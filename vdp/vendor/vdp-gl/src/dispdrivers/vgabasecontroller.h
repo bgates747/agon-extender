@@ -339,6 +339,11 @@ protected:
 
   bool allocateViewPort(uint32_t allocCaps, int rowlen);
   virtual bool allocateViewPort() = 0;
+  // RGB-001: row descriptors can borrow LCD-owned pixels. The ordinary free
+  // path then releases only these tables, because no pixel pool was allocated.
+  void bindBorrowedViewPort(volatile uint8_t **drawing, volatile uint8_t **visible) {
+    m_viewPort = drawing; m_viewPortVisible = visible; m_viewPortAllocated = true;
+  }
   virtual void checkViewPortSize() { };
 
   // abstract method of BitmappedDisplayController

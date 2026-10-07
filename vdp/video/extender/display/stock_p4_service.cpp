@@ -1,3 +1,4 @@
+#include "extender/diagnostics/render_benchmark.hpp"
 #include "extender/diagnostics/row_priority.hpp"
 #include "extender/diagnostics/owner_trace.hpp"
 #ifdef AGON_EXTENDER_OWNER_TRACE
@@ -9,6 +10,9 @@ extern "C" IRAM_ATTR void agon_owner_switch(unsigned c,unsigned kind,void *task,
 #include <cassert>
 #include <new>
 #include "extender/display/drawing_cadence.hpp"
+#if defined(AGON_EXTENDER_HDMI)
+#include "extender/display/hdmi_output.hpp"
+#endif
 
 namespace agon::extender::display {
 namespace {
@@ -40,7 +44,12 @@ constexpr unsigned kOutputTaskPriority = 2;
 constexpr unsigned kOutputTaskPriority = 6;
 #endif
 // N04r: keep drawing/parser priorities and all row locks; isolate CPU affinity.
-#if defined(AGON_EXTENDER_OUTPUT_DRAW_CORE)
+#if defined(AGON_EXTENDER_HDMI)
+// IDF 5.5.5 selects the DMA source before its frame callback. Keep direct
+// framebuffer submissions on the initialization/IRQ core so buffer ownership
+// metadata cannot race a callback on another core (HDMI-001).
+constexpr unsigned kOutputTaskCore = 1;
+#elif defined(AGON_EXTENDER_OUTPUT_DRAW_CORE)
 constexpr unsigned kOutputTaskCore = 0;
 #else
 constexpr unsigned kOutputTaskCore = 1;
@@ -86,6 +95,9 @@ bool StockP4Service::startClock(std::uint32_t period_us) {
   if (!period_us || !barrier_ || !draw_done_ || !output_done_) return false;
   if (timer_ && period_us == period_us_) return true;
   if (controller_) return false; // change cadence only at a detached mode boundary
+#if defined(AGON_EXTENDER_HDMI)
+  if (!hdmiOutput().ready()) return false;
+#endif
   stopClock();
   period_us_ = period_us;
   esp_timer_create_args_t args{};
@@ -95,10 +107,16 @@ bool StockP4Service::startClock(std::uint32_t period_us) {
   args.name = "stock-clock";
   args.skip_unhandled_events = true; // elapsed time is accounted from esp_timer_get_time
   if (esp_timer_create(&args, &timer_) != ESP_OK) { timer_ = nullptr; return false; }
+#if defined(AGON_EXTENDER_HDMI) && !defined(AGON_EXTENDER_BENCH_OFF)
+  // Retain the detached-mode resource protocol but leave this software timer
+  // stopped. The pre-v3 P4 DMA frame callback supplies actual scanout cadence.
+  return true;
+#else
   if (esp_timer_start_periodic(timer_, drawingTimerPeriodUs(period_us, kDrawingOpportunities)) == ESP_OK) return true;
   esp_timer_delete(timer_);
   timer_ = nullptr;
   return false;
+#endif
 }
 
 void StockP4Service::stopClock() {
@@ -133,8 +151,28 @@ void StockP4Service::timerEntry(void *context) {
   if(logicalFrame && output)agon_lock_wake::notify(1);
 #endif
   if (drawing) xTaskNotifyGive(drawing);
+#if !defined(AGON_EXTENDER_HDMI)
   if (logicalFrame && output) xTaskNotifyGive(output);
+#endif
 }
+
+#if defined(AGON_EXTENDER_HDMI)
+bool StockP4Service::hardwareFrameEntry(void *context) {
+  auto &self = *static_cast<StockP4Service *>(context);
+  if (!self.active_.load(std::memory_order_acquire)) return false;
+  // One hardware scanout boundary is one VDP frame, independent of output
+  // conversion progress. Modelines originally specifying 70/75 Hz run at the
+  // fixed ~60 Hz HDMI cadence in this experimental composition.
+  StockFrameCounter::advance(1);
+  BaseType_t woken = pdFALSE;
+  auto drawing = self.draw_task_.load(std::memory_order_acquire);
+  if (drawing) vTaskNotifyGiveFromISR(drawing, &woken);
+  // Presentation is released by the drawing worker after its vblank batch.
+  // Waking both here races the queued native SwapBuffers: conversion can
+  // begin on the old front and then discard every otherwise timely frame.
+  return woken == pdTRUE;
+}
+#endif
 
 bool StockP4Service::prepare(StockRuntimeController &controller) {
   if (!timer_ || controller_ || !draw_done_ || !output_done_ ||
@@ -153,6 +191,7 @@ bool StockP4Service::prepare(StockRuntimeController &controller) {
     controller_ = nullptr; stopping_.store(true); return false;
   }
   draw_task_.store(drawing, std::memory_order_release);
+  controller_->bindDrawingTask(drawing);
   if (xTaskCreatePinnedToCore(outputEntry, "stock-output", 8192, this, kOutputTaskPriority, &output, kOutputTaskCore) != pdPASS) {
     detach(); return false;
   }
@@ -164,7 +203,16 @@ void StockP4Service::activate() {
   assert(timer_ && controller_ && draw_task_.load(std::memory_order_acquire) &&
          output_task_.load(std::memory_order_acquire));
   clock_.start(esp_timer_get_time(), period_us_);
+#if defined(AGON_EXTENDER_HDMI) && defined(AGON_EXTENDER_DIRECT_RGB888)
+  hdmiOutput().allowDirectSwaps();
+#endif
   active_.store(true, std::memory_order_release);
+#if defined(AGON_EXTENDER_HDMI) && !defined(AGON_EXTENDER_BENCH_OFF)
+  // Singleton callback ownership survives mode preparation; detach joins it
+  // before old task handles or this service can be reclaimed.
+  ESP_ERROR_CHECK(hdmiOutput().bindFrameCallback(hardwareFrameEntry, this)
+                      ? ESP_OK : ESP_ERR_INVALID_STATE);
+#endif
 }
 
 bool StockP4Service::attach(StockRuntimeController &controller) {
@@ -176,6 +224,9 @@ bool StockP4Service::attach(StockRuntimeController &controller) {
 void StockP4Service::detach() {
   if (!controller_) return;
   active_.store(false, std::memory_order_release);
+#if defined(AGON_EXTENDER_HDMI)
+  hdmiOutput().unbindFrameCallback(this);
+#endif
   stopping_.store(true, std::memory_order_release);
   auto drawing = draw_task_.load(std::memory_order_acquire);
   auto output = output_task_.load(std::memory_order_acquire);
@@ -187,6 +238,7 @@ void StockP4Service::detach() {
   if (drawing) xSemaphoreTake(draw_done_, portMAX_DELAY);
   if (output) xSemaphoreTake(output_done_, portMAX_DELAY);
   draw_task_.store(nullptr, std::memory_order_release);
+  controller_->bindDrawingTask(nullptr);
   output_task_.store(nullptr, std::memory_order_release);
   // Retain task handles until any clock callback which loaded them has left.
   timerBarrier();
@@ -212,7 +264,20 @@ void StockP4Service::drawLoop() {
     agon_lock_wake::entered(0);
 #endif
     if (stopping_.load(std::memory_order_acquire)) break;
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    {agon_bench::Scope drain(agon_bench::Drain);controller_->drain();}
+#else
     controller_->drain();
+#endif
+#if defined(AGON_EXTENDER_HDMI)
+    // In stock double-buffered modes ordinary drawing is immediate; the
+    // queued swap executes in this drain. Publish only after that commit and
+    // sprite updates, without making the independent hardware clock wait.
+    if (!stopping_.load(std::memory_order_acquire)) {
+      auto output = output_task_.load(std::memory_order_acquire);
+      if (output) xTaskNotifyGive(output);
+    }
+#endif
   }
   xSemaphoreGive(draw_done_);
   // The lifecycle owner deletes this task only after the clock callback join.
@@ -233,12 +298,26 @@ void StockP4Service::outputLoop() {
 #endif
     if (stopping_.load(std::memory_order_acquire)) break;
     publish();
+#if defined(AGON_EXTENDER_HDMI)
+    // HDMI-001 r02: a ~50 ms conversion outlasted the ~16.67 ms scanout
+    // period, so each pass left another notification pending. Priority 6
+    // output on core 1 stayed runnable and starved Arduino's priority 1
+    // setup before console/Ethernet initialization. taskYIELD() would only
+    // admit equal-priority tasks. Block for one tick even when already late;
+    // hardware frame counters/drawing continue and pending notifications
+    // still coalesce to the latest opportunity. Keep browser scheduling intact.
+    vTaskDelay(1);
+#endif
   }
   xSemaphoreGive(output_done_);
   vTaskSuspend(nullptr);
 }
 
 void StockP4Service::publish() {
+#if defined(AGON_EXTENDER_HDMI)
+  hdmiOutput().publish(*controller_, stopping_);
+  return;
+#else
   auto &display = controller_->display();
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   const auto isolation = agon_output_isolation::mode.load();
@@ -317,6 +396,7 @@ void StockP4Service::publish() {
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
   if (complete) controller_->outputRowTiming().publish(
       (static_cast<std::uint32_t>(view.width) << 16) | view.height);
+#endif
 #endif
 }
 } // namespace agon::extender::display

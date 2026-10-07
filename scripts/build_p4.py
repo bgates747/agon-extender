@@ -4,8 +4,11 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
+from datetime import datetime
 import hashlib
 import html
+import io
 import json
 import os
 from pathlib import Path
@@ -13,7 +16,10 @@ import re
 import shutil
 import subprocess
 import sys
+import tarfile
 from urllib.parse import urlsplit
+
+from p4_board import DEFAULT_BOARD, apply_sdk_overrides, load_board, write_board_inputs
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,6 +31,157 @@ PYTHON_ENV = ROOT / "agents/build001/native-tools/python-env"
 IDF_COMMIT = "b774170ff46c393eeb5e495ea37936038d3f4f4f"
 SAFE_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9.-]*")
 SAFE_DEFINITION = re.compile(r"[A-Z][A-Z0-9_]*(?:=[A-Za-z0-9_.-]+)?")
+RGB888_SOURCE = "video/extender/display/p4_rgb888_controller.cpp"
+EXPERIMENTAL_RGB_ID = re.compile(r"rgb-001-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
+HDMI_SOURCE = "video/extender/display/hdmi_output.cpp"
+HDMI_COMPONENT = "components/esp_lcd_lt8912b"
+EXPERIMENTAL_HDMI_ID = re.compile(r"hdmi-001-r[0-9]{2}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
+EXPERIMENTAL_BENCH_ID = re.compile(r"bench-009-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
+SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py",
+                "scripts/p4_board.py")
+
+
+def check_build_identity(build_id: str, source_dirty: bool,
+                         allow_dirty_experimental: bool, profile: str,
+                         board: str, display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False) -> None:
+    """Keep release-style IDs clean while admitting this explicit experiment."""
+    if allow_dirty_experimental:
+        match = (EXPERIMENTAL_RGB_ID if direct_rgb888 else EXPERIMENTAL_BENCH_ID if render_benchmark_output else EXPERIMENTAL_HDMI_ID).fullmatch(build_id)
+        if not match or (profile, board, display_output) != ("p4-console", "p4-pc", "hdmi"):
+            raise SystemExit("dirty experimental builds require an HDMI-001 ID and p4-pc / p4-console / hdmi")
+        try:
+            datetime.strptime(match.group(1), "%Y-%m-%d-%H-%M-%S")
+        except ValueError as error:
+            raise SystemExit("experimental build ID has an invalid UTC timestamp") from error
+    elif build_id != "UNVERSIONED-DO-NOT-DEPLOY" and source_dirty:
+        raise SystemExit("identified builds require clean committed inputs")
+
+
+def source_paths() -> list[Path]:
+    """Include maintained untracked inputs and exclude ignored build caches."""
+    names = subprocess.check_output([
+        "git", "-C", str(ROOT), "ls-files", "--cached", "--others",
+        "--exclude-standard", "-z", "--", *SOURCE_SCOPE,
+    ]).split(b"\0")
+    paths = sorted({ROOT / os.fsdecode(name) for name in names if name})
+    if any(not path.is_file() or path.is_symlink() for path in paths):
+        raise SystemExit("source closure contains a missing input or symlink")
+    return paths
+
+
+def source_input_record() -> dict:
+    files = [{"path": str(path.relative_to(ROOT)), "bytes": path.stat().st_size,
+              "sha256": sha(path)} for path in source_paths()]
+    return {"schema_version": 1, "scope": list(SOURCE_SCOPE), "files": files}
+
+
+def freeze_source_inputs(output: Path) -> dict:
+    """Archive the exact hash-recorded dirty experimental source bytes."""
+    files = []
+    with tarfile.open(output / "source.tar.gz", "w:gz", compresslevel=1) as archive:
+        for path in source_paths():
+            data = path.read_bytes()
+            relative = str(path.relative_to(ROOT))
+            files.append({"path": relative, "bytes": len(data),
+                          "sha256": hashlib.sha256(data).hexdigest()})
+            member = tarfile.TarInfo(relative)
+            member.size, member.mode = len(data), path.stat().st_mode & 0o777
+            archive.addfile(member, io.BytesIO(data))
+    record = {"schema_version": 1, "scope": list(SOURCE_SCOPE), "files": files}
+    (output / "source-inputs.json").write_text(json.dumps(record, indent=2) + "\n")
+    if source_input_record() != record:
+        raise SystemExit("source inputs changed while preparing experimental snapshot")
+    return record
+
+
+def select_display_profile(document: dict, name: str, board: str,
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False) -> dict:
+    """Select an output adapter without creating a second rendering owner."""
+    if display_output not in {"browser", "hdmi"}:
+        raise SystemExit("unsupported display output")
+    if display_output == "hdmi" and (name != "p4-console" or board != "p4-pc"):
+        raise SystemExit("HDMI output requires p4-pc / p4-console")
+    profile = deepcopy(document["profiles"][name])
+    if display_output == "hdmi":
+        if HDMI_SOURCE in profile["sources"] or HDMI_SOURCE in profile["forbidden_sources"]:
+            raise SystemExit("HDMI adapter must be selected at the output boundary")
+        profile["sources"].append(HDMI_SOURCE)
+        profile["definitions"].append("AGON_EXTENDER_HDMI=1")
+        profile.setdefault("requires", []).extend([
+            "esp_lcd", "esp_driver_i2c", "esp_driver_gpio", "esp_hw_support",
+            "esp_lcd_lt8912b",
+        ])
+    else:
+        if HDMI_SOURCE in profile["sources"]:
+            raise SystemExit("browser profile selects HDMI adapter")
+        if HDMI_SOURCE not in profile["forbidden_sources"]:
+            profile["forbidden_sources"].append(HDMI_SOURCE)
+    if render_benchmark_output:
+        if display_output != "hdmi" or render_benchmark_output not in {"normal", "hold", "off", "convert-off"}:
+            raise SystemExit("render benchmark requires HDMI and normal/hold/off/convert-off selection")
+        profile["definitions"].append("AGON_EXTENDER_RENDER_BENCHMARK=1")
+        if render_benchmark_output == "convert-off":
+            profile["definitions"].extend(["AGON_EXTENDER_BENCH_OFF=1", "AGON_EXTENDER_BENCH_CONVERT_OFF=1"])
+        elif render_benchmark_output != "normal":
+            profile["definitions"].append("AGON_EXTENDER_BENCH_" + render_benchmark_output.upper() + "=1")
+    if direct_rgb888:
+        if (name,board,display_output) != ("p4-console","p4-pc","hdmi") or not render_benchmark_output:
+            raise SystemExit("RGB-001 storage requires experimental p4-pc HDMI benchmark selection")
+        profile["sources"].append(RGB888_SOURCE)
+        profile["definitions"].append("AGON_EXTENDER_DIRECT_RGB888=1")
+    else:
+        profile["forbidden_sources"].append(RGB888_SOURCE)
+    return profile
+
+
+def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False) -> dict:
+    """Retain the selected adapter and exact vendored bridge source closure."""
+    record = {"schema_version": 1, "display_output": display_output,
+              "configuration": None, "adapter": None, "bridge": None}
+    if direct_rgb888:
+        record["render_storage"] = "rgb888-panel-direct"
+        record["logical_stride_bytes"] = 1280 * 3
+        record["presentation_copy_bytes"] = 0
+        record["renderer"] = artifact_record(checked_path(RGB888_SOURCE))
+    if render_benchmark_output:
+        record["render_benchmark_output"] = render_benchmark_output
+    if display_output == "hdmi":
+        component = checked_dir(HDMI_COMPONENT)
+        required = {"CMakeLists.txt", "esp_lcd_lt8912b.c",
+                    "include/esp_lcd_lt8912b.h", "license.txt"}
+        files = sorted(path for path in component.rglob("*") if path.is_file())
+        relative = {str(path.relative_to(component)) for path in files}
+        if not required.issubset(relative) or any(path.is_symlink() for path in files):
+            raise SystemExit("incomplete or symlinked HDMI bridge component")
+        record["configuration"] = {
+            "width": 1280, "height": 720, "refresh_hz_nominal": 60,
+            "pixel_format": "RGB888", "placement": "centered-unscaled-cropped",
+        }
+        record["adapter"] = artifact_record(checked_path(HDMI_SOURCE))
+        record["bridge"] = {
+            "component": "esp_lcd_lt8912b", "path": str(component),
+            "files": [{"path": str(path.relative_to(component)),
+                       "bytes": path.stat().st_size, "sha256": sha(path)}
+                      for path in files],
+        }
+    return record
+
+
+def checked_tools(tools: Path, python_env: Path) -> Path:
+    """Reject migrated/incomplete host tools before creating a build output."""
+    compilers = list(tools.glob("tools/riscv32-esp-elf/*/riscv32-esp-elf/bin/riscv32-esp-elf-gcc"))
+    if len(compilers) != 1:
+        raise SystemExit("expected exactly one pinned RISC-V toolchain under --tools-path")
+    for executable in (python_env / "bin/python", compilers[0]):
+        try:
+            subprocess.run([str(executable), "--version"], check=True,
+                           capture_output=True, timeout=15)
+        except (OSError, subprocess.SubprocessError) as error:
+            raise SystemExit(
+                f"host tool cannot execute: {executable}; select native host tools "
+                "with --tools-path and --python-env"
+            ) from error
+    return compilers[0]
 
 
 def sha(path: Path) -> str:
@@ -230,8 +387,23 @@ def render_component(profile: dict, common: dict, generated: Path,
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", required=True)
+    parser.add_argument("--board", default=DEFAULT_BOARD,
+                        help="tracked board name (default: p4-devkit)")
+    parser.add_argument("--usb-fsls-only", action="store_true",
+                        help="experimental P4-PC-only full/low-speed USB host backport")
+    parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser",
+                        help="presentation sink; HDMI requires p4-pc / p4-console")
+    parser.add_argument("--direct-rgb888", action="store_true", help="RGB-001 experimental CPU pixel storage; never production")
+    parser.add_argument("--render-benchmark-output", choices=("normal", "hold", "off", "convert-off"),
+                        help="BENCH-009 diagnostic windows and output controls")
+    parser.add_argument("--tools-path", type=Path, default=TOOLS,
+                        help="host-native ESP-IDF tools directory")
+    parser.add_argument("--python-env", type=Path, default=PYTHON_ENV,
+                        help="host-native ESP-IDF Python environment")
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--build-id", default="UNVERSIONED-DO-NOT-DEPLOY")
+    parser.add_argument("--allow-dirty-experimental", action="store_true",
+                        help="freeze HDMI-001 experimental source; never qualify a release")
     parser.add_argument("--mos", type=Path)
     parser.add_argument("--mos-sha256")
     parser.add_argument("--flash-agent", type=Path)
@@ -246,17 +418,23 @@ def main() -> None:
     source_dirty = bool(subprocess.check_output(
         ["git", "-C", str(ROOT), "status", "--porcelain"], text=True
     ).strip())
-    if args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and source_dirty:
-        parser.error("identified builds require clean committed inputs")
+    check_build_identity(args.build_id, source_dirty, args.allow_dirty_experimental,
+                         args.profile, args.board, args.display_output, args.render_benchmark_output, args.direct_rgb888)
+    if args.direct_rgb888 and not args.allow_dirty_experimental:
+        parser.error("direct RGB888 requires an explicitly frozen experimental build")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():
         parser.error("output must be a fresh nonexisting path")
     document = json.loads(MANIFEST.read_text())
     checked_display_ownership(document)
     try:
-        profile = document["profiles"][args.profile]
+        profile = select_display_profile(document, args.profile, args.board,
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888)
     except KeyError:
         parser.error("unknown profile")
+    board, board_path = load_board(args.board, args.profile)
+    if args.usb_fsls_only and (args.board != "p4-pc" or args.profile != "p4-console"):
+        parser.error("--usb-fsls-only requires p4-pc / p4-console")
     payload_arguments = (args.mos, args.mos_sha256, args.flash_agent)
     if profile.get("mos_recovery_payload"):
         if not all(payload_arguments):
@@ -270,25 +448,36 @@ def main() -> None:
     if subprocess.check_output(["git", "-C", str(IDF), "rev-parse", "HEAD"],
                                text=True).strip() != IDF_COMMIT:
         raise SystemExit("wrong ESP-IDF checkout identity")
+    tools, python_env = args.tools_path.resolve(), args.python_env.resolve()
+    compiler = checked_tools(tools, python_env)
+    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888)
     output.mkdir(parents=True)
+    source_record = freeze_source_inputs(output) if args.allow_dirty_experimental else None
+    (output / "display.json").write_text(json.dumps(display_record, indent=2) + "\n")
     project = output / "project"
     project.mkdir()
     shutil.copyfile(VDP / "native/CMakeLists.txt", project / "CMakeLists.txt")
     generated = project / "components/agon_vdp"
     generated.mkdir(parents=True)
+    board_record = write_board_inputs(board, board_path, output, generated)
     asset_overrides: dict[str, Path] = {}
-    if args.reset_url:
+    if args.reset_url or args.display_output == "hdmi":
         relative = "video/extender/web/index.html"
         page = generated / "embedded/index.html"
         page.parent.mkdir()
         source = checked_path(relative).read_text()
-        marker = 'name="agon-reset-url" content=""'
-        if source.count(marker) != 1:
-            raise SystemExit("reset URL marker missing or ambiguous")
-        page.write_text(source.replace(
-            marker,
-            'name="agon-reset-url" content="' +
-            html.escape(args.reset_url, quote=True) + '"'))
+        if args.reset_url:
+            marker = 'name="agon-reset-url" content=""'
+            if source.count(marker) != 1:
+                raise SystemExit("reset URL marker missing or ambiguous")
+            source = source.replace(marker, 'name="agon-reset-url" content="' +
+                                    html.escape(args.reset_url, quote=True) + '"')
+        if args.display_output == "hdmi":
+            marker = 'name="agon-video-output" content="browser"'
+            if source.count(marker) != 1:
+                raise SystemExit("video output marker missing or ambiguous")
+            source = source.replace(marker, 'name="agon-video-output" content="hdmi"')
+        page.write_text(source)
         asset_overrides[relative] = page
     render_component(profile, document["common"], generated, asset_overrides)
     payload_artifacts = []
@@ -307,6 +496,7 @@ def main() -> None:
         f'#define AGON_EXTENDER_SOURCE_IDENTITY "{args.profile}-native"\n'
         f'#define AGON_EXTENDER_BUILD_ID "{args.build_id}"\n'
         '#define AGON_EXTENDER_ARTIFACT_STATUS "experimental"\n'
+        f'#define AGON_EXTENDER_DISPLAY_OUTPUT "{args.display_output}"\n'
     )
     if args.profile == "p4-port008-nonrelease-qualification":
         header += '#define AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY "PORT-008-D002"\n'
@@ -316,39 +506,54 @@ def main() -> None:
         'CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"',
         f'CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="{VDP / "partitions.csv"}"',
     )
+    config = apply_sdk_overrides(config, board["sdkconfig_overrides"])
     sdkconfig = output / "sdkconfig"
     sdkconfig.write_text(config)
     lock = output / "dependencies.lock"
     build = output / "build"
     env = os.environ.copy()
     env.update({
-        "IDF_PATH": str(IDF), "IDF_TOOLS_PATH": str(TOOLS),
-        "IDF_PYTHON_ENV_PATH": str(PYTHON_ENV),
+        "IDF_PATH": str(IDF), "IDF_TOOLS_PATH": str(tools),
+        "IDF_PYTHON_ENV_PATH": str(python_env),
         # Normally exported by ESP-IDF's activate.py. The wrapper constructs a
         # hermetic environment instead of sourcing a shell, and esp_hosted's
         # Kconfig expands this variable directly.
         "ESP_IDF_VERSION": "5.5",
     })
-    tool_bins = [str(path) for path in TOOLS.glob("tools/**/bin") if path.is_dir()]
-    env["PATH"] = os.pathsep.join(tool_bins + [str(PYTHON_ENV / "bin"), env["PATH"]])
-    command = [str(PYTHON_ENV / "bin/python"), str(IDF / "tools/idf.py"),
+    rom_dirs = list(tools.glob("tools/esp-rom-elfs/*"))
+    if len(rom_dirs) == 1:
+        env["ESP_ROM_ELF_DIR"] = str(rom_dirs[0])
+    tool_bins = [str(path) for path in tools.glob("tools/**/bin") if path.is_dir()]
+    env["PATH"] = os.pathsep.join([str(python_env / "bin"), *tool_bins, env["PATH"]])
+    command = [str(python_env / "bin/python"), str(IDF / "tools/idf.py"),
                "-C", str(project), "-B", str(build),
                f"-DAGON_COMPONENT_DIR={generated}",
                f"-DAGON_DEPENDENCIES_LOCK={lock}",
                f"-DAGON_VDP_ROOT={VDP}",
                f"-DSDKCONFIG={sdkconfig}",
                f"-DAGON_DSP_LIFETIME_FIX={'ON' if profile.get('dsp_lifetime_fix') else 'OFF'}",
+               f"-DAGON_USB_FSLS_ONLY={'ON' if args.usb_fsls_only else 'OFF'}",
+               *([f"-DAGON_HDMI_COMPONENT_DIR={checked_dir(HDMI_COMPONENT)}"]
+                 if args.display_output == "hdmi" else []),
                "build"]
     with (output / "build.log").open("w") as log:
         completed = subprocess.run(command, env=env, stdout=log,
                                    stderr=subprocess.STDOUT)
     if completed.returncode:
         raise SystemExit(f"native build failed; inspect {output / 'build.log'}")
+    if source_record is not None and source_input_record() != source_record:
+        raise SystemExit("source inputs changed during experimental build; candidate is not validated")
     factory = assemble_factory_image(build)
     validation = [sys.executable, str(ROOT / "scripts/validate_p4_build.py"),
-                  "--profile", args.profile, "--output", str(output)]
+                  "--profile", args.profile, "--board", args.board,
+                  "--display-output", args.display_output,
+        *(["--render-benchmark-output", args.render_benchmark_output] if args.render_benchmark_output else []), "--output", str(output)]
+    if args.direct_rgb888:
+        validation.append("--direct-rgb888")
+    if args.usb_fsls_only:
+        validation.append("--usb-fsls-only")
     subprocess.run(validation, check=True)
-    size_tool = next(TOOLS.glob("tools/riscv32-esp-elf/*/riscv32-esp-elf/bin/riscv32-esp-elf-size"))
+    size_tool = compiler.with_name("riscv32-esp-elf-size")
     elf = build / "agon_extender.elf"
     size_result = subprocess.run([str(size_tool), "-A", str(elf)],
                                  check=True, text=True, capture_output=True)
@@ -360,10 +565,21 @@ def main() -> None:
         build / "ota_data_initial.bin", build / "flasher_args.json",
         build / "compile_commands.json", output / "validation.json",
         output / "size-sections.txt",
+        output / "board.json", generated / "agon_extender_board_config.hpp",
+        output / "display.json", generated / "agon_extender_build_identity.hpp",
         *payload_artifacts,
     ]
+    if args.usb_fsls_only:
+        artifact_paths.extend([VDP / "native/usb_fsls_only.cmake",
+                               build / "agon-extender-usb/hcd_dwc.c"])
+    if source_record is not None:
+        artifact_paths.extend([output / "source.tar.gz", output / "source-inputs.json"])
     record = {
         "schema_version": 1, "profile": args.profile, "lcd": False,
+        "board": args.board, "board_identity": board["identity"],
+        "board_profile_sha256": board_record["profile_sha256"],
+        "board_header_sha256": board_record["header_sha256"],
+        "compiler": artifact_record(compiler),
         "display_family": profile["display_family"],
         "product_display_role": profile["product_display_role"],
         "build_id": args.build_id, "manifest_sha256": sha(MANIFEST),
@@ -371,11 +587,19 @@ def main() -> None:
         "dependencies_lock_sha256": sha(lock),
         "source_commit": source_commit,
         "source_dirty": source_dirty,
+        "artifact_status": "experimental",
+        "allow_dirty_experimental": args.allow_dirty_experimental,
+        "source_snapshot_verified": source_record is not None,
         "reset_url_configured": bool(args.reset_url),
+        "usb_fsls_only": args.usb_fsls_only,
+        "display_output": args.display_output,
+        "display_inputs": display_record,
         "reset_url_sha256": (hashlib.sha256(args.reset_url.encode()).hexdigest()
                              if args.reset_url else None),
         "artifacts": [artifact_record(path) for path in artifact_paths],
     }
+    if source_record is not None and source_input_record() != source_record:
+        raise SystemExit("source inputs changed during experimental validation; candidate is not validated")
     (output / "manifest.json").write_text(json.dumps(record, indent=2) + "\n")
     print(f"native P4 build PASS: {output}")
 

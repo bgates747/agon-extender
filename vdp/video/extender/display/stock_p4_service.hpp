@@ -32,6 +32,9 @@ class StockP4Service {
   StockClock const &clock() const noexcept { return clock_; }
  private:
   static void timerEntry(void *);
+#if defined(AGON_EXTENDER_HDMI)
+  static bool hardwareFrameEntry(void *);
+#endif
   static void barrierEntry(void *);
   static void drawEntry(void *);
   static void outputEntry(void *);

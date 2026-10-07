@@ -313,8 +313,16 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	candidate.colours = colours;
 	candidate.refresh_hz = timing.refresh_hz;
 	candidate.double_buffered = doubleBuffered;
+#ifdef AGON_EXTENDER_DIRECT_RGB888
+	// RGB-001 borrows the sink's pixels: candidate initialization can no longer
+	// overlap the live mode's drawing/output. Join those owners first, outside
+	// native exclusion. Ordinary independently allocated modes keep RP06 staging.
+	const bool sharedPanel = rgb888ExperimentGeometry(colours,timing.width,timing.height);
+	const bool joinedPanel = sharedPanel && _stockFrameService && _stockController;
+	if(joinedPanel) _stockFrameService->detach();
+#endif
 	if (!prepareModeCandidate(candidate,
-		[&] { return makeStockRuntimeController(colours); },
+		[&] { return makeStockRuntimeController(colours, timing.width, timing.height); },
 		[&](StockRuntimeController &controller) {
 			auto &vga = controller.paletted();
 			vga.begin();
@@ -346,6 +354,18 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 				service.prepare(controller);
 		})) {
 		debug_log("changeResolution: P4 candidate preparation failed\n\r");
+#ifdef AGON_EXTENDER_DIRECT_RGB888
+		if(joinedPanel) {
+			// Release partial candidate resources before restarting the former
+			// mode. Official vdu_mode still owns old/mode-1 fallback and clearing.
+			candidate.service.reset();
+			candidate.canvas.reset();
+			candidate.controller.reset();
+			_stockController->bindNativeAliases();
+			if(!_stockFrameService->attach(*_stockController))
+				debug_log("changeResolution: former service restart failed; mode fallback required\n\r");
+		}
+#endif
 		return 2;
 	}
 

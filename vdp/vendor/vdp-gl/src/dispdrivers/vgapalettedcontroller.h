@@ -195,10 +195,12 @@ protected:
   PaletteListItem *           m_currentSignalItem;
 
 
-private:
-
+protected:
+  // RGB-001 derives a borrowed-pixel allocation while retaining the compact
+  // allocation for golden controls. Other implementation details stay private.
   bool allocateViewPort();
   void freeViewPort();
+private:
   void checkViewPortSize();
   void onSetupDMABuffer(lldesc_t volatile * buffer, bool isStartOfVertFrontPorch, int scan, bool isVisible, int visibleRow);
 
@@ -223,7 +225,6 @@ private:
 
 
 } // end of namespace
-
 
 
 

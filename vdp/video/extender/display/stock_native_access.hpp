@@ -26,6 +26,11 @@ namespace agon::extender::display {
 std::recursive_mutex &stockNativeMutex();
 std::recursive_mutex &stockForegroundMutex();
 std::uint32_t &stockPaletteRevision();  // accessed only under the native mutex
+// HDMI row conversion samples this register while it holds native exclusion.
+// A logical swap advances it only after both visible row aliases have changed;
+// an output pass spanning that change must discard its incomplete image.
+std::uint32_t stockVisibleGeneration() noexcept;
+void stockVisibleBufferSwapped() noexcept; // caller holds stockNativeMutex()
 #if defined(AGON_EXTENDER_OWNER_TRACE)
 class StockNativeGuard {
  std::recursive_mutex &mutex_;

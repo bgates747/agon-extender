@@ -1,3 +1,4 @@
+#include "extender/diagnostics/render_benchmark.hpp"
 #include "extender/codecs/rle2.hpp"
 #ifdef AGON_EXTENDER_REFRESH_TRACE
 #include "extender/diagnostics/refresh_trace.hpp"
@@ -327,6 +328,9 @@ uint32_t VDUStreamProcessor::bufferWrite(uint16_t bufferId, uint32_t length) {
 	}
 
 	if (bufferId == 65535) {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+        agon_bench::marker(bufferStream->getBuffer(), length);
+#endif
 #ifdef AGON_EXTENDER_REFRESH_TRACE
 		agon_refresh_trace::marker(bufferStream->getBuffer(), length);
 #endif

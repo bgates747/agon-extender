@@ -134,6 +134,9 @@ ESP32Time		rtc(0);							// The RTC
 #include "extender/transport/disconnected_stream.hpp"
 #endif
 #include "extender/web/browser_video_provider.hpp"
+#if defined(AGON_EXTENDER_HDMI)
+#include "extender/display/hdmi_output.hpp"
+#endif
 #else
 #include "vdp_protocol.h"						// VDP Protocol
 #endif
@@ -214,6 +217,14 @@ void setup() {
 		ESP_LOGI("extender_boot", "retained VDP setup starting");
 	#else
 		DBGSerial.begin(SERIALBAUDRATE, SERIAL_8N1, 3, 1);
+	#endif
+	#if defined(AGON_EXTENDER_HDMI)
+		// Initialize before the first fallible logical mode preparation, on
+		// core 1 shared with the HDMI output worker and DSI/DMA interrupts.
+		if (!agon::extender::display::hdmiOutput().start()) {
+			ESP_LOGE("extender_boot", "HDMI startup failed; parser not started");
+			return;
+		}
 	#endif
 	changeMode(startup_screen_mode);
 	copy_font();

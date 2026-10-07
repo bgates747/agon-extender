@@ -30,6 +30,14 @@
 
 namespace agon::extender::display {
 
+#ifdef AGON_EXTENDER_DIRECT_RGB888
+template<>
+void StockScanlineController<fabgl::P4Rgb888Controller>::prepareStockRowQuiescent(
+    int y, std::uint8_t *signal) {
+  this->encodeSignalRow(y, signal);
+}
+#endif
+
 template<>
 void StockScanlineController<fabgl::VGA2Controller>::prepareStockRowQuiescent(
     int scanLine, std::uint8_t *signalRow) {

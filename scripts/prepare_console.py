@@ -21,6 +21,9 @@ ROOT = Path(__file__).resolve().parents[1]
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--board", default="p4-devkit")
+    parser.add_argument("--tools-path", type=Path)
+    parser.add_argument("--python-env", type=Path)
     parser.add_argument("--reset-url")
     parser.add_argument("--admission-probe", action="store_true")
     parser.add_argument("--lcd", action="store_true")
@@ -50,10 +53,15 @@ def main() -> None:
     command = [
         sys.executable, str(ROOT / "scripts/build_p4.py"),
         "--profile", "p4-console", "--output", str(args.output),
+        "--board", args.board,
         "--build-id", build_id,
     ]
     if args.reset_url:
         command += ["--reset-url", args.reset_url]
+    for option in ("tools_path", "python_env"):
+        value = getattr(args, option)
+        if value:
+            command += ["--" + option.replace("_", "-"), str(value)]
     subprocess.run(command, check=True)
 
 

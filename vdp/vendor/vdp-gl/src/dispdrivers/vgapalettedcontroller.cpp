@@ -491,9 +491,18 @@ void * IRAM_ATTR VGAPalettedController::getSignalsForScanline(int scanLine) {
 
 void VGAPalettedController::swapBuffers()
 {
+#if defined(AGON_EXTENDER_HDMI)
+  // HDMI conversion holds native exclusion for one copied row at a time.
+  // Keep the visible aliases and generation in one transaction so that its
+  // worker can reject a frame which spans two logical front buffers.
+  AGON_STOCK_NATIVE_GUARD;
+#endif
   VGABaseController::swapBuffers();
   s_viewPort        = m_viewPort;
   s_viewPortVisible = m_viewPortVisible;
+#if defined(AGON_EXTENDER_HDMI)
+  agon::extender::display::stockVisibleBufferSwapped();
+#endif
 }
 
 

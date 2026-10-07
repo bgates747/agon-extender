@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Agon Extender</title>
   <meta name="agon-reset-url" content="">
+  <meta name="agon-video-output" content="browser">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -19,6 +20,7 @@
     </header>
 
     <section class="screen-shell" id="video-panel">
+      <p id="hdmi-output" tabindex="0" hidden>Video is displayed on the HDMI monitor.</p>
       <div class="video-viewport" id="video-viewport">
         <canvas tabindex="0" id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
       </div>

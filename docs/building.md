@@ -68,6 +68,64 @@ that delegates ordinary console builds to the native wrapper. The old
 reproduction of identified hybrid evidence and fails unless its historical-use
 acknowledgement is supplied.
 
+### Board selection and compile-time pin mapping
+
+The native builder selects hardware independently of the software profile:
+
+```sh
+.venv/bin/python scripts/build_p4.py \
+  --profile p4-console --board p4-pc \
+  --tools-path "$P4_IDF_TOOLS" --python-env "$P4_IDF_PYTHON_ENV" \
+  --output agents/builds/pc-local \
+  --build-id UNVERSIONED-DO-NOT-DEPLOY
+```
+
+Set the two tool variables to host-native installations. Migrated x86 compiler
+executables cannot run on the Pi ARM64 host; the wrapper checks executability
+before creating output. Neither option changes the pinned ESP-IDF checkout or
+managed component versions. Machine-local tool locations belong in
+`HARDWARE.local.md`, not board profiles.
+
+Omitting `--board` retains `p4-devkit`. The revisioned configuration files under
+[`vdp/build/boards`](../vdp/build/boards/README.md) are the native hardware-input
+authority. `p4-pc` currently supports only `p4-console`; recovery and historical
+buffered parallel qualification remain DevKit-only. The builder rejects unknown
+boards, unsupported compositions and invalid/conflicting GPIO allocations.
+
+Each output contains `board.json` and the generated
+`project/components/agon_vdp/agon_extender_board_config.hpp`. Shared C++ code
+uses that header for UART routing, its startup input fence and TX cancellation,
+Ethernet, local SD and USB hub setup. The build manifest records board identity,
+configuration/header hashes and compiler identity. Validation checks actual
+compiler dependencies and the effective application/bootloader silicon range.
+
+Both variants retain browser output. Selecting the PC board does not add HDMI,
+select a new display family or change EMOS's ownership of transport admission.
+The PC mapping is a candidate direct harness: eight shared UART/parallel lanes
+plus READY_N, CLOCK and VALID_N. Its GPIO20/32 sensing options must remain
+disconnected. See [BOARD-001](tasks/BOARD-001.md) for pending physical review and
+bench gates; compile success does not qualify that wiring or authorize flashing.
+
+The [current wiring drawing and mapping](../hardware/designs/light2-p4pc-harness-draft/README.md)
+retain the original assignments. The Author arranged the bench to suit that
+mapping and withdrew the reversed-PC proposal. The unchanged PC board JSON
+and existing PC build outputs match this restored mapping; no firmware
+remapping is needed for the orientation request.
+
+For the pending P4-PC keyboard experiment, add `--usb-fsls-only` to the native
+`p4-console --board p4-pc` command. IDF 5.5.5 lacks the public `fsls_only`
+install option. The source-bound recipe in
+[`usb_fsls_only.cmake`](../vdp/native/usb_fsls_only.cmake) generates a USB HCD
+derivative that restricts the existing HS-capable controller to FS/LS before
+each root-port reset. It keeps the onboard hub and pin mapping, with a
+12 Mbit/s upstream link. Other board/profile combinations reject the flag;
+omitting it retains the existing USB source. The SDK checkout remains unchanged.
+The manifest records the option and recipe/derivative hashes; validation checks
+the actual compile action and USB archive. The Author's keyboard tests fail;
+passive serial confirms full-speed operation followed by failure of the initial
+device-descriptor transfer. Physical keyboard operation remains unqualified;
+see BOARD-001.
+
 ### Selected DevKit configuration
 
 The maintained [board definition](../vdp/boards/olimex_esp32_p4_devkit.json),
@@ -309,3 +367,26 @@ Arduino-backed but independent of VDP, EMOS and HTTP route composition.
 
 The optional development `--lcd` build is described in [LCD output](lcd-output.md);
 it is not enabled in ordinary builds or the selected production bundle.
+
+## P4-PC HDMI development output
+
+The native builder accepts `--display-output browser` (the default) or
+`--display-output hdmi`. HDMI is restricted to `p4-console` on `p4-pc` and
+uses the same stock-shaped renderer. The selected adapter supplies fixed
+1280×720 RGB888 output, centered unscaled images and cropping, with logical-mode
+buffering and hardware-paced frames. Browser video is omitted; browser keyboard,
+HTTP and SD services remain. Native DevKit/browser selection is unchanged.
+
+HDMI is experimental, outside selected production. Its pre-v3 silicon callback
+is DMA frame completion rather than a separate hardware-vsync interrupt; original
+70/75Hz modes physically use the fixed ~60Hz HDMI cadence. See
+[HDMI-001](tasks/HDMI-001.md) for scope, constraints and pre-flash evidence.
+
+The explicit `--allow-dirty-experimental` exception is restricted to HDMI-001
+experimental build identities on P4-PC/console/HDMI. It archives exact Git-visible
+VDP and build-tool source bytes before compiling, records their hashes, and
+rejects changes during the build. It does not qualify dirty source or waive
+the normal clean-input guard for other identified builds. Build outputs retain
+`source.tar.gz`, `source-inputs.json`, `display.json`, board inputs, dependency
+lock, compile/link validation, image hashes and normal manifests. No build command
+flashes a board.

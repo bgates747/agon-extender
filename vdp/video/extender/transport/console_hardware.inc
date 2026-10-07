@@ -7,6 +7,18 @@
 #include <driver/gpio.h>
 #include <hal/uart_ll.h>
 #include <esp_random.h>
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+#include "agon_extender_board_config.hpp"
+namespace console_board = agon::extender::board;
+#else
+// Historical hybrid reproductions retain their original DevKit tuple.
+// Board selection is supported only by the maintained native build wrapper.
+namespace console_board {
+constexpr int kUartTx=12,kUartRx=22,kUartRts=11,kUartCts=23;
+constexpr int kFencePins[]={9,10,11,12,13,14,15,17,20,21,22,23,32,33};
+constexpr char kIdentity[]="legacy-devkit";
+}
+#endif
 #include "../input/p4_usb_host.hpp"
 #include "../input/usb_cli_keyboard.hpp"
 #include "../input/usb_key_queue.hpp"
@@ -25,11 +37,12 @@ agon::extender::input::UsbKeyQueue console_keys;
 bool console_locale_pending{},console_admit_pending{},console_overload{};
 void console_cancel_tx() {
   // IDF 5.5.5 flush is RX-only; inherited bounded TX cancellation from PORT-015.
-  ESP_ERROR_CHECK(gpio_reset_pin(GPIO_NUM_12));
+  ESP_ERROR_CHECK(gpio_reset_pin(gpio_num_t(console_board::kUartTx)));
   ESP_ERROR_CHECK(uart_disable_intr_mask(UART_NUM_1,UART_INTR_TX_DONE|UART_INTR_TXFIFO_EMPTY));
   uart_ll_txfifo_rst(UART_LL_GET_HW(UART_NUM_1));
-  ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_12,1));
-  ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,12,22,11,23));
+  ESP_ERROR_CHECK(gpio_set_level(gpio_num_t(console_board::kUartTx),1));
+  ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
+                             console_board::kUartRts,console_board::kUartCts));
 }
 }
 #if defined(AGON_EXTENDER_SD_SERVICE)
@@ -70,7 +83,7 @@ ConsoleStream *beginConsole() {
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
   agon::extender::input::remoteLocked([](auto &r){r.begin(esp_random());return 0;});
 #endif
-  for(int pin:{9,10,11,12,13,14,15,17,20,21,22,23,32,33}) {
+  for(int pin:console_board::kFencePins) {
     ESP_ERROR_CHECK(gpio_reset_pin(gpio_num_t(pin)));
     ESP_ERROR_CHECK(gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT));
     ESP_ERROR_CHECK(gpio_pullup_dis(gpio_num_t(pin)));ESP_ERROR_CHECK(gpio_pulldown_dis(gpio_num_t(pin)));
@@ -79,7 +92,8 @@ ConsoleStream *beginConsole() {
   cfg.parity=UART_PARITY_DISABLE;cfg.stop_bits=UART_STOP_BITS_1;
   cfg.flow_ctrl=UART_HW_FLOWCTRL_CTS_RTS;cfg.rx_flow_ctrl_thresh=64;cfg.source_clk=UART_SCLK_DEFAULT;
   ESP_ERROR_CHECK(uart_param_config(UART_NUM_1,&cfg));
-  ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,12,22,11,23));
+  ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
+                             console_board::kUartRts,console_board::kUartCts));
   ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1,4096,0,32,&console_events,0));
   // Stock Arduino HardwareSerial applies a two-symbol RX idle interrupt timeout.
   ESP_ERROR_CHECK(uart_set_rx_timeout(UART_NUM_1,2));
@@ -87,6 +101,8 @@ ConsoleStream *beginConsole() {
   console_stream->setTimeout(COMMS_TIMEOUT); // match stock setupVDPProtocol (200 ms)
   if(!agon::extender::input::usbhost::begin()) console_stream->fail("USB host startup");
   printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
+  printf("Board %s UART1 TX=%d RX=%d RTS=%d CTS=%d\n",console_board::kIdentity,
+         console_board::kUartTx,console_board::kUartRx,console_board::kUartRts,console_board::kUartCts);
   return console_stream;
 }
 void runConsole(VDUStreamProcessor *processor) {

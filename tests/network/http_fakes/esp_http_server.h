@@ -21,6 +21,8 @@ int httpd_sess_set_send_override(httpd_handle_t,int,int(*)(httpd_handle_t,int,co
 int httpd_resp_send_500(httpd_req_t*);
 int httpd_resp_set_type(httpd_req_t*,const char*);
 int httpd_resp_set_hdr(httpd_req_t*,const char*,const char*);
+int httpd_resp_set_status(httpd_req_t*,const char*);
+int httpd_resp_sendstr(httpd_req_t*,const char*);
 int httpd_resp_send(httpd_req_t*,const char*,ssize_t);
 int httpd_sess_trigger_close(httpd_handle_t,int);
 int httpd_req_to_sockfd(httpd_req_t*);

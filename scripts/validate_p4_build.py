@@ -7,9 +7,14 @@ import argparse
 import json
 from pathlib import Path
 import shlex
+import hashlib
+import subprocess
 import sys
 
-from build_p4 import checked_definition_groups, checked_display_ownership
+from build_p4 import (HDMI_COMPONENT, IDF, checked_definition_groups,
+                      checked_display_ownership, display_input_record,
+                      select_display_profile)
+from p4_board import load_board, render_header
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,9 +26,42 @@ def fail(message: str) -> None:
     raise SystemExit(f"native P4 validation FAIL: {message}")
 
 
+def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str) -> None:
+    """Prove the selected bridge object reaches the ELF; reject stale copies."""
+    bridge = (VDP / HDMI_COMPONENT / "esp_lcd_lt8912b.c").resolve()
+    actions = [command for command in commands
+               if Path(command["file"]).name == "esp_lcd_lt8912b.c"]
+    if display_output == "browser":
+        if actions:
+            fail("browser build compiled the HDMI bridge")
+        return
+    if len(actions) != 1 or Path(actions[0]["file"]).resolve() != bridge:
+        fail("HDMI bridge compile source differs from the vendored component")
+    archive = "esp-idf/esp_lcd_lt8912b/libesp_lcd_lt8912b.a"
+    edges = [line for line in ninja.splitlines()
+             if line.startswith(f"build {archive}:")]
+    obj = actions[0].get("output")
+    if len(edges) != 1 or not obj or obj not in edges[0]:
+        fail("HDMI bridge object is absent from the bridge archive")
+    elf = [line for line in ninja.splitlines()
+           if line.startswith("build agon_extender.elf:")]
+    if len(elf) != 1 or archive not in elf[0]:
+        fail("HDMI bridge archive is absent from the ELF link")
+    dpi = [command for command in commands
+           if Path(command["file"]).name == "esp_lcd_panel_dpi.c"]
+    expected_dpi = (IDF / "components/esp_lcd/dsi/esp_lcd_panel_dpi.c").resolve()
+    if len(dpi) != 1 or Path(dpi[0]["file"]).resolve() != expected_dpi:
+        fail("HDMI build lacks exactly one pinned DPI scanout compile action")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", required=True)
+    parser.add_argument("--board", help="require and verify board provenance for new builds")
+    parser.add_argument("--usb-fsls-only", action="store_true")
+    parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser")
+    parser.add_argument("--direct-rgb888", action="store_true")
+    parser.add_argument("--render-benchmark-output", choices=("normal", "hold", "off", "convert-off"))
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     output = args.output.resolve()
@@ -31,7 +69,8 @@ def main() -> None:
     checked_display_ownership(document)
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
-    profile = document["profiles"][args.profile]
+    profile = select_display_profile(document, args.profile, args.board,
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -42,6 +81,33 @@ def main() -> None:
     for command in commands:
         source = Path(command["file"]).resolve()
         by_source.setdefault(source, []).append(command)
+    # Verify actual compile actions and final USB archive linkage, not merely
+    # a selected CMake option or a generated patch that might be unused.
+    derivative = output / "build/agon-extender-usb/hcd_dwc.c"
+    hcd_actions = [c for c in commands if Path(c["file"]).name == "hcd_dwc.c"]
+    if len(hcd_actions) > 1 or (args.usb_fsls_only and len(hcd_actions) != 1):
+        fail("expected exactly one USB HCD compile action")
+    hcd_action = hcd_actions[0] if hcd_actions else None
+    compiled_derivative = bool(hcd_action and Path(hcd_action["file"]).resolve() == derivative)
+    if compiled_derivative != args.usb_fsls_only:
+        fail("USB FSLS selection differs from compiled HCD source")
+    if args.usb_fsls_only:
+        if args.board != "p4-pc":
+            fail("USB FSLS experiment is P4-PC only")
+        upstream = ROOT / "agents/build001/native-tools/esp-idf/components/usb/hcd_dwc.c"
+        if hashlib.sha256(upstream.read_bytes()).hexdigest() != "33fea9059ee546d1c773fc5e86ed0c294e600e645c4c14e0788ce879f596280b":
+            fail("USB HCD upstream identity changed")
+        before = "    usb_dwc_hal_port_toggle_reset(port->hal, true);"
+        after = ("    // Extender P4-PC: IDF 5.5.5 FSLS-only backport; see native/usb_fsls_only.cmake.\n"
+                 "    if (port->hal->constant_config.hsphy_type != 0) {\n"
+                 "        usb_dwc_ll_hcfg_set_fsls_supp_only(port->hal->dev);\n"
+                 "    }\n" + before)
+        if derivative.read_text() != upstream.read_text().replace(before, after):
+            fail("USB derivative differs from the bounded reset backport")
+        usb_edges = [line for line in ninja_path.read_text().splitlines()
+                     if line.startswith("build esp-idf/usb/libusb.a:")]
+        if len(usb_edges) != 1 or hcd_action["output"] not in usb_edges[0]:
+            fail("USB derivative object is absent from USB archive")
     selected = [(VDP / item).resolve() for item in profile["sources"]]
     forbidden = [(VDP / item).resolve() for item in profile["forbidden_sources"]]
     problems: list[str] = []
@@ -63,6 +129,17 @@ def main() -> None:
                             *definition_groups["rejected"]]
     for command in selected_commands:
         argv = command.get("arguments") or shlex.split(command["command"])
+        for definition, benchmark_selected in (("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
+                                     ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
+                                     ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
+                                     ("AGON_EXTENDER_BENCH_OFF",args.render_benchmark_output in ("off","convert-off")),
+                                     ("AGON_EXTENDER_BENCH_CONVERT_OFF",args.render_benchmark_output=="convert-off")):
+            if (f"-D{definition}=1" in argv) != benchmark_selected:
+                fail("render benchmark selection differs from compile action")
+        if ("-DAGON_EXTENDER_HDMI=1" in argv) != (args.display_output == "hdmi"):
+            fail("HDMI application selection disagrees with compiled definitions")
+        if ("-DAGON_EXTENDER_USB_FSLS_ONLY=1" in argv) != args.usb_fsls_only:
+            fail("USB FSLS application diagnostic disagrees with compiled HCD")
         missing = [item for item in required_definitions
                    if f"-D{item}" not in argv]
         if missing:
@@ -77,6 +154,7 @@ def main() -> None:
             problems.append(f"{Path(command['file']).name} missing C++17 boundary")
 
     ninja = ninja_path.read_text().replace("$\n  ", "")
+    check_hdmi_linkage(commands, ninja, args.display_output)
     archive_lines = [line for line in ninja.splitlines()
                      if line.startswith("build esp-idf/agon_vdp/libagon_vdp.a:")]
     if len(archive_lines) != 1:
@@ -94,8 +172,67 @@ def main() -> None:
                  if line.startswith("build agon_extender.elf:")]
     if len(elf_lines) != 1 or "esp-idf/agon_vdp/libagon_vdp.a" not in elf_lines[0]:
         problems.append("application archive absent from ELF link edge")
+    if args.usb_fsls_only and (len(elf_lines) != 1 or "esp-idf/usb/libusb.a" not in elf_lines[0]):
+        problems.append("patched USB archive absent from ELF link edge")
     if problems:
         fail("; ".join(problems))
+
+    display_record = None
+    if args.display_output == "hdmi" or (output / "display.json").is_file():
+        try:
+            display_record = json.loads((output / "display.json").read_text())
+            if display_record != display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888):
+                fail("display snapshot differs from the selected adapter/component")
+        except (OSError, ValueError) as error:
+            fail(f"missing or invalid display build evidence: {error}")
+
+    board_record = None
+    if args.board or (output / "board.json").is_file():
+        try:
+            board_record = json.loads((output / "board.json").read_text())
+            name = args.board or board_record["board"]
+            board, board_path = load_board(name, args.profile)
+            header = output / "project/components/agon_vdp/agon_extender_board_config.hpp"
+            if (board_record["configuration"] != board or board_record["board"] != name
+                    or board_record["identity"] != board["identity"]):
+                fail("board snapshot differs from selected profile")
+            if board_record["profile_sha256"] != hashlib.sha256(board_path.read_bytes()).hexdigest():
+                fail("board profile hash differs")
+            if header.read_text() != render_header(board):
+                fail("generated board header differs from selected profile")
+            if board_record["header_sha256"] != hashlib.sha256(header.read_bytes()).hexdigest():
+                fail("generated board header hash differs")
+            # Query actual compiler dependency evidence, not just an include
+            # directory that may have lost to a stale or shadowing header.
+            consumers = {"p4_console.cpp", "wired_network_service.cpp", "http.cpp"}
+            for command in selected_commands:
+                if Path(command["file"]).name not in consumers:
+                    continue
+                deps = subprocess.check_output(
+                    ["ninja", "-C", str(output / "build"), "-t", "deps", command["output"]], text=True)
+                if str(header) not in deps:
+                    fail(f"compiled source did not use selected board header: {command['file']}")
+            for config in (output / "sdkconfig", output / "build/config/sdkconfig.h",
+                           output / "build/bootloader/config/sdkconfig.h"):
+                content = config.read_text()
+                for key, value in (("CONFIG_ESP32P4_REV_MIN_FULL", board["silicon_min"]),
+                                   ("CONFIG_ESP32P4_REV_MAX_FULL", board["silicon_max"])):
+                    if f"{key}={value}" not in content and f"#define {key} {value}" not in content:
+                        fail(f"silicon bounds differ in {config}")
+            config_lines = (output / "sdkconfig").read_text().splitlines()
+            compiled_config = (output / "build/config/sdkconfig.h").read_text().splitlines()
+            for key, value in board["sdkconfig_overrides"].items():
+                expected = f"{key}={value}" if value != "n" else f"# {key} is not set"
+                if expected not in config_lines:
+                    fail(f"effective SDK board setting differs: {key}")
+                compiled = f"#define {key} 1"
+                if (compiled in compiled_config) != (value == "y"):
+                    fail(f"compiled SDK board setting differs: {key}")
+            hubs_enabled = "#define CONFIG_USB_HOST_HUBS_SUPPORTED 1" in compiled_config
+            if hubs_enabled != (board["usb"]["hub_reset"] is not None):
+                fail("compiled USB hub support differs from selected board topology")
+        except (OSError, KeyError, subprocess.SubprocessError) as error:
+            fail(f"missing or invalid board build evidence: {error}")
 
     report = {
         "schema_version": 1,
@@ -103,6 +240,12 @@ def main() -> None:
         "display_family": profile["display_family"],
         "product_display_role": profile["product_display_role"],
         "lcd": False,
+        "board": board_record["board"] if board_record else None,
+        "board_identity": board_record["identity"] if board_record else None,
+        "usb_fsls_only": args.usb_fsls_only,
+        "display_output": args.display_output,
+        "render_benchmark_output": args.render_benchmark_output,
+        "display_inputs": display_record,
         "compile_actions": len(commands),
         "selected_sources": len(selected),
         "forbidden_sources": len(forbidden),

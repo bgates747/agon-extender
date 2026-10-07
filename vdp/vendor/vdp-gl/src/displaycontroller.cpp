@@ -548,6 +548,11 @@ void BitmappedDisplayController::addPrimitive(Primitive & primitive)
     primitiveReplaceDynamicBuffers(primitive);
     xQueueSendToBack(m_execQueue, &primitive, portMAX_DELAY);
 
+    // RGB-001 stages a completed panel back buffer before the upcoming DMA
+    // boundary. Waiting for that boundary just to start staging costs two
+    // refresh intervals. Ordinary controllers retain their existing wakeup.
+    if(primitive.cmd==PrimitiveCmd::SwapBuffers) queuedSwapReady();
+
     if (m_doubleBuffered) {
       // wait notufy from PrimitiveCmd::SwapBuffers executor
       ulTaskNotifyTake(true, portMAX_DELAY);
@@ -726,6 +731,7 @@ void BitmappedDisplayController::refreshSprites()
 void IRAM_ATTR BitmappedDisplayController::hideSprites(Rect & updateRect)
 {
   AGON_STOCK_NATIVE_GUARD;
+  prepareForDrawing();
   if (!m_spritesHidden) {
     m_spritesHidden = true;
 
@@ -753,6 +759,7 @@ void IRAM_ATTR BitmappedDisplayController::hideSprites(Rect & updateRect)
 void IRAM_ATTR BitmappedDisplayController::showSprites(Rect & updateRect)
 {
   AGON_STOCK_NATIVE_GUARD;
+  prepareForDrawing();
 #ifdef AGON_GRAPHICS_TIMING
   agon_graphics_timing::FinishSprites qual_fence_after_sprite_scope;
 #endif
@@ -826,6 +833,7 @@ void BitmappedDisplayController::setMouseCursorPos(int X, int Y)
 void IRAM_ATTR BitmappedDisplayController::execPrimitive(Primitive const & prim, Rect & updateRect, bool insideISR)
 {
   AGON_STOCK_NATIVE_GUARD;
+  prepareForDrawing();
   AGON_GRAPHICS_SCOPE(Primitive);
   switch (prim.cmd) {
 #ifdef AGON_GRAPHICS_TIMING

@@ -1147,6 +1147,10 @@ protected:
   //// implemented methods
 
   void execPrimitive(Primitive const & prim, Rect & updateRect, bool insideISR);
+  // RGB-001 panel storage may contain transient presentation overlays. Retire
+  // them under native exclusion before a primitive touches its background.
+  virtual void prepareForDrawing() {}
+  virtual void queuedSwapReady() {}
 
   void updateAbsoluteClippingRect();
 
@@ -3072,4 +3076,3 @@ protected:
 
 
 } // end of namespace
-

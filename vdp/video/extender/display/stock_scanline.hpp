@@ -37,6 +37,9 @@
 #include "dispdrivers/vga8controller.h"
 #include "dispdrivers/vga16controller.h"
 #include "dispdrivers/vga64controller.h"
+#ifdef AGON_EXTENDER_DIRECT_RGB888
+#include "extender/display/p4_rgb888_controller.hpp"
+#endif
 
 namespace agon::extender::display {
 template<class DepthController>

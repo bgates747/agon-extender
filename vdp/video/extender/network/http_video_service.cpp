@@ -1,3 +1,4 @@
+#include "extender/diagnostics/render_benchmark.hpp"
 // Extracted from WiredNetworkService: shared socket/credit/lease ownership.
 #include "http_video_service.hpp"
 #include "extender/diagnostics/video_timing.hpp"
@@ -47,12 +48,22 @@ bool HttpVideoService::startServer(web::EmbeddedAsset const *assets, std::size_t
       http_fault_=true;increment(http_start_failures_);stopServer();return false;
     }
   }
+#if !defined(AGON_EXTENDER_HDMI)
   httpd_uri_t video{};video.uri="/video";video.method=HTTP_GET;
   video.handler=&videoHandler;video.user_ctx=this;video.is_websocket=true;
   video.ws_post_handshake_cb=&videoPostHandshake;
   if(httpd_register_uri_handler(server,&video)!=ESP_OK){
     http_fault_=true;increment(http_start_failures_);stopServer();return false;
   }
+#endif
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  httpd_uri_t bench{};bench.uri="/diagnostics/render-benchmark";bench.method=HTTP_GET;
+  bench.handler=[](httpd_req_t *req)->esp_err_t {
+    auto data=agon_bench::json();httpd_resp_set_type(req,"application/json");
+    return httpd_resp_send(req,data.data(),data.size());
+  };
+  if(httpd_register_uri_handler(server,&bench)!=ESP_OK){http_fault_=true;stopServer();return false;}
+#endif
   http_fault_=false;increment(http_starts_);return true;
 }
 bool HttpVideoService::stopServer() noexcept {
@@ -217,6 +228,11 @@ esp_err_t HttpVideoService::videoHandler(httpd_req_t *request) noexcept {
 }
 
 void HttpVideoService::attemptVideoSend() noexcept {
+#if defined(AGON_EXTENDER_HDMI)
+  // HDMI owns presentation in this build. HTTP and its independent keyboard
+  // WebSocket remain available without requesting a browser snapshot.
+  return;
+#endif
   if (!allowSend()) return;
   std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
   if (video_send_queued_) return;

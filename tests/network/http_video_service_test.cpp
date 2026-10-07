@@ -1,5 +1,6 @@
 // Compile the entire shared adapter with only the ESP-IDF/socket boundary faked.
 #include "extender/network/http_video_service.hpp"
+#include "extender/network/display_status.hpp"
 #include <cassert>
 #include <algorithm>
 #include <cstring>
@@ -18,6 +19,7 @@ static int (*send_override)(httpd_handle_t,int,const char*,size_t,int);
 static std::vector<int> closed,sent;
 static std::vector<std::vector<uint8_t>> payloads;
 static std::vector<int> types;static std::vector<bool> finals,fragmented;
+static std::string response;
 int httpd_start(httpd_handle_t *s,httpd_config_t *c){if(start_fail)return -1;config=*c;*s=&config;routes.clear();reg_count=0;return 0;}
 int httpd_stop(httpd_handle_t){if(stop_fail)return -1;queued=nullptr;return 0;}
 int httpd_register_uri_handler(httpd_handle_t,httpd_uri_t *r){if(++reg_count==reg_fail)return -1;routes.push_back(*r);return 0;}
@@ -25,7 +27,9 @@ int httpd_sess_set_send_override(httpd_handle_t,int,int(*f)(httpd_handle_t,int,c
 int httpd_resp_send_500(httpd_req_t*){return -500;}
 int httpd_resp_set_type(httpd_req_t*,const char*){return 0;}
 int httpd_resp_set_hdr(httpd_req_t*,const char*,const char*){return 0;}
-int httpd_resp_send(httpd_req_t*,const char*,ssize_t){return send_fail;}
+int httpd_resp_set_status(httpd_req_t*,const char*){return 0;}
+int httpd_resp_sendstr(httpd_req_t*,const char*body){response=body;return send_fail;}
+int httpd_resp_send(httpd_req_t*,const char*body,ssize_t length){response.assign(body,size_t(length));return send_fail;}
 int httpd_sess_trigger_close(httpd_handle_t,int fd){closed.push_back(fd);return 0;}
 int httpd_req_to_sockfd(httpd_req_t*r){return r->socket;}
 int httpd_ws_send_frame_async(httpd_handle_t,int fd,httpd_ws_frame_t *f){
@@ -41,7 +45,7 @@ void*httpd_get_global_user_ctx(httpd_handle_t){return config.global_user_ctx;}
 int fake_send(int,const char*,size_t n,int){++sends;if(send_errno){errno=send_errno;send_errno=0;return -1;}if(send_fail)return -1;return int(std::min(n,size_t(send_limit)));}
 int lwip_close(int){return 0;}
 int64_t esp_timer_get_time(){return clock_us+=clock_step;}
-static void drain(){auto f=queued;auto c=queued_ctx;queued=nullptr;assert(f);f(c);}
+[[maybe_unused]] static void drain(){auto f=queued;auto c=queued_ctx;queued=nullptr;assert(f);f(c);}
 struct Provider:OpaqueMessageProvider {
  int acquired=0,released=0;OpaqueReleaseDisposition disposition{};uint8_t a[2]={1,2},b[3]={3,4,5};
  bool unavailable=false,block=false,entered=false,proceed=false;
@@ -53,11 +57,39 @@ struct Provider:OpaqueMessageProvider {
   OpaqueMessageSegment s[]={{a,2},{b,3}};assert(l.assign(++acquired,s,2,this,release));return OpaqueAcquireResult::Acquired;
  }
 };
-static httpd_req_t connect(int fd){auto&r=routes.back();httpd_req_t q{r.user_ctx,&config,fd};assert(r.ws_post_handshake_cb(&q)==0);return q;}
-static void credit(httpd_req_t&q){assert(routes.back().handler(&q)==0);}
+[[maybe_unused]] static httpd_req_t connect(int fd){auto&r=routes.back();httpd_req_t q{r.user_ctx,&config,fd};assert(r.ws_post_handshake_cb(&q)==0);return q;}
+[[maybe_unused]] static void credit(httpd_req_t&q){assert(routes.back().handler(&q)==0);}
 int main(){
+ // Mode metadata remains nominal even when the physical HDMI clock is fixed.
+ agon::extender::display::modeStatus.publish({140,320,200,64,70,true});
+ httpd_req_t metadata{};assert(agon::extender::display_status::handle(&metadata)==0);
+ assert(response.find("\"width\":320")!=std::string::npos);
+ assert(response.find("\"refresh_hz\":70")!=std::string::npos);
+ assert(response.find("\"double_buffered\":true")!=std::string::npos);
+#if defined(AGON_EXTENDER_HDMI)
+ assert(response.find("\"output\":\"hdmi\"")!=std::string::npos);
+ assert(response.find("\"output_width\":1280")!=std::string::npos);
+ assert(response.find("\"output_height\":720")!=std::string::npos);
+ assert(response.find("\"output_nominal_refresh_hz\":60")!=std::string::npos);
+ assert(response.find("\"frame_clock\":\"dma-frame-complete\"")!=std::string::npos);
+#else
+ assert(response.find("\"output\"")==std::string::npos);
+#endif
  Provider p;HttpVideoService service(p);uint8_t assetdata[]={42};
  agon::extender::web::EmbeddedAsset assets[]={{"/","text/plain",assetdata,1}};
+#if defined(AGON_EXTENDER_HDMI)
+ // HDMI selection removes video transport while preserving the asset server
+ // on which independent input/control routes are subsequently registered.
+ reg_fail=1;assert(!service.startServer(assets,1));assert(!service.running());reg_fail=0;
+ assert(service.startServer(assets,1));
+ assert(routes.size()==1 && std::strcmp(routes[0].uri,"/")==0);
+ for(auto const &route:routes)assert(std::strcmp(route.uri,"/video")!=0);
+ httpd_req_t request{routes[0].user_ctx,&config,7};
+ assert(routes[0].handler(&request)==0);
+ for(int i=0;i<10;++i)service.poll();
+ assert(p.acquired==0 && p.released==0 && queued==nullptr);
+ assert(service.stopServer());
+#else
  start_fail=1;assert(!service.startServer(assets,1));start_fail=0;
  for(int fail=1;fail<=2;++fail){reg_fail=fail;assert(!service.startServer(assets,1));assert(!service.running());}reg_fail=0;
  // Failed rollback retains context, refuses replacement startup, allows stop retry.
@@ -90,4 +122,5 @@ int main(){
  worker.join();http.join();p.block=false;drain();
  q2=connect(15);credit(q2);service.poll();before=p.released;stop_fail=1;assert(!service.stopServer());assert(p.released==before);stop_fail=0;assert(service.stopServer());assert(p.released==before+1&&!queued);
  assert(service.startServer(assets,1));assert(service.stopServer());assert(p.acquired==p.released);
+#endif
 }

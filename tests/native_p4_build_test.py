@@ -6,11 +6,13 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import sys
 from copy import deepcopy
 
 
 ROOT = Path(__file__).resolve().parents[1]
 VDP = ROOT / "vdp"
+sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):

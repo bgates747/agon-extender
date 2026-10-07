@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """One ordinary reset pulse using the accepted Pi transistor circuit.
 
-JSON configuration (kept outside Git): ssh = complete SSH argv, chip, gpio.
+JSON configuration (kept outside Git): chip, gpio, and ssh argv for remote use.
+Use --local on the Pi host; the GPIO mapping remains explicit and private.
 The caller initiates the operation. No automatic retry or Extender reset.
 """
 import argparse
@@ -34,12 +35,12 @@ def wait_boot(url, old_boot, timeout):
     raise TimeoutError(f'Agon boot/connectivity verification deadline exceeded: {last}')
 
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',type=Path,required=True)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',type=Path,required=True);p.add_argument('--local',action='store_true')
     p.add_argument('--verify-url', help='P4 HTTP base URL used to verify a fresh EMOS boot and Extender input')
     p.add_argument('--verify-timeout', type=float, default=60)
     a=p.parse_args();c=json.loads(a.config.read_text());gpio=int(c['gpio']);chip=c['chip']
     if not 0<=gpio<=53 or not re.fullmatch('gpiochip[0-9]+',chip):raise ValueError('Invalid GPIO selection')
-    if not isinstance(c['ssh'],list) or not c['ssh'] or c['ssh'][0]!='ssh':raise ValueError('Expected SSH argv')
+    if not a.local and (not isinstance(c.get('ssh'),list) or not c['ssh'] or c['ssh'][0]!='ssh'):raise ValueError('Expected SSH argv')
     before = status(a.verify_url) if a.verify_url else None
     script=f'''set -euo pipefail
 trap 'pinctrl set {gpio} ip pd' EXIT
@@ -49,7 +50,7 @@ timeout --kill-after=1s 2s gpioset -c {chip} -C agon-reset -b pull-down -t 100ms
 pinctrl set {gpio} ip pd
 echo '100 ms reset pulse sent and GPIO released.'
 '''
-    subprocess.run(c['ssh']+['sudo -n bash -s'],input=script,text=True,check=True,timeout=15)
+    subprocess.run((['sudo','-n','bash','-s'] if a.local else c['ssh']+['sudo -n bash -s']),input=script,text=True,check=True,timeout=15)
     if not a.verify_url:
         print('PULSE-ONLY COMPLETE — the caller owns subsequent boot/application verification.')
         return

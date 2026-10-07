@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "chip": "esp32p4",
+  "silicon_min": 100,
+  "silicon_max": 199,
+  "display_output": "browser-only",
+  "ethernet": {
+    "phy": "IP101",
+    "address": 1,
+    "mdc": 31,
+    "mdio": 52,
+    "reset": 51,
+    "clock_input": 50
+  },
+  "sd": {
+    "clk": 43,
+    "cmd": 44,
+    "d0": 39,
+    "d1": 40,
+    "d2": 41,
+    "d3": 42,
+    "ldo": 4
+  },
+  "reserved_gpios": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    34,
+    35,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54
+  ],
+  "board": "p4-devkit",
+  "identity": "olimex-p4-devkit-revd1-r01",
+  "status": "development-baseline",
+  "supported_profiles": [
+    "p4-console",
+    "p4-mos-recovery",
+    "p4-port008-nonrelease-qualification"
+  ],
+  "transport": {
+    "data": [
+      22,
+      12,
+      23,
+      11,
+      32,
+      10,
+      33,
+      9
+    ],
+    "clock": 14,
+    "valid": 13,
+    "ready": 20,
+    "isolation": [
+      15,
+      17,
+      21
+    ]
+  },
+  "header": {
+    "name": "EXT1/EXT2",
+    "gpio_pins": {},
+    "ground_pin": null
+  },
+  "requires_disconnected_sensing": [],
+  "usb": {
+    "hub_reset": null,
+    "reset_assert_ms": 0,
+    "reset_recovery_ms": 0,
+    "peripheral_map": 0
+  },
+  "sdkconfig_overrides": {},
+  "notes": [
+    "Preserves the maintained DevKit UART tuple and fourteen-pin startup fence.",
+    "Historical buffered parallel qualification and recovery remain DevKit-only."
+  ]
+}

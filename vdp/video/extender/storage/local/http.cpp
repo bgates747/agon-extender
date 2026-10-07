@@ -12,6 +12,9 @@
 #include <esp_log.h>
 #include <cstring>
 #include <algorithm>
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+#include "agon_extender_board_config.hpp"
+#endif
 namespace agon::extender::local_sd {
 namespace {
 constexpr const char *root="/p4sd";
@@ -23,12 +26,22 @@ esp_err_t mountError=ESP_OK;
 bool mount(){
   if(attempted)return card!=nullptr;
   attempted=true;
-  sd_pwr_ctrl_ldo_config_t ldo{};ldo.ldo_chan_id=4;
+  sd_pwr_ctrl_ldo_config_t ldo{};
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+  ldo.ldo_chan_id=board::kSdLdo;
+#else
+  ldo.ldo_chan_id=4;
+#endif
   mountError=sd_pwr_ctrl_new_on_chip_ldo(&ldo,&power);if(mountError!=ESP_OK)return false;
   sdmmc_host_t host=SDMMC_HOST_DEFAULT();host.pwr_ctrl_handle=power;
   sdmmc_slot_config_t slot=SDMMC_SLOT_CONFIG_DEFAULT();slot.width=4;
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+  slot.clk=gpio_num_t(board::kSdClk);slot.cmd=gpio_num_t(board::kSdCmd);slot.d0=gpio_num_t(board::kSdD0);
+  slot.d1=gpio_num_t(board::kSdD1);slot.d2=gpio_num_t(board::kSdD2);slot.d3=gpio_num_t(board::kSdD3);
+#else
   slot.clk=GPIO_NUM_43;slot.cmd=GPIO_NUM_44;slot.d0=GPIO_NUM_39;
   slot.d1=GPIO_NUM_40;slot.d2=GPIO_NUM_41;slot.d3=GPIO_NUM_42;
+#endif
   slot.flags|=SDMMC_SLOT_FLAG_INTERNAL_PULLUP;
   esp_vfs_fat_sdmmc_mount_config_t cfg{};cfg.format_if_mount_failed=false;
   cfg.max_files=4;cfg.allocation_unit_size=16384;

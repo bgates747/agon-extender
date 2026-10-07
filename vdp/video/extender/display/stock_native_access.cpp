@@ -8,6 +8,7 @@
 namespace agon::extender::display {
 namespace {
 std::atomic<std::uint32_t> frame_count{};
+std::atomic<std::uint32_t> visible_generation{};
 static_assert(std::atomic<std::uint32_t>::is_always_lock_free,
               "The frame clock must not acquire a runtime mutex");
 }
@@ -25,6 +26,14 @@ std::recursive_mutex &stockForegroundMutex() {
 std::uint32_t &stockPaletteRevision() {
   static std::uint32_t revision{};
   return revision;
+}
+
+std::uint32_t stockVisibleGeneration() noexcept {
+  return visible_generation.load(std::memory_order_acquire);
+}
+
+void stockVisibleBufferSwapped() noexcept {
+  visible_generation.fetch_add(1, std::memory_order_release);
 }
 
 void StockExecutionGate::suspend() {

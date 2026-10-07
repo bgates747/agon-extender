@@ -20,7 +20,11 @@ const presentedNode = document.querySelector("#presented");
 const fpsNode = document.querySelector("#fps");
 const gapsNode = document.querySelector("#gaps");
 
-const presenter = new WebGL2Presenter(canvas);
+// The native build embeds the selected output in its generated HTML. Browser
+// keyboard capture remains independent of video and its WebGL requirements.
+const hdmiOutput = document.querySelector('meta[name="agon-video-output"]')?.content === "hdmi";
+const inputSurface = hdmiOutput ? document.querySelector("#hdmi-output") : canvas;
+const presenter = hdmiOutput ? null : new WebGL2Presenter(canvas);
 const credit = new BrowserCreditState();
 
 let socket = null;
@@ -159,7 +163,7 @@ function animationLoop() {
   }
   requestAnimationFrame(animationLoop);
 }
-requestAnimationFrame(animationLoop);
+if (!hdmiOutput) requestAnimationFrame(animationLoop);
 
 function onSocketMessage(event) {
   try {
@@ -189,6 +193,7 @@ function stopDemo() {
 }
 
 function connect() {
+  if (hdmiOutput) return;
   stopDemo();
   disconnect();
   resetStats();
@@ -224,6 +229,7 @@ function connect() {
 }
 
 function startDemo() {
+  if (hdmiOutput) return;
   disconnect();
   stopDemo();
   resetStats();
@@ -241,12 +247,23 @@ function startDemo() {
 connectButton.addEventListener("click", connect);
 demoButton.addEventListener("click", startDemo);
 
-if (new URLSearchParams(location.search).has("demo")) startDemo();
+if (!hdmiOutput && new URLSearchParams(location.search).has("demo")) startDemo();
 
 
 const videoPanel = document.querySelector("#video-panel");
 const fullscreenButton = document.querySelector("#fullscreen");
 const videoViewport = document.querySelector("#video-viewport");
+if (hdmiOutput) {
+  videoViewport.hidden = true;
+  connectButton.hidden = true;
+  demoButton.hidden = true;
+  fullscreenButton.hidden = true;
+  document.querySelector("#hdmi-output").hidden = false;
+  document.querySelector(".diagnostics").hidden = true;
+  setState("HDMI output");
+  surfaceNode.textContent = "HDMI 1280x720 60 Hz";
+  fpsNode.parentElement.hidden = true;
+}
 new ResizeObserver(([entry]) => {
   videoViewport.style.setProperty("--view-width", `${entry.contentRect.width}px`);
   videoViewport.style.setProperty("--view-height", `${entry.contentRect.height}px`);
@@ -273,7 +290,7 @@ document.addEventListener("fullscreenchange", () => {
 // acquire or release it. Only P4 acknowledgements establish capture ownership.
 (() => {
   const panel = document.querySelector('#video-panel');
-  const canvas = document.querySelector('#screen');
+  const canvas = inputSurface;
   const button = document.querySelector('#capture-keyboard');
   const status = document.querySelector('#keyboard-state');
   let socket, generation = 0, sequence = 0, requested = false, captured = false;

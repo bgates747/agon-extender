@@ -12,6 +12,10 @@
 #include <esp_intr_alloc.h>
 #include <usb/usb_host.h>
 #include <usb/hid_host.h>
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+#include "agon_extender_board_config.hpp"
+#include <driver/gpio.h>
+#endif
 
 namespace agon::extender::input::usbhost {
 enum class Kind { connected, report, disconnected };
@@ -95,10 +99,32 @@ inline void hostEvents(void *) {
   }
 }
 inline bool begin() {
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+  if constexpr (board::kUsbHubReset >= 0) {
+    // P4-PC Rev C: dedicated HS host connects through the onboard hub.
+    // Match Olimex's active-low reset sequence before installing USB host.
+    // This is distinct from the multiplexed Agon interface and never fences it.
+    const auto reset=gpio_num_t(board::kUsbHubReset);
+    if (!check(gpio_set_level(reset,0),"hub reset preload") ||
+        !check(gpio_set_direction(reset,GPIO_MODE_OUTPUT),"hub reset output")) return false;
+    vTaskDelay(pdMS_TO_TICKS(board::kUsbResetAssertMs));
+    if (!check(gpio_set_level(reset,1),"hub reset release")) return false;
+    vTaskDelay(pdMS_TO_TICKS(board::kUsbResetRecoveryMs));
+  }
+#endif
   events=xQueueCreate(32,sizeof(Event));ledMutex=xSemaphoreCreateMutex();
   if (!events || !ledMutex) return false;
   usb_host_config_t host{}; host.intr_flags=ESP_INTR_FLAG_LEVEL1;
-  host.peripheral_map=0; // Dedicated HS USB-P/USB-N, EXT2.19/20.
+#if defined(AGON_EXTENDER_USB_FSLS_ONLY)
+  // The native builder applies the source-bound IDF 5.5.5 HCD backport before
+  // root-port reset. This reports selection; hub negotiation needs bench proof.
+  printf("USB HOST CONFIG: FS/LS only on onboard HS controller (12 Mbit/s hub)\n");
+#endif
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+  host.peripheral_map=board::kUsbPeripheralMap;
+#else
+  host.peripheral_map=0; // Historical DevKit dedicated HS USB-P/USB-N.
+#endif
   if (!check(usb_host_install(&host),"host install")) return false;
   if (xTaskCreate(hostEvents,"usb-library",4096,nullptr,6,nullptr)!=pdPASS) return false;
   hid_host_driver_config_t driver{}; driver.create_background_task=true;

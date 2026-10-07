@@ -382,9 +382,11 @@ bool WiredNetworkService::startHttp() noexcept {
 #endif
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
+#if !defined(AGON_EXTENDER_HDMI)
   if(!pair_scratch)pair_scratch=(uint8_t*)heap_caps_malloc(786432,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
   if(!packed_scratch)packed_scratch=(uint8_t*)heap_caps_malloc(589828,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
   if(!rle2_scratch)rle2_scratch=(uint8_t*)heap_caps_malloc(786446,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+#endif
   auto const &assets = web::embeddedBrowserAssets();
   HttpVideoConfig options;
   options.max_uri_handlers = 18; // common assets/video plus optional console routes

@@ -1,5 +1,5 @@
 #pragma once
-// Shared Olimex ESP32-P4-DevKit Rev D1 Ethernet ownership. Arduino 3.3.11
+// Shared Olimex ESP32-P4 Ethernet ownership. Arduino 3.3.11
 // supplies IP101/RMII and DHCP; consumers supply workers and HTTP/services.
 // No initArduino(), VDP, EMOS, web routes, USB or storage startup occurs here.
 #include <ETH.h>
@@ -7,6 +7,9 @@
 #include <cstdint>
 #include <mutex>
 #include <string>
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+#include "agon_extender_board_config.hpp"
+#endif
 
 namespace agon::extender::network {
 class DevkitEthernet final {
@@ -53,9 +56,16 @@ class DevkitEthernet final {
             owner_->callback_(owner_->context_, event);
         });
     registered_ = event_handle_ != 0;
-    // Original console pin/clock/DHCP selection, unchanged. Other boards need
-    // their own reviewed hardware backend rather than overriding these pins.
+    // Both reviewed Olimex boards use IP101 and external RMII clock GPIO50.
+    // Retain the public class name for detached DevKit consumers. Their legacy
+    // builds use the original tuple; native builds use the checked board file.
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+    if (!registered_ || !ETH.begin(ETH_PHY_IP101, board::kPhyAddress,
+                                   board::kEthMdc, board::kEthMdio,
+                                   board::kEthReset, EMAC_CLK_EXT_IN)) {
+#else
     if (!registered_ || !ETH.begin(ETH_PHY_IP101, 1, 31, 52, 51, EMAC_CLK_EXT_IN)) {
+#endif
       stop();
       return false;
     }
