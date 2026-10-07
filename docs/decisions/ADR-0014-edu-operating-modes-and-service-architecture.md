@@ -3,9 +3,9 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-09-26
-- Related tasks: SETUP-004, SETUP-005
-- Open-decision tracker: SETUP-005
+- Last amended: 2026-09-30
+- Related tasks: SETUP-004, SETUP-005, QUAL-006
+- Open-decision tracker: SETUP-005, QUAL-006
 
 ## Current reading boundary
 
@@ -366,6 +366,15 @@ that processor.
     hardware and EDP firmware remain quiescent while Legacy is committed or a
     transaction is uncommitted. QUAL-002 owns electrical and power/reset proof;
     the protocol and parser owners prove bounded handling.
+45. Make resident EMOS the authoritative owner of its startup, foreground,
+    committed mode/route, failure and admitted-job lifecycle state, and require
+    EMOS to report that state to the P4 EDP on an explicit bounded request. The
+    P4 may cache and present a current-epoch report but must not infer EMOS state
+    from keyboard delivery, rendered pixels, elapsed time, or P4-local service
+    state. A state request is observation only and grants the P4 no authority to
+    launch, cancel, reset, select a mode, commit a route, or mutate EMOS state.
+    QUAL-006 owns the still-open request carrier, earliest available boot phase,
+    framing, freshness, event and qualification decisions.
 
 ## Rationale
 
@@ -446,6 +455,10 @@ that processor.
     packets; P4 does not send a replacement memory image. Session admission
     remains explicit and Legacy follows decision 20's keyboard exception. A separately
     identified bounded test does not claim complete exclusive-mode activation.
+15. Automated control and human diagnostics can share one truthful lifecycle
+    source: EMOS reports what it owns, while P4 records transport, display and
+    client state that P4 itself owns. Keeping those authorities separate avoids
+    turning a convenient P4 observation into permission to control the eZ80.
 
 
 ## SD-loaded qualification samples — 2026-09-08 clarification
