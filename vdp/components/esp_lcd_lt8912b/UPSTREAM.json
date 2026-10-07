@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/OLIMEX/ESP32-P4-PC",
+  "commit": "04032d68e5c727870f9d40beb9e37b7ab3a66916",
+  "path": "SOFTWARE/ESP-IDF/p4_production_test/components/esp-bsp/components/lcd/esp_lcd_lt8912b",
+  "files": {
+    "CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+    "esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+    "include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+    "license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+  },
+  "changes": "None; complete standalone component source closure copied verbatim."
+}

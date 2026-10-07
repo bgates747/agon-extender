@@ -7,6 +7,28 @@ sources. This is reference material, not Extender firmware or board qualificatio
 
 ## Start here
 
+## Current Rev C authority — 2026-10-02
+
+The Author confirms receipt of an **Olimex ESP32-P4-PC Rev C**, replacing the
+DevKit as the project target. The authoritative manufacturer reference is the
+[official Olimex repository](https://github.com/OLIMEX/ESP32-P4-PC), with the
+local read-only checkout verified at commit
+`04032d68e5c727870f9d40beb9e37b7ab3a66916`.
+Use its `HARDWARE/ESP32-P4-PC-Rev.C/` schematic, design and BOM,
+`HARDWARE/Hardware-revision-changes.txt`, and `DOCUMENTS/` manual for Rev C
+research. The machine-local checkout location is recorded in
+`agents/p4pc-reference/LOCAL.md`.
+
+The vendored files and `PROVENANCE.json` below remain the historical Rev B
+snapshot at `89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd`; their hashes and
+provenance have not been relabelled as Rev C. They are not the current board's
+documentation authority. Receipt does not establish integration or qualification.
+The Pi 5 now hosts development and the P4-PC bench; standalone P4-PC tests
+precede Agon reconnection. Current topology and remaining identity/wiring
+verification boundaries are recorded in `HARDWARE.local.md`.
+
+## Retained Rev B snapshot
+
 | Resource | Local copy |
 |---|---|
 | User manual | [PDF](upstream/DOCUMENTS/ESP32-P4-PC-user-manual.pdf) · [searchable text](text/ESP32-P4-PC-user-manual.txt) · [editable upstream original](upstream/DOCUMENTS/ESP32-P4-PC-user-manual.odt) |
@@ -53,8 +75,7 @@ regulatory PDFs are stored under `website/` with retrieval metadata.
 `text/` contains marked pdftotext derivatives for searching. Consult original
 PDFs for pinouts, electrical diagrams and visual layout. Each original and
 extract has a SHA-256 record; upstream files also have commit-pinned source URLs.
-This snapshot describes the upstream Rev.B files, not an assertion about the
-revision of a board received by the Author.
+This snapshot describes the upstream Rev.B files; the received board is Rev C.
 
 Olimex states documentation CC BY-SA4.0, hardware CERN-OHL-S2.0 and software MIT;
 retain upstream notices and individual dependency licenses. Imported originals

@@ -9,6 +9,14 @@ The durable role vocabulary for hardware objects is maintained under
 only. Pins, nets, components, and electrical connectivity remain authoritative
 inside the applicable revisioned design or fixture profile.
 
+The proposed P4-PC direct mapping has a separate
+[wiring review drawing](designs/light2-p4pc-harness-draft/README.md), with complete
+Agon/P4-PC headers, straight data wires and explicit pull-resistor rails.
+The Author arranged the bench to suit the original mapping, which is restored
+and matches the unchanged native P4-PC configuration.
+It is an unversioned draft for BOARD-001; the existing harness revisions and
+qualification records remain authoritative for their original scopes.
+
 The active bench arrangement uses the simplified
 [`light2-harness-r03`](designs/light2-harness-r03/README.md) UART wiring and
 P4 USB keyboard connection. Its eight direct Port C lanes have 220 Ω series

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1540" viewBox="0 0 1800 1540" font-family="DejaVu Sans, sans-serif">
+<title>Agon Light 2 to Olimex P4-PC Rev C — complete headers and straight-across wiring</title>
+<desc>Unversioned P4-PC wiring review draft. Derived from the legacy wiring diagram and native p4-pc board profile. All 34 Agon and 20 PC contacts shown. No sniffer markers or series resistors.</desc>
+<rect width="1800" height="1540" fill="white"/>
+<text x="40" y="40" font-size="28" fill="#20242b" text-anchor="start" font-weight="bold">Agon Light 2 → Olimex ESP32-P4-PC Rev C</text>
+<text x="40" y="69" font-size="16" fill="#56606e" text-anchor="start" font-weight="normal">Wiring review draft · Unversioned · Native build selection: p4-pc</text>
+<text x="40" y="99" font-size="17" fill="#20242b" text-anchor="start" font-weight="normal">Board-side views: look down onto the connector pins. Pin 1 is outlined; wiring-side socket views are mirrored.</text>
+<text x="60" y="145" font-size="20" fill="#20242b" text-anchor="start" font-weight="bold">Complete Agon GPIO header — 2 × 17</text>
+<text x="60" y="169" font-size="14" fill="#56606e" text-anchor="start" font-weight="normal">Rotate the official horizontal pinout 90° counterclockwise; no mirror.</text>
+<text x="945" y="145" font-size="20" fill="#20242b" text-anchor="start" font-weight="bold">Complete P4-PC EXT1 header — 2 × 10</text>
+<text x="945" y="169" font-size="14" fill="#56606e" text-anchor="start" font-weight="normal">Component side: LAN / HDMI end above; USB-A end below.</text>
+<text x="310" y="194" font-size="14" fill="#20242b" text-anchor="middle" font-weight="bold">Pin 1 / VBAT end</text>
+<text x="1248" y="194" font-size="14" fill="#20242b" text-anchor="middle" font-weight="bold">↑ LAN / HDMI</text>
+<rect x="60" y="207" width="245" height="19" fill="#f5f6f8" stroke="#111111" stroke-width="3" id="agon-overview-pin1"/>
+<text x="68" y="221" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold"> 1  VBAT</text>
+<rect x="315" y="207" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin2"/>
+<text x="323" y="221" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 2  +5 V USB</text>
+<rect x="60" y="228" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin3"/>
+<text x="68" y="242" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 3  GND</text>
+<rect x="315" y="228" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin4"/>
+<text x="323" y="242" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 4  +5 V</text>
+<rect x="60" y="249" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin5"/>
+<text x="68" y="263" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 5  GND</text>
+<rect x="315" y="249" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin6"/>
+<text x="323" y="263" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 6  ESP39</text>
+<rect x="60" y="270" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin7"/>
+<text x="68" y="284" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 7  ESP35</text>
+<rect x="315" y="270" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin8"/>
+<text x="323" y="284" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 8  ESP27</text>
+<rect x="60" y="291" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin9"/>
+<text x="68" y="305" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 9  ESP26</text>
+<rect x="315" y="291" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin10"/>
+<text x="323" y="305" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">10  ESP36</text>
+<rect x="60" y="312" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin11"/>
+<text x="68" y="326" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">11  ESP37</text>
+<rect x="315" y="312" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin12"/>
+<text x="323" y="326" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">12  ESP38</text>
+<rect x="60" y="333" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin13"/>
+<text x="68" y="347" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">13  PD4 / READY_N</text>
+<rect x="315" y="333" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin14"/>
+<text x="323" y="347" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">14  PD5 / CLOCK</text>
+<rect x="60" y="354" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin15"/>
+<text x="68" y="368" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">15  PD6</text>
+<rect x="315" y="354" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin16"/>
+<text x="323" y="368" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">16  PD7 / VALID_N</text>
+<rect x="60" y="375" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin17"/>
+<text x="68" y="389" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">17  PC0 / D0</text>
+<rect x="315" y="375" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin18"/>
+<text x="323" y="389" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">18  PC1 / D1</text>
+<rect x="60" y="396" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin19"/>
+<text x="68" y="410" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">19  PC2 / D2</text>
+<rect x="315" y="396" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin20"/>
+<text x="323" y="410" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">20  PC3 / D3</text>
+<rect x="60" y="417" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin21"/>
+<text x="68" y="431" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">21  PC4 / D4</text>
+<rect x="315" y="417" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin22"/>
+<text x="323" y="431" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">22  PC5 / D5</text>
+<rect x="60" y="438" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin23"/>
+<text x="68" y="452" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">23  PC6 / D6</text>
+<rect x="315" y="438" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin24"/>
+<text x="323" y="452" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">24  PC7 / D7</text>
+<rect x="60" y="459" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin25"/>
+<text x="68" y="473" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">25  CS</text>
+<rect x="315" y="459" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin26"/>
+<text x="323" y="473" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">26  PB5</text>
+<rect x="60" y="480" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin27"/>
+<text x="68" y="494" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">27  PB6</text>
+<rect x="315" y="480" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin28"/>
+<text x="323" y="494" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">28  CLK</text>
+<rect x="60" y="501" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin29"/>
+<text x="68" y="515" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">29  SDA</text>
+<rect x="315" y="501" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin30"/>
+<text x="323" y="515" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">30  SCL</text>
+<rect x="60" y="522" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin31"/>
+<text x="68" y="536" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">31  PB3</text>
+<rect x="315" y="522" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin32"/>
+<text x="323" y="536" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">32  PB7</text>
+<rect x="60" y="543" width="245" height="19" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin33"/>
+<text x="68" y="557" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">33  GND</text>
+<rect x="315" y="543" width="245" height="19" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="agon-overview-pin34"/>
+<text x="323" y="557" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">34  +3.3 V</text>
+<rect x="945" y="207" width="245" height="28" fill="#f5f6f8" stroke="#111111" stroke-width="3" id="pc-overview-pin1"/>
+<text x="953" y="230" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold"> 1  +3.3 V</text>
+<rect x="1200" y="207" width="245" height="28" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin2"/>
+<text x="1208" y="230" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 2  +5 V</text>
+<rect x="945" y="237" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin3"/>
+<text x="953" y="260" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold"> 3  GND</text>
+<rect x="1200" y="237" width="245" height="28" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin4"/>
+<text x="1208" y="260" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 4  GPIO26 / USB1 N</text>
+<rect x="945" y="267" width="245" height="28" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin5"/>
+<text x="953" y="290" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 5  ESP_EN</text>
+<rect x="1200" y="267" width="245" height="28" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin6"/>
+<text x="1208" y="290" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 6  GPIO27 / USB1 P</text>
+<rect x="945" y="297" width="245" height="28" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin7"/>
+<text x="953" y="320" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 7  GPIO2 / User LED</text>
+<rect x="1200" y="297" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin8"/>
+<text x="1208" y="320" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold"> 8  GPIO14 / CLOCK</text>
+<rect x="945" y="327" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin9"/>
+<text x="953" y="350" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold"> 9  GPIO15 / READY_N</text>
+<rect x="1200" y="327" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin10"/>
+<text x="1208" y="350" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">10  GPIO16 / VALID_N</text>
+<rect x="945" y="357" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin11"/>
+<text x="953" y="380" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">11  GPIO17 / D0</text>
+<rect x="1200" y="357" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin12"/>
+<text x="1208" y="380" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">12  GPIO18 / D1</text>
+<rect x="945" y="387" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin13"/>
+<text x="953" y="410" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">13  GPIO19 / D2</text>
+<rect x="1200" y="387" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin14"/>
+<text x="1208" y="410" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">14  GPIO20 / D3</text>
+<rect x="945" y="417" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin15"/>
+<text x="953" y="440" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">15  GPIO32 / D4</text>
+<rect x="1200" y="417" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin16"/>
+<text x="1208" y="440" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">16  GPIO33 / D5</text>
+<rect x="945" y="447" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin17"/>
+<text x="953" y="470" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">17  GPIO36 / D6</text>
+<rect x="1200" y="447" width="245" height="28" fill="#e9f3ff" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin18"/>
+<text x="1208" y="470" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">18  GPIO46 / D7</text>
+<rect x="945" y="477" width="245" height="28" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin19"/>
+<text x="953" y="500" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">19  GPIO47 / Spare</text>
+<rect x="1200" y="477" width="245" height="28" fill="#f5f6f8" stroke="#c2c8d0" stroke-width="1" id="pc-overview-pin20"/>
+<text x="1208" y="500" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">20  GPIO48 / Spare</text>
+<text x="310" y="587" font-size="14" fill="#20242b" text-anchor="middle" font-weight="bold">Pin 33 GND / pin 34 +3.3 V end</text>
+<text x="1248" y="529" font-size="14" fill="#20242b" text-anchor="middle" font-weight="bold">↓ Four USB-A keyboard ports</text>
+<text x="945" y="556" font-size="15" fill="#20242b" text-anchor="start" font-weight="normal">Odd pins on the left; even pins on the right.</text>
+<text x="945" y="579" font-size="15" fill="#20242b" text-anchor="start" font-weight="normal">The square pin-1 pad is the +3.3 V contact.</text>
+<path d="M 40 611 H 1760" fill="none" stroke="#c2c8d0" stroke-width="1" stroke-linejoin="round" />
+<text x="40" y="645" font-size="21" fill="#20242b" text-anchor="start" font-weight="bold">Breadboard wiring — same bank separation and wire colours as the original SVG</text>
+<text x="40" y="671" font-size="16" fill="#56606e" text-anchor="start" font-weight="normal">Below, each header row is separated and reversed (high pin numbers at top) to keep the data wires straight.</text>
+<path d="M 1060 768 H 940 V 690 H 40 V 1108" fill="none" stroke="#d32f2f" stroke-width="3" stroke-linejoin="round" id="agon-power-feed" data-agon-pin="34"/>
+<path d="M 940 768 V 1108" fill="none" stroke="#d32f2f" stroke-width="3" stroke-linejoin="round" />
+<text x="545" y="686" font-size="14" fill="#b71c1c" text-anchor="middle" font-weight="bold">Agon +3.3 V — from pin 34</text>
+<text x="40" y="815" font-size="12" fill="#b71c1c" text-anchor="start" font-weight="normal">+3.3 V</text>
+<text x="940" y="815" font-size="12" fill="#b71c1c" text-anchor="start" font-weight="normal">+3.3 V</text>
+<text x="900" y="1145" font-size="12" fill="#20242b" text-anchor="start" font-weight="bold">GND</text>
+<text x="160" y="712" font-size="20" fill="#20242b" text-anchor="start" font-weight="bold">Odd-numbered contacts</text>
+<text x="160" y="739" font-size="16" fill="#20242b" text-anchor="start" font-weight="bold">Agon GPIO</text>
+<text x="580" y="739" font-size="16" fill="#20242b" text-anchor="start" font-weight="bold">P4-PC EXT1</text>
+<rect x="160" y="756" width="235" height="24" fill="#111111" stroke="#555555" id="agon-bank-pin33"/>
+<text x="168" y="773" font-size="14" fill="white" text-anchor="start" font-weight="bold">33  GND</text>
+<rect x="160" y="785" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin31"/>
+<text x="168" y="802" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">31  PB3</text>
+<rect x="160" y="814" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin29"/>
+<text x="168" y="831" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">29  SDA</text>
+<rect x="160" y="843" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin27"/>
+<text x="168" y="860" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">27  PB6</text>
+<rect x="160" y="872" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin25"/>
+<text x="168" y="889" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">25  CS</text>
+<rect x="160" y="901" width="235" height="24" fill="#6d4c41" stroke="#555555" id="agon-bank-pin23"/>
+<text x="168" y="918" font-size="14" fill="white" text-anchor="start" font-weight="bold">23  PC6 / D6</text>
+<rect x="160" y="930" width="235" height="24" fill="#d32f2f" stroke="#555555" id="agon-bank-pin21"/>
+<text x="168" y="947" font-size="14" fill="white" text-anchor="start" font-weight="bold">21  PC4 / D4</text>
+<rect x="160" y="959" width="235" height="24" fill="#f57c00" stroke="#555555" id="agon-bank-pin19"/>
+<text x="168" y="976" font-size="14" fill="#20242b" text-anchor="start" font-weight="bold">19  PC2 / D2</text>
+<rect x="160" y="988" width="235" height="24" fill="#fbc02d" stroke="#555555" id="agon-bank-pin17"/>
+<text x="168" y="1005" font-size="14" fill="#20242b" text-anchor="start" font-weight="bold">17  PC0 / D0</text>
+<rect x="160" y="1017" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin15"/>
+<text x="168" y="1034" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">15  PD6</text>
+<rect x="160" y="1046" width="235" height="24" fill="#1976d2" stroke="#555555" id="agon-bank-pin13"/>
+<text x="168" y="1063" font-size="14" fill="white" text-anchor="start" font-weight="bold">13  PD4 / READY_N</text>
+<rect x="160" y="1075" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin11"/>
+<text x="168" y="1092" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">11  ESP37</text>
+<rect x="160" y="1104" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin9"/>
+<text x="168" y="1121" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 9  ESP26</text>
+<rect x="160" y="1133" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin7"/>
+<text x="168" y="1150" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 7  ESP35</text>
+<rect x="160" y="1162" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin5"/>
+<text x="168" y="1179" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 5  GND</text>
+<rect x="160" y="1191" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin3"/>
+<text x="168" y="1208" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 3  GND</text>
+<rect x="160" y="1220" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin1"/>
+<text x="168" y="1237" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 1  VBAT</text>
+<rect x="580" y="872" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin19"/>
+<text x="588" y="889" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">19  GPIO47 / Spare</text>
+<rect x="580" y="901" width="255" height="24" fill="#6d4c41" stroke="#555555" id="pc-bank-pin17"/>
+<text x="588" y="918" font-size="13" fill="white" text-anchor="start" font-weight="bold">17  GPIO36 / D6</text>
+<rect x="580" y="930" width="255" height="24" fill="#d32f2f" stroke="#555555" id="pc-bank-pin15"/>
+<text x="588" y="947" font-size="13" fill="white" text-anchor="start" font-weight="bold">15  GPIO32 / D4</text>
+<rect x="580" y="959" width="255" height="24" fill="#f57c00" stroke="#555555" id="pc-bank-pin13"/>
+<text x="588" y="976" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">13  GPIO19 / D2</text>
+<rect x="580" y="988" width="255" height="24" fill="#fbc02d" stroke="#555555" id="pc-bank-pin11"/>
+<text x="588" y="1005" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">11  GPIO17 / D0</text>
+<rect x="580" y="1017" width="255" height="24" fill="#1976d2" stroke="#555555" id="pc-bank-pin9"/>
+<text x="588" y="1034" font-size="13" fill="white" text-anchor="start" font-weight="bold"> 9  GPIO15 / READY_N</text>
+<rect x="580" y="1046" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin7"/>
+<text x="588" y="1063" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 7  GPIO2 / User LED</text>
+<rect x="580" y="1075" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin5"/>
+<text x="588" y="1092" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 5  ESP_EN</text>
+<rect x="580" y="1104" width="255" height="24" fill="#111111" stroke="#555555" id="pc-bank-pin3"/>
+<text x="588" y="1121" font-size="13" fill="white" text-anchor="start" font-weight="bold"> 3  GND</text>
+<rect x="580" y="1133" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin1"/>
+<text x="588" y="1150" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 1  +3.3 V</text>
+<path d="M 395 1000 H 580" fill="none" stroke="#fbc02d" stroke-width="3" stroke-linejoin="round" id="wire-d0" data-agon-pin="17" data-pc-pin="11" data-net="D0"/>
+<text x="487" y="994" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">17 → 11 · D0</text>
+<path d="M 160 1000 H 140" fill="none" stroke="#fbc02d" stroke-width="2" stroke-linejoin="round" />
+<rect x="80" y="992" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d0" data-agon-pin="17" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="110" y="1004" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 80 1000 H 40" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="38" y="998" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 395 971 H 580" fill="none" stroke="#f57c00" stroke-width="3" stroke-linejoin="round" id="wire-d2" data-agon-pin="19" data-pc-pin="13" data-net="D2"/>
+<text x="487" y="965" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">19 → 13 · D2</text>
+<path d="M 160 971 H 140" fill="none" stroke="#f57c00" stroke-width="2" stroke-linejoin="round" />
+<rect x="80" y="963" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d2" data-agon-pin="19" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="110" y="975" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 80 971 H 40" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="38" y="969" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 395 942 H 580" fill="none" stroke="#d32f2f" stroke-width="3" stroke-linejoin="round" id="wire-d4" data-agon-pin="21" data-pc-pin="15" data-net="D4"/>
+<text x="487" y="936" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">21 → 15 · D4</text>
+<path d="M 160 942 H 140" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="80" y="934" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d4" data-agon-pin="21" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="110" y="946" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 80 942 H 40" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="38" y="940" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 395 913 H 580" fill="none" stroke="#6d4c41" stroke-width="3" stroke-linejoin="round" id="wire-d6" data-agon-pin="23" data-pc-pin="17" data-net="D6"/>
+<text x="487" y="907" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">23 → 17 · D6</text>
+<path d="M 160 913 H 140" fill="none" stroke="#6d4c41" stroke-width="2" stroke-linejoin="round" />
+<rect x="80" y="905" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d6" data-agon-pin="23" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="110" y="917" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 80 913 H 40" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="38" y="911" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 395 1058 H 515 V 1029 H 580" fill="none" stroke="#1976d2" stroke-width="3" stroke-linejoin="round" id="wire-ready_n" data-agon-pin="13" data-pc-pin="9" data-net="READY_N"/>
+<text x="487" y="1023" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">13 → 9 · READY_N</text>
+<path d="M 160 1058 H 140" fill="none" stroke="#1976d2" stroke-width="2" stroke-linejoin="round" />
+<rect x="80" y="1050" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-ready_n" data-agon-pin="13" data-resistance-ohm="10000" data-rail="AGON_3V3"/>
+<text x="110" y="1062" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">10 kΩ</text>
+<path d="M 80 1058 H 40" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="38" y="1056" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 160 768 H 20 V 1260 H 900 V 1058" fill="none" stroke="#111111" stroke-width="3" stroke-linejoin="round" id="wire-ground" data-agon-pin="33" data-pc-pin="3" data-net="GND"/>
+<path d="M 835 1116 H 850 V 1260" fill="none" stroke="#111111" stroke-width="3" stroke-linejoin="round" id="wire-pc-ground"/>
+<rect x="848" y="1258" width="4" height="4" fill="#111111" stroke="#111111" />
+<text x="460" y="1250" font-size="14" fill="#20242b" text-anchor="middle" font-weight="bold">Common ground: Agon 33 → PC EXT1-3</text>
+<text x="580" y="1222" font-size="12" fill="#56606e" text-anchor="start" font-weight="normal">↑ High-numbered end; pin 1/2 end ↓</text>
+<text x="1060" y="712" font-size="20" fill="#20242b" text-anchor="start" font-weight="bold">Even-numbered contacts</text>
+<text x="1060" y="739" font-size="16" fill="#20242b" text-anchor="start" font-weight="bold">Agon GPIO</text>
+<text x="1480" y="739" font-size="16" fill="#20242b" text-anchor="start" font-weight="bold">P4-PC EXT1</text>
+<rect x="1060" y="756" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin34"/>
+<text x="1068" y="773" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">34  +3.3 V</text>
+<rect x="1060" y="785" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin32"/>
+<text x="1068" y="802" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">32  PB7</text>
+<rect x="1060" y="814" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin30"/>
+<text x="1068" y="831" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">30  SCL</text>
+<rect x="1060" y="843" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin28"/>
+<text x="1068" y="860" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">28  CLK</text>
+<rect x="1060" y="872" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin26"/>
+<text x="1068" y="889" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">26  PB5</text>
+<rect x="1060" y="901" width="235" height="24" fill="#388e3c" stroke="#555555" id="agon-bank-pin24"/>
+<text x="1068" y="918" font-size="14" fill="white" text-anchor="start" font-weight="bold">24  PC7 / D7</text>
+<rect x="1060" y="930" width="235" height="24" fill="#1976d2" stroke="#555555" id="agon-bank-pin22"/>
+<text x="1068" y="947" font-size="14" fill="white" text-anchor="start" font-weight="bold">22  PC5 / D5</text>
+<rect x="1060" y="959" width="235" height="24" fill="#7b1fa2" stroke="#555555" id="agon-bank-pin20"/>
+<text x="1068" y="976" font-size="14" fill="white" text-anchor="start" font-weight="bold">20  PC3 / D3</text>
+<rect x="1060" y="988" width="235" height="24" fill="#808080" stroke="#555555" id="agon-bank-pin18"/>
+<text x="1068" y="1005" font-size="14" fill="white" text-anchor="start" font-weight="bold">18  PC1 / D1</text>
+<rect x="1060" y="1017" width="235" height="24" fill="#ffffff" stroke="#555555" id="agon-bank-pin16"/>
+<text x="1068" y="1034" font-size="14" fill="#20242b" text-anchor="start" font-weight="bold">16  PD7 / VALID_N</text>
+<rect x="1060" y="1046" width="235" height="24" fill="#111111" stroke="#555555" id="agon-bank-pin14"/>
+<text x="1068" y="1063" font-size="14" fill="white" text-anchor="start" font-weight="bold">14  PD5 / CLOCK</text>
+<rect x="1060" y="1075" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin12"/>
+<text x="1068" y="1092" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">12  ESP38</text>
+<rect x="1060" y="1104" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin10"/>
+<text x="1068" y="1121" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal">10  ESP36</text>
+<rect x="1060" y="1133" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin8"/>
+<text x="1068" y="1150" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 8  ESP27</text>
+<rect x="1060" y="1162" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin6"/>
+<text x="1068" y="1179" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 6  ESP39</text>
+<rect x="1060" y="1191" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin4"/>
+<text x="1068" y="1208" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 4  +5 V</text>
+<rect x="1060" y="1220" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin2"/>
+<text x="1068" y="1237" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 2  +5 V USB</text>
+<rect x="1480" y="872" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin20"/>
+<text x="1488" y="889" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">20  GPIO48 / Spare</text>
+<rect x="1480" y="901" width="255" height="24" fill="#388e3c" stroke="#555555" id="pc-bank-pin18"/>
+<text x="1488" y="918" font-size="13" fill="white" text-anchor="start" font-weight="bold">18  GPIO46 / D7</text>
+<rect x="1480" y="930" width="255" height="24" fill="#1976d2" stroke="#555555" id="pc-bank-pin16"/>
+<text x="1488" y="947" font-size="13" fill="white" text-anchor="start" font-weight="bold">16  GPIO33 / D5</text>
+<rect x="1480" y="959" width="255" height="24" fill="#7b1fa2" stroke="#555555" id="pc-bank-pin14"/>
+<text x="1488" y="976" font-size="13" fill="white" text-anchor="start" font-weight="bold">14  GPIO20 / D3</text>
+<rect x="1480" y="988" width="255" height="24" fill="#808080" stroke="#555555" id="pc-bank-pin12"/>
+<text x="1488" y="1005" font-size="13" fill="white" text-anchor="start" font-weight="bold">12  GPIO18 / D1</text>
+<rect x="1480" y="1017" width="255" height="24" fill="#ffffff" stroke="#555555" id="pc-bank-pin10"/>
+<text x="1488" y="1034" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">10  GPIO16 / VALID_N</text>
+<rect x="1480" y="1046" width="255" height="24" fill="#111111" stroke="#555555" id="pc-bank-pin8"/>
+<text x="1488" y="1063" font-size="13" fill="white" text-anchor="start" font-weight="bold"> 8  GPIO14 / CLOCK</text>
+<rect x="1480" y="1075" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin6"/>
+<text x="1488" y="1092" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 6  GPIO27 / USB1 P</text>
+<rect x="1480" y="1104" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin4"/>
+<text x="1488" y="1121" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 4  GPIO26 / USB1 N</text>
+<rect x="1480" y="1133" width="255" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="pc-bank-pin2"/>
+<text x="1488" y="1150" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal"> 2  +5 V</text>
+<path d="M 1295 1000 H 1480" fill="none" stroke="#808080" stroke-width="3" stroke-linejoin="round" id="wire-d1" data-agon-pin="18" data-pc-pin="12" data-net="D1"/>
+<text x="1387" y="994" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">18 → 12 · D1</text>
+<path d="M 1060 1000 H 1040" fill="none" stroke="#808080" stroke-width="2" stroke-linejoin="round" />
+<rect x="980" y="992" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d1" data-agon-pin="18" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="1010" y="1004" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 980 1000 H 940" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="938" y="998" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 1295 971 H 1480" fill="none" stroke="#7b1fa2" stroke-width="3" stroke-linejoin="round" id="wire-d3" data-agon-pin="20" data-pc-pin="14" data-net="D3"/>
+<text x="1387" y="965" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">20 → 14 · D3</text>
+<path d="M 1060 971 H 1040" fill="none" stroke="#7b1fa2" stroke-width="2" stroke-linejoin="round" />
+<rect x="980" y="963" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d3" data-agon-pin="20" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="1010" y="975" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 980 971 H 940" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="938" y="969" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 1295 942 H 1480" fill="none" stroke="#1976d2" stroke-width="3" stroke-linejoin="round" id="wire-d5" data-agon-pin="22" data-pc-pin="16" data-net="D5"/>
+<text x="1387" y="936" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">22 → 16 · D5</text>
+<path d="M 1060 942 H 1040" fill="none" stroke="#1976d2" stroke-width="2" stroke-linejoin="round" />
+<rect x="980" y="934" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d5" data-agon-pin="22" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="1010" y="946" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 980 942 H 940" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="938" y="940" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 1295 913 H 1480" fill="none" stroke="#388e3c" stroke-width="3" stroke-linejoin="round" id="wire-d7" data-agon-pin="24" data-pc-pin="18" data-net="D7"/>
+<text x="1387" y="907" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">24 → 18 · D7</text>
+<path d="M 1060 913 H 1040" fill="none" stroke="#388e3c" stroke-width="2" stroke-linejoin="round" />
+<rect x="980" y="905" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-d7" data-agon-pin="24" data-resistance-ohm="15000" data-rail="AGON_3V3"/>
+<text x="1010" y="917" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">15 kΩ</text>
+<path d="M 980 913 H 940" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="938" y="911" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<path d="M 1295 1058 H 1480" fill="none" stroke="#111111" stroke-width="3" stroke-linejoin="round" id="wire-clock" data-agon-pin="14" data-pc-pin="8" data-net="CLOCK"/>
+<text x="1387" y="1052" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">14 → 8 · CLOCK</text>
+<path d="M 1060 1058 H 1040" fill="none" stroke="#111111" stroke-width="2" stroke-linejoin="round" />
+<rect x="980" y="1050" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-clock" data-agon-pin="14" data-resistance-ohm="10000" data-rail="GND"/>
+<text x="1010" y="1062" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">10 kΩ</text>
+<path d="M 980 1058 H 900" fill="none" stroke="white" stroke-width="7" stroke-linejoin="round" />
+<path d="M 980 1058 H 900" fill="none" stroke="#111111" stroke-width="2" stroke-linejoin="round" />
+<rect x="898" y="1056" width="4" height="4" fill="#111111" stroke="#111111" />
+<path d="M 1295 1029 H 1480" fill="none" stroke="#555555" stroke-width="5" stroke-linejoin="round" />
+<path d="M 1295 1029 H 1480" fill="none" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" id="wire-valid_n" data-agon-pin="16" data-pc-pin="10" data-net="VALID_N"/>
+<text x="1387" y="1023" font-size="11" fill="#374151" text-anchor="middle" font-weight="normal">16 → 10 · VALID_N</text>
+<path d="M 1060 1029 H 1040" fill="none" stroke="#555555" stroke-width="2" stroke-linejoin="round" />
+<rect x="980" y="1021" width="60" height="16" fill="#fffaf0" stroke="#8d6e63" id="pull-valid_n" data-agon-pin="16" data-resistance-ohm="10000" data-rail="AGON_3V3"/>
+<text x="1010" y="1033" font-size="11" fill="#20242b" text-anchor="middle" font-weight="bold">10 kΩ</text>
+<path d="M 980 1029 H 940" fill="none" stroke="#d32f2f" stroke-width="2" stroke-linejoin="round" />
+<rect x="938" y="1027" width="4" height="4" fill="#d32f2f" stroke="#d32f2f" />
+<text x="1480" y="1222" font-size="12" fill="#56606e" text-anchor="start" font-weight="normal">↑ High-numbered end; pin 1/2 end ↓</text>
+<path d="M 885 699 V 1283" fill="none" stroke="#dce0e6" stroke-width="1" stroke-linejoin="round" />
+<path d="M 40 1294 H 1760" fill="none" stroke="#c2c8d0" stroke-width="1" stroke-linejoin="round" />
+<text x="40" y="1328" font-size="20" fill="#20242b" text-anchor="start" font-weight="bold">Pulls and spare contacts</text>
+<text x="40" y="1358" font-size="17" fill="#20242b" text-anchor="start" font-weight="normal">Eight data pull-ups: 15 kΩ each to Agon pin 34 (+3.3 V). READY_N and VALID_N: 10 kΩ pull-ups to that same rail.</text>
+<text x="40" y="1386" font-size="16" fill="#20242b" text-anchor="start" font-weight="normal">CLOCK: 10 kΩ pull-down to common ground. Handshake values follow the original drawing; data values follow the later harness.</text>
+<text x="40" y="1414" font-size="16" fill="#20242b" text-anchor="start" font-weight="normal">P4-PC EXT1-19 / GPIO47 and EXT1-20 / GPIO48 remain spare. GPIO20/32 sensing links must remain disconnected.</text>
+<text x="40" y="1442" font-size="16" fill="#20242b" text-anchor="start" font-weight="normal">Connect the common ground only; do not join the independently powered Agon and P4-PC positive supply rails.</text>
+<text x="40" y="1473" font-size="16" fill="#20242b" text-anchor="start" font-weight="normal">READY_N has one jog because Agon pin 15 is unused. No series resistors or sniffer circles. A square dot marks a rail junction.</text>
+<text x="40" y="1510" font-size="13" fill="#56606e" text-anchor="start" font-weight="normal">Pin authority: vdp/build/boards/p4-pc.json · Physical reference: Olimex Rev C schematic and top silkscreen · 2026-10-04</text>
+</svg>
