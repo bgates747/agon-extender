@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "identity": "render-load-contract-r02",
+  "task": "BENCH-009",
+  "seed": 45065,
+  "modes": [
+    20,
+    8,
+    136,
+    21,
+    149
+  ],
+  "output_control_modes": [
+    20,
+    8
+  ],
+  "passes": 3,
+  "endpoint_order": [
+    [
+      "mainboard",
+      "p4"
+    ],
+    [
+      "p4",
+      "mainboard"
+    ],
+    [
+      "mainboard",
+      "p4"
+    ]
+  ],
+  "warmup_frames": 8,
+  "styles": [
+    "paced",
+    "throughput"
+  ],
+  "levels": [
+    1,
+    4,
+    16,
+    64
+  ],
+  "marker_band_pixels": 8,
+  "payload_limit_bytes": 65535,
+  "window_capacity": 512,
+  "prt_divisor": 256,
+  "prt_nominal_counts_per_second": 72000,
+  "prt_saturation_counts": 65535,
+  "raw_mos_units_per_second_at_60hz": 120,
+  "nominal_completion_budget_counts": 1200,
+  "marker": {
+    "buffer_id": 65535,
+    "length": 12,
+    "magic": "B009",
+    "version": 1
+  },
+  "controls": [
+    "no_marker_no_timing",
+    "marker_no_timing"
+  ],
+  "workloads": [
+    {
+      "family": "static",
+      "variants": [
+        "static"
+      ],
+      "levels": [
+        0
+      ]
+    },
+    {
+      "family": "fills",
+      "variants": [
+        "area"
+      ],
+      "level_meaning": "screen area units out of64"
+    },
+    {
+      "family": "primitives",
+      "variants": [
+        "lines",
+        "circles"
+      ],
+      "level_meaning": "primitive count"
+    },
+    {
+      "family": "bitmaps",
+      "variants": [
+        "16",
+        "32"
+      ],
+      "level_meaning": "bitmap count"
+    },
+    {
+      "family": "sprites",
+      "variants": [
+        "software",
+        "hardware"
+      ],
+      "level_meaning": "moving sprite count"
+    },
+    {
+      "family": "overlap",
+      "variants": [
+        "software",
+        "hardware"
+      ],
+      "level_meaning": "sprites per overlapping group;64 total"
+    },
+    {
+      "family": "text_scroll",
+      "variants": [
+        "text_scroll"
+      ],
+      "level_meaning": "character and scroll-operation count"
+    },
+    {
+      "family": "mixed",
+      "variants": [
+        "mixed"
+      ],
+      "level_meaning": "total objects split across four primitive kinds"
+    }
+  ],
+  "p4_outputs": [
+    "normal",
+    "hold",
+    "off"
+  ],
+  "physical_frame_delivery": "Unavailable without independent video capture; never infer from completion or DMA counters",
+  "template_frames": 40,
+  "interactive_controls": {
+    "next": "Space",
+    "exit": "Escape",
+    "repeat": "indefinite until an operator or scripted keypress"
+  },
+  "automated_case_seconds": 10,
+  "automated_initial_wait_seconds": 20,
+  "minimum_comparable_frames": 64,
+  "record_capacity_frames": 65535,
+  "record_limit_behavior": "Keep rendering indefinitely; mark sample truncation and exclude from complete-distribution comparisons",
+  "timed_transition": "Pi sends the same admitted Space key at fixed wall-clock intervals; fixture records actual bounds, completed frames and exit reason"
+}

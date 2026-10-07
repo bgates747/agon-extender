@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agon rendering — completion explorer</title>
+<style>__STYLE__</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Agon Extender · retained benchmark review</div>
+    <h1>Where does rendering slow down?</h1>
+    <p class="intro">Compare the same workload on the mainboard VDP and P4, then follow its increasing load. Completion includes EMOS routing, transport, drawing and the reply.</p>
+    <div class="status"><span class="badge" id="coverage-badge">Partial campaign</span><span id="source"></span></div>
+  </header>
+  <section class="summary" aria-label="Evidence coverage">
+    <div><strong id="paired-count"></strong><span>paired workload points</span></div>
+    <div><strong id="valid-count"></strong><span>valid scheduled executions</span></div>
+    <div><strong id="failed-count"></strong><span>failed / invalid executions</span></div>
+    <div><strong id="pending-count"></strong><span>unperformed executions</span></div>
+  </section>
+  <section class="controls" aria-label="Plot filters">
+    <label>Video mode<select id="mode"></select></label>
+    <label>Pacing<select id="style"><option value="throughput">Throughput · no deliberate pacing</option><option value="paced">Paced · target 60 Hz</option></select></label>
+    <label>Completion statistic<select id="metric"><option value="median">Median</option><option value="p95">95th percentile</option></select></label>
+    <label>Time axes<select id="scale"><option value="linear">Linear</option><option value="log">Logarithmic</option></select></label>
+    <label>Workload family<select id="family"><option value="all">All families</option></select></label>
+    <div class="checks"><label><input type="checkbox" id="connect" checked>Connect increasing load</label><label><input type="checkbox" id="ranges">Across-pass median ranges</label></div>
+  </section>
+  <p id="scope" class="scope" aria-live="polite"></p>
+  <section class="plots">
+    <article class="panel">
+      <div class="panel-heading"><h2>Device comparison</h2><span class="hint">Click a point for details</span></div>
+      <p class="caption">Above the equal-time diagonal, the P4 takes longer. The red lines mark the nominal 16.67 ms completion budget.</p>
+      <div id="scatter" class="plot" aria-label="Mainboard versus P4 completion time scatter plot"></div>
+    </article>
+    <article class="panel">
+      <div class="panel-heading"><h2>Load curve</h2><label class="compact">Workload<select id="workload"></select></label></div>
+      <p id="curve-caption" class="caption"></p>
+      <div id="curve" class="plot" aria-label="Completion time versus increasing workload"></div>
+    </article>
+  </section>
+  <section id="detail" class="panel detail" aria-live="polite"><h2>Inspect a workload</h2><p>Click a point in either plot or a row below. Hover shows timing and repetition details. Drag to zoom; double-click resets the view. Each plot’s toolbar exports SVG.</p></section>
+  <section class="panel table-panel">
+    <div class="panel-heading"><h2>Filtered measurements</h2><button id="csv">Download these rows as CSV</button></div>
+    <p class="caption">Worst P4 slowdown first. Mainboard is the completion baseline; difference = (P4 − mainboard) / mainboard × 100%. P4 submissions are accepted framebuffer selections per second. Physical displayed FPS remains unmeasured.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Case / workload</th><th>Load</th><th id="main-heading">Mainboard ms</th><th id="p4-heading">P4 ms</th><th>P4 difference</th><th>P4 submissions/s</th><th>Paired passes</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </section>
+  <details class="notes" open><summary>How to read this evidence</summary>
+    <ol>
+      <li>Points use matching pass numbers on both endpoints. Missing and failed measurements stay absent; gaps in load curves are not joined.</li>
+      <li>“Median” is the median of paired per-pass medians. “95th percentile” is the median of paired per-pass p95 values. Samples are not pooled. Range whiskers span pass medians, not confidence intervals.</li>
+      <li>Double-buffer completion includes the ordinary vblank-synchronised swap. A step near 16.67 or 33.33 ms can reflect waiting for a refresh opportunity.</li>
+      <li>Hardware-sprite composition recurs outside the command fence. P4 presentation includes that composition; completion alone does not measure its cost.</li>
+      <li>P4 HDMI submissions, application updates and the DMA scanout proxy have different scopes. A 60 Hz DMA count can scan an older framebuffer repeatedly.</li>
+      <li>Clock values are nominal PRT1 /256 counts: 13.889 μs/count. The 16.67 ms budget is 1,200 counts. Measurements include frame-marker and timing instrumentation.</li>
+    </ol>
+    <p id="audit-note"></p>
+  </details>
+  <footer><span id="generated"></span><span>Local, self-contained page · no network connection required</span></footer>
+</main>
+<script>__PLOTLY__</script>
+<script type="application/json" id="benchmark-data">__DATA__</script>
+<script>__APP__</script>
+</body>
+</html>

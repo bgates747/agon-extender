@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "identity": "resident-render-suite-r01",
+  "status": "experimental",
+  "scope": "Persistent, bounded known-working render-load-r04 subset and Author-reviewed visual fixtures; no complete VDP or production qualification",
+  "selection": {
+    "20": [
+      0,
+      1,
+      7,
+      9,
+      15,
+      23,
+      39,
+      41,
+      46
+    ],
+    "8": [
+      0,
+      1,
+      7,
+      9,
+      15,
+      23,
+      39,
+      41,
+      46
+    ],
+    "136": [
+      0,
+      9,
+      41,
+      46
+    ]
+  },
+  "cases": [
+    {
+      "id": 0,
+      "family": "static",
+      "variant": "static",
+      "level": 0,
+      "style": "paced",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 1,
+      "family": "static",
+      "variant": "static",
+      "level": 0,
+      "style": "throughput",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 7,
+      "family": "fills",
+      "variant": "area",
+      "level": 16,
+      "style": "throughput",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 9,
+      "family": "fills",
+      "variant": "area",
+      "level": 64,
+      "style": "throughput",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 15,
+      "family": "primitives",
+      "variant": "lines",
+      "level": 16,
+      "style": "throughput",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 23,
+      "family": "primitives",
+      "variant": "circles",
+      "level": 16,
+      "style": "throughput",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 39,
+      "family": "bitmaps",
+      "variant": "32",
+      "level": 16,
+      "style": "throughput",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 41,
+      "family": "bitmaps",
+      "variant": "32",
+      "level": 64,
+      "style": "throughput",
+      "timing": true,
+      "marker": true
+    },
+    {
+      "id": 46,
+      "family": "sprites",
+      "variant": "software",
+      "level": 16,
+      "style": "paced",
+      "timing": true,
+      "marker": true
+    }
+  ],
+  "files": [
+    {
+      "role": "benchmark",
+      "sd_path": "/extender/render-load-r04/render-load-r04-b2026-10-05-05-58-59Z.bin",
+      "bytes": 5053,
+      "sha256": "55f4bb13eb561ac1f3fda98c6ed8b18d479ec0f34d3ddc601b9784935c0b571d"
+    },
+    {
+      "role": "drawing-data",
+      "sd_path": "/extender/render-load-r04/data20.rle",
+      "bytes": 258261,
+      "sha256": "c5a0540d3960e56cfb0f75922c5e1b2ec16860b659182b5a954713eac327014d"
+    },
+    {
+      "role": "drawing-data",
+      "sd_path": "/extender/render-load-r04/data8.rle",
+      "bytes": 257179,
+      "sha256": "2d8dcddd034944b1652ce82425fa5c2492c0c6794b3ac25b59d16b8fb000c625"
+    },
+    {
+      "role": "drawing-data",
+      "sd_path": "/extender/render-load-r04/data136.rle",
+      "bytes": 258681,
+      "sha256": "e683cda865064160ac8d7df7fe3dbe65e7b56c7f9b7394125de6f3776f315686"
+    },
+    {
+      "role": "colour-chart",
+      "mode": 20,
+      "build_id": "render-load-static-r01-b2026-10-05-19-28-26Z",
+      "sd_path": "/extender/render-load-static-r01/render-load-static-r01-b2026-10-05-19-28-26Z/mode20.bin",
+      "bytes": 2713,
+      "sha256": "283d20a4da96c00cc0d92adf6afedd7f7ed3448439dadb8e726fd30703006b31",
+      "acceptance": "Author confirmed steady chart and correct colours on native HDMI; direct-panel checks additionally cover20/8/136"
+    },
+    {
+      "role": "colour-chart",
+      "mode": 8,
+      "build_id": "render-load-static-r01-b2026-10-05-19-28-26Z",
+      "sd_path": "/extender/render-load-static-r01/render-load-static-r01-b2026-10-05-19-28-26Z/mode8.bin",
+      "bytes": 2712,
+      "sha256": "732ed93519fd450af5a3ff85503349f258d937e7eefa0084e2a556cb61039022",
+      "acceptance": "Author confirmed steady chart and correct colours on native HDMI; direct-panel checks additionally cover20/8/136"
+    },
+    {
+      "role": "colour-chart",
+      "mode": 136,
+      "build_id": "render-load-static-r01-b2026-10-05-19-28-26Z",
+      "sd_path": "/extender/render-load-static-r01/render-load-static-r01-b2026-10-05-19-28-26Z/mode136.bin",
+      "bytes": 2717,
+      "sha256": "aa0312fc571bb491e031bbb41812a64899d223829ae6a336f615b3fb66ab3a42",
+      "acceptance": "Author confirmed steady chart and correct colours on native HDMI; direct-panel checks additionally cover20/8/136"
+    },
+    {
+      "role": "colour-chart",
+      "mode": 21,
+      "build_id": "render-load-static-r01-b2026-10-05-19-28-26Z",
+      "sd_path": "/extender/render-load-static-r01/render-load-static-r01-b2026-10-05-19-28-26Z/mode21.bin",
+      "bytes": 1081,
+      "sha256": "6eaa328920fca627422a35a990fab783402e1f88656684b2103623cf31840ea7",
+      "acceptance": "Author confirmed steady chart and correct colours on native HDMI; direct-panel checks additionally cover20/8/136"
+    },
+    {
+      "role": "colour-chart",
+      "mode": 149,
+      "build_id": "render-load-static-r01-b2026-10-05-19-28-26Z",
+      "sd_path": "/extender/render-load-static-r01/render-load-static-r01-b2026-10-05-19-28-26Z/mode149.bin",
+      "bytes": 1085,
+      "sha256": "37e479bcbe7a48b1fe607fe75b533fa90d1a36f56e061fb0669ac2a9cf5d5965",
+      "acceptance": "Author confirmed steady chart and correct colours on native HDMI; direct-panel checks additionally cover20/8/136"
+    },
+    {
+      "role": "familiar-art",
+      "mode": 20,
+      "build_id": "game-art-visual-r01-b2026-10-06-00-05-56Z",
+      "sd_path": "/extender/game-art-visual-r01/game-art-visual-r01-b2026-10-06-00-05-56Z/mode20.bin",
+      "bytes": 19562,
+      "sha256": "3544ab5b0c683f25cda2d7a879da119601599fe0363545174819d16d973593a5",
+      "acceptance": "Author confirmed colours, movement and clean old positions on panel-direct HDMI"
+    },
+    {
+      "role": "familiar-art",
+      "mode": 8,
+      "build_id": "game-art-visual-r01-b2026-10-06-00-05-56Z",
+      "sd_path": "/extender/game-art-visual-r01/game-art-visual-r01-b2026-10-06-00-05-56Z/mode8.bin",
+      "bytes": 19561,
+      "sha256": "d16f203272e0b0d7a4cf4237ac494734b0b0d63c72591d5ca39e9fa6f9998f02",
+      "acceptance": "Author confirmed colours, movement and clean old positions on panel-direct HDMI"
+    },
+    {
+      "role": "familiar-art",
+      "mode": 136,
+      "build_id": "game-art-visual-r02-b2026-10-06-00-20-01Z",
+      "sd_path": "/extender/game-art-visual-r02/game-art-visual-r02-b2026-10-06-00-20-01Z/mode136.bin",
+      "bytes": 25334,
+      "sha256": "30c871ffecee1f2950855d0b78055e1476a99c81f44f696989b97d39c7b34c34",
+      "acceptance": "Author confirmed colours, movement and clean old positions on panel-direct HDMI; identical executable also passed on mainboard"
+    }
+  ],
+  "controls": {
+    "benchmark": {
+      "next": "Space",
+      "exit": "Escape",
+      "duration": "indefinite; finite sample capacity31402 records per case"
+    },
+    "familiar-art": {
+      "pause_resume": "P",
+      "step": "Space while paused",
+      "exit": "Escape",
+      "poses_per_second": 2
+    },
+    "colour-chart": {
+      "exit": "Escape",
+      "duration": "indefinite hold after three10-second fixed-source diagnostic windows"
+    }
+  },
+  "contracts": [
+    "docs/testing/render-load-contract-r04.md",
+    "docs/testing/render-load.md",
+    "docs/testing/resident-render-suite.md"
+  ],
+  "excluded": [
+    "game-art-visual-r01 mode136: CLS disables moving sprites; use the tested r02 binary",
+    "hardware-sprite stress, Copper and4/2-colour coverage are outside this resident selection"
+  ],
+  "result_location": "/agents/extender/results",
+  "installation": "Retain existing exact files. Install or repair missing files once through fast upload with one whole-file verification; future runs change only tiny plans/startup and owned result directories."
+}

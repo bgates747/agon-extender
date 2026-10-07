@@ -1,0 +1,2 @@
+# Optional offline plotting tool; not a firmware or bench-runner dependency.
+plotly==6.3.0
