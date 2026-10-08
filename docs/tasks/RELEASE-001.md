@@ -176,3 +176,39 @@ closeout does not start downstream development. New firmware
 identities and registry changes follow the existing version authority; exact
 historical binaries retain their identities. A packaging milestone does not
 close electrical qualification, all-mode compatibility or the documentation audit.
+
+
+## Native HDMI production v0.2.0 — authorized 2026-10-07
+
+Author accepts HDMI r10 gameplay and its correctly displayed outro screen and
+explicitly selects v0.2.0 for production promotion. Preserve the tested bytes;
+do not rebuild them merely to change their experimental embedded identity.
+Current production v0.1.0 remains selected until the following gates pass.
+
+R01-N01 [x] Record acceptance and version authorization. P4 candidate is
+`rgb-001-r10-b2026-10-07-22-56-28Z`, factory SHA-256
+`ef7e7bdae861119bcdc2fcda947631450f0890b6cefc8d4c23e2b6d8ead7498c`;
+paired EMOS is `agon-emos-v0.1.24-b2026-10-07-23-11-33Z`, image SHA-256
+`44d217b555f68a7d030bc0a89a2fa1d27f0fb537576f2925e90ef055b0a44d02`.
+Evidence: [HDMI r10 physical results](HDMI-002/R10-PHYSICAL-RESULTS.md) and
+[EMOS callback correction](../../../agon-emos/docs/tasks/INTEG-015.md).
+
+R01-N02 [ ] Adapt native release inputs/receipt mapping for the current P4-PC
+bench and run canonical paired qualification against the exact accepted bytes.
+Existing r10/EMOS receipts retain build/source-closure and full verification
+but do not have the canonical runner's schema-1 component snapshot fields.
+Match committed source to retained build inputs; never fabricate a clean-build
+or qualification claim. Check raw-SD qualification prerequisites before running
+its write/restore case. Preserve current game/startup and input recovery.
+
+R01-N03 [ ] Package a new immutable native bundle with exact firmware, listener,
+host tools, source snapshots, licenses and archive hashes. The existing
+`scripts/package_installation.py` is deliberately pinned to the old hybrid r02;
+it cannot package this native build. Provide a separate native recipe, retaining
+r02 reproduction and rollback. Verify extracted archive contents and deployment
+instructions before updating current selection.
+
+R01-N04 [ ] Update current operating/build/install documentation for the scoped
+P4-PC combination, commit the verified selection, create annotated v0.2.0 tag
+and publish under standing acceptance-promotion authorization. Do not include
+unaccepted 240-line experiments in the accepted r10 bundle.

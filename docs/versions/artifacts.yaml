@@ -1,22 +1,73 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r142
-updated_at: 2026-10-07T00:49:06Z
+registry_revision: r166
+updated_at: 2026-10-07T23:11:33Z
 
 artifacts:
+  - artifact_id: dsi-strip
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: dsi-strip-r02
+    status: experimental
+    variants: [static-blocks, rolling-strips, dma-refill]
+    description: Bounded standalone P4 DSI multiblock and rolling scanout experiment.
+    notes:
+      - SPRITE-001; Author authorizes one hour, progressive tests and rollback.
+      - Project-owned derivative of pinned IDF5.5.5 DPI source; no SDK edits.
+      - Standalone image has no Agon input, network or SD services.
+      - r02 tests asynchronous DMA2D refills with generation checks and abort on a detected late handoff; not normal firmware.
+
+  - artifact_id: nurples-hardware
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: nurples-hardware-r01
+    status: experimental
+    variants: []
+    description: Ordinary repaired Nurples with all sprite slots explicitly using the stock hardware-sprite API.
+    notes:
+      - SPRITE-001; Author requests hardware-sprites game branch and separate nurples-hardware.bin deployment beside the ordinary game.
+      - No firmware, artwork, pacing or population change; Author owns Legacy and ExCom gameplay review.
+
+  - artifact_id: nurples-hardware-pause
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: nurples-hardware-pause-r01
+    status: experimental
+    variants: []
+    description: Temporary ordinary hardware Nurples derivative with an edge-triggered P pause/resume control.
+    notes:
+      - SPRITE-001; game-owned builder reproduces the hardware control before patching only an isolated copied entry point.
+      - Pause freezes simulation, drawing, telemetry and virtual game time; MOS clock wait, keyboard polling and Escape remain. P4 scanout and hardware-sprite composition continue.
+      - Separate nurples-hardware-pause.bin deployment; original games, startup, assets and both firmwares unchanged. No benchmark equivalence or production promotion.
+
+  - artifact_id: hdmi-timing
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: hdmi-timing-r04
+    status: experimental
+    variants: []
+    description: Standalone P4-PC HDMI timing patterns; accepted848x480 and experimental native-active geometries.
+    notes:
+      - HDMI-002 first visual experiment; standing Author identity approval and bounded deployment authorization.
+      - No renderer, EMOS, SD or production changes; monitor picture review remains required.
+      - r01 APLL design was not deployed; r02 uses supported PLL240/7 and matching custom1104x517 totals at60.069440Hz.
+      - r03 prepares512x384,684x384,320x240 and428x240 native-active signals with the same clock/totals and no pixel scaling; physical acceptance remains separate.
+      - r04 corrects color-label alignment and centers512x384 in684x384 or320x240 in428x240 with black sidebars; timing and bridge unchanged.
+
   - artifact_id: scan-scroll-suite
     kind: fixture
     identity_scheme: revision
-    latest_identity: scan-scroll-suite-r02
+    latest_identity: scan-scroll-suite-r04
     status: experimental
-    variants: [primary, window-marked, natural, no-timing]
+    variants: [primary, window-marked, natural, no-timing, hardware-nurples]
     description: Nine finite mode20 scrolling/software-sprite cases including deterministic current repaired Nurples.
     notes:
       - SCAN-001 S05; mainboard and P4 share executable/assets, EMOS owns routing and startup selects mode.
       - Experimental fixtures deployed separately from production games; emulator correctness is not hardware timing qualification.
       - S05 freezes r01; S06 r02 adds optional aggregate window carriers and a fresh post-warm-up pacing epoch. Drawing streams and assets remain identical.
       - Exact builds, transformations and validation are recorded in the S05/S06 task evidence; r02 is not a silent replacement of r01 results.
+      - SPRITE-001 r03 reproduces the frozen r02 Nurples binary, then changes only hardware-sprite admission/type and fixture identity; simulation and timing remain unchanged.
   - artifact_id: resident-render-suite
     kind: fixture
     identity_scheme: revision
@@ -41,18 +92,46 @@ artifacts:
       - EMOS and startup select route/mode; single-buffer software backgrounds and explicit double-buffer redraw follow stock behaviour.
       - r02 corrects the visual-only redraw lifecycle: CLG avoids CLS sprite deactivation; sprites are inactive during back-plane redraw and reactivated before refresh/swap.
       - Original r01 binaries remain retained; exact r01 mainboard control precedes corrected mode136 validation.
+  - artifact_id: hdmi-carrier-sprite-data
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: hdmi-carrier-sprite-data-r01
+    status: experimental
+    variants: [mode0, mode1, mode2]
+    description: Parameterized render-load-r04 case54 for640x480 in16,4,2colors.
+    notes:
+      - HDMI-002 runtime carrier checks; unchanged resident executable and generator sprite commands,16 paced hardware sprites, independent compression roundtrip.
+      - Author requires sprites remain supported in every mode; no new indexed-background color contract.
   - artifact_id: rgb-001
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: rgb-001-r02
+    latest_identity: rgb-001-r10
     status: experimental
-    variants: [normal, off, convert-off, panel-normal, panel-off, panel-convert-off, panel-copy-normal]
+    variants: [normal, off, convert-off, panel-normal, panel-off, panel-convert-off, panel-copy-normal, rolling-scanout, auto-carrier, wide480]
     description: CPU RGB888 experiment with copied and panel-direct storage variants.
     notes:
+      - r10 adds HDMI02-L swap cancellation and contained-scanout fault recovery at joined mode boundaries, plus the r09 refill queue. Host/build checks and bounded physical mode96/mode20 Nurples and sprite-transition tests pass; Author gameplay/outro accepted; v0.2.0 promotion authorized, pending canonical paired qualification/native packaging; physical fault-recovery qualification remains separate. Standing experimental identity approval applies.
       - RGB-001; selected64-colour geometries only; ordinary native renderer remains the default.
       - Initial copied-buffer builds retained; Author selects panel borrowing with DMA-gated swaps for subsequent measurements.
       - r02 SCAN-001 bounded remedy reuses stock copy/fill vertical scrolling for fixed panel rows; r01 exchange-based evidence remains frozen.
+      - r03 HDMI-002 adds explicit848x480 output selection using visually accepted standalone timings; retains r02 scrolling and720p default. Standing Author identity/deployment authority; bounded Nurples review pending.
+      - r04 SPRITE-001 selects experimental DMA2D rolling scanout, task-owned sprite snapshots and frame-latched background ownership; never selected by default.
+      - The same r04 experiment retains unflashed native512x384 preparation; standalone512 timing failed Author review and is superseded as the integration target.
+      - Explicit684x384 rolling output retains the reviewed carrier and centers512x384 at86,0; initial loaded internal-memory exhaustion is proven by allocation-abort diagnostics. Ordinary-malloc and primitive-queue payload PSRAM placement preserve internal RTOS controls and scanout slots.
+      - Latest684 candidate passes marked3600-update hardware Nurples at nominal60/s and ordinary menu/mode changes/Escape exit with about22KiB internal free RAM. Author review pending; ExCom SD admission after exit rejects and recovers through EMOS Legacy without reset. No broad service or gameplay qualification.
+      - r05 HDMI-002 adds opt-in runtime carrier selection;684 rolling scanout and848 full-frame DMA preserve both proven timings at ordinary mode boundaries. No new240-line timing or general480-line sprite-performance claim.
+      - r06 HDMI-002 exposes experimental848x480 single-buffer modes96-99 at64/16/4/2colors only in automatic-HDMI builds; existing native compositor, no new physical timing or stock mode reassignment.
       - No PPA, expanded-asset cache or production promotion.
+      - r09 HDMI-002 offline refill queue and first-fault diagnostics; compile/host tests only while the bench belongs to another project. No deployment or hardware-fix claim; r06 rollback retained.
+  - artifact_id: hdmi-wide-mode
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: hdmi-wide-mode-r01
+    status: experimental
+    variants: [pattern, sprites]
+    description: Full-width848x480 visual pattern and parameterized resident render-load-r04 sprite checks.
+    notes:
+      - HDMI-002 W01-W03; startup selects the mode, never the fixture. Original files/startup preserved; no full performance qualification.
   - artifact_id: bench-009-recovery
     kind: experimental_firmware
     identity_scheme: revision
@@ -409,13 +488,14 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.23
+    latest_identity: agon-emos-v0.1.24
     status: draft
     variants:
       - port008-forward
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - v0.1.24 adds bounded mainboard Pingo P3DR completion dispatch independently of keyboard source; INTEG-015 linked checks and bounded physical completion/input test pass, installed draft pending Author acceptance; not production.
       - v0.1.22 adds finite-job private binding/terminal exchange and two-slot finite reception; REMOTE-005 A09-A11 candidate under standing preapproval.
       - v0.1.21 adds the R05-A05 application-owned SD lease; candidate under standing identity preapproval, not production.
       - v0.1.20 is the REMOTE-005 A04 idle admission hardware candidate under standing version authorization; no automatic file service or production promotion.

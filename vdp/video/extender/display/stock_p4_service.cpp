@@ -1,3 +1,4 @@
+#include "extender/display/rolling/task_memory.hpp"
 #include "extender/diagnostics/render_benchmark.hpp"
 #include "extender/diagnostics/row_priority.hpp"
 #include "extender/diagnostics/owner_trace.hpp"
@@ -186,13 +187,13 @@ bool StockP4Service::prepare(StockRuntimeController &controller) {
   // row waiter has precedence over the next primitive after mutex release.
   // The bounded N04n test selects priority 2 to measure output interference. Pinned
   // IDF esp_timer task runs priority 22/core 0 and never waits for that mutex.
-  if (xTaskCreatePinnedToCore(drawEntry, "stock-draw", 8192, this, 5, &drawing, 0) != pdPASS) {
+  if (agon::extender::createVideoWorker(drawEntry, "stock-draw", 8192, this, 5, &drawing, 0) != pdPASS) {
     controller_->display().enableBackgroundPrimitiveExecution(false);
     controller_ = nullptr; stopping_.store(true); return false;
   }
   draw_task_.store(drawing, std::memory_order_release);
   controller_->bindDrawingTask(drawing);
-  if (xTaskCreatePinnedToCore(outputEntry, "stock-output", 8192, this, kOutputTaskPriority, &output, kOutputTaskCore) != pdPASS) {
+  if (agon::extender::createVideoWorker(outputEntry, "stock-output", 8192, this, kOutputTaskPriority, &output, kOutputTaskCore) != pdPASS) {
     detach(); return false;
   }
   output_task_.store(output, std::memory_order_release);
@@ -242,8 +243,8 @@ void StockP4Service::detach() {
   output_task_.store(nullptr, std::memory_order_release);
   // Retain task handles until any clock callback which loaded them has left.
   timerBarrier();
-  if (drawing) vTaskDelete(drawing);
-  if (output) vTaskDelete(output);
+  if (drawing) agon::extender::deleteVideoWorker(drawing);
+  if (output) agon::extender::deleteVideoWorker(output);
   // With both native readers joined, retain stock's disable/flush path so
   // queued dynamic payloads finish against their still-live native mode.
   controller_->display().enableBackgroundPrimitiveExecution(false);

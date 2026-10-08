@@ -90,6 +90,14 @@ public:
   void copyRgb888Row(int y, uint8_t *destination, uint8_t *signal);
   void encodeSignalRow(int y, uint8_t *signal);
   bool overlayIntersectsRow(int y);
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  // Snapshot access is task-only under native exclusion. Keep this accommodation
+  // in the P4-owned controller rather than changing the upstream base class.
+  using VGAPalettedController::textCursor;
+  using VGAPalettedController::mouseCursor;
+  using VGAPalettedController::getSprite;
+  using VGAPalettedController::spritesCount;
+#endif
 
   // unwanted methods
   P4Rgb888Controller(P4Rgb888Controller const&) = delete;
@@ -245,7 +253,6 @@ private:
 
 
 } // end of namespace
-
 
 
 

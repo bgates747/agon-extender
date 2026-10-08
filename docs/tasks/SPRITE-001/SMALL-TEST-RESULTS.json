@@ -1,0 +1,192 @@
+{
+  "task": "SPRITE-001",
+  "scope": "Two existing paced mode20 cases on unchanged P4 image; diagnostic comparison, not Nurples acceptance",
+  "firmware_build": "rgb-001-r03-b2026-10-07-02-45-45Z",
+  "factory_sha256": "c41d7974f9d734a1464155f02fec3ed3bf122e3e26b21e52306e9b6bf95bacad",
+  "fixture_build": "render-load-r04-b2026-10-05-05-58-59Z",
+  "fixture_sha256": "55f4bb13eb561ac1f3fda98c6ed8b18d479ec0f34d3ddc601b9784935c0b571d",
+  "sprite_count": 16,
+  "sprite_size": [
+    16,
+    16
+  ],
+  "geometry": [
+    512,
+    384
+  ],
+  "output_geometry": [
+    848,
+    480
+  ],
+  "single_buffered": true,
+  "browser_streaming": false,
+  "clock_units": {
+    "nominal_prt_counts_per_second": 72000,
+    "mos_raw_units_per_second": 120,
+    "nominal_frame_budget_ms": 16.666666666666668,
+    "limits": "Nominal PRT conversion; MOS quantization16.67ms; P4 ESP timer separate, not externally calibrated; preparation includes mutex wait"
+  },
+  "rows": [
+    {
+      "case": 46,
+      "kind": "software",
+      "frames": 842,
+      "raw_clock_seconds": 14.033333333333333,
+      "update_hz": 60.0,
+      "p4_window_seconds": 14.042628,
+      "calibration_prt_counts": 35237,
+      "calibration_raw_units": 60,
+      "submit_ms": {
+        "mean": 1.7112199788862497,
+        "median": 1.7083333333333333,
+        "p95": 1.7222222222222223,
+        "max": 1.8055555555555556
+      },
+      "complete_ms": {
+        "mean": 5.016049749274215,
+        "median": 4.902777777777778,
+        "p95": 5.472222222222222,
+        "max": 6.861111111111111
+      },
+      "total_ms": {
+        "mean": 16.64782924254421,
+        "median": 16.65277777777778,
+        "p95": 16.666666666666668,
+        "max": 16.666666666666668
+      },
+      "over_budget_frames": 0,
+      "drain_ms": {
+        "mean": 0.041084223013048635,
+        "max": 2.191
+      },
+      "cache_ms": {
+        "mean": 0.10868327402135232,
+        "max": 0.323
+      },
+      "preparation_ms": {
+        "mean": 0.457576512455516,
+        "max": 2.2
+      },
+      "submissions_hz": 60.031498377654096,
+      "dma_hz": 60.031498377654096,
+      "marker_transitions": 841,
+      "marker_repeats": 2,
+      "raw_evidence": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-03-57-24Z",
+      "run_id": "BENCH-009-2026-10-07-03-57-24Z"
+    },
+    {
+      "case": 54,
+      "kind": "hardware",
+      "frames": 402,
+      "raw_clock_seconds": 6.7,
+      "update_hz": 60.0,
+      "p4_window_seconds": 6.701147,
+      "calibration_prt_counts": 35023,
+      "calibration_raw_units": 60,
+      "submit_ms": {
+        "mean": 1.712824765063571,
+        "median": 1.7083333333333333,
+        "p95": 1.7222222222222223,
+        "max": 1.875
+      },
+      "complete_ms": {
+        "mean": 5.756460751796573,
+        "median": 4.791666666666667,
+        "p95": 10.51388888888889,
+        "max": 14.375
+      },
+      "total_ms": {
+        "mean": 16.638992537313435,
+        "median": 16.65277777777778,
+        "p95": 16.666666666666668,
+        "max": 16.666666666666668
+      },
+      "over_budget_frames": 0,
+      "drain_ms": {
+        "mean": 0.03209203980099502,
+        "max": 0.081
+      },
+      "cache_ms": {
+        "mean": 0.18920149253731344,
+        "max": 0.231
+      },
+      "preparation_ms": {
+        "mean": 3.9527786069651745,
+        "max": 5.522
+      },
+      "submissions_hz": 59.98973011635172,
+      "dma_hz": 59.98973011635172,
+      "marker_transitions": 400,
+      "marker_repeats": 2,
+      "raw_evidence": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-04-04-12Z",
+      "run_id": "BENCH-009-2026-10-07-04-04-12Z"
+    }
+  ],
+  "raw_evidence": [
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-03-57-24Z/results.bin",
+      "bytes": 10256,
+      "sha256": "d7f2bccb39d2f682b5323ce681c2ab2c1cc8d7ac81e6852e0ddf54004bbf5767"
+    },
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-03-57-24Z/telemetry.json",
+      "bytes": 599,
+      "sha256": "fb8fdcdda161d8cb99ed9f0a656038cced6880680c7afd8ac35e065293ce2e24"
+    },
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-03-57-24Z/plan.bin",
+      "bytes": 256,
+      "sha256": "affcf32cb2334cd155bfc1307f51ac4cfa7bfb4408de9a788e38f172703420dd"
+    },
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-03-57-24Z/startup.txt",
+      "bytes": 252,
+      "sha256": "663056c508e020cde039ba7f48a2337d131f7ff5fe437d41cffb8d3e99d27bef"
+    },
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-04-04-12Z/results.bin",
+      "bytes": 4976,
+      "sha256": "8b19c61018bb0b6227cf078b50f6dde73ba1bf9ab235e100d9c543f4a35738a1"
+    },
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-04-04-12Z/telemetry.json",
+      "bytes": 599,
+      "sha256": "a01ef981d89b5362c5d0d44f968bee0cf604c87110e59f6fa0d2f100148a78da"
+    },
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-04-04-12Z/plan.bin",
+      "bytes": 256,
+      "sha256": "49e607661afefd82f16a9b9d42a781b9957d25c1d7f95911883dadbac5279a60"
+    },
+    {
+      "path": "agents/sprite001/diagnostic/evidence/BENCH-009-2026-10-07-04-04-12Z/startup.txt",
+      "bytes": 252,
+      "sha256": "d0de875c6d215f68d6282c17e38fc353882004d126db194e4be04f3e001d23f8"
+    }
+  ],
+  "source_sha256": {
+    "vdp/video/extender/display/p4_rgb888_controller.cpp": "5a741602a09e9c67a2e09be3c551da0e89ad48c6d4696cfc4749051fa4ab6c54",
+    "vdp/video/extender/display/hdmi_output.cpp": "6a4e078fc3687bb59ac575c159d661eea59c6011f0c797004770de0015e24dfa",
+    "vdp/video/extender/display/hdmi_geometry.hpp": "36b3e504f87dbe4431c400ce8da7de1a98fea738d7c50f4ef3de723128264762",
+    "vdp/video/extender/display/rgb888_pixel.hpp": "39a21a64959096fd16562fda409f59d10c3651716939b2ca0132adcc5341bfcb",
+    "vdp/vendor/vdp-gl/src/displaycontroller.cpp": "e639852334723ecc286d14112fccf55c0e316ff427275cc4f699e3097125e174",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp": "4447b81ad53a7dc262e782600259e18fcf866dafe7e64f2c239b35dc186141fa",
+    "qualification/render_load.py": "f46553d8e0f30f7f17dbe0118506443c44826709234497a716d84271b3262367"
+  },
+  "restoration": {
+    "original_startup_sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5",
+    "whole_file_readback_verified": true,
+    "keyboard_ready": true,
+    "pending_or_held_keys": 0,
+    "sd_listener_online": false,
+    "measurement_windows_open": 0,
+    "firmware_changed": false,
+    "user_game_or_assets_changed": false
+  },
+  "limitations": [
+    "Single diagnostic pass; unequal actual durations14.033s software and6.7s hardware",
+    "Both small cases reached60 updates/s; severe ordinary-game stall was not reproduced",
+    "Startup connection timeout preceded any measurement; paired restart recovered and manual Space closed the software case",
+    "No mainboard benchmark in this tranche; mainboard gameplay pass is Author testimony"
+  ]
+}

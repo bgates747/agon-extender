@@ -1,3 +1,4 @@
+#include "extender/display/rolling/task_memory.hpp"
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #include "extender/storage/local/http.hpp"
 #include "extender/storage/webdav/runtime.hpp"
@@ -92,8 +93,8 @@ bool WiredNetworkService::start() noexcept {
   stop_requested_.store(false, std::memory_order_release);
   pending_events_.store(0, std::memory_order_release);
   TaskHandle_t task = nullptr;
-  if (xTaskCreate(&workerEntry, "extender-net", kWorkerStackBytes, this,
-                  kWorkerPriority, &task) != pdPASS) {
+  if (agon::extender::createVideoWorker(&workerEntry, "extender-net", kWorkerStackBytes, this,
+                  kWorkerPriority, &task, tskNO_AFFINITY) != pdPASS) {
     state_.store(WiredServiceState::Faulted, std::memory_order_release);
     ESP_LOGE(kTag, "network worker creation failed");
     return false;
@@ -181,7 +182,7 @@ void WiredNetworkService::worker() noexcept {
   }
   stopHttp();
   worker_task_.store(nullptr, std::memory_order_release);
-  vTaskDelete(nullptr);
+  agon::extender::deleteVideoWorker(nullptr);
 }
 
 void WiredNetworkService::processEvents(std::uint32_t events) noexcept {

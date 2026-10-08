@@ -70,6 +70,38 @@ class HdmiBuildTest(unittest.TestCase):
             with self.assertRaises(SystemExit):
                 build_p4.select_display_profile(self.document,"p4-console","p4-pc",output,benchmark,True)
 
+    def test_smaller_hdmi_timing_is_explicit_and_recorded(self):
+        default = build_p4.select_display_profile(self.document,"p4-console","p4-pc","hdmi","normal",True)
+        smaller = build_p4.select_display_profile(self.document,"p4-console","p4-pc","hdmi","normal",True,"848x480")
+        self.assertNotIn("AGON_EXTENDER_HDMI_848X480=1", default["definitions"])
+        self.assertIn("AGON_EXTENDER_HDMI_848X480=1", smaller["definitions"])
+        self.assertEqual(default["sources"], smaller["sources"])
+        metadata = build_p4.display_input_record("hdmi","normal",True,"848x480")
+        self.assertEqual(metadata["logical_stride_bytes"],2544)
+        self.assertEqual((metadata["configuration"]["width"],metadata["configuration"]["height"]),(848,480))
+        self.assertEqual(metadata["configuration"]["timing"]["h_total"],1104)
+        for output,timing in (("browser","848x480"),("hdmi","692x384")):
+            with self.assertRaises(SystemExit):
+                build_p4.select_display_profile(self.document,"p4-console","p4-pc",output,hdmi_timing=timing)
+
+    def test_automatic_carriers_require_the_complete_lifecycle_profile(self):
+        for direct, rolling, bench in ((False,True,"normal"),(True,False,"normal"),(True,True,"off")):
+            with self.assertRaises(SystemExit):
+                build_p4.select_display_profile(self.document,"p4-console","p4-pc","hdmi",bench,direct,"auto",rolling)
+        profile=build_p4.select_display_profile(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        self.assertIn("AGON_EXTENDER_HDMI_AUTO=1",profile["definitions"])
+        record=build_p4.display_input_record("hdmi","normal",True,"auto",True)
+        self.assertEqual(record["configuration"]["carriers"], [[684,384],[848,480]])
+        scanout=record["scanout"]
+        self.assertEqual(scanout["kind"], "mode-selected-rolling")
+        self.assertEqual(scanout["blocks"],15)
+        self.assertEqual(scanout["runtime_layouts"],
+                         [{"geometry":[684,384],"blocks":12},
+                          {"geometry":[848,480],"blocks":15}])
+        self.assertEqual(scanout["sram_allocation_width"],848)
+        self.assertEqual(scanout["sram_allocation_bytes"],244224)
+        self.assertNotIn("full_frame_geometry",scanout)
+
     def test_bridge_copy_or_missing_link_is_rejected(self):
         bridge = ROOT / "vdp/components/esp_lcd_lt8912b/esp_lcd_lt8912b.c"
         obj = "esp-idf/esp_lcd_lt8912b/CMakeFiles/__idf_esp_lcd_lt8912b.dir/esp_lcd_lt8912b.c.obj"
@@ -88,6 +120,44 @@ class HdmiBuildTest(unittest.TestCase):
             validate_p4_build.check_hdmi_linkage(commands, ninja.replace(f"link {archive}", "link unrelated.a"), "hdmi")
         with self.assertRaisesRegex(SystemExit, "browser build compiled"):
             validate_p4_build.check_hdmi_linkage(commands, ninja, "browser")
+
+    def test_rolling_scanout_is_only_selected_for_explicit_experiments(self):
+        selected = build_p4.select_display_profile(self.document, "p4-console",
+            "p4-pc", "hdmi", "normal", True, "848x480", True)
+        self.assertIn("AGON_EXTENDER_ROLLING_SCANOUT=1", selected["definitions"])
+        self.assertTrue(any(p.endswith("rolling/scene.cpp") for p in selected["sources"]))
+        for direct, timing, bench in ((False,"848x480","normal"),
+                (True,"720p","normal"),(True,"848x480","off")):
+            with self.assertRaises(SystemExit):
+                build_p4.select_display_profile(self.document,"p4-console","p4-pc",
+                    "hdmi",bench,direct,timing,True)
+
+    def test_native_active_timing_and_bounded_memory_selection(self):
+        selected = build_p4.select_display_profile(self.document, "p4-console",
+            "p4-pc", "hdmi", "normal", True, "512x384", True)
+        self.assertIn("AGON_EXTENDER_HDMI_512X384=1", selected["definitions"])
+        self.assertNotIn("AGON_EXTENDER_HDMI_848X480=1", selected["definitions"])
+        metadata = build_p4.display_input_record("hdmi", "normal", True, "512x384", True)
+        self.assertEqual(metadata["logical_stride_bytes"], 1536)
+        self.assertEqual(metadata["scanout"]["blocks"], 12)
+        self.assertEqual(metadata["scanout"]["refill_abort_us"], 1600)
+        configuration = metadata["configuration"]
+        self.assertEqual((configuration["width"], configuration["height"]), (512,384))
+        self.assertEqual(configuration["timing"]["h_front_sync_back"], [368,112,112])
+        self.assertEqual(configuration["timing"]["v_front_sync_back"], [102,8,23])
+        self.assertEqual(configuration["aspect_hint"], "4:3")
+
+    def test_wide_carrier_preserves_centered_canvas_and_dma_geometry(self):
+        selected = build_p4.select_display_profile(self.document, "p4-console",
+            "p4-pc", "hdmi", "normal", True, "684x384", True)
+        self.assertIn("AGON_EXTENDER_HDMI_684X384=1", selected["definitions"])
+        metadata = build_p4.display_input_record("hdmi", "normal", True, "684x384", True)
+        self.assertEqual(metadata["logical_stride_bytes"], 2052)
+        self.assertEqual(metadata["scanout"]["blocks"], 12)
+        self.assertEqual(metadata["scanout"]["refill_abort_us"], 1600)
+        self.assertEqual(684 * 32 * 3 * metadata["scanout"]["sram_slots"], 196992)
+        self.assertEqual(metadata["configuration"]["timing"]["h_front_sync_back"], [196,112,112])
+        self.assertEqual(metadata["configuration"]["aspect_hint"], "16:9")
 
     def test_dirty_experimental_permission_does_not_waive_normal_identity_guard(self):
         identity = "hdmi-001-r01-b2026-10-05-01-23-45Z"

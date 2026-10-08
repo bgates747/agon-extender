@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#include "esp_heap_caps.h"
+#endif
 #include "extender/diagnostics/render_benchmark.hpp"
 // Extracted from WiredNetworkService: shared socket/credit/lease ownership.
 #include "http_video_service.hpp"
@@ -33,6 +36,11 @@ bool HttpVideoService::startServer(web::EmbeddedAsset const *assets, std::size_t
   config.server_port=options.port; config.ctrl_port=options.control_port;
   config.max_uri_handlers=options.max_uri_handlers;
   config.max_open_sockets=options.max_open_sockets;config.stack_size=options.stack_bytes;
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  // HDMI02-F: socket/FAT-only handlers; no flash/NVS/cache-off operations.
+  // IDF owns matching capability-aware deletion on server stop.
+  config.task_caps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;
+#endif
   config.open_fn=&socketOpened;config.close_fn=&socketClosed;
   config.send_wait_timeout=kVideoSendWaitSeconds;config.lru_purge_enable=false;
   config.global_user_ctx=this;config.global_user_ctx_free_fn=nullptr;

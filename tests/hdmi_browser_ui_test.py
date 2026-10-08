@@ -6,6 +6,7 @@ endpoint receives traffic. Both reset controls and keyboard ownership remain
 the existing browser mechanisms.
 """
 from functools import partial
+import argparse
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
@@ -23,6 +24,9 @@ class Quiet(SimpleHTTPRequestHandler):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--hdmi848', action='store_true')
+    args = parser.parse_args()
     server = ThreadingHTTPServer(("127.0.0.1", 0), partial(Quiet, directory=str(WEB)))
     Thread(target=server.serve_forever, daemon=True).start()
     try:
@@ -37,6 +41,8 @@ def main():
             html = (WEB / "index.html").read_text().replace(
                 'name="agon-video-output" content="browser"',
                 'name="agon-video-output" content="hdmi"')
+            if args.hdmi848:
+                html = html.replace('content="1280x720 60 Hz"', 'content="848x480 60.07 Hz"')
             page.route("**/?demo", lambda route: route.fulfill(
                 content_type="text/html", body=html))
             page.add_init_script("""
@@ -66,7 +72,7 @@ window.WebSocket = class extends EventTarget {
 """)
             page.goto(f"http://127.0.0.1:{server.server_port}/?demo")
             page.wait_for_function("document.querySelector('#state').textContent === 'HDMI output'")
-            assert page.locator("#surface").inner_text() == "HDMI 1280x720 60 Hz"
+            assert page.locator("#surface").inner_text() == ("HDMI 848x480 60.07 Hz" if args.hdmi848 else "HDMI 1280x720 60 Hz")
             for selector in ("#video-viewport", "#connect", "#demo", "#fullscreen", ".diagnostics"):
                 assert not page.locator(selector).is_visible(), selector
             assert page.locator("#hdmi-output").is_visible()

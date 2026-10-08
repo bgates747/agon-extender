@@ -7,6 +7,10 @@ classification does not grant new execution or waive human acceptance.
 
 ## Active board-build preparation
 
+- [ ] **[SPRITE-001 — Nurples hardware-sprite trial](docs/tasks/SPRITE-001.md)** — Author reports beautiful output from the full684 memory remedy; the thin tear disappears when paused, and mainboard hardware sprites show no tear. Rollback reproduces ordinary Nurples's upper-playfield visibility defect. HDMI-002 now selects a480-line carrier on mode0 exit; Author confirms full upper text. ExCom SD admission, tearing and broader qualification remain open.
+
+- [ ] **[HDMI-002 — HDMI video timings](docs/tasks/HDMI-002.md)** — r10 installed and bounded physical checks pass: widescreen mode96 and ordinary mode20 each complete 3,600 Nurples updates at nominal 60/s, retaining about 57% median game-loop headroom with no scanout faults. Small sprite checks and same-carrier 96-to97 transition pass. Normal startup/configuration restored; Author accepts gameplay and correct outro; physical post-fault recovery remains open. Next is the 320×240 pattern gate. Exact r06 rollback retained. ExCom SD admission, slight tearing, broader qualification and 240-line output remain separate.
+
 - [ ] **[BOARD-001 — Board-selectable P4 builds and compile-time pin profiles](docs/tasks/BOARD-001.md)** — Board profiles, shared pin consumers, ARM builds and validation pass for DevKit/PC. Web keyboard/video works; Author reports Nurples at 16–17 fps. The tested full-speed USB experiment bypasses the previous transaction-translation rejection, but serial now confirms failure of the keyboard's initial device-descriptor transfer. Try an alternative keyboard as the next hardware control. SD checks, electrical review and canonical qualification/acceptance remain.
 
 ## Networking prior-art review — awaiting review
@@ -164,3 +168,5 @@ scope versus later higher-rate client/experiment records must be reconciled
 before future output qualification; do not assume that a current firmware cap
 has been verified. See PLAN-001-N04 in the disposition table. Old experiment
 headings no longer compete with the approved current sequence.
+
+- [ ] **[RELEASE-001 — Native HDMI production v0.2.0](docs/tasks/RELEASE-001.md)** — Version authorized; preserve accepted r10/EMOS bytes, complete native receipt/paired qualification and packaging before selection and annotated release tag.

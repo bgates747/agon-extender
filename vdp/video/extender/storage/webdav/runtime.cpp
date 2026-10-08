@@ -12,6 +12,10 @@
 #include <esp_timer.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#include <freertos/idf_additions.h>
+#include <esp_heap_caps.h>
+#endif
 #include <lwip/inet.h>
 #include <lwip/sockets.h>
 namespace agon::extender::webdav {
@@ -20,6 +24,20 @@ constexpr unsigned Port = 8081, Quota = 32U * 1024U * 1024U,
                    WorkerStack = 32768;
 std::atomic_flag workerBusy = ATOMIC_FLAG_INIT;
 TaskHandle_t acceptTask = nullptr;
+BaseType_t startStorageWorker(TaskFunction_t function, const char *name, void *argument) {
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  // SPRITE-001 experiment only: the permanent application worker and temporary
+  // DAV worker otherwise require32KiB internal SRAM each beside244224 bytes of
+  // scanout strips. These task-only FAT/UART/socket paths perform no SPI-flash
+  // operations. Use IDF's supported external-stack allocation/deletion pair;
+  // keep peripheral DMA buffers and all interrupt stacks internal. Requalify
+  // this placement if storage workers ever gain flash/NVS/cache-off operations.
+  return xTaskCreateWithCaps(function,name,WorkerStack,argument,1,nullptr,
+                             MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+#else
+  return xTaskCreate(function,name,WorkerStack,argument,1,nullptr);
+#endif
+}
 class QueueAccess final : public storage::admission::Access {
 public:
   void
@@ -101,7 +119,11 @@ void worker(void *arg) {
   }
   workerBusy.clear();
   completion.complete();
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  vTaskDeleteWithCaps(nullptr);
+#else
   vTaskDelete(nullptr);
+#endif
 }
 // Application packets are consumed by a dedicated foreground storage worker.
 // Queue critical sections only copy bytes; FAT operations never hold sd_mutex.
@@ -153,9 +175,8 @@ void acceptLoop(void *arg) {
       unavailable(fd);
       continue;
     }
-    if (xTaskCreate(worker, "sd-webdav", WorkerStack,
-                    reinterpret_cast<void *>(static_cast<intptr_t>(fd)), 1,
-                    nullptr) != pdPASS) {
+    if (startStorageWorker(worker, "sd-webdav",
+                    reinterpret_cast<void *>(static_cast<intptr_t>(fd))) != pdPASS) {
       workerBusy.clear();
       unavailable(fd);
     }
@@ -182,7 +203,7 @@ bool startRuntime() noexcept {
     ::close(fd);
     return false;
   }
-  if(xTaskCreate(applicationLoop,"sd-application",WorkerStack,nullptr,1,nullptr)!=pdPASS)
+  if(startStorageWorker(applicationLoop,"sd-application",nullptr)!=pdPASS)
     return false;
   portENTER_CRITICAL(&storage::sd_mutex);
   storage::sd_runtime_ready = true;

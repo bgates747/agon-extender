@@ -5,7 +5,11 @@
 
 namespace agon::extender::display {
 inline bool rgb888ExperimentGeometry(int colours, int width, int height) noexcept {
-  return colours == 64 && ((width == 512 && height == 384) || (width == 320 && height == 240));
+  return colours == 64 && (
+#ifdef AGON_EXTENDER_HDMI_AUTO
+      (width == 848 && height == 480) ||
+#endif
+      (width == 512 && height == 384) || (width == 320 && height == 240));
 }
 class Rgb888PixelRef {
  public:

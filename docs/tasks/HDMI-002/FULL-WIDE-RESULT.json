@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "candidate_build": "rgb-001-r04-b2026-10-07-13-47-13Z",
+  "candidate_factory_sha256": "83f8f1bc1fe086ddc53bcd32c4658ed5c47954ed9e8525beda274b1f05dfeaa2",
+  "fixture_build": "scan-scroll-suite-r03-b2026-10-07-06-32-42Z",
+  "status": "workload-completes-but-exit-crashes",
+  "game_result_sha256": "4a0ebd20bf0bb713e67c425bdb17233b6de17a67b2dfa471d093bbe2c151bf2a",
+  "game_summary": {
+    "case": 9,
+    "count": 3600,
+    "expected": 3600,
+    "warmup": 120,
+    "controls": 1,
+    "window_tag": 0,
+    "build_id": "scan-scroll-suite-r03-b2026-10-07-06-32-42Z",
+    "abort": false,
+    "window_start": 2994,
+    "window_end": 10194,
+    "calibration_prt": 35726,
+    "calibration_mos": 60,
+    "drain": 44,
+    "evidence_complete": true,
+    "scope": "unfenced game submission/pacing",
+    "active": {
+      "median_counts": 516.0,
+      "p95_counts": 639,
+      "max_counts": 853,
+      "median_budget_percent": 43.0,
+      "p95_budget_percent": 53.25,
+      "median_ms": 7.166666666666667,
+      "over_budget_percent": 0.0
+    },
+    "total": {
+      "median_counts": 1191.0,
+      "p95_counts": 1193,
+      "max_counts": 1193,
+      "median_budget_percent": 99.25,
+      "p95_budget_percent": 99.41666666666667,
+      "median_ms": 16.541666666666668,
+      "over_budget_percent": 0.0
+    },
+    "wait": {
+      "median_counts": 675.0,
+      "p95_counts": 861,
+      "max_counts": 908,
+      "median_budget_percent": 56.25,
+      "p95_budget_percent": 71.75,
+      "median_ms": 9.375,
+      "over_budget_percent": 0.0
+    },
+    "median_active_headroom_percent": 57.0,
+    "fault_rows": 0,
+    "late_rows": 0,
+    "longest_over_budget_streak": 0,
+    "window_raw_mos_ticks": 7200,
+    "nominal_updates_per_second": 60.0,
+    "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+    "unmeasured_tail_estimate_ms": 435.1249999999993
+  },
+  "output_observations": {
+    "steady_windows": [
+      {
+        "uptime_ms": 342798.0,
+        "seconds": 10.005,
+        "updates_s": 60.071,
+        "submissions_s": 60.071,
+        "scanout_hz": 60.071
+      },
+      {
+        "uptime_ms": 352804.0,
+        "seconds": 10.005,
+        "updates_s": 60.069,
+        "submissions_s": 60.069,
+        "scanout_hz": 60.069
+      },
+      {
+        "uptime_ms": 362809.0,
+        "seconds": 10.005,
+        "updates_s": 60.068,
+        "submissions_s": 60.068,
+        "scanout_hz": 60.068
+      },
+      {
+        "uptime_ms": 372814.0,
+        "seconds": 10.005,
+        "updates_s": 60.07,
+        "submissions_s": 60.07,
+        "scanout_hz": 60.07
+      },
+      {
+        "uptime_ms": 382819.0,
+        "seconds": 10.005,
+        "updates_s": 60.069,
+        "submissions_s": 60.069,
+        "scanout_hz": 60.069
+      },
+      {
+        "uptime_ms": 392824.0,
+        "seconds": 10.005,
+        "updates_s": 60.07,
+        "submissions_s": 60.07,
+        "scanout_hz": 60.07
+      }
+    ],
+    "steady_total_seconds": 60.03,
+    "free_internal_min_observed": 83,
+    "final_refill_max_us": 903,
+    "final_compose_max_us": 280,
+    "final_copy_max_us": 858,
+    "final_ready_lead_min_us": 1131,
+    "scanout_recorded_faults": 0,
+    "author_visual": "Fantastic; no flicker. Slight tearing about one third down from top. Confirmed observation was before it stopped.",
+    "crash": "processLoop shared_ptr BufferStream mutex destruction during bufferClear/all-buffers cleanup"
+  },
+  "trajectory_reference": {
+    "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+    "firmware": "rgb-001-r03-b2026-10-07-02-45-45Z",
+    "sprite_type": "software",
+    "output": "848x480",
+    "records": 3600,
+    "matching_fields": [
+      "update",
+      "state",
+      "phase",
+      "actors",
+      "projectiles",
+      "map_row",
+      "rng"
+    ],
+    "mismatched_rows": 0,
+    "comparable_workload": true,
+    "identical_rendering_path": false
+  },
+  "small_cases": [
+    {
+      "run_id": "BENCH-009-2026-10-07-14-00-55Z",
+      "case": 50,
+      "frames": 403,
+      "bad_frames": 0,
+      "nominal_updates_s": 60.0,
+      "submit_counts": {
+        "p95": 17,
+        "p95_ms": 0.2361111111111111,
+        "p95_budget_pct": 1.4166666666666667,
+        "max": 17
+      },
+      "complete_counts": {
+        "p95": 66,
+        "p95_ms": 0.9166666666666666,
+        "p95_budget_pct": 5.5,
+        "max": 289
+      }
+    },
+    {
+      "run_id": "BENCH-009-2026-10-07-14-03-04Z",
+      "case": 54,
+      "frames": 402,
+      "bad_frames": 0,
+      "nominal_updates_s": 60.0,
+      "submit_counts": {
+        "p95": 131,
+        "p95_ms": 1.8194444444444444,
+        "p95_budget_pct": 10.916666666666666,
+        "max": 167
+      },
+      "complete_counts": {
+        "p95": 240,
+        "p95_ms": 3.3333333333333335,
+        "p95_budget_pct": 20.0,
+        "max": 519
+      }
+    }
+  ],
+  "core_sha256": "acc6303e6ba55e51c2505b68f838f39e4b0c19271af8f127b7a513e8c2123775",
+  "production_promoted": false
+}

@@ -12,6 +12,9 @@
 // authoritative. Remove only if upstream acquires an equivalent generic
 // bitmapped-controller integration boundary.
 
+#ifdef AGON_EXTENDER_HDMI_AUTO
+#include "extender/display/hdmi_output.hpp"
+#endif
 #include <memory>
 #include <new>
 #if defined(ESP_PLATFORM)
@@ -307,6 +310,21 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	using namespace agon::extender::display;
 	agon::extender::display::OfficialModeLine timing{};
 	if (!agon::extender::display::parseOfficialModeline(modeLine, timing)) return 2;
+#ifdef AGON_EXTENDER_HDMI_AUTO
+	// HDMI02-R: one DSI peripheral cannot stage two carriers concurrently.
+	// Retire all borrowed storage before deleting the panel. If creation fails,
+	// official vdu_mode reconstructs old/default mode through this same path.
+	if(hdmiOutput().needsMode(timing.width,timing.height)) {
+		modeStatus.invalidate();
+		if(_stockFrameService) _stockFrameService->detach();
+		resetMousePositioner(0,0,nullptr);
+		canvas.reset();
+		_stockController.reset();
+		_stockFrameService.reset();
+		_VGAController=nullptr;
+		if(!hdmiOutput().selectMode(timing.width,timing.height)) return 2;
+	}
+#endif
 	using Candidate = PreparedModeCandidate<StockRuntimeController,
 		fabgl::Canvas, StockP4Service>;
 	Candidate candidate{};
@@ -577,6 +595,16 @@ int8_t changeMode(uint8_t mode) {
 		case 30:
 			errVal = changeResolution(2, QSVGA_640x256_60Hz);
 			break;
+#ifdef AGON_EXTENDER_HDMI_AUTO
+		// HDMI02-W: experimental Extender-only IDs, absent from stock v2.16.
+		// Expose the entire already-proven848 carrier. Keep the native indexed /
+		// RGB222 controllers and stock semantics; no RGB888 fast-path expansion.
+		// This is logical-mode metadata; HdmiOutput owns physical DSI timings.
+		case 96: case 97: case 98: case 99:
+			errVal = changeResolution(mode == 96 ? 64 : mode == 97 ? 16 : mode == 98 ? 4 : 2,
+				"\"848x480@60Hz\" 34.285714 848 880 992 1104 480 486 494 517 +HSync +VSync");
+			break;
+#endif
 		case 129:
 			errVal = changeResolution(4, VGA_640x480_60Hz, true);
 			break;
@@ -659,7 +687,13 @@ int8_t changeMode(uint8_t mode) {
 			_VGAColourDepth, browserNominalRefreshHz, _VGAController->isDoubleBuffered()});
 #endif
 	}
-	if (errVal != -1) {
+	if (errVal != -1
+#ifdef AGON_EXTENDER_HDMI_AUTO
+        // Carrier replacement retires the old controller. A failed allocation
+        // must reach vdu_mode's old/default fallback before touching a palette.
+        && _VGAController != nullptr
+#endif
+    ) {
 		restorePalette();
 	}
 	return errVal;

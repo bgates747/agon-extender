@@ -228,7 +228,7 @@ timing. See
 [ADR-0015](decisions/ADR-0015-p4-display-backend-and-frame-service.md).
 
 The planned P4-PC HDMI adapter presents fitting mode images unscaled and
-centered in a fixed 1280×720 nominal 60 Hz output buffer, with black
+centered in a selected widescreen nominal60Hz output buffer (initially1280×720), with black
 letterboxing and pillarboxing, cropping centered oversized images. Each logical
 pixel occupies one output pixel; RGB888 conversion and composition remain at
 the output boundary. HDMI follows logical mode double buffering where feasible,
@@ -240,7 +240,21 @@ selection is owned by EMOS. This accepted
 geometry is implemented with bounded hardware evidence; full qualification
 remains pending. See
 [ADR-0024](decisions/ADR-0024-centered-unscaled-hdmi.md); HDMI-001 owns remaining
-implementation and qualification.
+implementation and qualification. The Author specifies that logical512×384
+stays pillarboxed inside a widescreen carrier; it is not a4:3 HDMI output target.
+HDMI-002 qualifies smaller widescreen timings under that same presentation rule.
+The Author also authorizes full-width logical drawing on the proven848×480
+carrier. Such Extender-specific modes use ordinary EMOS-routed VDU22 selection;
+stock mode IDs and geometry remain unchanged. Initial IDs are experimental and
+their implementation/qualification belongs to HDMI-002, not the stock API.
+At an ordinary EMOS-routed logical mode change, the P4 may select the smallest
+proven fitting carrier:684×384 for fitting images up to384lines,848×480 for
+480-line images. The P4 joins drawing/output, retires borrowed framebuffer
+references and restarts DSI/bridge ownership on core1 before publishing the new
+mode. Same-carrier changes retain the existing candidate lifecycle. Logical
+mode IDs and buffering semantics remain stock-owned. Oversized images retain
+the documented crop fallback; this does not qualify additional carriers.
+Experimental timing selection does not change legacy logical mode IDs.
 
 The separate FabGL `VGATextController` is retained in the complete vendored
 vdp-gl source but excluded from Extender builds. Official VDP text remains on

@@ -1,0 +1,148 @@
+{
+  "case": 9,
+  "count": 3600,
+  "expected": 3600,
+  "warmup": 120,
+  "controls": 5,
+  "window_tag": 6209068,
+  "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+  "abort": false,
+  "window_start": 2998,
+  "window_end": 10198,
+  "calibration_prt": 35003,
+  "calibration_mos": 60,
+  "drain": 251,
+  "evidence_complete": true,
+  "scope": "unfenced game submission/pacing",
+  "active": {
+    "median_counts": 512.0,
+    "p95_counts": 636,
+    "max_counts": 841,
+    "median_budget_percent": 42.666666666666664,
+    "p95_budget_percent": 53.0,
+    "median_ms": 7.111111111111111,
+    "over_budget_percent": 0.0
+  },
+  "total": {
+    "median_counts": 1191.0,
+    "p95_counts": 1193,
+    "max_counts": 1193,
+    "median_budget_percent": 99.25,
+    "p95_budget_percent": 99.41666666666667,
+    "median_ms": 16.541666666666668,
+    "over_budget_percent": 0.0
+  },
+  "wait": {
+    "median_counts": 679.0,
+    "p95_counts": 863,
+    "max_counts": 895,
+    "median_budget_percent": 56.583333333333336,
+    "p95_budget_percent": 71.91666666666667,
+    "median_ms": 9.430555555555555,
+    "over_budget_percent": 0.0
+  },
+  "median_active_headroom_percent": 57.333333333333336,
+  "fault_rows": 0,
+  "late_rows": 0,
+  "longest_over_budget_streak": 0,
+  "window_raw_mos_ticks": 7200,
+  "nominal_updates_per_second": 60.0,
+  "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+  "unmeasured_tail_estimate_ms": 436.63888888888636,
+  "p4_window": {
+    "tag": 6209068,
+    "id": 9,
+    "flags": 1,
+    "start_us": 187286917,
+    "end_us": 247349261,
+    "scanouts": 3608,
+    "updates": 3608,
+    "marker_valid": 0,
+    "marker_invalid": 3608,
+    "last_frame": 4294967295,
+    "marker_transitions": 0,
+    "marker_repeats": 0,
+    "phases": [
+      {
+        "calls": 3608,
+        "us": 17385223,
+        "max_us": 8888,
+        "boundary_drops": 0
+      },
+      {
+        "calls": 0,
+        "us": 0,
+        "max_us": 0,
+        "boundary_drops": 0
+      },
+      {
+        "calls": 0,
+        "us": 0,
+        "max_us": 0,
+        "boundary_drops": 0
+      },
+      {
+        "calls": 0,
+        "us": 0,
+        "max_us": 0,
+        "boundary_drops": 0
+      },
+      {
+        "calls": 3608,
+        "us": 2132782,
+        "max_us": 897,
+        "boundary_drops": 0
+      },
+      {
+        "calls": 3608,
+        "us": 2117972,
+        "max_us": 704,
+        "boundary_drops": 0
+      }
+    ]
+  },
+  "trajectory_matches_retained_mainboard": true,
+  "raw_sha256": "60641c081462de81652b7e013c5a90d0d6ba9a18c8f854f0cc58617cf311fa49",
+  "activity": {
+    "actors": {
+      "min": 0,
+      "max": 5
+    },
+    "projectiles": {
+      "min": 0,
+      "max": 4
+    }
+  },
+  "hdmi": {
+    "window_seconds": 60.062344,
+    "submissions_per_second": 60.07091564724813,
+    "dma_scanouts_per_second": 60.07091564724813
+  },
+  "actor_groups": [
+    {
+      "actors_min": 3,
+      "actors_max": 255,
+      "count": 995,
+      "median_budget_percent": 47.666666666666664,
+      "p95_budget_percent": 55.25
+    },
+    {
+      "actors_min": 1,
+      "actors_max": 2,
+      "count": 1921,
+      "median_budget_percent": 42.25,
+      "p95_budget_percent": 52.333333333333336
+    },
+    {
+      "actors_min": 0,
+      "actors_max": 0,
+      "count": 684,
+      "median_budget_percent": 30.125,
+      "p95_budget_percent": 38.833333333333336
+    }
+  ],
+  "interpretation": "One functional/performance smoke; PRT nominal72kHz and MOS nominal120ticks/s; DMA completion is not optical flicker or live-input acceptance.",
+  "evidence_path": "agents/hdmi002/nurples",
+  "sd_result": "/agents/extender/results/hdmi002-g01/nurples3600.bin",
+  "firmware_build": "rgb-001-r03-b2026-10-07-02-45-45Z"
+}

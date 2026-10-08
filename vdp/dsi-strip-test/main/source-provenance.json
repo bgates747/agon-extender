@@ -1,0 +1,32 @@
+{
+  "stock_source": "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp",
+  "stock_source_sha256": "4447b81ad53a7dc262e782600259e18fcf866dafe7e64f2c239b35dc186141fa",
+  "function_sha256": "ee7f7612f9df7950b7ac7490262d535df47cc497e4783c416bc20997a307c185",
+  "body_unchanged": true,
+  "assets": [
+    {
+      "project": "nurples-repair",
+      "path": "assets/rgba2/sprites/ship_0l.rgba2",
+      "sha256": "2f1a335955dc4f7a2ed8f6b86cffcc218b947a479a3d00e719adf426fec65b55",
+      "bytes": 256
+    },
+    {
+      "project": "nurples-repair",
+      "path": "assets/rgba2/sprites/seeker_000.rgba2",
+      "sha256": "1489867c7e8e4ce165bbd483a9e93fa844865cb67e1d584b449d83a10b6af078",
+      "bytes": 256
+    },
+    {
+      "project": "nurples-repair",
+      "path": "assets/rgba2/sprites/turret_000.rgba2",
+      "sha256": "922c8e9079830dcbd237aff9be413e4d634f064845c1ec31e029c75373fe2560",
+      "bytes": 256
+    },
+    {
+      "project": "nurples-repair",
+      "path": "assets/rgba2/sprites/fireball_2_000.rgba2",
+      "sha256": "c63c4966f8c95813c036326ae7ba062994944c573ccdab53fea7cf4e47be1bc8",
+      "bytes": 256
+    }
+  ]
+}

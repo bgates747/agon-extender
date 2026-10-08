@@ -1,9 +1,12 @@
+#include "extender/display/rolling/task_memory.hpp"
 #include "extender/diagnostics/render_benchmark.hpp"
 #include "esp_heap_caps.h"
 // HDMI-001 uses the visually accepted P4PC-001 r06/r09 timing, not the generic
 // Olimex 64 MHz preset. IDF 5.5.5 on P4 v1.3 has no hardware VSYNC interrupt:
 // its callback is a whole-frame DMA completion proxy. Rendering remains on the
-// task, and only frame notification executes inside the scanout ISR.
+// task in the normal output path. The explicitly selected rolling experiment
+// additionally copies strips by DMA2D and paints immutable sprite snapshots in
+// completion callbacks; it never enters the mutable native renderer there.
 #include "extender/display/hdmi_output.hpp"
 #include "extender/display/stock_runtime_controller.hpp"
 #include "extender/display/presentation_snapshot_pool.hpp"
@@ -13,11 +16,15 @@
 #include "freertos/task.h"
 #include <algorithm>
 #include <cstring>
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#include "extender/display/rolling/bridge.h"
+#include "extender/display/rolling/strip_probe.h"
+#endif
 
 namespace agon::extender::display {
 namespace {
 constexpr char kTag[] = "ext-hdmi";
-constexpr std::size_t kBufferBytes = kHdmiStride * kHdmiHeight;
+
 static_assert(std::atomic<std::uint32_t>::is_always_lock_free,
               "Scanout ISR requires lock-free 32-bit counters");
 }
@@ -26,6 +33,7 @@ HdmiOutput &hdmiOutput() { static HdmiOutput output; return output; }
 
 void HdmiOutput::cleanup() {
   ready_ = false;
+  output_size_.store(0, std::memory_order_release);
   if (panel_) { esp_lcd_panel_del(panel_); panel_ = nullptr; }
   for (auto &io : io_) if (io) { esp_lcd_panel_io_del(io); io = nullptr; }
   if (dsi_) { esp_lcd_del_dsi_bus(dsi_); dsi_ = nullptr; }
@@ -37,6 +45,8 @@ void HdmiOutput::cleanup() {
   buffers_[0] = buffers_[1] = nullptr;
   buffer_count_ = 0;
   ownership_.reset();
+  report_updates_ = report_submissions_ = report_swap_drops_ = 0;
+  report_conversion_us_ = report_cache_us_ = report_wait_us_ = report_conversion_max_us_ = 0;
   buffer_width_[0] = buffer_width_[1] = 0;
   buffer_height_[0] = buffer_height_[1] = 0;
   scanouts_.store(0, std::memory_order_relaxed);
@@ -47,7 +57,7 @@ bool HdmiOutput::start() {
   if (ready_) return true;
 #ifdef AGON_EXTENDER_BENCH_OFF
   // Retain the same RGB888 allocation while deliberately starting no DSI DMA.
-  for(auto &buffer:buffers_)buffer=static_cast<std::uint8_t *>(heap_caps_aligned_calloc(64,1,kBufferBytes,MALLOC_CAP_SPIRAM));
+  for(auto &buffer:buffers_)buffer=static_cast<std::uint8_t *>(heap_caps_aligned_calloc(64,1,bufferBytes(),MALLOC_CAP_SPIRAM));
   if(!buffers_[0]||!buffers_[1]){cleanup();return false;}
   buffer_count_=2;ready_=true;
 #ifdef AGON_EXTENDER_DIRECT_RGB888
@@ -98,46 +108,48 @@ bool HdmiOutput::start() {
   bus_config.bus_id = 0;
   bus_config.num_data_lanes = 2;
   bus_config.phy_clk_src = MIPI_DSI_PHY_CLK_SRC_DEFAULT;
-  bus_config.lane_bit_rate_mbps = 720;
+  bus_config.lane_bit_rate_mbps = timing_.lane_mbps;
   error = esp_lcd_new_dsi_bus(&bus_config, &dsi_);
   if (error != ESP_OK) return failed(error, "DSI bus");
 
   esp_lcd_dpi_panel_config_t dpi{};
   dpi.virtual_channel = 0;
-  dpi.dpi_clk_src = MIPI_DSI_DPI_CLK_SRC_DEFAULT;
-  dpi.dpi_clock_freq_mhz = 60;
+  dpi.dpi_clk_src = MIPI_DSI_DPI_CLK_SRC_PLL_F240M;
+  dpi.dpi_clock_freq_mhz = timing_.pixel_mhz;
   dpi.in_color_format = LCD_COLOR_FMT_RGB888;
   dpi.out_color_format = LCD_COLOR_FMT_RGB888;
   dpi.num_fbs = 2;
-  dpi.video_timing.h_size = kHdmiWidth;
-  dpi.video_timing.v_size = kHdmiHeight;
-  dpi.video_timing.hsync_pulse_width = 32;
-  dpi.video_timing.hsync_back_porch = 28;
-  dpi.video_timing.hsync_front_porch = 10;
-  dpi.video_timing.vsync_pulse_width = 5;
-  dpi.video_timing.vsync_back_porch = 13;
-  dpi.video_timing.vsync_front_porch = 3;
+  dpi.video_timing.h_size = width();
+  dpi.video_timing.v_size = height();
+  dpi.video_timing.hsync_pulse_width = timing_.h_sync;
+  dpi.video_timing.hsync_back_porch = timing_.h_back;
+  dpi.video_timing.hsync_front_porch = timing_.h_front;
+  dpi.video_timing.vsync_pulse_width = timing_.v_sync;
+  dpi.video_timing.vsync_back_porch = timing_.v_back;
+  dpi.video_timing.vsync_front_porch = timing_.v_front;
   dpi.flags.disable_lp = true;
   // We expand straight into panel memory. DMA2D would add a copy and an
   // intermediate format; it does not expand stock RGB222/palette storage.
   dpi.flags.use_dma2d = false;
 
   lt8912b_vendor_config_t vendor{};
-  vendor.video_timing.hfp = 10;
-  vendor.video_timing.hs = 32;
-  vendor.video_timing.hbp = 28;
-  vendor.video_timing.hact = kHdmiWidth;
-  vendor.video_timing.htotal = 1350;
-  vendor.video_timing.vfp = 3;
-  vendor.video_timing.vs = 5;
-  vendor.video_timing.vbp = 13;
-  vendor.video_timing.vact = kHdmiHeight;
-  vendor.video_timing.vtotal = 741;
-  vendor.video_timing.h_polarity = true;
-  vendor.video_timing.v_polarity = false;
-  vendor.video_timing.vic = 4;
-  vendor.video_timing.aspect_ratio = LT8912B_ASPECT_RATION_16_9;
-  vendor.video_timing.pclk_mhz = 60;
+  vendor.video_timing.hfp = timing_.h_front;
+  vendor.video_timing.hs = timing_.h_sync;
+  vendor.video_timing.hbp = timing_.h_back;
+  vendor.video_timing.hact = width();
+  vendor.video_timing.htotal = timing_.hTotal();
+  vendor.video_timing.vfp = timing_.v_front;
+  vendor.video_timing.vs = timing_.v_sync;
+  vendor.video_timing.vbp = timing_.v_back;
+  vendor.video_timing.vact = height();
+  vendor.video_timing.vtotal = timing_.vTotal();
+  vendor.video_timing.h_polarity = timing_.h_positive;
+  vendor.video_timing.v_polarity = timing_.v_positive;
+  vendor.video_timing.vic = timing_.vic;
+  vendor.video_timing.aspect_ratio = width() == 512
+      ? LT8912B_ASPECT_RATION_4_3 : LT8912B_ASPECT_RATION_16_9;
+  // Integer value is used only by the disabled bridge-internal test pattern.
+  vendor.video_timing.pclk_mhz = static_cast<unsigned>(timing_.pixel_mhz+0.5f);
   vendor.mipi_config.dsi_bus = dsi_;
   vendor.mipi_config.dpi_config = &dpi;
   vendor.mipi_config.lane_num = 2;
@@ -184,15 +196,45 @@ bool HdmiOutput::start() {
   ownership_.reset();
   portEXIT_CRITICAL(&callback_mux_);
   ready_ = true;
+  output_size_.store(unsigned(width()) << 16 | unsigned(height()),std::memory_order_release);
 #ifdef AGON_EXTENDER_DIRECT_RGB888
   if(!startDirectSubmitter()) return failed(ESP_ERR_NO_MEM,"Direct framebuffer submission task");
 #endif
   report_started_ = esp_timer_get_time();
   report_scanouts_ = scanouts_.load(std::memory_order_relaxed);
-  ESP_LOGI(kTag, "1280x720 RGB888, 60MHz pixel/two 720Mbps lanes, 1350x741 total, 59.979Hz calculated; %u buffers/%u bytes",
-           buffer_count_, static_cast<unsigned>(buffer_count_ * kBufferBytes));
+  ESP_LOGI(kTag, "%dx%d RGB888, %.6fMHz pixel/two %uMbps lanes, %dx%d total, %.6fHz calculated; %u buffers/%u bytes",
+           width(), height(), double(timing_.pixel_mhz), timing_.lane_mbps,
+           timing_.hTotal(), timing_.vTotal(), timing_.refreshHz(),
+           buffer_count_, static_cast<unsigned>(buffer_count_ * bufferBytes()));
   ESP_LOGI(kTag, "DSI/DMA IRQ and submission core 1; frame DMA completion is the vblank proxy on v1.3 silicon");
   return true;
+}
+
+
+bool HdmiOutput::needsMode(int w,int h) const {
+#ifdef AGON_EXTENDER_HDMI_AUTO
+  auto next=selectHdmiTiming(w,h);
+  // Rebuild a faulted panel even when the requested carrier is unchanged.
+  // The caller first joins both renderers and retires all borrowed pointers.
+  return !ready_ || scanoutFailed() || next.width!=timing_.width || next.height!=timing_.height;
+#else
+  (void)w;(void)h;return false;
+#endif
+}
+bool HdmiOutput::selectMode(int w,int h) {
+#ifdef AGON_EXTENDER_HDMI_AUTO
+  if(!needsMode(w,h))return true;
+  if(!direct_task_ || frame_context_ || direct_state_.load()!=Idle)return false;
+  requested_timing_=selectHdmiTiming(w,h);
+  configure_state_.store(1,std::memory_order_release);
+  xTaskNotifyGive(direct_task_);
+  while(configure_state_.load(std::memory_order_acquire)==1)vTaskDelay(1);
+  bool ok=configure_state_.load(std::memory_order_acquire)==2;
+  configure_state_.store(0,std::memory_order_release);
+  return ok;
+#else
+  (void)w;(void)h;return ready_;
+#endif
 }
 
 bool HdmiOutput::bindFrameCallback(FrameCallback callback, void *context) {
@@ -231,7 +273,11 @@ bool IRAM_ATTR HdmiOutput::frameComplete(esp_lcd_panel_handle_t,
 #endif
   bool task_woken = false;
   portENTER_CRITICAL_ISR(&output.callback_mux_);
-  if (output.ownership_.pending()) {
+  if (output.ownership_.pending()
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+      && (!output.rolling() || output.ownership_.submittedIndex()==agon_scanout_front())
+#endif
+      ) {
     // IDF snapshots the selected index and starts that frame's DMA before
     // entering this callback. Same-core task/ISR exclusion means pending can
     // only describe a selection made before this interrupt began. The old
@@ -248,14 +294,27 @@ bool IRAM_ATTR HdmiOutput::frameComplete(esp_lcd_panel_handle_t,
   return task_woken;
 }
 
+bool HdmiOutput::scanoutFailed() const {
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  if (rolling()) {
+    strip_async_stats status{};
+    strip_async_read(&status);
+    // An underrun observation alone is not an acknowledged DMA stop. Use the
+    // runtime's contained-abort counter, not its first diagnostic reason.
+    return status.faults != 0;
+  }
+#endif
+  return false;
+}
+
 bool HdmiOutput::waitForSubmittedBuffer(std::atomic<bool> &stopping) {
   const auto started = esp_timer_get_time();
   for (;;) {
+    if (stopping.load(std::memory_order_acquire) || scanoutFailed()) return false;
     portENTER_CRITICAL(&callback_mux_);
     const bool pending = ownership_.pending();
     portEXIT_CRITICAL(&callback_mux_);
     if (!pending) break;
-    if (stopping.load(std::memory_order_acquire)) return false;
     // Leave drawing, parser and logical frame progression running. A stalled
     // panel must never cause a buffer to be reused unsafely or block detach.
     vTaskDelay(1);
@@ -282,6 +341,10 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
     AGON_STOCK_NATIVE_GUARD;
     int marker=-1;
     const unsigned index=controller.preparePanelFrame(marker);
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+    if(rolling() && !agon_scanout_stage(static_cast<fabgl::P4Rgb888Controller *>(&controller.paletted()),index,
+        controller.display().getViewPortWidth(),controller.display().getViewPortHeight()))return false;
+#endif
     const auto prepared=esp_timer_get_time();
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
     conversion.finish();
@@ -292,8 +355,11 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 #ifndef AGON_EXTENDER_BENCH_OFF
     // IDF recognizes its own pixel allocation: write back/select only. The VDP
     // already rendered here, with the panel stride; no row reader or memcpy.
-    auto error=esp_lcd_panel_draw_bitmap(panel_,0,0,kHdmiWidth,kHdmiHeight,buffers_[index]);
+    auto error=esp_lcd_panel_draw_bitmap(panel_,0,0,width(),height(),buffers_[index]);
     if(error!=ESP_OK) return false;
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+    if(rolling()) agon_scanout_commit();
+#endif
     if(!controller.display().isDoubleBuffered()) {
       portENTER_CRITICAL(&callback_mux_);ownership_.submitted(index);portEXIT_CRITICAL(&callback_mux_);
     }
@@ -313,7 +379,7 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
   auto &display = controller.display();
   const int width = display.getViewPortWidth();
   const int height = display.getViewPortHeight();
-  const auto geometry = centeredHdmiGeometry(width, height);
+  const auto geometry = centeredHdmiGeometry(width, height, this->width(), this->height());
   if (!geometry.valid() || width > static_cast<int>(kPresentationSnapshotMaximumWidth)) return false;
   const bool doubled = display.isDoubleBuffered() && buffer_count_ == 2;
   portENTER_CRITICAL(&callback_mux_);
@@ -323,7 +389,7 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
   const auto started = esp_timer_get_time();
   const auto visible_generation = stockVisibleGeneration();
   const bool clear = buffer_width_[target] != width || buffer_height_[target] != height;
-  if (clear) std::memset(destination, 0, kBufferBytes);
+  if (clear) std::memset(destination, 0, bufferBytes());
   alignas(8) std::uint8_t signal[kPresentationSnapshotMaximumWidth];
   // Even cropped-out rows run in stock order. This preserves the existing
   // stock Copper cursor without adding indexed/Copper feature work.
@@ -335,7 +401,7 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
       // RGB-001 geometries fit wholly inside720p. Copy already-rendered BGR888
       // rows under the same native exclusion and generation check as stock.
       // Overlay rows use the stock decorator; there is no full-image expansion.
-      controller.prepareRgb888Row(y, destination + destination_y * kHdmiStride +
+      controller.prepareRgb888Row(y, destination + destination_y * stride() +
           geometry.destination_x * kHdmiBytesPerPixel, signal);
     } else controller.prepareRow(y, signal);
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
@@ -351,7 +417,7 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
     agon_bench::Scope expand(agon_bench::Expand);
 #endif
     expandSignalRowToHdmi(signal,
-        destination + destination_y * kHdmiStride + geometry.destination_x * kHdmiBytesPerPixel,
+        destination + destination_y * stride() + geometry.destination_x * kHdmiBytesPerPixel,
         geometry.source_x, geometry.width);
   }
   const auto conversion_finished = esp_timer_get_time();
@@ -392,10 +458,16 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
   conversion.finish();agon_bench::Scope cache(agon_bench::Cache);
 #endif
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  if(rolling() && !agon_scanout_stage(nullptr,target,geometry.width,geometry.height))return false;
+#endif
   const auto error = esp_lcd_panel_draw_bitmap(panel_, 0,
-      clear ? 0 : geometry.destination_y, kHdmiWidth,
-      clear ? kHdmiHeight : geometry.destination_y + geometry.height, destination);
+      clear ? 0 : geometry.destination_y, this->width(),
+      clear ? this->height() : geometry.destination_y + geometry.height, destination);
   if (error != ESP_OK) { ESP_LOGE(kTag, "Framebuffer submission: %s", esp_err_to_name(error)); return false; }
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  if(rolling()) agon_scanout_commit();
+#endif
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
   agon_bench::update(conversion_token,frame_id);cache.finish();
 #endif
@@ -422,7 +494,8 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 
 #ifdef AGON_EXTENDER_DIRECT_RGB888
 bool HdmiOutput::startDirectSubmitter() {
-  return xTaskCreatePinnedToCore(directSubmitEntry,"hdmi-swap",4096,this,6,&direct_task_,1)==pdPASS;
+  if(direct_task_) return true;
+  return agon::extender::createVideoWorker(directSubmitEntry,"hdmi-swap",4096,this,6,&direct_task_,1)==pdPASS;
 }
 
 Rgb888PanelStorage HdmiOutput::panelStorage() {
@@ -440,21 +513,36 @@ Rgb888PanelStorage HdmiOutput::panelStorage() {
   const auto front=ownership_.writable(false);
   portEXIT_CRITICAL(&callback_mux_);
   direct_cancelled_.store(false,std::memory_order_release);
-  return {{buffers_[0],buffers_[1]},buffer_count_,front,kHdmiWidth,kHdmiHeight,kHdmiStride,this,directSwap};
+  return {{buffers_[0],buffers_[1]},buffer_count_,front,width(),height(),stride(),this,directSwap};
 }
 
 bool HdmiOutput::directSwap(void *context,unsigned target) {
   auto &self=*static_cast<HdmiOutput*>(context);
-  if(target>=self.buffer_count_ || self.direct_cancelled_.load(std::memory_order_acquire))return false;
+  if(!self.ready_ || target>=self.buffer_count_ ||
+     self.direct_cancelled_.load(std::memory_order_acquire) || self.scanoutFailed())return false;
   self.direct_target_=target;
   self.direct_state_.store(Requested,std::memory_order_release);
   xTaskNotifyGive(self.direct_task_);
   for(;;) {
+    const bool abandoned=self.direct_cancelled_.load(std::memory_order_acquire) || self.scanoutFailed();
+    portENTER_CRITICAL(&self.callback_mux_);
     auto state=self.direct_state_.load(std::memory_order_acquire);
+    // HDMI02-L: after Submitted, the worker has finished every panel access.
+    // Cancellation/fault can now release the drawing waiter without waiting for
+    // an IRQ which may never arrive. Requested must still join the worker;
+    // changing it to Idle here could race a live draw_bitmap call and teardown.
+    // Keep ownership_.pending intact: only actual DMA completion or joined
+    // panel deletion permits the old front to be reused.
+    if(abandoned && state==Submitted) {
+      self.direct_state_.store(Failed,std::memory_order_release);
+      state=Failed;
+    }
     if(state==Complete || state==Failed) {
       self.direct_state_.store(Idle,std::memory_order_release);
-      return state==Complete && !self.direct_cancelled_.load(std::memory_order_acquire);
+      portEXIT_CRITICAL(&self.callback_mux_);
+      return state==Complete && !abandoned;
     }
+    portEXIT_CRITICAL(&self.callback_mux_);
     // Native exclusion stays held, but the independent core1 submitter and the
     // hardware frame clock remain runnable. No guessed reuse deadline.
     vTaskDelay(1);
@@ -465,6 +553,15 @@ void HdmiOutput::directSubmitEntry(void *context) {
   auto &self=*static_cast<HdmiOutput*>(context);
   for(;;) {
     ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+    if(self.configure_state_.load(std::memory_order_acquire)==1) {
+      self.cleanup();
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+      agon_scanout_reset();
+#endif
+      self.timing_=self.requested_timing_;
+      self.configure_state_.store(self.start()?2:3,std::memory_order_release);
+      continue;
+    }
     if(self.direct_state_.load(std::memory_order_acquire)!=Requested)continue;
     if(!self.waitForSubmittedBuffer(self.direct_cancelled_) || self.direct_cancelled_.load()) {
       self.direct_state_.store(Failed,std::memory_order_release);continue;
@@ -474,7 +571,7 @@ void HdmiOutput::directSubmitEntry(void *context) {
     agon_bench::Scope cache(agon_bench::Cache);
 #endif
 #ifndef AGON_EXTENDER_BENCH_OFF
-    if(esp_lcd_panel_draw_bitmap(self.panel_,0,0,kHdmiWidth,kHdmiHeight,self.buffers_[target])!=ESP_OK) {
+    if(esp_lcd_panel_draw_bitmap(self.panel_,0,0,self.width(),self.height(),self.buffers_[target])!=ESP_OK) {
       self.direct_state_.store(Failed,std::memory_order_release);continue;
     }
 #endif
@@ -485,6 +582,9 @@ void HdmiOutput::directSubmitEntry(void *context) {
     if(self.direct_cancelled_.load(std::memory_order_acquire)) {
       self.direct_state_.store(Failed,std::memory_order_release);continue;
     }
+#endif
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+    if(self.rolling()) agon_scanout_commit(); // native swap staged the back-buffer scene before waiting
 #endif
     // Driver selection and this metadata store share core1 with the DMA ISR.
     // An interrupt between them merely defers acknowledgment to the next one.
@@ -503,6 +603,18 @@ void HdmiOutput::directSubmitEntry(void *context) {
 void HdmiOutput::report(std::int64_t now) {
   const auto elapsed = now - report_started_;
   if (elapsed < 10000000 || !report_updates_) return;
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  if (rolling()) {
+  strip_probe_stats strips{};strip_async_stats copy{};
+  strip_probe_read(&strips);strip_async_read(&copy);
+  strip_fault_stats fault{};strip_fault_read(&fault);
+  ESP_LOGI(kTag,"rolling blocks=%u frames=%u invalid=%u underruns=%u sequence=%u refill_max=%uus over=%u copy_max=%u compose_max=%u late=%u overlap=%u faults=%u lead_min=%u free_internal=%u first_fault=%u first_error=%u queued=%u queue_wait_max=%u",
+    strips.blocks,strips.frames,strips.invalid,strips.underruns,strips.sequence_errors,
+    strips.max_us,strips.over_budget,copy.copy_max_us,copy.compose_max_us,copy.late,copy.overlap,copy.faults,
+    copy.min_ready_lead_us,(unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
+    unsigned(fault.first_fault),unsigned(fault.first_error),unsigned(fault.queued),unsigned(fault.queue_wait_max_us));
+  }
+#endif
   const auto scanouts = scanouts_.load(std::memory_order_relaxed);
   ESP_LOGI(kTag, "window %.3fs: updates %.3f/s submissions %.3f/s scanout %.3fHz; convert wall mean/max %.3f/%.3fms cache %.3fms wait %.3fms swap-drops %u",
       elapsed / 1000000.0, report_updates_ * 1000000.0 / elapsed,

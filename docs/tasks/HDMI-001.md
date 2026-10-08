@@ -14,6 +14,11 @@ RGB888 presentation and hardware-paced VDP frames. The Author's r03 startup
 and bounded gameplay checks now pass. Complete mode coverage, measured game
 presentation throughput and excess sprite flicker remain unresolved.
 
+For the separately authorized smaller-output experiment, see
+[HDMI-002](HDMI-002.md) and its
+[640×480 failure analysis/native 512×384 lessons](HDMI-002/TIMING-LESSONS.md).
+That static custom 848×480 pass has not changed this task's product output.
+
 ## Scope and ownership
 
 1. P4 VDP retains the stock-shaped rendering family, logical mode dimensions,

@@ -1,0 +1,268 @@
+{
+  "candidate": "rgb-001-r04-b2026-10-07-15-27-40Z",
+  "factory_sha256": "8a0bcbe2f591f0728629fffe0cf7894fb5cd71b39fe5dfa8c2d1e036a3fc3cd6",
+  "fields": [
+    "update",
+    "state",
+    "phase",
+    "actors",
+    "projectiles",
+    "map_row",
+    "rng"
+  ],
+  "rows": 3600,
+  "baseline_rows": 3600,
+  "trajectory_matches": true,
+  "result_sha256": "da31b162d86dc0eed95c652f5522a1c9d925fd36eb134cb38cfeb1ba3ddcc16c",
+  "summary": {
+    "case": 9,
+    "count": 3600,
+    "expected": 3600,
+    "warmup": 120,
+    "controls": 5,
+    "window_tag": 11743217,
+    "build_id": "scan-scroll-suite-r03-b2026-10-07-06-32-42Z",
+    "abort": false,
+    "window_start": 2980,
+    "window_end": 10180,
+    "calibration_prt": 35733,
+    "calibration_mos": 60,
+    "drain": 43,
+    "evidence_complete": true,
+    "scope": "unfenced game submission/pacing",
+    "active": {
+      "median_counts": 516.0,
+      "p95_counts": 640,
+      "max_counts": 842,
+      "median_budget_percent": 43.0,
+      "p95_budget_percent": 53.333333333333336,
+      "median_ms": 7.166666666666667,
+      "over_budget_percent": 0.0
+    },
+    "total": {
+      "median_counts": 1191.0,
+      "p95_counts": 1193,
+      "max_counts": 1193,
+      "median_budget_percent": 99.25,
+      "p95_budget_percent": 99.41666666666667,
+      "median_ms": 16.541666666666668,
+      "over_budget_percent": 0.0
+    },
+    "wait": {
+      "median_counts": 674.5,
+      "p95_counts": 864,
+      "max_counts": 908,
+      "median_budget_percent": 56.208333333333336,
+      "p95_budget_percent": 72.0,
+      "median_ms": 9.368055555555555,
+      "over_budget_percent": 0.0
+    },
+    "median_active_headroom_percent": 57.0,
+    "fault_rows": 0,
+    "late_rows": 0,
+    "longest_over_budget_streak": 0,
+    "window_raw_mos_ticks": 7200,
+    "nominal_updates_per_second": 60.0,
+    "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+    "unmeasured_tail_estimate_ms": 436.65277777778044,
+    "p4_window": {
+      "tag": 11743217,
+      "id": 9,
+      "flags": 1,
+      "start_us": 142030996,
+      "end_us": 202090448,
+      "scanouts": 3608,
+      "updates": 3608,
+      "marker_valid": 0,
+      "marker_invalid": 3608,
+      "last_frame": 4294967295,
+      "marker_transitions": 0,
+      "marker_repeats": 0,
+      "phases": [
+        {
+          "calls": 3608,
+          "us": 15165518,
+          "max_us": 5919,
+          "boundary_drops": 0
+        },
+        {
+          "calls": 0,
+          "us": 0,
+          "max_us": 0,
+          "boundary_drops": 0
+        },
+        {
+          "calls": 0,
+          "us": 0,
+          "max_us": 0,
+          "boundary_drops": 0
+        },
+        {
+          "calls": 0,
+          "us": 0,
+          "max_us": 0,
+          "boundary_drops": 0
+        },
+        {
+          "calls": 3608,
+          "us": 1565431,
+          "max_us": 1047,
+          "boundary_drops": 0
+        },
+        {
+          "calls": 3608,
+          "us": 556406,
+          "max_us": 468,
+          "boundary_drops": 0
+        }
+      ]
+    }
+  },
+  "minimum_observed_internal_bytes": 22691,
+  "status": "deterministic-pass-ordinary-game-entry-exit-pass-excom-sd-admission-open-author-review-pending",
+  "prior_placement_candidate": {
+    "candidate": "rgb-001-r04-b2026-10-07-15-09-19Z",
+    "result_sha256": "132aa79bcc3c00c042861d3c0525b63f54966d08dc76bcb06f6ae9216234c1f5",
+    "trajectory_matches": true,
+    "compared_fields": [
+      "update",
+      "state",
+      "phase",
+      "actors",
+      "projectiles",
+      "map_row",
+      "rng"
+    ],
+    "summary": {
+      "case": 9,
+      "count": 3600,
+      "expected": 3600,
+      "warmup": 120,
+      "controls": 5,
+      "window_tag": 1938854,
+      "build_id": "scan-scroll-suite-r03-b2026-10-07-06-32-42Z",
+      "abort": false,
+      "window_start": 2988,
+      "window_end": 10188,
+      "calibration_prt": 35343,
+      "calibration_mos": 60,
+      "drain": 58,
+      "evidence_complete": true,
+      "scope": "unfenced game submission/pacing",
+      "active": {
+        "median_counts": 514.5,
+        "p95_counts": 639,
+        "max_counts": 842,
+        "median_budget_percent": 42.875,
+        "p95_budget_percent": 53.25,
+        "median_ms": 7.145833333333333,
+        "over_budget_percent": 0.0
+      },
+      "total": {
+        "median_counts": 1191.0,
+        "p95_counts": 1193,
+        "max_counts": 1195,
+        "median_budget_percent": 99.25,
+        "p95_budget_percent": 99.41666666666667,
+        "median_ms": 16.541666666666668,
+        "over_budget_percent": 0.0
+      },
+      "wait": {
+        "median_counts": 676.0,
+        "p95_counts": 854,
+        "max_counts": 883,
+        "median_budget_percent": 56.333333333333336,
+        "p95_budget_percent": 71.16666666666667,
+        "median_ms": 9.38888888888889,
+        "over_budget_percent": 0.0
+      },
+      "median_active_headroom_percent": 57.125,
+      "fault_rows": 0,
+      "late_rows": 0,
+      "longest_over_budget_streak": 0,
+      "window_raw_mos_ticks": 7200,
+      "nominal_updates_per_second": 60.0,
+      "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+      "unmeasured_tail_estimate_ms": 441.0833333333315,
+      "p4_window": {
+        "tag": 1938854,
+        "id": 9,
+        "flags": 1,
+        "start_us": 142258682,
+        "end_us": 202314194,
+        "scanouts": 3607,
+        "updates": 3607,
+        "marker_valid": 0,
+        "marker_invalid": 3607,
+        "last_frame": 4294967295,
+        "marker_transitions": 0,
+        "marker_repeats": 0,
+        "phases": [
+          {
+            "calls": 3607,
+            "us": 15077928,
+            "max_us": 5893,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 0,
+            "us": 0,
+            "max_us": 0,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 0,
+            "us": 0,
+            "max_us": 0,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 0,
+            "us": 0,
+            "max_us": 0,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 3607,
+            "us": 1569889,
+            "max_us": 838,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 3607,
+            "us": 598331,
+            "max_us": 556,
+            "boundary_drops": 0
+          }
+        ]
+      }
+    },
+    "minimum_observed_internal_bytes": 3835,
+    "status": "fixed-mode-workload-and-exit-pass-insufficient-mode-transition-headroom"
+  },
+  "ordinary_smoke": {
+    "game_sha256": "3ba82ef604cb75fdd35b42ff5890504a3c4e74c28bfc7f83b7208130276cfcd1",
+    "mode_sequence": [
+      0,
+      8,
+      20,
+      0
+    ],
+    "gameplay_seconds": 12,
+    "escape_and_cli_echo": "pass",
+    "script_overall": "failed-final-excom-head-assertion",
+    "excom_sd_head_status": 503,
+    "legacy_sd_head_status": 200,
+    "recovery_reset": false,
+    "minimum_observed_internal_bytes": 22519,
+    "ending_observed_internal_bytes": 88707,
+    "scanout_faults": 0,
+    "p4_crash": false
+  },
+  "restoration": {
+    "original_startup_sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5",
+    "original_fixture_config_sha256": "1128fc600505f64cc334fcbff61d0e031be90416b864ce05c4ec52a15cb62d4f",
+    "full_readback": true,
+    "candidate_left_installed": true
+  }
+}

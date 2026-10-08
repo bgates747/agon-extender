@@ -35,6 +35,7 @@ RGB888_SOURCE = "video/extender/display/p4_rgb888_controller.cpp"
 EXPERIMENTAL_RGB_ID = re.compile(r"rgb-001-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 HDMI_SOURCE = "video/extender/display/hdmi_output.cpp"
 HDMI_COMPONENT = "components/esp_lcd_lt8912b"
+HDMI_GEOMETRIES = {"auto": (848, 480), "1280x720": (1280, 720), "848x480": (848, 480), "512x384": (512, 384), "684x384": (684, 384)}
 EXPERIMENTAL_HDMI_ID = re.compile(r"hdmi-001-r[0-9]{2}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 EXPERIMENTAL_BENCH_ID = re.compile(r"bench-009-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py",
@@ -95,18 +96,28 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
     if display_output == "hdmi" and (name != "p4-console" or board != "p4-pc"):
         raise SystemExit("HDMI output requires p4-pc / p4-console")
+    if hdmi_timing not in HDMI_GEOMETRIES or (hdmi_timing != "1280x720" and display_output != "hdmi"):
+        raise SystemExit("custom HDMI timing requires HDMI output")
     profile = deepcopy(document["profiles"][name])
     if display_output == "hdmi":
         if HDMI_SOURCE in profile["sources"] or HDMI_SOURCE in profile["forbidden_sources"]:
             raise SystemExit("HDMI adapter must be selected at the output boundary")
         profile["sources"].append(HDMI_SOURCE)
         profile["definitions"].append("AGON_EXTENDER_HDMI=1")
+        if hdmi_timing == "auto":
+            profile["definitions"].append("AGON_EXTENDER_HDMI_AUTO=1")
+        elif hdmi_timing == "848x480":
+            profile["definitions"].append("AGON_EXTENDER_HDMI_848X480=1")
+        elif hdmi_timing == "512x384":
+            profile["definitions"].append("AGON_EXTENDER_HDMI_512X384=1")
+        elif hdmi_timing == "684x384":
+            profile["definitions"].append("AGON_EXTENDER_HDMI_684X384=1")
         profile.setdefault("requires", []).extend([
             "esp_lcd", "esp_driver_i2c", "esp_driver_gpio", "esp_hw_support",
             "esp_lcd_lt8912b",
@@ -131,16 +142,44 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["definitions"].append("AGON_EXTENDER_DIRECT_RGB888=1")
     else:
         profile["forbidden_sources"].append(RGB888_SOURCE)
+    if hdmi_timing == "auto" and not rolling_scanout:
+        raise SystemExit("automatic HDMI requires the explicit rolling/direct normal composition")
+    if rolling_scanout:
+        if not direct_rgb888 or hdmi_timing not in {"auto", "848x480", "512x384", "684x384"} or render_benchmark_output!="normal":
+            raise SystemExit("rolling scanout requires experimental 848x480/512x384/684x384 direct RGB888 normal output")
+        profile["sources"].append("video/extender/display/rolling/scene.cpp")
+        profile["definitions"].append("AGON_EXTENDER_ROLLING_SCANOUT=1")
     return profile
 
 
-def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False) -> dict:
+def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False) -> dict:
     """Retain the selected adapter and exact vendored bridge source closure."""
     record = {"schema_version": 1, "display_output": display_output,
               "configuration": None, "adapter": None, "bridge": None}
+    width, height = HDMI_GEOMETRIES[hdmi_timing]
+    if rolling_scanout:
+        record["scanout"]={"kind":"rolling-dma2d", "blocks":height//32,"rows_per_block":32,"sram_slots":3,
+                           "snapshot":"deep-copy-at-task-publication", "refill_abort_us":1600,
+                           "malloc_always_internal_bytes":0,
+                           "primitive_queue_storage":"psram-payload-internal-control",
+                           "malloc_reserved_internal_bytes":32768,
+                           "sd_worker_stack_memory":"psram",
+                           "video_and_network_worker_stack_memory":"psram",
+                           "sram_allocation_width":width,
+                           "sram_allocation_bytes":width*32*3*3}
+        if hdmi_timing=="auto":
+            # Both carriers now roll; blocks describes the maximum allocation,
+            # not the active count of a684-pixel-wide runtime mode. Retained
+            # r07/r08 manifests kept the old r06 descriptive fields; preserve
+            # those frozen records and document the correction alongside them.
+            record["scanout"].update(kind="mode-selected-rolling",blocks=15,
+                sram_allocation_width=848,sram_allocation_bytes=244224,
+                runtime_layouts=[{"geometry":[684,384],"blocks":12},
+                                 {"geometry":[848,480],"blocks":15}])
+        record["scanout_sources"]=[artifact_record(p) for p in sorted((VDP/"video/extender/display/rolling").glob("*")) if p.is_file()]
     if direct_rgb888:
         record["render_storage"] = "rgb888-panel-direct"
-        record["logical_stride_bytes"] = 1280 * 3
+        record["logical_stride_bytes"] = width * 3
         record["presentation_copy_bytes"] = 0
         record["renderer"] = artifact_record(checked_path(RGB888_SOURCE))
     if render_benchmark_output:
@@ -154,9 +193,23 @@ def display_input_record(display_output: str, render_benchmark_output: str | Non
         if not required.issubset(relative) or any(path.is_symlink() for path in files):
             raise SystemExit("incomplete or symlinked HDMI bridge component")
         record["configuration"] = {
-            "width": 1280, "height": 720, "refresh_hz_nominal": 60,
+            "width": width, "height": height, "refresh_hz_nominal": 60,
             "pixel_format": "RGB888", "placement": "centered-unscaled-cropped",
         }
+        if hdmi_timing != "1280x720":
+            record["configuration"]["timing"] = {
+                "kind": "custom", "clock_source": "PLL240", "clock_divider": 7,
+                "lane_mbps": 480, "h_front_sync_back": [1104-width-224,112,112],
+                "v_front_sync_back": [517-height-31,8,23], "h_total": 1104, "v_total": 517,
+                "refresh_hz_calculated": 240000000 / (7 * 1104 * 517), "vic": 0,
+            }
+        if hdmi_timing == "512x384":
+            record["configuration"]["aspect_hint"] = "4:3"
+        elif hdmi_timing == "684x384":
+            record["configuration"]["aspect_hint"] = "16:9"
+        if hdmi_timing == "auto":
+            record["configuration"].update(selection="smallest-proven-carrier-at-mode-change", carriers=[[684,384],[848,480]])
+            record["logical_stride_bytes"]="selected-output-width * 3"
         record["adapter"] = artifact_record(checked_path(HDMI_SOURCE))
         record["bridge"] = {
             "component": "esp_lcd_lt8912b", "path": str(component),
@@ -393,6 +446,11 @@ def main() -> None:
                         help="experimental P4-PC-only full/low-speed USB host backport")
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser",
                         help="presentation sink; HDMI requires p4-pc / p4-console")
+    parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720",
+                        help="fixed HDMI timing or auto carrier selection; experimental custom 60.069Hz")
+    parser.add_argument("--rolling-scanout",action="store_true",help="SPRITE-001 experimental DMA2D strip output")
+    parser.add_argument("--abort-on-alloc-failure", action="store_true",
+                        help="Experimental diagnosis: stop at the first failed heap allocation")
     parser.add_argument("--direct-rgb888", action="store_true", help="RGB-001 experimental CPU pixel storage; never production")
     parser.add_argument("--render-benchmark-output", choices=("normal", "hold", "off", "convert-off"),
                         help="BENCH-009 diagnostic windows and output controls")
@@ -401,6 +459,8 @@ def main() -> None:
     parser.add_argument("--python-env", type=Path, default=PYTHON_ENV,
                         help="host-native ESP-IDF Python environment")
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--dependencies-lock", type=Path,
+                        help="reuse a retained dependency lock for a controlled comparison")
     parser.add_argument("--build-id", default="UNVERSIONED-DO-NOT-DEPLOY")
     parser.add_argument("--allow-dirty-experimental", action="store_true",
                         help="freeze HDMI-001 experimental source; never qualify a release")
@@ -429,12 +489,14 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
     if args.usb_fsls_only and (args.board != "p4-pc" or args.profile != "p4-console"):
         parser.error("--usb-fsls-only requires p4-pc / p4-console")
+    if args.abort_on_alloc_failure and not (args.rolling_scanout and args.allow_dirty_experimental):
+        parser.error("--abort-on-alloc-failure requires an explicit experimental rolling build")
     payload_arguments = (args.mos, args.mos_sha256, args.flash_agent)
     if profile.get("mos_recovery_payload"):
         if not all(payload_arguments):
@@ -450,7 +512,7 @@ def main() -> None:
         raise SystemExit("wrong ESP-IDF checkout identity")
     tools, python_env = args.tools_path.resolve(), args.python_env.resolve()
     compiler = checked_tools(tools, python_env)
-    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888)
+    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout)
     output.mkdir(parents=True)
     source_record = freeze_source_inputs(output) if args.allow_dirty_experimental else None
     (output / "display.json").write_text(json.dumps(display_record, indent=2) + "\n")
@@ -477,6 +539,11 @@ def main() -> None:
             if source.count(marker) != 1:
                 raise SystemExit("video output marker missing or ambiguous")
             source = source.replace(marker, 'name="agon-video-output" content="hdmi"')
+            if args.hdmi_timing != "1280x720":
+                marker = 'name="agon-hdmi-timing" content="1280x720 60 Hz"'
+                if source.count(marker) != 1:
+                    raise SystemExit("HDMI timing metadata missing or ambiguous")
+                source = source.replace(marker, f'name="agon-hdmi-timing" content="{("automatic carrier" if args.hdmi_timing == "auto" else args.hdmi_timing)} 60.07 Hz"')
         page.write_text(source)
         asset_overrides[relative] = page
     render_component(profile, document["common"], generated, asset_overrides)
@@ -507,9 +574,25 @@ def main() -> None:
         f'CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="{VDP / "partitions.csv"}"',
     )
     config = apply_sdk_overrides(config, board["sdkconfig_overrides"])
+    if args.rolling_scanout:
+        # HDMI02-M02c: even the 1KiB preference exhausted internal RAM during
+        # Nurples bitmap loading (84-byte pthread semaphore allocation fails).
+        # Prefer PSRAM for all ordinary allocations; IDF still explicitly keeps
+        # RTOS objects and peripheral DMA in internal memory. Preserve the32KiB
+        # reserve and three strip slots. This changes placement, not stock VDU
+        # semantics or the libstdc++ mutex policy. See HDMI-002 memory results.
+        config = apply_sdk_overrides(config, {
+            "CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL":"0",
+            "CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL":"32768"})
     sdkconfig = output / "sdkconfig"
+    # HDMI02-M02c: diagnose the allocation itself before an unchecked upstream
+    # mutex constructor fails later in destruction. This is not a runtime fix.
+    if args.abort_on_alloc_failure:
+        config = apply_sdk_overrides(config, {"CONFIG_HEAP_ABORT_WHEN_ALLOCATION_FAILS": "y"})
     sdkconfig.write_text(config)
     lock = output / "dependencies.lock"
+    if args.dependencies_lock:
+        shutil.copyfile(args.dependencies_lock.resolve(), lock)
     build = output / "build"
     env = os.environ.copy()
     env.update({
@@ -530,6 +613,8 @@ def main() -> None:
                f"-DAGON_COMPONENT_DIR={generated}",
                f"-DAGON_DEPENDENCIES_LOCK={lock}",
                f"-DAGON_VDP_ROOT={VDP}",
+               f"-DAGON_ROLLING_SCANOUT={'ON' if args.rolling_scanout else 'OFF'}",
+               f"-DAGON_HDMI_TIMING={args.hdmi_timing}",
                f"-DSDKCONFIG={sdkconfig}",
                f"-DAGON_DSP_LIFETIME_FIX={'ON' if profile.get('dsp_lifetime_fix') else 'OFF'}",
                f"-DAGON_USB_FSLS_ONLY={'ON' if args.usb_fsls_only else 'OFF'}",
@@ -546,8 +631,12 @@ def main() -> None:
     factory = assemble_factory_image(build)
     validation = [sys.executable, str(ROOT / "scripts/validate_p4_build.py"),
                   "--profile", args.profile, "--board", args.board,
-                  "--display-output", args.display_output,
+                  "--display-output", args.display_output, "--hdmi-timing", args.hdmi_timing,
         *(["--render-benchmark-output", args.render_benchmark_output] if args.render_benchmark_output else []), "--output", str(output)]
+    if args.rolling_scanout:
+        validation.append("--rolling-scanout")
+    if args.abort_on_alloc_failure:
+        validation.append("--abort-on-alloc-failure")
     if args.direct_rgb888:
         validation.append("--direct-rgb888")
     if args.usb_fsls_only:
@@ -569,6 +658,8 @@ def main() -> None:
         output / "display.json", generated / "agon_extender_build_identity.hpp",
         *payload_artifacts,
     ]
+    if args.rolling_scanout:
+        artifact_paths.append(build/"dsi-strip/esp_lcd_panel_dpi.c")
     if args.usb_fsls_only:
         artifact_paths.extend([VDP / "native/usb_fsls_only.cmake",
                                build / "agon-extender-usb/hcd_dwc.c"])
@@ -592,6 +683,7 @@ def main() -> None:
         "source_snapshot_verified": source_record is not None,
         "reset_url_configured": bool(args.reset_url),
         "usb_fsls_only": args.usb_fsls_only,
+        "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "display_inputs": display_record,
         "reset_url_sha256": (hashlib.sha256(args.reset_url.encode()).hexdigest()

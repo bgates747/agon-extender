@@ -27,6 +27,10 @@ add_compile_options(-Wno-stringop-truncation)
 idf_build_set_property(DEPENDENCIES_LOCK "${DEPENDENCIES_LOCK}")
 project(agon_extender)
 
+if(AGON_ROLLING_SCANOUT)
+  include("${AGON_VDP_ROOT}/video/extender/display/rolling/strip_driver.cmake")
+endif()
+
 if(AGON_DSP_LIFETIME_FIX)
   include("${AGON_VDP_ROOT}/pio/dsp_matrix_lifetime.cmake")
 endif()

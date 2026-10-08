@@ -1,0 +1,39 @@
+{
+  "build_id": "hdmi-timing-r03-b2026-10-07-07-17-01Z",
+  "factory_sha256": "0aaa31da76792382d94686d91b095706a3653268eeb7f6d0c6797e86e98df226",
+  "flash_segments_verified": 3,
+  "samples": [
+    {
+      "frames": 300,
+      "interval_us": 5000369,
+      "rate": 59.996,
+      "hpd": 1
+    },
+    {
+      "frames": 601,
+      "interval_us": 5002000,
+      "rate": 60.176,
+      "hpd": 1
+    },
+    {
+      "frames": 901,
+      "interval_us": 5002000,
+      "rate": 59.976,
+      "hpd": 1
+    },
+    {
+      "frames": 1202,
+      "interval_us": 5002000,
+      "rate": 60.176,
+      "hpd": 1
+    }
+  ],
+  "dma_frame_count": 1202,
+  "measured_interval_us": 20006369,
+  "picture_review": "bounded pass: Author confirms steady continuous picture, round circle/square and all four outer edges; misplaced color labels are a fixture defect",
+  "services": "none; standalone pattern",
+  "agon_reset": false,
+  "sd_edits": false,
+  "mean_dma_hz": 60.08086724782493,
+  "picture_accepted": true
+}

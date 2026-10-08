@@ -134,3 +134,18 @@ experiment does not restore usable native HDMI on this monitor. Horizontal
 input detection and advancing software counters are insufficient acceptance.
 Preserve exact r13 bytes and the fresh boot capture. The board remains on paused
 bars; the render-only packed-format results remain valid within their scope.
+
+## Later clock review and working480-line control —2026-10-07
+
+[HDMI-002 timing lessons](../HDMI-002/TIMING-LESSONS.md) record the subsequent
+review. r10's APLL DPI mux is now a strong older-silicon failure suspect, supported
+by SDK history, the TRM register table and the zero-DMA behavior. It is not a
+vendor-confirmed isolated diagnosis. r11–r13's PLL picture failures remain
+unresolved; do not attribute them to the APLL issue.
+
+A separate static848×480 signal now works on this monitor with PLL240/7,
+two480 Mbps lanes, matched1104×517 totals and unchanged Olimex bridge setup.
+The Author confirms a good visible result. That excludes a categorical inability
+to output480 active lines; it does not identify which difference repairs640×480.
+The linked notes preserve the remaining hypotheses and native512×384 lessons.
+The preceding records, measurements and historical stop state are unchanged.

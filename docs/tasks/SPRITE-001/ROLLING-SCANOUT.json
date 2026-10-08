@@ -1,0 +1,1176 @@
+{
+  "schema_version": 1,
+  "scope": "Standalone P4 strip-scanout experiment; not a game run or product qualification",
+  "goal_start_utc": "2026-10-07T04:39:03Z",
+  "goal_deadline_utc": "2026-10-07T05:39:03Z",
+  "clock": "P4 esp_timer microseconds; no independent external calibration",
+  "timing": {
+    "output": [
+      848,
+      480
+    ],
+    "logical": [
+      512,
+      384
+    ],
+    "offset": [
+      168,
+      48
+    ],
+    "total": [
+      1104,
+      517
+    ],
+    "pixel_clock_hz": 34285714.28571428,
+    "calculated_frame_hz": 60.06944027295553
+  },
+  "builds": [
+    {
+      "variant": "static8-r01-b2",
+      "build_id": "dsi-strip-r01-b2026-10-07-04-46-30Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 394512,
+        "sha256": "13ca4ea62ec21660d7d67ec15516c506e56378315a1b8eae440ab16125079fb8"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "959bd1adbb9d78bba3a867db388733b83f81e102ba2606b0df9d2dd5d7c39c87",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1c9f1bf73d558a04d6f20759f3ad81034bb39a3663e906ee0331c0e5723b3a24",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "3dc3bbf7f41d27ad3766f3f5f07e756f7f1ef52f9de737107b769613d198a16d",
+        "main/build_identity.h": "3c061673cc56f2005566a273ee4b91afd03cda1fcc05b351413e2dd74051d7d1",
+        "main/main.c": "dcf0c72f820eae2dc09da1bc0c23761379fb8962acb2d585902574dc1d7e1724",
+        "main/strip_config.h": "3770ab8b7c2153fdaa9958b8252e2d8da517475759329a32d8339cb1a86ed1d7",
+        "main/strip_probe.h": "7b14d6beb6054d18ed39211243757320e95fdadc44f03629c7373a31c6032021",
+        "patch_dpi.py": "9138fe7987c7d49d9a5fc600b0afb0ad489dd10662d1822c41755ccfa4e9a814",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "bcaef007bdd9c03da25ee9d1b7a0229becb0bc898613e88a6c3bf0abe3118c39"
+      },
+      "captures": [
+        {
+          "path": "static8-r01-b2/installed-2026-10-07-04-52-29Z/serial.log",
+          "bytes": 3332,
+          "sha256": "f22996d066caf932c7cb84903bec79877774c68c471ab75a59bab6a7985190c3",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 5000060,
+              "rate_hz": 59.999
+            },
+            {
+              "cumulative_frames": 600,
+              "interval_us": 5002000,
+              "rate_hz": 59.976
+            },
+            {
+              "cumulative_frames": 901,
+              "interval_us": 5002000,
+              "rate_hz": 60.176
+            },
+            {
+              "cumulative_frames": 1201,
+              "interval_us": 5003000,
+              "rate_hz": 59.964
+            }
+          ],
+          "last_refill_cumulative": null,
+          "last_block_counters": [
+            "8",
+            "0",
+            "9616",
+            "1202",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": null,
+          "last_load_counters": null
+        },
+        {
+          "path": "static8-r01-b2/installed-2026-10-07-04-55-48Z/serial.log",
+          "bytes": 3445,
+          "sha256": "f5b15432b5fd97243c107c8528fc0c655cb6d250883a12cf3f04e42599d16af8",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 5000255,
+              "rate_hz": 59.997
+            },
+            {
+              "cumulative_frames": 601,
+              "interval_us": 5003000,
+              "rate_hz": 60.164
+            },
+            {
+              "cumulative_frames": 901,
+              "interval_us": 5002000,
+              "rate_hz": 59.976
+            },
+            {
+              "cumulative_frames": 1202,
+              "interval_us": 5003000,
+              "rate_hz": 60.164
+            }
+          ],
+          "last_refill_cumulative": null,
+          "last_block_counters": [
+            "8",
+            "0",
+            "9617",
+            "1202",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": null,
+          "last_load_counters": null
+        }
+      ]
+    },
+    {
+      "variant": "rolling8-r01",
+      "build_id": "dsi-strip-r01-b2026-10-07-04-48-32Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 395824,
+        "sha256": "dec25c9a22713d353d868ed3c1f0afa5e77323a9deb8388e16e0c004be597e11"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "ecf64bdefa58bdd3d80175150d02eecec138fb4718eb102e99b137ee4d018e65",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1c9f1bf73d558a04d6f20759f3ad81034bb39a3663e906ee0331c0e5723b3a24",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "3dc3bbf7f41d27ad3766f3f5f07e756f7f1ef52f9de737107b769613d198a16d",
+        "main/build_identity.h": "ecdc8636f1b8b524e5dbbf201fcfcb0b1eb819d59eaac82122d052d4d43befea",
+        "main/main.c": "143d3060892b9aeccbd7ce224eed88d50a2a6083f49f4169865188add8b7e862",
+        "main/strip_config.h": "eeed0246cd520f827d7c5febcb6fd054ce46f8fd9bdb27d44673cc19579d3d4f",
+        "main/strip_probe.h": "3b673b2a2d373b2e755ff8a14395944c31c28563b6952bfae82c1804a64c76dc",
+        "main/strip_runtime.inc": "95d2c53377215b685907404d84fa62db24ffb41875d60b5066550ab57c1b098d",
+        "patch_dpi.py": "099d68f976f30fe8ba23f6447117b4624a1fd1e384a72db256c093322a426e35",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "f2c3e62db700644a32dc9fb21230f9483a7aec58b1dbde2b34fb2b31be4dda03"
+      },
+      "captures": [
+        {
+          "path": "rolling8-r01/installed-2026-10-07-04-54-28Z/serial.log",
+          "bytes": 3999,
+          "sha256": "df15a5701e4cd7b35dc7259f58d0537c4f735a3b7e608ac63cfb4a03d8257677",
+          "frame_samples": [
+            {
+              "cumulative_frames": 151,
+              "interval_us": 5011773,
+              "rate_hz": 30.129
+            },
+            {
+              "cumulative_frames": 301,
+              "interval_us": 5005700,
+              "rate_hz": 29.966
+            },
+            {
+              "cumulative_frames": 452,
+              "interval_us": 5022000,
+              "rate_hz": 30.068
+            },
+            {
+              "cumulative_frames": 603,
+              "interval_us": 5021595,
+              "rate_hz": 30.07
+            }
+          ],
+          "last_refill_cumulative": [
+            "3017",
+            "3377.51",
+            "3751",
+            "3017",
+            "0",
+            "3400",
+            "1"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "3015",
+            "603",
+            "0",
+            "0",
+            "603"
+          ],
+          "last_copy_mean_us_cumulative": null,
+          "last_load_counters": null
+        }
+      ]
+    },
+    {
+      "variant": "rolling8-sram-r01",
+      "build_id": "dsi-strip-r01-b2026-10-07-04-55-30Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 396032,
+        "sha256": "53fee6df66d3114a9896305aa33d4cbf2fc39b2ac8887e58fa8b92727c959a9b"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "656e144b4cabd1242aad6369318f6cc0afa6a5d5b0dda98a89202b026226712d",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1ca4656684b574cbaaed895cb281732af460eb0b9a89fcb8f6f643ec23cda371",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "3dc3bbf7f41d27ad3766f3f5f07e756f7f1ef52f9de737107b769613d198a16d",
+        "main/build_identity.h": "c9505b7b48786fb42f084c6e70c5d1a7ee7d7f94a580426ee9f868c4cdb29a04",
+        "main/main.c": "30adb499941448a710fe6b3e97cf85587e09c17bed7c248585f17301205c18bb",
+        "main/strip_config.h": "eeed0246cd520f827d7c5febcb6fd054ce46f8fd9bdb27d44673cc19579d3d4f",
+        "main/strip_probe.h": "1b0ed9249fa0a68c042af6122237082bc1c782f38d9e8b2bec595cde8a690e03",
+        "main/strip_runtime.inc": "df24d5c7c3462d9c83c2e1f065a861a0022a6c1ce440d14f5cf77a69b9d566d0",
+        "patch_dpi.py": "099d68f976f30fe8ba23f6447117b4624a1fd1e384a72db256c093322a426e35",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "839fc7d6e042a002487828f5f983cd5511a9f8de808d61ab6d15dbb4f601d8c7"
+      },
+      "captures": [
+        {
+          "path": "rolling8-sram-r01/installed-2026-10-07-04-56-42Z/serial.log",
+          "bytes": 4277,
+          "sha256": "4ac8bbd3753f93552fa9a95f0f63be6d752a994a70f06ac7137554929ce81f60",
+          "frame_samples": [
+            {
+              "cumulative_frames": 150,
+              "interval_us": 5000146,
+              "rate_hz": 29.999
+            },
+            {
+              "cumulative_frames": 301,
+              "interval_us": 5013947,
+              "rate_hz": 30.116
+            },
+            {
+              "cumulative_frames": 451,
+              "interval_us": 5005914,
+              "rate_hz": 29.965
+            },
+            {
+              "cumulative_frames": 602,
+              "interval_us": 5015086,
+              "rate_hz": 30.109
+            }
+          ],
+          "last_refill_cumulative": [
+            "4818",
+            "1400.37",
+            "1477",
+            "0",
+            "0",
+            "1924",
+            "1"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "4816",
+            "602",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 1384.88,
+          "last_load_counters": null
+        }
+      ]
+    },
+    {
+      "variant": "rolling8-rearm-r01",
+      "build_id": "dsi-strip-r01-b2026-10-07-04-58-24Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 396096,
+        "sha256": "3b7575f15965a79e36b4f90627ba74d882890b57149dd1737ca495088c0d9b27"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "ec085c1f0b419ba53ec2693b4d0242ad8c58aac5f2c3002bf5ea659d6985c4c8",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1ca4656684b574cbaaed895cb281732af460eb0b9a89fcb8f6f643ec23cda371",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "3dc3bbf7f41d27ad3766f3f5f07e756f7f1ef52f9de737107b769613d198a16d",
+        "main/build_identity.h": "9008d9f41bb7076938e41e7deb7f6ebaa568ba871aae406976f65a37fd2f9950",
+        "main/main.c": "30adb499941448a710fe6b3e97cf85587e09c17bed7c248585f17301205c18bb",
+        "main/strip_config.h": "eeed0246cd520f827d7c5febcb6fd054ce46f8fd9bdb27d44673cc19579d3d4f",
+        "main/strip_probe.h": "1b0ed9249fa0a68c042af6122237082bc1c782f38d9e8b2bec595cde8a690e03",
+        "main/strip_runtime.inc": "b1b52022b5b6f466c278d1fc6bda3364314cac4df0f8df6f620e984ed496b22b",
+        "patch_dpi.py": "6e723bd0c8f76a4455578c2efdf78b7ae028449333bbbb0f1293f6b1b6339446",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "90ee3db08ab05ae12ad034c394f97d578f816bac3bdd8f3f67a8c1d6551743da"
+      },
+      "captures": [
+        {
+          "path": "rolling8-rearm-r01/installed-2026-10-07-04-59-37Z/serial.log",
+          "bytes": 4279,
+          "sha256": "cd599ab6f3bf7251a4a16cb1cb13bc0286400ff49d679e5e6b6443a95f8fccc5",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 5000330,
+              "rate_hz": 59.996
+            },
+            {
+              "cumulative_frames": 602,
+              "interval_us": 5020533,
+              "rate_hz": 60.153
+            },
+            {
+              "cumulative_frames": 903,
+              "interval_us": 5017848,
+              "rate_hz": 59.986
+            },
+            {
+              "cumulative_frames": 1205,
+              "interval_us": 5020533,
+              "rate_hz": 60.153
+            }
+          ],
+          "last_refill_cumulative": [
+            "9644",
+            "1400.93",
+            "1480",
+            "0",
+            "0",
+            "1921",
+            "1"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "9642",
+            "1205",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 1385.46,
+          "last_load_counters": null
+        },
+        {
+          "path": "rolling8-rearm-r01/installed-2026-10-07-05-08-51Z/serial.log",
+          "bytes": 4166,
+          "sha256": "5122467bca8500e910e7fd5fe49fbd5ceb9837c157b6017e8b2f4d220ab0807a",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 5000340,
+              "rate_hz": 59.996
+            },
+            {
+              "cumulative_frames": 602,
+              "interval_us": 5020531,
+              "rate_hz": 60.153
+            },
+            {
+              "cumulative_frames": 903,
+              "interval_us": 5017849,
+              "rate_hz": 59.986
+            },
+            {
+              "cumulative_frames": 1205,
+              "interval_us": 5020533,
+              "rate_hz": 60.153
+            }
+          ],
+          "last_refill_cumulative": [
+            "9644",
+            "1401.17",
+            "1480",
+            "0",
+            "0",
+            "1922",
+            "1"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "9642",
+            "1205",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 1385.69,
+          "last_load_counters": null
+        }
+      ]
+    },
+    {
+      "variant": "stock-sprites8-r01",
+      "build_id": "dsi-strip-r01-b2026-10-07-05-05-25Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 397952,
+        "sha256": "c48cb711619b3ce82b09979fd64ada1b42f9d4d1b8ae7fd4480a673eb2b4e31e"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "bef80f770344797b0ab705e8d2c7a14659b7c6d0a10e450bc0516185bcd99380",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1ca4656684b574cbaaed895cb281732af460eb0b9a89fcb8f6f643ec23cda371",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "78ce6c3e137dd7c3b14ec7bd75ad2e5e3a90834a673826488a2fc9c443a14418",
+        "main/build_identity.h": "4b8c45ac75d26ce0d31a4ca01c1a34111114238d37e4676b29dd9eb39017d847",
+        "main/main.c": "483275789c9106246b52f48e0824c26be70aaf1fb22cc9f647a763d77d7ee852",
+        "main/nurples_art.h": "2dbcd669e2aa9d7dbc9e018a54dba5e90fd84598164ad979d6334b45178c0419",
+        "main/source-provenance.json": "d92a87a940eb8e69505bb5c5533c856b5fbd620d0ab713fc97c354754bb09589",
+        "main/stock_sprite_body.inc": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+        "main/stock_sprite_probe.cpp": "d07c02c13e72a5bd19de1dda93fbacda61d209453d6bbf38d7cafc684b9aef29",
+        "main/stock_sprite_probe.h": "a4b6c8f2ae52d1fd14d844b735199d16eb185b7c927fd2772d816e4e3940c931",
+        "main/strip_config.h": "eeed0246cd520f827d7c5febcb6fd054ce46f8fd9bdb27d44673cc19579d3d4f",
+        "main/strip_probe.h": "1b0ed9249fa0a68c042af6122237082bc1c782f38d9e8b2bec595cde8a690e03",
+        "main/strip_runtime.inc": "a29d7d973c98d8facc56a17d01997904d58d82ab113f300e451fec6bc3a57546",
+        "patch_dpi.py": "6e723bd0c8f76a4455578c2efdf78b7ae028449333bbbb0f1293f6b1b6339446",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "95853be0d0fc26a313922b24a27fbca23d5793cc779c9097358189e92ec68f4a"
+      },
+      "captures": [
+        {
+          "path": "stock-sprites8-r01/installed-2026-10-07-05-06-39Z/serial.log",
+          "bytes": 4291,
+          "sha256": "72ff2578e469b0779efd8c34621454a7dae2a1dc6a1e571e59a537642e30cac9",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 4999976,
+              "rate_hz": 60.0
+            },
+            {
+              "cumulative_frames": 602,
+              "interval_us": 5037792,
+              "rate_hz": 59.947
+            },
+            {
+              "cumulative_frames": 752,
+              "interval_us": 5005440,
+              "rate_hz": 29.967
+            },
+            {
+              "cumulative_frames": 903,
+              "interval_us": 5017824,
+              "rate_hz": 30.093
+            }
+          ],
+          "last_refill_cumulative": [
+            "6637",
+            "1790.83",
+            "4330",
+            "1804",
+            "0",
+            "1403",
+            "8"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "6635",
+            "903",
+            "0",
+            "0",
+            "303"
+          ],
+          "last_copy_mean_us_cumulative": 1386.82,
+          "last_load_counters": null
+        }
+      ]
+    },
+    {
+      "variant": "stock-spans8-r01",
+      "build_id": "dsi-strip-r01-b2026-10-07-05-08-49Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 398032,
+        "sha256": "b828c7e0c1c4e472c77fd66897c466d6d7b00ab03e5df1fc3b71845f6e27960c"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "5697fd6827c06f1218885552bbd99c4c8f63589a926d57334f46ba0891eea427",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1ca4656684b574cbaaed895cb281732af460eb0b9a89fcb8f6f643ec23cda371",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "78ce6c3e137dd7c3b14ec7bd75ad2e5e3a90834a673826488a2fc9c443a14418",
+        "main/build_identity.h": "5ea2f8153c78535d07943e08a1428dbe280184abc63e9861c471b4db73848e1f",
+        "main/main.c": "483275789c9106246b52f48e0824c26be70aaf1fb22cc9f647a763d77d7ee852",
+        "main/nurples_art.h": "2dbcd669e2aa9d7dbc9e018a54dba5e90fd84598164ad979d6334b45178c0419",
+        "main/source-provenance.json": "d92a87a940eb8e69505bb5c5533c856b5fbd620d0ab713fc97c354754bb09589",
+        "main/stock_sprite_body.inc": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+        "main/stock_sprite_probe.cpp": "5391236c0ca649f39568a1e708c74c048c7b7e5977bca9552a2f32e3cb2753d5",
+        "main/stock_sprite_probe.h": "a4b6c8f2ae52d1fd14d844b735199d16eb185b7c927fd2772d816e4e3940c931",
+        "main/strip_config.h": "eeed0246cd520f827d7c5febcb6fd054ce46f8fd9bdb27d44673cc19579d3d4f",
+        "main/strip_probe.h": "1b0ed9249fa0a68c042af6122237082bc1c782f38d9e8b2bec595cde8a690e03",
+        "main/strip_runtime.inc": "a29d7d973c98d8facc56a17d01997904d58d82ab113f300e451fec6bc3a57546",
+        "patch_dpi.py": "6e723bd0c8f76a4455578c2efdf78b7ae028449333bbbb0f1293f6b1b6339446",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "73641dce832397f186613b1c5c86fd86ddcb20c1011048494594ca61e1a5e909"
+      },
+      "captures": [
+        {
+          "path": "stock-spans8-r01/installed-2026-10-07-05-10-02Z/serial.log",
+          "bytes": 4288,
+          "sha256": "bc9ffe155c9ff4b4bae36240cd9736a05d21021fe551be752605815e4eba6ddb",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 5000378,
+              "rate_hz": 59.995
+            },
+            {
+              "cumulative_frames": 602,
+              "interval_us": 5020645,
+              "rate_hz": 60.152
+            },
+            {
+              "cumulative_frames": 903,
+              "interval_us": 5021721,
+              "rate_hz": 59.94
+            },
+            {
+              "cumulative_frames": 1205,
+              "interval_us": 5023789,
+              "rate_hz": 60.114
+            }
+          ],
+          "last_refill_cumulative": [
+            "9651",
+            "1446.69",
+            "1681",
+            "1938",
+            "0",
+            "1892",
+            "16"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "9649",
+            "1206",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 1385.78,
+          "last_load_counters": null
+        },
+        {
+          "path": "stock-spans8-r01/loaded-serial.log",
+          "bytes": 1217,
+          "sha256": "d1cdb7482e516df9c801253ab67f5ca57dba1ddc95dc08936d3b83566c2ac643",
+          "frame_samples": [
+            {
+              "cumulative_frames": 3320,
+              "interval_us": 5027520,
+              "rate_hz": 60.069
+            },
+            {
+              "cumulative_frames": 3623,
+              "interval_us": 5046026,
+              "rate_hz": 60.047
+            },
+            {
+              "cumulative_frames": 3926,
+              "interval_us": 5042266,
+              "rate_hz": 60.092
+            }
+          ],
+          "last_refill_cumulative": [
+            "29001",
+            "1628.31",
+            "1965",
+            "17209",
+            "0",
+            "1885",
+            "32"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "28999",
+            "3624",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 1385.77,
+          "last_load_counters": null
+        }
+      ]
+    },
+    {
+      "variant": "stock-center-load8-r01",
+      "build_id": "dsi-strip-r01-b2026-10-07-05-13-48Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 399152,
+        "sha256": "d5f943e276cca01e974bb5c79b52a61e8cb6272cbb9f115a01310709346f6247"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "2e3a83c1d9d5b698aa1e522cf09e1bdefafa3baee50e922fbfbb019d989d893e",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1ca4656684b574cbaaed895cb281732af460eb0b9a89fcb8f6f643ec23cda371",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "78ce6c3e137dd7c3b14ec7bd75ad2e5e3a90834a673826488a2fc9c443a14418",
+        "main/build_identity.h": "f5d4434af98b9f1770386461b44d3b50f284e9403b9b22dd19b3b4c94d25966e",
+        "main/main.c": "52412d1bb7fad0025b8e9685f5660ab505efd731b62b09c5acfe9eba62ea6c0a",
+        "main/nurples_art.h": "2dbcd669e2aa9d7dbc9e018a54dba5e90fd84598164ad979d6334b45178c0419",
+        "main/source-provenance.json": "d92a87a940eb8e69505bb5c5533c856b5fbd620d0ab713fc97c354754bb09589",
+        "main/stock_sprite_body.inc": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+        "main/stock_sprite_probe.cpp": "5391236c0ca649f39568a1e708c74c048c7b7e5977bca9552a2f32e3cb2753d5",
+        "main/stock_sprite_probe.h": "a4b6c8f2ae52d1fd14d844b735199d16eb185b7c927fd2772d816e4e3940c931",
+        "main/strip_config.h": "eeed0246cd520f827d7c5febcb6fd054ce46f8fd9bdb27d44673cc19579d3d4f",
+        "main/strip_probe.h": "1b0ed9249fa0a68c042af6122237082bc1c782f38d9e8b2bec595cde8a690e03",
+        "main/strip_runtime.inc": "a2c0e43a5153484de8c8b656c1038b55c9947026c2031c73cf1d4b68160bd5e1",
+        "patch_dpi.py": "6e723bd0c8f76a4455578c2efdf78b7ae028449333bbbb0f1293f6b1b6339446",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "fb99ac1d7a85312ea240c034dad05f757bac7c7f31c46a0e5655c8cd272bbfc8"
+      },
+      "captures": [
+        {
+          "path": "stock-center-load8-r01/installed-2026-10-07-05-16-00Z/serial.log",
+          "bytes": 4482,
+          "sha256": "2120e58aa65ccd13e3de00716e929135fa4b9193c685f85d3d7463e38e7afb5d",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 4999759,
+              "rate_hz": 60.003
+            },
+            {
+              "cumulative_frames": 601,
+              "interval_us": 5010945,
+              "rate_hz": 60.069
+            },
+            {
+              "cumulative_frames": 902,
+              "interval_us": 5008981,
+              "rate_hz": 60.092
+            },
+            {
+              "cumulative_frames": 1203,
+              "interval_us": 5011515,
+              "rate_hz": 60.062
+            }
+          ],
+          "last_refill_cumulative": [
+            "9632",
+            "786.29",
+            "1155",
+            "0",
+            "0",
+            "1924",
+            "16"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "9630",
+            "1203",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 730.51,
+          "last_load_counters": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "path": "stock-center-load8-r01/load-serial.log",
+          "bytes": 5616,
+          "sha256": "f51e1d11fee3ee180a0d8cc64c97c9642832822be3431442f6ade78104670bd6",
+          "frame_samples": [
+            {
+              "cumulative_frames": 2106,
+              "interval_us": 5005076,
+              "rate_hz": 60.139
+            },
+            {
+              "cumulative_frames": 2407,
+              "interval_us": 5012723,
+              "rate_hz": 60.047
+            },
+            {
+              "cumulative_frames": 2708,
+              "interval_us": 5010866,
+              "rate_hz": 60.069
+            },
+            {
+              "cumulative_frames": 3009,
+              "interval_us": 5014746,
+              "rate_hz": 60.023
+            },
+            {
+              "cumulative_frames": 3310,
+              "interval_us": 5006992,
+              "rate_hz": 60.116
+            },
+            {
+              "cumulative_frames": 3611,
+              "interval_us": 5010878,
+              "rate_hz": 60.069
+            },
+            {
+              "cumulative_frames": 3913,
+              "interval_us": 5023810,
+              "rate_hz": 60.114
+            },
+            {
+              "cumulative_frames": 4214,
+              "interval_us": 5020661,
+              "rate_hz": 59.952
+            },
+            {
+              "cumulative_frames": 4516,
+              "interval_us": 5017595,
+              "rate_hz": 60.188
+            },
+            {
+              "cumulative_frames": 4817,
+              "interval_us": 5016620,
+              "rate_hz": 60.001
+            }
+          ],
+          "last_refill_cumulative": [
+            "38545",
+            "1047.20",
+            "3045",
+            "1921",
+            "0",
+            "959",
+            "32"
+          ],
+          "last_block_counters": [
+            "8",
+            "1",
+            "38543",
+            "4817",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 776.76,
+          "last_load_counters": [
+            "1217",
+            "0",
+            "4505"
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "stock-center-load12-r01",
+      "build_id": "dsi-strip-r01-b2026-10-07-05-17-06Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 399488,
+        "sha256": "d942713fa5cb53494f14ed1b6f32c03d970e15f6dc627665f2004bbd5ac388aa"
+      },
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "manifest_sha256": "59ddfbec9c31046a62fab16386bb2e16a306d3187bb6e06e93905a21cf7be589",
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "1ca4656684b574cbaaed895cb281732af460eb0b9a89fcb8f6f643ec23cda371",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "735efdc49a0c96d0e59dfa4130e841cf9e5d25349932757804edd4fa5c952d9d",
+        "main/CMakeLists.txt": "78ce6c3e137dd7c3b14ec7bd75ad2e5e3a90834a673826488a2fc9c443a14418",
+        "main/build_identity.h": "c46a4aac33e0b7eaa7bb222afd0a6f5bbf351e1db58d337fdd213f6f28b16dcc",
+        "main/main.c": "c7616da0e75ddc13c1524cac9b3af6d68bc8cc068c4ad963665a562dfc5c586a",
+        "main/nurples_art.h": "2dbcd669e2aa9d7dbc9e018a54dba5e90fd84598164ad979d6334b45178c0419",
+        "main/source-provenance.json": "d92a87a940eb8e69505bb5c5533c856b5fbd620d0ab713fc97c354754bb09589",
+        "main/stock_sprite_body.inc": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+        "main/stock_sprite_probe.cpp": "5391236c0ca649f39568a1e708c74c048c7b7e5977bca9552a2f32e3cb2753d5",
+        "main/stock_sprite_probe.h": "a4b6c8f2ae52d1fd14d844b735199d16eb185b7c927fd2772d816e4e3940c931",
+        "main/strip_config.h": "6d4713adeb7acd2580f99a095464473d4b72001d25626b1bedfc01b7cf209f25",
+        "main/strip_probe.h": "1b0ed9249fa0a68c042af6122237082bc1c782f38d9e8b2bec595cde8a690e03",
+        "main/strip_runtime.inc": "d7d052b83527dc6d6873c1daaa80873d138edd1c03e262a43e5a067edec9a125",
+        "patch_dpi.py": "6e723bd0c8f76a4455578c2efdf78b7ae028449333bbbb0f1293f6b1b6339446",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "3239a199883c264ad359dbe64c5d1218260ddfdef381a1f36f12d5ca965d05fe"
+      },
+      "captures": [
+        {
+          "path": "stock-center-load12-r01/installed-2026-10-07-05-22-46Z/serial.log",
+          "bytes": 4925,
+          "sha256": "6dd990a35c28e7e5bf5bc311ac3425d72a1e0ab32f5201704fd36d5ac097b446",
+          "frame_samples": [
+            {
+              "cumulative_frames": 300,
+              "interval_us": 5000630,
+              "rate_hz": 59.992
+            },
+            {
+              "cumulative_frames": 601,
+              "interval_us": 5011012,
+              "rate_hz": 60.068
+            },
+            {
+              "cumulative_frames": 902,
+              "interval_us": 5012121,
+              "rate_hz": 60.054
+            },
+            {
+              "cumulative_frames": 1203,
+              "interval_us": 5007045,
+              "rate_hz": 60.115
+            }
+          ],
+          "last_refill_cumulative": [
+            "14447",
+            "524.97",
+            "811",
+            "0",
+            "0",
+            "1281",
+            "16"
+          ],
+          "last_block_counters": [
+            "12",
+            "1",
+            "14445",
+            "1203",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 483.3,
+          "last_load_counters": [
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        {
+          "path": "stock-center-load12-r01/load-serial.log",
+          "bytes": 5967,
+          "sha256": "f6ff721a50262e33b3249d619090df2fd5fdd2da8f9cceac64faf2ca6082cc05",
+          "frame_samples": [
+            {
+              "cumulative_frames": 4815,
+              "interval_us": 5012165,
+              "rate_hz": 60.054
+            },
+            {
+              "cumulative_frames": 5116,
+              "interval_us": 5018797,
+              "rate_hz": 59.975
+            },
+            {
+              "cumulative_frames": 5418,
+              "interval_us": 5017036,
+              "rate_hz": 60.195
+            },
+            {
+              "cumulative_frames": 5719,
+              "interval_us": 5019964,
+              "rate_hz": 59.961
+            },
+            {
+              "cumulative_frames": 6021,
+              "interval_us": 5015000,
+              "rate_hz": 60.219
+            },
+            {
+              "cumulative_frames": 6322,
+              "interval_us": 5020741,
+              "rate_hz": 59.951
+            },
+            {
+              "cumulative_frames": 6623,
+              "interval_us": 5016259,
+              "rate_hz": 60.005
+            },
+            {
+              "cumulative_frames": 6925,
+              "interval_us": 5027000,
+              "rate_hz": 60.076
+            },
+            {
+              "cumulative_frames": 7227,
+              "interval_us": 5020039,
+              "rate_hz": 60.159
+            }
+          ],
+          "last_refill_cumulative": [
+            "86738",
+            "763.60",
+            "2195",
+            "8820",
+            "0",
+            "357",
+            "32"
+          ],
+          "last_block_counters": [
+            "12",
+            "1",
+            "86736",
+            "7228",
+            "0",
+            "0",
+            "0"
+          ],
+          "last_copy_mean_us_cumulative": 546.43,
+          "last_load_counters": [
+            "3624",
+            "0",
+            "4450"
+          ]
+        }
+      ]
+    }
+  ],
+  "author_observations": [
+    {
+      "variant": "static8",
+      "result": "intact and stable; all four white edges"
+    },
+    {
+      "variant": "rolling8-PSRAM",
+      "result": "flickering like mad; blue background reported for this and SRAM-before-rearm"
+    },
+    {
+      "variant": "rolling8-SRAM-before-rearm",
+      "result": "flickering faster; more visible; blue background"
+    },
+    {
+      "variant": "rolling8-SRAM-rearm-first",
+      "result": "black background; much improved, initially a very little flicker; later confirms stable black and moving square"
+    },
+    {
+      "variant": "stock-full-rows",
+      "result": "very unhappy; blue background returned"
+    },
+    {
+      "variant": "stock-spans8",
+      "result": "excellent; no flicker on sprites or background"
+    },
+    {
+      "variant": "stock-center-load8",
+      "result": "After initially excellent sprite/background stability: flickering starts; Author specifies static gray line/checker boxes at left exposing red bars. Coincides with separate-core scroll-memory load; this is background corruption as well as sprite output, not gameplay."
+    }
+  ],
+  "host_pixel_comparison": {
+    "stock_body_unchanged": true,
+    "all_pixels_match": true,
+    "frames": [
+      {
+        "frame": 0,
+        "sprites": 1,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 0,
+        "sprites": 1,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 599,
+        "sprites": 1,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 599,
+        "sprites": 1,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 600,
+        "sprites": 8,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 600,
+        "sprites": 8,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1199,
+        "sprites": 8,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1199,
+        "sprites": 8,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1200,
+        "sprites": 16,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1200,
+        "sprites": 16,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1799,
+        "sprites": 16,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1799,
+        "sprites": 16,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1800,
+        "sprites": 32,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1800,
+        "sprites": 32,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 3599,
+        "sprites": 32,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 3599,
+        "sprites": 32,
+        "blocks": 12,
+        "all_pixels_match": true
+      }
+    ]
+  },
+  "counter_limitations": [
+    "Refill/copy means and maxima are cumulative since boot; do not label them steady-state means.",
+    "Serial samples are non-atomic snapshots and frame counters can differ by one across lines.",
+    "Zero hardware error counters and 60Hz DMA do not prove scratch buffers were ready before reuse.",
+    "Eight- and twelve-block refill durations cover different row counts; direct percent speedup would be misleading."
+  ],
+  "restoration": {
+    "build_id": "rgb-001-r03-b2026-10-07-02-45-45Z",
+    "image_sha256": "c41d7974f9d734a1464155f02fec3ed3bf122e3e26b21e52306e9b6bf95bacad",
+    "readback_verified": true,
+    "segments": {
+      "0x2000": "bootloader/bootloader.bin",
+      "0x20000": "agon_extender.bin",
+      "0x8000": "partition_table/partition-table.bin",
+      "0xf000": "ota_data_initial.bin"
+    },
+    "receipt_sha256": "ac92cf015e86907b8cf7fb414a47a2696f5d07ec440982169743a4e137d6543b",
+    "verified_utc": "2026-10-07T05:28:30.107191+00:00",
+    "input_ready": true,
+    "input_pending": 0,
+    "input_held": 0,
+    "input_neutral": true,
+    "sd_online": false,
+    "sd_job_pending": false,
+    "diagnostic_open": 0,
+    "diagnostic_overflow": false,
+    "sd_and_startup_untouched": true,
+    "native_integration_attempted": false,
+    "hardware_sprite_game_run": false,
+    "production_selection_changed": false
+  }
+}

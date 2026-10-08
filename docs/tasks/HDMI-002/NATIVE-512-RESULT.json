@@ -1,0 +1,56 @@
+{
+  "build_id": "hdmi-timing-r03-b2026-10-07-06-49-32Z",
+  "factory_sha256": "8abd17f99d48c7fa7e2cbd17cc1148840080557aa6072a84d891e486fadcf731",
+  "timing": {
+    "name": "512x384",
+    "width": 512,
+    "height": 384,
+    "wide": false,
+    "hfp": 368,
+    "hs": 112,
+    "hbp": 112,
+    "vfp": 102,
+    "vs": 8,
+    "vbp": 23,
+    "htotal": 1104,
+    "vtotal": 517,
+    "pll_hz": 240000000,
+    "divider": 7,
+    "lanes": 2,
+    "lane_mbps": 480,
+    "refresh_hz": 60.06944027295553,
+    "vic": 0,
+    "aspect_error_percent": 0
+  },
+  "samples": [
+    {
+      "frames": 300,
+      "interval_us": 5000359,
+      "rate": 59.996,
+      "hpd": 1
+    },
+    {
+      "frames": 601,
+      "interval_us": 5003000,
+      "rate": 60.164,
+      "hpd": 1
+    },
+    {
+      "frames": 901,
+      "interval_us": 5002000,
+      "rate": 59.976,
+      "hpd": 1
+    },
+    {
+      "frames": 1202,
+      "interval_us": 5002000,
+      "rate": 60.176,
+      "hpd": 1
+    }
+  ],
+  "measured_interval_us": 20007359,
+  "frame_count": 1202,
+  "picture_accepted": false,
+  "hardware_services": "none; standalone pattern",
+  "mean_dma_hz": 60.077894338778044
+}

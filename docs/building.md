@@ -373,17 +373,116 @@ it is not enabled in ordinary builds or the selected production bundle.
 The native builder accepts `--display-output browser` (the default) or
 `--display-output hdmi`. HDMI is restricted to `p4-console` on `p4-pc` and
 uses the same stock-shaped renderer. The selected adapter supplies fixed
-1280×720 RGB888 output, centered unscaled images and cropping, with logical-mode
+1280×720 RGB888 output by default, centered unscaled images and cropping, with logical-mode
 buffering and hardware-paced frames. Browser video is omitted; browser keyboard,
 HTTP and SD services remain. Native DevKit/browser selection is unchanged.
+
+The experimental `--hdmi-timing auto` option requires
+`--rolling-scanout --direct-rgb888 --render-benchmark-output normal` and an
+explicit dirty-experiment build identity. It selects684×384 for logical images
+that fit that carrier and848×480 otherwise. Thus512×384 is centered at(86,0),
+while640×480 is centered at(104,0) with no clipped text rows. Smaller modes remain
+centered and unscaled;320×240 has no new physical timing yet. Oversized modes
+retain the crop fallback pending inventory. `/display/status` reports the active
+carrier rather than the build's initial size.
+
+The automatic build also exposes experimental single-buffer modes **96–99**:
+848×480 at 64, 16, 4 and 2 colors respectively. These provisional IDs expose
+the complete 848×480 carrier, without changing stock modes or adding DB aliases.
+They use the existing native compositor; the direct RGB888 fast path remains
+limited to its previously qualified geometries. Select them through ordinary
+EMOS-routed `VDU 22 n`; stock mainboard VDP does not implement these IDs.
+See [full-width qualification](tasks/HDMI-002.md) for current validation limits.
+
+The behavior in this paragraph and the next describes the retained r06 build.
+Unaccepted development source now also contains the r07/r08 experiment with
+three 848-wide slots, selected task stacks in PSRAM, and direct RGB888 mode 96.
+That experiment fails longer Nurples runs with stopped scanout and a recorded
+DSI underrun. A fresh build of this working tree is **not** the proven r06
+rollback. Use its exact retained artifacts/manifest, and consult the
+[failed experiment record](tasks/HDMI-002/ROLLING480-RESULTS.md) before choosing
+development firmware. Production selection is unchanged.
+
+The subsequent r09 source adds a bounded one-request refill queue and preserves
+the first scanout fault for diagnosis. It passes host checks and target compilation
+only; it has not been deployed. See the [offline review](tasks/HDMI-002/OFFLINE480-REVIEW.md)
+before choosing this experiment. The three-slot allocation,1,600µs limit and
+physical timings are unchanged; waiting time counts toward that limit.
+
+The following r10 experiment adds cancellation of submitted swap waiters and
+fault-aware panel borrowing/recreation at joined mode boundaries. It retains
+r09's refill remedy. Host lifecycle and failure-injection checks pass; this is
+still unflashed development, not a repair verified on the physical monitor.
+See the [mode-lifecycle review](tasks/HDMI-002/MODE-LIFECYCLE-REVIEW.md) for exact
+build status and the distinction between reproduced host defects and the
+unresolved physical mode96-to97 failure.
+
+The automatic build reserves three32-row684 rolling SRAM slots at boot and
+retains them across carrier changes, avoiding later fragmentation. The684 carrier
+uses those slots and immutable hardware
+sprite snapshots. The848 carrier reuses pinned IDF's full-frame DMA, avoiding
+an additional47KiB of SRAM that three848-wide slots would require. This does
+not qualify equivalent hardware-sprite performance in480-line modes. Sprites
+remain enabled through the native compositor, with unchanged palette behavior;
+bounded640×480 checks in16/4/2-color modes pass. Carrier
+changes stop/join the former rendering owners and restart DSI/LT8912B on core1;
+fixed selections remain available. See [runtime qualification](tasks/HDMI-002.md).
+
+The explicit experimental `--hdmi-timing 848x480` option selects the
+[HDMI-002](tasks/HDMI-002.md) custom 60.06944 Hz timing: PLL240/7 pixel clock,
+two 480 Mbps DSI lanes and 1104×517 totals. It is not exact DMT 0Eh or a
+native 512×384 signal. A 512×384 logical image is centered unscaled at (168,48).
+Omitting the option retains 1280×720. The build manifest and embedded browser
+status record the selected output; browser video remains absent in HDMI builds.
+The accepted partial-scroll implementation can be selected with the existing
+experimental `--direct-rgb888` option; this does not promote it to production.
+The additional experimental `--hdmi-timing 512x384` selection uses a native
+512×384 active area with the same clock and totals, larger blanking porches and
+4:3 metadata. The standalone signal failed physical review and the Author now
+targets a widescreen carrier with512×384 pillarboxed. This full512-wide selection
+is retained experimental preparation, not a deployment recommendation.
+With `--rolling-scanout --direct-rgb888 --render-benchmark-output normal`,
+its twelve 32-row DMA blocks use three internal SRAM slots totaling 147456 bytes,
+versus 244224 bytes for the 848-wide experiment. The rolling renderer and DMA
+driver must use matching build definitions; validation checks both. Full-firmware
+startup, mode transitions, sprites and gameplay for that512-wide build remain
+unqualified; it is not the accepted standalone684-wide timing pattern.
+
+The explicit `--hdmi-timing 684x384` selection uses the reviewed widescreen
+carrier with512×384 centered at(86,0), preserving the clock and totals above.
+Combined with the same rolling/direct/benchmark flags, twelve32-row blocks
+reuse three SRAM slots totaling196992bytes. Build validation checks matching
+684-wide C DMA and C++ definitions. The initial candidate exhausted internal
+memory during hardware Nurples and crashed in buffer ownership cleanup. The
+latest placement remedy completes the marked3600-update run at nominal60/s and
+ordinary menu/mode-change/Escape exit, with about22KiB internal RAM free during
+play. Author review and broader qualification remain pending; automatic Agon
+SD admission after ordinary exit rejects in ExCom and recovers through
+`EMOS LEGACY` without reset. Use
+[the integration record](tasks/SPRITE-001/INTEGRATION.md) for current evidence.
+The old full848 image remains usable for service recovery, but is not a
+hardware-sprite Nurples playtest rollback. The current rolling candidate prefers
+PSRAM for all ordinary malloc sizes (`CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=0`),
+while preserving the32768-byte internal reserve and explicitly internal RTOS/DMA
+allocations. The physical rolling build also allocates the unchanged1024-entry
+primitive queue payload in PSRAM, with its RTOS control in internal RAM. The
+owned adapter uses pinned IDF static-queue construction and capability-aware
+deletion; the stock queue capacity, order and drawing behavior are unchanged.
+An optional `--abort-on-alloc-failure` is restricted to an explicit
+experimental rolling build; it uses IDF's heap-abort diagnostic and must not be
+confused with the memory remedy. Default builds are unaffected. See
+[allocation diagnosis and current checks](tasks/HDMI-002/MEMORY-RESULTS.md).
+For controlled comparisons, `--dependencies-lock PATH` seeds dependency
+resolution from a retained build lock. Verify the resulting lock against the
+intended baseline; the option does not itself prevent a resolver update.
 
 HDMI is experimental, outside selected production. Its pre-v3 silicon callback
 is DMA frame completion rather than a separate hardware-vsync interrupt; original
 70/75Hz modes physically use the fixed ~60Hz HDMI cadence. See
 [HDMI-001](tasks/HDMI-001.md) for scope, constraints and pre-flash evidence.
 
-The explicit `--allow-dirty-experimental` exception is restricted to HDMI-001
-experimental build identities on P4-PC/console/HDMI. It archives exact Git-visible
+The explicit `--allow-dirty-experimental` exception is restricted to admitted
+HDMI experimental build identities on P4-PC/console/HDMI. It archives exact Git-visible
 VDP and build-tool source bytes before compiling, records their hashes, and
 rejects changes during the build. It does not qualify dirty source or waive
 the normal clean-input guard for other identified builds. Build outputs retain

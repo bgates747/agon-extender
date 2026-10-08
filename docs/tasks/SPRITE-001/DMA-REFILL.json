@@ -1,0 +1,1779 @@
+{
+  "schema_version": 1,
+  "task": "SPR01-07A",
+  "scope": "Standalone DMA-refill test; no live VDP/Nurples integration",
+  "builds": [
+    {
+      "variant": "async12-r02-build4",
+      "build_id": "dsi-strip-r02-b2026-10-07-05-47-18Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 402064,
+        "sha256": "b87df369215cf845a0a9ea3362be7903d2e496a8eff202991824ee9a1969ebfc"
+      },
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "manifest_sha256": "4f92e5e92108c4c039022b312b5cacf453996aabf9c688e85e0628fe99ba0223",
+      "configuration": {
+        "inject_late_tag": 0
+      },
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "da998ac25e8bd79c7a327c749d4b68747949c7bfb659515ca6b5eb15145233cd",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "204343c877b8ddfad71ee6b33cc62eff92a72e0085ad260bda8d70a85f23045d",
+        "main/CMakeLists.txt": "78ce6c3e137dd7c3b14ec7bd75ad2e5e3a90834a673826488a2fc9c443a14418",
+        "main/build_identity.h": "6690acba875bfe837fc8d1cb1d1b34f1fa1118f3f6fffd044b5261f5488a00ce",
+        "main/main.c": "ed35598c73b12218676d60205d8f15bf086d029469bb49134a072a04eed667be",
+        "main/nurples_art.h": "2dbcd669e2aa9d7dbc9e018a54dba5e90fd84598164ad979d6334b45178c0419",
+        "main/source-provenance.json": "d92a87a940eb8e69505bb5c5533c856b5fbd620d0ab713fc97c354754bb09589",
+        "main/stock_sprite_body.inc": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+        "main/stock_sprite_probe.cpp": "5391236c0ca649f39568a1e708c74c048c7b7e5977bca9552a2f32e3cb2753d5",
+        "main/stock_sprite_probe.h": "a4b6c8f2ae52d1fd14d844b735199d16eb185b7c927fd2772d816e4e3940c931",
+        "main/strip_config.h": "6d4713adeb7acd2580f99a095464473d4b72001d25626b1bedfc01b7cf209f25",
+        "main/strip_probe.h": "17cbfc99901e1fbb2352661648bad830babfb6f425ab16cc32888a61b51977d7",
+        "main/strip_runtime.inc": "7fc4116c28881ba827af5b66414b867536547088e2b9d81405e383695d826417",
+        "patch_dpi.py": "1616598366a5306913a0ebaf1c152dc36a6eea9b14efa0d6fa6b8e25305a1b7f",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "755c69191cb6a87c69a2902ada4ac5dc3827e8153ed9e08535a1b5225ee4773a"
+      },
+      "captures": [
+        {
+          "path": "async12-r02-build4/installed-2026-10-07-05-48-45Z/serial.log",
+          "sha256": "774c9a5cec151c5e53ef99c1af067021dca3cce3af3978460dfa03963a6fd600",
+          "bytes": 5610,
+          "preflight_pass": true,
+          "samples": [
+            {
+              "frame_fields": [
+                "6369",
+                "300",
+                "5000389",
+                "59.995"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "3609",
+                "300",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "3608",
+                "261.96",
+                "387",
+                "0",
+                "0",
+                "1281",
+                "1"
+              ],
+              "copy_mean_us": [
+                "243.91"
+              ],
+              "async_fields": [
+                "353",
+                "53",
+                "25591",
+                "0",
+                "0",
+                "0",
+                "866",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "11378",
+                "601",
+                "5009000",
+                "60.092"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "7218",
+                "601",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "7218",
+                "262.06",
+                "421",
+                "0",
+                "0",
+                "1281",
+                "8"
+              ],
+              "copy_mean_us": [
+                "243.90"
+              ],
+              "async_fields": [
+                "353",
+                "135",
+                "52190",
+                "0",
+                "0",
+                "0",
+                "866",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "16385",
+                "902",
+                "5007000",
+                "60.116"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "10828",
+                "902",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "10827",
+                "275.82",
+                "421",
+                "0",
+                "0",
+                "1281",
+                "8"
+              ],
+              "copy_mean_us": [
+                "243.87"
+              ],
+              "async_fields": [
+                "353",
+                "135",
+                "226171",
+                "0",
+                "0",
+                "0",
+                "866",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "21393",
+                "1203",
+                "5008000",
+                "60.104"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "14438",
+                "1203",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "14437",
+                "282.92",
+                "452",
+                "0",
+                "0",
+                "1281",
+                "16"
+              ],
+              "copy_mean_us": [
+                "243.89"
+              ],
+              "async_fields": [
+                "353",
+                "166",
+                "403095",
+                "0",
+                "0",
+                "0",
+                "836",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "async12-r02-build4/load-serial.log",
+          "sha256": "df581cbbdd835de531ee8ad2b22eb23df68377e4c4e3b404930fa93c08435745",
+          "bytes": 7321,
+          "preflight_pass": false,
+          "samples": [
+            {
+              "frame_fields": [
+                "76444",
+                "4509",
+                "5005000",
+                "59.940"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "54120",
+                "4510",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "54120",
+                "440.83",
+                "1498",
+                "1610",
+                "0",
+                "1059",
+                "32"
+              ],
+              "copy_mean_us": [
+                "258.77"
+              ],
+              "async_fields": [
+                "707",
+                "834",
+                "9172142",
+                "0",
+                "0",
+                "0",
+                "3",
+                "12"
+              ],
+              "load_fields": [
+                "910",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "81458",
+                "4811",
+                "5013996",
+                "60.231"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "57736",
+                "4811",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "57736",
+                "453.13",
+                "1539",
+                "2313",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "262.51"
+              ],
+              "async_fields": [
+                "707",
+                "834",
+                "10262532",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "1211",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "86471",
+                "5112",
+                "5013000",
+                "60.044"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "61349",
+                "5112",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "61349",
+                "461.98",
+                "1539",
+                "2615",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "266.15"
+              ],
+              "async_fields": [
+                "707",
+                "834",
+                "11212230",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "1511",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "91481",
+                "5413",
+                "5010000",
+                "60.080"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "64963",
+                "5413",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "64963",
+                "470.39",
+                "1539",
+                "3180",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "268.64"
+              ],
+              "async_fields": [
+                "707",
+                "834",
+                "12246275",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "1812",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "96494",
+                "5714",
+                "5013000",
+                "60.044"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "68574",
+                "5714",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "68574",
+                "479.22",
+                "1539",
+                "3884",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "271.27"
+              ],
+              "async_fields": [
+                "707",
+                "846",
+                "13339766",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "2113",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "101506",
+                "6015",
+                "5012000",
+                "60.056"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "72186",
+                "6015",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "72186",
+                "484.73",
+                "1539",
+                "4104",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "273.73"
+              ],
+              "async_fields": [
+                "707",
+                "846",
+                "14253640",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "2413",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "106516",
+                "6316",
+                "5010010",
+                "60.080"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "75801",
+                "6316",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "75801",
+                "491.39",
+                "1539",
+                "4737",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "275.69"
+              ],
+              "async_fields": [
+                "754",
+                "846",
+                "15312021",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "2714",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "111529",
+                "6617",
+                "5012990",
+                "60.044"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "79412",
+                "6617",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "79412",
+                "497.92",
+                "1539",
+                "5401",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "277.76"
+              ],
+              "async_fields": [
+                "754",
+                "850",
+                "16385135",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "3015",
+                "0",
+                "4480"
+              ]
+            },
+            {
+              "frame_fields": [
+                "116542",
+                "6918",
+                "5013329",
+                "60.040"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "83025",
+                "6918",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "83025",
+                "501.49",
+                "1539",
+                "5588",
+                "0",
+                "1016",
+                "32"
+              ],
+              "copy_mean_us": [
+                "279.34"
+              ],
+              "async_fields": [
+                "754",
+                "850",
+                "17289130",
+                "0",
+                "0",
+                "0",
+                "2",
+                "12"
+              ],
+              "load_fields": [
+                "3315",
+                "0",
+                "4480"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "async12-three-r02",
+      "build_id": "dsi-strip-r02-b2026-10-07-05-54-07Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 402112,
+        "sha256": "78ca29b966bcd05be588108f923bf39e995ae46fadb3403b7961fd5938435809"
+      },
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "manifest_sha256": "52dfea9eb074318d49e2c35ded97b23e2696b94dd6a1e09bd565485d4ae3c12e",
+      "configuration": {
+        "inject_late_tag": 0
+      },
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "cb2e1f9363882016b3566b0ff96fd30bcdb14a68b06b2b7e9ae73230a130c9cc",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "204343c877b8ddfad71ee6b33cc62eff92a72e0085ad260bda8d70a85f23045d",
+        "main/CMakeLists.txt": "78ce6c3e137dd7c3b14ec7bd75ad2e5e3a90834a673826488a2fc9c443a14418",
+        "main/build_identity.h": "03b05b485f392fd0a6fe0ebd9f4ba0de67ec41495ed032f052e47c57b5a566a9",
+        "main/main.c": "e73846b4a11813af9edbbdfdf7722c526edc7de50a1c59f4862805d5531b4ba9",
+        "main/nurples_art.h": "2dbcd669e2aa9d7dbc9e018a54dba5e90fd84598164ad979d6334b45178c0419",
+        "main/source-provenance.json": "d92a87a940eb8e69505bb5c5533c856b5fbd620d0ab713fc97c354754bb09589",
+        "main/stock_sprite_body.inc": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+        "main/stock_sprite_probe.cpp": "5391236c0ca649f39568a1e708c74c048c7b7e5977bca9552a2f32e3cb2753d5",
+        "main/stock_sprite_probe.h": "a4b6c8f2ae52d1fd14d844b735199d16eb185b7c927fd2772d816e4e3940c931",
+        "main/strip_config.h": "ad3bb9c46cab30cc9d171a5e4ae9520bc5bdd3733bfeb1b0562c82a389dc7137",
+        "main/strip_probe.h": "17cbfc99901e1fbb2352661648bad830babfb6f425ab16cc32888a61b51977d7",
+        "main/strip_runtime.inc": "8ca26c0785e6de608c3b0fb9f16408efbe22c188f70f0e98c491ee8b4200baa4",
+        "patch_dpi.py": "6994f616844cb33897de0ca412c101746e9e8421f2fd32fa54867a74327875ba",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "df08f38cf1c508dc8d7407c9ab2006fbdd87e6d1b1ad4616470711e8e8854550"
+      },
+      "captures": [
+        {
+          "path": "async12-three-r02/installed-2026-10-07-05-55-46Z/serial.log",
+          "sha256": "8a8b3834881ded1ec6a04e0535a9e3a1627826d2e92eb117b58e2bdb5545a7f6",
+          "bytes": 5614,
+          "preflight_pass": true,
+          "samples": [
+            {
+              "frame_fields": [
+                "6371",
+                "300",
+                "5000479",
+                "59.994"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "3608",
+                "300",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "3608",
+                "261.88",
+                "358",
+                "0",
+                "0",
+                "1283",
+                "1"
+              ],
+              "copy_mean_us": [
+                "243.92"
+              ],
+              "async_fields": [
+                "335",
+                "50",
+                "25416",
+                "0",
+                "0",
+                "0",
+                "2183",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "11379",
+                "601",
+                "5008000",
+                "60.104"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "7218",
+                "601",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "7217",
+                "262.01",
+                "419",
+                "0",
+                "0",
+                "1283",
+                "8"
+              ],
+              "copy_mean_us": [
+                "243.92"
+              ],
+              "async_fields": [
+                "335",
+                "135",
+                "51932",
+                "0",
+                "0",
+                "0",
+                "2156",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "16387",
+                "902",
+                "5008000",
+                "60.104"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "10828",
+                "902",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "10827",
+                "275.83",
+                "419",
+                "0",
+                "0",
+                "1283",
+                "8"
+              ],
+              "copy_mean_us": [
+                "243.92"
+              ],
+              "async_fields": [
+                "335",
+                "135",
+                "225991",
+                "0",
+                "0",
+                "0",
+                "2156",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "21396",
+                "1203",
+                "5009000",
+                "60.092"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "14438",
+                "1203",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "14438",
+                "282.92",
+                "450",
+                "0",
+                "0",
+                "1283",
+                "16"
+              ],
+              "copy_mean_us": [
+                "243.90"
+              ],
+              "async_fields": [
+                "335",
+                "166",
+                "402818",
+                "0",
+                "0",
+                "0",
+                "2125",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          ]
+        },
+        {
+          "path": "async12-three-r02/load-serial.log",
+          "sha256": "e0a6b88f5170d01f2c634a97fe81dfc8b0a00d22e0bfe7c4069513a461e6a677",
+          "bytes": 7322,
+          "preflight_pass": false,
+          "samples": [
+            {
+              "frame_fields": [
+                "81456",
+                "4810",
+                "5008856",
+                "59.894"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "57733",
+                "4811",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "57732",
+                "451.81",
+                "1509",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "261.84"
+              ],
+              "async_fields": [
+                "688",
+                "841",
+                "10211975",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "1210",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "86468",
+                "5111",
+                "5012203",
+                "60.053"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "61346",
+                "5112",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "61346",
+                "461.13",
+                "1509",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "265.50"
+              ],
+              "async_fields": [
+                "688",
+                "841",
+                "11184224",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "1511",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "91479",
+                "5412",
+                "5010797",
+                "60.070"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "64957",
+                "5413",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "64957",
+                "468.86",
+                "1509",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "267.66"
+              ],
+              "async_fields": [
+                "688",
+                "841",
+                "12194423",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "1812",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "96493",
+                "5714",
+                "5014086",
+                "60.230"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "68572",
+                "5714",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "68572",
+                "477.76",
+                "1522",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "270.25"
+              ],
+              "async_fields": [
+                "688",
+                "844",
+                "13289751",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "2113",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "101507",
+                "6015",
+                "5013914",
+                "60.033"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "72186",
+                "6015",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "72186",
+                "484.02",
+                "1522",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "272.97"
+              ],
+              "async_fields": [
+                "688",
+                "864",
+                "14234291",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "2413",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "106518",
+                "6316",
+                "5011409",
+                "60.063"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "75799",
+                "6316",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "75799",
+                "489.84",
+                "1524",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "274.57"
+              ],
+              "async_fields": [
+                "688",
+                "864",
+                "15254245",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "2714",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "111529",
+                "6617",
+                "5010610",
+                "60.073"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "79410",
+                "6617",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "79410",
+                "496.48",
+                "1524",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "276.59"
+              ],
+              "async_fields": [
+                "688",
+                "864",
+                "16336089",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "3015",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "116541",
+                "6918",
+                "5011981",
+                "60.056"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "83023",
+                "6918",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "83023",
+                "500.77",
+                "1524",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "278.47"
+              ],
+              "async_fields": [
+                "688",
+                "864",
+                "17270692",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "3315",
+                "0",
+                "4568"
+              ]
+            },
+            {
+              "frame_fields": [
+                "121553",
+                "7219",
+                "5012273",
+                "60.053"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "86636",
+                "7219",
+                "0",
+                "0",
+                "0"
+              ],
+              "refill_fields": [
+                "86636",
+                "505.42",
+                "1524",
+                "0",
+                "0",
+                "997",
+                "32"
+              ],
+              "copy_mean_us": [
+                "279.71"
+              ],
+              "async_fields": [
+                "729",
+                "864",
+                "18308473",
+                "0",
+                "0",
+                "0",
+                "1012",
+                "12"
+              ],
+              "load_fields": [
+                "3616",
+                "0",
+                "4568"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "variant": "async12-negative-r02",
+      "build_id": "dsi-strip-r02-b2026-10-07-05-56-11Z",
+      "factory": {
+        "offset": 0,
+        "path": "build/hdmi-timing.factory.bin",
+        "bytes": 402160,
+        "sha256": "0c6babe47269fe0b2ed26478544ab10a9926ec7a9270038f89f7bfbb0c26b84c"
+      },
+      "source_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+      "source_dirty": true,
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "manifest_sha256": "649587a745752c0452b33874cffd02dd7f241f22dcbe4a1f6dd9613a508835f2",
+      "configuration": {
+        "inject_late_tag": 500
+      },
+      "frozen_source_sha256": {
+        "CMakeLists.txt": "ea90979726ec20ef60b996cf1803e68aa88d6bf58351c8493dabb0120ade0d4f",
+        "README.md": "cb2e1f9363882016b3566b0ff96fd30bcdb14a68b06b2b7e9ae73230a130c9cc",
+        "components/esp_lcd_lt8912b/CMakeLists.txt": "275f50f771a5f66317c931be2671ece28cf5e5117f0eee4b6d103e3a837e368c",
+        "components/esp_lcd_lt8912b/UPSTREAM.json": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+        "components/esp_lcd_lt8912b/esp_lcd_lt8912b.c": "5ec69f4e84bfc5455e76547f2f4deb7a427c7ddc97698a9ff934e115c22d3fb8",
+        "components/esp_lcd_lt8912b/include/esp_lcd_lt8912b.h": "2c69628e876c4e124d0198ddb20f9c9cd87783af3791a359a7bbaa8c7cfafcc0",
+        "components/esp_lcd_lt8912b/license.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "identity.json": "204343c877b8ddfad71ee6b33cc62eff92a72e0085ad260bda8d70a85f23045d",
+        "main/CMakeLists.txt": "78ce6c3e137dd7c3b14ec7bd75ad2e5e3a90834a673826488a2fc9c443a14418",
+        "main/build_identity.h": "bdd1f2418e0d0ea48897168b34530d5cbb6db226591745ca55cbf40a88547932",
+        "main/main.c": "e73846b4a11813af9edbbdfdf7722c526edc7de50a1c59f4862805d5531b4ba9",
+        "main/nurples_art.h": "2dbcd669e2aa9d7dbc9e018a54dba5e90fd84598164ad979d6334b45178c0419",
+        "main/source-provenance.json": "d92a87a940eb8e69505bb5c5533c856b5fbd620d0ab713fc97c354754bb09589",
+        "main/stock_sprite_body.inc": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+        "main/stock_sprite_probe.cpp": "5391236c0ca649f39568a1e708c74c048c7b7e5977bca9552a2f32e3cb2753d5",
+        "main/stock_sprite_probe.h": "a4b6c8f2ae52d1fd14d844b735199d16eb185b7c927fd2772d816e4e3940c931",
+        "main/strip_config.h": "33d00481aa805157d51ac9fc74f579d2af8226741cbf6298fb1dae215c0deb5f",
+        "main/strip_probe.h": "17cbfc99901e1fbb2352661648bad830babfb6f425ab16cc32888a61b51977d7",
+        "main/strip_runtime.inc": "8ca26c0785e6de608c3b0fb9f16408efbe22c188f70f0e98c491ee8b4200baa4",
+        "patch_dpi.py": "6994f616844cb33897de0ca412c101746e9e8421f2fd32fa54867a74327875ba",
+        "pattern.c": "ab58b02bdf949be72315d0f70ae9ac11d7e452edc9401be820ac36a6dbfe9c19",
+        "pattern.h": "5389e1bc81121ff820847a0f42a801b38f864245df83c802a0912c97b9af1ae7",
+        "sdkconfig.defaults": "8552c7eb76b40db6bd52cb0d7209f6ca880f3327f1c22b3642a01dc205abea15",
+        "strip_driver.cmake": "272a0c452e932d2f19002b37265dd5996329ec36452bcd81645a8b9ea2a89afc",
+        "version.txt": "c05f6c59051e8ceb6828742d7e357884025454e7211df309122b26a234b7ec88"
+      },
+      "captures": [
+        {
+          "path": "async12-negative-r02/installed-2026-10-07-06-02-08Z/serial.log",
+          "sha256": "928acb10af8c09eca05bcf65cece208e3a68461201f5d275daf3320b02af7da3",
+          "bytes": 5662,
+          "preflight_pass": true,
+          "samples": [
+            {
+              "frame_fields": [
+                "6370",
+                "41",
+                "5000468",
+                "8.199"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "498",
+                "41",
+                "0",
+                "1",
+                "0"
+              ],
+              "refill_fields": [
+                "498",
+                "270.41",
+                "4288",
+                "1",
+                "0",
+                "1285",
+                "1"
+              ],
+              "copy_mean_us": [
+                "244.32"
+              ],
+              "async_fields": [
+                "348",
+                "53",
+                "3553",
+                "0",
+                "0",
+                "1",
+                "2174",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "11378",
+                "41",
+                "5008000",
+                "0.000"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "498",
+                "41",
+                "0",
+                "1",
+                "0"
+              ],
+              "refill_fields": [
+                "498",
+                "270.41",
+                "4288",
+                "1",
+                "0",
+                "1285",
+                "1"
+              ],
+              "copy_mean_us": [
+                "244.32"
+              ],
+              "async_fields": [
+                "348",
+                "53",
+                "3553",
+                "0",
+                "0",
+                "1",
+                "2174",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "16385",
+                "41",
+                "5007000",
+                "0.000"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "498",
+                "41",
+                "0",
+                "1",
+                "0"
+              ],
+              "refill_fields": [
+                "498",
+                "270.41",
+                "4288",
+                "1",
+                "0",
+                "1285",
+                "1"
+              ],
+              "copy_mean_us": [
+                "244.32"
+              ],
+              "async_fields": [
+                "348",
+                "53",
+                "3553",
+                "0",
+                "0",
+                "1",
+                "2174",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            },
+            {
+              "frame_fields": [
+                "21392",
+                "41",
+                "5007000",
+                "0.000"
+              ],
+              "block_fields": [
+                "12",
+                "1",
+                "498",
+                "41",
+                "0",
+                "1",
+                "0"
+              ],
+              "refill_fields": [
+                "498",
+                "270.41",
+                "4288",
+                "1",
+                "0",
+                "1285",
+                "1"
+              ],
+              "copy_mean_us": [
+                "244.32"
+              ],
+              "async_fields": [
+                "348",
+                "53",
+                "3553",
+                "0",
+                "0",
+                "1",
+                "2174",
+                "12"
+              ],
+              "load_fields": [
+                "0",
+                "0",
+                "0"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": {
+    "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+    "references": [
+      {
+        "path": "docs/en/api-reference/peripherals/lcd/dsi_lcd.rst",
+        "sha256": "b9bdaca44389597709829e76c0b33e6d2e00a5154fa8b24555c0f28284b907fc"
+      },
+      {
+        "path": "docs/en/api-reference/system/mm_sync.rst",
+        "sha256": "ace02f9757e9763b847c47b56b7b5a5d220652421c4dad6cc78008572634963c"
+      },
+      {
+        "path": "components/esp_lcd/src/esp_async_fbcpy.c",
+        "sha256": "6174cb19c4630769fe2dc9ed37f3d17abacc2d99d9743f1a35a0eb278e12e702"
+      },
+      {
+        "path": "components/esp_lcd/priv_include/esp_async_fbcpy.h",
+        "sha256": "85b24977d2f975d76a1e42ba15980a39ac185974d5abc3cf76320520879d7a0e"
+      },
+      {
+        "path": "components/esp_hw_support/dma/dma2d.c",
+        "sha256": "9ba2352c48717cc74766b6ae4e12b2c027beb9b16a0e43e7a68a48be8c2f267e"
+      },
+      {
+        "path": "components/esp_hw_support/dma/dw_gdma.c",
+        "sha256": "ace979c51265cd782d061c1dc157530fb13f8e8cc834234df6c50eb2fe2a349f"
+      },
+      {
+        "path": "components/esp_lcd/dsi/esp_lcd_panel_dpi.c",
+        "sha256": "a0b13536fec34d3cc4a6324ab64bc9bb62fee4db39dec24133681bc3c17b8373"
+      }
+    ]
+  },
+  "host_pixels": {
+    "stock_body_unchanged": true,
+    "all_pixels_match": true,
+    "frames": [
+      {
+        "frame": 0,
+        "sprites": 1,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 0,
+        "sprites": 1,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 599,
+        "sprites": 1,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 599,
+        "sprites": 1,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 600,
+        "sprites": 8,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 600,
+        "sprites": 8,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1199,
+        "sprites": 8,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1199,
+        "sprites": 8,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1200,
+        "sprites": 16,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1200,
+        "sprites": 16,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1799,
+        "sprites": 16,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1799,
+        "sprites": 16,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1800,
+        "sprites": 32,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 1800,
+        "sprites": 32,
+        "blocks": 12,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 3599,
+        "sprites": 32,
+        "blocks": 8,
+        "all_pixels_match": true
+      },
+      {
+        "frame": 3599,
+        "sprites": 32,
+        "blocks": 12,
+        "all_pixels_match": true
+      }
+    ]
+  },
+  "evidence_root": "agents/sprite001/dma-refill",
+  "clock": "P4 esp_timer microseconds, no external calibration; rates from roughly five-second deltas; duration counters cumulative since boot",
+  "field_order": {
+    "frame_fields": [
+      "uptime_ms",
+      "frames",
+      "interval_us",
+      "rate_hz"
+    ],
+    "block_fields": [
+      "blocks_per_frame",
+      "rolling",
+      "completed",
+      "frames",
+      "invalid",
+      "underruns",
+      "sequence_errors"
+    ],
+    "refill_fields": [
+      "count",
+      "mean_us",
+      "max_us",
+      "threshold_exceedances",
+      "cache_errors",
+      "min_block_interval_us",
+      "sprites"
+    ],
+    "copy_mean_us": [
+      "copy_mean_us"
+    ],
+    "async_fields": [
+      "copy_max_us",
+      "compose_max_us",
+      "compose_total_us",
+      "late",
+      "overlap",
+      "faults",
+      "min_ready_lead_us",
+      "preflight_strips"
+    ],
+    "load_fields": [
+      "steps",
+      "late",
+      "max_us"
+    ]
+  },
+  "author_visual": {
+    "variant": "async12-three-r02",
+    "report": "Stable, no flicker",
+    "question": "Gray/checkered boxes on the left staying intact, with no red showing through or sprite flicker?",
+    "loaded_phase": true,
+    "scope": "Standalone immutable scene with separate-core memory load, not Nurples"
+  },
+  "baseline": {
+    "document": "ROLLING-SCANOUT.json",
+    "sha256": "96f163722d6380f1dea09b070bb49f062961ad4aa77dfefc38fd7567168b3d1e"
+  },
+  "negative_control": {
+    "expected_injection_tag": 500,
+    "injected_delay_us": 4000,
+    "observed_refill_max_us": 4288,
+    "faults": 1,
+    "final_frames": 41,
+    "final_blocks": 498,
+    "final_rate_hz": 0,
+    "underruns_after_abort": 1,
+    "outcome": "pass: latched abort, no continuing frame rearm through final sample at uptime21.392s"
+  },
+  "restoration": {
+    "receipt": {
+      "build_id": "rgb-001-r03-b2026-10-07-02-45-45Z",
+      "image_sha256": "c41d7974f9d734a1464155f02fec3ed3bf122e3e26b21e52306e9b6bf95bacad",
+      "verified_segments": {
+        "0x2000": "bootloader/bootloader.bin",
+        "0x20000": "agon_extender.bin",
+        "0x8000": "partition_table/partition-table.bin",
+        "0xf000": "ota_data_initial.bin"
+      },
+      "firmware_backup_performed": false,
+      "outcome": "pass"
+    },
+    "receipt_sha256": "ac92cf015e86907b8cf7fb414a47a2696f5d07ec440982169743a4e137d6543b",
+    "services": {
+      "timestamp_utc": "2026-10-07T06:04:42.044133+00:00",
+      "startup_and_sd": "untouched during this experiment",
+      "normal_reset_sent": true,
+      "/keyboard/status": {
+        "protocol": 1,
+        "boot": 659928505,
+        "session": 0,
+        "sequence": 0,
+        "emitted": 0,
+        "accepted": 0,
+        "discarded": 0,
+        "pending": 0,
+        "held": 0,
+        "locale": 1,
+        "ready": true,
+        "physical_neutral": true,
+        "caps": false,
+        "reason": 0
+      },
+      "/sd/status": {
+        "protocol": 1,
+        "online": false,
+        "pending": false,
+        "boot": 0
+      },
+      "/display/status": {
+        "available": true,
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colors": 16,
+        "refresh_hz": 60,
+        "double_buffered": false,
+        "output": "hdmi",
+        "output_width": 848,
+        "output_height": 480,
+        "output_nominal_refresh_hz": 60,
+        "frame_clock": "dma-frame-complete",
+        "render_storage": "native",
+        "render_memory": "native"
+      },
+      "/diagnostics/render-benchmark": {
+        "schema": 1,
+        "output": "normal",
+        "open": 0,
+        "overflow": false,
+        "windows": []
+      }
+    },
+    "production_selection_changed": false,
+    "sd_changed": false
+  },
+  "contract_hashes": {
+    "contract-frozen.md": "93e96f4eea83174cb196682cf29a47a11fd29f506b1ca77b7307250beea9754a",
+    "contract-refinement-frozen.md": "ab6cbc3174c4f890c4192618d992d366a6c20cf458931f4dc04f3a48c8055862"
+  }
+}

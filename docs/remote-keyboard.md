@@ -20,6 +20,17 @@ and conflicting duplicates are rejected. Layout/admission loss invalidates the
 session. The host reports the difference between request acceptance, UART
 emission and separately observed eZ80 command/application completion.
 
+## Pingo completion compatibility in the development EMOS build
+
+The installed EMOS v0.1.24 draft permits the Pingo mainboard VDP's ten-byte
+`P3DR` render-completion callback while Extender keyboard input is selected and
+the committed display route is Legacy. It delivers the unchanged payload to
+the application's registered `mos_setkbvector` callback without treating the
+completion as a key. Genuine mainboard keys still obey keyboard-source selection.
+This correction has passed linked CPU checks and a bounded physical Pingo
+completion/input test; it is not part of the selected production v0.1.0 bundle.
+See the EMOS owner's [contract and evidence](../../agon-emos/docs/tasks/INTEG-015.md).
+
 ## Host API and timing
 
 `GET /keyboard/status` returns JSON. `POST /keyboard/rpc` accepts a binary

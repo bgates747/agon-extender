@@ -2,10 +2,11 @@
 // palettes and Copper remain in the original stock scanline implementation.
 #pragma once
 #include <cstdint>
+#include "extender/display/hdmi_timing.hpp"
 
 namespace agon::extender::display {
-constexpr int kHdmiWidth = 1280;
-constexpr int kHdmiHeight = 720;
+constexpr int kHdmiWidth = kHdmiTiming.width;
+constexpr int kHdmiHeight = kHdmiTiming.height;
 constexpr int kHdmiBytesPerPixel = 3;
 constexpr int kHdmiStride = kHdmiWidth * kHdmiBytesPerPixel;
 
@@ -14,15 +15,17 @@ struct HdmiGeometry {
   bool valid() const noexcept { return width > 0 && height > 0; }
 };
 
-inline HdmiGeometry centeredHdmiGeometry(int width, int height) noexcept {
-  if (width <= 0 || height <= 0) return {};
+inline HdmiGeometry centeredHdmiGeometry(int width, int height,
+                                       int outputWidth = kHdmiWidth,
+                                       int outputHeight = kHdmiHeight) noexcept {
+  if (width <= 0 || height <= 0 || outputWidth <= 0 || outputHeight <= 0) return {};
   HdmiGeometry result;
-  result.width = width < kHdmiWidth ? width : kHdmiWidth;
-  result.height = height < kHdmiHeight ? height : kHdmiHeight;
+  result.width = width < outputWidth ? width : outputWidth;
+  result.height = height < outputHeight ? height : outputHeight;
   result.source_x = (width - result.width) / 2;
   result.source_y = (height - result.height) / 2;
-  result.destination_x = (kHdmiWidth - result.width) / 2;
-  result.destination_y = (kHdmiHeight - result.height) / 2;
+  result.destination_x = (outputWidth - result.width) / 2;
+  result.destination_y = (outputHeight - result.height) / 2;
   return result;
 }
 

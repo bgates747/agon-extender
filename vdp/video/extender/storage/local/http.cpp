@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#include "esp_heap_caps.h"
+#endif
 // Olimex DevKit SD1 mounting follows OLIMEX/ESP32-P4-DevKit commit
 // 26705d36407a07324348927dfd30fbf4ffc1d94c sdmmc example. No format path.
 // Separate HTTP task prevents long card operations occupying the video server.
@@ -297,6 +300,11 @@ bool startHttp() noexcept {
   httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();
   cfg.server_port = 8080; cfg.ctrl_port = 32769;
   cfg.max_uri_handlers = 10; cfg.stack_size = 16384; cfg.max_open_sockets = 2;
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  // HDMI02-F: socket/FAT-only handlers; no flash/NVS/cache-off operations.
+  // IDF owns matching capability-aware deletion on server stop.
+  cfg.task_caps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;
+#endif
   cfg.recv_wait_timeout = 5; cfg.send_wait_timeout = 5;
   if (httpd_start(&server, &cfg) != ESP_OK) return false;
   const httpd_uri_t routes[] = {

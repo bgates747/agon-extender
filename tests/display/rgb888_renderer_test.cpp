@@ -21,7 +21,13 @@ using Native=TestController<VGA64Controller>;
 using Direct=TestController<P4Rgb888Controller>;
 
 struct Panel {
+#ifdef AGON_EXTENDER_HDMI_848X480
+  static constexpr int PW=848,PH=480,Stride=PW*3,Guard=64;
+#elif defined(AGON_EXTENDER_HDMI_684X384)
+  static constexpr int PW=684,PH=384,Stride=PW*3,Guard=64;
+#else
   static constexpr int PW=96,PH=48,Stride=PW*3,Guard=64;
+#endif
   std::vector<uint8_t> pixels[2] {std::vector<uint8_t>(Guard+Stride*PH+Guard,0x5a),std::vector<uint8_t>(Guard+Stride*PH+Guard,0x5a)};
   std::mutex mutex;std::condition_variable changed;
   bool hold{},requested{},released{};unsigned target{};
@@ -212,4 +218,36 @@ int main() {
     native.end();direct.end();
     if(binding)panel.guards();
   }
+#ifdef AGON_EXTENDER_HDMI_848X480
+  // HDMI02-F: full-width allocation, edge drawing, partial scrolling and
+  // overlay scratch beyond the old512 boundary; compare real stock pixels.
+  {
+    Native native;Direct direct;Panel panel;direct.bindPanelStorage(panel.binding(0));
+    std::vector<RGB888> images[2];unsigned variant=0;
+    for(auto *r : {static_cast<StockRuntimeController*>(&native),static_cast<StockRuntimeController*>(&direct)}) {
+      r->paletted().begin();
+      r->paletted().setResolution("\"848x480\" 34.285714 848 880 992 1104 480 486 494 517 +HSync +VSync",848,480,false);
+      assert(r->display().isViewPortAllocated());r->display().enableBackgroundPrimitiveExecution(false);
+      r->bindNativeAliases();Canvas c(&r->paletted());c.setBrushColor(0,0,0);c.clear();
+      c.setBrushColor(85,170,255);c.fillRectangle(512,450,847,479);
+      c.setPenColor(255,0,0);c.drawLine(0,0,847,479);c.setPixel(847,0);
+      // Keep a four-pixel right sidebar: retained VGA64 swapRows repeats its
+      // tail when the sidebar is only1..3 pixels. That upstream-style edge
+      // discrepancy is recorded under HDMI02-F, not fixed by this experiment.
+      c.setScrollingRegion(701,459,843,478);c.scroll(0,1);c.scroll(0,-2);
+      images[variant].resize(848*480);r->display().readScreen(Rect(0,0,847,479),images[variant++].data());
+    }
+    same(images[0],images[1]);
+    std::uint8_t pixels[]={0xc3,0xc2,0xc1,0xff};Bitmap bitmap(2,2,pixels,PixelFormat::RGBA2222);
+    Sprite overlay;overlay.addBitmap(&bitmap);overlay.visible=overlay.allowDraw=overlay.hardware=1;overlay.x=846;overlay.y=478;
+    native.setTextCursor(&overlay);direct.setTextCursor(&overlay);direct.bindNativeAliases();int marker;direct.preparePanelFrame(marker);
+    alignas(8)std::uint8_t signal[848];std::uint8_t rgb[848*3];
+    for(int y=478;y<480;++y) {
+      native.bindNativeAliases();native.prepareRow(y,signal);expandSignalRowToHdmi(signal,rgb,0,848);
+      assert(!memcmp(rgb,(const void*)direct.visibleRow(y),sizeof(rgb)));
+    }
+    native.setTextCursor(nullptr);direct.setTextCursor(nullptr);native.end();direct.end();panel.guards();
+  }
+#endif
+
 }

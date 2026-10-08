@@ -1,0 +1,28 @@
+{
+  "build_id": "rgb-001-r04-b2026-10-07-08-21-48Z",
+  "scope": "compile-and-host-validation-only",
+  "flashed": false,
+  "factory_sha256": "944f1cf6599fe803d202bd34a16288245ef0c4dd47725ae8b0eb7622c8e73378",
+  "factory_bytes": 1832416,
+  "geometry": [
+    512,
+    384
+  ],
+  "blocks": 12,
+  "rows_per_block": 32,
+  "slots": 3,
+  "sram_strip_bytes": 147456,
+  "prior_sram_strip_bytes": 244224,
+  "saving_bytes": 96768,
+  "saving_percent": 39.62264150943396,
+  "refill_abort_us": 1600,
+  "source_matches_snapshot": true,
+  "host_checks": [
+    "10 build-selection tests",
+    "sprite lifetime/clipping/overlap/XOR/RGBA tests with ASan/UBSan at 848 and 512 widths",
+    "HDMI geometry/ownership/conversion with ASan/UBSan at 1280,848,512 widths",
+    "existing browser input/video exclusion regression",
+    "mixed C DMA/C++ geometry rejected"
+  ],
+  "physical_gate": "Await Author review of installed standalone native512 pattern; no full-image flash, reset or fixture in this turn."
+}

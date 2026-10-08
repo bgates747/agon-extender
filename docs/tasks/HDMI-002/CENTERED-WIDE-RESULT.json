@@ -1,0 +1,42 @@
+{
+  "build_id": "hdmi-timing-r04-b2026-10-07-13-36-36Z",
+  "factory_sha256": "4de6bd549cb6fa11a6f7996802c0a062b2779319ce33f8478cc413931afd62cd",
+  "flash_segments_verified": 3,
+  "timing": "684x384; identical to Author-reviewed r03",
+  "logical_pattern": "512x384 centered at86,0",
+  "samples": [
+    {
+      "frames": 300,
+      "interval_us": 5000151,
+      "rate": 59.998,
+      "hpd": 1
+    },
+    {
+      "frames": 601,
+      "interval_us": 5002000,
+      "rate": 60.176,
+      "hpd": 1
+    },
+    {
+      "frames": 901,
+      "interval_us": 5002000,
+      "rate": 59.976,
+      "hpd": 1
+    },
+    {
+      "frames": 1202,
+      "interval_us": 5002000,
+      "rate": 60.176,
+      "hpd": 1
+    }
+  ],
+  "dma_frame_count": 1202,
+  "measured_interval_us": 20006151,
+  "picture_review": "Author: yes, correct and steady; different artwork from640x480 is disorienting",
+  "services": "none; standalone pattern",
+  "agon_reset": false,
+  "sd_edits": false,
+  "mean_dma_hz": 60.081521927931064,
+  "picture_accepted": true,
+  "review_recorded_at": "2026-10-07T13:41:27.233905+00:00"
+}

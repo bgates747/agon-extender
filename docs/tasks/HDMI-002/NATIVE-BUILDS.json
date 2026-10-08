@@ -1,0 +1,40 @@
+[
+  {
+    "timing": "512x384",
+    "build_id": "hdmi-timing-r03-b2026-10-07-06-49-32Z",
+    "factory_sha256": "8abd17f99d48c7fa7e2cbd17cc1148840080557aa6072a84d891e486fadcf731",
+    "state": "verified-build",
+    "duration_seconds": 69.915,
+    "hardware_trial": true,
+    "picture_accepted": false,
+    "picture_review": "failed; flicker and repeated picture loss"
+  },
+  {
+    "timing": "684x384",
+    "build_id": "hdmi-timing-r03-b2026-10-07-07-17-01Z",
+    "factory_sha256": "0aaa31da76792382d94686d91b095706a3653268eeb7f6d0c6797e86e98df226",
+    "state": "verified-build",
+    "duration_seconds": 138.481,
+    "hardware_trial": true,
+    "picture_accepted": true,
+    "picture_review": "bounded signal pass; fixture labels wrong"
+  },
+  {
+    "timing": "320x240",
+    "build_id": "hdmi-timing-r03-b2026-10-07-07-19-21Z",
+    "factory_sha256": "3b97c31867313f4f4c54b5310cb63b2e013e8f2178a8663207464da7e081124d",
+    "state": "verified-build",
+    "duration_seconds": 137.831,
+    "hardware_trial": false,
+    "picture_accepted": false
+  },
+  {
+    "timing": "428x240",
+    "build_id": "hdmi-timing-r03-b2026-10-07-07-21-40Z",
+    "factory_sha256": "37bc89a8e45afac22655358509cb08667529eb13ea3af538606ecfef135f924b",
+    "state": "verified-build",
+    "duration_seconds": 91.03,
+    "hardware_trial": false,
+    "picture_accepted": false
+  }
+]

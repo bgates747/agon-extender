@@ -44,6 +44,17 @@
 #include "fabutils.h"
 #include "images/cursors.h"
 
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) && defined(ESP_PLATFORM)
+// P4 task-only queue placement; stock capacity/ordering and all other builds
+// are unchanged. Pair creation/destruction through the owned adapter.
+#include "extender/display/primitive_queue.hpp"
+#define AGON_CREATE_PRIMITIVE_QUEUE agon::extender::display::createPrimitiveQueue
+#define AGON_DELETE_PRIMITIVE_QUEUE agon::extender::display::deletePrimitiveQueue
+#else
+#define AGON_CREATE_PRIMITIVE_QUEUE xQueueCreate
+#define AGON_DELETE_PRIMITIVE_QUEUE vQueueDelete
+#endif
+
 
 #pragma GCC optimize ("O2")
 
@@ -504,7 +515,7 @@ BitmappedDisplayController::BitmappedDisplayController()
 
 BitmappedDisplayController::~BitmappedDisplayController()
 {
-  vQueueDelete(m_execQueue);
+  AGON_DELETE_PRIMITIVE_QUEUE(m_execQueue);
 }
 
 
@@ -512,9 +523,9 @@ void BitmappedDisplayController::setDoubleBuffered(bool value)
 {
   m_doubleBuffered = value;
   if (m_execQueue)
-    vQueueDelete(m_execQueue);
+    AGON_DELETE_PRIMITIVE_QUEUE(m_execQueue);
   // on double buffering a queue of single element is enough and necessary (see addPrimitive() for details)
-  m_execQueue = xQueueCreate(value ? 1 : BitmappedDisplayController::queueSize, sizeof(Primitive));
+  m_execQueue = AGON_CREATE_PRIMITIVE_QUEUE(value ? 1 : BitmappedDisplayController::queueSize, sizeof(Primitive));
 }
 
 

@@ -261,7 +261,7 @@ if (hdmiOutput) {
   document.querySelector("#hdmi-output").hidden = false;
   document.querySelector(".diagnostics").hidden = true;
   setState("HDMI output");
-  surfaceNode.textContent = "HDMI 1280x720 60 Hz";
+  surfaceNode.textContent = `HDMI ${document.querySelector('meta[name="agon-hdmi-timing"]')?.content || ''}`.trim();
   fpsNode.parentElement.hidden = true;
 }
 new ResizeObserver(([entry]) => {

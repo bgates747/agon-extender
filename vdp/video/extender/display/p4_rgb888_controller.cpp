@@ -42,6 +42,9 @@
 #include "esp_spi_flash.h"
 #endif
 #include "esp_heap_caps.h"
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#include "extender/display/rolling/bridge.h"
+#endif
 
 #include "fabutils.h"
 #include "extender/display/p4_rgb888_controller.hpp"
@@ -609,20 +612,24 @@ void P4Rgb888Controller::setResolution(VGATimings const &t,int w,int h,bool doub
 
 bool P4Rgb888Controller::allocateViewPort() {
   if(!panelStorage()) return VGAPalettedController::allocateViewPort();
-  if(m_viewPortWidth>512 || m_viewPortWidth>m_panel.width || m_viewPortHeight>m_panel.height ||
+  if(m_viewPortWidth>848 || m_viewPortWidth>m_panel.width || m_viewPortHeight>m_panel.height ||
      m_panel.stride<std::size_t(m_panel.width)*3 ||
      (isDoubleBuffered() && (m_panel.count<2 || !m_panel.swap))) return false;
   const auto count=isDoubleBuffered()?2u:1u;
   volatile uint8_t **rows[2]{};
   for(unsigned i=0;i<count;++i) {
     rows[i]=static_cast<volatile uint8_t **>(heap_caps_malloc(m_viewPortHeight*sizeof(uint8_t*),MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+#ifndef AGON_EXTENDER_ROLLING_SCANOUT
     m_overlayBackground[i]=static_cast<uint8_t *>(heap_caps_malloc(m_viewPortWidth*m_viewPortHeight,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
     m_overlayRows[i]=static_cast<uint8_t *>(heap_caps_malloc(m_viewPortHeight,MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
     if(!rows[i] || !m_overlayBackground[i] || !m_overlayRows[i]) {
+#else
+    if(!rows[i]) {
+#endif
       for(unsigned j=0;j<2;++j) {heap_caps_free(rows[j]);heap_caps_free(m_overlayBackground[j]);heap_caps_free(m_overlayRows[j]);m_overlayBackground[j]=m_overlayRows[j]=nullptr;}
       return false;
     }
-    memset(m_overlayRows[i],0,m_viewPortHeight);
+    if(m_overlayRows[i])memset(m_overlayRows[i],0,m_viewPortHeight);
   }
   const int x=(m_panel.width-m_viewPortWidth)/2,y=(m_panel.height-m_viewPortHeight)/2;
   for(unsigned i=0;i<count;++i) {
@@ -673,7 +680,7 @@ void P4Rgb888Controller::prepareForDrawing() {
 void P4Rgb888Controller::composePanelOverlays(unsigned index) {
   auto rows=panelIndex(m_viewPort)==index?m_viewPort:m_viewPortVisible;
   restorePanelOverlays(index);
-  alignas(8)uint8_t signal[512];
+  alignas(8)uint8_t signal[848];
   for(int y=0;y<m_viewPortHeight;++y) if(overlayIntersectsRow(y)) {
     auto row=(uint8_t*)rows[y];
     for(int x=0;x<m_viewPortWidth;++x) {
@@ -693,7 +700,11 @@ void P4Rgb888Controller::swapBuffers() {
   AGON_STOCK_NATIVE_GUARD;
   if(!isDoubleBuffered()) return;
   const unsigned target=panelIndex(m_viewPort);
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  if(!agon_scanout_stage(this,target,m_viewPortWidth,m_viewPortHeight))return;
+#else
   composePanelOverlays(target);
+#endif
   // This callback runs a core1 submission task independent of the drawing
   // drain. Holding native exclusion here cannot prevent that task or DMA from
   // progressing. The ordinary SwapBuffers waiter is notified only afterward.
@@ -706,7 +717,9 @@ unsigned P4Rgb888Controller::preparePanelFrame(int &marker) {
   const unsigned index=panelIndex(m_viewPortVisible);
   // Double-buffer overlays are completed on the back before each explicit
   // swap; never draw into its scanned front during an ordinary presentation.
+#ifndef AGON_EXTENDER_ROLLING_SCANOUT
   if(!isDoubleBuffered()) composePanelOverlays(index);
+#endif
   auto row=m_viewPortVisible[0];
   auto pixel=[&](int x){return uint8_t(VGA_PIXELINROW(row,x))&63;};
   marker=-1;

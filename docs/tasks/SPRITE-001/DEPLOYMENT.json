@@ -1,0 +1,13 @@
+{
+  "build_id": "nurples-hardware-r01-b2026-10-07-03-35-10Z",
+  "destination": "/mystuff/arcade/nurples-hardware.bin",
+  "sha256": "3ba82ef604cb75fdd35b42ff5890504a3c4e74c28bfc7f83b7208130276cfcd1",
+  "bytes": 36493,
+  "ordinary_sha256": "63c89d2676f6645631b2240f23002b8b68d45069979a4804ca7d14f34e720088",
+  "startup_sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5",
+  "readback": "complete-byte-equality",
+  "assets_written": false,
+  "firmware_changed": false,
+  "game_invoked": false,
+  "terminal_state": "Legacy MOS prompt; listener exited"
+}
