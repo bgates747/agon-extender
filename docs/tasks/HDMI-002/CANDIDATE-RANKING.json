@@ -1,0 +1,577 @@
+{
+  "schema": 1,
+  "source": [
+    320,
+    240
+  ],
+  "requested_hz": 60,
+  "tolerance_hz": 0.15,
+  "explicit_min_h_khz": 31.0,
+  "ranking": "Ordinal heuristic: exact pass; geometry interpolation; extrapolation; failed geometry; exact failure. No probability or guarantee.",
+  "limits": [
+    "Framebuffer size and one-read payload are arithmetic estimates, not measured memory bandwidth or rendering time; exclude blanking, copies and sprites.",
+    "DSI capacity check omits PHY transitions and other packet scheduling overhead.",
+    "Proposed geometries need a separately reviewed pattern/build/physical test. No firmware selection or monitor settings changed."
+  ],
+  "tool_sha256": "5eed07a6a32bfa0993556c065e3a84172f8f40f9b804b2f4d45d3c1dff9f53bf",
+  "observations_sha256": "447488b1682446027626d87ee58fc3cf66602dcfbde1082dd10b231551d72971",
+  "edid_sha256": "28ed9725b73c08bb2baa8d7f5daeb10ff36c26988175e758b0dcecd3bfde3222",
+  "ranked": [
+    {
+      "timing": {
+        "name": "684x384-known-clock",
+        "width": 684,
+        "height": 384,
+        "wide": true,
+        "hfp": 196,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 102,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 787968,
+        "one_read_MB_s": 47.33279671300023,
+        "bytes_percent_of_848x480": 64.52830188679245,
+        "source_offset": [
+          182,
+          72
+        ],
+        "source_height_percent": 62.5
+      },
+      "tier": 0,
+      "reason": "Exact timing passed visual review on this monitor",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "848x480",
+        "width": 848,
+        "height": 480,
+        "wide": true,
+        "hfp": 32,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 6,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "refresh_hz": 60.06944027295553,
+        "vic": 0,
+        "aspect_error_percent": -0.6249999999999978,
+        "h_positive": true,
+        "v_positive": true
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 1221120,
+        "one_read_MB_s": 73.35199490611146,
+        "bytes_percent_of_848x480": 100.0,
+        "source_offset": [
+          264,
+          120
+        ],
+        "source_height_percent": 50.0
+      },
+      "tier": 0,
+      "reason": "Exact timing passed visual review on this monitor",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "712x400-known-clock",
+        "width": 712,
+        "height": 400,
+        "wide": true,
+        "hfp": 168,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 86,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 854400,
+        "one_read_MB_s": 51.32332976921322,
+        "bytes_percent_of_848x480": 69.96855345911949,
+        "source_offset": [
+          196,
+          80
+        ],
+        "source_height_percent": 60.0
+      },
+      "tier": 1,
+      "reason": "Untested: between working canvas sizes in the same timing family",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "768x432-known-clock",
+        "width": 768,
+        "height": 432,
+        "wide": true,
+        "hfp": 112,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 54,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 995328,
+        "one_read_MB_s": 59.78879584800029,
+        "bytes_percent_of_848x480": 81.50943396226415,
+        "source_offset": [
+          224,
+          96
+        ],
+        "source_height_percent": 55.55555555555556
+      },
+      "tier": 1,
+      "reason": "Untested: between working canvas sizes in the same timing family",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "852x480-known-clock",
+        "width": 852,
+        "height": 480,
+        "wide": true,
+        "hfp": 28,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 6,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 1226880,
+        "one_read_MB_s": 73.6979948820837,
+        "bytes_percent_of_848x480": 100.47169811320755,
+        "source_offset": [
+          266,
+          120
+        ],
+        "source_height_percent": 50.0
+      },
+      "tier": 2,
+      "reason": "Untested: extrapolation beyond working sizes",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "640x360-known-clock",
+        "width": 640,
+        "height": 360,
+        "wide": true,
+        "hfp": 240,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 126,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 691200,
+        "one_read_MB_s": 41.51999711666687,
+        "bytes_percent_of_848x480": 56.60377358490566,
+        "source_offset": [
+          160,
+          60
+        ],
+        "source_height_percent": 66.66666666666667
+      },
+      "tier": 2,
+      "reason": "Untested: extrapolation beyond working sizes",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "568x320-known-clock",
+        "width": 568,
+        "height": 320,
+        "wide": true,
+        "hfp": 312,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 166,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 545280,
+        "one_read_MB_s": 32.7546643920372,
+        "bytes_percent_of_848x480": 44.65408805031446,
+        "source_offset": [
+          124,
+          40
+        ],
+        "source_height_percent": 75.0
+      },
+      "tier": 2,
+      "reason": "Untested: extrapolation beyond working sizes",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "512x288-known-clock",
+        "width": 512,
+        "height": 288,
+        "wide": true,
+        "hfp": 368,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 198,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 442368,
+        "one_read_MB_s": 26.572798154666796,
+        "bytes_percent_of_848x480": 36.22641509433962,
+        "source_offset": [
+          96,
+          24
+        ],
+        "source_height_percent": 83.33333333333333
+      },
+      "tier": 2,
+      "reason": "Untested: extrapolation beyond working sizes",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "484x272-known-clock",
+        "width": 484,
+        "height": 272,
+        "wide": true,
+        "hfp": 396,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 214,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 394944,
+        "one_read_MB_s": 23.72406501916215,
+        "bytes_percent_of_848x480": 32.34276729559748,
+        "source_offset": [
+          82,
+          16
+        ],
+        "source_height_percent": 88.23529411764706
+      },
+      "tier": 2,
+      "reason": "Untested: extrapolation beyond working sizes",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "456x256-known-clock",
+        "width": 456,
+        "height": 256,
+        "wide": true,
+        "hfp": 424,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 230,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 350208,
+        "one_read_MB_s": 21.036798539111214,
+        "bytes_percent_of_848x480": 28.67924528301887,
+        "source_offset": [
+          68,
+          8
+        ],
+        "source_height_percent": 93.75
+      },
+      "tier": 2,
+      "reason": "Untested: extrapolation beyond working sizes",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "428x240-known-clock",
+        "width": 428,
+        "height": 240,
+        "wide": true,
+        "hfp": 452,
+        "hs": 112,
+        "hbp": 112,
+        "vfp": 246,
+        "vs": 8,
+        "vbp": 23,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "h_positive": true,
+        "v_positive": true,
+        "vic": 0
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 308160,
+        "one_read_MB_s": 18.51099871451398,
+        "bytes_percent_of_848x480": 25.235849056603772,
+        "source_offset": [
+          54,
+          0
+        ],
+        "source_height_percent": 100.0
+      },
+      "tier": 4,
+      "reason": "Exact timing failed visual review",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "428x240-centered",
+        "width": 428,
+        "height": 240,
+        "wide": true,
+        "hfp": 280,
+        "hs": 112,
+        "hbp": 284,
+        "vfp": 134,
+        "vs": 8,
+        "vbp": 135,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "refresh_hz": 60.06944027295553,
+        "vic": 0,
+        "aspect_error_percent": 0.31250000000000444,
+        "h_positive": true,
+        "v_positive": true
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 60.06944027295554,
+        "rgb888_bytes": 308160,
+        "one_read_MB_s": 18.51099871451398,
+        "bytes_percent_of_848x480": 25.235849056603772,
+        "source_offset": [
+          54,
+          0
+        ],
+        "source_height_percent": 100.0
+      },
+      "tier": 4,
+      "reason": "Exact timing failed visual review",
+      "edid_geometry_hint": false
+    },
+    {
+      "timing": {
+        "name": "428x240-lowclock",
+        "width": 428,
+        "height": 240,
+        "wide": true,
+        "hfp": 176,
+        "hs": 80,
+        "hbp": 176,
+        "vfp": 134,
+        "vs": 8,
+        "vbp": 135,
+        "htotal": 860,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 9,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "refresh_hz": 59.976309357803665,
+        "vic": 0,
+        "aspect_error_percent": 0.31250000000000444,
+        "h_positive": true,
+        "v_positive": true
+      },
+      "metrics": {
+        "pixel_mhz": 26.666666666666668,
+        "h_khz": 31.007751937984494,
+        "refresh_hz": 59.976309357803665,
+        "rgb888_bytes": 308160,
+        "one_read_MB_s": 18.482299491700775,
+        "bytes_percent_of_848x480": 25.235849056603772,
+        "source_offset": [
+          54,
+          0
+        ],
+        "source_height_percent": 100.0
+      },
+      "tier": 4,
+      "reason": "Exact timing failed visual review",
+      "edid_geometry_hint": false
+    }
+  ],
+  "excluded": [
+    {
+      "timing": {
+        "name": "428x240-shortblank",
+        "width": 428,
+        "height": 240,
+        "wide": true,
+        "hfp": 280,
+        "hs": 112,
+        "hbp": 284,
+        "vfp": 33,
+        "vs": 8,
+        "vbp": 33,
+        "htotal": 1104,
+        "vtotal": 314,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "refresh_hz": 98.90414210547137,
+        "vic": 0,
+        "aspect_error_percent": 0.31250000000000444,
+        "h_positive": true,
+        "v_positive": true
+      },
+      "metrics": {
+        "pixel_mhz": 34.285714285714285,
+        "h_khz": 31.055900621118013,
+        "refresh_hz": 98.90414210547138,
+        "rgb888_bytes": 308160,
+        "one_read_MB_s": 30.47830043122206,
+        "bytes_percent_of_848x480": 25.235849056603772,
+        "source_offset": [
+          54,
+          0
+        ],
+        "source_height_percent": 100.0
+      },
+      "reasons": [
+        "Outside requested application cadence band"
+      ]
+    }
+  ]
+}

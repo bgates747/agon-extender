@@ -1,5 +1,42 @@
 # HDMI-002 — 848×480 HDMI timing and centered 512×384 image
 
+## HDMI02-N02 — offline candidate ranking, authorized 2026-10-07
+
+The Author asks for a script predicting likely working resolutions. Build an
+offline shortlist, not a hardware-acceptance oracle or automatic mode switcher.
+EDID range compliance and DSI arithmetic are necessary screens, not sufficient
+proof. Report exact observed successes/failures separately from untested
+interpolation/extrapolation. No fabricated success percentages.
+
+HDMI02-N02a [x] Implement a focused host script reading a checksummed local EDID
+and monitor-matched observations. Reuse known PLL240/7/link/total settings for
+proposed near60Hz widescreen canvases holding320×240 without scaling. Preserve
+exact known timings; expose every porch, clock and estimated RGB888 cost. Reject
+invalid totals, field overflow, non-integral DSI byte clocks, insufficient packet
+capacity and known monitor frequency violations. Mark absent/partial EDID data.
+
+HDMI02-N02b [x] Verify decoding and independent timing arithmetic with focused
+host tests, including corrupted EDID, wrong-monitor evidence and previously
+failed configurations. Generate a concise ranked table, document ranking and
+limitations, and stop for review. No build, flash, reset, display-setting or SD
+change; existing full r11 remains installed.
+
+Implemented [offline tool](../../scripts/hdmi_candidates.py) and [guide](../testing/hdmi-candidates.md).
+Ten focused host tests pass; actual Acer EDID report generated. A bounded peer
+review caught two EDID metadata edge cases (extended CTA VIC IDs and unspecified
+maximum clock); both are corrected and tested, with no effect on this Acer
+ranking. [Shortlist](HDMI-002/CANDIDATE-RANKING.md) and
+[exact proposed timings](HDMI-002/CANDIDATE-RANKING.json) are retained.
+The nearest cheaper candidate is640×360, then568×320 and512×288; all untested.
+712×400/768×432 lie between proven active sizes but offer less useful cost
+reduction for a320×240 game. These are heuristics, not compatibility guarantees.
+No new monitor tests authorized or performed in N02; pause for review.
+
+Research: pinned IDF5.5.5 DSI HAL, hw_ver1 register widths and bridge component;
+[Linux EDID structures](https://github.com/torvalds/linux/blob/master/include/drm/drm_edid.h)
+for standard byte layouts. EDID contains no exhaustive list of all acceptable
+custom modes. The ranking is an explicit heuristic, not a learned probability.
+
 ## HDMI02-N01 — bounded native 240-line retry, authorized 2026-10-07
 
 The Author requests one more attempt to avoid pixel doubling and PPA cost.
