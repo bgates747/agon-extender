@@ -45,6 +45,26 @@ keyboard queuing, pin release acknowledgements and boot/reset fences. Select
 wire IDs only after checking the existing control namespace. Add a native
 PARLIO TX adapter and the bounded assembly receive loop; test fake-peer failures.
 
+P08-F02c1 [x] — Current bounded increment: private paired ownership sequencers
+and explicit adapter-completion acknowledgements, covering entry, return and
+reset/cancel recovery. Execute simulated-peer checks and compiled eZ80 checks;
+compile for P4-PC. [Candidate](PORT-008/HANDOVER.md). Leave all live UART,
+ISR, boot and keyboard behavior unchanged until integration below.
+[Results](PORT-008/HANDOVER-RESULTS.md): 5,208 paired cases, 16,392 linked
+eZ80 cases, existing regression checks and both target compile/validation
+paths pass. Negative control demonstrates the corrected reset-during-arming
+race. Source remains uncommitted for Author review; no physical qualification.
+
+P08-F02c2 [ ] — Connect matching ExExt session/sequence/direction/length admission
+and actual UART suspension, packet-boundary drain, ISR fencing, retained input,
+bounded phase deadlines and boot recovery. Review the wire namespace before
+assigning an envelope. Keep Legacy/ExCom paths and existing ownership guards.
+
+P08-F02c3 [ ] — Bind current P4-PC PARLIO TX/RX and the EMOS assembly payload
+loop under that coordinator; prove adapter cleanup and first/last-byte software
+ordering in target builds and simulated peers. Hardware timing still belongs
+to F03, not these bench-free checks.
+
 P08-F02d [ ] — Recheck generated GPIO/peripheral configuration and exact build
 identities before declaring a candidate ready for P08-F03. Compilation and
 emulation cannot qualify electrical contention, first/last byte timing or speed.

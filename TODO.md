@@ -35,7 +35,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — F01 wiring/prototype reconciliation complete. F02a/b bench-free EMOS receive/EDP transmit cores and target checks pass; existing READY/CLOCK/VALID, no extra wires. UART/pad handover, native binding and physical reverse qualification remain. Bench occupied; no deployment. Earlier UART E08/E09 evidence retained; E10 still separate.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — F01, F02a/b and F02c1 complete: reverse cores and private handover sequencers pass paired/target checks on the existing eleven-wire design. Next F02c2: actual UART/admission/ISR/boot integration; native binding and physical qualification remain. Bench occupied; no deployment. Earlier UART E08/E09 evidence retained; E10 still separate.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 

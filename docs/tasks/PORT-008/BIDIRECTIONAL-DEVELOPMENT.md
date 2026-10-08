@@ -59,6 +59,54 @@ the core waits within its deadline rather than diagnosing that delay as loss.
 
 ## Required integration before activation
 
+### Current bounded increment — F02c1, 2026-10-08
+
+Implement and test the two private ownership sequencers before attaching
+either to UART/GPIO. EMOS and EDP will request a transmit fence, wait for
+software queues **and the shift register** to drain at a packet boundary,
+release their shared pads, and acknowledge release on the dedicated controls.
+Test both directions, delayed peers, failures, reset during every phase and
+queued keyboard traffic with simulated adapters; execute EMOS's compiled
+sequencer on the eZ80 instruction emulator. No changes to ordinary UART
+startup, ISR, keyboard state or mode admission in this increment. The real
+adapters and admission envelope remain F02c2 work; native PARLIO and the
+assembly payload loop remain F02c3 work.
+
+The sequencers are deliberately not new generic transport frameworks. Each
+is a small transition function with explicit completed-adapter inputs and
+requested-adapter actions. No transition function may treat a requested pad
+release as completed. A deadline enters release/recovery, never blindly
+restores UART. A failed cleanup stays fenced. Only the EMOS coordinator may
+authorize a block after matching session/sequence/direction/length admission;
+these functions do not encode or accept UART records themselves.
+
+CLOCK distinguishes setup/return (low) from the byte-clock phase (initially
+high). During setup PARLIO must remain disarmed, so changing CLOCK is not a
+payload edge. UART idle is CLOCK low, VALID high, READY high. Entry is:
+EMOS releases pads then VALID low; P4 releases pads then READY low; EMOS VALID
+high; P4 READY high; EMOS CLOCK high; P4 arms the block then READY low. All
+levels are held until the reciprocal acknowledgement. This separates the
+release acknowledgement from payload readiness even with slow task polling.
+
+After the block P4 stops DMA/releases its pads before READY high. EMOS then
+releases its pads before CLOCK low/VALID high. EMOS observes READY high,
+requests a fresh release acknowledgement with VALID low, and waits for READY
+low. EMOS then restores its UART subset and raises VALID; P4 restores its
+disjoint UART subset and raises READY. UART completion status requires the separately
+matched admission descriptor; pad release alone never establishes success.
+
+Cold start/reset uses the same return handshake, starting with **all shared
+pads as inputs**, CLOCK low and VALID high. Neither CPU may restore its UART
+outputs merely because the other looks idle. Tests model reset by dropping
+the reset CPU's physical output enables as well as discarding its RAM state.
+The physical boot fences, bounded polling source, UART/ISR serialization and
+PARLIO's first/last-byte behavior remain mandatory before activation. This
+model assumes working wires and honest adapters, not electrical fault tolerance.
+P4 reset/cancellation announces recovery with READY low after its own release,
+then raises READY only after CLOCK low/VALID high. This makes an otherwise
+idle EMOS join recovery instead of silently assuming P4 retained its session.
+The exact states, adapter contracts and limits are in [HANDOVER.md](HANDOVER.md).
+
 1. **EMOS admission:** only its mode coordinator may request a parallel block.
    The existing service serializer must reject competing UART transactions.
    UART request/reply IDs and sequence checks remain to be assigned within the
@@ -69,8 +117,9 @@ the core waits within its deadline rather than diagnosing that delay as loss.
    boundaries and keyboard state; do not discard partially received packets.
 3. **Ownership acknowledgement:** use dedicated READY/VALID phase transitions
    to confirm both endpoints have released UART before either enables a data
-   output. A UART ACK alone or a fixed delay is insufficient. The complete
-   phase truth table remains F02c; block READY is not yet that table.
+   output. A UART ACK alone or a fixed delay is insufficient. F02c1 implements
+   the candidate truth table with simulated adapters; F02c2 must bind it to
+   actual completed UART/pad operations, including the boot path.
 4. **Return:** EMOS finishes/stops CLOCK, releases VALID and its data outputs.
    P4 stops DMA and releases all eight data pads before READY completion.
    Restore the UART mux only after the reciprocal release acknowledgement.

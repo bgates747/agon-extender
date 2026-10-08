@@ -1,0 +1,71 @@
+{
+  "recorded_utc": "2026-10-08T20:03:42.321021+00:00",
+  "scope": "F02c1 unbound paired ownership sequencers; no hardware or live UART integration",
+  "bench_access": false,
+  "committed": false,
+  "source_heads": {
+    "extender": "4722446a05cc34a792df6e9a325c1fd24d9573e2",
+    "emos": "3ce67e16246051c8ae3316ca3cbb0b653ec8e04f"
+  },
+  "sources_sha256": {
+    "../agon-emos/src/emos_parallel_handover.c": "f25f21f01ecc6927a1dc0bbb00c9c935ca6fa18c96b4235411ef32a12a890517",
+    "../agon-emos/src/emos_parallel_handover.h": "e6fe15e04322fca29169a6970366d255c0862c61da4b0661442249a50020e979",
+    "../agon-emos/port/mos-agondev.mk": "7df98b5499ef5ac31430f5ecd8b5378ce8aadcad0a0bbf4400d8e0f750e5978f",
+    "../agon-emos/tests/uart_put_cpu/src/bin/parallel_handover.rs": "354bc14dd953af73c515250a7cec88d1c57518c367ad09b8137eb3f0ca33f846",
+    "vdp/video/extender/transport/p4_parallel_handover.cpp": "059ff6f0ff4300ac9a83f1bd7ab46b090b716c602edb694194d2f0ae2bd964e5",
+    "vdp/video/extender/transport/p4_parallel_handover.hpp": "2f7a4c45f28f565b8efaf3d528e3ca21f6e9c0e6b5098ee2b74b0193e326c7c0",
+    "vdp/build/p4-profiles.json": "dcd740481c909c3d4eaf3a0501928b5eb3e69edc9ae2c72bf9e96712f52f72c4",
+    "tests/parallel_handover_test.cpp": "95c795b766efc5131bc1cb3651d9730a04b9b201875f7d361504548a605665ba",
+    "tests/parallel_handover_test.py": "0e02e66f382b68fec8e24a9f11dd722f58b4232b0cddb61d5c7d1325f332b0d7"
+  },
+  "checks": {
+    "paired_handover_cases": 5208,
+    "linked_ez80_handover_cases": 16392,
+    "paired_reverse_cases": 48,
+    "linked_ez80_reverse_cases": 38,
+    "emos_parallel_tests": 9,
+    "p4_profile_tests": 11,
+    "emos_wrapper_firmware_check": "pass",
+    "p4_final_compilation": "full native wrapper build, then maintained IDF incremental rebuild of corrected source and maintained validator: pass",
+    "negative_control_without_arming_cancellation": "fails as expected: opposing masks 5 and 255"
+  },
+  "artifacts": {
+    "emos": {
+      "bytes": 129626,
+      "sha256": "fb01ff49e98d73dee0e4aa7cfa229e302a5d803f3a0f55fcf100d9a7da37208f",
+      "growth_bytes": 430,
+      "remaining_image_bytes": 1446
+    },
+    "p4": {
+      "profile": "p4-console",
+      "board": "p4-pc",
+      "display": "browser",
+      "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+      "sha256": "30141691c41ea364b07773fe3b935f7cf25ebfdb92ea9f99e5bc2b46128a1655",
+      "incremental_check_sha256": "ed5fc45f7c8bbdd4686668584a5cccde98f87ef6e67df391af4ca1a46081cd79",
+      "source_inputs_sha256": "0460281e34f1749978feec92b9d345810a1700d964ac3e02f3af0bb38c4c8155",
+      "validation_sha256": "a2d468faad99b716414cc9a2239782281e43f86a6fd57e23d4ad8fdc9373cabc"
+    },
+    "dependency_lock_sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+  },
+  "test_evidence_sha256": {
+    "host-test.log": "a8d2cbd92cb0638aba8df20f7633da073d372ba353f0531da9a2d0c3f073b212",
+    "cpu-test.log": "66b329ab47e6a5e17a97d9218bb634f9a93b900fe2af93d585078c5aad8c010d",
+    "vectors.txt": "0f4ab80c64cfe8ec9349b82949d91e36fe8f3c22aeb0c8fe0feb6e13985a9fad",
+    "negative-control.log": "e70985f1369fe0820c93ddd4aabc5d921ff13bdb220ff1d5632f7f419e73ae91",
+    "reverse-cpu-test.log": "58f6d9ee7d65a6f08b3933ca3049a4f271489692c3985fafcf27bbc1468d7806",
+    "reverse-host-test.log": "301e25e34dc93ff688e897e764464319f192dbd6e66a4fc8c147745726805b6c",
+    "profile-test.log": "d73fd8570ea6c135f94f4d70721ecc5a147abfac6affa568cd83d37a1707e4c6",
+    "emos-regression.log": "888d28023509d0e9b989905a4f6b0cf7d8ed401b59e429085528ff6bb87198bc",
+    "emos-build.log": "a1ae7305b153ad9177f7770d611fadf4570aaad15504efe894f4af6622f16ad9"
+  },
+  "limits": [
+    "No UART wire IDs, serializer/ISR changes or real boot fences",
+    "No native PARLIO binding or assembly payload loop",
+    "No physical GPIO timing, contention, throughput or keyboard latency proof",
+    "Host adapters model payload progress; real block cores tested separately",
+    "Linked CPU test is not a full-system Fab boot",
+    "Only guarded inputs/completed-adapter signals are in scope; electrical faults excluded"
+  ],
+  "local_evidence": "agents/port008-handover (ignored)"
+}
