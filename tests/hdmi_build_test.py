@@ -21,6 +21,19 @@ class HdmiBuildTest(unittest.TestCase):
     def setUpClass(cls):
         cls.document = json.loads((ROOT / "vdp/build/p4-profiles.json").read_text())
 
+    def test_ppa_selection_is_explicit_and_preserves_ordinary_profiles(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        ordinary=build_p4.select_display_profile(*args)
+        scaled=build_p4.select_display_profile(*args,ppa_scale_320=True)
+        self.assertNotIn("AGON_EXTENDER_HDMI_PPA_320=1",ordinary["definitions"])
+        self.assertIn("AGON_EXTENDER_HDMI_PPA_320=1",scaled["definitions"])
+        self.assertIn("esp_driver_ppa",scaled["requires"])
+        with self.assertRaises(SystemExit):
+            build_p4.select_display_profile(self.document,"p4-console","p4-pc","hdmi",ppa_scale_320=True)
+        record=build_p4.display_input_record("hdmi","normal",True,"auto",True,True)
+        self.assertEqual(record["ppa_scale_320"]["carrier"],[848,480])
+        self.assertNotEqual(record["presentation_copy_bytes"],0)
+
     def test_unsupported_board_or_profile_rejected_before_output_creation(self):
         for board, profile in (("p4-devkit", "p4-console"),
                                ("p4-pc", "p4-mos-recovery")):

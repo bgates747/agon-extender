@@ -22,6 +22,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', type=Path, default=SOURCE)
     parser.add_argument('--old-control', action='store_true')
+    parser.add_argument('--ppa-scale-320', action='store_true')
     parser.add_argument('--report', type=Path)
     args = parser.parse_args()
     utc = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -56,6 +57,7 @@ def main():
                 '-fsanitize=address,undefined', '-fno-omit-frame-pointer',
                 '-DAGON_EXTENDER_HDMI', '-DAGON_EXTENDER_HDMI_AUTO',
                 '-DAGON_EXTENDER_DIRECT_RGB888', '-DAGON_EXTENDER_ROLLING_SCANOUT',
+                *(['-DAGON_EXTENDER_HDMI_PPA_320'] if args.ppa_scale_320 else []),
                 '-I'+str(temp), '-I'+str(HERE), '-I'+str(ROOT/'vdp/video'),
                 str(args.source), str(HERE/'hdmi_lifecycle_test.cpp'),
                 '-o', str(binary)], check=True)

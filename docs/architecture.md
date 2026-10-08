@@ -227,7 +227,7 @@ must not block rendering, grow an unbounded queue, or redefine logical frame
 timing. See
 [ADR-0015](decisions/ADR-0015-p4-display-backend-and-frame-service.md).
 
-The planned P4-PC HDMI adapter presents fitting mode images unscaled and
+By default the P4-PC HDMI adapter presents fitting mode images unscaled and
 centered in a selected widescreen nominal60Hz output buffer (initially1280×720), with black
 letterboxing and pillarboxing, cropping centered oversized images. Each logical
 pixel occupies one output pixel; RGB888 conversion and composition remain at
@@ -255,6 +255,14 @@ mode. Same-carrier changes retain the existing candidate lifecycle. Logical
 mode IDs and buffering semantics remain stock-owned. Oversized images retain
 the documented crop fallback; this does not qualify additional carriers.
 Experimental timing selection does not change legacy logical mode IDs.
+The Author-authorized 320×240 experimental exception uses PPA bilinear2×
+presentation: a decorated private320×240 snapshot becomes640×480 at(104,0) in
+848×480. Logical front/back buffers remain independent from the HDMI pair.
+The P4 rejects a snapshot spanning a logical swap, finishes scaling before
+publication and waits for actual DMA release before reusing HDMI buffers.
+This exception preserves application dimensions/swap commands, and its loaded
+qualification remains owned by HDMI-002; other modes retain unscaled output.
+
 
 The separate FabGL `VGATextController` is retained in the complete vendored
 vdp-gl source but excluded from Extender builds. Official VDP text remains on

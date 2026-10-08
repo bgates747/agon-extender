@@ -1,5 +1,97 @@
 # HDMI-002 — 848×480 HDMI timing and centered 512×384 image
 
+## HDMI02-N01 — bounded native 240-line retry, authorized 2026-10-07
+
+The Author requests one more attempt to avoid pixel doubling and PPA cost.
+The attached Acer identifies as SB272. Its verified EDID gives48–100Hz vertical
+and30–85kHz horizontal ranges; these are bounds, not a promise of custom-mode
+support. Keep raw EDID/serial identifiers in ignored bench evidence. Acer's
+[SB272 E specification](https://www.acer.com/gb-en/monitors/essential/sb2/pdp/UM.HS2EE.E01)
+publishes HDMI31–112.5kHz/48–100Hz; use the narrower observed intersection.
+
+HDMI02-N01a [x] Review the failed428×240 timing and bridge register contract.
+First test redistributes blanking around the same428×240 image: H280/112/284,
+V134/8/135, PLL240/7, total1104×517, two480Mbps DSI lanes, VIC0. This preserves
+31.056kHz/60.069Hz while testing the extreme front-porch hypothesis. No scaling,
+false VIC, fabricated monitor identity, or change to the game clock. At most two
+additional evidence-led static alternatives in this tranche; avoid blind sweeps.
+
+HDMI02-N01b [x] Build/verify, flash/read back and retain a short passive capture.
+Ask the Author about stable picture, edges and aspect. P4 standalone has no Agon
+services; do not change EMOS/mainboard VDP, SD/startup or game files. Preserve
+exact full r11 and accepted r10 rollback. If no candidate succeeds, restore full
+r11 and input readiness. If one succeeds, leave it for visual review and report
+native output evidence separately from later renderer/sprite integration.
+
+## HDMI02-P02 — full 320×240 scaling integration, authorized 2026-10-07
+
+Author requests full firmware with keyboard/services for Rally review and
+emphasizes that Rally is double-buffered. Keep logical 320×240 front/back
+buffers and stock VDU23,0,195 swaps. HDMI owns separate completed output
+buffers. Copy/decorate the visible image into private RGB888 staging, discard
+any copy spanning a logical swap, then PPA-scale that immutable staging into
+an HDMI back buffer. Publish only after PPA completion and retain the old
+HDMI front until actual DMA release. No native mutex held during PPA waits.
+Both software sprites already in the image and hardware/cursor overlays must
+be included before filtering. No second scanout sprite overlay at scaled size.
+
+HDMI02-P02a [x] Implement opt-in 320×240-only 2× scaling in the full automatic
+HDMI composition, with unchanged 384/480-line rendering paths. Reuse pinned
+SDK PPA and the existing decorated-row/generation and DMA-ownership contracts.
+Check failed allocation/scaling, mode lifecycle, mixed-generation rejection,
+and double-buffer publication using existing host test infrastructure. Build
+an independently identified experimental image; keep accepted r10 rollback.
+
+HDMI02-P02b [x] Deploy/read back; verify network/input/service readiness, a
+bounded small double-buffered 320×240 run and return to the normal prompt.
+Reuse an existing fixture if practical; do not edit production Rally or assets.
+Leave full services and the scaled candidate ready for Author Rally review.
+Record actual output cadence separately from game speed; no performance promise
+or production promotion follows from the earlier static-pattern pass.
+
+Research contracts: upstream `docs/vdp/Screen-Modes.md` describes mode136 as
+320×240/64 colors/double-buffered and swap at VSYNC; `Bitmaps-API.md` distinguishes
+software sprites drawn before swaps from hardware overlays. Maintained
+`stockVisibleGeneration`, decorated RGB888 rows and HDMI ownership already
+implement the required snapshot rejection and hardware acknowledgment seams.
+PPA API/cache research remains in P01; hardware filtering itself stays unchanged.
+
+## HDMI02-P01 — authorized PPA scaling experiment, 2026-10-07
+
+The Author accepts trying filtered 2× presentation after the native 428×240
+signal produced no usable monitor picture. Preserve accepted r10 as rollback.
+This standalone test is a visual/cost probe, not a change to ordinary video modes.
+
+HDMI02-P01a [x] Reuse the corrected pattern at 320×240; ask P4 PPA SRM to scale
+it to 640×480, centered at x104 in the proven 848×480 carrier. Retain the sharp
+source generator. Use pinned IDF5.5.5 APIs unchanged; no new scaler algorithm.
+Freeze source/identity and verify the target build and existing pattern tests.
+
+HDMI02-P01b [x] **Deployment, independent checks and Author static-picture review pass.** Flash/read back the standalone image; retain ten isolated
+blocking scale timings, compare uniform colors and untouched black sidebars,
+and count differences from exact nearest duplication. Start scanout only after
+PPA completion and pixel verification; obtain Author picture review and stop.
+No SD, EMOS, mainboard VDP or ordinary application changes in this tranche.
+
+**Sprite boundary:** the Author specifically flags sprite breakage. A future
+live scaler must receive the composed background plus sprites, preserve logical
+coordinates/occlusion and keep DMA buffers immutable until consumption ends.
+Scaling only the background is not acceptable. Strip boundaries may require
+filter overlap; scaling and scanout will compete for memory bandwidth. None of
+that is qualified by this static test. Moving-sprite and loaded-game checks
+must precede any claim of a working integrated 240-line mode.
+
+Bounded research: [Espressif PPA documentation](https://docs.espressif.com/projects/esp-idf/en/v5.5.5/esp32p4/api-reference/peripherals/ppa.html),
+SDK commit `b774170ff46c393eeb5e495ea37936038d3f4f4f`,
+`components/esp_driver_ppa/include/driver/ppa.h`,
+`components/esp_driver_ppa/src/ppa_srm.c` and the `ppa_dsi` example.
+SRM uses bilinear filtering, exposes no nearest-neighbor selector, accepts exact
+2× factors and distinct RGB888 source/destination buffers. The output base/size
+must meet cache-line alignment. Flush CPU-written sidebars before the driver
+invalidates its destination; invalidate after blocking completion before CPU
+checks. Measure scaling separately from scanout: ten pre-scanout calls do not
+measure sustained game throughput or establish a 60 Hz loaded budget.
+
 ## Accepted r10 and next tranche — 2026-10-07
 
 The Author reports beautiful gameplay and a correctly displayed **outro screen**
@@ -806,3 +898,146 @@ scanline, after background palette expansion. Source therefore suggests hardware
 sprites may already provide that distinction. This is a research observation,
 not a newly implemented feature or a complete physical color qualification.
 Software sprites still paint into the background representation.
+
+
+### HDMI02-M03 initial pattern gate — 2026-10-07
+
+Committed accepted video work as `8800ca84` and the EMOS correction as `cf10f0b`
+before starting this experiment. Rebuilt the unchanged corrected r04 standalone
+pattern for428×240, centering320×240 at x54. Build/source closure and existing
+pattern correctness tests pass; four flash segments independently verified.
+Boot identifies the exact image; passive samples show approximately60 DMA
+scanouts/s and HDMI HPD1. No scaling, game, sprite or ordinary-service claim.
+[Exact timing/build record](HDMI-002/NATIVE-240-RESULT.json). Author geometry and
+stability review pending; keep the pattern visible and stop before integration.
+Accepted r10 rollback is verified and retained. No Agon firmware/SD/startup
+change or reset in this pattern tranche; Extender services are absent while
+standalone firmware is installed. Production v0.2.0 remains gated in RELEASE-001.
+
+
+HDMI02-M03 visual result: Author reports **no signal**. Passive serial capture
+still shows about60 DMA frames/s, HDMI HPD1 and bridge MIPI detection. Those
+counters do not establish a usable HDMI signal or monitor lock. Mark native
+428×240 failed on this combination; no integrated240-line mode is authorized by
+this result. Restore exact accepted r10 and fresh Agon input admission. A next
+option is integer2× presentation of320×240 in the proven848×480 carrier; that is
+scaled output, not a native240-line HDMI timing. Pause before implementing it.
+
+
+HDMI02-P01 physical preparation: [r05 result](HDMI-002/PPA-240-RESULT.json)
+records four verified flash segments, no uniform-color or sidebar pixel errors,
+and about60Hz DMA progression. Ten pre-scanout PPA operations average4558.7µs
+(27.35% of a60Hz frame budget), range4512–4931µs.34284 of307200 output pixels
+differ from exact nearest duplication, consistent with filtering. This is an
+isolated cost, not loaded game throughput. Author visual review is pending.
+The standalone image remains visible without Extender services; exact accepted
+r10 rollback retained. No Agon reset, SD change or firmware change on mainboard.
+
+
+HDMI02-P01 Author review passes: visible/stable, correct reviewed geometry,
+with expected blur judged an acceptable CRT-like softness. The static-pattern
+tranche is complete. This is not acceptance of an integrated firmware feature
+or a production mode. Moving-sprite composition and sustained scaling remain
+unproven. Leave the reviewed pattern visible and pause before that integration.
+
+
+### P02 bounded hardware result — 2026-10-07
+
+Full `rgb-001-r11-b2026-10-08-01-22-20Z` builds/validates, flashes and
+independently verifies all four segments. Both existing mode136 fixtures pass
+with closed correlated telemetry, no bad frames and no scanout fault/underrun.
+[Exact results](HDMI-002/PPA-INTEGRATION-RESULT.json). Rows ordered by lower
+application cadence first; scopes differ and are not interchangeable fps.
+
+| Workload | Application updates/s, nominal MOS clock | Presented images/s, P4 wall clock | DMA scanouts/s, P4 wall clock | Bad frames |
+|---|---:|---:|---:|---:|
+| Case46:16 software sprites |59.855|30.034|60.068|0|
+| Case50:one hardware sprite |60.000|29.982|59.963|0|
+
+Application cadence uses raw MOS120Hz nominal ticks; this is not external clock
+calibration. HDMI repeats complete scaled images between publications. These
+short runs prove functional completion, control return and clean scanout counters;
+Rally performance and moving-image visual acceptance remain with the Author.
+Original38-byte startup is restored by whole-file readback; normal boot/input
+and ExCom prompt are checked before handback. No game/asset/EMOS/mainboard VDP
+changes. Full r11 remains installed for review; accepted r10 rollback retained.
+
+Known diagnostic limitation: `display/status.render_memory` still uses a static
+geometry label and says `panel-direct` in320×240. The actual controller now owns
+private logical pixels there, as the source and r11 build manifest specify.
+Correct that label before production promotion; do not use it as proof of pointer
+ownership. P02 is not product promotion or acceptance of all scaled modes.
+
+
+### P02 Author Rally review — 2026-10-07
+
+On full r11, the Author reports that Rally looks fine in both demo mode and
+racing. Record this as a bounded visual pass for the integrated scaled output.
+Rally controls remain unresponsive in ExCom, while controls work correctly in
+Legacy. This repeats the previously reported Rally issue; its cause remains
+unidentified. Visual acceptance does not close input responsiveness or prove
+that scaling, UART traffic, query handling, or scheduling is responsible.
+No measured Rally cadence, duration, or input-source comparison accompanies
+this manual review. No further hardware changes were made for this report.
+The existing promotion/qualification gates and diagnostic-label correction
+remain open; production selection is unchanged.
+
+
+N01 first retry r06 compiles, flashes/readback passes and DMA remains about60/s
+with HPD1; Author reports black screen with flashes of the monitor's no-signal
+message. Centered blanking alone did not fix acquisition. Second bounded probe
+uses PLL240/9=26.666667MHz, H176/80/176,total860 and the same centeredV517,
+yielding31.007752kHz/59.976309Hz. Horizontal active duty improves49.77% versus
+38.77%; no framebuffer expansion, scaling or changed application timing.
+
+
+N01 second retry r07 (`hdmi-timing-r07-b2026-10-08-02-42-24Z`) compiles and
+all four flashed segments independently verify. Register readback confirms
+PLL240 divider9; DMA59.976/s and HPD1. Author visual response is pending. Leave
+this standalone pattern unchanged for review. If it fails, the bounded final
+proposal retains PLL240/7,H1104 and uses V33/8/33,total314:98.904142Hz. It tests
+shorter vertical blanking only; success would not qualify60Hz game pacing on
+that output. No third probe is built or deployed yet.
+
+
+N01 second retry r07 fails Author visual review: monitor consistently cannot find
+a signal, though it remains awake. This does not establish correct video lock.
+Proceed with the already bounded final static probe r08:428×240, PLL240/7,
+H280/112/284,total1104; V33/8/33,total314,98.904142Hz. This stays inside the
+observed Acer frequency ranges and reduces vertical blanking from277 to74lines.
+It neither changes an application's clock nor qualifies a60Hz application on
+this carrier. Stop the native retry sequence after this monitor observation;
+restore fullr11 if it also fails. No further speculative timing sweep.
+
+
+Final r08 (`hdmi-timing-r08-b2026-10-08-02-53-36Z`) builds and all four flash
+segments independently verify. Divider7 readback,314-line bridge input and
+DMA about98.9/s with HPD1 observed over25seconds. Monitor review pending;
+standalone left visible. Result record: [native retry evidence](HDMI-002/NATIVE-240-RETRY-RESULT.json).
+
+
+### N01 final result — native240 trials exhausted, 2026-10-07
+
+All three bounded retries failed monitor acquisition. The Author reports r08
+mostly showing no signal, with periodic black intervals before the monitor's
+notification returns. P4 DMA cadence and HPD never established a visible picture.
+
+| Probe | Pixel clock MHz | Horizontal kHz | Vertical Hz | Blank lines | Author observation |
+|---|---:|---:|---:|---:|---|
+| r06 centered blanking |34.285714|31.055901|60.069440|277|Black; no-signal flashes|
+| r07 lower clock |26.666667|31.007752|59.976309|277|Consistent no signal; monitor stays awake|
+| r08 shorter blanking |34.285714|31.055901|98.904142|74|No signal alternating with black|
+
+No valid native240 picture was obtained on this P4/LT8912B/Acer combination.
+The result does not locate the fault at the monitor versus the bridge or exclude
+all possible timings. Stop the timing sweep; retain the failures and exact source
+closures. Restore exact full r11 with input readiness. No application, SD,
+EMOS, mainboard VDP or production-selection change belongs to this experiment.
+
+
+N01 restoration complete: exact full r11 factorySHA
+`32bb20c8b8c7150e1e452813f3fd9f408a62d3cb57ef66a8f79a8707cf393359`
+reflashed and all four segments verified. Fresh Agon boot, neutral admitted
+keyboard, ExCom MOS prompt, idle SD and no open measurement window verified.
+No scanout faults; no active host operation remains. The bounded investigation
+is complete with a negative native240 result, not a supported native mode.

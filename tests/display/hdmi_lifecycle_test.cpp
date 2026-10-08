@@ -69,7 +69,59 @@ static void failed_panel_borrow(bool old) {
   close(output);
 }
 
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+// Test actual sink ownership/generation rules; SDK filtering is exercised on
+// hardware. This substitute writes a sentinel and can fail, not simulate PPA.
+static unsigned scale_calls;
+namespace agon::extender::display {
+bool HdmiPpaScaler::initialize(){
+  if(hdmi_host::operation("scaler-init")!=ESP_OK)return false;
+  source_=static_cast<uint8_t *>(std::malloc(320*240*3));return source_!=nullptr;
+}
+void HdmiPpaScaler::reset(){std::free(source_);source_=nullptr;}
+bool HdmiPpaScaler::scale(uint8_t *out,size_t bytes){
+  assert(bytes==848*480*3 && source_);++scale_calls;
+  if(hdmi_host::operation("scale")!=ESP_OK)return false;
+  out[104*3]=0xab;return true;
+}
+}
+static void scaled_publication() {
+  assert(selectHdmiTiming(320,240).width==848);
+  for(bool logical_double: {false,true}) {
+    HdmiOutput output;assert(output.start());StockRuntimeController renderer;
+    renderer.controller.w=320;renderer.controller.h=240;
+    renderer.controller.doubled=logical_double;std::atomic<bool> stop{};
+    // Logical swap during snapshot: reject without PPA or HDMI publication.
+    const auto before_draw=hdmi_host::draws.load(),before_scale=scale_calls;
+    on_row=[](int y){if(y==100)++visible_generation;};
+    assert(!output.publish(renderer,stop));on_row={};
+    assert(scale_calls==before_scale && hdmi_host::draws==before_draw);
+    assert(!output.ownership_.pending());
+    // SDK failure leaves the old front selected and no pending DMA release.
+    hdmi_host::inject("scale");assert(!output.publish(renderer,stop));
+    assert(!output.ownership_.pending() && hdmi_host::draws==before_draw);
+    // A completed scale writes only HDMI back. Until the IRQ acknowledges it,
+    // publication cannot return and the original front must remain untouched.
+    for(unsigned expected: {1u,0u}) {
+      auto old=output.panel_->pixels[1-expected];
+      auto run=std::async(std::launch::async,[&]{return output.publish(renderer,stop);});
+      await([&]{return output.ownership_.pending();});
+      assert(output.ownership_.submittedIndex()==expected);
+      assert(output.panel_->pixels[1-expected]==old);
+      assert(output.panel_->pixels[expected][104*3]==0xab);
+      assert(run.wait_for(10ms)==std::future_status::timeout);
+      host_frame(output.panel_);assert(completed(run));
+    }
+    close(output);
+  }
+  HdmiOutput output;hdmi_host::inject("scaler-init");assert(!output.start());close(output);
+}
+#endif
+
 int main(int argc,char **) {
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  scaled_publication();
+#endif
   const bool old=argc>1;
   cancelled_swap(old);failed_panel_borrow(old);
   if(old)return 0;

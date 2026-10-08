@@ -199,7 +199,9 @@ struct P4Rgb888Controller {
 #define AGON_STOCK_NATIVE_GUARD ((void)0)
 namespace agon::extender::display {
 constexpr int kPresentationSnapshotMaximumWidth=1024;
-inline unsigned stockVisibleGeneration(){return 0;}
+inline unsigned visible_generation{};
+inline unsigned stockVisibleGeneration(){return visible_generation;}
+inline std::function<void(int)> on_row;
 class StockRuntimeController {
  public:
   fabgl::P4Rgb888Controller controller;bool direct{};
@@ -207,7 +209,7 @@ class StockRuntimeController {
   fabgl::P4Rgb888Controller &paletted(){return controller;}
   bool panelStorage(){return direct;}bool rgb888Storage(){return false;}
   unsigned preparePanelFrame(int &){return 0;}
-  void prepareRow(int,uint8_t *p){std::memset(p,0,controller.w);}
+  void prepareRow(int y,uint8_t *p){std::memset(p,0,controller.w);if(on_row)on_row(y); }
   void prepareRgb888Row(int,uint8_t *,uint8_t *){}
 };
 }

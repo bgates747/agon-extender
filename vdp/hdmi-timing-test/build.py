@@ -79,7 +79,11 @@ def main() -> None:
     parser.add_argument("--output", required=True, type=Path,
                         help="New evidence directory; an existing directory is rejected")
     parser.add_argument("--timing", choices=TIMINGS, default="848x480")
+    parser.add_argument("--ppa-scale-320", action="store_true",
+                        help="Bilinear 2x320x240 pattern, centered in the 848x480 carrier")
     args = parser.parse_args()
+    if args.ppa_scale_320 and args.timing != "848x480":
+        parser.error("--ppa-scale-320 requires the proven 848x480 carrier")
     timing = selected(args.timing)
     output = args.output.resolve()
     if output.exists():
@@ -119,12 +123,17 @@ def main() -> None:
     (project / "main/build_identity.h").write_text(
         "#pragma once\n#define HDMI_TEST_BUILD_ID " + json.dumps(build_id) + "\n")
     (project / "version.txt").write_text(project_version + "\n")
-    (project / "main/timing_config.h").write_text(timing_header(timing))
+    (project / "main/timing_config.h").write_text(timing_header(timing) +
+        f"\n#define TEST_PPA_SCALE_320 {int(args.ppa_scale_320)}\n")
     frozen = {str(path.relative_to(project)): digest(path) for path in sources(project)}
     manifest = {
         "schema_version": 1, "artifact_status": "experimental", "state": "prepared",
         "build_id": build_id, "project_version": project_version,
         "started_utc": started.isoformat(), "timing": timing,
+        "presentation": ({"source": [320, 240], "scale": [2, 2],
+                          "offset": [104, 0], "method": "ppa-srm-bilinear",
+                          "scope": "static-before-scanout; no sprite qualification"}
+                         if args.ppa_scale_320 else {"method": "native-unscaled"}),
         "source_commit": git(ROOT, "rev-parse", "HEAD"),
         "source_dirty": git(ROOT, "status", "--porcelain=v1"),
         "idf_commit": IDF_COMMIT, "idf_dirty": git(IDF, "status", "--porcelain=v1"),

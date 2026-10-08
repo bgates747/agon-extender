@@ -12,7 +12,13 @@ std::unique_ptr<StockRuntimeController> makeStockRuntimeController(int colours, 
   if(rgb888ExperimentGeometry(colours, width, height)) {
     auto *controller=new (std::nothrow) StockBoundController<fabgl::P4Rgb888Controller>();
 #if !defined(FABGL_EMULATED)
-    if(controller) {
+    if(controller
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+       // The scaled mode owns logical front/back pixels independently from
+       // HDMI; never borrow the PPA destination as the game's drawing buffer.
+       && !(width==320 && height==240)
+#endif
+    ) {
       auto storage=hdmiOutput().panelStorage();
       if(!storage.count) {delete controller;return nullptr;}
       controller->bindPanelStorage(storage);

@@ -35,6 +35,9 @@ void HdmiOutput::cleanup() {
   ready_ = false;
   output_size_.store(0, std::memory_order_release);
   if (panel_) { esp_lcd_panel_del(panel_); panel_ = nullptr; }
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  scaler_.reset();
+#endif
   for (auto &io : io_) if (io) { esp_lcd_panel_io_del(io); io = nullptr; }
   if (dsi_) { esp_lcd_del_dsi_bus(dsi_); dsi_ = nullptr; }
   if (i2c_) { i2c_del_master_bus(i2c_); i2c_ = nullptr; }
@@ -77,6 +80,9 @@ bool HdmiOutput::start() {
     cleanup();
     return false;
   };
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  if(!scaler_.initialize())return failed(ESP_ERR_NO_MEM,"PPA snapshot/client allocation");
+#endif
   esp_ldo_channel_config_t power{};
   power.chan_id = 3;
   power.voltage_mv = 2500;
@@ -379,9 +385,17 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
   auto &display = controller.display();
   const int width = display.getViewPortWidth();
   const int height = display.getViewPortHeight();
-  const auto geometry = centeredHdmiGeometry(width, height, this->width(), this->height());
+  bool scaled=false;
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  scaled=width==320 && height==240 && this->width()==848 && this->height()==480;
+#endif
+  const auto geometry = centeredHdmiGeometry(scaled?width*2:width, scaled?height*2:height,
+                                             this->width(), this->height());
   if (!geometry.valid() || width > static_cast<int>(kPresentationSnapshotMaximumWidth)) return false;
-  const bool doubled = display.isDoubleBuffered() && buffer_count_ == 2;
+  // Always use independent HDMI front/back for PPA, including single-buffered
+  // logical modes. The logical swap counter remains owned by stock VDP.
+  const bool doubled = (scaled || display.isDoubleBuffered()) && buffer_count_ == 2;
+  if(scaled && !doubled)return false; // never PPA-write a scanned front
   portENTER_CRITICAL(&callback_mux_);
   const unsigned target = ownership_.writable(doubled);
   portEXIT_CRITICAL(&callback_mux_);
@@ -390,6 +404,15 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
   const auto visible_generation = stockVisibleGeneration();
   const bool clear = buffer_width_[target] != width || buffer_height_[target] != height;
   if (clear) std::memset(destination, 0, bufferBytes());
+  auto *image=destination;
+  std::size_t image_stride=stride();
+  auto image_geometry=geometry;
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  if(scaled) {
+    image=scaler_.source();image_stride=320*3;
+    image_geometry=centeredHdmiGeometry(320,240,320,240);
+  }
+#endif
   alignas(8) std::uint8_t signal[kPresentationSnapshotMaximumWidth];
   // Even cropped-out rows run in stock order. This preserves the existing
   // stock Copper cursor without adding indexed/Copper feature work.
@@ -397,12 +420,12 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
     if (stopping.load(std::memory_order_acquire)) return false;
     const bool direct = controller.rgb888Storage();
     if (direct) {
-      const int destination_y = geometry.destination_y + y - geometry.source_y;
+      const int destination_y = image_geometry.destination_y + y - image_geometry.source_y;
       // RGB-001 geometries fit wholly inside720p. Copy already-rendered BGR888
       // rows under the same native exclusion and generation check as stock.
       // Overlay rows use the stock decorator; there is no full-image expansion.
-      controller.prepareRgb888Row(y, destination + destination_y * stride() +
-          geometry.destination_x * kHdmiBytesPerPixel, signal);
+      controller.prepareRgb888Row(y, image + destination_y * image_stride +
+          image_geometry.destination_x * kHdmiBytesPerPixel, signal);
     } else controller.prepareRow(y, signal);
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
     if(y==0){unsigned a=0,b=0;bool valid=(signal[0^2]&63)==63&&(signal[1^2]&63)==0&&(signal[18^2]&63)==0&&(signal[19^2]&63)==63;
@@ -410,17 +433,17 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
       if(valid&&(a^b)==255&&a<40)frame_id=a;
     }
 #endif
-    if (y < geometry.source_y || y >= geometry.source_y + geometry.height) continue;
+    if (y < image_geometry.source_y || y >= image_geometry.source_y + image_geometry.height) continue;
     if (direct) continue;
-    const int destination_y = geometry.destination_y + y - geometry.source_y;
+    const int destination_y = image_geometry.destination_y + y - image_geometry.source_y;
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
     agon_bench::Scope expand(agon_bench::Expand);
 #endif
     expandSignalRowToHdmi(signal,
-        destination + destination_y * stride() + geometry.destination_x * kHdmiBytesPerPixel,
-        geometry.source_x, geometry.width);
+        image + destination_y * image_stride + image_geometry.destination_x * kHdmiBytesPerPixel,
+        image_geometry.source_x, image_geometry.width);
   }
-  const auto conversion_finished = esp_timer_get_time();
+  auto conversion_finished = esp_timer_get_time();
   if (doubled && visible_generation != stockVisibleGeneration()) {
     // A logical swap during a row pass can mix two source images. Keep the
     // complete HDMI front and retry at the next ordinary frame opportunity.
@@ -429,6 +452,15 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
     report(conversion_finished);
     return false;
   }
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  // The decorated source is now private and coherent. Native drawing/swapping
+  // can continue during this SDK wait. No live row/sprite pointer is borrowed.
+  if(scaled) {
+    if(stopping.load(std::memory_order_acquire) || !scaler_.scale(destination,bufferBytes()))return false;
+    conversion_finished=esp_timer_get_time();
+    if(stopping.load(std::memory_order_acquire))return false;
+  }
+#endif
   const auto conversion_us = static_cast<std::uint64_t>(conversion_finished - started);
 #ifdef AGON_EXTENDER_BENCH_CONVERT_OFF
   // Supplemental fixed-source control: OFF retains equal RGB888 allocations

@@ -1,4 +1,4 @@
-# ADR-0024 — Centered unscaled HDMI presentation
+# ADR-0024 — Centered HDMI presentation
 
 - Status: Accepted
 - Completeness: Complete
@@ -8,7 +8,7 @@
 
 ## Executive summary
 
-The Author selects a centered, unscaled image in a widescreen HDMI
+The Author selects a centered image, unscaled by default, in a widescreen HDMI
 presentation buffer. The initial carrier is1280×720; separately selected timing
 experiments retain the same geometry rule. Black letterboxing and pillarboxing preserve logical
 pixel geometry and avoid presentation resampling. This defines the product
@@ -17,6 +17,7 @@ adapter's intended geometry; implementation and qualification remain pending.
 ## Decision and rationale
 
 P4 VDP retains each Agon mode's logical drawing dimensions and native storage.
+Except for the explicitly selected 320×240 scaling exception below,
 The P4 output adapter maps one logical
 pixel to one output pixel, without enlargement, reduction or aspect correction
 by resampling. It centers the image and fills all surrounding pixels black.
@@ -60,6 +61,24 @@ full wider logical area. The848×480 experiment centers512×384 at(168,48).
 The proposed684×384 experiment would center it at(86,0), with0.1953% rounding
 from exact16:9. Those numerical choices are experimental timings, not supported
 mode declarations. [HDMI-002](../tasks/HDMI-002.md) owns their qualification.
+
+## Authorized 320×240 scaling exception — 2026-10-07
+
+After the native 428×240 trial produced no usable monitor picture, the Author
+accepted a stable PPA-filtered static pattern and requested integration for
+Rally. The experimental P4 output adapter may scale the completed 320×240 image
+by exactly2×, centering640×480 at(104,0) in the proven848×480 carrier. Bilinear
+softening is accepted for this trial. Other modes retain the unscaled policy.
+This is an output transformation, not a change to logical mode IDs or VDU calls.
+
+The P4 first composes a private visible-image snapshot including sprites/cursors;
+PPA consumes that snapshot without borrowing the application's writable back
+buffer. A copy spanning a logical swap is discarded. HDMI uses its own front/back
+buffers even in a single-buffered logical mode, publishes only completed scales,
+and does not reuse the old front before actual DMA acknowledgment. Stock logical
+swap and frame-clock semantics remain unchanged. The scaling experiment's visual,
+performance and lifecycle qualification belongs to HDMI-002, independently of
+the unscaled accepted firmware and production selection.
 
 ## Implementation boundary
 

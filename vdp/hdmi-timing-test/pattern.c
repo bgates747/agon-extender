@@ -161,7 +161,7 @@ static void native_pattern(surface_t *s)
     const uint32_t bars[8]={0,0xff0000,0x00ff00,0x0000ff,0xffff00,0xff00ff,0x00ffff,0xffffff};
     rectangle(s,0,0,s->width,s->height,0);
     char label[48];
-    snprintf(label,sizeof label,"%dx%d image - no scaling",s->width,s->height);
+    snprintf(label,sizeof label,"%dx%d source pixels",s->width,s->height);
     text(s,12,12,label,1,0xffffff);
     const char names[]="KRGBYMCW";
     for(int i=0;i<8;++i) {

@@ -75,6 +75,7 @@ def main() -> None:
     parser.add_argument("--usb-fsls-only", action="store_true")
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser")
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720")
+    parser.add_argument("--ppa-scale-320", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true")
     parser.add_argument("--abort-on-alloc-failure", action="store_true")
     parser.add_argument("--direct-rgb888", action="store_true")
@@ -87,7 +88,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -146,7 +147,7 @@ def main() -> None:
                             *definition_groups["rejected"]]
     for command in selected_commands:
         argv = command.get("arguments") or shlex.split(command["command"])
-        for definition, benchmark_selected in (("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
+        for definition, benchmark_selected in (("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
                                      ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
                                      ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
                                      ("AGON_EXTENDER_BENCH_OFF",args.render_benchmark_output in ("off","convert-off")),
@@ -201,7 +202,7 @@ def main() -> None:
     if args.display_output == "hdmi" or (output / "display.json").is_file():
         try:
             display_record = json.loads((output / "display.json").read_text())
-            if display_record != display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout):
+            if display_record != display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320):
                 fail("display snapshot differs from the selected adapter/component")
         except (OSError, ValueError) as error:
             fail(f"missing or invalid display build evidence: {error}")

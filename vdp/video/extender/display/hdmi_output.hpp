@@ -15,6 +15,9 @@
 #include "extender/display/hdmi_geometry.hpp"
 #include "extender/display/hdmi_buffer_ownership.hpp"
 #include "extender/display/rgb888_panel_storage.hpp"
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+#include "extender/display/hdmi_ppa_scaler.hpp"
+#endif
 
 namespace agon::extender::display {
 class StockRuntimeController;
@@ -88,6 +91,9 @@ class HdmiOutput {
   std::uint8_t *buffers_[2]{};
   unsigned buffer_count_{};
   HdmiBufferOwnership ownership_;
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  HdmiPpaScaler scaler_;
+#endif
   int buffer_width_[2]{}, buffer_height_[2]{};
   std::atomic<std::uint32_t> scanouts_{};
   std::atomic<std::uint32_t> interrupt_core_{UINT32_MAX};

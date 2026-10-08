@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r166
-updated_at: 2026-10-07T23:11:33Z
+registry_revision: r171
+updated_at: 2026-10-08T01:21:51Z
 
 artifacts:
   - artifact_id: dsi-strip
@@ -44,7 +44,7 @@ artifacts:
   - artifact_id: hdmi-timing
     kind: fixture
     identity_scheme: revision
-    latest_identity: hdmi-timing-r04
+    latest_identity: hdmi-timing-r08
     status: experimental
     variants: []
     description: Standalone P4-PC HDMI timing patterns; accepted848x480 and experimental native-active geometries.
@@ -53,6 +53,8 @@ artifacts:
       - No renderer, EMOS, SD or production changes; monitor picture review remains required.
       - r01 APLL design was not deployed; r02 uses supported PLL240/7 and matching custom1104x517 totals at60.069440Hz.
       - r03 prepares512x384,684x384,320x240 and428x240 native-active signals with the same clock/totals and no pixel scaling; physical acceptance remains separate.
+      - r06-r08 retain identified native240 probes for centered blanking, lower pixel clock and shorter vertical blanking; monitor results live in HDMI-002. r08 is98.904Hz standalone, not an application mode.
+      - r05 adds an optional standalone PPA bilinear 2x320x240 pattern in848x480; static-only pixel/cost checks do not qualify sprites. Author authorized the scaled experiment.
       - r04 corrects color-label alignment and centers512x384 in684x384 or320x240 in428x240 with black sidebars; timing and bridge unchanged.
 
   - artifact_id: scan-scroll-suite
@@ -105,11 +107,12 @@ artifacts:
   - artifact_id: rgb-001
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: rgb-001-r10
+    latest_identity: rgb-001-r11
     status: experimental
     variants: [normal, off, convert-off, panel-normal, panel-off, panel-convert-off, panel-copy-normal, rolling-scanout, auto-carrier, wide480]
     description: CPU RGB888 experiment with copied and panel-direct storage variants.
     notes:
+      - r11 adds opt-in HDMI02-P02 PPA 2x320x240 presentation using independent logical and HDMI buffers; no other mode renderer changes. Standing experimental identity approval.
       - r10 adds HDMI02-L swap cancellation and contained-scanout fault recovery at joined mode boundaries, plus the r09 refill queue. Host/build checks and bounded physical mode96/mode20 Nurples and sprite-transition tests pass; Author gameplay/outro accepted; v0.2.0 promotion authorized, pending canonical paired qualification/native packaging; physical fault-recovery qualification remains separate. Standing experimental identity approval applies.
       - RGB-001; selected64-colour geometries only; ordinary native renderer remains the default.
       - Initial copied-buffer builds retained; Author selects panel borrowing with DMA-gated swaps for subsequent measurements.

@@ -1,0 +1,116 @@
+{
+  "scope": "Standalone native240 timing retry; no application/scaling changes",
+  "monitor": {
+    "model": "Acer SB272",
+    "edid_checksums": "Both 128-byte blocks valid",
+    "edid_sha256": "28ed9725b73c08bb2baa8d7f5daeb10ff36c26988175e758b0dcecd3bfde3222",
+    "preferred": [
+      1920,
+      1080,
+      60
+    ],
+    "range_h_khz": [
+      30,
+      85
+    ],
+    "range_v_hz": [
+      48,
+      100
+    ],
+    "native240_advertised": false
+  },
+  "attempts": [
+    {
+      "build_id": "hdmi-timing-r06-b2026-10-08-02-38-16Z",
+      "timing": {
+        "name": "428x240-centered",
+        "width": 428,
+        "height": 240,
+        "wide": true,
+        "hfp": 280,
+        "hs": 112,
+        "hbp": 284,
+        "vfp": 134,
+        "vs": 8,
+        "vbp": 135,
+        "htotal": 1104,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "refresh_hz": 60.06944027295553,
+        "vic": 0,
+        "aspect_error_percent": 0.31250000000000444
+      },
+      "factory_sha256": "6878f344b0032e644e81dcfc04a42ce32579e1d610432b6625053d2a8d4e3625",
+      "flash": "four segments independently verified",
+      "dma": "approximately60 frames/s; HPD1",
+      "visual": "FAIL: black screen with monitor no-signal flashes; Author report"
+    },
+    {
+      "build_id": "hdmi-timing-r07-b2026-10-08-02-42-24Z",
+      "timing": {
+        "name": "428x240-lowclock",
+        "width": 428,
+        "height": 240,
+        "wide": true,
+        "hfp": 176,
+        "hs": 80,
+        "hbp": 176,
+        "vfp": 134,
+        "vs": 8,
+        "vbp": 135,
+        "htotal": 860,
+        "vtotal": 517,
+        "pll_hz": 240000000,
+        "divider": 9,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "refresh_hz": 59.976309357803665,
+        "vic": 0,
+        "aspect_error_percent": 0.31250000000000444
+      },
+      "factory_sha256": "1ddae87d26822560e614a428082d032ba634847a59af7ca1c674116ed966ff85",
+      "flash": "four segments independently verified",
+      "dma": "Cadence matches calculated timing; HPD1",
+      "visual": "FAIL: consistently no signal; monitor remains powered rather than entering standby, per Author. No usable picture."
+    },
+    {
+      "build_id": "hdmi-timing-r08-b2026-10-08-02-53-36Z",
+      "timing": {
+        "name": "428x240-shortblank",
+        "width": 428,
+        "height": 240,
+        "wide": true,
+        "hfp": 280,
+        "hs": 112,
+        "hbp": 284,
+        "vfp": 33,
+        "vs": 8,
+        "vbp": 33,
+        "htotal": 1104,
+        "vtotal": 314,
+        "pll_hz": 240000000,
+        "divider": 7,
+        "lanes": 2,
+        "lane_mbps": 480,
+        "refresh_hz": 98.90414210547137,
+        "vic": 0,
+        "aspect_error_percent": 0.31250000000000444
+      },
+      "factory_sha256": "ee034337773b567d512f15f4fa78ac271779dfc7aaff8a328f33c1c1c4f27963",
+      "flash": "four segments independently verified",
+      "dma": "Cadence matches calculated timing; HPD1",
+      "visual": "FAIL: mostly no signal, periodically black before monitor no-signal notification returns; Author report."
+    }
+  ],
+  "conclusion": "All three bounded native428x240 retry timings failed monitor acquisition. No assertion that every native240 timing is impossible; bridge versus sink cause remains unresolved.",
+  "restoration": {
+    "build_id": "rgb-001-r11-b2026-10-08-01-22-20Z",
+    "factory_sha256": "32bb20c8b8c7150e1e452813f3fd9f408a62d3cb57ef66a8f79a8707cf393359",
+    "flash": "four segments independently verified",
+    "handback": "fresh EMOS boot, neutral ready input, ExCom MOS prompt verified; SD idle, no open measurement window, no scanout fault",
+    "sd_or_game_changes": false
+  }
+}

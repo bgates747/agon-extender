@@ -1,0 +1,75 @@
+{
+  "build_id": "rgb-001-r11-b2026-10-08-01-22-20Z",
+  "factory_sha256": "32bb20c8b8c7150e1e452813f3fd9f408a62d3cb57ef66a8f79a8707cf393359",
+  "source_commit": "8800ca84577410d5b4a9d70fbd830c10624fc326",
+  "status": "experimental; bounded functional smoke and Author Rally visual review passed; ExCom controls remain unresponsive",
+  "scope": "mode136 320x240 double-buffered scaled to640x480 in848x480",
+  "runs": [
+    {
+      "case": 46,
+      "run_id": "BENCH-009-2026-10-08-01-34-44Z",
+      "outcome": "pass",
+      "frames": 412,
+      "application_updates_s_nominal": 59.855,
+      "presented_images_s": 30.034,
+      "dma_scanouts_s": 60.068,
+      "bad_frames": 0,
+      "result_sha256": "98a4763f849e7a8a2568d37aec0f7eaec5b25cf0ee7437cb9f6fff89bf4764cd",
+      "preparation_seconds": 41.54123006016016,
+      "startup_fixture_return_seconds": 23.970592084806412,
+      "retrieval_seconds": 3.1811919920146465
+    },
+    {
+      "case": 50,
+      "run_id": "BENCH-009-2026-10-08-01-36-16Z",
+      "outcome": "pass",
+      "frames": 408,
+      "application_updates_s_nominal": 60.0,
+      "presented_images_s": 29.982,
+      "dma_scanouts_s": 59.963,
+      "bad_frames": 0,
+      "result_sha256": "b8c210b13ab03383d564e020f11da5c4be537cc67bd1c1cdd89674f9fa0a50cd",
+      "preparation_seconds": 41.37500286009163,
+      "startup_fixture_return_seconds": 24.11438292823732,
+      "retrieval_seconds": 3.3111307891085744
+    }
+  ],
+  "rolling": {
+    "frames": 23864,
+    "faults": 0,
+    "late": 0,
+    "over_budget": 0,
+    "underruns": 0,
+    "refill_max_us": 830,
+    "free_internal": 83687,
+    "invalid_blocks": 0,
+    "sequence_errors": 0,
+    "cache_errors": 0,
+    "overlap": 0,
+    "first_fault": 0,
+    "first_error": 0,
+    "queued": 0,
+    "queue_wait_max_us": 34
+  },
+  "host_checks": [
+    "13 build-selection checks",
+    "real HDMI sink ownership/failure/lifecycle with scaled-path substitute; sanitizers",
+    "actual native visible-generation swap test",
+    "actual service scheduling test"
+  ],
+  "limits": [
+    "PPA filtering physically tested in standalone; these runs qualify bounded execution, not human moving-sprite visual correctness.",
+    "Author Rally visual review passed; no quantified sustained Rally or heavy sprite qualification; ExCom controls remain unresponsive.",
+    "display/status render_memory still reports static panel-direct label for this private320 path; source ownership and build manifest are authoritative.",
+    "Unrelated pre-existing Light2 connectivity hash mismatch prevents full version-registry validation."
+  ],
+  "evidence": "Ignored bench record locates exact build, installation, telemetry, raw fixture results and serial capture.",
+  "author_review": {
+    "date": "2026-10-07",
+    "rally_demo_visual": "looks fine",
+    "rally_racing_visual": "looks fine",
+    "rally_excom_controls": "unresponsive",
+    "rally_legacy_controls": "work fine",
+    "disposition": "Bounded visual pass; recurring ExCom input issue remains unresolved. No cause established."
+  }
+}

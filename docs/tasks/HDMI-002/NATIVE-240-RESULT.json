@@ -1,0 +1,41 @@
+{
+  "build_id": "hdmi-timing-r04-b2026-10-08-00-52-24Z",
+  "source_commit": "8800ca84577410d5b4a9d70fbd830c10624fc326",
+  "source_dirty": "",
+  "state": "verified-build",
+  "timing": {
+    "name": "428x240",
+    "width": 428,
+    "height": 240,
+    "wide": true,
+    "hfp": 452,
+    "hs": 112,
+    "hbp": 112,
+    "vfp": 246,
+    "vs": 8,
+    "vbp": 23,
+    "htotal": 1104,
+    "vtotal": 517,
+    "pll_hz": 240000000,
+    "divider": 7,
+    "lanes": 2,
+    "lane_mbps": 480,
+    "refresh_hz": 60.06944027295553,
+    "vic": 0,
+    "aspect_error_percent": 0.31250000000000444
+  },
+  "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+  "factory": {
+    "offset": 0,
+    "path": "build/hdmi-timing.factory.bin",
+    "bytes": 395424,
+    "sha256": "610298a9f3c233f80deba10202229f5a3ff23fc05a80dccb8c64cc0ced5d0791"
+  },
+  "build_and_validation_seconds": 72.107,
+  "installation": "Four flash segments independently verified; boot identity and 200MHz PSRAM observed",
+  "scanout": "Periodic DMA samples approximately60/s; HDMI HPD=1",
+  "visual": "FAILED: Author reports monitor no signal",
+  "scope": "Standalone static pattern; no game, services, sprite or ordinary firmware qualification",
+  "followup": "Passive capture still reports about60 DMA scanouts/s, HPD1 and bridge MIPI input. Monitor lock is not established; timing compatibility suspected, exact cause unresolved.",
+  "restoration": "Exact accepted rgb-001-r10 restored; four segments verified; fresh neutral Agon input and idle SD confirmed"
+}

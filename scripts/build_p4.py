@@ -96,7 +96,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -149,10 +149,16 @@ def select_display_profile(document: dict, name: str, board: str,
             raise SystemExit("rolling scanout requires experimental 848x480/512x384/684x384 direct RGB888 normal output")
         profile["sources"].append("video/extender/display/rolling/scene.cpp")
         profile["definitions"].append("AGON_EXTENDER_ROLLING_SCANOUT=1")
+    if ppa_scale_320:
+        if hdmi_timing != "auto" or not rolling_scanout:
+            raise SystemExit("PPA 320 scaling requires the automatic rolling HDMI composition")
+        profile["sources"].append("video/extender/display/hdmi_ppa_scaler.cpp")
+        profile["definitions"].append("AGON_EXTENDER_HDMI_PPA_320=1")
+        profile.setdefault("requires", []).extend(["esp_driver_ppa", "esp_mm"])
     return profile
 
 
-def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False) -> dict:
+def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False) -> dict:
     """Retain the selected adapter and exact vendored bridge source closure."""
     record = {"schema_version": 1, "display_output": display_output,
               "configuration": None, "adapter": None, "bridge": None}
@@ -217,6 +223,15 @@ def display_input_record(display_output: str, render_benchmark_output: str | Non
                        "bytes": path.stat().st_size, "sha256": sha(path)}
                       for path in files],
         }
+    if ppa_scale_320:
+        record["render_storage"] = "rgb888-panel-direct-except-private-320x240"
+        record["logical_stride_bytes"] = "logical RGB888 rows for320x240; panel stride otherwise"
+        record["presentation_copy_bytes"] = "320x240:230400 snapshot +921600 scaled output; zero otherwise"
+        record["configuration"]["placement"] = "320x240 bilinear2x centered; other modes unscaled/cropped"
+        record["configuration"]["selection"] = "320x240 uses848x480; otherwise smallest-proven-carrier"
+        record["ppa_scale_320"] = {"source": [320, 240], "destination": [640, 480],
+                                   "carrier": [848, 480], "filter": "bilinear",
+                                   "storage": "decorated snapshot; independent DMA-owned HDMI pair"}
     return record
 
 
@@ -448,6 +463,7 @@ def main() -> None:
                         help="presentation sink; HDMI requires p4-pc / p4-console")
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720",
                         help="fixed HDMI timing or auto carrier selection; experimental custom 60.069Hz")
+    parser.add_argument("--ppa-scale-320", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true",help="SPRITE-001 experimental DMA2D strip output")
     parser.add_argument("--abort-on-alloc-failure", action="store_true",
                         help="Experimental diagnosis: stop at the first failed heap allocation")
@@ -489,7 +505,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -512,7 +528,7 @@ def main() -> None:
         raise SystemExit("wrong ESP-IDF checkout identity")
     tools, python_env = args.tools_path.resolve(), args.python_env.resolve()
     compiler = checked_tools(tools, python_env)
-    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout)
+    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320)
     output.mkdir(parents=True)
     source_record = freeze_source_inputs(output) if args.allow_dirty_experimental else None
     (output / "display.json").write_text(json.dumps(display_record, indent=2) + "\n")
@@ -633,6 +649,8 @@ def main() -> None:
                   "--profile", args.profile, "--board", args.board,
                   "--display-output", args.display_output, "--hdmi-timing", args.hdmi_timing,
         *(["--render-benchmark-output", args.render_benchmark_output] if args.render_benchmark_output else []), "--output", str(output)]
+    if args.ppa_scale_320:
+        validation.append("--ppa-scale-320")
     if args.rolling_scanout:
         validation.append("--rolling-scanout")
     if args.abort_on_alloc_failure:

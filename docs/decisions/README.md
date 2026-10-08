@@ -37,7 +37,7 @@ attention instructions are not continuing execution authorization.
 | [ADR-0021 — RLE2 as the browser-video default](ADR-0021-rle2-browser-default.md) | Accepted / Complete |
 | [ADR-0022 — Explicit browser keyboard capture](ADR-0022-browser-keyboard-capture.md) | Accepted / Complete |
 | [ADR-0023 — Native ESP-IDF/CMake with Arduino as a component](ADR-0023-native-esp-idf-build-authority.md) | Accepted / Partial; implementation decisions in BUILD-001 |
-| [ADR-0024 — Centered unscaled HDMI presentation](ADR-0024-centered-unscaled-hdmi.md) | Accepted / Complete; HDMI-001/HDMI-002;512×384 stays pillarboxed in a widescreen carrier |
+| [ADR-0024 — Centered HDMI presentation](ADR-0024-centered-unscaled-hdmi.md) | Accepted / Complete; HDMI-001/HDMI-002;512×384 stays pillarboxed in a widescreen carrier |
 | [ADR-0025 — Bounded RGB888 rendering experiment](ADR-0025-rgb888-rendering-experiment.md) | Accepted / Complete |
 | [SD separation of support files, evidence and transactions](ADR-2026-09-21-sd-layout.md) | Accepted / Complete |
 

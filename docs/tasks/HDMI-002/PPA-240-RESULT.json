@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "state": "static-pattern-pixel-checks-and-author-visual-pass",
+  "build_id": "hdmi-timing-r05-b2026-10-08-01-09-08Z",
+  "factory_sha256": "19450d00e183a56d0bb49d386a1507d1599bc6f720299510d43cc39f4f8fa3b5",
+  "source_commit": "8800ca84577410d5b4a9d70fbd830c10624fc326",
+  "source_dirty": true,
+  "presentation": {
+    "source": [
+      320,
+      240
+    ],
+    "scale": [
+      2,
+      2
+    ],
+    "offset": [
+      104,
+      0
+    ],
+    "method": "ppa-srm-bilinear",
+    "scope": "static-before-scanout; no sprite qualification"
+  },
+  "timing": {
+    "name": "848x480",
+    "width": 848,
+    "height": 480,
+    "wide": true,
+    "hfp": 32,
+    "hs": 112,
+    "hbp": 112,
+    "vfp": 6,
+    "vs": 8,
+    "vbp": 23,
+    "htotal": 1104,
+    "vtotal": 517,
+    "pll_hz": 240000000,
+    "divider": 7,
+    "lanes": 2,
+    "lane_mbps": 480,
+    "refresh_hz": 60.06944027295553,
+    "vic": 0,
+    "aspect_error_percent": -0.6249999999999978
+  },
+  "flash_segments_verified": 3,
+  "scaling": {
+    "scope": "10 blocking calls before scanout; no renderer/network/sprite contention",
+    "samples": 10,
+    "min_us": 4512,
+    "mean_us": 4558.7,
+    "max_us": 4931,
+    "mean_percent_of_60hz_budget": 27.35
+  },
+  "pixel_checks": {
+    "uniform_checked": 258640,
+    "uniform_errors": 0,
+    "sidebar_errors": 0,
+    "different_from_nearest": 34284,
+    "scaled_pixels": 307200
+  },
+  "dma_samples_hz": [
+    59.996,
+    60.176,
+    59.976,
+    59.976
+  ],
+  "hpd": 1,
+  "limits": [
+    "No moving sprites, ordinary rendering, sustained scaling or service qualification.",
+    "DMA/HPD counters do not establish monitor picture correctness.",
+    "Production and ordinary renderer unchanged."
+  ],
+  "rollback": {
+    "build_id": "rgb-001-r10-b2026-10-07-22-56-28Z",
+    "factory_sha256": "ef7e7bdae861119bcdc2fcda947631450f0890b6cefc8d4c23e2b6d8ead7498c"
+  },
+  "local_evidence": "Ignored bench record selects exact build, flash/readback receipt and passive serial capture.",
+  "author_review": {
+    "visible": true,
+    "stable": true,
+    "geometry_accepted": true,
+    "filtering": "Visible blur accepted as a CRT-like softness; not a terrible effect.",
+    "scope": "Standalone static pattern only; no moving sprites or product-mode acceptance."
+  }
+}
