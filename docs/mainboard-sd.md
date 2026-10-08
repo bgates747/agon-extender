@@ -23,6 +23,13 @@ receipt; this guide does not assert a service is currently running.
 
 ## Automatic staged transfers — development candidate
 
+Current bench report (2026-10-08): WebDAV metadata requests succeeded but file
+downloads returned empty HTTP 500 responses. Foreground checked listener
+transfers succeeded. Until [REMOTE-007](tasks/REMOTE-007.md) isolates and repairs
+this failure, use the foreground listener for file transfers; a successful
+directory listing alone does not verify WebDAV transfer readiness. This report
+does not invalidate earlier bounded passes or identify the regression's cause.
+
 No `EMOS sdserve` invocation is needed. P4 accepts the network request and stages
 file data on its own SD card; EMOS authorizes the mainboard operation at an
 eligible idle CLI and invokes `/emos/sdjob.bin` for the finite job. Mainboard data

@@ -13,6 +13,10 @@ research scope below does not itself authorize further hardware operations.
 
 ## Existing foundation and scope
 
+The current staged-WebDAV download failure is tracked separately in
+[REMOTE-007](REMOTE-007.md), including the working foreground-listener control.
+That repair does not replace this task's broader research and qualification scope.
+
 Reuse the accepted [mainboard SD service](../mainboard-sd.md) and its
 [PORT-017 record](PORT-017.md). Host software requests operations over Ethernet;
 P4 translates them into the existing admitted mainboard-SD transport; EMOS and
