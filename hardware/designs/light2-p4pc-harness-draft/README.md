@@ -10,6 +10,21 @@ restoration. The diagram, native board profile and prepared P4-PC builds now
 share the same assignments; no firmware remapping is required. This report
 confirms the chosen arrangement, not powered transport qualification.
 
+## Author construction clarification — 2026-10-08
+
+The Author confirms that the P4-PC migration was wired according to the supplied
+specification. Treat the complete restored mapping below, including PD4 READY_N,
+PD5 CLOCK and PD7 VALID_N, as the reported connected arrangement. The older
+DevKit r03 record of disconnected handshake lines does not describe this PC
+migration. This is an Author construction report, not a new continuity or
+powered parallel test; electrical qualification remains open.
+
+The current EXT1 allocation has13 available transport/recovery GPIOs after
+excluding GPIO2 (LED) and GPIO26/27 (USB): eight data/UART lanes plus three
+handshake/clock lines are allocated, leaving GPIO47/48 at contacts19/20 spare.
+Those two spare contacts are proposed for the deferred ZDI recovery connection;
+they are not already connected or freely reassigned by this clarification.
+
 ## Reading the drawing
 
 1. The upper view shows the complete 34-contact Agon and 20-contact P4-PC EXT1

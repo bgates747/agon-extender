@@ -2,6 +2,79 @@
 
 ## Current scope
 
+### Selected bench-free tranche — eight-bit payload, 2026-10-08
+
+The Author clarified that the target is **eight-bit bidirectional payload on
+PC0–PC7**, using the already-wired PD4 READY_N, PD5 CLOCK and PD7 VALID_N.
+The earlier spare-data-lane handshake suggestion is unnecessary on P4-PC.
+EMOS and P4 must coordinate
+switching into and out of the eight-bit phase; UART cannot operate on those
+pins during that phase. No extra wiring is preferred. The bench is occupied:
+no flashing, resets, network probes, serial capture or pin driving.
+
+The earlier [four-lane review](PORT-008/FOUR-LANE-REVIEW.md) investigated the
+wrong payload architecture. Its source findings remain useful, but its two-bit
+SPI recommendation is withdrawn from the active plan. The
+[corrected scope](PORT-008/EIGHT-BIT-HANDSHAKE.md) distinguishes block admission
+from byte timing; the proved forward PD5 clock and all three dedicated control
+signals are included in the Author-followed P4-PC specification.
+
+P08-F01 [x] — Source/prototype and wiring reconciliation complete in the
+[reuse report](PORT-008/FORWARD-PROTOTYPE-REUSE.md). The proved forward path uses
+an eZ80 PD5 clock and P4 PARLIO. The P4-PC migration specification includes all
+eight data lanes plus READY/CLOCK/VALID; the Author confirms following it.
+No missing-wire or spare-pin decision blocks design. Reverse transfer,
+UART handover and electrical operation remain unqualified.
+
+P08-F02 [ ] — Author authorized bench-free EMOS/EDP development on 2026-10-08.
+The [development contract](PORT-008/BIDIRECTIONAL-DEVELOPMENT.md) fixes the
+first bounded increment and records the remaining integration gates.
+
+P08-F02a [x] — Reconcile the complete wiring, reverse block contract and known
+UART/reset hazards. Preserve the proved forward path; no pseudo-SPI payload.
+
+P08-F02b [x] — Implement EMOS receive and EDP transmit lifecycle cores; execute
+paired deterministic host checks, eZ80 compilation/emulation where feasible,
+and P4 compilation. Keep physical activation unreachable in ordinary firmware.
+[Results](PORT-008/REVERSE-CORE-RESULTS.md): 48 paired host cases, 38 linked
+eZ80 cases, existing suites and both target build checks pass. This completes
+the reverse-core increment only; F02c/d and the parent F02 remain open.
+
+P08-F02c [ ] — Implement negotiated phase/sequence/length admission, UART drain,
+keyboard queuing, pin release acknowledgements and boot/reset fences. Select
+wire IDs only after checking the existing control namespace. Add a native
+PARLIO TX adapter and the bounded assembly receive loop; test fake-peer failures.
+
+P08-F02d [ ] — Recheck generated GPIO/peripheral configuration and exact build
+identities before declaring a candidate ready for P08-F03. Compilation and
+emulation cannot qualify electrical contention, first/last byte timing or speed.
+
+P08-F03 [ ] — When the Author releases the bench, prove handshake entry/exit,
+small eight-bit blocks both ways, direction/reset recovery and resumed UART
+input. Measure link-only correctness and throughput before file integration.
+Read current hardware/fixture gates; do not run inherited wiring assumptions.
+
+P08-F04 [ ] — After transport proof, connect existing file-service semantics and
+measure exact-readback transfers both ways. Coordinate ExExt mode lifecycle and
+ordinary VDU routing under SETUP-005; a file-only diagnostic is not full ExExt.
+Update operating guidance and follow acceptance/promotion gates.
+
+#### Decisions
+
+P08-F-D01 [x] — Author clarification: ExExt-only eight-bit payload in both
+directions. EMOS owns its admission and GPIO/flow-control state, and P4 owns its counterpart.
+UART is temporarily surrendered for payload. The previous record incorrectly
+attributed a permanently UART-preserving narrow data bus to the Author. The
+subsequent wiring reconciliation selects dedicated controls rather than the
+initially discussed spare-data-lane handshake.
+
+P08-F-D02 [x] — Development proceeds on the existing eight data plus
+READY/CLOCK/VALID connections, following the Author's wiring clarification and
+authorization. No added wires, pins or logic chips. Reverse-edge timing remains
+a candidate to qualify; UART handover/recovery must precede physical activation.
+
+#### Earlier qualified UART scope
+
 Bulk UART parity is qualified within E07P's frozen controls, and E08/E09
 correctness/graphics evidence is complete. E10 remains unstarted and requires
 its existing EMOS review/authorization gate. The [UART findings](PORT-008/uart-alignment/FINDINGS.md)
@@ -33,7 +106,8 @@ wiring and production, qualifying bounded transfers and UART/input handovers,
 then feeding EDP's existing VDU stream. This is direction for the next bounded
 contract, not permission to execute old qualification scripts. Audio and
 [TRS-80 integration](TRS-80-003.md) consume the common transport; neither owns
-a private fork. Reverse high-speed parallel is not implicitly added to scope.
+a private fork. The later P08-F tranche explicitly investigates a bidirectional
+eight-bit candidate with existing-wire handshaking; it does not resume the old eight-bit circuit.
 
 ## EMOS follow-up planning — 2026-09-13
 
@@ -2021,7 +2095,9 @@ forward data plane behind the accepted fixed-backend qualification boundary.
 
 ## Explicit exclusions
 
-- No reverse high-speed parallel bus.
+- The historical eight-bit implementation excluded reverse parallel. P08-F
+  explicitly investigates eight-bit bidirectional traffic with existing-wire handshaking; its
+  own gates apply, and the old reverse exclusion does not block that review.
 - No new VDU/EDU discovery packet merely for testing.
 - No adoption of the predecessor's fixed eight-byte UART experiment as product
   protocol.

@@ -131,6 +131,16 @@ READY_N/CLOCK/VALID_N 15/14/16, matching the unchanged board profile and earlier
 build evidence. No remapping or rebuild was performed or is needed for this
 orientation request. Physical qualification remains a separate gate.
 
+### Wiring clarification — 2026-10-08
+
+The Author confirms having wired the P4-PC according to the supplied migration
+specification. Its restored mapping includes all eight Port C lanes and all
+three Port D signals: READY_N→EXT1-9/GPIO15, CLOCK→EXT1-8/GPIO14 and
+VALID_N→EXT1-10/GPIO16. PORT-008 must use this reported PC arrangement instead
+of the historical DevKit r03 disconnected-handshake state. Eleven GPIOs are
+allocated; GPIO47/48 remain the two spares proposed for deferred ZDI recovery.
+No new physical inspection, pin drive or transport qualification was performed.
+
 ## Acceptance and remaining gates
 
 1. This goal tranche is complete when B001-01–06 have reviewable outputs and

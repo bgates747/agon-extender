@@ -9,6 +9,11 @@
 
 ## Current applicability
 
+[ADR-0026](ADR-0026-four-lane-exext-transport.md) selects an eight-bit
+bidirectional ExExt investigation with existing-wire handshaking. This record's
+forward-only exclusion and buffered circuit do not govern that new candidate;
+they continue to describe the held circuit below.
+
 This accepted decision defines the **held r02 buffered circuit**, not the
 active simplified r03 bench wiring. [HW-002](../tasks/HW-002.md) and the
 [hardware index](../../hardware/README.md) record the latter's bounded evidence

@@ -39,6 +39,7 @@ attention instructions are not continuing execution authorization.
 | [ADR-0023 — Native ESP-IDF/CMake with Arduino as a component](ADR-0023-native-esp-idf-build-authority.md) | Accepted / Partial; implementation decisions in BUILD-001 |
 | [ADR-0024 — Centered HDMI presentation](ADR-0024-centered-unscaled-hdmi.md) | Accepted / Complete; HDMI-001/HDMI-002;512×384 stays pillarboxed in a widescreen carrier |
 | [ADR-0025 — Bounded RGB888 rendering experiment](ADR-0025-rgb888-rendering-experiment.md) | Accepted / Complete |
+| [ADR-0026 — Eight-bit ExExt payload with existing-wire handshaking](ADR-0026-four-lane-exext-transport.md) | Accepted / Partial; PORT-008 owns peripheral/protocol selection and qualification |
 | [SD separation of support files, evidence and transactions](ADR-2026-09-21-sd-layout.md) | Accepted / Complete |
 
 [Browser mainboard SD access](ADR-2026-09-27-browser-file-access.md): Accepted / Partial; remaining decisions in REMOTE-005.

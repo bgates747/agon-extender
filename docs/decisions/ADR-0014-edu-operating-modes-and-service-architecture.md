@@ -19,6 +19,12 @@ are not a claim that all four modes are implemented.
 
 ## Mode and entry-point clarification — 2026-09-26
 
+Transport clarification, 2026-10-08:
+[ADR-0026](ADR-0026-four-lane-exext-transport.md) retains the eight-bit payload
+target and expands investigation to both directions. The existing dedicated
+READY/CLOCK/VALID wires carry handshake/status around the payload phase. UART/parallel handover
+and byte timing remain under PORT-008; no narrow SPI payload was selected.
+
 The Author reaffirmed the four-mode design and named Exclusive Extended
 **ExExt**. Exclusive Compatible remains **ExCom**; two independently controlled
 displays remain **Dual**. ExCom retains UART-only traffic, without parallel

@@ -1,0 +1,51 @@
+{
+  "recorded_utc": "2026-10-08T19:07:57.016921+00:00",
+  "scope": "Bench-free reverse block cores; no activation, deployment or physical timing qualification",
+  "bench_access": false,
+  "committed": false,
+  "source_heads": {
+    "extender": "8800ca84577410d5b4a9d70fbd830c10624fc326",
+    "emos": "cf10f0b1848346bc5d04056e4663bbbc166b2480"
+  },
+  "sources_sha256": {
+    "../agon-emos/src/emos_parallel.h": "d45acf83e2499ea4c2f68c81b9559c44c90716d62a1e100f662f537daf03da07",
+    "../agon-emos/src/emos_parallel_engine.c": "e40575b879460eaf8ee09a0e314158e86aa45d2838c4183a730b89a5e0fee660",
+    "../agon-emos/tests/uart_put_cpu/src/bin/parallel_reverse.rs": "425d91ef16653c22bdbb0844a753f70caf06214d691fde54ccb5760fe449047a",
+    "vdp/video/extender/transport/p4_parallel_egress.hpp": "cbfe5fb6224116ff37d52bad73aca77e6d67fd50867d1c0304a0c545e44b49b8",
+    "vdp/video/extender/transport/p4_parallel_egress.cpp": "62c7c9be9c43718bcc0a3b5aabbfe5c9472956dbf6ef87c2167c34f974dbabae",
+    "tests/parallel_reverse_test.cpp": "64b00f8656a70d5cc02262da97902789481d19f01ec5c27ab8faab09034b1876",
+    "tests/parallel_reverse_test.py": "878847f3c1b3f0b0ae91e8df0a8d1bdf4aebb131fbc97f2a89ad8946dc69f467"
+  },
+  "checks": {
+    "paired_host_cases": 48,
+    "linked_ez80_cases": 38,
+    "emos_parallel_tests": 9,
+    "native_p4_profile_tests": 11,
+    "emos_wrapper_firmware_check": "pass",
+    "p4_native_build_and_validation": "pass"
+  },
+  "artifacts": {
+    "emos_image": {
+      "bytes": 129196,
+      "sha256": "845c0fa958783dba485d6ac469ad18448235cfe0b10176035317ac98a85f519e",
+      "status": "development, not for deployment"
+    },
+    "p4_image": {
+      "profile": "p4-console",
+      "board": "p4-pc",
+      "display_output": "browser",
+      "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+      "sha256": "82125488cb1e8cc6d83c7053c383ce1652fec816fc5bd6bb1ed351607b24b2ac"
+    },
+    "p4_dependency_lock_sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad",
+    "p4_validation_sha256": "28d9a9cc55cce0ebb0a051167e3d85a32c466ea61d89113979efe8ce95c3752b"
+  },
+  "limits": [
+    "EDP target adapter and UART/pad handover are not implemented",
+    "eZ80 callbacks and shared wires modeled, not physical GPIO timing",
+    "Full-system Fab boot not performed",
+    "No performance or throughput claim",
+    "Image size includes dormant C receive reference; assembly optimization still planned"
+  ],
+  "local_evidence": "agents/port008-reverse (ignored)"
+}

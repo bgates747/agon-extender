@@ -102,6 +102,14 @@ separate.
 
 ## Accepted operating-mode vocabulary
 
+Current transport clarification (2026-10-08):
+[ADR-0026](../decisions/ADR-0026-four-lane-exext-transport.md) and PORT-008 P08-F
+target eight-bit payload both ways, using the existing READY/CLOCK/VALID wires for
+handshake/status before and after the payload phase; UART requires coordinated handover.
+The earlier parallel-forward/UART-return vocabulary below is historical transport
+scope, not a prohibition on this accepted new direction. Mode identity and EMOS
+ownership remain unchanged; ExExt lifecycle/routing implementation remains open.
+
 The Author accepted the following formal names and stable identities on
 2026-08-23:
 

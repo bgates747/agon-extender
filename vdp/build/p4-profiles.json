@@ -71,6 +71,7 @@
       "product_display_role": "product-owner",
       "sources": [
         "video/extender/boot/p4_console.cpp",
+        "video/extender/transport/p4_parallel_egress.cpp",
         "video/extender/display/cursor_position_adapter.cpp",
         "video/extender/display/presentation_snapshot_pool.cpp",
         "video/extender/display/screen_facade_adapter.cpp",

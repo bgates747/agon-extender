@@ -9,24 +9,22 @@ The durable role vocabulary for hardware objects is maintained under
 only. Pins, nets, components, and electrical connectivity remain authoritative
 inside the applicable revisioned design or fixture profile.
 
-The proposed P4-PC direct mapping has a separate
+The current P4-PC mapping has a separate
 [wiring review drawing](designs/light2-p4pc-harness-draft/README.md), with complete
-Agon/P4-PC headers, straight data wires and explicit pull-resistor rails.
-The Author arranged the bench to suit the original mapping, which is restored
-and matches the unchanged native P4-PC configuration.
-It is an unversioned draft for BOARD-001; the existing harness revisions and
-qualification records remain authoritative for their original scopes.
+Agon/P4-PC headers, eight data/UART lanes and dedicated READY/CLOCK/VALID lines.
+The Author confirms on2026-10-08 that the migration followed that specification.
+The restored drawing and native P4-PC profile match; this is reported construction,
+not a new continuity or powered parallel qualification. BOARD-001 owns remaining
+as-built/electrical gates. GPIO47/48 are spare, proposed for deferred ZDI recovery.
 
-The active bench arrangement uses the simplified
-[`light2-harness-r03`](designs/light2-harness-r03/README.md) UART wiring and
-P4 USB keyboard connection. Its eight direct Port C lanes have 220 Ω series
-resistors and 15 kΩ pull-ups to Agon 3.3 V. Bounded UART, keyboard and ExCom
-results are recorded under [PORT-008](../docs/tasks/PORT-008.md),
-[PORT-015](../docs/tasks/PORT-015.md) and the linked qualification records.
-Those results do not complete circuit qualification. The KiCad draft does not
-yet include the accepted USB connection, and full as-built/power/reset review
-remains with [HW-002](../docs/tasks/HW-002.md). Do not infer the buffered r02
-isolation guarantees from the direct r03 wiring.
+The earlier simplified
+[`light2-harness-r03`](designs/light2-harness-r03/README.md) records the DevKit
+UART wiring, including disconnected Port D handshake lines, series resistors
+and the separate USB cable. Those details are historical for that board; do not
+apply them to the later PC assembly. Bounded UART, keyboard and ExCom results
+remain under [PORT-008](../docs/tasks/PORT-008.md),
+[PORT-015](../docs/tasks/PORT-015.md) and their qualification records. Neither
+assembly inherits the buffered r02 isolation guarantees.
 
 The held frozen candidate is
 [`light2-harness-r02`](designs/light2-harness-r02/README.md). Its

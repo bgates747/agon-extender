@@ -325,16 +325,18 @@ that storage capability without defining its physical backend.
 
 ## Hardware design and active evidence
 
-The active bounded UART/USB work uses the simplified
-[`light2-harness-r03`](../hardware/designs/light2-harness-r03/README.md)
-arrangement: eight Port C lanes with 220-ohm series resistors and 15-kohm
-pull-ups to Agon 3.3 V, common ground, separate positive supply rails and no
-four-chip isolation circuit. UART uses four lanes; the former parallel handshake
-signals remain disconnected. Native USB uses the separately specified P4
-connector/power path. HW-002 owns the incomplete drawing/as-built update and
-endpoint review; PORT-015 and PORT-008 retain bounded input/UART evidence.
-Working tests do not qualify all power/reset states or establish a released
-hardware design.
+The current P4-PC uses the
+[direct PC harness mapping](../hardware/designs/light2-p4pc-harness-draft/README.md)
+under BOARD-001. The Author confirms that the migration followed that drawing:
+eight Port C data/UART lanes plus PD4 READY_N, PD5 CLOCK and PD7 VALID_N are
+connected as specified. GPIO47/48 remain spare, proposed for deferred ZDI recovery.
+No four-chip isolation circuit or series resistors are specified in that PC
+drawing; pull-resistor rails and sensing-link constraints are recorded there.
+This construction report does not establish powered parallel or reverse-transfer
+qualification. The former
+[DevKit r03 arrangement](../hardware/designs/light2-harness-r03/README.md), including
+disconnected handshake lines and a separate keyboard cable, is historical evidence
+for that board, not the current PC pin budget.
 
 [ADR-0016](decisions/ADR-0016-v1-transport-electrical-core.md) records the
 accepted but **held** four-chip `light2-harness-r02` candidate and provisional
@@ -371,14 +373,21 @@ policy that silently upgrades ExCom to parallel operation.
 |---|---|---|---|
 | Legacy | Mainboard VDP, stock mainboard UART | Ordinary EDU plane inactive; documented service exceptions remain | Implemented bounded production subset |
 | ExCom | P4 EDP over UART; no parallel traffic | Separate EMOS-owned interface to EDP where supported | Implemented bounded production subset |
-| ExExt | P4 EDP with eight-bit forward parallel transport available for standard VDU commands; UART response/control epochs | Separate EMOS-owned interface | Planned; parallel integration and compatibility unqualified |
+| ExExt | P4 EDP with enhanced transport for standard VDU commands; eight-bit bidirectional payload target with existing-wire handshake and UART/parallel phases | Separate EMOS-owned interface | Planned; byte timing, handover, integration and compatibility unqualified |
 | Dual | Mainboard VDP; never mirrored | P4 EDP, separate result domain | Planned; general EDU interface unimplemented |
 
 ExExt lets existing VDU applications benefit from faster transport without
 rewriting their output calls. It does not promise ExCom-equivalent timing or
 compatibility: differences may prove small, but require separate qualification.
-Keyboard source remains independently selected; EMOS arbitrates any shared-pin
-handover so parallel operation does not silently abandon input/control traffic.
+Keyboard source remains independently selected. The current
+[eight-bit candidate decision](decisions/ADR-0026-four-lane-exext-transport.md)
+uses the existing dedicated READY/CLOCK/VALID wires for phase handshakes.
+PC4–PC7 remain data lanes; PC0–PC3 serve UART between payload phases.
+Payload then uses all eight lanes, temporarily excluding UART on the same pins.
+EMOS owns admission, its GPIO state and UART handover; P4 firmware owns its
+counterpart. Local RAM flags alone do not establish peer readiness or byte
+sampling. PORT-008 owns feasibility and recovery; existing wiring is not yet
+qualified for this traffic.
 
 Extender-aware programs address the P4 through an explicit, stable, versioned
 EDU API owned by EMOS. Synchronous foreground applications may link a client
@@ -406,12 +415,14 @@ the predecessor split-link harness; its exact firmware behavior and physical
 qualification remain under HW-001 and PORT-008.
 
 In **Exclusive Extended (ExExt) mode**, the EDP has the same exclusive compatibility
-authority and logical MOS/eZ80 integration reach. Commands may use the
-eight-bit forward parallel path; response, control, and fallback traffic uses
-the same common four-signal UART circuit as Exclusive Compatible during
-separately owned UART epochs. Transport enhancement does not weaken the
-compatibility ownership model. Exact enhanced reverse capabilities remain
-unresolved.
+authority and logical MOS/eZ80 integration reach. Enhanced transport remains
+planned. The current investigation targets eight-bit payload in both directions,
+with handshake/status over the dedicated READY/CLOCK/VALID connections before
+and after each bounded parallel phase. EMOS owns CLOCK and VALID in both
+directions; P4 owns READY. UART must be quiesced and restored under EMOS/P4 coordination; it cannot
+carry control or keyboard bytes concurrently on shared payload pins. Byte timing,
+protocol and routing integration remain under PORT-008 and SETUP-005. The older
+forward-only circuit remains held evidence. EMOS ownership is unchanged.
 
 Both exclusive modes may claim compatibility only for the declared normal
 application-facing surface; Extender v1 explicitly excludes local printer/USB
