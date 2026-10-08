@@ -163,3 +163,43 @@ No deployment, serial port, device network request, reset, SD access or GPIO
 drive is permitted while the bench is occupied. Keep ordinary production and
 the current installed images untouched. Preserve unrelated working-tree dirt.
 Emulator-coupled changes remain uncommitted pending Author validation.
+
+## Current UART integration slice — F02c2a, 2026-10-08
+
+The Author authorized development after preserving F02c1; the bench remains
+unavailable. Implement real register/SDK leaves but keep them unreachable from
+ordinary startup and CLI mode switching. This bounds review of shared-pin and
+IRQ behavior before adding wire admission and bootstrap recovery in F02c2b.
+
+1. EMOS reserves the existing serializer and Port C lifecycle lock before
+   suspending. No competing sender, selector or raw UART API may steal it.
+   Normal pause must not synthesize key releases, clear parser state or flush
+   received bytes. A partial packet or UART transmitter not fully empty keeps
+   the request pending. Preserve errors acknowledged by LSR reads.
+2. Keep EMOS keyboard ownership logically held while parked. Use a private
+   parked owner state; guard byte/block output, receive IRQ, IRQ RTS tail,
+   close/stop and timer processing before any shared-pin mutation. Resume only
+   after caller-owned reciprocal release proof. Do not infer it from delay.
+3. P4's single UART owner must fence new submissions and reach a complete
+   packet boundary before parking. Require actual TX completion and no pending
+   RX bytes, disconnect UART inputs while the pads carry parallel data, and
+   explicitly release the two UART output pads. Restore only its UART subset
+   after peer release. Retain queued keyboard events; no simulated disconnect.
+4. Test ordinary behavior as well as parked behavior. Use actual eZ80 linked
+   IRQ/TX code, register-access traces and deterministic delayed/failed SDK
+   operations. Target builds include the dormant leaves for type/link checking.
+   Host tests cannot establish peripheral timing or physical high impedance.
+5. No ExExt command, new wire opcode or boot path is activated by these leaves.
+   Full phase deadlines, mutual admission and reset fences remain c2b. The old
+   active-UART exclusion in the forward adapter stays intact. C2a is not a
+   complete ExExt implementation or permission to use an old circuit adapter.
+
+
+F02c2a implementation and checks are recorded in
+[UART-PARKING-RESULTS.md](UART-PARKING-RESULTS.md). EMOS's documented MCTL
+loopback isolates external RX while TX is fenced and empty; P4 uses the
+SDK's GPIO-matrix constant-input idiom. The P4 caller must share its UART
+ISR installation core to make FIFO/ring inspection indivisible against that
+ISR. Current startup/task affinity must be reconciled in F02c2b, not assumed.
+The leaves remain unbound and both endpoints still require negotiated peer
+quiescence: a local empty FIFO does not prove the other CPU has stopped.

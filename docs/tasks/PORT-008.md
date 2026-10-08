@@ -53,12 +53,31 @@ ISR, boot and keyboard behavior unchanged until integration below.
 [Results](PORT-008/HANDOVER-RESULTS.md): 5,208 paired cases, 16,392 linked
 eZ80 cases, existing regression checks and both target compile/validation
 paths pass. Negative control demonstrates the corrected reset-during-arming
-race. Source remains uncommitted for Author review; no physical qualification.
+race. Checkpoint committed/pushed at Extender `2098c791` and EMOS `3237404`;
+no physical qualification.
 
 P08-F02c2 [ ] — Connect matching ExExt session/sequence/direction/length admission
 and actual UART suspension, packet-boundary drain, ISR fencing, retained input,
 bounded phase deadlines and boot recovery. Review the wire namespace before
 assigning an envelope. Keep Legacy/ExCom paths and existing ownership guards.
+
+P08-F02c2a [x] — Bench-free development slice complete: implement the actual
+EMOS UART suspension/resumption leaves, serializer reservation and IRQ/RTS
+guards; implement the corresponding P4 UART pad-parking boundary. Exercise
+real source against modeled registers/SDK calls and compiled eZ80 instructions,
+including partial packets, nonempty shift registers and late interrupts.
+No live caller or ExExt entry until c2b and F02c3 supply the remaining fences.
+[Results](PORT-008/UART-PARKING-RESULTS.md): both target builds and real-source/
+linked CPU checks pass. New changes remain uncommitted for Author review;
+EMOS image 130,135 bytes (937 bytes headroom).
+
+P08-F02c2b [ ] — Compose the leaves with the paired phase machines, wire-level
+session/sequence admission and boot/reset fences. Preserve ordinary operation
+with an old peer; an unnegotiated UART peer must never be mistaken for a peer
+that supports parallel handover. Prove timeout/fault recovery and packet order
+through the real coordinator before exposing any candidate activation. The P4
+UART parking owner must share the actual UART ISR installation core; retain
+complete event/queue draining and explicit peer quiescence.
 
 P08-F02c3 [ ] — Bind current P4-PC PARLIO TX/RX and the EMOS assembly payload
 loop under that coordinator; prove adapter cleanup and first/last-byte software

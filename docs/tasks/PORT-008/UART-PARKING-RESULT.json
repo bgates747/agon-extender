@@ -1,0 +1,128 @@
+{
+  "recorded_utc": "2026-10-08T20:36:21.219716+00:00",
+  "scope": "F02c2a private UART parking leaves and guards, no live handover caller",
+  "bench_access": false,
+  "committed": false,
+  "source_heads": {
+    "extender": "2098c79171b9cae163d490abefd5ebe9bfe1e912",
+    "emos": "323740470dc215c2ca19b1324fad99236f66cc1c"
+  },
+  "sources_sha256": {
+    "../agon-emos/src/uart.c": "bf35bbf9546c5a1e887bc3076c7ebcc09c17b339c9b81ad7cc163db4758c56f7",
+    "../agon-emos/src/uart.h": "ad1ef241061b1f117d99675aa4387b8308980b016575b315db23346fe784b5ce",
+    "../agon-emos/src/emos_keyboard.c": "99234c478133d6d2e559ca03dddd0555ef875cb85e76b591517edc0e1f71d24b",
+    "../agon-emos/src/emos_keyboard.h": "b6cbc474c2f8e74b4f37f6f82a2d606d7126725b6baa5f42b22e8e3daaa1aa07",
+    "../agon-emos/src/emos_keyboard_io.asm": "9a8aaac982ae0fa1a366a43f1851fb1a3b61b152797d3a663e9f6025ac630bcf",
+    "../agon-emos/src/emos_parallel.c": "3e421e6ee479552f9051a0b4cd638d4cc7bc52b104ad766312c3085f962fee4a",
+    "../agon-emos/projects/emos/verify_parallel.py": "6d0adbb45f75badf0ea89c255052690e4078263c16521f3671e4b283b52f867f",
+    "../agon-emos/tests/emos_keyboard_harness.c": "7046a229a7c57be1a5af8a436272b6871e32eaec61a1f246bf5835aaa6048fa5",
+    "../agon-emos/tests/emos_uart1_guard_harness.c": "28c70ecd9b0d85400ac0939458e53ff83acaf615ee7e477fcad6dd6283ded025",
+    "../agon-emos/tests/test_emos_port.py": "849e38c4a7090af3b50edc7933a0d9c98d9e1b54682ddb6943d4746a53bc3499",
+    "../agon-emos/tests/uart_put_cpu/src/bin/uart_parking.rs": "8d8e7d1f6b569d4a369ac56cc8a365b4783da117f454811807fd3490f11ca357",
+    "vdp/video/extender/transport/p4_uart_parking.cpp": "0652888aefd8bc73a684d9a48306b42b04ae3185c2b95c58189b20872f57d98a",
+    "vdp/video/extender/transport/p4_uart_parking.hpp": "21a092ce07a0c350176576846079d8105fa20a90364c9c9d39e8a8b1f7401868",
+    "vdp/build/p4-profiles.json": "81647fb35781181badbb9c58bc380e13ff28b41762687a073aec49c82c80359c",
+    "tests/p4_uart_parking_test.cpp": "620fce14dbb3d034f338c7671dfb114e0d28201309e1759499da698b6484b36a",
+    "tests/p4_uart_parking_test.py": "7e15d5e70febdb1991e5d935f32140be3bb509255f659badce3b265e1c0c2566",
+    "tests/p4_uart_sdk_fake.hpp": "5538b6aa12e20809742b4c9056ef506af43da1169746a44c8e29e62bcf367dd7"
+  },
+  "checks": {
+    "linked_ez80_parking": 289,
+    "sdk_adapter_cases": 196,
+    "linked_tx_byte_cases_per_image": 221184,
+    "linked_tx_block_comparisons": 375,
+    "linked_irq_comparisons": 1302,
+    "linked_parser_comparisons": 8683703,
+    "paired_handover_cases": 5208,
+    "paired_reverse_cases": 48,
+    "emos_parallel_tests": 9,
+    "emos_provenance_tests": 6,
+    "p4_profile_tests": 11,
+    "keyboard_host_profiles": [
+      "ordinary",
+      "telemetry"
+    ],
+    "emos_wrapper": "pass",
+    "p4_native_wrapper": "pass; supplement verifies unchanged source closure and validator"
+  },
+  "artifacts": {
+    "emos": {
+      "bytes": 130135,
+      "sha256": "ff01198b72594bed24885caa9125c19fcd8a54902927e41b7fcefc079b1703b7",
+      "growth_bytes": 509,
+      "remaining_image_bytes": 937
+    },
+    "p4": {
+      "bytes": 1598560,
+      "sha256": "b2cbab2c2c7b8188dc9fb2717c52584b96d0ec6b8d018372c26b497820638e1d",
+      "profile": "p4-console",
+      "board": "p4-pc",
+      "display": "browser",
+      "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+      "check_sha256": "13b92c4397a04f57f3395102cff3cc60b936da251d9e5c0f294a87eb19db5f27",
+      "source_inputs_sha256": "2fc506afc64cb53a3bc47532d38a374a98738519c0aca6c43729dcb220eb08a3",
+      "validation_sha256": "52afa0ac06cc747cbfa817ca9295c83621cf6e152cfd96c268eee14ce91d754f"
+    }
+  },
+  "evidence_sha256": {
+    "emos-build.log": "cc6aedc1756d04e42b6244a27b65a397ba74de4109e461b5c56c4adb985e7abd",
+    "keyboard-tests.log": "f778e2f7a44cbfcd85232a8f8f249377158bc182b57d4a3cc5a759c272cbae27",
+    "parallel-tests.log": "c6b60b7246b3975a44a7923083404d0c4c9cf4ef2d9d71c115e75c9571923dba",
+    "emos-port-tests.log": "8cbb59a2bef334a9d929cc14fb5c7effb5611c588acb406e0cbd685217bb035e",
+    "p4-uart-tests.log": "b8bc3b98cbc22e8e18d25882662319e590278f77a2c65ee573ef3fa7c18917a3",
+    "handover-tests.log": "8ace6f619520bd075066766f87f82845fea53b2a69ca44b6011b931991648281",
+    "reverse-tests.log": "e1b93fed86f0971a3052d3e41d10030a97f28fb4a43c1b9f04389370b6a05839",
+    "profile-tests.log": "72d899e8e77fff8557e5b00b4b51883cff642a99af4e5a2bf073fbe37db2aa8e",
+    "cpu-uart_parking.log": "49db402986c1dbb17cae90ac155b43c47eb953b0932569180f191cceaf505f67",
+    "cpu-emos-uart-put-check.log": "6f043676917a40dde201ed692be7c1f6cc4c038f767db2c70ea2d4e4718c8374",
+    "cpu-block.log": "f36791d5bb8570dbdaa747866293699285934de08539ffb629dfada409a7c85e",
+    "cpu-irq.log": "1508bfa0532d2538a1804b2c3a05674e7f99e2790c962db110de9030cfee6a67",
+    "cpu-receive.log": "3907c5d38867858ed6f644dbd4c345c9a066ef12aea7d7a8c9113471837e97e2"
+  },
+  "timed_checks": {
+    "clock": "host monotonic seconds; includes harness compilation where needed, no target clock calibration",
+    "cpu": [
+      {
+        "test": "uart_parking",
+        "seconds": 0.211,
+        "returncode": 0
+      },
+      {
+        "test": "emos-uart-put-check",
+        "seconds": 145.34,
+        "returncode": 0
+      },
+      {
+        "test": "block",
+        "seconds": 3.365,
+        "returncode": 0
+      },
+      {
+        "test": "irq",
+        "seconds": 2.201,
+        "returncode": 0
+      },
+      {
+        "test": "receive",
+        "seconds": 25.862,
+        "returncode": 0
+      }
+    ],
+    "p4_adapter": {
+      "started_utc": "2026-10-08T20:33:08.839022+00:00",
+      "ended_utc": "2026-10-08T20:33:09.708783+00:00",
+      "seconds": 0.87,
+      "exit_code": 0
+    }
+  },
+  "limits": [
+    "No wire admission/session/sequence envelope or active ExExt entry",
+    "P4 UART installation/owner core affinity must be arranged by integration",
+    "No real boot/reset handover or native PARLIO payload adapter",
+    "Peer quiet proofs are private caller preconditions, not inferred from empty FIFO",
+    "No physical contention, edge timing, throughput or keyboard latency evidence",
+    "Linked eZ80 execution is not a full-system Fab boot",
+    "New UART byte-transmit guard adds two interpreted instructions"
+  ],
+  "local_evidence": "agents/port008-uart (ignored)"
+}
