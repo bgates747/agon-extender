@@ -10,6 +10,7 @@
 #include "console_uart_owner.hpp"
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
 #include "p4_boot_startup.hpp"
+#include "p4_uart_reset.hpp"
 #endif
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
 #include "agon_extender_board_config.hpp"
@@ -121,12 +122,17 @@ void runConsole(VDUStreamProcessor *processor) {
   // Neither the parser nor keyboard serializer runs until reciprocal release.
   agon::extender::transport::P4BootStartup startup(console_board::kDataPins,
       console_board::kReady,console_board::kClock,console_board::kValid,xPortGetCoreID());
+  auto restoreUart=[](){
+    // Shared pads are already detached. Cancel old FIFO/ring/event contents
+    // BEFORE reattaching; RX flush alone is not TX/shift-register quiescence.
+    using namespace agon::extender::transport;
+    if(!discardConsoleUart(console_events) || !consoleUartResetIdle())return false;
+    agon::extender::input::usbhost::transportBoundary();
+    return uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
+        console_board::kUartRts,console_board::kUartCts)==ESP_OK;
+  };
   startup.begin(millis());
-  while(!startup.poll(millis(),[](){
-    if(uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
-        console_board::kUartRts,console_board::kUartCts)!=ESP_OK)return false;
-    return uart_flush_input(UART_NUM_1)==ESP_OK;
-  }))vTaskDelay(pdMS_TO_TICKS(1));
+  while(!startup.poll(millis(),restoreUart))vTaskDelay(pdMS_TO_TICKS(1));
 #endif
   printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
   printf("Board %s UART1 TX=%d RX=%d RTS=%d CTS=%d\n",console_board::kIdentity,
@@ -150,8 +156,44 @@ void runConsole(VDUStreamProcessor *processor) {
   unsigned discard=0;
   uint32_t partial_at=0,tx_at=0;
   bool transmitting=false;
+#if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
+  auto cancelTransport=[&](){
+    // P4BootStartup completed a NEW physical fence before this callback.
+    // Do not call console_cancel_tx: its ordinary fault path rebinds GPIO.
+    s.transportLost();used=discard=0;need=3;partial_at=tx_at=0;transmitting=false;
+    console_keys.reset();keyboard.lost([](agon::extender::input::ProcessedKey){});
+    keyboard.admissionBoundary();agon::extender::input::usbhost::transportBoundary();
+    agon::extender::input::processedKeyboard().reset();
+    console_locale_pending=console_admit_pending=console_overload=false;
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+    agon::extender::input::remoteLocked([](auto &r){
+      r.boundary(agon::extender::input::RemoteKeyboard::transport);
+      agon::extender::input::ProcessedKey ignored;
+      while(r.release(ignored)){} // old releases cannot cross physical epochs
+      return 0;
+    });
+#endif
+#if defined(AGON_EXTENDER_SD_SERVICE)
+    agon::extender::storage::sdTransportLost();
+#endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+    agon::extender::telemetry::reset();
+#endif
+    processor->consoleTransportBoundary();
+    const bool cleared=agon::extender::transport::discardConsoleUart(console_events);
+    if(!cleared)printf("Private UART reset cleanup failed; pads remain fenced\n");
+    return cleared;
+  };
+#endif
   for(;;) {
-    const uint32_t now=millis();s.session.expire(now);s.parallel.expire(now);
+    const uint32_t now=millis();
+#if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
+    // No parser, USB admission or UART writer runs while release is unresolved.
+    if(!startup.poll(now,restoreUart,cancelTransport)) {
+      vTaskDelay(pdMS_TO_TICKS(1));continue;
+    }
+#endif
+    s.session.expire(now);s.parallel.expire(now);
     agon::extender::input::usbhost::pump(
       [&](const uint8_t *p,size_t n){keyboard.report(p,n,now,emit);},
       [&](bool attached){if(!attached) {

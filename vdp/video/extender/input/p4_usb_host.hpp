@@ -135,6 +135,12 @@ inline bool begin() {
   return running;
 }
 inline bool attached() { return active.load()!=nullptr && !detached.load(); }
+inline void transportBoundary() {
+  // Invalidate queued/in-flight reports without deleting connection events:
+  // those events own HID handle setup/closure. The private UART owner calls
+  // this on loss AND before reattachment, discarding reports from its absence.
+  generation.fetch_add(1);
+}
 // Callbacks execute only on the application owner. Loss callbacks must clear
 // owned key state; the USB driver itself does not publish MOS keyboard packets.
 template<class Report,class Connection,class Lost>

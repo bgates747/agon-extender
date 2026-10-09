@@ -47,6 +47,10 @@ bool P4BootRelease::begin(P4ParallelHandover &h) noexcept {
   if (!ok) gpio_set_direction(gpio_num_t(ready_),GPIO_MODE_INPUT);
   return ok;
 }
+bool P4BootRelease::uartLive() const noexcept {
+  return !failed_ && xPortGetCoreID()==core_ &&
+      !gpio_get_level(gpio_num_t(clock_)) && gpio_get_level(gpio_num_t(valid_));
+}
 P4BootRelease::Result P4BootRelease::poll(P4ParallelHandover &h, bool uartRestored) noexcept {
   if (failed_ || xPortGetCoreID()!=core_) return fault;
   // No payload/entry actions are supported by this boot-only adapter.

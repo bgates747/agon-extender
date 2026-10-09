@@ -131,17 +131,20 @@ void applicationLoop(void *) {
   std::unique_ptr<local_sd::MediaLease> lease;
   std::unique_ptr<storage::application::Engine> engine;
   std::uint8_t request[240], response[240];
+  unsigned engineGeneration=0;
   for (;;) {
-    unsigned n=0;
+    unsigned n=0,generation=0;
     auto now=std::uint32_t(esp_timer_get_time()/1000);
     bool expired=false;
     portENTER_CRITICAL(&storage::sd_mutex);
     auto &q=storage::sd_application;
+    generation=q.generation;
     if(q.owned && !q.requestSize && !q.responseSize && std::uint32_t(now-q.touched)>5000 && std::uint32_t(now-q.touched)<0x80000000U) {
       q.owned=false;expired=true;
     }
     if(q.requestSize){n=q.requestSize;std::memcpy(request,q.request,n);q.requestSize=0;q.working=true;}
     portEXIT_CRITICAL(&storage::sd_mutex);
+    if(generation!=engineGeneration){engine.reset();lease.reset();engineGeneration=generation;}
     if(expired){engine.reset();lease.reset();}
     if(n) {
       unsigned got=0;bool close=false;
@@ -156,9 +159,12 @@ void applicationLoop(void *) {
       if(engine){got=engine->process(request,n,response);close=engine->closed;}
       if(close){engine.reset();lease.reset();}
       portENTER_CRITICAL(&storage::sd_mutex);
-      if(got){std::memcpy(q.response,response,got);q.responseSize=got;}
-      q.working=false;q.closing=close;
+      const bool accepted=q.complete(generation,response,got,close);
       portEXIT_CRITICAL(&storage::sd_mutex);
+      // A physical reset can happen while this worker performs local SD I/O.
+      // Its completed mutation is not undone, but its stale reply and engine
+      // cannot become the new owner's response/state.
+      if(!accepted){engine.reset();lease.reset();}
     }
     vTaskDelay(1);
   }

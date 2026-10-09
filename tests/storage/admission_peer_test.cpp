@@ -58,6 +58,18 @@ struct QuietAccess : Access {
   void pause() override { ++f.now; }
 };
 int main() {
+  { // Reset discards offered/file/cached replies and denies the old binding.
+    Fixture f;f.ready();auto binding=f.b;
+    std::uint8_t request[20];
+    sd_header(request,SD_REQUEST,f.peer.fileSession(),1,SD_HELLO,0,0);sd_seal(request);
+    assert(f.peer.submit(binding,request,20,f.now));
+    f.peer.transportLost();assert(f.peer.phase==Peer::failed&&!f.peer.success);
+    assert(!f.peer.take(f.out,f.now)&&!f.peer.answer(binding,f.out));
+    assert(!f.peer.submit(binding,request,20,f.now)&&!f.peer.finish(binding,f.now));
+    // The former control request cannot replay its cached reply.
+    assert(f.peer.receive(f.p,48,f.now,1,2));assert(!f.peer.take(f.out,f.now));
+    f.hello();f.poll();assert(f.peer.idleReady(f.now));
+  }
   { // A quiet cancelled operation is unsuccessful, but cleanup is healthy.
     Fixture f; f.ready();
     f.peer.cancel(f.b, true); f.peer.cancel(f.b, true);
@@ -104,6 +116,8 @@ int main() {
     assert(f.call(9, 0, 1) == 48);
     assert(f.call(10) == 48);
     assert(f.peer.phase == Peer::closed && f.peer.success);
+    f.peer.transportLost(); // confirmed mutation receipt survives worker latency
+    assert(f.peer.phase==Peer::closed&&f.peer.success&&!f.peer.take(f.out,f.now));
     auto completed = f.peer.binding;
     f.hello(); // resident re-entry can precede HTTP worker wakeup
     f.poll();

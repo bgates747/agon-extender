@@ -41,6 +41,15 @@ inline unsigned sdTake(std::uint8_t *out,std::uint32_t now) {
 #endif
   portEXIT_CRITICAL(&sd_mutex);return n;
 }
+inline void sdTransportLost() {
+  // Console owner fences pins before entering this shared producer boundary.
+  portENTER_CRITICAL(&sd_mutex);
+  sd_service.transportLost();
+#if AGON_EXTENDER_STAGED_WEBDAV
+  sd_peer.transportLost();sd_application.transportLost();
+#endif
+  portEXIT_CRITICAL(&sd_mutex);
+}
 inline void sdReceive(const std::uint8_t *p,unsigned n,std::uint32_t now) {
 #if AGON_EXTENDER_STAGED_WEBDAV
   auto a=esp_random(),b=esp_random();

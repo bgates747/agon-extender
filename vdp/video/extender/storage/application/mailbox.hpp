@@ -8,6 +8,14 @@ struct Mailbox {
   unsigned requestSize=0,responseSize=0,generation=0;
   std::uint32_t touched=0;
   bool owned=false,working=false,closing=false;
+  void transportLost() {
+    requestSize=responseSize=0;owned=working=closing=false;++generation;
+  }
+  bool complete(unsigned epoch,const std::uint8_t *p,unsigned n,bool close) {
+    if(epoch!=generation || !owned || !working || n>sizeof(response))return false;
+    if(n){std::memcpy(response,p,n);responseSize=n;}
+    working=false;closing=close;return true;
+  }
   static bool hello(const std::uint8_t *p,unsigned n) {
     return n==48&&p[3]==4&&p[12]==1&&p[44]==2;
   }

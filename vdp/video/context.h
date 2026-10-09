@@ -249,6 +249,14 @@ class Context {
 
 		inline VDUProcessorState getProcessorState();
 		void setProcessorState(VDUProcessorState state);
+#if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
+		// Private transport reset must not use ordinary pause-resume: that can
+		// execute cursorAutoNewline and scroll the retained scene.
+		void consoleTransportBoundary() {
+			processorState = VDUProcessorState::Active;
+			idleFrameCount = 0;
+		}
+#endif
 		void setWaitForFrames(uint8_t frames);
 		bool checkForVSYNC(bool hasPendingCommands);
 

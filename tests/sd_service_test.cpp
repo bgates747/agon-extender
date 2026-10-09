@@ -33,4 +33,10 @@ int main() {
   sd_header(other,SD_PRESENCE,13,0,0,0,0);sd_seal(other);
   assert(s.receive(other,20,0xfffffff0U));
   assert(s.online(10) && !s.online(6000)); // Millisecond wrap is bounded.
+  assert(s.post(req,20,out,n,11)==202);
+  s.transportLost();assert(!s.online(11)&&!s.pending()&&!s.boot());
+  assert(!s.take(out,9000));assert(!s.receive(other,0,12));
+  assert(s.post(req,20,out,n,12)==503&&n==0);
+  sd_header(other,SD_PRESENCE,14,0,0,0,0);sd_seal(other);
+  assert(s.receive(other,20,13));assert(s.post(req,20,out,n,14)==202);
 }

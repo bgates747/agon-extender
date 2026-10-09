@@ -154,5 +154,40 @@ int main(){unsigned cases=0;
  {Pair q;agon::extender::transport::P4BootStartup startup(data,15,14,16,0);
   core=1;auto before=operation;assert(!startup.begin(0));
   assert(!startup.poll(3000,[](){assert(false);return true;}));assert(before==operation);core=0;++cases;}
- std::cout<<"PASS "<<cases<<" paired physical boot-adapter cases; held recovery, asymmetric polling, one-board resets, missing peers, GPIO failure and output ownership\n";
+ // Real runtime coordinator: old live grant cannot survive observed controls.
+ for(unsigned level:{0u,0x20u,0xa0u})for(bool cleanupFails:{false,true})
+ for(bool fenceFails:{false,true}) {
+  Pair q;agon::extender::transport::P4BootStartup startup(data,15,14,16,0);
+  assert(startup.begin(0));unsigned restores=0,cancels=0;
+  auto restore=[&](){++restores;pMask=10;ownership();return true;};
+  auto cancel=[&](){++cancels;assert(!pMask);assert(directions[15]==GPIO_MODE_OUTPUT);
+    assert(levels[15]==1);return !cleanupFails;};
+  auto tickE=[&](){
+    hostPdDr=(hostPdDr&~0x10)|(levels[15]?0x10:0);
+    auto a=emos_parallel_boot_poll(&q.e,q.eUp);
+    if(a==EPH_RESTORE){eMask=5;q.eUp=true;ownership();}
+  };
+  bool live=false;unsigned now=0;
+  for(;now<1000&&!live;++now){tickE();live=startup.poll(now,restore,cancel);}
+  assert(live&&restores==1&&!cancels);
+  for(unsigned n=0;n<8;++n)assert(startup.poll(++now,restore,cancel));
+  // Wrong-core sampling must not revoke or rebind another owner's UART.
+  core=1;auto before=operation;assert(!startup.poll(++now,restore,cancel));
+  assert(operation==before&&!cancels&&pMask==10);core=0;
+  hostPdDr=(hostPdDr&~0xa0)|level;
+  if(fenceFails)failOperation=operation;
+  assert(!startup.poll(++now,restore,cancel));assert(!pMask&&!cancels);
+  if(fenceFails){assert(directions[15]==GPIO_MODE_INPUT);
+    assert(!startup.poll(++now,restore,cancel));assert(!cancels);}
+  assert(!startup.poll(++now,restore,cancel));assert(cancels==1);
+  // Missing peer held levels and timeouts do not revive the old grant.
+  for(unsigned n=0;n<7000;++n){assert(!startup.poll(++now,restore,cancel));assert(!pMask);}
+  assert(cancels==1&&restores==1);
+  q.resetE();live=false;
+  for(unsigned n=0;n<10000&&!live;++n){tickE();live=startup.poll(++now,restore,cancel);}
+  if(cleanupFails)assert(!live&&!pMask&&restores==1);
+  else assert(live&&restores==2);
+  assert(cancels==1);++cases;
+ }
+ std::cout<<"PASS "<<cases<<" paired physical boot/runtime-adapter cases; held recovery, asymmetric polling, one-board resets, cleanup refusal, GPIO failure and output ownership\n";
 }

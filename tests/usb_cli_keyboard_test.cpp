@@ -39,6 +39,16 @@ int main() {
   k.lost(emit);assert(!events.back().down);n=events.size();send(9003);assert(events.size()==n);
   report[2]=0;send(9004);report[2]=4;send(9005);assert(events.size()==n+1);
   k.disconnect(emit);
+  // Physical transport loss before any report was decoded still requires a
+  // neutral report: queued presses from the detached interval cannot repeat.
+  UsbCliKeyboard reset;reset.locale=1;
+  reset.lost([](ProcessedKey){});reset.admissionBoundary();reset.admit();
+  report={};report[2]=4;n=events.size();
+  reset.report(report.data(),report.size(),10000,emit);reset.tick(11000,emit);
+  assert(events.size()==n);
+  report[2]=0;reset.report(report.data(),report.size(),11001,emit);
+  report[2]=4;reset.report(report.data(),report.size(),11002,emit);
+  assert(events.size()==n+1&&events.back().down);
   // Queue reserves cleanup capacity even when a key-up cannot be admitted.
   UsbKeyQueue q;ProcessedKey key{'a',0,22,1,'a'},out;
   for(unsigned i=0;i<48;++i) assert(q.push(key));

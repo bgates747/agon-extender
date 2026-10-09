@@ -13,6 +13,8 @@ class P4BootRelease final {
                 int valid, int ownerCore) noexcept
       : data_(data), ready_(ready), clock_(clock), valid_(valid), core_(ownerCore) {}
   bool begin(P4ParallelHandover &handover) noexcept;
+  // Runtime observation only: do not rewrite READY on every console iteration.
+  bool uartLive() const noexcept;
   // uartRestored is completion of the coordinator's real, authorized restore,
   // not a timeout or a sampled high READY. No UART writer is called here.
   Result poll(P4ParallelHandover &handover, bool uartRestored) noexcept;

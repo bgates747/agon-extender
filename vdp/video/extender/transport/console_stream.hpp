@@ -18,6 +18,11 @@ class ConsoleStream final : public Stream {
   uint32_t diagnostic_rx_bytes{};
 #endif
   const char *failure{};
+  void transportLost() {
+    // No old setup/peek/reply byte may survive into a new physical UART epoch.
+    session.cancel();parallel.cancel();pos=4;cached=-1;read_pos=count=0;
+    std::memset(setup,0,sizeof(setup));failure=nullptr;
+  }
   void fail(const char *why) { if (!failure) failure=why; }
   void feed(const uint8_t *p) { std::memcpy(setup,p,4);pos=0; }
   int available() override {

@@ -10,6 +10,10 @@ class SdService {
   bool online(std::uint32_t now) const { return admitted_ && now-seen_<5000; }
   std::uint32_t boot() const { return boot_; }
   bool pending() const { return pending_; }
+  void transportLost() {
+    admitted_=pending_=sent_=false;request_length_=response_length_=0;
+    boot_=seen_=sent_at_=0;
+  }
   unsigned post(const std::uint8_t *data,unsigned n,std::uint8_t *out,
                 unsigned &out_length,std::uint32_t now) {
     out_length=0;

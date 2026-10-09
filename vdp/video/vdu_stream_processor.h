@@ -324,6 +324,18 @@ class VDUStreamProcessor {
 		std::shared_ptr<Context> getContext() {
 			return context;
 		}
+#if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
+		// Private transport reset only. Preserve scene/resources and video mode;
+		// cancel old modal parsing, echo and alternate reply destinations. Never
+		// flush echo here: those bytes belong to the discarded physical epoch.
+		void consoleTransportBoundary() {
+			commandsEnabled = true;
+			echoEnabled = echoBuffering = false;
+			echoBuffer.clear();outputStream = originalOutputStream;
+			context->consoleTransportBoundary();
+			for (auto left = eventQueue.size(); left; --left) eventQueue.pop();
+		}
+#endif
 		bool contextExists(uint8_t id) {
 			return contextStacks.find(id) != contextStacks.end();
 		}

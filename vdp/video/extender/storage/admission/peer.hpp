@@ -32,6 +32,13 @@ public:
   Phase phase = offline;
   Binding binding{};
   bool success = false;
+  void transportLost() {
+    // Keep an already-confirmed CLOSE receipt for its HTTP worker. Other jobs
+    // fail with their binding intact; no old record or capability may be sent.
+    if(phase!=closed)fail();
+    pollValid_=false;controlSize_=cachedSize_=lastSize_=fileSize_=answerSize_=0;
+    controlSession_=lastSequence_=0;std::memset(nonce_,0,sizeof(nonce_));
+  }
   std::uint32_t fileSession() const {
     auto n = sd_crc(binding.data(), binding.size());
     return n ? n : 1;
