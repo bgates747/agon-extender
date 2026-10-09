@@ -14,7 +14,10 @@ class PairedReverseTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             obj = Path(directory) / "emos.o"
             exe = Path(directory) / "paired"
-            includes = [f"-I{EMOS / 'tests/host'}", f"-I{EMOS / 'src'}"]
+            # The maintained C receive loop is a correctness reference, not
+            # part of ordinary/native resident firmware (PORT-008 ROM fit).
+            includes = ["-DEMOS_PARALLEL_RECEIVE_REFERENCE=1",
+                        f"-I{EMOS / 'tests/host'}", f"-I{EMOS / 'src'}"]
             warnings = ["-Wall", "-Wextra", "-Werror", "-pedantic"]
             subprocess.run(["cc", "-std=c17", *warnings, *includes, "-c",
                             str(EMOS / "src/emos_parallel_engine.c"), "-o", str(obj)], check=True)

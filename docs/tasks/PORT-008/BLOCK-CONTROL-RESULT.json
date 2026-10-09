@@ -1,0 +1,182 @@
+{
+  "task": "PORT-008",
+  "scope": "Private block-control transactions; no native activation or bench access",
+  "recorded_utc": "2026-10-09T15:54:07.610961+00:00",
+  "source_bases": {
+    "agon-extender": "2f5f749178fc458aec10413113ffaf58019b4d2b",
+    "agon-emos": "120808337eb53f04f9af7b9d4363d703f2e769b1",
+    "state": "Uncommitted development for Author review"
+  },
+  "builder_commit": "90034c2348761c42bab4217ce5b0f906922dc0e4",
+  "rom": {
+    "ordinary": {
+      "rom_capacity_bytes": 131072,
+      "rom_used_bytes": 130677,
+      "rom_free_bytes": 395,
+      "static_ram_bytes": 4058,
+      "build_identities": [
+        "agon-emos-v0.1.24-b2026-10-09-15-47-15Z"
+      ]
+    },
+    "native": {
+      "rom_capacity_bytes": 131072,
+      "rom_used_bytes_if_integrated": 131262,
+      "overflow_bytes": 190,
+      "previous_native_bytes": 130763,
+      "added_transaction_bytes": 499,
+      "link_guard": "refused; no oversized firmware emitted"
+    },
+    "unchanged_account_tool": "docs/tasks/AUDIT-008/account.py",
+    "account_dependency": "pyelftools==0.32"
+  },
+  "checks": {
+    "paired_block_owner_cases": 689,
+    "linked_ez80_control_cases": 65,
+    "paired_session_control_regression_cases": 218,
+    "other_regressions": {
+      "session_owner": 1149,
+      "admission": 18097,
+      "boot_runtime_adapter": 718,
+      "handover": 5208,
+      "p4_profile_tests": 12,
+      "ordinary_console_host_suites": 1,
+      "keyboard_host_suites": 1
+    },
+    "ordinary_full_wrapper": "PASS, including every mandatory link check",
+    "native_full_wrapper": "REFUSED by unchanged flash bound; no oversized image or full native link checks",
+    "p4_private_target": "PASS, final source snapshot, incremental compile, factory assembly and validator"
+  },
+  "p4_final_compile": {
+    "kind": "OFF_BENCH_PRIVATE_COMPILE_CHECK_NOT_RELEASE",
+    "start_utc": "2026-10-09T15:50:26.050711+00:00",
+    "end_utc": "2026-10-09T15:51:02.966523+00:00",
+    "elapsed_host_seconds": 36.91581185301766,
+    "source_snapshot_verified": true,
+    "deployed": false
+  },
+  "sources": {
+    "agon-extender/vdp/video/extender/transport/parallel_control.hpp": {
+      "bytes": 4103,
+      "sha256": "eaa8fa9cdff952578c9c7f3480d0dcb10d263ca3699c9606e5629fc316bdc454"
+    },
+    "agon-extender/vdp/video/extender/transport/parallel_wire.h": {
+      "bytes": 1974,
+      "sha256": "0f994d668473782cba4ce0b4f265785a5635ecb3521ea65968d3ed343574ef73"
+    },
+    "agon-extender/tests/parallel_block_control_test.cpp": {
+      "bytes": 10760,
+      "sha256": "c98da31397b1f608a4359d7419334495c49d42a32ed4f4d916a906b585ed9a13"
+    },
+    "agon-extender/tests/parallel_block_control_test.py": {
+      "bytes": 1788,
+      "sha256": "249d14cf17ad44b4b25004d2bda7947100d74450ccfd9c3ad1bb4d8d70355ee7"
+    },
+    "agon-emos/src/emos_console.c": {
+      "bytes": 12064,
+      "sha256": "32a558c1ac0cab5ab30e3b11dfce404a95243797bbedd38c4d1e783a33a568a9"
+    },
+    "agon-emos/src/emos_parallel_wire.h": {
+      "bytes": 1974,
+      "sha256": "0f994d668473782cba4ce0b4f265785a5635ecb3521ea65968d3ed343574ef73"
+    },
+    "agon-emos/src/emos_parallel_handover.h": {
+      "bytes": 5013,
+      "sha256": "18f4fdbc5c724a04b47d4627c442f67481b05275ec929f5d246339c7fc1e14ff"
+    },
+    "agon-emos/tests/uart_put_cpu/src/bin/parallel_control.rs": {
+      "bytes": 9192,
+      "sha256": "b9ecdcbeae740dc674b5fa8ddad2639651733380998a2bb3fcea81f4ab6d1973"
+    }
+  },
+  "local_evidence_root": "agents/port008-block-control",
+  "evidence": {
+    "reviewed/builds.local.json": {
+      "bytes": 1835,
+      "sha256": "d67d6252c775ae4f4697026088c23e2dd97fa935f586eb8bf2359b86951051c7"
+    },
+    "reviewed/ordinary/bin/MOS.bin": {
+      "bytes": 130677,
+      "sha256": "554d661c3f04a419aced3813cb6a7b106453f8c1a7f305d3cbcedec15d6fa808"
+    },
+    "reviewed/ordinary/bin/MOS.elf": {
+      "bytes": 325036,
+      "sha256": "1c55bfb757f4b74ea6f23ee131616597252911892a02e78a99c2cee3a6a89d6e"
+    },
+    "reviewed/ordinary/bin/nm.txt": {
+      "bytes": 75770,
+      "sha256": "828020c12cd55b0703190be8f4d9a0716620afc87a6e77c376e68829721a32ea"
+    },
+    "reviewed/ordinary/ledger/BASELINE.json": {
+      "bytes": 21413,
+      "sha256": "dc70d9ba48c30ae68b271998de8e9bc52811a63491cffe3c36678c065d02e97d"
+    },
+    "reviewed/native/overflow.map": {
+      "bytes": 80396,
+      "sha256": "954751c7bd8b226ad4ab9dc6757918b9b3af1ff92b68f62df860aec0e05c6c7f"
+    },
+    "reviewed/native/overflow-link.log": {
+      "bytes": 138,
+      "sha256": "ddf500a3e69a3df473dbc2dd125ca42f938f981b74f928e45a2bc0c435e9cd82"
+    },
+    "reviewed/native/rom-refusal.json": {
+      "bytes": 229,
+      "sha256": "b59da92a07097586e9a6f0629c969aafc807c584bb78e0f1fe2a7792937d42d2"
+    },
+    "reviewed/native/firmware-check.log": {
+      "bytes": 756728,
+      "sha256": "96360fb27df341ee3b1427012c0e4f19adbff3968697b9026e4b87243c9970d7"
+    },
+    "block-control-final.log": {
+      "bytes": 268,
+      "sha256": "b09da79d0ba1fd5d10c4c05e2bd40621148df7937c85457d33d7c21b413848e7"
+    },
+    "control-regression-final.log": {
+      "bytes": 149,
+      "sha256": "920c273de5cba1c6403c839ea41a49deff949070aa61757ae017dd17f1d54319"
+    },
+    "control-cpu-final.log": {
+      "bytes": 635,
+      "sha256": "7511565c9dd07357ac1a76299e4aca02d5f4baf90c4d6502960ba0b82a7f651e"
+    },
+    "p4-final-reviewed.log": {
+      "bytes": 173,
+      "sha256": "1712a7dbf525f58142679009ae54216a1d3297a865de56f12eb6f16090d4eceb"
+    },
+    "p4-candidate/compile-check.json": {
+      "bytes": 2860,
+      "sha256": "5c751c11fffed42b49b44f84f88fbb55a5d6b4c06e0bd22d955c880199063f43"
+    },
+    "p4-candidate/validation.json": {
+      "bytes": 746,
+      "sha256": "0ef681f8789fd0e320d606c24f0a4f3c0aeaf1a78bc56b4111628328ee0579da"
+    },
+    "p4-candidate/source-inputs.json": {
+      "bytes": 1143974,
+      "sha256": "a2e9e7307beb8ad4540a8cf5e353c24afeb246acc34e155e1f9fd2af1fd6e771"
+    },
+    "p4-candidate/source.tar.gz": {
+      "bytes": 27903231,
+      "sha256": "a0e4546a29808f0ec2efce5b16b70fc936a266a80ab337fa2619cbf8d4841faf"
+    },
+    "p4-candidate/build/agon_extender.bin": {
+      "bytes": 1612544,
+      "sha256": "d8f71253274c6ed68cbec59e838d1034adbdf10dc7b9459c21f902fa8a7d2527"
+    },
+    "p4-candidate/build/agon_extender.elf": {
+      "bytes": 34290696,
+      "sha256": "025f36525b11f37cf4a5a2d23cd72761660f42db3a73bdd8de3c839435e2e1a1"
+    }
+  },
+  "remaining_gates": [
+    "Recover EMOS ROM before live integration",
+    "Join physical boot/block ownership and reset monitoring",
+    "Drain/park/arm/run/restore actual UART/native adapters under one owner",
+    "Complete phase deadline/cleanup integration and linked ownership checks",
+    "Prepare paired bench fixture and qualify first/last bytes, contention, recovery and throughput"
+  ],
+  "limits": [
+    "Host/CPU-model checks are not electrical or throughput evidence",
+    "No SD writes, hardware changes, deployment, production promotion or commits this tranche",
+    "A lost final result does not guarantee atomic agreement; no replay of uncertain sequence"
+  ]
+}

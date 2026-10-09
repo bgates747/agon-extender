@@ -5,6 +5,20 @@ Documentation checkpoint: 2026-09-25 UTC. Begin with [README](README.md) and
 references before work. Machine-specific bench configuration remains ignored. [TODO](TODO.md) owns
 unfinished work; this handoff is not a competing task queue.
 
+## 2026-10-09 active development checkpoint
+
+PORT-008 LC02 software integration is complete after the Author resumed the
+network-change pause. [Current checkpoint](docs/tasks/PORT-008/LIVE-COORDINATOR-LC02-STATUS.md)
+and [results](docs/tasks/PORT-008/LIVE-COORDINATOR-LC02-RESULTS.md) record complete
+ordinary/private EMOS/P4 build passes and bounded host/linked-eZ80 verification.
+Private EMOS has 599 ROM bytes free. No activation caller, ExExt mode/API or SD
+transport was added; **do not flash this as a qualified live transport**.
+Stop for Author review before a separate private hardware fixture.
+No bench/network-device operation, commit or push occurred. Preserve all current
+Extender/EMOS dirt and unrelated EMOS application_peer.py. Refresh ignored bench
+connectivity before later hardware work. The older overview below is dated
+orientation, not current bench state.
+
 ## Current recorded position
 
 1. EMOS v0.1.19 removes the cancelled external `.emo` loading machinery while

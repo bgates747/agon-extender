@@ -2,7 +2,9 @@
 #include "p4_uart_sdk_fake.hpp"
 #include "extender/transport/p4_boot_release.hpp"
 #include "extender/transport/p4_boot_startup.hpp"
+#include "extender/transport/parallel_control.hpp"
 #include <cassert>
+#include <cstring>
 #include <iostream>
 extern "C" {
 #include "emos_parallel_handover.h"
@@ -15,7 +17,7 @@ using H=agon::extender::transport::P4ParallelHandover;
 using B=agon::extender::transport::P4BootRelease;
 constexpr std::array<int,8> data{{17,18,19,20,32,33,36,46}};
 static int core=0,failOperation=-1,operation=0;
-static unsigned pMask=0,eMask=0;
+static unsigned pMask=0,eMask=0,reads=0;
 static int directions[50]{},levels[50]{};
 static bool armed=false;
 static void ownership(){assert(!(pMask & eMask));}
@@ -40,7 +42,7 @@ int gpio_set_level(int pin,int v){
  if(pin==15 && !v){assert(armed);assert(!pMask);}
  levels[pin]=v;return ESP_OK;
 }
-int gpio_get_level(int pin){assert(pin==14||pin==16);return pin==14?!!(hostPdDr&0x20):!!(hostPdDr&0x80);}
+int gpio_get_level(int pin){++reads;assert(pin==14||pin==16);return pin==14?!!(hostPdDr&0x20):!!(hostPdDr&0x80);}
 int gpio_pullup_dis(int){return fails()?ESP_FAIL:ESP_OK;}
 int gpio_pulldown_dis(int){return fails()?ESP_FAIL:ESP_OK;}
 void esp_rom_gpio_connect_in_signal(int value,int sig,bool inv){assert(value==GPIO_MATRIX_CONST_ONE_INPUT && !inv && (sig==10||sig==11));}
@@ -125,7 +127,7 @@ int main(){unsigned cases=0;
  // Actual startup coordinator: asynchronous EMOS polling and real restore gate.
  for(unsigned stride:{1,3,9})for(bool restoreFails:{false,true}){
   Pair q;
-  agon::extender::transport::P4BootStartup startup(data,15,14,16,0);
+  agon::extender::transport::P4BootStartup startup(q.p,data,15,14,16,0);
   assert(startup.begin(0));bool live=false;unsigned restores=0;
   for(unsigned now=0;now<7000&&!live;++now){
    if(now%stride==0){
@@ -146,18 +148,18 @@ int main(){unsigned cases=0;
  // Absent peer, clock rollover and wrong core: no restore on a timer.
  for(unsigned level:{0,0x80,0x20,0xa0}){
   Pair q;hostPdDr=(hostPdDr&~0xa0)|level;
-  agon::extender::transport::P4BootStartup startup(data,15,14,16,0);
+  agon::extender::transport::P4BootStartup startup(q.p,data,15,14,16,0);
   const std::uint32_t start=0xfffff000;assert(startup.begin(start));
   for(unsigned n=0;n<7000;++n)assert(!startup.poll(start+n,[](){assert(false);return true;}));
   assert(!pMask);++cases;
  }
- {Pair q;agon::extender::transport::P4BootStartup startup(data,15,14,16,0);
+ {Pair q;agon::extender::transport::P4BootStartup startup(q.p,data,15,14,16,0);
   core=1;auto before=operation;assert(!startup.begin(0));
   assert(!startup.poll(3000,[](){assert(false);return true;}));assert(before==operation);core=0;++cases;}
  // Real runtime coordinator: old live grant cannot survive observed controls.
  for(unsigned level:{0u,0x20u,0xa0u})for(bool cleanupFails:{false,true})
  for(bool fenceFails:{false,true}) {
-  Pair q;agon::extender::transport::P4BootStartup startup(data,15,14,16,0);
+  Pair q;agon::extender::transport::P4BootStartup startup(q.p,data,15,14,16,0);
   assert(startup.begin(0));unsigned restores=0,cancels=0;
   auto restore=[&](){++restores;pMask=10;ownership();return true;};
   auto cancel=[&](){++cancels;assert(!pMask);assert(directions[15]==GPIO_MODE_OUTPUT);
@@ -188,6 +190,77 @@ int main(){unsigned cases=0;
   if(cleanupFails)assert(!live&&!pMask&&restores==1);
   else assert(live&&restores==2);
   assert(cancels==1);++cases;
+ }
+ // One actual control handover: boot completion must permit real admission.
+ for(bool cancelBlock:{false,true})for(bool fenceFails:{false,true}) {
+  Pair q;agon::extender::transport::ParallelControl owner;
+  agon::extender::transport::P4BootStartup startup(owner.handover,data,15,14,16,0);
+  assert(startup.begin(0));unsigned restores=0,cancels=0;std::uint32_t now=0;
+  auto restore=[&](){++restores;pMask=10;ownership();return true;};
+  auto cancel=[&](){++cancels;assert(!pMask);owner.cancel();return true;};
+  auto tickE=[&](){
+   hostPdDr=(hostPdDr&~0x10)|(levels[15]?0x10:0);
+   auto a=emos_parallel_boot_poll(&q.e,q.eUp);
+   if(a==EPH_RESTORE){eMask=5;q.eUp=true;ownership();}
+  };
+  bool live=false;
+  for(;now<1000&&!live;++now){tickE();live=startup.poll(now,restore,cancel);}
+  assert(live && owner.handover.phase()==H::uart && restores==1);
+  std::uint8_t buffer[32]{},request[16]{},reply[16]{},commit[16]{},transaction[4]{1,2,3,4};
+  t_parallelSession client{};
+  assert(owner.provide(buffer,sizeof(buffer)));
+  assert(parallel_session_begin(&client,transaction,request));
+  assert(owner.request(request,now,0x12345678,reply));
+  assert(parallel_session_accept(&client,reply,commit)==PARALLEL_SESSION_COMMITTING);
+  assert(owner.request(commit,now,0,reply));
+  assert(parallel_session_accept(&client,reply,commit)==PARALLEL_SESSION_ACTIVE);
+  std::memset(request,0,16);request[0]='E';request[1]='X';request[2]=2;
+  request[3]=PARALLEL_OFFER;std::memcpy(request+4,client.bytes,4);
+  request[8]=1;request[10]=16;parallel_session_seal(request);
+  assert(owner.request(request,now,0,reply));assert(owner.pending());
+  auto yield=[&](){
+   const auto before=operation;const auto r=restores,c=cancels,readsBefore=reads;
+   for(unsigned level:{0u,0x20u,0x80u,0xa0u}) {
+    hostPdDr=(hostPdDr&~0xa0)|level;
+    assert(!startup.poll(now+5000,restore,cancel));
+    assert(operation==before && reads==readsBefore && restores==r && cancels==c);
+   }
+   core=1;assert(!startup.poll(now+5000,restore,cancel));core=0;
+   assert(operation==before && reads==readsBefore && owner.pending());
+  };
+  yield();
+  // Real block sequencer, modeled completed adapter operations only.
+  for(auto flags:std::array<std::uint8_t,7>{H::quiet,H::released,0,
+      H::validHigh,H::validHigh|H::clockHigh,
+      H::validHigh|H::clockHigh|H::armed,H::validHigh|H::clockHigh|H::done}) {
+   owner.handover.step(flags);yield();
+  }
+  assert(owner.handover.phase()==H::blockReturn);
+  if(cancelBlock) {
+   owner.cancel();assert(!owner.pending());
+   if(fenceFails)failOperation=operation;
+   assert(!startup.poll(++now,restore,cancel));assert(!pMask && !cancels);
+   for(unsigned n=0;n<10&&!cancels;++n)assert(!startup.poll(++now,restore,cancel));
+   assert(cancels==1 && restores==1);
+  } else {
+   // Return's recovery phases still belong to the block, not boot timeout.
+   for(auto flags:std::array<std::uint8_t,4>{H::validHigh,0,H::validHigh,
+                                            H::validHigh|H::uartUp}) {
+    owner.handover.step(flags);
+    if(owner.handover.phase()!=H::uart)yield();
+   }
+   assert(owner.handover.phase()==H::uart);
+   hostPdDr=(hostPdDr&~0xa0)|0x80;
+   assert(startup.poll(++now,restore,cancel));
+   assert(restores==1&&!cancels && owner.pending());
+   assert(owner.payloadReturned(0,now));
+   std::memcpy(request,owner.descriptor(),16);request[3]=PARALLEL_COMPLETE;
+   parallel_session_seal(request);assert(owner.request(request,now,0,reply));
+   std::uint8_t *got=nullptr,direction=99;std::size_t length=0;
+   assert(owner.takeCompleted(got,length,direction));
+   assert(got==buffer && length==16 && direction==0 && !reply[13]);
+  }
+  ++cases;
  }
  std::cout<<"PASS "<<cases<<" paired physical boot/runtime-adapter cases; held recovery, asymmetric polling, one-board resets, cleanup refusal, GPIO failure and output ownership\n";
 }

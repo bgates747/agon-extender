@@ -1,0 +1,255 @@
+{
+  "state": "pass",
+  "date": "2026-10-09",
+  "scope": "ordinary EMOS diagnostic extraction hardware qualification; no live parallel activation",
+  "emos": {
+    "build": "agon-emos-v0.1.24-b2026-10-09-16-28-01Z",
+    "image_bytes": 128739,
+    "image_sha256": "bbae7be825927827f1d8af622dfdd11e2e87986eabd76a98a5a63a7c70491365",
+    "verified_full_ROM_sha256": "f5f4495dea2d50b7cd5c516cc8675790d55cc98c773f3c25c55b8b176bf9a9df",
+    "free_ROM_bytes": 2333
+  },
+  "utilities": {
+    "uartflow.bin": {
+      "bytes": 9351,
+      "sha256": "17eff13cf6d76ca1c9075b501c045984a3d26750a6e3389d9ae84ddba6d4209d"
+    },
+    "uarttest.bin": {
+      "bytes": 9523,
+      "sha256": "75ff96e320ac24bad82ef88b112a5e2b2f80ba3be4dacf904c9ebe855c44a743"
+    },
+    "vdppoll.bin": {
+      "bytes": 9522,
+      "sha256": "9d20c31e108281a2b411153c3f7dfed73f333be98848c872787d97a781167f8d"
+    }
+  },
+  "basic_checks": [
+    {
+      "utility": "uarttest",
+      "test": "version",
+      "exit": "zero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "uarttest",
+      "test": "argument",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "uarttest",
+      "test": "busy",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "uarttest",
+      "test": "wrongpeer",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 0,
+      "serialFlags": 3
+    },
+    {
+      "utility": "vdppoll",
+      "test": "version",
+      "exit": "zero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "vdppoll",
+      "test": "argument",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "vdppoll",
+      "test": "busy",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "vdppoll",
+      "test": "ordinary-P4-General-Poll",
+      "exit": "zero",
+      "diagnostic_active": 0,
+      "rts_owned": 0,
+      "serialFlags": 3
+    },
+    {
+      "utility": "uartflow",
+      "test": "version",
+      "exit": "zero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "uartflow",
+      "test": "argument",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "uartflow",
+      "test": "busy",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 1,
+      "serialFlags": 51
+    },
+    {
+      "utility": "uartflow",
+      "test": "wrongpeer",
+      "exit": "nonzero",
+      "diagnostic_active": 0,
+      "rts_owned": 0,
+      "serialFlags": 3
+    }
+  ],
+  "UARTTEST": {
+    "pass": true,
+    "request_and_reply_verified_by_peer": true,
+    "Agon_exit_zero": true,
+    "diagnostic_active": 0,
+    "rts_owned": 0,
+    "serialFlags": 3,
+    "startup_restored": true,
+    "ordinary_P4_restored": true,
+    "started_utc": "2026-10-09T17:31:36Z",
+    "ended_utc": "2026-10-09T17:31:52Z",
+    "peer_capture_seconds": null,
+    "clock": "host monotonic seconds; collection only; earlier deployment/capture duration not measured",
+    "collection_seconds": 16.37098229676485
+  },
+  "UARTFLOW": {
+    "pass": true,
+    "request_and_reply_verified_by_peer": true,
+    "Agon_exit_zero": true,
+    "diagnostic_active": 0,
+    "rts_owned": 0,
+    "serialFlags": 3,
+    "startup_restored": true,
+    "ordinary_P4_restored": true,
+    "started_utc": "2026-10-09T17:32:09Z",
+    "ended_utc": "2026-10-09T17:33:31Z",
+    "total_seconds": 81.96669291425496,
+    "peer_capture_seconds": 25.218424824997783,
+    "clock": "host monotonic seconds; total includes deployment and retrieval"
+  },
+  "restored_P4": {
+    "mode": "restore",
+    "app_sha256": "a38d3f39602ec52860b89fdd6954d4764a0fbf95def60ba5b646c40ab6ba3c02",
+    "bytes": 1734800,
+    "verified_address": "0x20000",
+    "prior_firmware_backup": false,
+    "only_app_written": true
+  },
+  "startup_sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5",
+  "final_input_ready": true,
+  "final_held": 0,
+  "final_pending": 0,
+  "final_listener_online": false,
+  "mainboard_VDP_changed": false,
+  "prior_firmware_backup": false,
+  "production_changed": false,
+  "live_parallel_activated": false,
+  "RAM_offsets_from_candidate_map": {
+    "serialFlags": "BC32E",
+    "uartdiag_active": "BC858",
+    "uart1_rts_owned": "BCF07"
+  },
+  "evidence": {
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uartflow-argument-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "34aed47c025dd618062c9b89ace3795f0fc8faa86b2f2195f2a5e389900cecf1"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uartflow-busy-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "df7b4e0bba34422cdf1ab222d4f68b461627d9413f217bb029c7dfaa10b9c319"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uartflow-version-zero.bin": {
+      "bytes": 4096,
+      "sha256": "7e04c32660ccdf125c88571c9fff2bfc9850c3f4945c91cec288e760af37c018"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uartflow-wrongpeer-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "421248af4a731ad1e3a516c421f96df2698762e73f1036f928fd048e15e83e06"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uarttest-argument-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "531aac5e0c6a04cc729ae797bf575f7dcd193143cc80c2f90775739c68d9d75a"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uarttest-busy-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "82de0df939ed8ac43606c45305e12a58b67786ab4b9fceeac3c5e58104b0a661"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uarttest-version-zero.bin": {
+      "bytes": 4096,
+      "sha256": "5cb16a69ed2a3660cd5226189c4aa2f0255b5a8947aa1573c88f797f68fb66fe"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-uarttest-wrongpeer-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "68e706ee3b0c8213d9c62088add8ae5b92187e515d8a01c3859eb2958ce9094e"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-vdppoll-argument-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "0b623efd0127db6dd0b2a132ae287d93b27424f412dc7e1a6aed8090287c6db1"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-vdppoll-busy-nonzero.bin": {
+      "bytes": 4096,
+      "sha256": "82bcf17a244e1e5fcc726c17cace025cb142fe287146b6cff08b925e33225022"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-vdppoll-version-zero.bin": {
+      "bytes": 4096,
+      "sha256": "d0efb933d09df6773b1c6cb9ffd1797d11c9c05810500e11313149d8864f2b2c"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/dr-vdppoll-wrongpeer-zero.bin": {
+      "bytes": 4096,
+      "sha256": "2ad05ac3155cb676dbe6e165eea857317588aea97b53c80c1ef68c90e0faa69e"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/slow-ram.bin": {
+      "bytes": 4096,
+      "sha256": "58501366d3cc58fdd494f5c197b92df24622ca057e9b5bcba85db772e1a48369"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/flow-ram.bin": {
+      "bytes": 4096,
+      "sha256": "dd4eec59545bb0730d6877b4adef7b26390d1b0240b656ebf03d8723b0b611d1"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/slow-serial.log": {
+      "bytes": 2077,
+      "sha256": "9a6b096ac0080a9ddf809aec005183087189b91ada0dc824320a2aa0f7c1cce4"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/flow-serial.log": {
+      "bytes": 2972,
+      "sha256": "3736cf4c47c7c01e5b028a247aa7e006d2dbbb4afa334bd86675ec220feccd0d"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/installed-rom.bin": {
+      "bytes": 131072,
+      "sha256": "f5f4495dea2d50b7cd5c516cc8675790d55cc98c773f3c25c55b8b176bf9a9df"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/original-autoexec.txt": {
+      "bytes": 38,
+      "sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5"
+    },
+    "agents/port008-diagnostic-rom-recovery/hardware/peer-slow/build/diagnostic_peer.bin": {
+      "bytes": 212672,
+      "sha256": "93c9c97ee37cfb36a2f4cf619b6909313f16325ed8af30fb9fb7e75ff4bfe5fe"
+    }
+  },
+  "local_handback": "agents/port008-diagnostic-rom-recovery/hardware/handback.json"
+}

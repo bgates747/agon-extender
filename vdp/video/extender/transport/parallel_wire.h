@@ -10,8 +10,20 @@
 #define PARALLEL_WIRE_VERSION 2
 #define PARALLEL_OFFER 2
 #define PARALLEL_ACK 0x82
+#define PARALLEL_COMPLETE 4
+#define PARALLEL_COMPLETE_ACK 0x84
 #define PARALLEL_EXEXT 3
 #define PARALLEL_SESSION_SIZE 6
+/* The retained offer supplies authority, never the arriving result. Failure
+ * status is a valid result, not permission to publish a received prefix. */
+static inline unsigned char parallel_block_matches(const unsigned char *offer,
+    const unsigned char *p, unsigned char operation) {
+    unsigned short crc;
+    if (memcmp(offer,p,3) || p[3]!=operation || memcmp(offer+4,p+4,9) ||
+        p[13] > (operation==PARALLEL_ACK ? 0 : 1)) return 0;
+    crc=console_crc(p);
+    return p[14]==(unsigned char)crc && p[15]==(unsigned char)(crc>>8);
+}
 static inline unsigned char parallel_offer_valid(const unsigned char *session,
                                           const unsigned char *p) {
     unsigned short next, crc;

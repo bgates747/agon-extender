@@ -65,3 +65,14 @@ Private leaves and software checks complete; resident integration stopped at
 the required ROM gate (265 bytes over). See [results](NATIVE-PAYLOAD-RESULTS.md)
 and the hashed result index. Parent F02c3 remains open for live coordinator
 integration and ROM fit. Nothing was installed, committed or promoted.
+
+The Author subsequently authorized the safety checkpoint and
+[ROM-fit continuation](NATIVE-ROM-FIT-RESULTS.md). Prior work is committed/pushed;
+the new full native EMOS image fits with 309 bytes free. The original result
+above and its hashes remain historical evidence. Live coordinator binding and
+physical qualification are still open.
+
+Subsequent continuation: [LC02 software integration](LIVE-COORDINATOR-LC02-RESULTS.md)
+now passes complete builds with the private coordinator bound but unactivated.
+Its result supersedes the earlier integration/ROM position above; physical
+qualification remains open. Historical identities and hashes remain unchanged.

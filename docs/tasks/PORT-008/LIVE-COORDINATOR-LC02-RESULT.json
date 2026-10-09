@@ -1,0 +1,1156 @@
+{
+  "scope": "PORT-008 LC02 private native coordinator software integration",
+  "recorded_utc": "2026-10-09T19:30:53.111825+00:00",
+  "result": "off-bench pass; pause before hardware activation fixture",
+  "bench_changed": false,
+  "production_changed": false,
+  "commit_or_push": false,
+  "unactivated_private_composition": true,
+  "source_bases": {
+    "extender": "2f5f749178fc458aec10413113ffaf58019b4d2b",
+    "emos": "120808337eb53f04f9af7b9d4363d703f2e769b1",
+    "mos_builder": "90034c2348761c42bab4217ce5b0f906922dc0e4"
+  },
+  "source_dirty": true,
+  "p4_builds": {
+    "source_unchanged": true,
+    "seconds": 775.8918982776813,
+    "checks": [
+      {
+        "variant": "private",
+        "seconds": 400.14872010983527,
+        "pass": true
+      },
+      {
+        "variant": "ordinary",
+        "seconds": 375.28290484519675,
+        "pass": true
+      }
+    ]
+  },
+  "EMOS_builds": {
+    "start_utc": "2026-10-09T19:15:06.091109+00:00",
+    "variants": {
+      "ordinary": {
+        "build_identity": "agon-emos-v0.1.24-b2026-10-09-19-15-06Z",
+        "profile": "mos-agondev.mk",
+        "steps": [
+          {
+            "target": "prepare-mos",
+            "exit_code": 0,
+            "elapsed_seconds": 0.320115
+          },
+          {
+            "target": "firmware-check",
+            "exit_code": 0,
+            "elapsed_seconds": 27.013804
+          }
+        ],
+        "artifacts": {
+          "MOS.map": {
+            "bytes": 79438,
+            "sha256": "2b420234518cd80038dca92fc0b640bafa977eddf86dd1dd9a5d343b58619fa6"
+          },
+          "MOS.bin": {
+            "bytes": 128739,
+            "sha256": "1399d61d5c43a555a40b73007f0445cee499477aac70b8740dd6d8941b26dfde"
+          },
+          "MOS.elf": {
+            "bytes": 324564,
+            "sha256": "80a79af9a79081427114b4a0681a65c44ddde632753736540efd611d2c96b976"
+          },
+          "MOS.hex": {
+            "bytes": 362158,
+            "sha256": "884bab08c36a3ab94894019a75d64fd0d53f8a5c65418f8728971087dc2a2ea1"
+          },
+          "MOS.link.trace": {
+            "bytes": 1157,
+            "sha256": "a902cea830cace277158757fd8a01f8d41c59d3e5c817510fb1f7f85a8ddd9ee"
+          },
+          "MOS.link.d": {
+            "bytes": 2647,
+            "sha256": "1834d09f2da06cc5c2174ea790632923c608593faba5fe7b178943f67b66c34b"
+          }
+        }
+      },
+      "native": {
+        "build_identity": "agon-emos-v0.1.24-b2026-10-09-19-15-33Z",
+        "profile": "parallel-native-candidate.mk",
+        "steps": [
+          {
+            "target": "prepare-mos",
+            "exit_code": 0,
+            "elapsed_seconds": 0.268541
+          },
+          {
+            "target": "firmware-check",
+            "exit_code": 0,
+            "elapsed_seconds": 28.383771
+          }
+        ],
+        "artifacts": {
+          "MOS.map": {
+            "bytes": 80823,
+            "sha256": "6be0f40b629128b0d1ba6fb044857c1272807b62386a76884afa47d231d9198a"
+          },
+          "MOS.bin": {
+            "bytes": 130473,
+            "sha256": "c1c58d54a1c4b17f17cbdc57360ae04c6d8143322e839aba5be22f813fff58cf"
+          },
+          "MOS.elf": {
+            "bytes": 326364,
+            "sha256": "52ca5718f7069aa002abc4f74f35d0f7f23461ffe221dbddb8b470d04e8075ed"
+          },
+          "MOS.hex": {
+            "bytes": 367030,
+            "sha256": "19ff60c5177225ee8731eb6ca7b35680f8d6c851480e4a5e72087b9165a1b568"
+          },
+          "MOS.link.trace": {
+            "bytes": 1253,
+            "sha256": "aad70f3c05ad5b46316e1cdaa44c75696eb9ae9e250e6c31a4b70d8aacff94bf"
+          },
+          "MOS.link.d": {
+            "bytes": 2857,
+            "sha256": "6afbc8fff6412cafd71921f12f62b2dd9e03ccf6d3e08e4c538c081b9253a819"
+          }
+        }
+      }
+    },
+    "end_utc": "2026-10-09T19:16:02.650877+00:00"
+  },
+  "regressions": {
+    "end_utc": "2026-10-09T19:19:43.808131+00:00",
+    "seconds": 42.41368668200448,
+    "checks": [
+      {
+        "test": "p4_block_coordinator_test",
+        "seconds": 5.957987010944635,
+        "exit_code": 0
+      },
+      {
+        "test": "parallel_native_coordinator_test",
+        "seconds": 7.763131758198142,
+        "exit_code": 0
+      },
+      {
+        "test": "p4_native_payload_test",
+        "seconds": 4.592919532675296,
+        "exit_code": 0
+      },
+      {
+        "test": "parallel_boot_release_test",
+        "seconds": 4.653923869132996,
+        "exit_code": 0
+      },
+      {
+        "test": "parallel_block_control_test",
+        "seconds": 3.6439715940505266,
+        "exit_code": 0
+      },
+      {
+        "test": "parallel_session_test",
+        "seconds": 2.4775494751520455,
+        "exit_code": 0
+      },
+      {
+        "test": "parallel_handover_test",
+        "seconds": 2.9367854329757392,
+        "exit_code": 0
+      },
+      {
+        "test": "console_uart_owner_test",
+        "seconds": 1.7872009379789233,
+        "exit_code": 0
+      },
+      {
+        "test": "p4_uart_parking_test",
+        "seconds": 3.1342533389106393,
+        "exit_code": 0
+      },
+      {
+        "test": "p4_transport_reset_test",
+        "seconds": 5.46103882510215,
+        "exit_code": 0
+      }
+    ]
+  },
+  "linked_execution_and_controls": [
+    {
+      "test": "linked-uart_reservation",
+      "seconds": 0.12901588808745146,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-uart_parking",
+      "seconds": 0.474236155860126,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-parallel_boot_startup",
+      "seconds": 12.050987835042179,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-parallel_control",
+      "seconds": 3.287476954050362,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-parallel_native",
+      "seconds": 0.7231540828943253,
+      "exit_code": 0
+    },
+    {
+      "test": "native-negative-links",
+      "seconds": 46.817403841763735,
+      "exit_code": 0
+    }
+  ],
+  "isolated_mutations": [
+    {
+      "test": "no-matched-result",
+      "expected_refusal": true,
+      "seconds": 8.846483741886914
+    },
+    {
+      "test": "allow-irq-block-owner",
+      "expected_refusal": true,
+      "seconds": 8.470878248102963
+    }
+  ],
+  "memory": {
+    "ordinary": {
+      "rom_capacity_bytes": 131072,
+      "rom_used_bytes": 128739,
+      "rom_free_bytes": 2333,
+      "static_ram_bytes": 4058,
+      "stack_reserve_bytes": 2048,
+      "heap_arena_bytes": 10278,
+      "build_identities": [
+        "agon-emos-v0.1.24-b2026-10-09-19-15-06Z"
+      ]
+    },
+    "native": {
+      "rom_capacity_bytes": 131072,
+      "rom_used_bytes": 130473,
+      "rom_free_bytes": 599,
+      "static_ram_bytes": 4064,
+      "stack_reserve_bytes": 2048,
+      "heap_arena_bytes": 10272,
+      "build_identities": [
+        "agon-emos-v0.1.24-b2026-10-09-19-15-33Z"
+      ]
+    }
+  },
+  "artifacts": [
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/manifest.json",
+      "bytes": 5960,
+      "sha256": "52b538af45332f311105ce2c6662fd02f0c89cb46a8dda9fece214c6e108156a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/source-inputs.json",
+      "bytes": 1144350,
+      "sha256": "ce042d95bde40d2e7e0136720a98e9a92a338bb05d2986071de84c09d98749e2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/source.tar.gz",
+      "bytes": 27906670,
+      "sha256": "8edc9f115d7261ae678cb18232d961f92b4ad89148c7e76ce7a7352bfc155c8b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/validation.json",
+      "bytes": 746,
+      "sha256": "5cd5d4a8cb42953775458387a25d08464dfce50c085edb8900426c9ba73edb32"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/build/agon_extender.bin",
+      "bytes": 1648368,
+      "sha256": "7caf791be7e4d8068bff82b14d9f95cd38f8f3215e3a69664f54f180c68bb66a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/build/agon_extender.elf",
+      "bytes": 34819456,
+      "sha256": "1b9dc8491f5ce1447321994e4d99577d15ed4e0f80586b42b987dd604fc8b5f7"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/build/agon_extender.map",
+      "bytes": 12840211,
+      "sha256": "4426318e01881fa846c7ee5951fec0c28de84b19daf4200c65397affa1588025"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-private/build/agon_extender.factory.bin",
+      "bytes": 1779440,
+      "sha256": "9b0c6eb0ec1fb3f8a0f2a319b037f3872b9dcbf9777017040b4529eacce0b009"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/manifest.json",
+      "bytes": 5483,
+      "sha256": "aed44621e6e817c79b7dd42a32021e51b8445bf08b442d8f13439e116591abb6"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/source-inputs.json",
+      "bytes": 1144350,
+      "sha256": "ce042d95bde40d2e7e0136720a98e9a92a338bb05d2986071de84c09d98749e2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/source.tar.gz",
+      "bytes": 27906670,
+      "sha256": "21c73ce800324bb622bc25cb70090980f2d3488403fd11fbd3a7c717a7cb326f"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/validation.json",
+      "bytes": 747,
+      "sha256": "e6e8e93de5688cb1d9628ab568924c3c14855e99d47d75d4c9d5f5080e96bbcb"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/build/agon_extender.bin",
+      "bytes": 1609344,
+      "sha256": "e189d9d9192e3ec5b85b614741308ca9a2f47f72e2a276299778768ac752c8e2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/build/agon_extender.elf",
+      "bytes": 34247304,
+      "sha256": "cb1412bdab16f967ea978e68ba1eafc21f668716f0ed219b6e362fd868bd4005"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/build/agon_extender.map",
+      "bytes": 12743614,
+      "sha256": "238e1015d20c8320d0ff2be1cbb2b80747f2f37706cb230580d47b20b5f70547"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation-final/p4-ordinary/build/agon_extender.factory.bin",
+      "bytes": 1740416,
+      "sha256": "a9ce991ad0c053f3f7d66bcbf1dddcdae4b007eca12e3bc69a4b245a6526158e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/builds.local.json",
+      "bytes": 2745,
+      "sha256": "7017201ce755cdb062a4389a654926f1153c3875ad3f064d8324df7c22ee989b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/bin/MOS.bin",
+      "bytes": 130473,
+      "sha256": "c1c58d54a1c4b17f17cbdc57360ae04c6d8143322e839aba5be22f813fff58cf"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/bin/MOS.elf",
+      "bytes": 326364,
+      "sha256": "52ca5718f7069aa002abc4f74f35d0f7f23461ffe221dbddb8b470d04e8075ed"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/bin/MOS.map",
+      "bytes": 80823,
+      "sha256": "6be0f40b629128b0d1ba6fb044857c1272807b62386a76884afa47d231d9198a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/bin/nm.txt",
+      "bytes": 79003,
+      "sha256": "15d7469e12572d424d7fe3204ff3447efb20ba14e354bbdc1c6cca303f89814c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/firmware-check.log",
+      "bytes": 831959,
+      "sha256": "ad7f2bc505d893ccbc803a19d158ab09e65c446e31d1b4ce885920c60c7f76d2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/ledger/BASELINE.json",
+      "bytes": 21932,
+      "sha256": "1f7679c0255016bcc4685420a1d4abc41e3e112d5904ee5b42b770bf9e28ea20"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/prepare-mos.log",
+      "bytes": 633,
+      "sha256": "6294692dc78ed70c903ec023e4b8863645eb60731935b1cf858780cd7946d7a5"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/.mos-agondev-provenance-session.json",
+      "bytes": 174,
+      "sha256": "34bb6402e12507d7507e7e57e085bc64e40be00d1dd4c9e92785167b80df22e9"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/hostfs_descriptor.json",
+      "bytes": 3507,
+      "sha256": "3c3b21720dc38c11b13c92de5607e61da7d07b90004bb1398e886a2e51ac3859"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/runtime/i48_required.json",
+      "bytes": 3582,
+      "sha256": "b9ce348ea6550c9e9b334a88d25a64a5feba26da5a2b4f9bea0f9f501f26beb2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/crash.json",
+      "bytes": 16994,
+      "sha256": "e1a9a0f3c059b636faaffe5551affab3ba4caf272349af0a9642efb6b618cb66"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/emos_console_io.json",
+      "bytes": 17061,
+      "sha256": "73d34aeb9799d79c048d5dab527ba3f4f865a188d9ded7619d6af24a64c82cc0"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/emos_keyboard_io.json",
+      "bytes": 17073,
+      "sha256": "47bf7d789269a3ae8e254389daeb59d813e25660b527cc95b5bc1c731192616b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/emos_parallel_io.json",
+      "bytes": 17073,
+      "sha256": "5eaf38fb09b40a194b581d934accb7dd78f1a3768c3c6a10c5dbb3699b73a9db"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/emos_parallel_native_io.json",
+      "bytes": 17120,
+      "sha256": "72ebe70d65904bc2db22d8e59d69290552a6ec6b4c025708b364242381231e5b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/gpio.json",
+      "bytes": 16989,
+      "sha256": "50dc16d724c96d590d47874da358c1e867b646538c7a39f73bfafdb2c8012490"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/interrupts.json",
+      "bytes": 17031,
+      "sha256": "b234e5d21e2a0c4bf78de507f6dd002be73d37a27647740bfa7e5616e1337487"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/keyboard.json",
+      "bytes": 17017,
+      "sha256": "99ae81f2e6d930168de234d41c4a6ebdea42042bc0ef129f8848a45e43c0d403"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/misc.json",
+      "bytes": 16989,
+      "sha256": "256c3eea77c5c54025d1245024f2fa20f04faad2046ee7d9923a8c1d4862bb6e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/mos_api.json",
+      "bytes": 17011,
+      "sha256": "9154b5b0a60e6774fe6d5a034db90cd6fd55adad0e5b4b8ff5d8e52389834698"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/rtc.json",
+      "bytes": 16982,
+      "sha256": "f0c8186f0bec7b3e2dc6d5e505eb9016ad8cdecd39b8680d205e07472f3a6717"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/sd.json",
+      "bytes": 16975,
+      "sha256": "01d6c6200870165fd7e73d98a80ac24737936eb476b1f5fbc6b7bb0183be1bf1"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/serial.json",
+      "bytes": 17003,
+      "sha256": "178a1ade393c35f36c71ba9abda5521e0f71f4fe8a36b28a1ba8da35f5ab1580"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/spi.json",
+      "bytes": 16982,
+      "sha256": "2d519fcdcfb0b0872484c43e7829ffbc92f06f0ecdf08940789080b6688d28ae"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src/vdp_protocol.json",
+      "bytes": 17045,
+      "sha256": "d04bfe5a3bd2452538f292e4e30ba1b93ba140f416f3db2b52bfbc382aca1dfb"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src_startup/cstartup.json",
+      "bytes": 17071,
+      "sha256": "2ebd3399740e2f256824ff5cecdb826fbd55542e0a2225c33a586f1076c36547"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src_startup/globals.json",
+      "bytes": 17064,
+      "sha256": "390fe338c278f46eee79b047c466ada057e8e98e42f2b3ce2a3fba610da14688"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src_startup/init_params_f92.json",
+      "bytes": 17122,
+      "sha256": "118e357b757185afbd0dd6669b114e548682a80e07007808ed8987cc1197cc63"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/assemble/src_startup/vectors16.json",
+      "bytes": 17080,
+      "sha256": "f03d54770ff8c611c4bc0f021553a49d6e2b4a52be891f186d3a00f1b302c349"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/main.json",
+      "bytes": 32738,
+      "sha256": "b3d51da809f9fa18489bfa65817a375d7535317ee64c7d1dbb82331c7cf1657e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/runtime/firmware_printf.json",
+      "bytes": 20335,
+      "sha256": "7d5c43478f98bf3a1c78b63bc89a65a6451aa3f38b7dc6c4542cbb167c6471a8"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/clock.json",
+      "bytes": 31594,
+      "sha256": "28e97a5fd82632ed704f1eee25ec31c5b6cc6f7d48e0b2bb806443c9df44fff2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos.json",
+      "bytes": 33746,
+      "sha256": "f3e61d5a64037b6d812cbd35a467c4b9d2544e59449f24017ce2291e785a5c43"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_admission.json",
+      "bytes": 30371,
+      "sha256": "ce64de462ffc4e9efa066480af50e644688af5a2b129b0032cee0764d2fbf2f0"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_console.json",
+      "bytes": 30853,
+      "sha256": "37e6868caebafff6e262fe0a657a29ac85d93e7564c3188e369b91d84f21f3ad"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_keyboard.json",
+      "bytes": 31518,
+      "sha256": "a9962c1a804cd0a7cd80ef82466361e309470634cde845ddc37f6fa39a2fa637"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_parallel.json",
+      "bytes": 29391,
+      "sha256": "1433c45fedb106b45cb906a937b97bdc0da6a23b2219b4d00ea28249c5629690"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_parallel_boot.json",
+      "bytes": 30509,
+      "sha256": "56a91c5d64a196add9e8e157b732f7f55be3ffd117f314e32f86b343eb985029"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_parallel_coordinator.json",
+      "bytes": 31021,
+      "sha256": "d4d7035c54706ec94d8f188a00fb166a5e69b3fb358c845049b13e712a46ae3c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_parallel_engine.json",
+      "bytes": 29249,
+      "sha256": "8ef41de22e943756485bad8a9a5c5c3cdd7f5dd3ea06d9520cccf6730615c71a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_parallel_handover.json",
+      "bytes": 29979,
+      "sha256": "8ad0d96df9fba09bf3af06e940457508c32d0b05458b277ab7acfb80e44b834e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_parallel_native.json",
+      "bytes": 30726,
+      "sha256": "127934fc1d06a67a397455903d652b8e074048ae192e7da8fd46966716f732dd"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_parallel_startup.json",
+      "bytes": 30752,
+      "sha256": "672d706d3377edb51c239a2a2ba3192028eef38924a8aa9fc1c9da5091a33c07"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_sdlink.json",
+      "bytes": 30781,
+      "sha256": "e1bcf3d2d1da0bd069fd5040b63a8d1bb713be64deeca1f82f11b22f752df4f2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_telemetry.json",
+      "bytes": 28441,
+      "sha256": "dbb966a7ea49e9e48afabf1b964a8fd6b46f9137d22c6a70d067fdf9b345be42"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_uart_flow.json",
+      "bytes": 30534,
+      "sha256": "237da8401bb22c92e7dd233dff6ad23d74d199fd562b00b84bc1953051826f4e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/emos_uart_probe.json",
+      "bytes": 30412,
+      "sha256": "15cbf00cf9630bc92ff4646ece28dd8e4efef68333a0288962d677e45b036e2f"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/i2c.json",
+      "bytes": 29274,
+      "sha256": "0d05943da34ddb739bf844180895db575e53b09790bb0497cfea2816a23ab0ca"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/mos.json",
+      "bytes": 32509,
+      "sha256": "bc231f68393584e1546ffbbe52b3a68cf50fd384fd9dac0b34604503818de04c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/mos_editor.json",
+      "bytes": 32213,
+      "sha256": "c760c2bf64de7f62c83aae84b0c9e51ce3fc1cd183e81a9ec350809bd4951dfa"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/mos_file.json",
+      "bytes": 30726,
+      "sha256": "31646d6376e7744120b207c7a84fa119f7177e5c53813dfb9b27f60bbd272859"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/mos_sysvars.json",
+      "bytes": 30967,
+      "sha256": "20a8f5ffe245cad6f43e80bcee84fe99c8f19ac7b909a85971fb3c9e61b8ca43"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/strings.json",
+      "bytes": 29887,
+      "sha256": "e1649fe57e9604dc786a969603bc0dafc68b5f686612436b7c027aa92ff175bd"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/tests.json",
+      "bytes": 31121,
+      "sha256": "37201691e2c274a4c3e3c2f2766707a82632d871e032ecac5d82b28299c1d856"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/timer.json",
+      "bytes": 29171,
+      "sha256": "036aa7bc7fb2cec680904b9978e240babec508a8142ac49520a522e07e612e72"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src/uart.json",
+      "bytes": 30964,
+      "sha256": "8fc794e882121ce90942a1fe2b777d39217a8d5cf442139ab80dfdcce5c987f8"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src_fatfs/diskio.json",
+      "bytes": 29822,
+      "sha256": "6c565d5efe16229a7e35580eadbf22f5aa46b7ecd80268f8aba69c6a03969555"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src_fatfs/ff.json",
+      "bytes": 29506,
+      "sha256": "ed8a0e3daff1d6b83a54022f00456d3f1ba17d004fe71513789ed492c6fd67a0"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src_fatfs/ffsystem.json",
+      "bytes": 29570,
+      "sha256": "173a02e63a8683d2bdd13904c8d83c3b09bb126d45f61c608ce5194e384b4e4c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src_fatfs/ffunicode.json",
+      "bytes": 29111,
+      "sha256": "23f478519be26bc93fad29353710cfa3c2f4ed1afdce3d42943f2bb86d1542ec"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/compile/src_umm_malloc/umm_malloc.json",
+      "bytes": 30260,
+      "sha256": "f24fa7154b83579aff5792d447b107846deaa622a4e827a7dc97803f48b751eb"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/native/provenance/link/firmware.json",
+      "bytes": 56064,
+      "sha256": "5e9fd745c47a53af8267e934b82895b597979bbce9a7e48f68d8922c3e18e31a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/bin/MOS.bin",
+      "bytes": 128739,
+      "sha256": "1399d61d5c43a555a40b73007f0445cee499477aac70b8740dd6d8941b26dfde"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/bin/MOS.elf",
+      "bytes": 324564,
+      "sha256": "80a79af9a79081427114b4a0681a65c44ddde632753736540efd611d2c96b976"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/bin/MOS.map",
+      "bytes": 79438,
+      "sha256": "2b420234518cd80038dca92fc0b640bafa977eddf86dd1dd9a5d343b58619fa6"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/bin/nm.txt",
+      "bytes": 76917,
+      "sha256": "90c15642826dc1274ae390d7859ba571826300e26e7f9357678029a8f192e965"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/firmware-check.log",
+      "bytes": 784946,
+      "sha256": "1dea6ea615e970ee982a85f3be4c246a3dfd981fcd1dd593192de933a98f9722"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/ledger/BASELINE.json",
+      "bytes": 21413,
+      "sha256": "7c02eb9ff00617cbf0a8e623a543b38c5f5bef240884e25a0b27cfaad66b688f"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/prepare-mos.log",
+      "bytes": 637,
+      "sha256": "def0c25d5d9b8f32bef504bf564a71289be518911e2e68029344fbb926a8e91c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/.mos-agondev-provenance-session.json",
+      "bytes": 174,
+      "sha256": "8088fa385d4b251da36a9a4ff5896b1d2277e931ce17501fe8db6e43668fd3fb"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/hostfs_descriptor.json",
+      "bytes": 3507,
+      "sha256": "2de66a588af7de70c3c769770a0fc27de4fd59f99d24a46673ed11f04fc192ae"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/runtime/i48_required.json",
+      "bytes": 3582,
+      "sha256": "d9625a72c2f0718cb562ed120d0ae92aa43d7d7d73e3d2c6723f039c7a1e16d1"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/crash.json",
+      "bytes": 16810,
+      "sha256": "0842aef026bbc367c7d9cf8398ada697494b8689657166d06931293b81fc0596"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/emos_console_io.json",
+      "bytes": 16877,
+      "sha256": "7c3bf8b0bdc282df3ef4c09829ec3f18f38ad7807de9ec2939698c9a8ffdf9a9"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/emos_keyboard_io.json",
+      "bytes": 16889,
+      "sha256": "e82a346956fc56638bf199563c8c4096868c5a8c2de80fd0f5e38c43c8e41314"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/emos_parallel_io.json",
+      "bytes": 16889,
+      "sha256": "61387a7b809363c7db6cae0e10be13c9214958abbc2365c02de7bbb1d4c2e977"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/gpio.json",
+      "bytes": 16805,
+      "sha256": "bef22506a19e283f6d29ca0221c1ac33f405381fc346e3b5b770fa896041d199"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/interrupts.json",
+      "bytes": 16847,
+      "sha256": "5d641e1afa181a27147375100276d47602c435b973a1d617943f65db6061efaa"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/keyboard.json",
+      "bytes": 16833,
+      "sha256": "bd129ff179edf211eceb85a21f6c4e921ce346b9d037f987a99ff3c365680434"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/misc.json",
+      "bytes": 16805,
+      "sha256": "8caca9a09e123628bc6898fd5a89bba7899fd5d65392a07547660aae71b4e748"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/mos_api.json",
+      "bytes": 16827,
+      "sha256": "ca4466b7d79132b8ecaf3ab1fa1fa86e9f8a668a8731cd96663297be72df8149"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/rtc.json",
+      "bytes": 16798,
+      "sha256": "50875046db275082a1d1c0250f07b4e6ef01c0b9cdab0a26dbe773da23006c2d"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/sd.json",
+      "bytes": 16791,
+      "sha256": "a2f6762aee70fa5b36018ae5d4d8484a14dd089e77c4d942389d0ef1d69b3727"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/serial.json",
+      "bytes": 16819,
+      "sha256": "2f1cc40981b118ac4e6e33fa4bfae5c31c9afe3dfe612305ec183f7def056b7e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/spi.json",
+      "bytes": 16798,
+      "sha256": "a17f60d715ba91eae2f42962dec8e8eccfbc6a3777d319798d9c926ab7337e4a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src/vdp_protocol.json",
+      "bytes": 16861,
+      "sha256": "1f0ef24f1b9fe0b50bd752771f92dabbf60c71e705c629c6fb2851a2f46d4270"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src_startup/cstartup.json",
+      "bytes": 16887,
+      "sha256": "efb50008d35607de0155e3fb5e79edfe1ee2e119157c03c83fb0b40a0ee4df5e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src_startup/globals.json",
+      "bytes": 16880,
+      "sha256": "b7ee952e7b45b7003a3bd8dc4e42e32f5717b96a5718d6d0223c4542dde4724f"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src_startup/init_params_f92.json",
+      "bytes": 16938,
+      "sha256": "55332fc8688f3ab12212fc1decda894ab834953484a73b81ffba4132aa9213fb"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/assemble/src_startup/vectors16.json",
+      "bytes": 16896,
+      "sha256": "05eeae33673e49158c85f75e04109e2c797d06c49b8270117579312cbe04dec8"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/main.json",
+      "bytes": 32600,
+      "sha256": "dc687ed79ecef2b3859afcc4ac6eb440f05791482d6d7a69a97076ee00707151"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/runtime/firmware_printf.json",
+      "bytes": 20335,
+      "sha256": "3f31c4f9863930136e69a9e7bc1f399587d1a52f79e4982819696dc4a0ad2ca3"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/clock.json",
+      "bytes": 31456,
+      "sha256": "75aafa4d182000ae4d602289db0f2bdf55673a7ff8f6b1e3ca5aeb86c2695ad7"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos.json",
+      "bytes": 33608,
+      "sha256": "c0b582be0ae932260c487e5ab5172fba3f59d819423dfd7dac64e0ccfa1b7424"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_admission.json",
+      "bytes": 30233,
+      "sha256": "a5cecca7e32bde28f84c737fff26cb4107b20008b82f07ffad3773769998cd06"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_console.json",
+      "bytes": 30715,
+      "sha256": "13232a1cd22f908246d6dcc323b4213f2089689877bb816d407740a23757fb24"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_keyboard.json",
+      "bytes": 31380,
+      "sha256": "3643d51b6e02ab34b9ff8a93f634194933a61c17a72fe4cd9ab0b1c9fff4b35b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_parallel.json",
+      "bytes": 29253,
+      "sha256": "b0eb91b1975bad01a04f3078166e0eca1e538b3f91e28a947c7586f03e5f1cb8"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_parallel_boot.json",
+      "bytes": 30371,
+      "sha256": "17f7863b6e5e1045104e8fefd464f533d812bc24973447d783ab49824e71d238"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_parallel_engine.json",
+      "bytes": 29111,
+      "sha256": "1e607a1876d88c8356a9b634529c6c5cafa84ab87bc8bf018f44c43a7e1ecf0c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_parallel_handover.json",
+      "bytes": 29841,
+      "sha256": "ba54e4e75a6e84f1de5d564f3002ee860a48f5549425beb3a51ac9d429729dc7"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_parallel_startup_disabled.json",
+      "bytes": 30045,
+      "sha256": "fe0e5e986a1cfcf1166f5d33ed5b952eb14c0086e3d9dfe353e69665b6488bbb"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_sdlink.json",
+      "bytes": 30643,
+      "sha256": "c1e2748e42623098d62e8d8dcb3d4d684814315794bd1a51671600c5f1ac0557"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_telemetry.json",
+      "bytes": 28303,
+      "sha256": "15f7ca89af1c0e757488a37d4b486d905b55ddbeb321497b976aed53239097b8"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_uart_flow.json",
+      "bytes": 30396,
+      "sha256": "54b1078309f113eb5ee7adb4247aa8524e9a3511d594917d6470eb71c549338a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/emos_uart_probe.json",
+      "bytes": 30274,
+      "sha256": "46fdb24b18b8bdd5927da4f181b589c380e3dc8f81244d65a1ccaa77c5d56b92"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/i2c.json",
+      "bytes": 29136,
+      "sha256": "e0e474cb9c9eabb14a15288906c711c4c3578ef55e8911b961ef2c2b6e738f19"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/mos.json",
+      "bytes": 32371,
+      "sha256": "3ee24442bd27eebe3f49cf26064a43ee9662e1a0c0924950d49810e5ce86834d"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/mos_editor.json",
+      "bytes": 32075,
+      "sha256": "73f6798b3f996d34121f0cb52e9255be8dc7f5b70ddc84fdde831f7c084cba9d"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/mos_file.json",
+      "bytes": 30588,
+      "sha256": "5920ce4ea385073e4af3ac33efa1409627f0654e013e587fb9933210ee6ff2a4"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/mos_sysvars.json",
+      "bytes": 30829,
+      "sha256": "a1eb288574c5af54f82a97c3f8595a63b7a10290081d9254fd3dfb7319cce4b6"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/strings.json",
+      "bytes": 29749,
+      "sha256": "c6e9e826d32a44f00d0609f1dd5a5019968ec5f5c33e7690aed05465c5c4d7e3"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/tests.json",
+      "bytes": 30983,
+      "sha256": "b57a928348f628a72f63370b77a2096f9415f8e3eeb9ce0f0887ef533ea3ffb9"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/timer.json",
+      "bytes": 29033,
+      "sha256": "6820470e37d5ad2f2af07d75e288b507ad902f3428b911f97d352372484c411d"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src/uart.json",
+      "bytes": 30826,
+      "sha256": "4e8425972b882a5fbbda94b5c4cac6d945b5dbfcfc75eac4f4bcb4f40e9f7b36"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src_fatfs/diskio.json",
+      "bytes": 29684,
+      "sha256": "6179661b70ff7acde5a97ff0fbd0e306372c857719653c235118d47d546234a7"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src_fatfs/ff.json",
+      "bytes": 29368,
+      "sha256": "b407b9d1752ca1285e7ea6af6feda53b03a22046d2748de5b3dcc9f07d4e67d5"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src_fatfs/ffsystem.json",
+      "bytes": 29432,
+      "sha256": "c93016c9da07671ba5fed10afc5f6b337ab22901136a25a67965f435ca0b4d29"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src_fatfs/ffunicode.json",
+      "bytes": 28973,
+      "sha256": "f0c6c8fe183c418ae698e4de0d372d17e0be2971977cd93f8e246ced3f259500"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/compile/src_umm_malloc/umm_malloc.json",
+      "bytes": 30122,
+      "sha256": "ef3f95542ccbc333dc3641bdac4c6a6834e4759bcef2e8ee92d62960c6052a7d"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-retry/ordinary/provenance/link/firmware.json",
+      "bytes": 52848,
+      "sha256": "9bd092046e91746918ee8bb09071d0c55a46ac0b79d134d0510ad02103d35c8a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/console_uart_owner_test.log",
+      "bytes": 100,
+      "sha256": "829ef274e5c4044acc7a14df9dbf607e5035619eb129a6610879fa513e985180"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/p4_block_coordinator_test.log",
+      "bytes": 288,
+      "sha256": "755bad3c19776827a5fbdb620e9ad04016771938e801cbf77a161a0aaa67fa3a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/p4_native_payload_test.log",
+      "bytes": 410,
+      "sha256": "eedbf182042bb8352491dfe7fd9b379923df6a22ae59c04af5e2d0bdedb48f2b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/p4_transport_reset_test.log",
+      "bytes": 242,
+      "sha256": "39aa0db69a5cc03165d72e55234097b79101c17eff047f0e15843f92dd86fe72"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/p4_uart_parking_test.log",
+      "bytes": 209,
+      "sha256": "775df39056410523b9b63d4f828ca35b9fd803c417ea61cf5aa1606ef286a53f"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/parallel_block_control_test.log",
+      "bytes": 268,
+      "sha256": "fa2b44ed521e78ba00ec1442fc73c4aafea9db263b7c85a2587ef5a7325b6200"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/parallel_boot_release_test.log",
+      "bytes": 414,
+      "sha256": "5f6386d31060dc18f3d321ba7386f68fb3dde85aff41323b1fbc99bb833ce3bf"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/parallel_handover_test.log",
+      "bytes": 256,
+      "sha256": "04f6f4125ad5f5601353f6599bd9ab15d81b749bda25ed38a8ec3354deb8c99f"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/parallel_native_coordinator_test.log",
+      "bytes": 294,
+      "sha256": "242258272bdd0978476018f787ba643ebf2646639f7af1b9eb5583167c636185"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/parallel_session_test.log",
+      "bytes": 231,
+      "sha256": "c1cb3ce0aa710697dbedd3d94de8e7e8f8115b651906c9c098a283b9070ee60a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/regressions-final/regressions.json",
+      "bytes": 1227,
+      "sha256": "d761da50a5f1b1e150828e3d29d2302102958f25d1103bfbcc1feea7bd910387"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-source-inputs.json",
+      "bytes": 16376,
+      "sha256": "cb3210e0ecef3e8eabbf38b94d0b2f121282545cd70d7c7b1ecf05dba8003916"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/emos-source.tar.gz",
+      "bytes": 225035,
+      "sha256": "e0ea90ecd7b201b5703ea4a3acb8f02540b6080b2d8ce5acc326555a75680b71"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/linked-checks.json",
+      "bytes": 612,
+      "sha256": "6d20f9789c79fbc82ef906e99dc37ac06cebb30adf47de44787ce963d670991b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/mutations.json",
+      "bytes": 217,
+      "sha256": "782322b5808c25cc7a1f7d5724c61c94df7408bb66038375edb34462dcd2984e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/linked-uart_reservation.log",
+      "bytes": 418,
+      "sha256": "f2242c1e372b2df4798e900e968874c9d1d8abb38640e64fa8dd5b0ccbcf4bb3"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/linked-uart_parking.log",
+      "bytes": 374,
+      "sha256": "7a66b3fd0f3f34914b6cc7457e25a380b5eac6a30e716611e65916b58248dc7a"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/linked-parallel_boot_startup.log",
+      "bytes": 465,
+      "sha256": "6fa4f24d07cde9ddc7af1f176a01405de8fb8e5d5a300daaf737d8d7c0eeccf2"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/linked-parallel_control.log",
+      "bytes": 626,
+      "sha256": "e5bb6c100a34aa728db5d0e37cd42ccf3d6215855c18efba81f549ae9d12d118"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/linked-parallel_native.log",
+      "bytes": 428,
+      "sha256": "1311b27497e04ceb82a9ea51c59d3432410aeff040775410aa0e8ed20ea403a9"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/native-negative-links.log",
+      "bytes": 1670,
+      "sha256": "8c07f2b4c6ac3ffe170ddfdc75410d5b468930b71af43d84de97931667c09eef"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/no-matched-result.log",
+      "bytes": 1061,
+      "sha256": "546349565365d045019d616079f1c85160de745af50dab82dd2b3d9ac2c0692b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/validation/allow-irq-block-owner.log",
+      "bytes": 1001,
+      "sha256": "cf228782919e452fffedd5e33b43658d34f535edc33b6c014690baccad7a98d6"
+    }
+  ],
+  "reviewed_source_files": [
+    {
+      "repository": "extender",
+      "path": "tests/p4_block_coordinator_test.cpp",
+      "bytes": 9919,
+      "sha256": "7fe20af5422dd7021168736465917c58964d80c72a15b7d94a97adbd8502c0bd"
+    },
+    {
+      "repository": "extender",
+      "path": "tests/p4_block_coordinator_test.py",
+      "bytes": 2561,
+      "sha256": "3837430f21800a4d0aac42bac87c2820f8bae7e042b4a70a680840c1eb757ac7"
+    },
+    {
+      "repository": "extender",
+      "path": "tests/parallel_native_coordinator_test.cpp",
+      "bytes": 10266,
+      "sha256": "8bb9396346829553a07789e5323b89f240000bc69edf9015fef8e43f5f88434e"
+    },
+    {
+      "repository": "extender",
+      "path": "tests/parallel_native_coordinator_test.py",
+      "bytes": 2210,
+      "sha256": "f6f1977716760838c93211274cf5a1872eae122ab030e7e8cf6b957ac6e09ef1"
+    },
+    {
+      "repository": "extender",
+      "path": "vdp/video/extender/transport/p4_block_coordinator.cpp",
+      "bytes": 4045,
+      "sha256": "f8ecffac06505cb54b6cf4e4f9ed3319b524d4d7f151d3b7d57dfaa48797dfdb"
+    },
+    {
+      "repository": "extender",
+      "path": "vdp/video/extender/transport/p4_block_coordinator.hpp",
+      "bytes": 1659,
+      "sha256": "d8c9cc8451a1e361e4e750252bc6aaa04d484ff516d9e51fa7a5ef4361485674"
+    },
+    {
+      "repository": "extender",
+      "path": "vdp/video/extender/transport/parallel_control.hpp",
+      "bytes": 4848,
+      "sha256": "ba6c4bd5dccdd7dfbfbfd73eae52d46e340a601fec97ff5564f9dc237f439dff"
+    },
+    {
+      "repository": "extender",
+      "path": "vdp/video/extender/transport/console_hardware.inc",
+      "bytes": 20635,
+      "sha256": "4761cbd26856cae79d5911db3cf9b29cca732c44c0ee42295a9839c580bb413d"
+    },
+    {
+      "repository": "extender",
+      "path": "scripts/build_p4.py",
+      "bytes": 40802,
+      "sha256": "f0bf85a1b84c95d69276a0e640c0a9d5b2cce9c5d437cd2eb4ff1af93af87686"
+    },
+    {
+      "repository": "emos",
+      "path": "src/emos_parallel_coordinator.c",
+      "bytes": 3921,
+      "sha256": "bb078cfed77b47755ef46955efb4a72d818310e5ce07aefd981c62080f9fc5af"
+    },
+    {
+      "repository": "emos",
+      "path": "src/emos_parallel_startup.c",
+      "bytes": 4019,
+      "sha256": "a1f898673c9f247d95532214f2ab1dc9cd5019e1440fe2d1036d1eeb1b8739e1"
+    },
+    {
+      "repository": "emos",
+      "path": "src/emos_parallel_handover.h",
+      "bytes": 5355,
+      "sha256": "27b26e5c954ca8553371b53e89d9f9b4d85c41b2f1988d29438c6e3de7acb497"
+    },
+    {
+      "repository": "emos",
+      "path": "port/parallel-native-candidate.mk",
+      "bytes": 968,
+      "sha256": "3c57f6005129f7995e7a86fad892c669abd0b5e9cad4b0080f22353f1122ecb8"
+    },
+    {
+      "repository": "emos",
+      "path": "projects/emos/verify_parallel_native.py",
+      "bytes": 5093,
+      "sha256": "b6e8876a2f9ae65cf7bd8a32a546c6b7ff935e6de20cbc4b1466f1a4a63502a1"
+    },
+    {
+      "repository": "emos",
+      "path": "projects/emos/verify_parallel.py",
+      "bytes": 46546,
+      "sha256": "17f875a2797bc5863d23660ac530af4b241171de01e884f70603ffb53a3d5821"
+    },
+    {
+      "repository": "emos",
+      "path": "tests/uart_put_cpu/src/bin/parallel_boot_startup.rs",
+      "bytes": 13315,
+      "sha256": "4455f213e13d3a267c550bae6030c59157fb79fceda99118cef170730e0294d3"
+    },
+    {
+      "repository": "emos",
+      "path": "tests/check_parallel_native_link.py",
+      "bytes": 5236,
+      "sha256": "2702f84bd734388d1d748375e512b34a1d17075af5a680cc8333bb33c537cba6"
+    }
+  ]
+}

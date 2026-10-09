@@ -8,18 +8,18 @@ C reverse correctness reference, rather than removing a supported utility or
 weakening a transport guard. EMOS continues to own admission, routing and GPIO
 control. This is a bounded off-bench continuation of F02c3, not its completion.
 
-RF01 [ ] — Verify all callers and reuse AUDIT-008's unchanged ELF/map accounting
+RF01 [x] — Verify all callers and reuse AUDIT-008's unchanged ELF/map accounting
 tool. Preserve the preceding ordinary/private images and the refused native
 link as comparative evidence; identify compiler, profile and source revisions.
 
-RF02 [ ] — Exclude only `emos_parallel_engine_read` and its declaration from
+RF02 [x] — Exclude only `emos_parallel_engine_read` and its declaration from
 ordinary/native firmware by default. Preserve its maintained source and an
 explicit opt-in test composition, including existing paired C/C++ and linked
 eZ80 reference tests. Keep the forward engine, handover checks, memory limits,
 commands and public APIs unchanged. Add a compiled-symbol selection check so
 tests cannot accidentally return the reference to resident firmware.
 
-RF03 [ ] — Run complete wrapper builds for ordinary, native and reference-test
+RF03 [x] — Run complete wrapper builds for ordinary, native and reference-test
 compositions, including every mandatory linked check. Account ROM/static RAM
 and verify that the native image now fits. Execute the compiled native guard
 and assembly from the full linked image as well as the retained RAM-only test;
@@ -27,7 +27,7 @@ rerun reference and affected forward/ownership regressions. Retain build/test
 duration, hashes and result evidence. Compilation/instruction emulation does
 not prove physical timing or transfer performance.
 
-RF04 [ ] — Update current EMOS build/use documentation, paired task state and
+RF04 [x] — Update current EMOS build/use documentation, paired task state and
 the dated development log. Record recovered bytes and remaining integration
 gates. Stop before live coordinator activation, bench access, flashing or
 production promotion. Preserve unrelated checkout work.
@@ -61,3 +61,15 @@ native-profile checker, reusing every ordinary check while admitting only the
 audited raw-leaf register sequence. Ordinary profiles must continue rejecting
 that leaf. Check its sole guarded caller, no live wrapper caller, atomic Port D
 helper and reference exclusion; use actual linked-image negative controls.
+
+## Result
+
+All four bounded items are complete. The actual full-link recovery is 574 bytes;
+ordinary EMOS has 894 free and the private native image has 309 free. See
+[results and remaining gates](NATIVE-ROM-FIT-RESULTS.md) and the hashed evidence
+index. Implementation is retained for Author review before commit/bench work.
+
+Subsequent continuation: [LC02 software integration](LIVE-COORDINATOR-LC02-RESULTS.md)
+now passes complete builds with the private coordinator bound but unactivated.
+Its result supersedes the earlier integration/ROM position above; physical
+qualification remains open. Historical identities and hashes remain unchanged.

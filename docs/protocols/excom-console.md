@@ -68,8 +68,9 @@ the parser's own timeout behavior. P4 serial diagnostics use its USB console.
    successful leave, then clears the mainboard screen and restores its cursor.
    Failed entry abandons the unpublished local lease; failed active leave
    reports failure and retains the route. All EMOS control waits are bounded
-   by 600 mainboard clock ticks (ten seconds at 60 Hz), with a finite poll
-   budget for a stopped interrupt clock.
+   by 600 mainboard clock units (nominally five seconds at 120 units/s; MOS
+   increments the clock twice per 60 Hz VBlank), with a finite poll budget for
+   a stopped interrupt clock. These units are not milliseconds.
 
 Keyboard selection/layout survive display transitions. Closing the keyboard
 source alone does not close UART1 while ExCom needs it. Normal display polls
@@ -101,3 +102,28 @@ other requests. A busy resident dispatcher still rejects the request. The
 option grants no transport ownership to the application. A rejected transition
 returns a nonzero MOS status; the caller stops before drawing on the wrong
 renderer. Mode/cursor sysvars always describe the selected display, not both.
+
+## Private parallel-control extension — not an enabled transport
+
+Version 2 reuses the fixed F7/FF envelope with a separate capability lifecycle.
+Its block offer/ACK are 02h/82h; completion request/reply are 04h/84h. All
+session, sequence, length and direction bytes must match the admitted descriptor.
+Completion status zero means success and one means payload failure; other
+values are invalid. A failure is a valid matched reply, never successful data.
+Both processors require completed physical UART return and their local payload
+result before reporting success. Received bytes remain provisional meanwhile.
+
+P4 retains one descriptor and a provisioned caller-owned buffer until the
+completion receipt is consumed. Per-phase/result waits expire after 2,000 ms;
+expiration invalidates capability and requests release, never restores pins.
+EMOS reuses its existing reservation, reply ISR and bounded wait. A matched
+payload failure after clean return invalidates P4's session while retaining
+UART so the failure reply can drain. Physical faults take release recovery.
+
+This is private development, with no public command/API or live native caller.
+The current combined native EMOS link exceeds ROM capacity. Boot/block owner
+integration and actual drain/park/payload/restore remain gates within PORT-008.
+The [bounded contract](../tasks/PORT-008/BLOCK-CONTROL.md) records exact fields,
+publication limits and tests. This protocol does not guarantee atomic agreement
+if a final UART reply is lost: EMOS treats uncertain delivery as failure and
+must not replay that sequence.

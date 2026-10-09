@@ -254,15 +254,37 @@ for dispatch and memory limits. No build command in this guide deploys firmware.
 
 ## Private parallel payload compile probe
 
-PORT-008's explicit `--parallel-boot-candidate` P4-PC build additionally
-compiles an unbound native PARLIO RX/TX leaf. It does not activate ExExt or
-provide a live payload caller. Ordinary selections exclude that leaf.
-The companion EMOS `port/parallel-native-candidate.mk` currently exceeds ROM
-capacity by 265 bytes and correctly fails the maintained firmware linker.
-It is a development probe, not an installable image. The RAM-only instruction
-test image is also not firmware. See the [bounded result and remaining gates](tasks/PORT-008/NATIVE-PAYLOAD-RESULTS.md)
-before selecting or attempting either composition; never bypass the capacity
-check or substitute this development snapshot for the production selection.
+PORT-008's explicit `--parallel-boot-candidate` P4-PC build compiles the private
+shared handover, UART drain/parking and native PARLIO RX/TX coordinator. It does
+not activate ExExt or provision a payload buffer. Ordinary selections exclude
+the native coordinator and payload leaves. Unprovisioned offers are rejected.
+
+The companion EMOS `port/parallel-native-candidate.mk` includes the private
+foreground coordinator and native assembly. The complete checked image uses
+130473 ROM bytes, 599 free; ordinary EMOS uses 128739 bytes, 2333 free. These are
+compile/link measurements with unchanged ROM and caller-inventory guards, not
+deployed identities or production selections. The coordinator has no activation
+caller, public API or CLI command. See the
+[coordinator integration evidence and remaining gate](tasks/PORT-008/LIVE-COORDINATOR-LC02-RESULTS.md)
+before selecting either private composition. A separately reviewed fixture and
+physical qualification remain required.
+
+EMOS excludes its C receive correctness reference from ordinary/native builds;
+`port/parallel-reference-test.mk` retains it explicitly for tests. The RAM-only
+instruction image is never firmware. Earlier
+[ROM-fit](tasks/PORT-008/NATIVE-ROM-FIT-RESULTS.md),
+[diagnostic extraction](tasks/PORT-008/DIAGNOSTIC-ROM-RECOVERY-RESULTS.md) and
+[block-control refusal](tasks/PORT-008/BLOCK-CONTROL-RESULTS.md) retain their own
+historical build sizes and validation limits.
+
+The extracted diagnostics build in sibling `agon-emos/projects/uartprobe` with
+`make NAME=uarttest` and `make NAME=vdppoll`, using the selected AgonDev toolchain.
+During an authorized paired development deployment their binaries belong at
+`/emos/uarttest.bin` and `/emos/vdppoll.bin`; they are not present on SD by
+assumption. Commands keep their EMOS prefix, require an idle Legacy CLI and an
+unclaimed UART1, and retain their distinct peer/baud requirements. See the
+[component guide](../../agon-emos/projects/uartprobe/README.md). No build command
+installs either file or authorizes bench use.
 
 ## Deployed candidates versus the base target
 
@@ -501,3 +523,8 @@ the normal clean-input guard for other identified builds. Build outputs retain
 `source.tar.gz`, `source-inputs.json`, `display.json`, board inputs, dependency
 lock, compile/link validation, image hashes and normal manifests. No build command
 flashes a board.
+
+The 2026-10-09 diagnostic extraction ordinary candidate and its three MOSlets
+have subsequently passed [bounded hardware qualification](tasks/PORT-008/DIAGNOSTIC-ROM-RECOVERY-HARDWARE.md).
+This development installation does not replace the selected production bundle
+or qualify the private parallel coordinator.

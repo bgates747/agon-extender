@@ -264,8 +264,10 @@ recovery, universal reset detection, native payload, bench access or promotion.
 
 P08-F02c3 [ ] — [Native payload binding](PORT-008/NATIVE-PAYLOAD.md): private
 P4-PC RX/TX and guarded EMOS assembly leaves pass off-bench tests. P4 target
-compilation passes; EMOS correctly refuses the 265-byte ROM overflow.
-See [results](PORT-008/NATIVE-PAYLOAD-RESULTS.md). Resolve resident fit and bind
+compilation passes. The first EMOS composition refused a 265-byte ROM overflow;
+the [ROM-fit continuation](PORT-008/NATIVE-ROM-FIT-RESULTS.md) now recovers
+574 bytes and passes full private linking with 309 free. Native/reference
+instruction tests and ordinary ownership checks pass. Bind
 current P4-PC PARLIO TX/RX and the EMOS assembly payload
 loop under that coordinator; prove adapter cleanup and first/last-byte software
 ordering in target builds and simulated peers. Hardware timing still belongs
@@ -274,11 +276,43 @@ to F03, not these bench-free checks.
 The Author authorized the bounded [ROM-fit continuation](PORT-008/NATIVE-ROM-FIT.md)
 on 2026-10-09: exclude the unused reverse C reference from resident builds,
 retain an explicit reference-test composition, measure full images and rerun
-affected instruction/ownership checks. No live activation or bench operation.
+affected instruction/ownership checks. That bounded continuation is complete;
+parent integration remains open. No live activation or bench operation.
 
 P08-F02d [ ] — Recheck generated GPIO/peripheral configuration and exact build
 identities before declaring a candidate ready for P08-F03. Compilation and
 emulation cannot qualify electrical contention, first/last byte timing or speed.
+
+The off-bench [bounded block control transactions](PORT-008/BLOCK-CONTROL.md)
+now implement exact offer/result matching and provisional-buffer publication
+within F02c2. [Results](PORT-008/BLOCK-CONTROL-RESULTS.md): 689 paired owner cases
+and 65 complete-image eZ80 cases pass. Ordinary EMOS uses 130677 ROM bytes;
+the combined native link was refused at 131262 (190 over capacity). The following
+authorized recovery resolves that capacity refusal. This does not activate native
+payloads or satisfy the remaining live
+UART drain, physical phase owner and reset-monitor integration gates.
+
+P08-F02c3R2 [x] — Author authorized further ROM recovery while the bench remained
+occupied. The frozen [diagnostic extraction contract](PORT-008/DIAGNOSTIC-ROM-RECOVERY.md)
+moves UARTTEST/VDPPOLL into existing-loader MOSlets, sharing UARTFLOW's admitted
+transport and retaining resident text services. Net recovery is 1938 bytes;
+ordinary EMOS has 2333 free and the combined private native image has 1748 free.
+Complete builds, existing algorithm/ownership tests, linked eZ80 checks and
+negative controls pass; [results](PORT-008/DIAGNOSTIC-ROM-RECOVERY-RESULTS.md)
+record exact identities and limits. Subsequent authorized ordinary-EMOS installation,
+real MOSlet loading, paired diagnostic replies and cleanup all passed; see
+[hardware qualification](PORT-008/DIAGNOSTIC-ROM-RECOVERY-HARDWARE.md). No live
+parallel activation or production promotion; coordinator work stays within F02c2/F02c3.
+
+The Author authorized [live coordinator integration](PORT-008/LIVE-COORDINATOR.md)
+after that hardware qualification. LC01 joins P4 boot recovery and block control
+to one physical owner and excludes ordinary UART work during a delegated block.
+LC02 now binds actual UART drain/parking, native-leaf invocation and paired EMOS
+coordination. [Software/build results](PORT-008/LIVE-COORDINATOR-LC02-RESULTS.md)
+pass, including complete ordinary/private images and the unchanged ROM/ownership
+guards. The private EMOS image has 599 bytes free. No activation caller, physical
+transfer, mode/API or SD integration is supplied. Stop for review before a
+separate bounded private hardware fixture; F03 remains open.
 
 P08-F03 [ ] — When the Author releases the bench, prove handshake entry/exit,
 small eight-bit blocks both ways, direction/reset recovery and resumed UART

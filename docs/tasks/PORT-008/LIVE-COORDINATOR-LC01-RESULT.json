@@ -1,0 +1,271 @@
+{
+  "scope": "PORT-008 LC01 shared P4 physical handover owner",
+  "result": "off-bench pass",
+  "source_commit": "2f5f749178fc458aec10413113ffaf58019b4d2b",
+  "source_dirty": true,
+  "production_changed": false,
+  "bench_changed": false,
+  "EMOS_source_changed_in_this_subtask": false,
+  "boot_runtime_cases": 722,
+  "host_checks": {
+    "checks": [
+      {
+        "test": "parallel_block_control_test",
+        "seconds": 4.156272687017918,
+        "pass": true
+      },
+      {
+        "test": "parallel_session_test",
+        "seconds": 3.83732932433486,
+        "pass": true
+      },
+      {
+        "test": "parallel_handover_test",
+        "seconds": 3.439597120974213,
+        "pass": true
+      },
+      {
+        "test": "console_uart_owner_test",
+        "seconds": 1.6210834672674537,
+        "pass": true
+      },
+      {
+        "test": "p4_uart_parking_test",
+        "seconds": 3.4949476360343397,
+        "pass": true
+      },
+      {
+        "test": "p4_transport_reset_test",
+        "seconds": 5.290104181971401,
+        "pass": true
+      },
+      {
+        "test": "no-block-yield",
+        "expected_refusal": true
+      },
+      {
+        "test": "no-return-yield",
+        "expected_refusal": true
+      }
+    ]
+  },
+  "build_checks": {
+    "source_unchanged": true,
+    "seconds": 880.9990638000891,
+    "checks": [
+      {
+        "test": "parallel_block_control_test",
+        "seconds": 1.2664523222483695,
+        "pass": true
+      },
+      {
+        "test": "parallel_session_test",
+        "seconds": 1.216395169030875,
+        "pass": true
+      },
+      {
+        "test": "parallel_handover_test",
+        "seconds": 0.9657064927741885,
+        "pass": true
+      },
+      {
+        "test": "console_uart_owner_test",
+        "seconds": 0.5149403689429164,
+        "pass": true
+      },
+      {
+        "test": "p4_uart_parking_test",
+        "seconds": 0.9155950983986259,
+        "pass": true
+      },
+      {
+        "test": "p4_transport_reset_test",
+        "seconds": 1.4665995668619871,
+        "pass": true
+      },
+      {
+        "test": "no-block-yield",
+        "expected_refusal": true
+      },
+      {
+        "test": "no-return-yield",
+        "expected_refusal": true
+      },
+      {
+        "test": "private-full-build",
+        "seconds": 471.03368727164343,
+        "pass": true
+      },
+      {
+        "test": "ordinary-full-build",
+        "seconds": 400.1350389639847,
+        "pass": true
+      }
+    ]
+  },
+  "builds": {
+    "private": {
+      "identity": "UNVERSIONED-DO-NOT-DEPLOY",
+      "private_boot": true,
+      "complete_build_and_validator_pass": true,
+      "deployed": false,
+      "artifacts": [
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-private/build/agon_extender.bin",
+          "bytes": 1613024,
+          "sha256": "10972e6b319dc0d527cc4e326953c9dbf7bea554403115bf1d8a6b0a99920178"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-private/build/agon_extender.elf",
+          "bytes": 34293648,
+          "sha256": "23aadd7e43a78996a14c013f9dc94a8c757578104729a8798709e1f5347e60f5"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-private/build/agon_extender.map",
+          "bytes": 12745791,
+          "sha256": "7803b47a3f20a5405fd43e17412a17e69841ce8cc8577e0b42ae3fe3f280a905"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-private/manifest.json",
+          "bytes": 5671,
+          "sha256": "98274ba27cde57a34dfc44d7f66b48472056c23d80c4d0b7ba80a5a121e0fdb9"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-private/validation.json",
+          "bytes": 746,
+          "sha256": "0ef681f8789fd0e320d606c24f0a4f3c0aeaf1a78bc56b4111628328ee0579da"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-private/source-inputs.json",
+          "bytes": 1143974,
+          "sha256": "2ebdd867ffa63fc9854d0f8f40675e4e12bf96619f3b075dda2865ffb575dfc2"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-private/source.tar.gz",
+          "bytes": 27903564,
+          "sha256": "7f3fa778fd725f0ad29ceea9f5a456f5d3e4006099815c44778b5ea92c0abacd"
+        }
+      ]
+    },
+    "ordinary": {
+      "identity": "UNVERSIONED-DO-NOT-DEPLOY",
+      "private_boot": false,
+      "complete_build_and_validator_pass": true,
+      "deployed": false,
+      "artifacts": [
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-ordinary/build/agon_extender.bin",
+          "bytes": 1609232,
+          "sha256": "a25d47c152bd184e5a334285da80bd7785f660544e16c24625c1c792bba218d7"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-ordinary/build/agon_extender.elf",
+          "bytes": 34243856,
+          "sha256": "422745da0635f30b545915c29800fa04d5fa4b494371eacc410c21dcc10f1ed8"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-ordinary/build/agon_extender.map",
+          "bytes": 12740231,
+          "sha256": "d539bb0e99be8aa8a937176f23d6b5078c9fcdb4435ffbc0581b9ce1402df62d"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-ordinary/manifest.json",
+          "bytes": 5228,
+          "sha256": "071b7fae878491dee56bdbdb9378bbd27cd8e43216fec091472d050dedf0003e"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-ordinary/validation.json",
+          "bytes": 747,
+          "sha256": "e6e8e93de5688cb1d9628ab568924c3c14855e99d47d75d4c9d5f5080e96bbcb"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-ordinary/source-inputs.json",
+          "bytes": 1143974,
+          "sha256": "2ebdd867ffa63fc9854d0f8f40675e4e12bf96619f3b075dda2865ffb575dfc2"
+        },
+        {
+          "path": "agents/port008-live-coordinator/lc01/p4-ordinary/source.tar.gz",
+          "bytes": 27903564,
+          "sha256": "a1e8ec71935478b6fe4411d1436adc045e59c349b04e557a00e6689e1fa59a8c"
+        }
+      ]
+    }
+  },
+  "evidence": [
+    {
+      "path": "vdp/video/extender/transport/p4_boot_startup.hpp",
+      "bytes": 3092,
+      "sha256": "1b82479819936ad326ee347770cd7ea00245b29c966426aa1a6333a0637ea0a7"
+    },
+    {
+      "path": "vdp/video/extender/transport/console_hardware.inc",
+      "bytes": 18388,
+      "sha256": "5d26fc8837d9695605d0e9b4dc9146887a86219aa6a7657349f46721b3740042"
+    },
+    {
+      "path": "tests/parallel_boot_release_test.cpp",
+      "bytes": 13421,
+      "sha256": "3741038d5086c02fd58ac920246afd7ab5d4a35c409122728f871296a02e0bf5"
+    },
+    {
+      "path": "tests/parallel_boot_release_test.py",
+      "bytes": 2028,
+      "sha256": "2cddef6bab1c89afff7fccdd0bb543a6eb0ac5c5eede724e5e67bbe6b2dda8c4"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/boot.log",
+      "bytes": 414,
+      "sha256": "64508998f3934a4a96e40e778a2962b59ccedc1e8ddc40b325d00b2a0e359534"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/console_uart_owner_test.log",
+      "bytes": 100,
+      "sha256": "1d2b3c736562ed3a0ae821de5d0a81fa37aad39942a2283d781f18a6c8914b8e"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/no-block-yield.log",
+      "bytes": 1369,
+      "sha256": "933e06e6760db60a4bba1531e3565d3fc6381d1eafd4fc8a49551b8a63c9224c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/no-return-yield.log",
+      "bytes": 1369,
+      "sha256": "cec837a81c5ed56e226f625d85e781bca846b58ed9258c2cc611c673046351ca"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/ordinary-wrapper.log",
+      "bytes": 219,
+      "sha256": "0d9a659f057fd6660db3dc8a51d58cffc03cb3ca688ea6b95875574b33f05841"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/p4_transport_reset_test.log",
+      "bytes": 242,
+      "sha256": "004d9fc3addb9bcd3c00677693da1dda9ed788f5371300e055685e2e134e7b30"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/p4_uart_parking_test.log",
+      "bytes": 209,
+      "sha256": "59a61297b7aceb3617223bbc472df096f9396c4e752eb6fd30a6de53df0ba03c"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/parallel_block_control_test.log",
+      "bytes": 268,
+      "sha256": "57a8ed6d31a5a129e40b756943bc0e2b8e44db7389906da0c997c6db17d27a18"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/parallel_handover_test.log",
+      "bytes": 256,
+      "sha256": "b743e7a0e232a4ac93bd204d29832aede82cb106c2a23b235d0db74d0c56dcf4"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/parallel_session_test.log",
+      "bytes": 231,
+      "sha256": "c1ae5e4b783c78793ffe4a844c59734ea001ef813ac76dcfb014f6f50e4b7edb"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc01/private-wrapper.log",
+      "bytes": 217,
+      "sha256": "1156c6edbc110794a6330e916a79f49a8086e8e827197b42439568d09f54708f"
+    }
+  ]
+}

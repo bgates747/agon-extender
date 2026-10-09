@@ -1,0 +1,118 @@
+{
+  "recorded_utc": "2026-10-09T18:32:22.103101+00:00",
+  "status": "Author-requested pause; partial LC02; not deployable",
+  "bench_changed": false,
+  "production_changed": false,
+  "commit_or_push": false,
+  "p4_coordinator_host_cases_passed": 22,
+  "complete_P4_build_after_LC02": false,
+  "paired_EMOS_coordinator_execution": false,
+  "ordinary_EMOS": {
+    "rom_used": 128739,
+    "rom_free": 2333,
+    "full_wrapper_and_guards_pass": true
+  },
+  "private_EMOS": {
+    "rom_used": 130495,
+    "rom_free": 577,
+    "full_wrapper_and_guards_pass": true,
+    "static_ram": 4064
+  },
+  "artifacts": [
+    {
+      "path": "vdp/video/extender/transport/p4_block_coordinator.hpp",
+      "bytes": 1659,
+      "sha256": "d8c9cc8451a1e361e4e750252bc6aaa04d484ff516d9e51fa7a5ef4361485674"
+    },
+    {
+      "path": "vdp/video/extender/transport/p4_block_coordinator.cpp",
+      "bytes": 4045,
+      "sha256": "f8ecffac06505cb54b6cf4e4f9ed3319b524d4d7f151d3b7d57dfaa48797dfdb"
+    },
+    {
+      "path": "vdp/video/extender/transport/parallel_control.hpp",
+      "bytes": 4356,
+      "sha256": "94158cb5a5de03c60b5fa9d851d42bd61988380bdbedad6cf0115c831ad7eabc"
+    },
+    {
+      "path": "vdp/video/extender/transport/console_hardware.inc",
+      "bytes": 19767,
+      "sha256": "efaf37db180f2d2e2d32a48ae461e2d1060b770e2edd3c1af3765d5fb525353c"
+    },
+    {
+      "path": "scripts/build_p4.py",
+      "bytes": 40802,
+      "sha256": "f0bf85a1b84c95d69276a0e640c0a9d5b2cce9c5d437cd2eb4ff1af93af87686"
+    },
+    {
+      "path": "tests/p4_block_coordinator_test.cpp",
+      "bytes": 5584,
+      "sha256": "43116c870026af9942578de14ea88e0207c8fcead8e2d2e2f621ffdbe4c03049"
+    },
+    {
+      "path": "tests/p4_block_coordinator_test.py",
+      "bytes": 2534,
+      "sha256": "ea2cb59bb39f38e1838048afa521f0aa8a455cee9b748f5f1c65d6c8c00d90a0"
+    },
+    {
+      "path": "../agon-emos/src/emos_parallel_coordinator.c",
+      "bytes": 3738,
+      "sha256": "4701ef413c12144c0b44e30ef04ed4fecad75796f3272c8c234b7e74cd7212c7"
+    },
+    {
+      "path": "../agon-emos/src/emos_parallel_startup.c",
+      "bytes": 4019,
+      "sha256": "a1f898673c9f247d95532214f2ab1dc9cd5019e1440fe2d1036d1eeb1b8739e1"
+    },
+    {
+      "path": "../agon-emos/src/emos_parallel_handover.h",
+      "bytes": 5355,
+      "sha256": "27b26e5c954ca8553371b53e89d9f9b4d85c41b2f1988d29438c6e3de7acb497"
+    },
+    {
+      "path": "../agon-emos/port/parallel-native-candidate.mk",
+      "bytes": 968,
+      "sha256": "3c57f6005129f7995e7a86fad892c669abd0b5e9cad4b0080f22353f1122ecb8"
+    },
+    {
+      "path": "../agon-emos/projects/emos/verify_parallel.py",
+      "bytes": 46546,
+      "sha256": "17f875a2797bc5863d23660ac530af4b241171de01e884f70603ffb53a3d5821"
+    },
+    {
+      "path": "../agon-emos/projects/emos/verify_parallel_native.py",
+      "bytes": 5093,
+      "sha256": "b6e8876a2f9ae65cf7bd8a32a546c6b7ff935e6de20cbc4b1466f1a4a63502a1"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/emos-final/ordinary/bin/MOS.bin",
+      "bytes": 128739,
+      "sha256": "e1b0edca304097b0f36ec8a200f1493e1200f1a4bafc3787f97eb77155e17f0b"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/emos-final/ordinary/bin/MOS.elf",
+      "bytes": 324564,
+      "sha256": "789262b43a6f22d7a2ade754fb596674f33ded102e1dfca0b7f9204447a89827"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/emos-final/ordinary/bin/MOS.map",
+      "bytes": 79438,
+      "sha256": "2b420234518cd80038dca92fc0b640bafa977eddf86dd1dd9a5d343b58619fa6"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/emos-private-check/native/bin/MOS.bin",
+      "bytes": 130495,
+      "sha256": "80e8bcc0e82aeda37f650762a4ebf10478f6a11dfcec39911e0db02acdfc6335"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/emos-private-check/native/bin/MOS.elf",
+      "bytes": 326364,
+      "sha256": "b4c78e462aaa74c3d4452026ea166542e5c8b855f332f6779d54d4d36697d8d4"
+    },
+    {
+      "path": "agents/port008-live-coordinator/lc02/emos-private-check/native/bin/MOS.map",
+      "bytes": 80823,
+      "sha256": "d33591f1ccca490c36fa6b41dc35dbb0f319def56076ece166e58427ca4a0076"
+    }
+  ]
+}
