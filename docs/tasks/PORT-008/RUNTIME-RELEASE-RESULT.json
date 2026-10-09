@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "result": "OFF_BENCH_PASS",
+  "scope": "EMOS observed READY-loss invalidation only; no automatic runtime reconnect, fresh-session quarantine, ExCom route recovery or payload activation",
+  "previous_candidate": {
+    "rom_used_bytes": 130949,
+    "rom_free_bytes": 123,
+    "static_ram_bytes": 4063
+  },
+  "emos_candidate": {
+    "rom_capacity_bytes": 131072,
+    "rom_used_bytes": 130981,
+    "rom_free_bytes": 91,
+    "static_ram_bytes": 4063,
+    "build_identities": [
+      "agon-emos-v0.1.24-b2026-10-09-02-50-49Z"
+    ],
+    "artifacts": {
+      "MOS.bin": {
+        "bytes": 130981,
+        "sha256": "d00df848d5b66138a542eb515826b4ac44140061a495df9504b62e7eda43ba99"
+      },
+      "MOS.elf": {
+        "bytes": 325008,
+        "sha256": "e1a4d4af9903248ffe7f509c48f4cd602716f97e07e55308426384ba501c3432"
+      },
+      "MOS.map": {
+        "bytes": 79441,
+        "sha256": "2a0fe2f5794aa0d5c0346b3b1f9971b14b2518a966c44fb544ce24f73104feaf"
+      },
+      "nm.txt": {
+        "bytes": 77428,
+        "sha256": "56bb202ec7ca55234159f236805dc77e5fd2313dbaaa4cfefd9ccd82d0b4b8c1"
+      }
+    },
+    "prepared_snapshot": "worktree-volatile"
+  },
+  "emos_ordinary": {
+    "rom_capacity_bytes": 131072,
+    "rom_used_bytes": 130752,
+    "rom_free_bytes": 320,
+    "static_ram_bytes": 4058,
+    "build_identities": [
+      "agon-emos-v0.1.24-b2026-10-09-02-46-49Z"
+    ],
+    "artifacts": {
+      "MOS.bin": {
+        "bytes": 130752,
+        "sha256": "cf6054aa658afdc7404536d0093e78236d49dadb4278f4e621c624952d5b4f84"
+      },
+      "MOS.elf": {
+        "bytes": 324952,
+        "sha256": "31edb2ebc3c2eec95e14c0f1334069a80215e2f577e9393d142de2a70f2c6e00"
+      },
+      "MOS.map": {
+        "bytes": 79486,
+        "sha256": "74a3f6a422cfe519cdc56ee3caa7787f44d4de9fe3634d6a44934771f010d2ad"
+      },
+      "nm.txt": {
+        "bytes": 77373,
+        "sha256": "fafd9f56a0606d5a83a5a6caf3ae5d7443bd666158749aaee28d7b51b922f674"
+      }
+    },
+    "prepared_snapshot": "worktree-ordinary"
+  },
+  "current_runtime_sources_match_candidate_snapshot": true,
+  "current_test_snapshot": "worktree-test-evidence",
+  "emos_source_head": "8922ed87ce82567bd92384def0992128db6e596a",
+  "checks": {
+    "linked_startup_runtime_cases": 26,
+    "new_runtime_cases": 14,
+    "previous_firmware_regression_control": "expected failure: READY high revives lost grant",
+    "negative_guard_cases": 4,
+    "linked_ordinary_parking_cases": 289,
+    "linked_ordinary_control_cases": 10,
+    "linked_ordinary_boot_leaf_cases": 126,
+    "host_keyboard_tests": 1,
+    "host_keyboard_variants": 2,
+    "host_console_tests": 1,
+    "host_parallel_tests": 9,
+    "emos_profile_tests": 6,
+    "paired_startup_adapter_cases": 706
+  },
+  "evidence_silo": "agents/port008-runtime-release",
+  "logs": {
+    "candidate-build-volatile.log": {
+      "bytes": 691912,
+      "sha256": "e262878d86554eb477b3094d432d8f34b83da800a5e2df5a60c6c00c33b96a54"
+    },
+    "candidate-account-volatile.log": {
+      "bytes": 318,
+      "sha256": "0bddfaf40fc954f8bea38735b47a295d869cead5ff39a7a6266afce352898f0a"
+    },
+    "ordinary-build.log": {
+      "bytes": 689639,
+      "sha256": "ca271a82f9ca5236791e8debf581ace689cef3ec18e8f4e1b69dce2c543f08fb"
+    },
+    "ordinary-final-guard.log": {
+      "bytes": 249,
+      "sha256": "91c07f31be18c3da696d9811ce327942a2a12ec6ab3fe1fb65b562f470a896b1"
+    },
+    "ordinary-account.log": {
+      "bytes": 313,
+      "sha256": "c5d35664bca2629a393078882225dc6ee54291e8b650fd5aea62c810468471c7"
+    },
+    "cpu-runtime-final.log": {
+      "bytes": 540,
+      "sha256": "3310f5e5d14986cdfcbae46889a3b57909e9e5faee0448b48b21cf75aaf78fc1"
+    },
+    "cpu-runtime-timed.log": {
+      "bytes": 210,
+      "sha256": "1c681ef1e009a075a4a8fb2d6903966b778011015d9694693475ffc9dfaf0798"
+    },
+    "previous-image-negative.log": {
+      "bytes": 239,
+      "sha256": "bae86042ac76e8d59ad274ecc290d37d57e6bb6200ffb8cdd5676dfde4d70218"
+    },
+    "runtime-duration.json": {
+      "bytes": 153,
+      "sha256": "7ccad4adfacd2fa9e96f5e9156ce4f5b150d5dabc37b46e1eed0bc6f8a83ee14"
+    },
+    "guard-negative.log": {
+      "bytes": 248,
+      "sha256": "95eaad62682eac730f9e2a447de669af1c83d92d6d96cb4ef91ade635430bbd1"
+    },
+    "cpu-parking.log": {
+      "bytes": 352,
+      "sha256": "1ee06dbf6ecfc5a2503cc910e6d6778cba9999e78dfc0fc5a42843b360e1e5aa"
+    },
+    "cpu-control.log": {
+      "bytes": 449,
+      "sha256": "bb0bb288a86d94e01c92019d4080468086cd4bd7b604ad9f778f6658d7a61bb3"
+    },
+    "cpu-boot-leaves.log": {
+      "bytes": 370,
+      "sha256": "c2cc5cb81dc03f50bb576a154e4cb9782d12258d40c36d01fc24d0259b2f2dd8"
+    },
+    "keyboard-host-r02.log": {
+      "bytes": 391,
+      "sha256": "e012603e76063a7142ccdcece2b2f2640b6c3e6d4c434d59eb1b614711ae9452"
+    },
+    "console-host-r02.log": {
+      "bytes": 326,
+      "sha256": "c5f544e0c6365cd8011e36dc2dc2fc7a9d3d7e7ceed9fa3c1405198e8c9dcf12"
+    },
+    "profile-host-r02.log": {
+      "bytes": 966,
+      "sha256": "98b90a3c8a61184942733b9288fbe4342f8c11c7624c86c0a83170943771433b"
+    },
+    "parallel-host.log": {
+      "bytes": 1512,
+      "sha256": "69bebb44d542fc8be38fba3c264c6c436550c757a6f43014d1566e468bcf3652"
+    },
+    "paired-startup.log": {
+      "bytes": 404,
+      "sha256": "6f2954b755b9514ef7f4e2b8ac56bc2d4b13ce4e15afc0f900826e4590eced0e"
+    }
+  },
+  "host_instruction_test_duration": {
+    "host_instruction_test_seconds": 4.050886265933514,
+    "clock": "host monotonic; modeled eZ80 instructions, not hardware timing",
+    "returncode": 0
+  },
+  "p4_changes": false,
+  "bench_operations": false,
+  "production_changes": false,
+  "committed": false
+}

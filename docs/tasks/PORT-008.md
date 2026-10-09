@@ -233,6 +233,20 @@ Runtime reset/fresh identity/quarantine and native payload integration remain op
 Author subsequently authorized a commit/publication checkpoint; implementation
 identities and preserved evidence status are recorded in the development log.
 
+P08-F02c2b7 [x] — Author-approved off-bench runtime release invalidation. Latch
+observed loss of P4 READY, reject reuse of the startup grant, and reuse EMOS's
+keyboard owner to clean up and fence shared pins. Measure the complete EMOS
+candidate first against its 123-byte remaining ROM budget; stop on overflow.
+No automatic reconnection, ExCom route change, P4 activation or bench operation.
+[Bounded contract](PORT-008/RUNTIME-RELEASE.md).
+
+[Results](PORT-008/RUNTIME-RELEASE-RESULTS.md): 26 actual linked startup/runtime
+cases, four guard negative controls and affected regressions pass. The previous
+candidate fails the new READY-bounce control. Final candidate uses 130,981 ROM
+bytes, 91 free; ordinary composition uses 130,752, 320 free. Observed loss is
+fenced and mainboard keyboard input restored; no automatic reconnect, committed
+display-route recovery, P4 change, bench operation or automatic commit.
+
 P08-F02c3 [ ] — Bind current P4-PC PARLIO TX/RX and the EMOS assembly payload
 loop under that coordinator; prove adapter cleanup and first/last-byte software
 ordering in target builds and simulated peers. Hardware timing still belongs
