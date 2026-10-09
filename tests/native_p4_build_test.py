@@ -20,6 +20,19 @@ class NativeP4ProfilesTest(unittest.TestCase):
     def setUpClass(cls):
         cls.document = json.loads((VDP / "build/p4-profiles.json").read_text())
 
+    def test_parallel_startup_is_explicit_private_selection(self):
+        from build_p4 import select_display_profile
+        ordinary = select_display_profile(self.document, "p4-console", "p4-pc", "browser")
+        candidate = select_display_profile(self.document, "p4-console", "p4-pc", "browser", parallel_boot_candidate=True)
+        flag = "AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1"
+        self.assertNotIn(flag, ordinary["definitions"])
+        self.assertIn(flag, candidate["definitions"])
+        self.assertEqual(ordinary["sources"], candidate["sources"])
+        with self.assertRaises(SystemExit):
+            select_display_profile(self.document, "p4-console", "devkit", "browser", parallel_boot_candidate=True)
+        with self.assertRaises(SystemExit):
+            select_display_profile(self.document, "p4-mos-recovery", "p4-pc", "browser", parallel_boot_candidate=True)
+
     def test_three_accepted_profiles_only(self):
         self.assertEqual(self.document["schema_version"], 2)
         self.assertEqual(set(self.document["profiles"]), {

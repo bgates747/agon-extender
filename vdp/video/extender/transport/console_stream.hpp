@@ -4,10 +4,12 @@
 #include <driver/uart.h>
 #include <cstring>
 #include "console_session.hpp"
+#include "parallel_control.hpp"
 #include "../input/processed_keyboard.hpp"
 class ConsoleStream final : public Stream {
  public:
   agon::extender::transport::ConsoleSession session;
+  agon::extender::transport::ParallelControl parallel;
   uint8_t setup[4]{},output[8192]{};
   unsigned pos{4},read_pos{},count{};
   int cached{-1};

@@ -3,6 +3,18 @@
 #include "parallel_wire.h"
 
 namespace agon::extender::transport {
+bool P4ParallelHandover::sessionRequest(std::uint8_t mode, t_parallelSession &s,
+    const std::uint8_t *request, const std::uint8_t *nonce, std::uint8_t *reply) noexcept {
+  return mode == PARALLEL_EXEXT && phase_ == uart &&
+      parallel_session_peer(&s,request,nonce,reply);
+}
+bool P4ParallelHandover::sessionAdmit(std::uint8_t mode, t_parallelSession &s,
+    const std::uint8_t *offer, std::uint8_t *ack) noexcept {
+  return s.phase == PARALLEL_SESSION_ACTIVE && admit(mode,s.bytes,offer,ack);
+}
+void P4ParallelHandover::sessionCancel(t_parallelSession &s) noexcept {
+  parallel_session_invalidate(&s); cancel();
+}
 bool P4ParallelHandover::admit(std::uint8_t mode, std::uint8_t *session,
                               const std::uint8_t *offer, std::uint8_t *ack) noexcept {
   if (mode != PARALLEL_EXEXT || phase_ != uart ||

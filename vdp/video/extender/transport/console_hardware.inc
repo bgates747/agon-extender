@@ -8,6 +8,9 @@
 #include <hal/uart_ll.h>
 #include <esp_random.h>
 #include "console_uart_owner.hpp"
+#if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
+#include "p4_boot_startup.hpp"
+#endif
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
 #include "agon_extender_board_config.hpp"
 namespace console_board = agon::extender::board;
@@ -64,8 +67,15 @@ void consoleLayout(int region) {
 void consolePoll() { if(console_locale_pending) console_admit_pending=true; }
 void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   uint8_t reply[CONSOLE_SIZE];
-  if (!console_stream->session.request(p,millis(),esp_random(),reply)) return;
-  if(p[3]==CONSOLE_PREPARE) {
+  if (p[2]==PARALLEL_WIRE_VERSION) {
+    // Shared F7 framing, distinct capability. No display reset or mode commit.
+    if (!console_stream->parallel.request(p,millis(),esp_random(),reply)) return;
+  } else {
+    if (!console_stream->session.request(p,millis(),esp_random(),reply)) return;
+    // An accepted console transition ends any prior parallel capability.
+    console_stream->parallel.cancel();
+  }
+  if(p[2]==1 && p[3]==CONSOLE_PREPARE) {
     // PORT-008 N002: raw changeMode() replaces Canvas with no selected font.
     // Skipping retained vdu_mode() context reset crashed on EMOS's first
     // VDU 26 (cursorHome -> getFont()->width). Use the complete stock lifecycle,
@@ -78,7 +88,7 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   // buffers intact. Its fresh lease is still required before ordinary output.
   console_stream->write(CONSOLE_REPLY);console_stream->write(CONSOLE_SIZE);
   console_stream->write(reply,sizeof(reply));
-  printf("ExCom control op=%u active=%u\n",p[3],console_stream->session.active());
+  printf("Console control version=%u op=%u active=%u\n",p[2],p[3],console_stream->session.active());
 }
 ConsoleStream *beginConsole() {
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
@@ -93,8 +103,10 @@ ConsoleStream *beginConsole() {
   cfg.parity=UART_PARITY_DISABLE;cfg.stop_bits=UART_STOP_BITS_1;
   cfg.flow_ctrl=UART_HW_FLOWCTRL_CTS_RTS;cfg.rx_flow_ctrl_thresh=64;cfg.source_clk=UART_SCLK_DEFAULT;
   ESP_ERROR_CHECK(uart_param_config(UART_NUM_1,&cfg));
+#if !defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
   ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
                              console_board::kUartRts,console_board::kUartCts));
+#endif
   console_stream=new ConsoleStream;
   console_stream->setTimeout(COMMS_TIMEOUT); // match stock setupVDPProtocol (200 ms)
   if(!agon::extender::input::usbhost::begin()) console_stream->fail("USB host startup");
@@ -104,6 +116,18 @@ void runConsole(VDUStreamProcessor *processor) {
   // First driver operation on the sole process owner. Setup only configured
   // pins/registers and built an inactive Stream; it did not install an ISR.
   ESP_ERROR_CHECK(agon::extender::transport::startConsoleUart(&console_events));
+#if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
+  // Driver/ISR belongs to this core. Setup never attached shared UART pins.
+  // Neither the parser nor keyboard serializer runs until reciprocal release.
+  agon::extender::transport::P4BootStartup startup(console_board::kDataPins,
+      console_board::kReady,console_board::kClock,console_board::kValid,xPortGetCoreID());
+  startup.begin(millis());
+  while(!startup.poll(millis(),[](){
+    if(uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
+        console_board::kUartRts,console_board::kUartCts)!=ESP_OK)return false;
+    return uart_flush_input(UART_NUM_1)==ESP_OK;
+  }))vTaskDelay(pdMS_TO_TICKS(1));
+#endif
   printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
   printf("Board %s UART1 TX=%d RX=%d RTS=%d CTS=%d\n",console_board::kIdentity,
          console_board::kUartTx,console_board::kUartRx,console_board::kUartRts,console_board::kUartCts);
@@ -127,7 +151,7 @@ void runConsole(VDUStreamProcessor *processor) {
   uint32_t partial_at=0,tx_at=0;
   bool transmitting=false;
   for(;;) {
-    const uint32_t now=millis();s.session.expire(now);
+    const uint32_t now=millis();s.session.expire(now);s.parallel.expire(now);
     agon::extender::input::usbhost::pump(
       [&](const uint8_t *p,size_t n){keyboard.report(p,n,now,emit);},
       [&](bool attached){if(!attached) {
@@ -159,7 +183,7 @@ void runConsole(VDUStreamProcessor *processor) {
       }
       else if(result!=ESP_ERR_TIMEOUT)s.fail("TX completion");
       else if(now-tx_at>=5000) {
-        console_cancel_tx();s.count=0;transmitting=false;s.session.cancel();
+        console_cancel_tx();s.count=0;transmitting=false;s.session.cancel();s.parallel.cancel();
         console_keys.reset();keyboard.admissionBoundary();
         agon::extender::input::processedKeyboard().reset();
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
@@ -302,6 +326,7 @@ void runConsole(VDUStreamProcessor *processor) {
     if(agon::extender::input::processedKeyboard().queryFault())
       s.fail("virtual-key query queue overflow");
     if(s.failure) {
+      s.parallel.cancel();
 #if defined(AGON_EXTENDER_TELEMETRY)
       agon::extender::telemetry::reset();
 #endif

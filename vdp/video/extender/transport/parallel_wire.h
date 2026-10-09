@@ -12,7 +12,7 @@
 #define PARALLEL_ACK 0x82
 #define PARALLEL_EXEXT 3
 #define PARALLEL_SESSION_SIZE 6
-static unsigned char parallel_offer_valid(const unsigned char *session,
+static inline unsigned char parallel_offer_valid(const unsigned char *session,
                                           const unsigned char *p) {
     unsigned short next, crc;
     if (!(session[0] | session[1] | session[2] | session[3]) ||

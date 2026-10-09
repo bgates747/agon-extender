@@ -1,9 +1,12 @@
-// PORT-008 F02c1: private ownership sequencer, not bound to live UART/GPIO.
+// PORT-008 F02c1: private ownership sequencer; physical boot/GPIO still unbound.
 // One task owns this object and its adapter. Completed bits describe actual
 // completed operations; clear stale bits before each new operation. No waits,
 // wire decoder, autonomous request or operating-mode authority here.
 #pragma once
 #include <cstdint>
+#include "control_crc.h"
+#include "parallel_wire.h"
+#include "parallel_session.h"
 
 namespace agon::extender::transport {
 class P4ParallelHandover final {
@@ -26,6 +29,15 @@ class P4ParallelHandover final {
   // before this call and drains the complete ACK before claiming quiet.
   bool admit(std::uint8_t mode, std::uint8_t *session,
              const std::uint8_t *offer, std::uint8_t *ack) noexcept;
+  // Control-owner binding: release recovery must already have reached UART.
+  // This mode argument names the requested capability, before formal mode
+  // commitment. sessionAdmit below still requires committed ExExt.
+  bool sessionRequest(std::uint8_t mode, t_parallelSession &session,
+                      const std::uint8_t *request, const std::uint8_t *nonce,
+                      std::uint8_t *reply) noexcept;
+  bool sessionAdmit(std::uint8_t mode, t_parallelSession &session,
+                    const std::uint8_t *offer, std::uint8_t *ack) noexcept;
+  void sessionCancel(t_parallelSession &session) noexcept;
   void cancel() noexcept;
   Action step(std::uint8_t completed) noexcept;
   Phase phase() const noexcept { return phase_; }

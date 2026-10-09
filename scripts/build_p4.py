@@ -96,7 +96,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -155,6 +155,10 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["sources"].append("video/extender/display/hdmi_ppa_scaler.cpp")
         profile["definitions"].append("AGON_EXTENDER_HDMI_PPA_320=1")
         profile.setdefault("requires", []).extend(["esp_driver_ppa", "esp_mm"])
+    if parallel_boot_candidate:
+        if (name,board) != ("p4-console","p4-pc"):
+            raise SystemExit("parallel boot candidate requires p4-pc / p4-console")
+        profile["definitions"].append("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1")
     return profile
 
 
@@ -459,6 +463,7 @@ def main() -> None:
                         help="tracked board name (default: p4-devkit)")
     parser.add_argument("--usb-fsls-only", action="store_true",
                         help="experimental P4-PC-only full/low-speed USB host backport")
+    parser.add_argument("--parallel-boot-candidate", action="store_true", help="private PORT-008 startup; no ExExt payload")
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser",
                         help="presentation sink; HDMI requires p4-pc / p4-console")
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720",
@@ -498,6 +503,8 @@ def main() -> None:
                          args.profile, args.board, args.display_output, args.render_benchmark_output, args.direct_rgb888)
     if args.direct_rgb888 and not args.allow_dirty_experimental:
         parser.error("direct RGB888 requires an explicitly frozen experimental build")
+    if args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY":
+        parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():
         parser.error("output must be a fresh nonexisting path")
@@ -505,7 +512,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -530,7 +537,7 @@ def main() -> None:
     compiler = checked_tools(tools, python_env)
     display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320)
     output.mkdir(parents=True)
-    source_record = freeze_source_inputs(output) if args.allow_dirty_experimental else None
+    source_record = freeze_source_inputs(output) if (args.allow_dirty_experimental or args.parallel_boot_candidate) else None
     (output / "display.json").write_text(json.dumps(display_record, indent=2) + "\n")
     project = output / "project"
     project.mkdir()
@@ -649,6 +656,8 @@ def main() -> None:
                   "--profile", args.profile, "--board", args.board,
                   "--display-output", args.display_output, "--hdmi-timing", args.hdmi_timing,
         *(["--render-benchmark-output", args.render_benchmark_output] if args.render_benchmark_output else []), "--output", str(output)]
+    if args.parallel_boot_candidate:
+        validation.append("--parallel-boot-candidate")
     if args.ppa_scale_320:
         validation.append("--ppa-scale-320")
     if args.rolling_scanout:
@@ -700,6 +709,7 @@ def main() -> None:
         "allow_dirty_experimental": args.allow_dirty_experimental,
         "source_snapshot_verified": source_record is not None,
         "reset_url_configured": bool(args.reset_url),
+        "parallel_boot_candidate": args.parallel_boot_candidate,
         "usb_fsls_only": args.usb_fsls_only,
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,

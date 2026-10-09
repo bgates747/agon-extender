@@ -19,11 +19,13 @@ spec.loader.exec_module(lifecycle)
 HARNESS = r'''
 #include <algorithm>
 #include "extender/transport/console_session.hpp"
+#include "extender/transport/parallel_control.hpp"
 using namespace agon::extender::transport;
 uint32_t millis() { return 100; }
 uint32_t esp_random() { return 1234; }
 struct ControlOutput {
   ConsoleSession session;
+  ParallelControl parallel;
   std::vector<uint8_t> bytes;
   void write(uint8_t b) { bytes.push_back(b); events.emplace_back("control.byte"); }
   void write(const uint8_t *p, size_t n) { for(size_t i=0;i<n;++i)write(p[i]); }
@@ -72,6 +74,24 @@ int main() {
   request[3]=CONSOLE_PREPARE; // wrong CRC: no mode change or ACK
   consoleControl(&processor,request);
   if(attemptIndex!=1 || stream.bytes.size()!=count) return 44;
+  // Version-2 control is framed by this real owner, without a VDU mode reset.
+  uint8_t v2[16]{},v2reply[16]{},commit[16]{};t_parallelSession e{};
+  const uint8_t txn[4]={4};parallel_session_begin(&e,txn,v2);
+  events.clear();stream.bytes.clear();consoleControl(&processor,v2);
+  if(!events.empty() || !stream.bytes.empty()) return 46; // cold release gate
+  using P=P4ParallelHandover;
+  for(auto done:std::vector<uint8_t>{P::released|P::validHigh,P::validHigh,0,P::validHigh,P::validHigh|P::uartUp})
+    stream.parallel.handover.step(done);
+  consoleControl(&processor,v2);
+  if(stream.bytes.size()!=18 || attemptIndex!=1 ||
+     std::find(events.begin(),events.end(),"contexts.reset-all")!=events.end()) return 47;
+  std::copy_n(stream.bytes.data()+2,16,v2reply);
+  if(parallel_session_accept(&e,v2reply,commit)!=2) return 48;
+  stream.bytes.clear();consoleControl(&processor,commit);
+  if(stream.parallel.session.phase!=3 || stream.session.active() || attemptIndex!=1) return 49;
+  // A validated version-1 transition explicitly invalidates that capability.
+  request[3]=CONSOLE_PREPARE_KEEP;console_seal(request);consoleControl(&processor,request);
+  if(stream.parallel.session.phase || stream.parallel.handover.phase()!=P::recoveryRelease) return 50;
 }
 '''
 
@@ -95,7 +115,9 @@ class ConsoleModeLifecycleTests(unittest.TestCase):
                 cpp.write_text(source+HARNESS.replace('@CONTROL@',body))
                 subprocess.run(['c++','-std=c++17','-Wall','-Wextra',
                                 '-fsanitize=address,undefined','-fno-sanitize-recover=all',
-                                '-I'+str(ROOT/'vdp/video'),str(cpp),'-o',str(binary)],
+                                '-I'+str(ROOT/'vdp/video'),str(cpp),
+                                str(ROOT/'vdp/video/extender/transport/p4_parallel_handover.cpp'),
+                                '-o',str(binary)],
                                check=True, capture_output=True, text=True)
                 result = subprocess.run([str(binary)],capture_output=True,text=True)
                 self.assertEqual(result.returncode, expected, result.stdout+result.stderr)
