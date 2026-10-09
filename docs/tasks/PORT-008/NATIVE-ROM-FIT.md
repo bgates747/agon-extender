@@ -54,3 +54,10 @@ Reuse [AUDIT-008 accounting](../AUDIT-008/account.py),
 actual full-link measurements decide the result. Historical UARTFLOW extraction
 savings must not be counted again. Resident diagnostics remain candidates for
 future MOSlet extraction only if additional space is needed.
+
+The first native link now fits, but its mandatory whole-image Port C inventory
+correctly rejects the new assembly writer. RF03 therefore includes a private
+native-profile checker, reusing every ordinary check while admitting only the
+audited raw-leaf register sequence. Ordinary profiles must continue rejecting
+that leaf. Check its sole guarded caller, no live wrapper caller, atomic Port D
+helper and reference exclusion; use actual linked-image negative controls.
