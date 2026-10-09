@@ -159,6 +159,8 @@ def select_display_profile(document: dict, name: str, board: str,
         if (name,board) != ("p4-console","p4-pc"):
             raise SystemExit("parallel boot candidate requires p4-pc / p4-console")
         profile["definitions"].append("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1")
+        profile["sources"].append("video/extender/transport/p4_native_payload.cpp")
+        profile.setdefault("requires", []).append("esp_driver_parlio")
     return profile
 
 

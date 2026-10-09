@@ -27,7 +27,10 @@ class NativeP4ProfilesTest(unittest.TestCase):
         flag = "AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1"
         self.assertNotIn(flag, ordinary["definitions"])
         self.assertIn(flag, candidate["definitions"])
-        self.assertEqual(ordinary["sources"], candidate["sources"])
+        native = "video/extender/transport/p4_native_payload.cpp"
+        self.assertNotIn(native, ordinary["sources"])
+        self.assertEqual(ordinary["sources"] + [native], candidate["sources"])
+        self.assertIn("esp_driver_parlio", candidate["requires"])
         with self.assertRaises(SystemExit):
             select_display_profile(self.document, "p4-console", "devkit", "browser", parallel_boot_candidate=True)
         with self.assertRaises(SystemExit):
