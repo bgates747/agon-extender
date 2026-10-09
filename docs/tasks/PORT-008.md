@@ -271,6 +271,11 @@ loop under that coordinator; prove adapter cleanup and first/last-byte software
 ordering in target builds and simulated peers. Hardware timing still belongs
 to F03, not these bench-free checks.
 
+The Author authorized the bounded [ROM-fit continuation](PORT-008/NATIVE-ROM-FIT.md)
+on 2026-10-09: exclude the unused reverse C reference from resident builds,
+retain an explicit reference-test composition, measure full images and rerun
+affected instruction/ownership checks. No live activation or bench operation.
+
 P08-F02d [ ] — Recheck generated GPIO/peripheral configuration and exact build
 identities before declaring a candidate ready for P08-F03. Compilation and
 emulation cannot qualify electrical contention, first/last byte timing or speed.
