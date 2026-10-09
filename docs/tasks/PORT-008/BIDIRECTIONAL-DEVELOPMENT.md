@@ -203,3 +203,18 @@ ISR installation core to make FIFO/ring inspection indivisible against that
 ISR. Current startup/task affinity must be reconciled in F02c2b, not assumed.
 The leaves remain unbound and both endpoints still require negotiated peer
 quiescence: a local empty FIFO does not prove the other CPU has stopped.
+
+
+## Admission gate and mandatory boot release — 2026-10-08
+
+F02c2b1 develops the [private version-2 block admission gate](PARALLEL-ADMISSION.md)
+before live serializer/startup integration. It validates coordinator-established
+session state rather than establishing capability from an incoming block. Actual
+session negotiation, deadlines, boot binding and payload adapters remain gated.
+
+The Author accepted P08-F-D03: the future parallel-capable pair requires reciprocal
+release before EMOS enables shared UART pads after reset. An absent or older P4
+leaves Extender I/O unavailable; MOS/mainboard keyboard remain usable. No timed
+fallback may reclaim UART pins. Current UART-only boot remains unchanged until
+that candidate integration is complete. The private admission gate alone does
+not implement this physical startup fence.

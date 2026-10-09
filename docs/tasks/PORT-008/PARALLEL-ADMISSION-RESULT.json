@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-08",
+  "scope": "PORT-008 F02c2b1 private admission gates; no live parser, serializer/session or boot binding",
+  "bench_access": false,
+  "committed": false,
+  "source_heads": {
+    "extender": "3552ca3a28b16e82f46a6ee16a0425ea683ff995",
+    "emos": "a93e82a9c45d5c29d210bb39cb032274f14fd566"
+  },
+  "sources_sha256": {
+    "../agon-emos/src/emos_console.c": "73f245e970011a2ce7acbd44259f045b1b8359b78d722192d8b9817163ccbf21",
+    "../agon-emos/src/emos_console_wire.h": "a90aec3b930e221c4cb2b9e016bbeb350d4f34364e3f83c9393d58c200d80eba",
+    "../agon-emos/src/control_crc.h": "7224c21ecf12782fb77c10211934d82d78d020d54176179f57e39103e7842650",
+    "../agon-emos/src/emos_parallel_wire.h": "44d075a428610c598aa767a4e42ec6aaec47325577cb12ad3ec2046659fe3495",
+    "../agon-emos/src/emos_parallel_handover.h": "eb6db257004a47189146871734153b605dfa4153cd99e375f9b549f9d7fb4666",
+    "../agon-emos/src/emos_parallel_handover.c": "f25f21f01ecc6927a1dc0bbb00c9c935ca6fa18c96b4235411ef32a12a890517",
+    "../agon-emos/tests/test_emos_console.py": "ba56ab1828e73bdbb9e4e304a65749f4748df9bb7f0602172182d613201998cf",
+    "../agon-emos/tests/uart_put_cpu/src/bin/parallel_admission.rs": "461c37b6ad98a01f6bc5e389dadd8e831a0e687bb68a03414b8303f19d9084df",
+    "vdp/video/extender/transport/console_wire.h": "a90aec3b930e221c4cb2b9e016bbeb350d4f34364e3f83c9393d58c200d80eba",
+    "vdp/video/extender/transport/control_crc.h": "7224c21ecf12782fb77c10211934d82d78d020d54176179f57e39103e7842650",
+    "vdp/video/extender/transport/parallel_wire.h": "44d075a428610c598aa767a4e42ec6aaec47325577cb12ad3ec2046659fe3495",
+    "vdp/video/extender/transport/p4_parallel_handover.hpp": "e3ccad55088979561288e917d4d0e55937aac0a8c84c74ea9db57de59164bc1a",
+    "vdp/video/extender/transport/p4_parallel_handover.cpp": "71143e251ed61598f2e60dcb82ac0ec720dee0adb6bfebfb1ff8c6d7989c372c",
+    "tests/parallel_admission_test.cpp": "6d508d021135233d0c05da1869920ad979cc946e907799ba270086a34aa0c1e1",
+    "tests/parallel_admission_test.py": "0be9bc138c838f430962eb5ce87d30015df29b9606591b5d923510404a5c8214"
+  },
+  "checks": {
+    "paired_admission_cases": 18097,
+    "linked_ez80_admission_cases": 18474,
+    "linked_ez80_parking_cases": 289,
+    "emos_parallel_tests": 9,
+    "paired_handover_cases": 5208,
+    "paired_reverse_cases": 48,
+    "p4_console_tests": 2,
+    "emos_console_tests": 1,
+    "mode_lifecycle_tests": 1,
+    "emos_provenance_tests": 6,
+    "p4_profile_tests": 11,
+    "crc_machine_code": "145 bytes unchanged after resolving seven helper CALL relocations",
+    "emos_wrapper": "pass",
+    "p4_native_wrapper": "pass; source snapshot, unchanged-source incremental build and validator pass"
+  },
+  "artifacts": {
+    "emos": {
+      "bytes": 130551,
+      "sha256": "fe668733644a15710204b2e7c691574f4663acfd455303ac96b414b56d304510",
+      "baseline_bytes": 130135,
+      "growth_bytes": 416,
+      "remaining_image_bytes": 521
+    },
+    "p4": {
+      "bytes": 1598560,
+      "sha256": "31e62fb1d5706a4573c8c717579753715d82cb39bf4d2af35b1a02e7fa1673fe",
+      "profile": "p4-console",
+      "board": "p4-pc",
+      "display": "browser",
+      "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+      "check_sha256": "873ff23ab3ffdd07aab9530da0d7115e3a1266de876fd180e0d026876a576797",
+      "source_inputs_sha256": "4ae74e58e24214a48d2f47f2bd0e5fb38a36d0f3fa5a80fdaa35a89fa6dda2ce",
+      "validation_sha256": "52afa0ac06cc747cbfa817ca9295c83621cf6e152cfd96c268eee14ce91d754f"
+    }
+  },
+  "evidence_sha256": {
+    "emos-build.log": "a6cde4f67d58adbb179cc8947b923918a4aae199362124d9d6ef75e69906f490",
+    "admission-tests.log": "45cea991c2e27f591a2fbb61f5e80e4e4700d8aaf13702c4cb504619b292a043",
+    "cpu-admission.log": "200dd728feb62959125cf9ac5b2cc5cff0cd3627c5e2847446be549acf3f822e",
+    "handover-tests.log": "2e2d0a1eb9654e69dad6ad808bf015cd5cde7e925120d46ded222ea57172f1cd",
+    "reverse-tests.log": "fd9fb267e75b6212c04b32b28e57e8103d4997233d5d5d755c87804fbc3934fb",
+    "console-tests.log": "59ddd38ddb4b1c77f3715590f8b1e15c65930e035541c758a9c7e9720128076b",
+    "emos-console-tests.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mode-tests.log": "cfdfd5f0b2f5a900f02a1185e2e620b083662de10f50f329ef1f9bc4a0a697dd",
+    "profile-tests.log": "caebcafac8862add3098bb145a317e2807c4330bf6a7c234dee7a08dbe819c5a",
+    "emos-port-tests.log": "20ac3372e0fbe2aadff5147e59f7db4171f636154e6f7ccbf8ac4550263d1ce9",
+    "crc-identity.log": "a4f0d1d1bde12e0777a057b6a3eb91eaa8db2eb20876d4c6db8bb1107cd86342",
+    "cpu-vectors.txt": "384bf4640f0ee9dcb92e81af7005fbdfb5a32749dad52000a751cdb5cb201d41",
+    "cpu-parking.log": "f1c25ec849bdc712427d9264224ccbfa82ae1ec83292b6e6848b6bb7af7ee6bf",
+    "emos-parallel-tests.log": "ef73229f1141def2b58f4cd3e7eb2113c5c8521aba1cd41eca5aa3353dd12d86"
+  },
+  "limitations": [
+    "Session negotiation and reset invalidation supplied as test preconditions, not live firmware",
+    "Adapters modeled for paired handover; no electrical/throughput claim",
+    "No full-system Fab boot; linked eZ80 instruction tests only",
+    "Hardware startup fences, deadlines, serializer drain and native payload binding remain c2b/c3"
+  ]
+}

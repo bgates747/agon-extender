@@ -389,6 +389,12 @@ counterpart. Local RAM flags alone do not establish peer readiness or byte
 sampling. PORT-008 owns feasibility and recovery; existing wiring is not yet
 qualified for this traffic.
 
+The future parallel-capable pair requires a reciprocal pad-release handshake
+before EMOS enables shared UART pins after reset. Absent/older P4 firmware leaves
+Extender I/O unavailable while mainboard MOS/keyboard remain usable. EMOS must
+not reclaim those pins on timeout. Reset invalidates admission state; the current
+UART-only firmware is not represented as implementing this candidate boot fence.
+
 Extender-aware programs address the P4 through an explicit, stable, versioned
 EDU API owned by EMOS. Synchronous foreground applications may link a client
 binding, but that binding invokes EMOS and does not own the transport,

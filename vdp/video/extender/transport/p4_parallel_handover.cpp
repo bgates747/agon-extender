@@ -1,6 +1,20 @@
 #include "p4_parallel_handover.hpp"
+#include "control_crc.h"
+#include "parallel_wire.h"
 
 namespace agon::extender::transport {
+bool P4ParallelHandover::admit(std::uint8_t mode, std::uint8_t *session,
+                              const std::uint8_t *offer, std::uint8_t *ack) noexcept {
+  if (mode != PARALLEL_EXEXT || phase_ != uart ||
+      !parallel_offer_valid(session, offer)) return false;
+  if (!begin()) return false;
+  session[4]=offer[8]; session[5]=offer[9];
+  memcpy(ack,offer,16); ack[3]=PARALLEL_ACK;
+  const auto crc=console_crc(ack);
+  ack[14]=static_cast<std::uint8_t>(crc);
+  ack[15]=static_cast<std::uint8_t>(crc>>8);
+  return true;
+}
 bool P4ParallelHandover::begin() noexcept {
   if (phase_ != uart) return false;
   failed_=false; phase_=drain; return true;

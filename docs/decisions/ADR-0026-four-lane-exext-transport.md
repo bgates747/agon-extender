@@ -47,3 +47,13 @@ recovery require a concrete design and measurement before implementation.
 
 [PORT-008](../tasks/PORT-008.md) owns that work. The old forward-only buffered
 circuit remains held evidence, not a qualified implementation of this design.
+
+## Reset and absent-peer policy
+
+For the future parallel-capable pair, EMOS must keep PC0–PC7 released after
+reset until P4 explicitly acknowledges release using READY/CLOCK/VALID. A timer
+cannot establish that P4 stopped driving. If P4 is absent or runs older firmware
+without this handshake, Extender input/output remains unavailable; MOS and the
+mainboard keyboard remain usable. There is no timed UART ownership fallback.
+Each reset invalidates the prior block admission. This accepted policy governs
+the candidate implementation, not the current UART-only production image.

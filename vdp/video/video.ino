@@ -114,6 +114,7 @@ ESP32Time		rtc(0);							// The RTC
 #include "extender/network/wired_network_service.hpp"
 #if defined(AGON_EXTENDER_CONSOLE)
 #include "extender/transport/console_stream.hpp"
+#include "extender/transport/console_uart_owner.hpp"
 #elif defined(AGON_EXTENDER_BROWSER_TYPING)
 #include "extender/diagnostic/browser_typing_stream.hpp"
 #elif defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
@@ -269,7 +270,11 @@ void setup() {
 		NULL,
 		3,			// Priority
 		&Core0Task,
+		#if defined(AGON_EXTENDER_CONSOLE)
+		agon::extender::transport::consoleUartOwnerCore
+		#else
 		0			// Core 0
+		#endif
 	);
 	#ifdef AGON_EXTENDER_P4_BOOT
 			if (processTaskResult != pdPASS) {

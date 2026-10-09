@@ -1,0 +1,81 @@
+{
+  "recorded_utc": "2026-10-08T21:56:54.676162+00:00",
+  "scope": "F02c2b2 retained EMOS serializer reservation and P4 UART owner-core installation; no live parallel coordinator",
+  "bench_access": false,
+  "committed": false,
+  "source_heads": {
+    "extender": "3552ca3a28b16e82f46a6ee16a0425ea683ff995",
+    "emos": "a93e82a9c45d5c29d210bb39cb032274f14fd566"
+  },
+  "sources_sha256": {
+    "../agon-emos/src/emos_keyboard.c": "1c7e907cee9f50c636aa183fcbb2cf8e1980b0e5a1d3ac98aaae80e5b73c6220",
+    "../agon-emos/src/emos_keyboard.h": "0348416e37404c38ab41bbe0e8cbda34be18d8745b6617846efa24e58fd4ba33",
+    "../agon-emos/src/emos_keyboard_io.asm": "9a8aaac982ae0fa1a366a43f1851fb1a3b61b152797d3a663e9f6025ac630bcf",
+    "../agon-emos/tests/emos_keyboard_harness.c": "604edcf658064114cf4f4a58fcda9626f6a613ba8ee9c3483d277666cd2aaa38",
+    "../agon-emos/tests/test_emos_keyboard.py": "7f8bcfe7d1e83e93a12c7e7a2c753c91dcccf862a092220e69795c3724b24caf",
+    "../agon-emos/tests/uart_put_cpu/src/bin/uart_parking.rs": "2974df764abdec15ac0746a4569155c60098cea1e40bd23a38788a04210e0827",
+    "../agon-emos/tests/uart_put_cpu/src/bin/uart_reservation.rs": "eaf00aa8d5ea2c006ba344180b49be550b0409552de38ecec528349a6213133d",
+    "../agon-emos/tests/uart_put_cpu/src/bin/block.rs": "93cc239071fe9977bbc5f54aec3e1d78b4df221c902a6257d96d2befa8222c4c",
+    "../agon-emos/tests/uart_put_cpu/src/bin/irq.rs": "736e675944aaa9e864be86dd6b72ed7751b60dda433ad5e7b4cf4b42967fef53",
+    "vdp/video/extender/transport/console_uart_owner.hpp": "8f56c9d7cae94dbe1a01fcdb2831429927fa8fb41bf99f7a38b1f28399f7b37a",
+    "vdp/video/extender/transport/console_hardware.inc": "25aa9baaf771534ee452d1d4639422676d7281ca08b4bbaa161abae140e3c34e",
+    "vdp/video/video.ino": "fc11e43c0273f3cc2ab959a46fb992399e697e145c3fbd16f8cc04804f4e96fb",
+    "tests/console_uart_owner_test.cpp": "fb07de4651cd5154d9c1e4fb44d53c2ce722777052290f02b2f6e6f53812eac0",
+    "tests/console_uart_owner_test.py": "c6321e32df90f27e519ae216f68e9fa332a51ddc570d2702c6db4938f4d371f5"
+  },
+  "checks": {
+    "linked_reservation_cases": 22,
+    "linked_parking_cases": 289,
+    "linked_sender_comparisons": 375,
+    "linked_irq_comparisons": 1302,
+    "keyboard_host_profiles": [
+      "ordinary",
+      "telemetry"
+    ],
+    "p4_sdk_combinations": 8,
+    "p4_owner_test_methods": 2,
+    "paired_handover_cases": 5208,
+    "p4_profile_tests": 11,
+    "emos_wrapper": "pass; prepared-source validation and exact keyboard source comparison",
+    "p4_wrapper": "pass; frozen source closure and unchanged-source rebuild verified"
+  },
+  "artifacts": {
+    "emos": {
+      "bytes": 130791,
+      "sha256": "ce08132c6fd57de150e917865fda6221a91a686769ab89194cfa9397f0ba0271",
+      "baseline_bytes": 130551,
+      "growth_bytes": 240,
+      "remaining_image_bytes": 281
+    },
+    "p4": {
+      "bytes": 1598528,
+      "sha256": "a7a205652c027ea341614091b1b99faa52f89dc24832fbc6bb5f9a5ea4f6aaba",
+      "profile": "p4-console",
+      "board": "p4-pc",
+      "display": "browser",
+      "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+      "check_sha256": "cec90d7ec37c99bb6adbdb01f6db3761c4ced991fca238fecf5d1ca008c055cf",
+      "source_inputs_sha256": "22132879d4c9861e071047e76ff2943bee10a6768f1f60d4f62b7ca635467499",
+      "validation_sha256": "52afa0ac06cc747cbfa817ca9295c83621cf6e152cfd96c268eee14ce91d754f"
+    }
+  },
+  "evidence_sha256": {
+    "block-cpu.log": "202bf61c11c990dd3e59a85b4161322b453aed203724f4a3ef94dac1d9aabe6f",
+    "emos-build.log": "f6d57e1231057eb7c3c9504b0451eb522e2d1614c7a9d90efa848ca349dcc44d",
+    "handover-tests.log": "080d6936e9c7e721027faf83274bbe9cd5f261e46255343429c161e0e3f33bd4",
+    "irq-cpu.log": "da347e141f3f4d3fcbfb7b1a4c410371b82cd38e164fb562d4f137c582742195",
+    "keyboard-tests.log": "74147eea842fbefbf8a26b8dc49660189deef194f89984dc74c4924c1126d505",
+    "p4-build-wrapper.log": "d95ad4f9329312a68437eded64e4f5942282c3a2c0746de36270cc23fa55215c",
+    "p4-owner-tests.log": "932dab4c0bb994602d1c965c44b93aedc27ea88969251831e01dc84d305c2bee",
+    "p4-recheck.log": "dfeecb191a400645872283ae809042dbba8adf1fcee88379d88c0ac470116ddb",
+    "parking-cpu.log": "2630b18c73cd1fb562709f50bddf08f98b0d8da47e52620e851d57c111b14ea6",
+    "profile-tests.log": "c77fa66afac57e9479d3ff8d80c02a0430e5f4a9bb637ed2001237fe6e8de67d",
+    "reservation-cpu.log": "8618ab82d42bcc03683238d01fe736e6703d13a68b191e56c24e4f35cbc49768"
+  },
+  "limitations": [
+    "Synthetic register/tick and SDK models, no physical timing or throughput",
+    "No full-system Fab boot",
+    "No live session exchange, P4 drain coordination, physical boot release or ExExt/payload activation",
+    "P4 core/startup change requires future bench qualification"
+  ]
+}

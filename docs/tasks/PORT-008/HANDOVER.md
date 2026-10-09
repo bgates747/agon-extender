@@ -2,20 +2,30 @@
 
 ## Executive summary
 
-The private EMOS and EDP sequencers now express a complete setup/return
-handshake using the existing READY/CLOCK/VALID wires. Their adapters remain
-simulated: ordinary UART, ISR, boot and keyboard code are unchanged. This is
-development evidence for F02c1, not electrical qualification or enabled ExExt.
-The next increment must connect real admission, UART suspension and reset
-fences before any GPIO activation.
+This document records F02c1's private EMOS/EDP setup/return sequencers using
+READY/CLOCK/VALID. Subsequent [UART parking leaves](UART-PARKING-RESULTS.md) and
+the [admission gate](PARALLEL-ADMISSION.md) remain unbound to live activation.
+The paired harness models adapter completions; it does not qualify electrical
+operation or enable ExExt. Serializer/session integration and physical startup
+fences remain required before GPIO activation.
+
+F02c2b2 adds [retained serializer reservation and P4 UART owner-core
+installation](UART-RESERVATION-RESULTS.md). Current EMOS caller order is
+reserve → private offer/status sends → park → restore → private result/status
+send → explicit release, with each operation gated by coordinator state.
+Busy parking and successful restore keep the reservation. The earlier parking
+results describe the preceding API; they are frozen evidence, not today's
+integration instructions. P4's driver is installed by its existing process task;
+live coordinator and physical startup release remain unimplemented.
 
 ## Ownership and sources
 
 EMOS owns CLOCK/VALID and requests each transaction. P4 owns READY. Port C's
 eight lanes carry the selected direction only after the handover. The mode
 coordinator must validate an ExExt admission with matching session, sequence,
-direction and exact length before calling either `begin` function. No UART
-opcode is assigned or parser changed by this increment. Neither sequencer
+direction and exact length before calling either `begin` function. F02c1 assigned no UART
+opcode or parser change; the later admission candidate uses version 2 of the
+existing F7 envelope, still without a live parser binding. Neither sequencer
 owns or publishes payload integrity/completion to applications.
 
 | Implementation | Role |
@@ -95,7 +105,10 @@ the phase deadline cancels that admission and forces another handshake.
 That is allowed recovery latency, not successful payload delivery. The future
 resumed-UART status must match the fresh transaction; GPIO levels cannot carry
 a session/sequence identity. Neither current UART boot path uses these fences
-yet, which prevents physical activation of this candidate.
+yet, which prevents physical activation of this candidate. P08-F-D03 now
+requires this release handshake in the future parallel-capable pair: no old or
+absent peer, nor an expired timer, permits a UART fallback. Mainboard operation
+remains available when Extender cannot acknowledge.
 
 ## Adapter requirements for F02c2/F02c3
 

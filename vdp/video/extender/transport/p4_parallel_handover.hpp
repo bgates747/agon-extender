@@ -21,6 +21,11 @@ class P4ParallelHandover final {
   // Reset adapter FIRST disables all shared output enables. Starting from
   // reset RAM without this physical reset/input fence is not recovery.
   bool begin() noexcept;
+  // Private candidate only. Trusted session[4]+last sequence[2] belongs to
+  // the coordinator; no offer may establish it. Caller fences the serializer
+  // before this call and drains the complete ACK before claiming quiet.
+  bool admit(std::uint8_t mode, std::uint8_t *session,
+             const std::uint8_t *offer, std::uint8_t *ack) noexcept;
   void cancel() noexcept;
   Action step(std::uint8_t completed) noexcept;
   Phase phase() const noexcept { return phase_; }

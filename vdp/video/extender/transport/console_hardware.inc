@@ -7,6 +7,7 @@
 #include <driver/gpio.h>
 #include <hal/uart_ll.h>
 #include <esp_random.h>
+#include "console_uart_owner.hpp"
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
 #include "agon_extender_board_config.hpp"
 namespace console_board = agon::extender::board;
@@ -94,18 +95,18 @@ ConsoleStream *beginConsole() {
   ESP_ERROR_CHECK(uart_param_config(UART_NUM_1,&cfg));
   ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
                              console_board::kUartRts,console_board::kUartCts));
-  ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1,4096,0,32,&console_events,0));
-  // Stock Arduino HardwareSerial applies a two-symbol RX idle interrupt timeout.
-  ESP_ERROR_CHECK(uart_set_rx_timeout(UART_NUM_1,2));
   console_stream=new ConsoleStream;
   console_stream->setTimeout(COMMS_TIMEOUT); // match stock setupVDPProtocol (200 ms)
   if(!agon::extender::input::usbhost::begin()) console_stream->fail("USB host startup");
-  printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
-  printf("Board %s UART1 TX=%d RX=%d RTS=%d CTS=%d\n",console_board::kIdentity,
-         console_board::kUartTx,console_board::kUartRx,console_board::kUartRts,console_board::kUartCts);
   return console_stream;
 }
 void runConsole(VDUStreamProcessor *processor) {
+  // First driver operation on the sole process owner. Setup only configured
+  // pins/registers and built an inactive Stream; it did not install an ISR.
+  ESP_ERROR_CHECK(agon::extender::transport::startConsoleUart(&console_events));
+  printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
+  printf("Board %s UART1 TX=%d RX=%d RTS=%d CTS=%d\n",console_board::kIdentity,
+         console_board::kUartTx,console_board::kUartRx,console_board::kUartRts,console_board::kUartCts);
   namespace timing = agon::extender::diagnostics;
   auto &s=*console_stream;
   auto &keyboard=console_keyboard;
