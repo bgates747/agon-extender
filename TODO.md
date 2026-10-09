@@ -5,6 +5,10 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
+## Browser paste — accepted development, release closeout pending
+
+- [ ] **[REMOTE-004 — Browser clipboard paste](docs/tasks/REMOTE-004.md)** — Browser paste and restored Reset Agon accepted after Author testing. Source, local tests and bounded P4 deployment evidence retained; broader validation and production promotion remain within the HDMI release boundary. Broader clipboard investigation remains deferred.
+
 ## Active board-build preparation
 
 - [ ] **[SPRITE-001 — Nurples hardware-sprite trial](docs/tasks/SPRITE-001.md)** — Author reports beautiful output from the full684 memory remedy; the thin tear disappears when paused, and mainboard hardware sprites show no tear. Rollback reproduces ordinary Nurples's upper-playfield visibility defect. HDMI-002 now selects a480-line carrier on mode0 exit; Author confirms full upper text. ExCom SD admission, tearing and broader qualification remain open.
@@ -113,7 +117,6 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[RESEARCH-005](docs/tasks/RESEARCH-005.md)** — Deferred VGA pillarboxing, P4 VGA output and aspect-preserving output research; FabGL investigation and existing P4 VGA driver lead retained. No implementation or bench work scheduled.
 
-- [ ] **[REMOTE-004](docs/tasks/REMOTE-004.md)** — Low-priority copy/paste feasibility: Extender first, possible stock MOS/VDP subset later. Investigate existing input/readback reuse and application-consumption guarantees; proposal before implementation.
 
 - [ ] **[BENCH-007](docs/tasks/BENCH-007.md)** — Package/results committed; F01 mainboard panic, F02 Rally fixture discrepancy and B07-R01 procedure refresh remain. Retain these unscheduled follow-ups here; measurement implementation is complete, not another half-built package. Refresh the retained runner/startup procedure before reuse under current fixture rules.
 

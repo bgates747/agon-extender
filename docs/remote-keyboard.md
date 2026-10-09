@@ -242,3 +242,35 @@ reserved shortcuts still require platform-specific observation. Rally keyboard
 stalls and streaming-related gameplay latency remain deferred follow-up, not
 proof that packets are lost in EMOS. See the dated observations in
 [REMOTE-001](tasks/REMOTE-001.md) and the [streaming comparison](tasks/QUAL-003.md).
+
+## Browser paste — accepted development build
+
+The current source adds **Paste text** beside keyboard capture. This development feature
+has passed local Chromium/mock-peer tests, a bounded real-browser/P4
+acknowledgement smoke and Author paste testing. The restored Reset Agon button
+also passed automated and Author testing. Broader hardware qualification and
+production promotion remain pending; the selected production bundle does not
+yet include this feature. See [REMOTE-004](tasks/REMOTE-004.md).
+
+1. Paste into the text box. The browser maps UK/US characters using the P4's
+   configured keyboard locale. If host Caps Lock is unknown, press a letter in
+   the box, then edit the contents as desired. Unsupported characters reject
+   the whole submission before any text is sent. Maximum: 4,096 characters.
+2. Set milliseconds per character (default 80) and the additional pause after
+   Enter (default 500 ms). **Send Enter at the end** is optional and off by
+   default; existing newlines still send Enter. The browser normalizes Windows
+   and old Mac line endings to one Enter.
+3. **Send text** acquires browser keyboard ownership if necessary, using the
+   existing P4 arbitration. EMOS must already admit Extender keyboard input.
+   Video need not be connected; paste also works through this route in Legacy.
+4. **Stop**, closing the dialog, focus loss, reset, physical takeover or an
+   input error cancels the job and releases capture. There is no automatic
+   replay. Successful completion retains capture; every synthetic key/modifier
+   has a matching release. Changing host Caps Lock while sending cancels paste.
+
+P4 acknowledgement confirms queue acceptance, not application consumption.
+Slower pacing can help older MOS readers, but cannot guarantee delivery to
+all applications. The Enter pause does not detect command completion. Use
+MOS batch execution for dependent commands that may take substantial time.
+A delayed key-release acknowledgement can also encounter P4 typematic repeat;
+the browser aborts on a one-second acknowledgement timeout rather than retrying.
