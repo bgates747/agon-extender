@@ -22,6 +22,14 @@ canvas { display: block; width: 100%; max-width: 960px; height: auto; aspect-rat
 .capture-control { flex: 1 1 13rem; }
 button { font: inherit; padding: .45rem .8rem; cursor: pointer; }
 button:focus-visible { outline: 2px solid #b4d4ef; outline-offset: 2px; }
+dialog { width: min(42rem, 95vw); max-height: 90vh; overflow: auto; background: #191919; color: #ddd; border: 1px solid #777; }
+dialog::backdrop { background: #0008; }
+dialog h2 { margin-top: 0; font-size: 1.1rem; }
+#paste-content { display: block; width: 100%; font: 1rem monospace; resize: vertical; }
+.paste-options { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: .8rem; }
+.paste-options label { display: flex; align-items: center; gap: .4rem; }
+.paste-options input[type="number"] { width: 6rem; font: inherit; }
+dialog p { font-size: .85rem; }
 #connect.connected, #capture-keyboard[aria-pressed="true"] { background: #244e3f; color: #fff; }
 #state, #keyboard-state { font-size: .85rem; color: #aaa; overflow-wrap: anywhere; }
 .diagnostics { margin-top: 1rem; color: #999; font-size: .85rem; }
@@ -34,9 +42,9 @@ button:focus-visible { outline: 2px solid #b4d4ef; outline-offset: 2px; }
 .screen-shell:fullscreen { display: flex; flex-direction: column; width: 100vw; height: 100vh; background: #000; }
 .screen-shell:fullscreen .video-viewport { flex: 1; min-height: 0; width: 100%; }
 .screen-shell:fullscreen canvas { max-width: none; width: min(var(--view-width, 100vw), calc(var(--view-height, 80vh) * 4 / 3)); height: auto; flex: none; }
-.screen-shell:fullscreen .controls { flex: none; width: 100%; padding: .5rem 1rem; opacity: 0; background: #111; transition: opacity .12s; }
-.screen-shell:fullscreen .controls:hover,
-.screen-shell:fullscreen .controls:focus-within { opacity: 1; }
+.screen-shell:fullscreen #keyboard-strip { flex: none; width: 100%; padding: .5rem 1rem; opacity: 0; background: #111; transition: opacity .12s; }
+.screen-shell:fullscreen #keyboard-strip:hover,
+.screen-shell:fullscreen #keyboard-strip:focus-within { opacity: 1; }
 @media (max-width: 650px) {
   body { padding: .6rem; }
   .controls { gap: .5rem; }

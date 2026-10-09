@@ -35,7 +35,24 @@
           <button id="capture-keyboard" type="button" aria-pressed="false">Capture keyboard</button>
           <span id="keyboard-state" role="status">Keyboard released</span>
         </div>
+        <button id="paste-text" type="button">Paste text</button>
       </div>
+      <dialog id="paste-dialog" aria-labelledby="paste-title">
+        <h2 id="paste-title">Paste text to Agon</h2>
+        <textarea id="paste-content" rows="7" maxlength="4096" aria-label="Text to type" placeholder="Paste text here"></textarea>
+        <div class="paste-options">
+          <label>Milliseconds per character <input id="paste-cadence" type="number" min="80" max="2000" value="80" step="20"></label>
+          <label>Pause after Enter (ms) <input id="paste-line-pause" type="number" min="100" max="10000" value="500" step="100"></label>
+          <label><input id="paste-enter" type="checkbox"> Send Enter at the end</label>
+        </div>
+        <p>Types into the active application. Enter runs MOS commands; the pause does not wait for them to finish.</p>
+        <p id="paste-state" role="status">Ready</p>
+        <div class="controls">
+          <button id="paste-send" type="button">Send text</button>
+          <button id="paste-stop" type="button" disabled>Stop</button>
+          <button id="paste-close" type="button">Close</button>
+        </div>
+      </dialog>
     </section>
 
     <details class="diagnostics">

@@ -296,6 +296,39 @@ document.addEventListener("fullscreenchange", () => {
   let socket, generation = 0, sequence = 0, requested = false, captured = false;
   let lastReply = 0;
   const held = new Set();
+  const dialog=document.querySelector('#paste-dialog'), text=document.querySelector('#paste-content');
+  const pasteState=document.querySelector('#paste-state'), start=document.querySelector('#paste-send');
+  let job=0, pasting=false, acknowledgement;
+  function cancelPaste(message) {
+    ++job;pasting=false;start.disabled=false;document.querySelector('#paste-stop').disabled=true;
+    if(acknowledgement) { clearTimeout(acknowledgement.timer);acknowledgement.reject(new Error(message));acknowledgement=undefined; }
+    pasteState.textContent=message;
+  }
+  const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+  // Same UK/US HID mapping as scripts/keyboard.py; preflight the entire text.
+  function planPaste(value,locale) {
+    if(locale!==0 && locale!==1)throw new Error('Unsupported Agon keyboard locale');
+    const plain=new Map(), shifted=new Map();
+    [...'1234567890'].forEach((c,i)=>plain.set(c,30+i));
+    [..."-=[];',./"].forEach((c,i)=>plain.set(c,[45,46,47,48,51,52,54,55,56][i]));
+    [...'!@#$%^&*()'].forEach((c,i)=>shifted.set(c,30+i));
+    [...'_+{}:"<>?'].forEach((c,i)=>shifted.set(c,[45,46,47,48,51,52,54,55,56][i]));
+    plain.set(' ',44);plain.set('\n',40);plain.set('\t',43);plain.set('`',53);
+    plain.set('\\',locale===0?100:49);shifted.set('|',locale===0?100:49);
+    if(locale===0) { plain.set('#',50);shifted.delete('#');shifted.set('"',31);shifted.set('£',32);shifted.set('@',52);shifted.set('~',50); }
+    else shifted.set('~',53);
+    return [...value].map(c=>{
+      let usage,shift=false;
+      if(/^[a-zA-Z]$/.test(c)) {
+        if(!locks[0].known)throw new Error('Press a letter in the text box first so host Caps Lock is known');
+        usage=c.toLowerCase().charCodeAt(0)-97+4;shift=(c===c.toUpperCase())!==locks[0].value;
+      } else if(plain.has(c))usage=plain.get(c);
+      else if(shifted.has(c)){usage=shifted.get(c);shift=true;}
+      else throw new Error(`Unsupported character: ${JSON.stringify(c)}`);
+      return {newline:c==='\n',events:shift?[[225,1],[usage,1],[usage,0],[225,0]]:[[usage,1],[usage,0]]};
+    });
+  }
+
   const codes = {Enter:40, Escape:41, Backspace:42, Tab:43, Space:44,
     Minus:45, Equal:46, BracketLeft:47, BracketRight:48, Backslash:49,
     Semicolon:51, Quote:52, Backquote:53, Comma:54, Period:55, Slash:56,
@@ -322,6 +355,7 @@ document.addEventListener("fullscreenchange", () => {
     return {known,value};
   }
   function observe(event) {
+    const previousCaps=snapshot().value&16;
     for(const lock of locks) {
       // false alone cannot distinguish unsupported reporting from an off lock.
       // A true observation establishes support. Letters also corroborate Caps.
@@ -335,8 +369,10 @@ document.addEventListener("fullscreenchange", () => {
         lock.known=true;lock.value=value;
       }
     }
+    if(pasting && previousCaps!==(snapshot().value&16))release('Paste stopped: host Caps Lock changed');
   }
   function reset(message) {
+    if(pasting)cancelPaste(message);
     captured=requested=false;held.clear();generation=sequence=0;
     button.textContent='Capture keyboard';button.setAttribute('aria-pressed','false');
     status.textContent=message;
@@ -348,7 +384,7 @@ document.addEventListener("fullscreenchange", () => {
     data.set([66,75,1,op]);view.setUint32(4,generation,true);view.setUint32(8,++sequence,true);
     data[12]=usage;data[13]=down;
     if(op!==1) { const s=snapshot();data[14]=s.known;data[15]=s.value; }
-    socket.send(data);return true;
+    socket.send(data);return sequence;
   }
   function release(message='Keyboard released') {
     // Close also covers an admission reply still in flight; never auto-recapture.
@@ -356,10 +392,10 @@ document.addEventListener("fullscreenchange", () => {
     reset(message);
   }
   window.addEventListener('agon-reset-request',()=>release('Keyboard released for reset'));
-  button.addEventListener('click', event => {
+  function capture(event,preserveLocks=false) {
     if(captured || requested) { release();return; }
-    for(const lock of locks) { lock.known=false;lock.value=false; }
-    observe(event);requested=true;lastReply=performance.now();status.textContent='Requesting keyboard…';
+    if(!preserveLocks)for(const lock of locks) { lock.known=false;lock.value=false; }
+    if(!preserveLocks)observe(event);requested=true;lastReply=performance.now();status.textContent='Requesting keyboard…';
     canvas.focus();
     const ws=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/keyboard/browser`);
     socket=ws;ws.binaryType='arraybuffer';
@@ -370,17 +406,25 @@ document.addEventListener("fullscreenchange", () => {
       if(data.length!==16 || data[0]!==66 || data[1]!==75 || data[2]!==1) { release('Keyboard protocol error');return; }
       if(data[3]!==0) { release(data[3]===2?'Keyboard unavailable: select Extender input and release physical keys':'Keyboard released by P4; capture again');return; }
       lastReply=performance.now();
+      const replyView=new DataView(data.buffer);
+      if(captured && replyView.getUint32(4,true)!==generation){release('Keyboard generation changed');return;}
+      const replySequence=replyView.getUint32(8,true);
+      if(acknowledgement?.sequence===replySequence) {
+        clearTimeout(acknowledgement.timer);acknowledgement.resolve();acknowledgement=undefined;
+      }
       if(requested) {
         generation=new DataView(data.buffer).getUint32(4,true);requested=false;captured=true;
         button.textContent='Release keyboard';button.setAttribute('aria-pressed','true');
-        status.textContent='Keyboard captured';canvas.focus();
+        status.textContent='Keyboard captured';if(!dialog.open)canvas.focus();
       }
     };
     ws.onclose=()=>{if(socket===ws){socket=undefined;reset('Keyboard disconnected; capture again');}};
     ws.onerror=()=>{if(socket===ws)release('Keyboard connection failed');};
-  });
+  }
+  button.addEventListener('click',event=>capture(event));
   function key(event, down) {
     if(!captured || event.isComposing)return;
+    if(pasting){event.preventDefault();release('Paste stopped by keyboard input');return;}
     const usage=codes[event.code];
     if(usage===undefined) { status.textContent=`Unsupported key: ${event.code || event.key}`;return; }
     event.preventDefault();event.stopPropagation();
@@ -407,7 +451,56 @@ document.addEventListener("fullscreenchange", () => {
   });
   window.addEventListener('pagehide',()=>release());
   document.addEventListener('fullscreenchange',()=>{
-    if(captured)canvas.focus();
+    if(captured && !dialog.open)canvas.focus();
+  });
+  document.querySelector('#paste-text').addEventListener('click',()=>{dialog.showModal();text.focus();});
+  text.addEventListener('keydown',observe);text.addEventListener('keyup',observe);
+  document.querySelector('#paste-stop').addEventListener('click',()=>release('Paste stopped; keyboard released'));
+  document.querySelector('#paste-close').addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('cancel',()=>{if(pasting)release('Paste stopped; keyboard released');});
+  dialog.addEventListener('close',()=>{if(pasting)release('Paste stopped; keyboard released');if(captured)canvas.focus();});
+  start.addEventListener('click',async event=>{
+    if(pasting)return;
+    const token=++job;pasting=true;pasteState.textContent='Preparing text…';start.disabled=true;document.querySelector('#paste-stop').disabled=false;
+    try {
+      const cadence=Number(document.querySelector('#paste-cadence').value);
+      const pause=Number(document.querySelector('#paste-line-pause').value);
+      if(!Number.isInteger(cadence)||cadence<80||cadence>2000||!Number.isInteger(pause)||pause<100||pause>10000)
+        throw new Error('Choose 80–2000 ms per character and 100–10000 ms after Enter');
+      let content=text.value.replace(/\r\n?/g,'\n');
+      if(document.querySelector('#paste-enter').checked)content+='\n';
+      if(!content.length||content.length>4096)throw new Error('Enter 1–4096 characters');
+      const response=await fetch('/keyboard/status',{signal:AbortSignal.timeout(2000)});
+      if(!response.ok)throw new Error('Keyboard status unavailable');
+      const peer=await response.json();if(token!==job)return;
+      const chars=planPaste(content,peer.locale);
+      if(held.size)throw new Error('Release keyboard keys before sending text');
+      if(!captured&&!requested)capture(event,true);
+      const deadline=performance.now()+5000;
+      while(!captured){if(token!==job)return;if(performance.now()>deadline)throw new Error('Keyboard admission timed out');await sleep(20);}
+      for(let i=0;i<chars.length;++i) {
+        for(const [usage,down] of chars[i].events) {
+          if(token!==job)return;
+          // ACK means P4 queue acceptance, never MOS/application consumption.
+          // Delay after every transition; overdue timers must not cause catch-up bursts.
+          await new Promise((resolve,reject)=>{
+            const seq=send(2,usage,down);
+            if(!seq){reject(new Error('Keyboard unavailable'));return;}
+            acknowledgement={sequence:seq,resolve,reject,timer:setTimeout(()=>{
+              acknowledgement=undefined;reject(new Error('Paste acknowledgement timed out'));
+            },1000)};
+          });
+          await sleep(cadence/chars[i].events.length);
+        }
+        if(token!==job)return;
+        pasteState.textContent=`Sent ${i+1} of ${chars.length} characters to P4`;
+        if(chars[i].newline)await sleep(pause);
+      }
+      if(token===job)cancelPaste('Text sent to P4');
+    } catch(error) {
+      if(token!==job)return;
+      release(`Paste stopped: ${error.message}`);
+    }
   });
   setInterval(()=>{
     if(requested && performance.now()-lastReply>5000)release('Keyboard admission timed out');

@@ -11,7 +11,7 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(Quiet,directory=str(ROOT/'vdp
 Thread(target=server.serve_forever,daemon=True).start()
 try:
     with sync_playwright() as pw:
-        browser=pw.chromium.launch(headless=True,args=['--enable-unsafe-swiftshader'])
+        browser=pw.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--enable-unsafe-swiftshader'])
         page=browser.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
         page.add_init_script('''
 window.sockets=[];
