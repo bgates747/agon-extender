@@ -247,6 +247,21 @@ bytes, 91 free; ordinary composition uses 130,752, 320 free. Observed loss is
 fenced and mainboard keyboard input restored; no automatic reconnect, committed
 display-route recovery, P4 change, bench operation or automatic commit.
 
+P08-F02c2b8 [x] — Author-approved off-bench P4 runtime cancellation and
+reattachment in the private candidate. Monitor live held controls, fence before
+discarding old UART/keyboard/session/service state, and require reciprocal
+release and actual TX idle before reattachment. No EMOS ROM addition, ordinary
+profile change, bench operation or payload activation.
+[Contract](PORT-008/P4-RUNTIME-RECOVERY.md).
+
+[Results](PORT-008/P4-RUNTIME-RECOVERY-RESULTS.md): 718 paired adapter cases,
+four focused reset checks, twelve regression suites, two negative controls and
+full ordinary/private P4-PC compile/validation checks pass. The private owner
+fences before one-time cancellation, rejects old sessions/completions and
+requires reciprocal release plus TX idle before reattachment. EMOS remains
+unchanged at 91 ROM bytes free. No automatic EMOS reconnect or committed-route
+recovery, universal reset detection, native payload, bench access or promotion.
+
 P08-F02c3 [ ] — Bind current P4-PC PARLIO TX/RX and the EMOS assembly payload
 loop under that coordinator; prove adapter cleanup and first/last-byte software
 ordering in target builds and simulated peers. Hardware timing still belongs

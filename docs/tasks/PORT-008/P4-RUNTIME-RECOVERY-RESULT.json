@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "result": "OFF_BENCH_PASS",
+  "scope": "Private P4 sampled control-withdrawal cancellation and reattachment; not full reset detection, automatic EMOS reconnect, committed ExCom recovery or native parallel payload",
+  "extender_source_head": "059d469b7e5268c635668e1c74fc7c5430b13951",
+  "extender_source_dirty": true,
+  "emos_source_head": "a67e27ff0ee2d9fc7ce56e94012e8463fcec1af6",
+  "emos_changed_in_tranche": false,
+  "emos_candidate_rom_bytes": 130981,
+  "emos_candidate_rom_free_bytes": 91,
+  "emos_candidate_static_ram_bytes": 4063,
+  "p4_variants": {
+    "p4-candidate": {
+      "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+      "profile": "p4-console",
+      "board": "p4-pc",
+      "display_output": "browser",
+      "private_boot_runtime": true,
+      "artifacts": {
+        "build/agon_extender.bin": {
+          "bytes": 1603552,
+          "sha256": "839d8244a1bd21ba795bb85dac9e747d711d53d032c425d3dd79a7a0be76e1f9"
+        },
+        "build/agon_extender.elf": {
+          "bytes": 34271956,
+          "sha256": "958cdec4b913326bf30fec79345ca8f192ebcb0a4020cffc017f1547e0ad6571"
+        },
+        "build/agon_extender.map": {
+          "bytes": 12742981,
+          "sha256": "d19fd44855d0ea622c0cd769b6c685467aa298f677517f5ee013e0c64725c5a5"
+        },
+        "build/agon_extender.factory.bin": {
+          "bytes": 1734624,
+          "sha256": "7bd32ff0fda5a4dc32f7eb4063a41dd21671d8d8458080febef76c8b063d8d39"
+        },
+        "validation.json": {
+          "bytes": 746,
+          "sha256": "a40a17ec49ae1681321605ffc166b48ffa7a7d5afb2c0603bcc30edc11abcf45"
+        },
+        "sdkconfig": {
+          "bytes": 92356,
+          "sha256": "2c2fb0762bdc27251d9eaf1e8b02969b967c8f036fdd92c6cef125f12a141051"
+        },
+        "dependencies.lock": {
+          "bytes": 14602,
+          "sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+        },
+        "source.tar.gz": {
+          "bytes": 27895193,
+          "sha256": "9df321147de5a41b8196964cbf308a3ffd7180bcf5c64d00a71680ddb81b8ab7"
+        },
+        "source-inputs.json": {
+          "bytes": 1143603,
+          "sha256": "b11649570930fddc5f85ee75ca9bc520e9d9b7b4fd13c8ff4ae7c5ebe9d17a4a"
+        },
+        "size-sections.txt": {
+          "bytes": 1931,
+          "sha256": "9d66214bf983dfa2dad11bf896e525d6f2c778480ca83229b1e010a09da2bf0d"
+        }
+      }
+    },
+    "p4-ordinary": {
+      "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+      "profile": "p4-console",
+      "board": "p4-pc",
+      "display_output": "browser",
+      "private_boot_runtime": false,
+      "artifacts": {
+        "build/agon_extender.bin": {
+          "bytes": 1600096,
+          "sha256": "7cbb91a7351fa7f3529a2a622129d74c502dab76d10a03ddfebf1e863e269548"
+        },
+        "build/agon_extender.elf": {
+          "bytes": 34226640,
+          "sha256": "a1b1d1869f227f9f780b67c8ebe81b5fa7ba4e8bf23b1d02733dcaa76f1249d1"
+        },
+        "build/agon_extender.map": {
+          "bytes": 12737023,
+          "sha256": "dc9cd755a14d1152900c51c24dd8e3416cedba126fd340c8c90a970c53707549"
+        },
+        "build/agon_extender.factory.bin": {
+          "bytes": 1731168,
+          "sha256": "8e7b4d2f0e432b7a3a8d8aa8d3d27c00b2cad3ebfe622c853ac4adabefe92f27"
+        },
+        "validation.json": {
+          "bytes": 747,
+          "sha256": "e6e8e93de5688cb1d9628ab568924c3c14855e99d47d75d4c9d5f5080e96bbcb"
+        },
+        "sdkconfig": {
+          "bytes": 92356,
+          "sha256": "2c2fb0762bdc27251d9eaf1e8b02969b967c8f036fdd92c6cef125f12a141051"
+        },
+        "dependencies.lock": {
+          "bytes": 14602,
+          "sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+        },
+        "source.tar.gz": {
+          "bytes": 27895193,
+          "sha256": "28e2595be2591c43ac292a44ea90e09492840b47ca82203a81a07f08f8faab1a"
+        },
+        "source-inputs.json": {
+          "bytes": 1143603,
+          "sha256": "b11649570930fddc5f85ee75ca9bc520e9d9b7b4fd13c8ff4ae7c5ebe9d17a4a"
+        },
+        "size-sections.txt": {
+          "bytes": 1930,
+          "sha256": "77be5eff260c2e02714c771efb801529bac50c9a5601821eff68e757aa483d40"
+        }
+      }
+    }
+  },
+  "checks": {
+    "paired_adapter_cases": 718,
+    "new_runtime_cases": 12,
+    "focused_reset_checks": 4,
+    "regression_suites": 12,
+    "negative_controls": 2,
+    "full_private_idf_compilation": "PASS; final unchanged-source dependency check and maintained validator",
+    "initial_private_wrapper_source_guard": "expected refusal: source finalized while initial compilation was running; no qualification of intermediate source",
+    "full_ordinary_wrapper": "PASS",
+    "final_source_closure_both_variants": "PASS"
+  },
+  "timing_scope": "UTC endpoints and host-monotonic compile/test durations; no GPIO/UART/hardware performance or clock calibration claim",
+  "tests": [
+    {
+      "test": "parallel_boot_release_test",
+      "start_utc": "2026-10-09T03:27:12.317656+00:00",
+      "end_utc": "2026-10-09T03:27:15.330670+00:00",
+      "elapsed_host_seconds": 3.013025,
+      "exit_code": 0
+    },
+    {
+      "test": "p4_transport_reset_test",
+      "start_utc": "2026-10-09T03:27:15.330766+00:00",
+      "end_utc": "2026-10-09T03:27:19.068003+00:00",
+      "elapsed_host_seconds": 3.737259,
+      "exit_code": 0
+    },
+    {
+      "test": "console_uart_owner_test",
+      "start_utc": "2026-10-09T03:23:51.365225+00:00",
+      "end_utc": "2026-10-09T03:23:53.029540+00:00",
+      "elapsed_host_seconds": 1.664335,
+      "exit_code": 0
+    },
+    {
+      "test": "console_session_test",
+      "start_utc": "2026-10-09T03:23:53.030261+00:00",
+      "end_utc": "2026-10-09T03:23:53.887878+00:00",
+      "elapsed_host_seconds": 0.857623,
+      "exit_code": 0
+    },
+    {
+      "test": "console_mode_lifecycle_test",
+      "start_utc": "2026-10-09T03:23:53.888563+00:00",
+      "end_utc": "2026-10-09T03:24:04.063864+00:00",
+      "elapsed_host_seconds": 10.175308,
+      "exit_code": 0
+    },
+    {
+      "test": "test_sd_service",
+      "start_utc": "2026-10-09T03:24:04.063938+00:00",
+      "end_utc": "2026-10-09T03:24:04.820709+00:00",
+      "elapsed_host_seconds": 0.756788,
+      "exit_code": 0
+    },
+    {
+      "test": "test_webdav_runtime",
+      "start_utc": "2026-10-09T03:24:04.820788+00:00",
+      "end_utc": "2026-10-09T03:24:18.015125+00:00",
+      "elapsed_host_seconds": 13.194349,
+      "exit_code": 0
+    },
+    {
+      "test": "test_application_card",
+      "start_utc": "2026-10-09T03:24:18.015188+00:00",
+      "end_utc": "2026-10-09T03:24:25.679844+00:00",
+      "elapsed_host_seconds": 7.664679,
+      "exit_code": 0
+    },
+    {
+      "test": "usb_boot_keyboard_test",
+      "start_utc": "2026-10-09T03:24:25.679915+00:00",
+      "end_utc": "2026-10-09T03:24:26.911863+00:00",
+      "elapsed_host_seconds": 1.231972,
+      "exit_code": 0
+    },
+    {
+      "test": "usb_cli_keyboard_test",
+      "start_utc": "2026-10-09T03:24:26.911947+00:00",
+      "end_utc": "2026-10-09T03:24:30.029033+00:00",
+      "elapsed_host_seconds": 3.117103,
+      "exit_code": 0
+    },
+    {
+      "test": "processed_keyboard_test",
+      "start_utc": "2026-10-09T03:24:30.029919+00:00",
+      "end_utc": "2026-10-09T03:24:34.143866+00:00",
+      "elapsed_host_seconds": 4.113929,
+      "exit_code": 0
+    },
+    {
+      "test": "test_remote_keyboard",
+      "start_utc": "2026-10-09T03:24:34.143942+00:00",
+      "end_utc": "2026-10-09T03:24:35.953296+00:00",
+      "elapsed_host_seconds": 1.809392,
+      "exit_code": 0
+    }
+  ],
+  "negative_controls": [
+    {
+      "test": "lost-controls-ignored",
+      "result": "EXPECTED_TEST_FAILURE_WITH_ASSERTION",
+      "exit_code": 1,
+      "start_utc": "2026-10-09T03:33:55.906396+00:00",
+      "end_utc": "2026-10-09T03:33:58.908100+00:00",
+      "elapsed_host_seconds": 3.00169
+    },
+    {
+      "test": "stale-worker-accepted",
+      "result": "EXPECTED_TEST_FAILURE_WITH_ASSERTION",
+      "exit_code": 1,
+      "start_utc": "2026-10-09T03:33:58.908670+00:00",
+      "end_utc": "2026-10-09T03:34:02.304930+00:00",
+      "elapsed_host_seconds": 3.396273
+    }
+  ],
+  "ordinary_build_timing": {
+    "start_utc": "2026-10-09T03:29:17.986783+00:00",
+    "end_utc": "2026-10-09T03:35:32.933396+00:00",
+    "elapsed_host_seconds": 374.946599,
+    "exit_code": 0
+  },
+  "private_final_verification_timing": {
+    "start_utc": "2026-10-09T03:28:55.987839+00:00",
+    "end_utc": "2026-10-09T03:29:00.446713+00:00",
+    "elapsed_host_seconds": 4.458879
+  },
+  "private_initial_full_compile_duration": "not separately measured; final verification timing must not be presented as complete clean-build duration",
+  "test_source_artifacts": {
+    "tests/p4_transport_reset_test.py": {
+      "bytes": 7131,
+      "sha256": "694b77136280bb7389674d815114b30043c7f0b45eaae89c589611e8d99b9efd"
+    },
+    "tests/p4_transport_reset_test.cpp": {
+      "bytes": 3932,
+      "sha256": "daf24a62935b94c87d479ab00fcf6e908001c3b08715e4956259270448de9663"
+    },
+    "tests/parallel_boot_release_test.py": {
+      "bytes": 2028,
+      "sha256": "2cddef6bab1c89afff7fccdd0bb543a6eb0ac5c5eede724e5e67bbe6b2dda8c4"
+    },
+    "tests/parallel_boot_release_test.cpp": {
+      "bytes": 9663,
+      "sha256": "827607a786887353d6fe90b591e6842c68eaca93b75f667b823a89aea3bad6a2"
+    },
+    "tests/usb_cli_keyboard_test.py": {
+      "bytes": 1782,
+      "sha256": "536d5476ee7d9fa35ffca5052a43c3da853480fef6511b5d8f1418ad871a546b"
+    },
+    "tests/usb_cli_keyboard_test.cpp": {
+      "bytes": 3422,
+      "sha256": "29a012110a52522827ad6b864962d915ac5e5e56480fe9781805a2b5411c2696"
+    },
+    "tests/sd_service_test.cpp": {
+      "bytes": 2232,
+      "sha256": "712e703f243e94a2265ed52f502b4167f8e93499f925907ab7916271e66c398f"
+    },
+    "tests/storage/admission_peer_test.cpp": {
+      "bytes": 8321,
+      "sha256": "855e51232036bfe447258d6aef796b3fc9fa963cd8805fc19632911b5c0e9a25"
+    }
+  },
+  "evidence_silo": "agents/port008-p4-runtime",
+  "logs": {
+    "console_mode_lifecycle_test.log": {
+      "bytes": 98,
+      "sha256": "5edc61d0686aa1a43bd3b4cf8fed84296e2139d541f590fd4cb84e64600b7b03"
+    },
+    "console_session_test.log": {
+      "bytes": 100,
+      "sha256": "bc25a807cc957e16b1727d4d85b0c2ce9a6445d818fc3305610cab8637dd9cc1"
+    },
+    "console_uart_owner_test.log": {
+      "bytes": 100,
+      "sha256": "c48bac343b40a21c65a57514afa40dce30752fc7e680a1907fc125798194c5f1"
+    },
+    "lost-controls-ignored.log": {
+      "bytes": 1287,
+      "sha256": "2810b7a26c7289fba15a405a6e9dbf52d170d57a649de57aed5700de6149da47"
+    },
+    "ordinary-wrapper.log": {
+      "bytes": 197,
+      "sha256": "d5a8d7c979b2a1fcf74dab229a1fb2ef49878e56c4f74b7631725010d2120f85"
+    },
+    "p4_transport_reset_test.log": {
+      "bytes": 242,
+      "sha256": "48b1a5818b4dc61d3b99a4ed5b04d3b3730f0e9e64d4f85c859c21a9a28da09f"
+    },
+    "parallel_boot_release_test.log": {
+      "bytes": 414,
+      "sha256": "d005ae537b4c53abc3fd9d0296037c65a453d5fab66845133abaad95d11d6bcb"
+    },
+    "processed_keyboard_test.log": {
+      "bytes": 64,
+      "sha256": "71063793d7cff2065a38f7d575936e55d2458b831ab268247f8c32e649424b5e"
+    },
+    "stale-worker-accepted.log": {
+      "bytes": 1155,
+      "sha256": "a42bf76f0e34b92f5a85cb5ecb1e8e8c6f8b91663a2de6bddc873195d6f033b6"
+    },
+    "test_application_card.log": {
+      "bytes": 196,
+      "sha256": "f4fad928a9a5b0ecb4b287c8901cd441265701f18867e7ae3accb7937eef9432"
+    },
+    "test_remote_keyboard.log": {
+      "bytes": 199,
+      "sha256": "f253d03d6bc848f1c1097b10fb627dde22923423ff58ed54cb0ff26bfdf72809"
+    },
+    "test_sd_service.log": {
+      "bytes": 98,
+      "sha256": "890cd7025dd2a845d30e0a3b2511b1ad438c3fb463a02bda96a1149cb4f155dc"
+    },
+    "test_webdav_runtime.log": {
+      "bytes": 218,
+      "sha256": "242917de0cf16b266ac965cc65df5646279a512d04baef5b8c76a5d3f057a86f"
+    },
+    "usb_boot_keyboard_test.log": {
+      "bytes": 103,
+      "sha256": "b16316fb1db8d9aed825d2cad1eda75e9c4335f2b99f94c6e02d5b608076bb5c"
+    },
+    "usb_cli_keyboard_test.log": {
+      "bytes": 79,
+      "sha256": "a31701294246890cca0bac772e3c1560b35c957eeea2d24a1315849ebca10677"
+    },
+    "p4-candidate/build.log": {
+      "bytes": 498818,
+      "sha256": "ad34099d13a121095d6f44f59500a7603d1c73006d64b4b7a37921fa31b26dca"
+    },
+    "p4-candidate/incremental-build.log": {
+      "bytes": 1326,
+      "sha256": "433f2bb7fc7932c6166887c18a4d9bc0f7833a8129d67a370d708e02358eb9f8"
+    },
+    "p4-candidate/incremental-check.json": {
+      "bytes": 3898,
+      "sha256": "e2fec64bfe70b61dab35edd82eb5c675d07a4c3235a7242ad6b4a6f957c31e36"
+    },
+    "p4-ordinary/build.log": {
+      "bytes": 498742,
+      "sha256": "949df7ab6bdd909d92bd5dbc5a2aecc83964d45cf8851303ad1cb71fa3cf907a"
+    },
+    "p4-ordinary/manifest.json": {
+      "bytes": 5063,
+      "sha256": "27210344ea2900037c83d6c8c1dc9cabc6060013a12709d5f669137050ddb60e"
+    },
+    "tests.json": {
+      "bytes": 2497,
+      "sha256": "0c98fdd66b88c2fb99f9260ad36925db76ed6d53725174d8c80251bba34e95c1"
+    },
+    "negative-controls.json": {
+      "bytes": 524,
+      "sha256": "7e862c8539c3c85352eabde0bdf1c0b2f51017171461bfe003a72b7637f657ab"
+    },
+    "ordinary-source-check.json": {
+      "bytes": 367,
+      "sha256": "ab2c091d500f05bc38b0cdba525dba875e07039435b5f145f7c251e395948297"
+    },
+    "finish_candidate.py": {
+      "bytes": 2845,
+      "sha256": "bdeb3b7af22bbada891400a8057a211e06c1458ad7bcc4483dd116d14801d49d"
+    }
+  },
+  "bench_used": false,
+  "sd_accessed": false,
+  "deployed": false,
+  "production_promoted": false,
+  "committed": false
+}
