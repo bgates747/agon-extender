@@ -1,0 +1,209 @@
+{
+  "state": "bench-free development checkpoint; no live parser, boot binding, activation or deployment",
+  "recorded_utc": "2026-10-09T00:29:57.678076+00:00",
+  "base_commits": {
+    "agon-extender": "a10b207a6ffc3ed9341c7f041f7f9db0deb40a7e",
+    "agon-emos": "c98f80e397f72369e9404adc18507b9378a1708f"
+  },
+  "accounting": {
+    "rom_used_bytes": 130212,
+    "rom_free_bytes": 860,
+    "static_ram_bytes": 4058,
+    "linker_fill_bytes": 70
+  },
+  "rom_baseline_bytes": 129464,
+  "rom_growth_bytes": 748,
+  "session_object_bytes": 11,
+  "live_session_objects": 0,
+  "build_id": "agon-emos-v0.1.24-b2026-10-09-00-19-36Z",
+  "artifacts": {
+    "EMOS.bin": {
+      "bytes": 130212,
+      "sha256": "31db1c50b79ae0599ca87835dfbb81200babcff408857bec18e8b1b0ca385012"
+    },
+    "EMOS.elf": {
+      "bytes": 324472,
+      "sha256": "05ccbe59092aa86abbc6b16abf7245e4d42555485f405fde0b8ace1fd0e84389"
+    },
+    "P4.bin": {
+      "bytes": 1598528,
+      "sha256": "eeed26e916e27cb418dfb956b74680088189ebb1dd1db1ddf4ee24fddc896f95"
+    },
+    "P4.factory.bin": {
+      "bytes": 1729600,
+      "sha256": "ac2ae54a95a8ba9d801c0746f1f30cb03e239f0931ef60cf267df2e14cd3af82"
+    }
+  },
+  "p4": {
+    "profile": "p4-console",
+    "board": "p4-pc",
+    "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+    "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+    "source_snapshot_verified": true,
+    "sdkconfig_sha256": "2c2fb0762bdc27251d9eaf1e8b02969b967c8f036fdd92c6cef125f12a141051",
+    "dependencies_lock_sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+  },
+  "sources": {
+    "agon-extender": {
+      "vdp/video/extender/transport/parallel_session.h": {
+        "bytes": 4054,
+        "sha256": "c640728e480cd7c4f789b1dabeff502ce5c5bfd819d6683904c8207549d32fb3"
+      },
+      "vdp/video/extender/transport/parallel_wire.h": {
+        "bytes": 1367,
+        "sha256": "21d79347d2ca93dcc92a17b52dae1f00d69329becab39e595cc5acf6ea5bf401"
+      },
+      "vdp/video/extender/transport/p4_parallel_handover.hpp": {
+        "bytes": 2408,
+        "sha256": "fecc0a7005489645c2e9617dac8ba22efc300fdc8426e995ca3f5d10c9580759"
+      },
+      "vdp/video/extender/transport/p4_parallel_handover.cpp": {
+        "bytes": 3999,
+        "sha256": "a320a8c3bbe3799cbe6df8f11ff969b5db284eab7f9236ff7f4fd49dea79f86f"
+      },
+      "tests/parallel_session_test.py": {
+        "bytes": 1536,
+        "sha256": "7d1626d58071977064d004c97d1e158c103359bb6616b8900da6e4a8e2f99e1b"
+      },
+      "tests/parallel_session_test.cpp": {
+        "bytes": 7296,
+        "sha256": "5ef969455cc03d861125095fd7710910b23f650655e7d6d9f0d4424f9a457984"
+      }
+    },
+    "agon-emos": {
+      "src/emos_parallel_session.h": {
+        "bytes": 4054,
+        "sha256": "c640728e480cd7c4f789b1dabeff502ce5c5bfd819d6683904c8207549d32fb3"
+      },
+      "src/emos_parallel_wire.h": {
+        "bytes": 1367,
+        "sha256": "21d79347d2ca93dcc92a17b52dae1f00d69329becab39e595cc5acf6ea5bf401"
+      },
+      "src/emos_console.c": {
+        "bytes": 8520,
+        "sha256": "8853d03848a2aa28075db63a8caa7df2aaec80a45b39b14e5ce27a4e247984e9"
+      },
+      "src/emos_keyboard.c": {
+        "bytes": 21824,
+        "sha256": "f2231853255b6cbd5fa6880c795d7858a8ac800509c4494d246f04085746e49f"
+      },
+      "src/emos_keyboard.h": {
+        "bytes": 2295,
+        "sha256": "e684f9a220620dbce9826d692c23e6c77fe2104a8d6ec3a340c7b8791145980d"
+      },
+      "src/emos_parallel_handover.h": {
+        "bytes": 3359,
+        "sha256": "de138b4c67a1082751720ab74ba829e3f32994e577a79fbcea3ee8a0328893d6"
+      },
+      "tests/emos_keyboard_harness.c": {
+        "bytes": 18643,
+        "sha256": "0eeb150358d6fade87816c498c13fcd5f0cfa59bf4746f55aa69b1d09ad20645"
+      },
+      "tests/emos_console_harness.c": {
+        "bytes": 4535,
+        "sha256": "457b3e9cacb234360602e264e3bdd2766742b815a453cd7d26c3bf82509b07e3"
+      },
+      "tests/uart_put_cpu/src/bin/parallel_session.rs": {
+        "bytes": 4136,
+        "sha256": "f5d5a554dca9628a389d65fe50f0e8d63e313917e50a8595fc946d196466d972"
+      }
+    }
+  },
+  "checks": {
+    "paired_session_checks": 1149,
+    "linked_session_checks": 1334,
+    "linked_reservation_checks": 22,
+    "linked_parking_checks": 289,
+    "paired_admission_checks": 18097,
+    "paired_handover_checks": 5208,
+    "native_parking_checks": 196
+  },
+  "evidence": {
+    "host-session.log": {
+      "bytes": 231,
+      "sha256": "1d2b5af9b5db036cd4d0945d8b21761872fb3c4a1a93c8bbb45bee873df53d7e"
+    },
+    "vectors.txt": {
+      "bytes": 174525,
+      "sha256": "b591a5b3294d8d79fb5ef5498815554e62869b9e18368ea3647fa380cedb10db"
+    },
+    "session-cpu.log": {
+      "bytes": 443,
+      "sha256": "0f71d9b5292e7e21e7569b80180eb7ceede3391af499e5925bb52fe6f9e0daa1"
+    },
+    "reservation-cpu.log": {
+      "bytes": 484,
+      "sha256": "8d30823ae6f6175e15aa63d008d7030dc16579ac74136cbdb5861cd70f2b6436"
+    },
+    "parking-cpu.log": {
+      "bytes": 440,
+      "sha256": "c017ea6c6f1f0edcc634e48269d6bdce246f5fe0c1780fc771b5a587a634b8d7"
+    },
+    "admission.log": {
+      "bytes": 214,
+      "sha256": "7a560af1ced115a9b5f12d5f16c8eb803949d5f25c3270020eaee9888270eb99"
+    },
+    "handover.log": {
+      "bytes": 256,
+      "sha256": "0651062617df0273e7e650cf96872e60fcd0e6211c19e745d5ffbccaa5ef626b"
+    },
+    "keyboard.log": {
+      "bytes": 391,
+      "sha256": "63803f61e8c366a13f557dfb3369128d2bf50bc542441f50fb673cf88d3e41e2"
+    },
+    "console.log": {
+      "bytes": 326,
+      "sha256": "ca7347b90e8bc4a7c9dc895751c4dc72505ecc581b1223cdcbe93b4b2e3e580e"
+    },
+    "console-session.log": {
+      "bytes": 100,
+      "sha256": "c4fae76532bba9634d558547f29765cce7f190e200a959a552b47f85450bd523"
+    },
+    "p4-parking.log": {
+      "bytes": 209,
+      "sha256": "0b11fc4ab1e1746d6e628964abf441dd1522e6a5d23b61df9be11c730153c199"
+    },
+    "uart-owner.log": {
+      "bytes": 100,
+      "sha256": "b478d415ad57d8713a0068c32f72b645f3c6f79938b068a53e76409a7de879b4"
+    },
+    "mode.log": {
+      "bytes": 264,
+      "sha256": "647bb9f49aac4abb8f61562bb626a34a03e623d09695d88d79baebfba151b461"
+    },
+    "profile.log": {
+      "bytes": 966,
+      "sha256": "171c0bef6106960e715dac25cff0efae7dce5a59363b57984785c58ec768ffcf"
+    },
+    "emos-build-r03.log": {
+      "bytes": 621384,
+      "sha256": "c2af39594b2a612581a36cb8820ee409674a5b6c244d8e263386c4cef1e9ce7c"
+    },
+    "p4-build-r02.log": {
+      "bytes": 193,
+      "sha256": "0ff947b540751b8f46e7d863b250f9acfcb9e3edfd131c1559f46b5ea3d802f9"
+    },
+    "p4-recheck.log": {
+      "bytes": 189,
+      "sha256": "31fa2becc459fbe65cc13d493a342a6e8734f70cb320bb5efca41df7dede4065"
+    },
+    "rom-account/BASELINE.json": {
+      "bytes": 21065,
+      "sha256": "21082b24703cc3bd6dd74bdc10cccb1f0000a9d8377100c11c008a27b7219fbb"
+    },
+    "p4-build-r02/validation.json": {
+      "bytes": 711,
+      "sha256": "52afa0ac06cc747cbfa817ca9295c83621cf6e152cfd96c268eee14ce91d754f"
+    },
+    "p4-build-r02/incremental-check.json": {
+      "bytes": 5801,
+      "sha256": "4fa74d096ec02b4615f2bdb689058c26b0df7f58228d90119fc2f240dbb238c2"
+    }
+  },
+  "limits": [
+    "Sanitizer checks used detect_leaks=0 because leak scanning is unsupported under the sandbox tracer; ASan/UBSan remain enabled.",
+    "Linked tests model registers and CPU behavior, not a full-system emulator or physical pin timing.",
+    "Fresh nonce and transaction origins, stale-byte quarantine, phase deadlines and physical boot fences remain caller integration work.",
+    "No benchmark, SD access, firmware installation, production promotion or source commit."
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "result": "OFF_BENCH_PASS",
+  "scope": "private startup only; no ExExt payload, runtime reset qualification, deployment, production or commit",
+  "previous_emos": {
+    "rom_used_bytes": 130718,
+    "rom_free_bytes": 354,
+    "static_ram_bytes": 4058
+  },
+  "emos_candidate": {
+    "rom_capacity_bytes": 131072,
+    "rom_used_bytes": 130949,
+    "rom_free_bytes": 123,
+    "static_ram_bytes": 4063,
+    "build_identities": [
+      "agon-emos-v0.1.24-b2026-10-09-01-56-54Z"
+    ],
+    "artifacts": {
+      "MOS.bin": {
+        "bytes": 130949,
+        "sha256": "a1375bc4b7e5f0d767262176e87fdcde94eca41bbefa6ea9d6a22690a2e7678d"
+      },
+      "MOS.elf": {
+        "bytes": 324968,
+        "sha256": "a4d10cf762d0283acd684b0986b8cd0d10ae0fda2679d6e924c0ff22e307d8ec"
+      },
+      "MOS.map": {
+        "bytes": 79374,
+        "sha256": "82a9fe6a22d556f82ee63bfbcda01cced8ab0152fa24f25185f9f2923f88af3a"
+      },
+      "nm.txt": {
+        "bytes": 77392,
+        "sha256": "aa81ade3a15ff9057ec7e2c916fc4ad765f167cb0928566e58a88aed1d94d21c"
+      }
+    },
+    "prepared_snapshot": "worktree-final"
+  },
+  "emos_ordinary": {
+    "rom_capacity_bytes": 131072,
+    "rom_used_bytes": 130747,
+    "rom_free_bytes": 325,
+    "static_ram_bytes": 4058,
+    "build_identities": [
+      "agon-emos-v0.1.24-b2026-10-09-01-59-56Z"
+    ],
+    "artifacts": {
+      "MOS.bin": {
+        "bytes": 130747,
+        "sha256": "9cba479152e2bc7239e46a0c9f7ce40f2adb061eb74d7bd03e12d3686796dd0f"
+      },
+      "MOS.elf": {
+        "bytes": 324912,
+        "sha256": "3b51b90e797b784ce411bdad07664a2d9dfbb8ad604e078ac95a59255a484118"
+      },
+      "MOS.map": {
+        "bytes": 79419,
+        "sha256": "ba24ee606fe2a77f0dfde1def18383fc708777fc85ca7b722bd9a9a8871374c8"
+      },
+      "nm.txt": {
+        "bytes": 77337,
+        "sha256": "6ddd834f08a52e1e368f921546f6b4efca1dfdfeb323f1840a5eeeb2ee49bd3e"
+      }
+    },
+    "prepared_snapshot": "worktree-ordinary"
+  },
+  "current_runtime_sources_match_candidate_snapshot": true,
+  "current_test_snapshot": "worktree-test-evidence",
+  "p4_candidate": {
+    "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+    "candidate_startup": true,
+    "source_snapshot_verified": true,
+    "validation": "PASS",
+    "artifact": {
+      "bytes": 1601264,
+      "sha256": "1592f5cadf8837b1597ea70838ce5a34e09ab9c3e85548f56be0951269328bc8"
+    },
+    "source_inputs": {
+      "bytes": 1143423,
+      "sha256": "d062016b2b3bd391ab753ab9896fa27a7c91669768db020bdd8ecb65fc06068d"
+    },
+    "source_archive": {
+      "bytes": 27892770,
+      "sha256": "89f2ad20bcb3e73d5c245f788cd47ddea068d423f4388501ed0d83008856e60e"
+    },
+    "dependency_lock": {
+      "bytes": 14602,
+      "sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+    }
+  },
+  "p4_ordinary": {
+    "build_id": "UNVERSIONED-DO-NOT-DEPLOY",
+    "candidate_startup": false,
+    "source_snapshot_verified": true,
+    "validation": "PASS",
+    "artifact": {
+      "bytes": 1599648,
+      "sha256": "54787dd50fe921db621a3427e23449cb904ba669c36c550a32ee8b32267b8ae3"
+    },
+    "source_inputs": {
+      "bytes": 1143423,
+      "sha256": "d062016b2b3bd391ab753ab9896fa27a7c91669768db020bdd8ecb65fc06068d"
+    },
+    "source_archive": {
+      "bytes": 27892770,
+      "sha256": "37ba5f7d180c771de2a51c58bdda198ea345f0a3d846ab812604a99b04292179"
+    },
+    "dependency_lock": {
+      "bytes": 14602,
+      "sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+    }
+  },
+  "checks": {
+    "paired_adapter_cases": 706,
+    "linked_startup_cases": 12,
+    "negative_guard_cases": 2,
+    "linked_parking_cases": 289,
+    "linked_control_cases": 10,
+    "linked_boot_leaf_cases": 126,
+    "host_parallel_tests": 9,
+    "sender_host_tests": 1,
+    "console_lifecycle_tests": 6,
+    "emos_profile_tests": 6,
+    "p4_profile_tests": 12
+  },
+  "evidence_silo": "agents/port008-startup",
+  "logs": {
+    "candidate-build-final.log": {
+      "bytes": 665643,
+      "sha256": "357c0c6e1afc9c8f305fcd3a4089a68e57d3133362dd17987dfb284bbab6fa72"
+    },
+    "ordinary-build-r02.log": {
+      "bytes": 671043,
+      "sha256": "320383df5bbf4b17f894cccc425c49bcce4996623efd1f6cc84161f27bbec622"
+    },
+    "paired-startup.log": {
+      "bytes": 404,
+      "sha256": "16e5e7aba0206acc8962dcf56cb4331523120569b31cc1751757bd427a5074e6"
+    },
+    "cpu-startup-final.log": {
+      "bytes": 349,
+      "sha256": "73119432d7ff0225e37b23c837bb90603d04af7f27800a53c8aa706bd5e2e8fb"
+    },
+    "guard-negative.log": {
+      "bytes": 153,
+      "sha256": "72999a0c4ed22706e049a73f9a75692b5acc58cf0cee4f33ad1d02fa4da644ad"
+    },
+    "parallel-host.log": {
+      "bytes": 107,
+      "sha256": "1d8fa7b05c38d1d39198cf202855cacdc9b18bd99085f6763b5040ea7439f034"
+    },
+    "sender-host.log": {
+      "bytes": 230,
+      "sha256": "953445d7527d09da272eef65f1b61f83bbd02408794f0a2e02e097e9cac380a1"
+    },
+    "control-regression.log": {
+      "bytes": 149,
+      "sha256": "92be0170484916e4f401476dcfe3015c4840daea69f8bc73ddb533ae4e35d687"
+    },
+    "lifecycle-regression.log": {
+      "bytes": 98,
+      "sha256": "1f0e09cdb2f45a1806cf399b0491a6f3141a24be64e8c216a2f20327e7ebee94"
+    },
+    "emos-profile-tests.log": {
+      "bytes": 104,
+      "sha256": "5a72b5b1aaadd56b6a6a929592822213c9258d5587bae0327a054c7a17179bb4"
+    },
+    "p4-profile-tests.log": {
+      "bytes": 111,
+      "sha256": "a5be5162cba385a6a989d3e91a52b76e470268dba227d7c7dc8ebb3b100db068"
+    },
+    "cpu-parking.log": {
+      "bytes": 344,
+      "sha256": "f15adab1f9b310f6e610218466b165efa11d315e90ba9ae361efaa3fd65aef88"
+    },
+    "cpu-control.log": {
+      "bytes": 441,
+      "sha256": "4319a7ce276a3066ebc1b5c5520669eeb44d8f49019699dbeb5403aee682815e"
+    },
+    "cpu-boot-leaves.log": {
+      "bytes": 447,
+      "sha256": "3e03c9bcfb109eb869978dbe3e3f8d22abe41577df1f883ca586522ff2e1d60c"
+    },
+    "p4-candidate-wrapper-r02.log": {
+      "bytes": 201,
+      "sha256": "c7dd3ac0efd2cb2332364f76cb8459875b75b35a7e6e262a5c48dd3be2077956"
+    },
+    "p4-recheck-ninja.log": {
+      "bytes": 198,
+      "sha256": "d556214092e811e3f51d70f0cfe171444c33c5591f5c7ab12804bdab78f2f455"
+    },
+    "p4-ordinary-wrapper.log": {
+      "bytes": 191,
+      "sha256": "51d5a499c32f155aa21497d73705beaa98b4a6fbe0a81c83fda219c6b89828f9"
+    },
+    "p4-ordinary-recheck.log": {
+      "bytes": 193,
+      "sha256": "812b63011757a29a589aae4129b660f1f6cddf9cc07042fbab6b980b09a7783f"
+    }
+  },
+  "bench_operations": false,
+  "committed": false
+}

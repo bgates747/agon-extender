@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "scope": "P08-F02c2b5 private physical boot-release leaves; offline checks only",
+  "status": "offline checks pass; live startup and hardware gates remain",
+  "hardware_operations": false,
+  "committed": false,
+  "production_changed": false,
+  "source_heads": {
+    "agon-extender": "a10b207a6ffc3ed9341c7f041f7f9db0deb40a7e",
+    "agon-emos": "c98f80e397f72369e9404adc18507b9378a1708f"
+  },
+  "maintained_sources": {
+    "vdp/video/extender/transport/p4_boot_release.cpp": {
+      "bytes": 3805,
+      "sha256": "a32fe9bcfbb8b7ba7d8da5fbf292c52ecb9c36bda3770b6fe700234abf5d1ad8"
+    },
+    "vdp/video/extender/transport/p4_boot_release.hpp": {
+      "bytes": 1088,
+      "sha256": "81db05b569573f5774456793e2137943b18b6e9b13a93ffd4857469410a7a7ef"
+    },
+    "vdp/build/p4-profiles.json": {
+      "bytes": 10128,
+      "sha256": "7cf6dcfc721dc6187bcd343aaf697f8177cb40ddee5bade4fb63240d168d1e2f"
+    },
+    "tests/parallel_boot_release_test.py": {
+      "bytes": 2028,
+      "sha256": "2cddef6bab1c89afff7fccdd0bb543a6eb0ac5c5eede724e5e67bbe6b2dda8c4"
+    },
+    "tests/parallel_boot_release_test.cpp": {
+      "bytes": 6190,
+      "sha256": "24c21500aef953f56e039b6b514f8caccfc85b456f879d5b00b0d9d893b4ed5f"
+    },
+    "tests/p4_uart_sdk_fake.hpp": {
+      "bytes": 1247,
+      "sha256": "2d83b21bbf30b364ebd6d72b81f805fdadde7506ab47b8ac97f40d38882d1f94"
+    },
+    "../agon-emos/src/emos_parallel_boot.c": {
+      "bytes": 1821,
+      "sha256": "aa7288320a0861e38df44d4518c2d45ec798ae898f2b29fed518a5d712765ce4"
+    },
+    "../agon-emos/src/emos_parallel_handover.h": {
+      "bytes": 4152,
+      "sha256": "5d30654c1182cb00892bc3cc195b21d2ebf3526fbcdc5f18ed19ecc6403037d2"
+    },
+    "../agon-emos/port/mos-agondev.mk": {
+      "bytes": 1427,
+      "sha256": "545d17ed4336aa8314a237c6fdb618794c872e6b4dd8a5fbbca53917cb8e15f0"
+    },
+    "../agon-emos/projects/emos/verify_parallel.py": {
+      "bytes": 40384,
+      "sha256": "383ae0e84e2e994ed95d049ffa5a081b1bb12dedc9cebcf5a48778853ec1cf0b"
+    },
+    "../agon-emos/tests/uart_put_cpu/src/bin/parallel_boot.rs": {
+      "bytes": 5387,
+      "sha256": "3bfb99b5314fa6f8edc60515b13e358355b7582f52cb5e2972f48697e7968df0"
+    },
+    "../agon-emos/tests/test_emos_port.py": {
+      "bytes": 12282,
+      "sha256": "c432e7298436ba576b66d5d8634b6aff0c76d71598fb6364f2db315fef5665da"
+    }
+  },
+  "artifacts": {
+    "agents/port008-boot-release/emos-artifacts/MOS.bin": {
+      "bytes": 130718,
+      "sha256": "0d437669fbf20c7afc5ffaab389fa0e597c4c60053e44208c432857659b76652"
+    },
+    "agents/port008-boot-release/emos-artifacts/MOS.elf": {
+      "bytes": 324712,
+      "sha256": "6f03f2c4775e4ebd9a9f337b740b8c723bc487f902b85b92fce867c71ec36301"
+    },
+    "agents/port008-boot-release/emos-artifacts/MOS.map": {
+      "bytes": 78773,
+      "sha256": "1d4480fa04e7d3cf69de031f226fd59e5a32d8a26bb368c3a5f93d043deaddd2"
+    },
+    "agents/port008-boot-release/emos-artifacts/nm.txt": {
+      "bytes": 77159,
+      "sha256": "f35f30a4d70519a52535c4db0320b7d675c214d58535fbfc9b01bd26e0ad7ad6"
+    },
+    "agents/port008-boot-release/rom-final/BASELINE.json": {
+      "bytes": 21235,
+      "sha256": "47345e128229470a8be9c2780d4798284c82805055e20337e2d3d63e2fcfba3b"
+    },
+    "agents/port008-boot-release/p4-build/incremental-check.json": {
+      "bytes": 5819,
+      "sha256": "aca38745ed1073cf854a12ebd2325fc0d59828ae98d16a4fd7865a302edc9085"
+    },
+    "agents/port008-boot-release/p4-build/source-inputs.json": {
+      "bytes": 1143240,
+      "sha256": "eb10a255f099a97e086a80ec6ba25fbb06d19b4429d9e95f3395115980852a0d"
+    },
+    "agents/port008-boot-release/p4-build/source.tar.gz": {
+      "bytes": 27891594,
+      "sha256": "cc15724525dee74a908f850307fa150cb1785cd61264b6376aafa08f9f8d750c"
+    },
+    "agents/port008-boot-release/p4-build/build/agon_extender.bin": {
+      "bytes": 1599648,
+      "sha256": "9842524cc8141576c6064c2845dea0f161eb8dc0345e60639cda8b3f2567b17b"
+    }
+  },
+  "logs": {
+    "agents/port008-boot-release/host-final.log": {
+      "bytes": 497,
+      "sha256": "f6cb7887588a5a81ab9f9bb17362367c61652167076ca760a0c7e1986e7592d7"
+    },
+    "agents/port008-boot-release/regressions.log": {
+      "bytes": 1411,
+      "sha256": "929da62f82b0b33895c5e6a94f472fd76388352270bf064e1f5c6ddaf477be6e"
+    },
+    "agents/port008-boot-release/extra-regressions.log": {
+      "bytes": 650,
+      "sha256": "8acded26373d57f7f1c10fa9c42577cde1610e230805335afedd9b64cf1805ed"
+    },
+    "agents/port008-boot-release/profile-tests.log": {
+      "bytes": 966,
+      "sha256": "cadc7e09c035714321c8fc4815515ffe8e0d3806be089ae2174a1ea6a76fd899"
+    },
+    "agents/port008-boot-release/guard-negative.log": {
+      "bytes": 80,
+      "sha256": "c01ef4c91a9924c6997892013e473a6328235bde9fb6d43b7bc04047965552c3"
+    },
+    "agents/port008-boot-release/final-cpu-parallel_boot.log": {
+      "bytes": 362,
+      "sha256": "2809dcb0b3760573cb254beb8fa72d7987726e84960335299f65695a9c09726c"
+    },
+    "agents/port008-boot-release/final-cpu-parallel_control.log": {
+      "bytes": 441,
+      "sha256": "be702d79dff53f18ed4edbf201ab8a76d9585690c0487cf548ce473f36cc9d3e"
+    },
+    "agents/port008-boot-release/final-cpu-parallel_session.log": {
+      "bytes": 432,
+      "sha256": "ea7f44fe7fe77ef40fb69127043cddd48b2e54f358274be0529fad211bef3488"
+    },
+    "agents/port008-boot-release/final-cpu-uart_reservation.log": {
+      "bytes": 473,
+      "sha256": "4c36440838d8b0ec9b827e40f6d479203cbe09be62aeb1422e31bfafe85e110b"
+    },
+    "agents/port008-boot-release/final-cpu-uart_parking.log": {
+      "bytes": 429,
+      "sha256": "bd9b2c13475f5df89c3c93a7f2a91d2092e7b8fb083353b1d7023e8a0c47e800"
+    },
+    "agents/port008-boot-release/emos-build-final.log": {
+      "bytes": 656332,
+      "sha256": "9386c4ed64dc16ba2ab35ccb2b1777bdd1117384157d517eab916d262cef8a1f"
+    },
+    "agents/port008-boot-release/p4-final.log": {
+      "bytes": 195,
+      "sha256": "ddc41f30de5891635fa6ef000ca4fcdabf7f413120c68f73fe3551b6e604a998"
+    }
+  },
+  "emos_rom_bytes": 130718,
+  "emos_rom_free_bytes": 354,
+  "emos_static_ram_bytes": 4058,
+  "paired_adapter_cases": 695,
+  "linked_boot_cases": 126,
+  "reproduction": {
+    "host": "ASAN_OPTIONS=detect_leaks=0 .venv/bin/python -m unittest tests.parallel_boot_release_test -v",
+    "linked": "Sibling agon-emos: cargo run --offline --manifest-path tests/uart_put_cpu/Cargo.toml --bin parallel_boot -- <retained image and nm directory>",
+    "guards": "Complete maintained EMOS firmware-check wrapper and full native P4-PC p4-console wrapper, followed by unchanged-source IDF rebuild and maintained validation"
+  }
+}

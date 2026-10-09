@@ -165,6 +165,74 @@ Hardware run passed: [results](PORT-008/UARTFLOW-HARDWARE-RESULTS.md).
 Original P4/startup restored; candidate EMOS remains installed; bench released.
 Author authorized committing and pushing this checkpoint. Production promotion remains outside this bounded qualification.
 
+P08-F02c2b3 [x] — Current bounded increment: establish and invalidate the
+private parallel session using the existing fixed 16-byte v2 carrier. Reuse the
+console CRC and challenge/commit idiom, with a distinct ExExt capability tag.
+Both owners require their release sequencer to have reached UART-ready state;
+EMOS additionally requires its retained serializer reservation. P4 issues a
+nonzero fresh challenge; EMOS validates prepare/commit replies before its block
+gate can use the session. Reject old-version, malformed, stale, replayed and
+wrong-mode records; cancellation/timeout/reset/mode exit invalidate the private
+session. Execute paired real-source host tests and linked eZ80 vectors, build
+both targets, and measure ROM against the 129,464-byte UARTFLOW checkpoint.
+Keep the session functions unbound to ordinary parsers/startup and payload.
+Live phase deadlines, event drains, reset GPIO fencing and native adapters
+remain c2b/c3. No bench operations or automatic commit in this increment.
+[Session contract](PORT-008/PARALLEL-SESSION.md).
+[Results](PORT-008/PARALLEL-SESSION-RESULTS.md): 1,149 paired owner checks,
+1,334 linked eZ80 checks, existing regressions and both full target builds pass.
+EMOS is 130,212 bytes (+748); **860 bytes remain**. No live session,
+boot GPIO fence, UART parser or payload binding is enabled. Changes remain
+uncommitted for Author review.
+
+P08-F02c2b4 [x] — Bind the private session to the existing UART control owners.
+Reuse EMOS's request buffer, ISR reply dispatcher, reserved sender and bounded
+wait. Refuse borrowing the buffer while an ExCom lease still owns its identity.
+P4 accepts version-2 session records on its existing F7 owner only after
+completed release recovery; preparation must not reset the display. Bind staged
+expiry and transport cancellation, retain the reservation on uncertain delivery,
+and verify actual parser/foreground behavior plus both target builds and ROM.
+Ordinary UART-only boot remains unchanged; mandatory physical boot-release
+fencing, fresh boot identity/quarantine, block deadlines/status and payload
+binding remain open. No bench operations or automatic commit.
+[Control-owner contract](PORT-008/PARALLEL-CONTROL.md).
+[Results](PORT-008/PARALLEL-CONTROL-RESULTS.md): 218 paired control cases,
+10 complete-image eZ80 control cases, prior session/ownership regressions,
+both full target builds and final P4 source verification pass. EMOS is
+130,480 ROM bytes (+268), leaving **592 free**. No physical boot-release
+adapter, native payload, bench operation or commit. Stop for Author review.
+
+P08-F02c2b5 [x] — Author released the bench and authorized the next bounded
+boot-release increment. Bind private physical pad/control leaves to the existing
+sequencers, verify actual pin-operation ordering with paired SDK/register and
+linked eZ80 tests, compile both targets and account for ROM. Keep ordinary
+startup unchanged until earliest-writer gating, deadlines, fresh identity and
+quarantine are integrated. No hardware operation or automatic commit.
+[Boot-release contract](PORT-008/BOOT-RELEASE.md).
+[Results](PORT-008/BOOT-RELEASE-RESULTS.md): 695 paired physical adapter cases,
+126 linked eZ80 boot cases, existing regressions and both full target builds
+pass. Private leaves remain unbound to ordinary startup. EMOS adds 238 bytes
+to 130,718 ROM bytes; **354 remain**. No bench operation, production change
+or automatic commit. Actual earliest-writer gating/deadlines/quarantine and
+one-board-reset hardware qualification remain under parent integration.
+
+P08-F02c2b6 [x] — Author-approved off-bench startup binding: add explicit ordinary
+and candidate EMOS hooks, run bounded reciprocal release before shared UART
+opens, preserve usable mainboard startup, and reuse the keyboard deadline/owner.
+Compile and measure EMOS first; stop if the candidate exceeds the 354-byte
+remaining ROM budget. If it fits, bind the P4 console owner's candidate startup,
+test real gates/linked instructions and compile both targets. No bench operation,
+payload activation or automatic commit. [Contract](PORT-008/BOOT-STARTUP.md).
+
+[Startup results](PORT-008/BOOT-STARTUP-RESULTS.md): actual candidate startup
+writers are gated; 706 paired adapter/coordinator cases, 12 linked startup cases,
+negative guards, regressions and both ordinary/candidate full target builds pass.
+Candidate EMOS uses 130,949 ROM bytes (123 free); ordinary inert hooks use
+130,747 (325 free). No hardware action, production change or automatic commit.
+Runtime reset/fresh identity/quarantine and native payload integration remain open.
+Author subsequently authorized a commit/publication checkpoint; implementation
+identities and preserved evidence status are recorded in the development log.
+
 P08-F02c3 [ ] — Bind current P4-PC PARLIO TX/RX and the EMOS assembly payload
 loop under that coordinator; prove adapter cleanup and first/last-byte software
 ordering in target builds and simulated peers. Hardware timing still belongs
