@@ -60,3 +60,7 @@ The network-change pause checkpoint is retained separately; software/build
 verification has now resumed and passed. No hardware activation caller is
 installed. Stop for review before a bounded physical fixture; F03 qualification
 and formal ExExt/application/SD integration remain open.
+
+Author authorized the next bounded increment on2026-10-09:
+[private qualification caller](LIVE-QUALIFICATION.md), LC03-A. Prepare and
+validate the diagnostic pair before a separate physical installation tranche.
