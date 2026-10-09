@@ -68,16 +68,102 @@ real source against modeled registers/SDK calls and compiled eZ80 instructions,
 including partial packets, nonempty shift registers and late interrupts.
 No live caller or ExExt entry until c2b and F02c3 supply the remaining fences.
 [Results](PORT-008/UART-PARKING-RESULTS.md): both target builds and real-source/
-linked CPU checks pass. New changes remain uncommitted for Author review;
-EMOS image 130,135 bytes (937 bytes headroom).
+linked CPU checks pass. Author-authorized checkpoints pushed at Extender
+`3552ca3a` and EMOS `a93e82a`; EMOS image 130,135 bytes (937 bytes headroom).
 
 P08-F02c2b [ ] — Compose the leaves with the paired phase machines, wire-level
-session/sequence admission and boot/reset fences. Preserve ordinary operation
-with an old peer; an unnegotiated UART peer must never be mistaken for a peer
-that supports parallel handover. Prove timeout/fault recovery and packet order
+session/sequence admission and boot/reset fences. The future parallel-capable
+pair requires reciprocal release even at boot (P08-F-D03); absent or older P4
+firmware does not authorize a timed UART fallback. Keep the current UART-only
+composition unchanged until the candidate is integrated and qualified. Prove timeout/fault recovery and packet order
 through the real coordinator before exposing any candidate activation. The P4
 UART parking owner must share the actual UART ISR installation core; retain
 complete event/queue draining and explicit peer quiescence.
+
+P08-F02c2b1 [x] — First bounded admission increment complete: specify a fixed-length,
+versioned extension of the existing F7/FF control envelope. Implement paired
+private admission gates against coordinator-established session state, strictly
+increasing block numbers, exact direction/length matching and one-shot handover
+grants. Reject cleared/stale sessions; live reset invalidation remains c2b.
+Test malformed, stale, duplicated and mismatched envelopes against both real
+handover cores; compile/link EMOS and measure the 937-byte starting ROM budget.
+[Candidate contract](PORT-008/PARALLEL-ADMISSION.md).
+No live activation or startup change in this increment. Leave serializer binding,
+physical boot fences, phase deadlines and native adapters under c2b/c3; do not
+claim that admission tests qualify those remaining pieces.
+[Results](PORT-008/PARALLEL-ADMISSION-RESULTS.md): 18,097 paired admission checks,
+18,474 linked eZ80 cases, prior regressions and both component builds pass.
+EMOS grows 416 bytes to 130,551; **521 bytes remain**. Reconcile the remaining
+coordinator/native code budget before activation; no linker guard was relaxed.
+Checkpoint committed at Extender `20d32326` and EMOS `de00af0`; no bench access was used for this increment.
+
+P08-F02c2b2 [x] — Reserve EMOS's existing serializer and Port C writer lock
+before a future offer, permit only its private bounded control sender while
+reserved, and retain the reservation across park/restore until explicit finish.
+Refuse nested/reentrant work and cancellation while pads are parked. Reuse the
+current transmit deadline/error path. Install the P4 UART driver on its existing
+process-owner core so parking can exclude that ISR. Test actual owner code and
+linked eZ80 transitions, compile both components and record ROM delta against
+130,551 bytes. No wire/session exchange, startup release fence, ExExt entry or
+native payload activation is supplied by this bounded increment. Those remain
+under c2b/c3; do not claim bench readiness. Bench stays off limits.
+[Results](PORT-008/UART-RESERVATION-RESULTS.md): 22 linked reservation cases,
+289 linked parking cases, ordinary TX/IRQ comparisons, host checks and both
+target builds pass. Image 130,791 bytes, +240; **281 bytes remain**. P4 driver
+installation now belongs to the existing core-0 console task. No parallel live
+caller/startup fence or deployment. Checkpoint committed at Extender `20d32326` and EMOS `de00af0`.
+
+ROM follow-up method (Author clarification): reuse the previous
+[AUDIT-008 accounting tool](AUDIT-008/account.py) and
+[cleanup findings](AUDIT-008/IMPLEMENTATION.md), rather than inventing another
+size-analysis framework. The unchanged tool has been run against the F02c2b2
+ELF/map: 130,791 ROM bytes, 281 free, 4,067 static RAM bytes and 70 linker-fill
+bytes. Its current object/function ledgers are retained locally under
+`agents/port008-reservation/rom-account`. Compare linked costs and callers
+before proposing removals; the earlier 6,282-byte recovery is historical and
+must not be counted as available savings again. No further extraction approved
+or performed by this accounting pass.
+
+The Author then requested the [ROM recovery review](PORT-008/ROM-REVIEW.md).
+Review complete: UARTFLOW contains 1,731 bytes; UARTTEST/VDPPOLL add 1,093
+function bytes before shared-code and CLI accounting. **Author direction:
+diagnostics should become MOSlets where feasible**, superseding the initial
+diagnostic-firmware proposal. Reuse `/emos` dispatch and the existing UART
+leaves; cost a small admitted resident interface before claiming net savings.
+Keep hardware ownership/cleanup resident and preserve `edu.text-probe`.
+Further implementation awaits the bounded extraction contract; no code removed.
+
+P08-F02c2bR1 [x] — Author authorized the first extraction: move UARTFLOW's
+test sequence, deadlines and reporting to `/emos/uartflow.bin`, preserving its
+CLI spelling through the existing MOSlet launcher. Keep a minimal admitted
+`ext.uartdiag` service for fixed 1,152,000-baud polling UART acquisition,
+nonblocking RX/TX, RTS and release. Only foreground MOSlet callers in Legacy;
+refuse other owners and IRQ callers. Resident lifecycle cleanup releases an
+unfinished diagnostic on utility exit; no retained utility pointer/callback.
+Use two-byte operation/argument and status/value buffers wholly in MOSlet RAM,
+the existing gateway ABI and existing UART leaves. Preserve all other diagnostic
+commands/services. Reuse the 15-case UARTFLOW harness, add service boundary and
+cleanup checks, compile both utility and complete EMOS through maintained
+wrappers, run affected regression checks, and measure net ROM with AUDIT-008's
+accounting tool. No bench operations, production selection or automatic commit.
+Stop after this extraction; the other probes and parallel integration remain
+separate. Full-system/hardware validation not achievable here stays explicit.
+
+Extraction complete: **1,327 ROM bytes recovered; 1,608 free**. Utility and full
+EMOS builds, host checks and 285 linked diagnostic cases pass. See
+[UARTFLOW extraction results](PORT-008/UARTFLOW-RESULTS.md). The subsequent R1H hardware run below qualifies bounded utility loading and paired flow behavior; it does not qualify parallel transport.
+
+P08-F02c2bR1H [x] — Author released the bench for bounded UARTFLOW MOSlet
+qualification. Preserve/read back entry EMOS and startup; use the current P4-PC
+board map with the unchanged dedicated flow-peer state machine. Verify candidate
+ROM and utility bytes, exercise wrong-peer failure/cleanup and paired success,
+retain Agon completion/state plus P4 timeout/cancellation evidence. Restore the
+exact ordinary P4 image and startup, establish fresh input and SD readiness,
+then hand back. Mainboard VDP unchanged. This does not qualify parallel payload,
+new timing speeds or production. A physical waveform capture is not assumed.
+Hardware run passed: [results](PORT-008/UARTFLOW-HARDWARE-RESULTS.md).
+Original P4/startup restored; candidate EMOS remains installed; bench released.
+Author authorized committing and pushing this checkpoint. Production promotion remains outside this bounded qualification.
 
 P08-F02c3 [ ] — Bind current P4-PC PARLIO TX/RX and the EMOS assembly payload
 loop under that coordinator; prove adapter cleanup and first/last-byte software
@@ -111,6 +197,13 @@ P08-F-D02 [x] — Development proceeds on the existing eight data plus
 READY/CLOCK/VALID connections, following the Author's wiring clarification and
 authorization. No added wires, pins or logic chips. Reverse-edge timing remains
 a candidate to qualify; UART handover/recovery must precede physical activation.
+
+P08-F-D03 [x] — Author accepted mandatory reciprocal release after reset for
+future parallel-capable firmware. EMOS leaves all eight shared data pads as inputs
+until P4 acknowledges release through the dedicated control handshake. No timeout
+reclaims UART ownership. Absent or older P4 firmware leaves Extender I/O unavailable;
+mainboard keyboard/MOS remain usable. Reset invalidates the previous admission.
+This does not retrospectively change the current UART-only firmware's boot contract.
 
 #### Earlier qualified UART scope
 

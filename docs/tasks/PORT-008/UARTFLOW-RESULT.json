@@ -1,0 +1,139 @@
+{
+  "state": "development; no hardware deployment",
+  "accounting": {
+    "rom_used_bytes": 129464,
+    "rom_free_bytes": 1608,
+    "static_ram_bytes": 4058,
+    "build_identities": [
+      "agon-emos-v0.1.24-b2026-10-08-22-57-18Z"
+    ],
+    "artifacts": {
+      "MOS.bin": {
+        "bytes": 129464,
+        "sha256": "147d436b09dd6eafd870d9c47c06c1c7fe3c47688ddff12ab4ca19dfbcd020c9"
+      },
+      "MOS.elf": {
+        "bytes": 324224,
+        "sha256": "d6dc2dd346687c689181cf34a4a608b7b11a1573172c2a7745e45d3a52ef624b"
+      },
+      "MOS.map": {
+        "bytes": 77900,
+        "sha256": "89c1581088129169618b17e2e78e657a2baf748044affd791c9853fa0bcf4943"
+      }
+    }
+  },
+  "baseline": {
+    "rom_used_bytes": 130791,
+    "rom_free_bytes": 281,
+    "static_ram_bytes": 4067
+  },
+  "rom_saved_bytes": 1327,
+  "utility": {
+    "bytes": 9326,
+    "sha256": "7652873379ec424d0826206ada61596ebe82a6789c849d1f65bf92ac1945defb",
+    "load_address": "0xB0000",
+    "heap_start": "0xB24F4",
+    "heap_end": "0xB8000",
+    "MOS_header_checked": true
+  },
+  "evidence": {
+    "adapter-tests.log": {
+      "bytes": 238,
+      "sha256": "2f39183e993d417e5a583c68212da20348e059986b74f54fe9a721d7cc3b4363"
+    },
+    "diag-cpu.log": {
+      "bytes": 345,
+      "sha256": "362484b31682b1968bfd27efd84418321d237d8e3ef32e04bab2c422dff3e9de"
+    },
+    "emos-build-r04.log": {
+      "bytes": 616899,
+      "sha256": "de1bb565cd5d8ea71ce8eb5920899bd88c1bb3d756069de8aa3b1f1debbdef42"
+    },
+    "flow-tests.log": {
+      "bytes": 266,
+      "sha256": "cb4cda8b43ac3f032a2b73672e87114d977245c06f1b0938d32f98f5e54471c5"
+    },
+    "gateway-tests.log": {
+      "bytes": 247,
+      "sha256": "4d14720b189c4b1b205e77ba6637e2f6b78bad14625ff06b28df78349e550ee3"
+    },
+    "prepare-r04.log": {
+      "bytes": 117,
+      "sha256": "5461d1352790146b5369596738ecca9230f1fbbd4a9b23d8e26efa227e1b57fc"
+    },
+    "prepare.log": {
+      "bytes": 117,
+      "sha256": "5461d1352790146b5369596738ecca9230f1fbbd4a9b23d8e26efa227e1b57fc"
+    },
+    "reservation-cpu.log": {
+      "bytes": 356,
+      "sha256": "4f8354cf6903413ffe612a52ac31fcb177178260afc36ee538e8138f2f6054eb"
+    },
+    "test_emos_admission.py.log": {
+      "bytes": 324,
+      "sha256": "98f16de0370433058272ca1715cbd87794bd9b916085b09a182465e3cb20c2de"
+    },
+    "test_emos_console.py.log": {
+      "bytes": 326,
+      "sha256": "8eb6881aefb12ca4119842722192b333bbf4701483ce6f20ea4528e9d7f18014"
+    },
+    "test_emos_keyboard.py.log": {
+      "bytes": 391,
+      "sha256": "7b7f30ef007b75e22f8f0410714fecfbc0227d1bbba082ec57ea05427132437c"
+    },
+    "test_emos_mode_transaction.py.log": {
+      "bytes": 264,
+      "sha256": "8493388554cd35dfff4fa59adc0dfb31065e3822f901a75b1d3a2bc847164151"
+    },
+    "test_emos_port.py.log": {
+      "bytes": 966,
+      "sha256": "e715cb0feecdfbabca5647f37e3a8d7a1e324b227b4c881c1597f869f892159d"
+    },
+    "test_emos_resident_gateway.py.log": {
+      "bytes": 247,
+      "sha256": "3e4f3bd83fc2d5ca083e4f44c6fd3beb3c1c4a111a0f0f408d85eddc3417e3e1"
+    },
+    "test_emos_sdlink.py.log": {
+      "bytes": 310,
+      "sha256": "e3249a2ebf7db6ee96971585bcf719faa2965231844342a1330e42d2161c8226"
+    },
+    "test_emos_uart_flow.py.log": {
+      "bytes": 266,
+      "sha256": "9fd24e7a6e43225f8e3c9d8af61104391a3a00f7ae602f960afafcc33f700dd8"
+    },
+    "test_emos_utility.py.log": {
+      "bytes": 259,
+      "sha256": "41a863307f287f0b333e17b53041a36bd3950aaf1128caed821877870431471b"
+    },
+    "test_general_poll_guard.py.log": {
+      "bytes": 352,
+      "sha256": "9540c3854ac00029ab60b3bbe88e4863f5957ea1eac7aad4505888cedb309ca0"
+    },
+    "test_visible_text_guard.py.log": {
+      "bytes": 352,
+      "sha256": "b21dfd5d1591756aae15b98594852781c7a7add2347030384e5399fd48229c7d"
+    },
+    "utility-build.log": {
+      "bytes": 485,
+      "sha256": "f0e276fa2626a01c7e9f93aad62f973f80399f72ba21932d0cc5a630d645a224"
+    }
+  },
+  "emos_source_sha256": {
+    "src/emos.c": "03c5d47d1dbb8c08bacdf15f89a564f61c45c32a35bf725ba18e65320942668b",
+    "src/emos_uart_flow.c": "d66e72b1ce98f642086f9236a9f7d0090a1b2ccbe1335ae3468b620d64c8f1d8",
+    "src/emos_uart_flow.h": "f3150780826f657db05001f3ed328849dcadb8916ab4c44aa66516c78a66cc59",
+    "port/bench-telemetry.mk": "6dac86a0af5634b7505def660e4b1055a580d3d7ea3761d00b0e7b1f396fe9f7",
+    "projects/emos/verify_parallel.py": "341446340e61dbdac661274c8d4549f6f4b411832de66918653918cac3b918c5",
+    "tests/test_emos_uart_flow.py": "e654bd741cc0620ba4ae3b5a4cc16ceb952590200f04ea7124f18f677043bb90",
+    "tests/emos_uart_flow_harness.c": "e148fe20ce6e935d9a6406734b86d5466f06a17ae8d5f57d5bd73fe537907129",
+    "tests/test_emos_resident_gateway.py": "6329fbbdca7cc8dbe4a8ea2e6a3470ad291843a1a6b2c484db7eee9a1aaa2246",
+    "tests/test_emos_uartflow_adapter.py": "5a32f578badd5bd4690ccfff19491565494038dca103b8c28fea5149471f4a9f",
+    "tests/uart_put_cpu/src/bin/uart_diag.rs": "0314b4baa393c7fe62a955f257e7cc918677c7808644d93e903f22940c5be9e3",
+    "projects/uartflow/src/emos_gateway.asm": "8e9537635a31c46392c245b99e735ba3b14513d7301e4f42960246f6d99b1f62",
+    "projects/uartflow/src/flow.c": "b825416feb7f15fa41e4297aa32cbdbd8c05a434ae7f86fabd835f94f7f0a263",
+    "projects/uartflow/src/flow.h": "45e21150a9a6233d4894ffef52b52267ddda7c4ad5a50b6c516aef6bd38b26d5",
+    "projects/uartflow/src/gateway.c": "99b08662acbfb7cedff8737403687f3980e71546ba2ba921989823ce095d19d6",
+    "projects/uartflow/src/main.c": "7e905d7b8a109756502e460d599f7f07f593d1e19bb7e71808cb4d6cdddf018f",
+    "projects/uartflow/Makefile": "d0cdb2a4b9e41bed672574b8e06110feb81341ff540d681659db60e9cab830fa"
+  }
+}

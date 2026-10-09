@@ -1,0 +1,101 @@
+{
+  "state": "bounded hardware pass; Author review pending; not production",
+  "date_utc": "2026-10-08T23:40:27.784562+00:00",
+  "scope": "UARTFLOW MOSlet extraction on current P4-PC harness; not parallel payload qualification",
+  "emos": {
+    "verified": true,
+    "rom_sha256": "fbe875ced63f48b2d985ca81a95a915d18e467208c20e4fa0b1af126aad26f1c",
+    "fresh_input": {
+      "protocol": 1,
+      "boot": 3964016795,
+      "session": 2424184213,
+      "sequence": 45,
+      "emitted": 96,
+      "accepted": 96,
+      "discarded": 0,
+      "pending": 0,
+      "held": 0,
+      "locale": 1,
+      "ready": true,
+      "physical_neutral": true,
+      "caps": false,
+      "reason": 1
+    },
+    "seconds": 96.35037928679958
+  },
+  "utility_sha256": "7652873379ec424d0826206ada61596ebe82a6789c849d1f65bf92ac1945defb",
+  "failure_case": {
+    "expected_nonzero_exit": true,
+    "serialFlags": 3,
+    "diagnostic_active": 0,
+    "rts_owned": 0,
+    "input_reacquired_without_reset": true,
+    "ram_sha256": "4c4313a1bee8d4e0f58328cc00ce8980745047b9bf562125ac8662d2da4ad8a7"
+  },
+  "peer": {
+    "pass": true,
+    "clean_after_pass_seconds": 5.099543458316475,
+    "capture_seconds": 25.77583742281422,
+    "physical_waveform_capture": false
+  },
+  "success_case": {
+    "bytes": 4096,
+    "sha256": "d15b3ef26d9cfe9d9b7ec17cdf4da157231473ef07229a40b24ca2cf4a23ebfd",
+    "serialFlags": 3,
+    "diagnostic_active": 0,
+    "rts_owned": 0
+  },
+  "startup_restored": true,
+  "ordinary_p4_restored": {
+    "mode": "restore",
+    "image_sha256": "5f1b42a161ec9df13701db3038e06019a27b2880cf608cdcf8eea109670ca13a",
+    "bytes": 1726944,
+    "offset": "0x20000",
+    "only_app_written": true,
+    "independent_verify": true,
+    "time": "2026-10-08T23:38:31Z"
+  },
+  "mainboard_vdp_unchanged": true,
+  "final_input": {
+    "protocol": 1,
+    "boot": 2091441590,
+    "session": 844842162,
+    "sequence": 24,
+    "emitted": 44,
+    "accepted": 44,
+    "discarded": 0,
+    "pending": 0,
+    "held": 0,
+    "locale": 1,
+    "ready": true,
+    "physical_neutral": true,
+    "caps": false,
+    "reason": 1
+  },
+  "final_sd": {
+    "protocol": 1,
+    "online": false,
+    "pending": false,
+    "boot": 389897995
+  },
+  "source_sha256": {
+    "vdp/video/extender/diagnostic/uart_flow_receiver.cpp": "9825ba74a140d02a7e85f2eafc5a8ac13769692e78227f9c310b68abad197cd6",
+    "vdp/video/extender/diagnostic/uart_flow_peer.hpp": "543a7d8c104455460543611b954f7976e6c4d74fe3602e705084a82cdd933de0",
+    "vdp/build/boards/p4-pc.json": "2e44a8c0456077c9c67f1dc74506872976398ec0b88672240f616761b3c0ad95"
+  },
+  "evidence_sha256": {
+    "entry-verified.json": "32c4c6cdfe4b3d1f1d52e38d98eac25c1a8f9912e37ba1ec893eecff5017d2a4",
+    "emos-installed.json": "2a8d51987bcfdf272599e9422a15713592b2572f3c27d27a1eac8cd5c75bbb71",
+    "failure-result.json": "e3a2ee82332ce4895cd9f216ec8bbeecdb41015a5feb6f154613ab336d4599ef",
+    "failure-ram.bin": "4c4313a1bee8d4e0f58328cc00ce8980745047b9bf562125ac8662d2da4ad8a7",
+    "peer-serial.log": "e02cb959205691712f48f5eaaa951263a8b252ffddb765167ce5290c0e11bd19",
+    "peer-result.json": "32b4b6a59daf763c2ff36f78f0a5f86861ed4fe563ff45ac37d73d1dfba82ff5",
+    "uf-pass.bin": "d15b3ef26d9cfe9d9b7ec17cdf4da157231473ef07229a40b24ca2cf4a23ebfd",
+    "handback.json": "2d9471de1547ff9a7de94dda821cdd4c80d434ae4daf4916863e303a018013c1",
+    "peer-r02/manifest.json": "16b55a29973c7e838a48716d39d0f58981c2ded2db773e5f749aa5d3399d544e",
+    "test-autoexec.txt": "79a1881c5d425cb686aa4b317453a579b20d786b05ca98258baa38eb726919f9",
+    "original-autoexec.txt": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5",
+    "entry-otadata.bin": "8ba3b110139f45443d4f268d1a3373ef99a1718b71d51664531b83ee2d4b91a3",
+    "p4-current.json": "19a230a3790d519ed5c1c23daac07b8517991f377be20ebf19e1b6165c31d374"
+  }
+}

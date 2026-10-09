@@ -35,7 +35,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — F01, F02a/b, F02c1 and F02c2a complete: reverse/handover cores and private UART parking leaves pass host/target checks on the existing eleven-wire design. Next F02c2b: admission/coordinator/ISR-affinity/boot integration; native binding and physical qualification remain. Bench occupied; no deployment. Earlier UART E08/E09 evidence retained; E10 still separate.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Through F02c2b2 complete: private cores, UART parking/admission, retained EMOS reservation and P4 UART owner-core installation pass host/target checks. F02c2b still owns live session/coordinator, P4 drain and mandatory-release boot integration; native binding and physical qualification remain. UARTFLOW extraction recovers 1,327 bytes; EMOS now has 1,608 ROM bytes free. Its host/linked-CPU and bounded UARTFLOW hardware checks pass; Author review remains. Reuse/replace code before adding the coordinator. UARTFLOW candidate EMOS installed; ordinary P4/startup restored and bench released. Earlier UART E08/E09 evidence retained; E10 still separate.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 
