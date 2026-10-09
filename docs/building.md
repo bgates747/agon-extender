@@ -252,6 +252,18 @@ Identified MOSlet builds and their validation are recorded in the
 [EMOS utility contract](https://github.com/bgates747/agon-emos/blob/main/docs/emos-utilities.md)
 for dispatch and memory limits. No build command in this guide deploys firmware.
 
+## Private parallel payload compile probe
+
+PORT-008's explicit `--parallel-boot-candidate` P4-PC build additionally
+compiles an unbound native PARLIO RX/TX leaf. It does not activate ExExt or
+provide a live payload caller. Ordinary selections exclude that leaf.
+The companion EMOS `port/parallel-native-candidate.mk` currently exceeds ROM
+capacity by 265 bytes and correctly fails the maintained firmware linker.
+It is a development probe, not an installable image. The RAM-only instruction
+test image is also not firmware. See the [bounded result and remaining gates](tasks/PORT-008/NATIVE-PAYLOAD-RESULTS.md)
+before selecting or attempting either composition; never bypass the capacity
+check or substitute this development snapshot for the production selection.
+
 ## Deployed candidates versus the base target
 
 The maintained `p4-console` target includes the selected codecs, browser decoders,

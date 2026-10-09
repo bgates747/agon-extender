@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "result": "OFF_BENCH_LEAVES_PASS_RESIDENT_ROM_REFUSED",
+  "scope": "Private unbound native P4 RX/TX adapter and guarded EMOS assembly leaf; no live coordinator or ExExt activation",
+  "source_heads": {
+    "extender": "d81f5e061d1b859f34dd5fac669012bb9331f39c",
+    "emos": "a67e27ff0ee2d9fc7ce56e94012e8463fcec1af6"
+  },
+  "source_dirty": true,
+  "rom": {
+    "rom_capacity_bytes": 131072,
+    "rom_used_bytes_if_integrated": 131337,
+    "overflow_bytes": 265,
+    "starting_candidate_bytes": 130981,
+    "added_native_bytes": 356,
+    "link_guard": "refused; no oversized ELF emitted"
+  },
+  "checks": {
+    "native_p4_model_cases": 151,
+    "linked_ez80_ram_cases": 124,
+    "reverse_model_cases": 48,
+    "boot_runtime_adapter_cases": 718,
+    "runtime_reset_tests": 4,
+    "p4_profile_tests": 12,
+    "p4_native_compile": "PASS; final unchanged source and maintained validator",
+    "emos_full_compile": "C/assembly/runtime/linker checks passed; final production ROM assertion correctly refused link"
+  },
+  "timings": {
+    "host_tests": [
+      {
+        "test": "p4_native_payload_test",
+        "start_utc": "2026-10-09T14:46:20.375771+00:00",
+        "end_utc": "2026-10-09T14:46:21.840987+00:00",
+        "elapsed_host_seconds": 1.4652099050581455,
+        "exit_code": 0
+      },
+      {
+        "test": "parallel_reverse_test",
+        "start_utc": "2026-10-09T14:46:21.841038+00:00",
+        "end_utc": "2026-10-09T14:46:22.361974+00:00",
+        "elapsed_host_seconds": 0.5209522941149771,
+        "exit_code": 0
+      },
+      {
+        "test": "parallel_boot_release_test",
+        "start_utc": "2026-10-09T14:46:22.362018+00:00",
+        "end_utc": "2026-10-09T14:46:23.568228+00:00",
+        "elapsed_host_seconds": 1.206227248068899,
+        "exit_code": 0
+      },
+      {
+        "test": "p4_transport_reset_test",
+        "start_utc": "2026-10-09T14:46:23.568271+00:00",
+        "end_utc": "2026-10-09T14:46:24.959802+00:00",
+        "elapsed_host_seconds": 1.3915489260107279,
+        "exit_code": 0
+      }
+    ],
+    "cpu_execution": {
+      "start_utc": "2026-10-09T14:45:44.235514+00:00",
+      "end_utc": "2026-10-09T14:45:44.345920+00:00",
+      "elapsed_host_seconds": 0.10789388511329889,
+      "exit_code": 0,
+      "clock": "host monotonic; correctness execution, not eZ80/PARLIO speed"
+    },
+    "final_p4_incremental_compile": {
+      "start_utc": "2026-10-09T14:47:47.421289+00:00",
+      "end_utc": "2026-10-09T14:48:05.173100+00:00",
+      "elapsed_host_seconds": 17.75180873880163
+    },
+    "initial_full_p4_compile_duration": "not separately measured; not comparable to final incremental check"
+  },
+  "p4_artifacts": {
+    "build/agon_extender.bin": {
+      "bytes": 1611232,
+      "sha256": "511cd12f6834a56945d40051e37cc7c6792924e73e28171631a385c526a8b84e"
+    },
+    "build/agon_extender.elf": {
+      "bytes": 34280860,
+      "sha256": "d0a575ce9c66edd26089623e306f4f25be0699dd5f79843287614c28044c9578"
+    },
+    "build/agon_extender.map": {
+      "bytes": 12743777,
+      "sha256": "e86a0db3e3648bce599490ce7f4af306800c65aa12d73630ce780879fae09204"
+    },
+    "build/agon_extender.factory.bin": {
+      "bytes": 1742304,
+      "sha256": "10ec8a2b0a621950a10bf91bc6772525b824ec9bea11d1fe76ca6a5747634239"
+    },
+    "validation.json": {
+      "bytes": 746,
+      "sha256": "0ef681f8789fd0e320d606c24f0a4f3c0aeaf1a78bc56b4111628328ee0579da"
+    },
+    "source-inputs.json": {
+      "bytes": 1143974,
+      "sha256": "7ac1cdfa6018e85332f5b9557a89dfa74ec12c5a487c2198c4ad8ee236937b5a"
+    },
+    "source.tar.gz": {
+      "bytes": 27902018,
+      "sha256": "041fa0ddb9a91c975fa82807942fd41537d61ee05598932eed3bc2dad5a0a710"
+    },
+    "incremental-build.log": {
+      "bytes": 1925,
+      "sha256": "8bf217de4731de21303586e64be984f75a2dc062a81a3166e56330542697f2a8"
+    },
+    "sdkconfig": {
+      "bytes": 92356,
+      "sha256": "2c2fb0762bdc27251d9eaf1e8b02969b967c8f036fdd92c6cef125f12a141051"
+    },
+    "dependencies.lock": {
+      "bytes": 14602,
+      "sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+    }
+  },
+  "emos_artifacts": {
+    "overflow.map": {
+      "bytes": 80309,
+      "sha256": "150e7c107dc32244ea83e5fb8bc7e385361cc9d72154d4ec3fa1998f658a6382"
+    },
+    "overflow-link.txt": {
+      "bytes": 138,
+      "sha256": "ddf500a3e69a3df473dbc2dd125ca42f938f981b74f928e45a2bc0c435e9cd82"
+    },
+    "ram-test/payload.bin": {
+      "bytes": 367,
+      "sha256": "f92ee5197a25278347b3dfb369e8d06f5ae08c973b25f9063ab005266dfa1b25"
+    },
+    "ram-test/payload.elf": {
+      "bytes": 68568,
+      "sha256": "3b362587ebadf9fe0c7a790584851b08e496a71f3572fdea7b3286ed38533fdc"
+    },
+    "ram-test/nm.txt": {
+      "bytes": 1744,
+      "sha256": "af80735dda174a8284aac4b0b364e559df854a44d1a6ee62927a66a92187a34f"
+    },
+    "ram-test/ram-test.json": {
+      "bytes": 1373,
+      "sha256": "9a93781686e47a2dd260daad34c0434794200d7027885640ccb59fe42b5ba3e5"
+    }
+  },
+  "source_units": {
+    "extender": {
+      "scripts/build_p4.py": {
+        "bytes": 40715,
+        "sha256": "2780ca68edf5646e5d7ca952e5ca050dc6e27714f00a4ce1c635ab9b200771c5"
+      },
+      "vdp/video/extender/transport/p4_native_payload.hpp": {
+        "bytes": 3044,
+        "sha256": "7f4f069ef3d423698b8b6f904d73530629ffaaec573de36c35248012e1104115"
+      },
+      "vdp/video/extender/transport/p4_native_payload.cpp": {
+        "bytes": 10657,
+        "sha256": "0627ada31a8f480293b9298dc724cb1f2bb37dc977043df4e12ffb8c11eab72f"
+      }
+    },
+    "emos": {
+      "src/emos_parallel_native.c": {
+        "bytes": 1431,
+        "sha256": "d1f25e4a0f044f11521e2c7f320885f84c1b3f7ade30d847f3b3f07c11f65037"
+      },
+      "src/emos_parallel_native_io.asm": {
+        "bytes": 2597,
+        "sha256": "32ac7a15f07f19c7fc7a94c07b62c53dee5d9bd91de91feddac221193cb6e42e"
+      },
+      "port/parallel-native-candidate.mk": {
+        "bytes": 436,
+        "sha256": "b6121bae174abdcedbba39a26c0ed304e93988149af3016d02d7dde536b831a6"
+      },
+      "tests/link_parallel_native.py": {
+        "bytes": 2648,
+        "sha256": "fc587f6a335fa4bb124506a033d72bf6d1760f099a6bb0c72a27a9ecc060b703"
+      },
+      "tests/uart_put_cpu/src/bin/parallel_native.rs": {
+        "bytes": 6597,
+        "sha256": "59606265858e65131042fc401d57f3a296f4d11b1eea83a464b1f0723e9d7e75"
+      }
+    }
+  },
+  "evidence_silo": "agents/port008-native-payload",
+  "bench_operations": false,
+  "installed_firmware_changed": false,
+  "production_changed": false,
+  "committed": false,
+  "remaining_gates": [
+    "Resident ROM fit; no oversized firmware emitted",
+    "Retained admission binding, complete UART drain, per-phase deadlines and matched post-block status",
+    "First/last byte, GPIO VALID pulse capture, electrical ownership and reset qualification on actual wiring",
+    "Live throughput; host durations are not device benchmarks"
+  ]
+}

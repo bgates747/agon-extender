@@ -39,7 +39,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Through F02c2b6: private cores, UART parking/admission/reservation, session/control binding and physical boot-release leaves and explicit candidate startup gates pass focused host, linked-eZ80 and both target build checks. Current bench-free EMOS candidate has 123 ROM bytes free (ordinary hooks: 325). Runtime reset/fresh identity/quarantine, drains, block deadlines/status and native payload binding remain. No bench operations in this increment; installed firmware was not reverified. Earlier UART E08/E09 evidence retained; E10 separate.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Private native P4 RX/TX and EMOS assembly leaves pass off-bench correctness checks; P4 target compile passes. EMOS ROM gate refuses native integration by 265 bytes (preceding private candidate: 91 free). Full admission/drain/deadline/status composition, ROM fit and physical payload qualification remain. No payload activation or installed firmware change. Earlier UART E08/E09 evidence retained; E10 separate.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 

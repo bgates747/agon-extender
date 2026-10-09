@@ -262,7 +262,11 @@ requires reciprocal release plus TX idle before reattachment. EMOS remains
 unchanged at 91 ROM bytes free. No automatic EMOS reconnect or committed-route
 recovery, universal reset detection, native payload, bench access or promotion.
 
-P08-F02c3 [ ] — Bind current P4-PC PARLIO TX/RX and the EMOS assembly payload
+P08-F02c3 [ ] — [Native payload binding](PORT-008/NATIVE-PAYLOAD.md): private
+P4-PC RX/TX and guarded EMOS assembly leaves pass off-bench tests. P4 target
+compilation passes; EMOS correctly refuses the 265-byte ROM overflow.
+See [results](PORT-008/NATIVE-PAYLOAD-RESULTS.md). Resolve resident fit and bind
+current P4-PC PARLIO TX/RX and the EMOS assembly payload
 loop under that coordinator; prove adapter cleanup and first/last-byte software
 ordering in target builds and simulated peers. Hardware timing still belongs
 to F03, not these bench-free checks.
