@@ -107,3 +107,12 @@ layout and driver/version licensing. Then assess rolling scanline buffers versus
 full output buffers, DMA/cache ownership, sprite/Copper fidelity and sustained
 refresh without blocking drawing or UART. Propose a bounded test only after
 Author resumes this work; no 60 Hz gameplay guarantee follows from finding a demo.
+
+## Board/scope clarification — 2026-10-09
+
+The resistor-ladder RGB565 VGA lead is a separate investigation, primarily an
+option for P4-DevKit. It is not part of [RESEARCH-007](RESEARCH-007.md), which
+targets indexed storage and faster output through P4-PC’s existing HDMI path.
+RGB565 describes the proposed pixel/channel representation; resistor DAC wiring
+and its electrical output remain separately unqualified. No pin assignment,
+wiring, driver port or bench experiment is selected by this clarification.

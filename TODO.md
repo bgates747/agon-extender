@@ -46,6 +46,8 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[HDMI-001 — Fixed 720p HDMI presentation for existing Agon modes](docs/tasks/HDMI-001.md)** — r03 startup, EMOS prompt modes0/3/8/20 and Author gameplay checks pass for Nurples and 320×240 Aginvadors/Rally. Excess sprite flicker remains open; passive timing records about19.2 complete updates/s versus60 DMA frames/s without an identified controlled game scene. Full mode coverage, fidelity/performance and promotion remain pending.
 - [ ] **[BENCH-009 — Deterministic rendering load suite](docs/tasks/BENCH-009.md)** — Long r04 campaign paused. Supplemental five-mode static controls complete. Permanent resident selection and card collection pass; the separate bounded RGB888 report is complete. No full-campaign resumption selected.
 
+- [ ] **[RESEARCH-007 — Indexed framebuffer and palette-expansion feasibility](docs/tasks/RESEARCH-007.md)** — Investigation recorded, not started: compare eight-bit indexed storage and P4 CPU/PPA/display expansion for faster output through P4-PC’s existing HDMI path. External VGA/Pico output is separate. Preserve stock VDU semantics and a necessary true-colour path; verify CLUT support and total pipeline cost before changing architecture. No implementation or bench work selected.
+
 - [ ] **[PPA-001 — Identify PPA rendering acceleration opportunities](docs/tasks/PPA-001.md)** — Deferred, not started; Author requests task recording only. Assess current clears, rectangular fills, bitmap/sprite compositing and transforms against IDF5.5.5 PPA capabilities, then rank source-linked opportunities and proposed comparisons. No implementation or bench work selected.
 
 - [ ] **[RGB-001 — Direct RGB888 rendering experiment](docs/tasks/RGB-001.md)** — Original r01 measurements and gameplay failure retained. SCAN-001 copy-scroll remedy r02 passes Author Nurples review; Rally steering remains an unchanged separate issue. Broader firmware qualification/promotion remains pending. Aginvadors held-fire slowdown is an application bug. Caches, PPA and the long campaign stay deferred.
@@ -114,6 +116,8 @@ classification does not grant new execution or waive human acceptance.
 
 
 - [ ] **[BENCH-008](docs/tasks/BENCH-008.md)** — Correct output but worse frame rate with replacement deltas; initial experiment complete. B08-06 cost investigation deferred until Author resumes; pre-experiment P4 firmware restored after the regression.
+
+- [ ] **[RESEARCH-008 — P4 output through Pico 2/Cowbell](docs/tasks/RESEARCH-008.md)** — Independent external-output investigation, primarily for P4-DevKit. Assess indexed delivery, palette expansion, HSTX and transport costs only when selected. No dependency for P4-PC indexed HDMI work; no implementation or bench action authorized.
 
 - [ ] **[RESEARCH-005](docs/tasks/RESEARCH-005.md)** — Deferred VGA pillarboxing, P4 VGA output and aspect-preserving output research; FabGL investigation and existing P4 VGA driver lead retained. No implementation or bench work scheduled.
 

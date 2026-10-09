@@ -194,3 +194,7 @@ or separately authorized bench work.
 
 Recorded September 28 UTC, 2026, from the preceding read-only exploration.
 No builds, benchmarks, board connections or hardware tests were performed.
+
+## Related indexed-storage investigation — 2026-10-09
+
+[RESEARCH-007](RESEARCH-007.md) investigates indexed storage for P4-PC’s existing HDMI path. P4-to-Pico/Cowbell output is independently recorded in [RESEARCH-008](RESEARCH-008.md), primarily as a P4-DevKit alternative. This task retains the distinct mainboard ESP32-to-Pico proposal; share RP2350/HSTX findings without conflating the endpoints or selecting wiring.
