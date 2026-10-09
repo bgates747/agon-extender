@@ -1,0 +1,13 @@
+object,post_purge_rom_bytes,current_rom_bytes,difference_bytes
+obj/src/emos_admission.o,0,3038,3038
+obj/src/emos_parallel_engine.o,1398,1972,574
+obj/src/emos_sdlink.o,685,1257,572
+obj/src/emos_keyboard.o,2760,3267,507
+obj/src/emos_parallel_handover.o,0,430,430
+obj/src/emos_console.o,1928,2344,416
+obj/src/uart.o,1092,1317,225
+obj/src/mos_editor.o,4589,4746,157
+obj/asm/src/vdp_protocol.o,591,639,48
+obj/src/mos.o,30320,30348,28
+obj/asm/src/emos_keyboard_io.o,716,733,17
+obj/src/emos.o,6901,6906,5

@@ -1,0 +1,18 @@
+{
+  "scope": "Read-only linked accounting and source/caller review, no removal/rebuild/deployment",
+  "source_sha256": {
+    "docs/tasks/AUDIT-008/account.py": "7f3ad69fc5384961ea3899f111089fbe5233337a1c0e55cce2fc4a809fe6343e",
+    "../agon-emos/src/emos.c": "9391c90d160d45c59deb77efc9c82c5e16dabd9a37c5a130349360a2530ec251",
+    "../agon-emos/src/emos_uart_flow.c": "375d4ffc335ff75b4e8e5734f5111c76bd7003e44aed4fd8867fdb672560f5bd",
+    "../agon-emos/src/emos_uart_probe.c": "6af28f71cb261345f7e25ec1e806fb64d66e9ef35fca4fbe97c0a5d3c9a872a0",
+    "../agon-emos/src/emos_parallel.c": "3e421e6ee479552f9051a0b4cd638d4cc7bc52b104ad766312c3085f962fee4a",
+    "../agon-emos/src/emos_parallel_engine.c": "e40575b879460eaf8ee09a0e314158e86aa45d2838c4183a730b89a5e0fee660",
+    "../agon-emos/src/emos_admission.c": "cff4fe551b3157fae54b5a1a72c6f916aab23b9f08be7c755d0a1798d775fb93",
+    "../agon-emos/port/mos-agondev.mk": "7df98b5499ef5ac31430f5ecd8b5378ce8aadcad0a0bbf4400d8e0f750e5978f",
+    "../agon-emos/port/bench-telemetry.mk": "8975dfd8d489c87a1d36b81f15d31ea858a8347ff29adab3273b07f31b8e3b49",
+    "../agon-emos/projects/emos/verify_parallel.py": "6d0adbb45f75badf0ea89c255052690e4078263c16521f3671e4b283b52f867f"
+  },
+  "baseline": "../UART-RESERVATION-RESULT.json",
+  "historical_comparison": "../../AUDIT-008/implementation/OBJECTS.csv",
+  "comparison_limit": "Different source/toolchain epochs; growth attribution, not a controlled optimization experiment"
+}

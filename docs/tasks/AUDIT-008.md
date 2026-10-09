@@ -17,6 +17,13 @@ recorded below as parked qualification, to revisit when relevant changes or
 failures justify them. No new firmware, production version or extraction is
 selected by this decision.
 
+2026-10-08: measured ROM pressure has returned during parallel integration
+(281 bytes free). The [PORT-008 recovery review](PORT-008/ROM-REVIEW.md) reuses
+this audit's accounting tool and findings. The Author prefers diagnostics as
+MOSlets where feasible, with resident transport ownership retained. That bounded
+follow-up belongs to PORT-008's integration budget; it does not reopen all
+parked extractions or claim the older qualification matrix is complete.
+
 ## Executive summary
 
 Contract refreshed 2026-09-23. The Author approved a one-hour autonomous
