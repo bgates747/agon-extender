@@ -16,6 +16,21 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_devkit_control_cannot_select_pc_diagnostics_or_release_identity(self):
+        from build_p4 import check_parallel_qualification_identity as check
+        good = "port-008-devkit-r01-b2026-10-10-06-00-00Z"
+        self.assertTrue(check(good, True, True, False, "p4-console", "p4-devkit", "browser"))
+        for identity, boot, probe, board, output, data in (
+            ("extender-vdp-v1.0.0", True, False, "p4-devkit", "browser", False),
+            (good, False, False, "p4-devkit", "browser", False),
+            (good, True, True, "p4-devkit", "browser", False),
+            (good, True, False, "p4-pc", "browser", False),
+            (good, True, False, "p4-devkit", "hdmi", False),
+            (good, True, False, "p4-devkit", "browser", True),
+        ):
+            with self.subTest(identity=identity, board=board, output=output), self.assertRaises(SystemExit):
+                check(identity, True, boot, probe, "p4-console", board, output, data)
+
     def test_parallel_install_identity_is_explicit_and_nonrelease(self):
         from build_p4 import check_parallel_qualification_identity as check
         good="port-008-probe-r01-b2026-10-09-21-00-00Z"
@@ -44,6 +59,8 @@ class NativeP4ProfilesTest(unittest.TestCase):
         self.assertNotIn(native, ordinary["sources"])
         self.assertEqual(ordinary["sources"] + [native,"video/extender/transport/p4_block_coordinator.cpp"], candidate["sources"])
         self.assertIn("esp_driver_parlio", candidate["requires"])
+        devkit = select_display_profile(self.document, "p4-console", "p4-devkit", "browser", parallel_boot_candidate=True)
+        self.assertIn(flag, devkit["definitions"])
         with self.assertRaises(SystemExit):
             select_display_profile(self.document, "p4-console", "devkit", "browser", parallel_boot_candidate=True)
         with self.assertRaises(SystemExit):

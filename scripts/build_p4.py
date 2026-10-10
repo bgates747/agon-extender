@@ -47,11 +47,12 @@ def check_parallel_qualification_identity(build_id: str, selected: bool,
     """PORT-008 LC03-B: frozen, nonrelease physical-probe identity only."""
     if not selected:
         return False
-    lineage = "data" if data_check else "probe"
+    devkit_control = (profile, board, output) == ("p4-console", "p4-devkit", "browser") and not probe and not data_check
+    lineage = "devkit" if devkit_control else "data" if data_check else "probe"
     match = re.fullmatch(r"port-008-"+lineage+r"-r[0-9]{2,}-b(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z", build_id)
-    composition = (profile,board)==("p4-console","p4-pc") and ((data_check and not probe and output=="hdmi") or (not data_check and probe and output=="browser"))
+    composition = devkit_control or ((profile,board)==("p4-console","p4-pc") and ((data_check and not probe and output=="hdmi") or (not data_check and probe and output=="browser")))
     if not match or not boot or not composition:
-        raise SystemExit("parallel qualification requires a PORT-008 probe ID and complete P4-PC browser probe composition")
+        raise SystemExit("parallel qualification requires a matching PORT-008 identity and bounded board composition")
     try:
         datetime.strptime(match.group(1), "%Y-%m-%d-%H-%M-%S")
     except ValueError as error:
@@ -173,8 +174,11 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["definitions"].append("AGON_EXTENDER_HDMI_PPA_320=1")
         profile.setdefault("requires", []).extend(["esp_driver_ppa", "esp_mm"])
     if parallel_boot_candidate:
-        if (name,board) != ("p4-console","p4-pc"):
-            raise SystemExit("parallel boot candidate requires p4-pc / p4-console")
+        # PORT-008 DEVKIT-HARDWARE-R01: setup/recovery must satisfy current
+        # EMOS release admission using the original board's generated pins.
+        # This does not qualify DevKit payloads or enable the old isolation ICs.
+        if name != "p4-console" or board not in {"p4-pc", "p4-devkit"}:
+            raise SystemExit("parallel boot candidate requires a console board")
         profile["definitions"].append("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1")
         profile["sources"].append("video/extender/transport/p4_native_payload.cpp")
         profile["sources"].append("video/extender/transport/p4_block_coordinator.cpp")

@@ -557,3 +557,15 @@ is 131,035 bytes / 37 free. A paired reset-phase counterexample prevents its
 installation; the experimental source changes were preserved and restored. These are private probe sizes, not ordinary/release sizes; retain
 the unchanged131072-byte limit and full guards. [Current repair evidence](tasks/PORT-008/LIVE-QUALIFICATION-BLOCK-R04.md)
 distinguishes exact installed bytes, compile-only work and physical failures.
+
+### Original DevKit parallel-control setup and recovery
+
+The bounded [DevKit hardware control](tasks/PORT-008/DEVKIT-HARDWARE-R01.md)
+uses `p4-console --board p4-devkit --parallel-boot-candidate`, browser output,
+and an explicit `port-008-devkit-rNN-bTIMESTAMP` experimental identity with
+`--allow-dirty-parallel-qualification`. This composition reuses the current
+reciprocal boot-release owner with DevKit GPIO assignments, keeping current
+EMOS unchanged. It is setup/recovery for the historical receiver comparison,
+not a new production selection or DevKit payload qualification. The physical
+three-wire handshake must actually be connected. Ordinary DevKit builds and
+selected production remain unchanged.
