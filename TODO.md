@@ -5,6 +5,10 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
+## Development host — Linux Lite migration preparation
+
+- [ ] **[HOST-001 — New Oryx Pro Linux Lite migration](docs/tasks/HOST-001.md)** — History précis and authorized read-only SSH inventory complete; private running log retains actions/results. Author proposes dual boot on the single SSD; no useful unallocated extent exists and current root is unencrypted ext4. Space allocation, preservation and installer/recovery preparation remain pending. Linux Lite is preferred; release and installation method remain unselected. No partition/boot/driver change, installation or reboot performed.
+
 ## Browser paste — accepted development, release closeout pending
 
 - [ ] **[REMOTE-004 — Browser clipboard paste](docs/tasks/REMOTE-004.md)** — Browser paste and restored Reset Agon accepted after Author testing. Source, local tests and bounded P4 deployment evidence retained; broader validation and production promotion remain within the HDMI release boundary. Broader clipboard investigation remains deferred.
