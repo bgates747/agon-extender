@@ -2669,3 +2669,9 @@ flash ran at 40 MHz versus reproduction 80 MHz; original complete config/compile
 invocation/binary not recovered. No SDK/DMA cause diagnosed. Proposed next
 control is one standalone slow-profile record at 40 MHz flash; paused for Author
 discussion before any rebuild or bench operation.
+
+## Authorized flash-speed control
+
+[40 MHz control](PORT-008/FLASH40-CONTROL-R01.md) owns the Author-approved
+single slow-profile historical record and exact full EDP/input restoration.
+Only flash frequency changes; no EMOS, wiring or production change.
