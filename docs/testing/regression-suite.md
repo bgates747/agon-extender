@@ -32,12 +32,13 @@ AUDIT-010 disposition.
 
 ## Launch from another computer
 
-The Pop!_OS host has a machine-local `agents/regression-suite.local.json` with
-the current Extender HTTP endpoint. It is ignored and must not be copied into
-tracked documentation. From an SSH client, run:
+Use the [canonical network instructions](https://github.com/bgates747/agon-dev-env/blob/feature/standardized-deployment/codex/environment.md#ssh-between-development-machines) to select and access the current regression host.
+The host-local `agents/regression-suite.local.json` owns the Extender HTTP
+endpoint and remains ignored. Once connected, invoke the installed application
+launcher locally:
 
 ```sh
-ssh smith@POP_OS_HOST /home/smith/.local/bin/agon-extender-regression
+~/.local/bin/agon-extender-regression
 ```
 
 The launcher prints the fresh job path, then streams concise phase, current-case
