@@ -16,6 +16,19 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_parallel_install_identity_is_explicit_and_nonrelease(self):
+        from build_p4 import check_parallel_qualification_identity as check
+        good="port-008-probe-r01-b2026-10-09-21-00-00Z"
+        self.assertTrue(check(good,True,True,True,"p4-console","p4-pc","browser"))
+        self.assertFalse(check(good,False,True,True,"p4-console","p4-pc","browser"))
+        for args in (("extender-vdp-v1.0.0",True,True,True,"p4-console","p4-pc","browser"),
+                     (good,True,False,True,"p4-console","p4-pc","browser"),
+                     (good,True,True,False,"p4-console","p4-pc","browser"),
+                     (good,True,True,True,"p4-console","devkit","browser"),
+                     (good,True,True,True,"p4-console","p4-pc","hdmi"),
+                     (good.replace("10-09","99-99"),True,True,True,"p4-console","p4-pc","browser")):
+            with self.assertRaises(SystemExit):check(*args)
+
     @classmethod
     def setUpClass(cls):
         cls.document = json.loads((VDP / "build/p4-profiles.json").read_text())
@@ -29,12 +42,22 @@ class NativeP4ProfilesTest(unittest.TestCase):
         self.assertIn(flag, candidate["definitions"])
         native = "video/extender/transport/p4_native_payload.cpp"
         self.assertNotIn(native, ordinary["sources"])
-        self.assertEqual(ordinary["sources"] + [native], candidate["sources"])
+        self.assertEqual(ordinary["sources"] + [native,"video/extender/transport/p4_block_coordinator.cpp"], candidate["sources"])
         self.assertIn("esp_driver_parlio", candidate["requires"])
         with self.assertRaises(SystemExit):
             select_display_profile(self.document, "p4-console", "devkit", "browser", parallel_boot_candidate=True)
         with self.assertRaises(SystemExit):
             select_display_profile(self.document, "p4-mos-recovery", "p4-pc", "browser", parallel_boot_candidate=True)
+
+    def test_private_probe_requires_native_owner(self):
+        from build_p4 import select_display_profile
+        args=(self.document,"p4-console","p4-pc","browser")
+        with self.assertRaises(SystemExit):
+            select_display_profile(*args,parallel_probe_candidate=True)
+        ordinary=select_display_profile(*args,parallel_boot_candidate=True)
+        probe=select_display_profile(*args,parallel_boot_candidate=True,parallel_probe_candidate=True)
+        self.assertEqual(ordinary["sources"],probe["sources"])
+        self.assertEqual(ordinary["definitions"]+["AGON_EXTENDER_PARALLEL_PROBE=1"],probe["definitions"])
 
     def test_three_accepted_profiles_only(self):
         self.assertEqual(self.document["schema_version"], 2)

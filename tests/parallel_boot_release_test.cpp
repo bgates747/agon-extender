@@ -33,7 +33,9 @@ int gpio_set_direction(int pin,int mode){
 }
 int gpio_reset_pin(int pin){
  if(fails())return ESP_FAIL;
- directions[pin]=GPIO_MODE_INPUT;
+ // Pinned IDF5.5.5 gpio_reset_pin disables BOTH input and output. A reset
+ // after selecting input must not silently preserve the receiver in the fake.
+ directions[pin]=GPIO_MODE_DISABLE;
  for(unsigned i=0;i<data.size();++i)if(data[i]==pin)pMask&=~(1u<<i);
  ownership();return ESP_OK;
 }
@@ -42,7 +44,11 @@ int gpio_set_level(int pin,int v){
  if(pin==15 && !v){assert(armed);assert(!pMask);}
  levels[pin]=v;return ESP_OK;
 }
-int gpio_get_level(int pin){++reads;assert(pin==14||pin==16);return pin==14?!!(hostPdDr&0x20):!!(hostPdDr&0x80);}
+int gpio_get_level(int pin){
+ ++reads;assert(pin==14||pin==16);
+ if(directions[pin]!=GPIO_MODE_INPUT)return 0;
+ return pin==14?!!(hostPdDr&0x20):!!(hostPdDr&0x80);
+}
 int gpio_pullup_dis(int){return fails()?ESP_FAIL:ESP_OK;}
 int gpio_pulldown_dis(int){return fails()?ESP_FAIL:ESP_OK;}
 void esp_rom_gpio_connect_in_signal(int value,int sig,bool inv){assert(value==GPIO_MATRIX_CONST_ONE_INPUT && !inv && (sig==10||sig==11));}
@@ -143,6 +149,41 @@ int main(){unsigned cases=0;
   }
   assert(restores==1);
   if(restoreFails)assert(!live&&!pMask);else assert(live);
+  ++cases;
+ }
+ // A delayed EMOS return request must advance the held recovery epoch.
+ // Rewinding an already-released fence on a timer reused READY-low as a new
+ // announce while EMOS interpreted it as ACK, leaving EMOS live and P4 stuck.
+ for(std::uint32_t start:{0u,0xfffffff0u})for(unsigned delay:{2000u,7000u}) {
+  Pair q;agon::extender::transport::P4BootStartup startup(q.p,data,15,14,16,0);
+  assert(startup.begin(start));unsigned restores=0;
+  auto restore=[&](){++restores;pMask=10;ownership();return true;};
+  assert(!startup.poll(start,restore));
+  assert(!startup.poll(start+1,restore));
+  assert(q.p.phase()==H::recoveryClear&&levels[15]==1&&!pMask);
+  // EMOS is paused before requesting ACK. No missing-peer timer may reset
+  // this released P4 fence or manufacture a UART grant.
+  for(unsigned n=2;n<=delay;++n){
+   assert(!startup.poll(start+n,restore));
+   assert(q.p.phase()==H::recoveryClear&&levels[15]==1&&!pMask&&!restores);
+  }
+  auto tickE=[&](){
+   hostPdDr=(hostPdDr&~0x10)|(levels[15]?0x10:0);
+   auto action=emos_parallel_boot_poll(&q.e,q.eUp);
+   if(action==EPH_RESTORE){eMask=5;q.eUp=true;ownership();}
+  };
+  tickE();tickE(); // EMOS releases and holds its fresh C0/V0 request.
+  assert(q.e.phase==EPH_RETURN_REQUEST&&!(hostPdDr&0x80));
+  assert(!startup.poll(start+delay+1,restore));
+  assert(q.p.phase()==H::recoveryAck&&levels[15]==0&&!restores);
+  // Pause again while EMOS observes ACK: neither side can skip UART proof.
+  for(unsigned n=2;n<2502;++n){
+   assert(!startup.poll(start+delay+n,restore));
+   assert(q.p.phase()==H::recoveryAck&&levels[15]==0&&!pMask&&!restores);
+  }
+  bool live=false;
+  for(unsigned n=2502;n<2520&&!live;++n){tickE();live=startup.poll(start+delay+n,restore);}
+  tickE();assert(live&&q.e.phase==EPH_UART&&q.p.phase()==H::uart&&restores==1);
   ++cases;
  }
  // Absent peer, clock rollover and wrong core: no restore on a timer.

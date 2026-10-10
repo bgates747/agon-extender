@@ -81,10 +81,13 @@ P4ParallelHandover::Action P4ParallelHandover::step(std::uint8_t c) noexcept {
       if (!(c&armed)) return arm;
       ready_=false; phase_=block; return run;
     case block:
-      if (v && !clock) { cancel(); return release; }
       // Includes DMA stop AND pad release; raw DMA completion is insufficient.
-      if (!(c&done)) break;
-      ready_=true; phase_=blockReturn; break;
+      // EMOS can finish and hold C=0,V=1 before the native ISR publishes EOF.
+      // Those levels also resemble a reset: neither means completion. Retain
+      // the bounded native operation until its exact DMA/VALID/cleanup proof or
+      // deadline; do not grant UART or READY-high from a task-level sample.
+      if (c&done) { ready_=true; phase_=blockReturn; break; }
+      break;
     case blockReturn:
       if (clock) break;
       // Our pads are already released. EMOS can see that READY high and

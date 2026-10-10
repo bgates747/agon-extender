@@ -3,7 +3,7 @@
 #include <cstdint>
 using esp_err_t=int; using uart_port_t=int; using gpio_num_t=int; using portMUX_TYPE=int;
 constexpr int ESP_OK=0,ESP_ERR_TIMEOUT=1,ESP_FAIL=2,UART_NUM_1=1,GPIO_MODE_INPUT=1;
-constexpr int GPIO_MODE_OUTPUT=2;
+constexpr int GPIO_MODE_OUTPUT=2,GPIO_MODE_DISABLE=0;
 constexpr int GPIO_MATRIX_CONST_ONE_INPUT=0x38,SOC_UART_RX_PIN_IDX=0,SOC_UART_CTS_PIN_IDX=1;
 #define UART_PERIPH_SIGNAL(u,p) ((u)*10+(p))
 #define portMUX_INITIALIZER_UNLOCKED 0

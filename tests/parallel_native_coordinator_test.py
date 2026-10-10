@@ -11,11 +11,16 @@ ROOT=Path(__file__).resolve().parents[1]
 EMOS=Path(os.environ.get('AGON_EMOS_ROOT',ROOT.parent/'agon-emos'))
 class NativePairTest(unittest.TestCase):
  def test_pair(self):
+  self.run_pair(False)
+ def test_qualification_pair(self):
+  self.run_pair(True)
+ def run_pair(self,probe):
   clock=monotonic()
   with tempfile.TemporaryDirectory() as tmp:
    d=Path(tmp);prepare_sdk(d)
    flags=['-Wall','-Wextra','-Werror','-Wno-endif-labels','-ffunction-sections','-fdata-sections',
     '-fsanitize=address,undefined','-fno-sanitize-recover=all']
+   if probe:flags+=['-DEMOS_PARALLEL_PROBE=1']
    inc=[f'-I{d}',f'-I{EMOS/"tests/host"}',f'-I{EMOS/"src"}',f'-I{ROOT/"vdp/video"}']
    objects=[]
    for name in ('emos_console','emos_parallel_handover','emos_parallel_boot','emos_parallel_startup',

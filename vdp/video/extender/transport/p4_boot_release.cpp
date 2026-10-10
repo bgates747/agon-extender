@@ -19,6 +19,9 @@ bool P4BootRelease::releasePads() noexcept {
     // Try every lane even if a previous SDK operation failed.
     if (gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT)!=ESP_OK) ok=false;
     if (gpio_reset_pin(gpio_num_t(pin))!=ESP_OK) ok=false;
+    // IDF5.5.5 gpio.c:462 resets BOTH input/output enables. Direction first
+    // fences a stale output, but input must be enabled again after mux reset.
+    if (gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT)!=ESP_OK) ok=false;
     if (gpio_pullup_dis(gpio_num_t(pin))!=ESP_OK) ok=false;
     if (gpio_pulldown_dis(gpio_num_t(pin))!=ESP_OK) ok=false;
   }
@@ -38,6 +41,9 @@ bool P4BootRelease::begin(P4ParallelHandover &h) noexcept {
   for (int pin:{clock_,valid_}) {
     if (gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT)!=ESP_OK) ok=false;
     if (gpio_reset_pin(gpio_num_t(pin))!=ESP_OK) ok=false;
+    // gpio_get_level returns zero when the input receiver is disabled. Do not
+    // let reset erase CLOCK/VALID input enable and deadlock physical recovery.
+    if (gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT)!=ESP_OK) ok=false;
     if (gpio_pullup_dis(gpio_num_t(pin))!=ESP_OK) ok=false;
     if (gpio_pulldown_dis(gpio_num_t(pin))!=ESP_OK) ok=false;
   }

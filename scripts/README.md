@@ -54,6 +54,7 @@ The [procedure index](../docs/procedures/README.md) and
 
 | Family / tools | Evidence owner and limits |
 |---|---|
+| [parallel_probe_results.py](parallel_probe_results.py) | PORT-008 private offline Agon CSV/P4 USB receipt comparison; requires all 20 endpoint cases and independent expected CRCs. [Qualification results](../docs/tasks/PORT-008/LIVE-QUALIFICATION-RESULTS.md) distinguish modeled checks from pending physical proof; this tool performs no bench operations |
 | [vdp-pio.sh](vdp-pio.sh) | BUILD-001 historical hybrid rollback only; requires an explicit acknowledgement variable and is not a maintained firmware build path |
 | [prepare_uart_forward.py](prepare_uart_forward.py), [prepare_uart_roundtrip.py](prepare_uart_roundtrip.py), [capture_uart_roundtrip.py](capture_uart_roundtrip.py) | PORT-009/010 historical paired transport diagnostics |
 | [prepare_uart_flow.py](prepare_uart_flow.py), [capture_uart_flow.py](capture_uart_flow.py) | PORT-011/012 flow-control diagnostics |

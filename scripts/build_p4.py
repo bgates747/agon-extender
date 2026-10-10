@@ -42,6 +42,23 @@ SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py",
                 "scripts/p4_board.py")
 
 
+def check_parallel_qualification_identity(build_id: str, selected: bool,
+        boot: bool, probe: bool, profile: str, board: str, output: str, data_check: bool = False) -> bool:
+    """PORT-008 LC03-B: frozen, nonrelease physical-probe identity only."""
+    if not selected:
+        return False
+    lineage = "data" if data_check else "probe"
+    match = re.fullmatch(r"port-008-"+lineage+r"-r[0-9]{2,}-b(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z", build_id)
+    composition = (profile,board)==("p4-console","p4-pc") and ((data_check and not probe and output=="hdmi") or (not data_check and probe and output=="browser"))
+    if not match or not boot or not composition:
+        raise SystemExit("parallel qualification requires a PORT-008 probe ID and complete P4-PC browser probe composition")
+    try:
+        datetime.strptime(match.group(1), "%Y-%m-%d-%H-%M-%S")
+    except ValueError as error:
+        raise SystemExit("parallel qualification ID has an invalid UTC timestamp") from error
+    return True
+
+
 def check_build_identity(build_id: str, source_dirty: bool,
                          allow_dirty_experimental: bool, profile: str,
                          board: str, display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False) -> None:
@@ -96,7 +113,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -161,7 +178,15 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["definitions"].append("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1")
         profile["sources"].append("video/extender/transport/p4_native_payload.cpp")
         profile["sources"].append("video/extender/transport/p4_block_coordinator.cpp")
-        profile.setdefault("requires", []).append("esp_driver_parlio")
+        profile.setdefault("requires", []).extend(["esp_driver_parlio"]+([] if parallel_data_check else ["esp_driver_pcnt"]))
+    if parallel_data_check:
+        if not parallel_boot_candidate or parallel_probe_candidate:
+            raise SystemExit("data check requires native owner and excludes diagnostic probe")
+        profile["definitions"].append("AGON_EXTENDER_PARALLEL_DATA_CHECK=1")
+    if parallel_probe_candidate:
+        if not parallel_boot_candidate:
+            raise SystemExit("parallel probe requires the complete private native coordinator")
+        profile["definitions"].append("AGON_EXTENDER_PARALLEL_PROBE=1")
     return profile
 
 
@@ -466,6 +491,8 @@ def main() -> None:
                         help="tracked board name (default: p4-devkit)")
     parser.add_argument("--usb-fsls-only", action="store_true",
                         help="experimental P4-PC-only full/low-speed USB host backport")
+    parser.add_argument("--parallel-data-check", action="store_true", help="comparison-only HDMI roundtrip; excludes PCNT and probe logging")
+    parser.add_argument("--parallel-probe-candidate", action="store_true", help="private PORT-008 qualification storage/receipts")
     parser.add_argument("--parallel-boot-candidate", action="store_true", help="private PORT-008 startup; no ExExt payload")
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser",
                         help="presentation sink; HDMI requires p4-pc / p4-console")
@@ -488,6 +515,8 @@ def main() -> None:
     parser.add_argument("--build-id", default="UNVERSIONED-DO-NOT-DEPLOY")
     parser.add_argument("--allow-dirty-experimental", action="store_true",
                         help="freeze HDMI-001 experimental source; never qualify a release")
+    parser.add_argument("--allow-dirty-parallel-qualification", action="store_true",
+                        help="freeze a PORT-008 private browser probe; never a release")
     parser.add_argument("--mos", type=Path)
     parser.add_argument("--mos-sha256")
     parser.add_argument("--flash-agent", type=Path)
@@ -502,11 +531,17 @@ def main() -> None:
     source_dirty = bool(subprocess.check_output(
         ["git", "-C", str(ROOT), "status", "--porcelain"], text=True
     ).strip())
-    check_build_identity(args.build_id, source_dirty, args.allow_dirty_experimental,
-                         args.profile, args.board, args.display_output, args.render_benchmark_output, args.direct_rgb888)
-    if args.direct_rgb888 and not args.allow_dirty_experimental:
+    parallel_qualification = check_parallel_qualification_identity(args.build_id,
+        args.allow_dirty_parallel_qualification, args.parallel_boot_candidate,
+        args.parallel_probe_candidate, args.profile, args.board, args.display_output, args.parallel_data_check)
+    if parallel_qualification and args.allow_dirty_experimental:
+        parser.error("parallel and HDMI experimental identity exceptions are mutually exclusive")
+    if not parallel_qualification:
+        check_build_identity(args.build_id, source_dirty, args.allow_dirty_experimental,
+                             args.profile, args.board, args.display_output, args.render_benchmark_output, args.direct_rgb888)
+    if args.direct_rgb888 and not (args.allow_dirty_experimental or (parallel_qualification and args.parallel_data_check)):
         parser.error("direct RGB888 requires an explicitly frozen experimental build")
-    if args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY":
+    if args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification:
         parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():
@@ -515,7 +550,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -659,8 +694,12 @@ def main() -> None:
                   "--profile", args.profile, "--board", args.board,
                   "--display-output", args.display_output, "--hdmi-timing", args.hdmi_timing,
         *(["--render-benchmark-output", args.render_benchmark_output] if args.render_benchmark_output else []), "--output", str(output)]
+    if args.parallel_data_check:
+        validation.append("--parallel-data-check")
     if args.parallel_boot_candidate:
         validation.append("--parallel-boot-candidate")
+    if args.parallel_probe_candidate:
+        validation.append("--parallel-probe-candidate")
     if args.ppa_scale_320:
         validation.append("--ppa-scale-320")
     if args.rolling_scanout:
@@ -710,9 +749,12 @@ def main() -> None:
         "source_dirty": source_dirty,
         "artifact_status": "experimental",
         "allow_dirty_experimental": args.allow_dirty_experimental,
+        "allow_dirty_parallel_qualification": parallel_qualification,
         "source_snapshot_verified": source_record is not None,
         "reset_url_configured": bool(args.reset_url),
         "parallel_boot_candidate": args.parallel_boot_candidate,
+        "parallel_probe_candidate": args.parallel_probe_candidate,
+        "parallel_data_check": args.parallel_data_check,
         "usb_fsls_only": args.usb_fsls_only,
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,

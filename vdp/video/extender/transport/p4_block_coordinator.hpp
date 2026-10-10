@@ -31,6 +31,6 @@ class P4BlockCoordinator final {
   std::optional<P4NativePayload> payload_;
   bool active_{},parked_{},released_{},restored_{},recovering_{};
   bool releasePads() noexcept;
-  Result fail() noexcept;
+  Result fail(const char *why="cleanup retry") noexcept;
 };
 }

@@ -1,6 +1,8 @@
 // PORT-008 private startup composition, not a qualified ExExt transport.
 // Sole installing UART task; no concurrent serializer or PARLIO owner.
-// A deadline repeats physical release. It never authorizes UART restoration.
+// Missing peer progress holds the released handshake. Never rewind its READY
+// acknowledgement on a timer: EMOS could accept the new polarity in an old
+// phase (ABA) and attach UART before the P4 has reciprocal release proof.
 #pragma once
 #include "p4_boot_release.hpp"
 #include <freertos/FreeRTOS.h>
@@ -48,7 +50,9 @@ class P4BootStartup final {
       if(!cancelTransport())cleanupFailed_=true;
       return false;
     }
-    if(std::uint32_t(now-phaseAt_)>=2000){begin(now);return false;}
+    // Pads are already fenced. Hold this phase across arbitrary peer delay;
+    // elapsed time is neither a new reset indication nor a new release epoch.
+    // Actual GPIO/restore failures still begin a fresh physical fence below.
     const auto before=handover_.phase();
     const auto result=pads_.poll(handover_,restored_);
     if(result==P4BootRelease::fault){begin(now);return false;}

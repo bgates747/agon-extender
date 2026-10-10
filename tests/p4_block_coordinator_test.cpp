@@ -46,11 +46,12 @@ static void drive(C &owner,bool tx,unsigned n,std::uint8_t*b,unsigned &now){
  assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0); // request
  valid=1;assert(owner.poll(++now,true,true)==CR::exclusive&&ready==1);
  clockLevel=1;assert(owner.poll(++now,true,true)==CR::exclusive);
- assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0&&watch); // arm
+ assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0&&!watch&&counterRunning); // arm
  if(!tx)for(unsigned i=0;i<n;++i)dma[i]=std::uint8_t(73*i+17);
- signal(false);completed(tx,n);
+ signal(false);clockEdges(n);if(tx)completed(tx,n);
  assert(owner.poll(++now,true,true)==CR::exclusive&&allocation); // hold last byte
- signal(true);assert(owner.poll(++now,true,true)==CR::exclusive&&ready==1&&!allocation);
+ signal(true);if(!tx)completed(tx,n); // RX callback may follow the complete byte record.
+ assert(owner.poll(++now,true,true)==CR::exclusive&&ready==1&&!allocation);
  assert(!uartRestored); // DMA end is NOT permission to restore UART
  clockLevel=0;valid=1;assert(owner.poll(++now,true,true)==CR::exclusive);
  valid=0;assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0);
@@ -82,6 +83,60 @@ int main(){unsigned cases=0;
   }
   assert(restores==2&&!allocation&&!outputs);
  }
+ // EMOS can finish its short native call and release CLOCK between P4 polls.
+ // Exact DMA/VALID completion AND pad release take precedence over C=0,V=1;
+ // those peer levels alone still cancel and cannot manufacture a receipt.
+ for(bool tx:{false,true})for(bool proof:{false,true}) {
+  reset();clockLevel=0;uartIdle=true;uartRestored=false;ring=fifo=restores=0;
+  agon::extender::transport::ParallelControl c;std::uint8_t b[1]{17},d[16];
+  boot(c,b,1);C owner(c,pins,14,16,15,18,17,20,19,0);offer(c,1,tx,d);
+  unsigned now=0;valid=0;
+  owner.poll(++now,true,true);owner.poll(++now,true,true);owner.poll(++now,true,true);
+  valid=1;owner.poll(++now,true,true);clockLevel=1;owner.poll(++now,true,true);
+  assert(owner.poll(++now,true,true)==CR::exclusive&&c.handover.phase()==H::block);
+  if(!tx)dma[0]=17;
+  signal(false);clockEdges(1);signal(true);if(proof)completed(tx,1);
+  clockLevel=0; // EMOS has already released its pads before P4 observes DONE.
+  if(!proof) {
+   // A peer release may precede the native EOF callback; levels alone neither
+   // complete the block nor reset it. The native deadline still fences it.
+   assert(owner.poll(++now,true,true)==CR::exclusive&&!c.handover.failed());
+   assert(c.pending()&&allocation&&c.handover.phase()==H::block&&ready==0);
+   now+=2000;
+   assert(owner.poll(now,true,true)==CR::recovery&&c.handover.failed());
+   assert(!c.pending()&&!allocation&&!outputs&&!watch);
+  } else {
+   assert(owner.poll(++now,true,true)==CR::exclusive&&!c.handover.failed());
+   assert(c.handover.phase()==H::blockReturn&&ready==1&&!allocation&&!outputs);
+   assert(owner.poll(++now,true,true)==CR::exclusive); // reciprocal return
+   valid=0;assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0);
+   valid=1;assert(owner.poll(++now,true,true)==CR::exclusive);
+   assert(owner.poll(++now,true,true)==CR::uart&&uartRestored&&ready==1);
+   complete(c,d,b,1,tx,now);
+  }
+  ++cases;
+ }
+ // Async native EOF can arrive one owner poll AFTER EMOS releases CLOCK.
+ for(bool tx:{false,true}) {
+  reset();clockLevel=0;uartIdle=true;uartRestored=false;ring=fifo=restores=0;
+  agon::extender::transport::ParallelControl c;std::uint8_t b[1]{17},d[16];
+  boot(c,b,1);C owner(c,pins,14,16,15,18,17,20,19,0);offer(c,1,tx,d);
+  unsigned now=0;valid=0;
+  owner.poll(++now,true,true);owner.poll(++now,true,true);owner.poll(++now,true,true);
+  valid=1;owner.poll(++now,true,true);clockLevel=1;owner.poll(++now,true,true);
+  assert(owner.poll(++now,true,true)==CR::exclusive&&c.handover.phase()==H::block);
+  if(!tx)dma[0]=17;
+  signal(false);clockEdges(1);signal(true);clockLevel=0;
+  assert(owner.poll(++now,true,true)==CR::exclusive&&c.pending()&&ready==0&&allocation);
+  completed(tx,1);
+  assert(owner.poll(++now,true,true)==CR::exclusive&&c.handover.phase()==H::blockReturn);
+  assert(ready==1&&!allocation&&!outputs);
+  assert(owner.poll(++now,true,true)==CR::exclusive);
+  valid=0;assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0);
+  valid=1;assert(owner.poll(++now,true,true)==CR::exclusive);
+  assert(owner.poll(++now,true,true)==CR::uart&&uartRestored&&ready==1);
+  complete(c,d,b,1,tx,now);++cases;
+ }
  // Genuine wrap: admission starts before UINT32 wrap; expiration crosses it.
  for(unsigned start:{0u,0xfffffff0u}) {
   reset();clockLevel=0;agon::extender::transport::ParallelControl c;std::uint8_t b[8]{},d[16];
@@ -111,8 +166,8 @@ int main(){unsigned cases=0;
    if(proceed){valid=1;proceed=poll();}
    if(proceed){clockLevel=1;proceed=poll()&&poll();}
    if(proceed){if(!tx)for(unsigned i=0;i<8;++i)dma[i]=std::uint8_t(73*i+17);
-    signal(false);completed(tx,8);proceed=poll();}
-   if(proceed){signal(true);proceed=poll();}
+    signal(false);clockEdges(8);if(tx)completed(tx,8);proceed=poll();}
+   if(proceed){signal(true);if(!tx)completed(tx,8);proceed=poll();}
    if(proceed){clockLevel=0;valid=1;proceed=poll();}
    if(proceed){valid=0;proceed=poll();}
    if(proceed){valid=1;proceed=poll();}
@@ -136,8 +191,8 @@ int main(){unsigned cases=0;
   for(unsigned step=0;step<stage;++step) {
    if(step==3)valid=1;
    if(step==4)clockLevel=1;
-   if(step==6){signal(false);completed(tx,8);}
-   if(step==7)signal(true);
+   if(step==6){signal(false);clockEdges(8);if(tx)completed(tx,8);}
+   if(step==7){signal(true);if(!tx)completed(tx,8);}
    if(step==8){clockLevel=0;valid=1;}
    if(step==9)valid=0;
    if(step==10)valid=1;

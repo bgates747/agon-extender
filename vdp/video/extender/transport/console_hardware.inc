@@ -12,6 +12,12 @@
 #include "p4_boot_startup.hpp"
 #include "p4_uart_reset.hpp"
 #include "p4_block_coordinator.hpp"
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#include "p4_parallel_data_check.hpp"
+#endif
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+#include "p4_parallel_probe.hpp"
+#endif
 #endif
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
 #include "agon_extender_board_config.hpp"
@@ -38,6 +44,12 @@ constexpr char kIdentity[]="legacy-devkit";
 namespace {
 ConsoleStream *console_stream;
 QueueHandle_t console_events;
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+std::optional<agon::extender::transport::P4ParallelDataCheck> console_data_check;
+#endif
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+std::optional<agon::extender::transport::P4ParallelProbe> console_probe;
+#endif
 agon::extender::input::UsbCliKeyboard console_keyboard;
 agon::extender::input::UsbKeyQueue console_keys;
 bool console_locale_pending{},console_admit_pending{},console_overload{};
@@ -72,6 +84,16 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   if (p[2]==PARALLEL_WIRE_VERSION) {
     // Shared F7 framing, distinct capability. No display reset or mode commit.
     if (!console_stream->parallel.request(p,millis(),esp_random(),reply)) return;
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+    if(p[3]==PARALLEL_OFFER && (!console_data_check || !console_data_check->acceptedOffer())) {
+      console_stream->parallel.cancel();console_stream->fail("data check storage");return;
+    }
+#endif
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+    if(p[3]==PARALLEL_OFFER && (!console_probe || !console_probe->acceptedOffer(micros()))) {
+      console_stream->parallel.cancel();console_stream->fail("private probe storage");return;
+    }
+#endif
   } else {
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
     if(!console_stream->parallel.uartTransitionAllowed())return;
@@ -98,7 +120,10 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   // buffers intact. Its fresh lease is still required before ordinary output.
   console_stream->write(CONSOLE_REPLY);console_stream->write(CONSOLE_SIZE);
   console_stream->write(reply,sizeof(reply));
-  printf("Console control version=%u op=%u active=%u\n",p[2],p[3],console_stream->session.active());
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+  if(p[2]!=PARALLEL_WIRE_VERSION)
+#endif
+    printf("Console control version=%u op=%u active=%u\n",p[2],p[3],console_stream->session.active());
 }
 ConsoleStream *beginConsole() {
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
@@ -141,7 +166,30 @@ void runConsole(VDUStreamProcessor *processor) {
         console_board::kUartRts,console_board::kUartCts)==ESP_OK;
   };
   startup.begin(millis());
-  while(!startup.poll(millis(),restoreUart))vTaskDelay(pdMS_TO_TICKS(1));
+  while(!startup.poll(millis(),restoreUart)) {
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+    // LC03-B boot diagnosis only: USB console, never the shared UART. Sample
+    // actual pads at a bounded cadence; do not manufacture release progress.
+    static uint32_t nextBootReport=0;
+    if(int32_t(millis()-nextBootReport)>=0) {
+      nextBootReport=millis()+500;
+      printf("Parallel boot phase=%u ready_n_command=%u clock=%d valid=%d\n",
+          unsigned(console_stream->parallel.handover.phase()),
+          unsigned(console_stream->parallel.handover.readyN()),
+          gpio_get_level(gpio_num_t(console_board::kClock)),
+          gpio_get_level(gpio_num_t(console_board::kValid)));
+    }
+#endif
+    vTaskDelay(pdMS_TO_TICKS(1));
+  }
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+  console_data_check.emplace(console_stream->parallel);
+  if(!console_data_check->begin())abort();
+#endif
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+  console_probe.emplace(console_stream->parallel);
+  if(!console_probe->begin())abort();
+#endif
   agon::extender::transport::P4BlockCoordinator block(console_stream->parallel,
       console_board::kDataPins,console_board::kClock,console_board::kValid,
       console_board::kReady,console_board::kUartTx,console_board::kUartRx,
@@ -173,6 +221,12 @@ void runConsole(VDUStreamProcessor *processor) {
   auto cancelTransport=[&](){
     // P4BootStartup completed a NEW physical fence before this callback.
     // Do not call console_cancel_tx: its ordinary fault path rebinds GPIO.
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+    console_data_check->cancel();
+#endif
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+    console_probe->cancel();
+#endif
     s.transportLost();used=discard=0;need=3;partial_at=tx_at=0;transmitting=false;
     console_keys.reset();keyboard.lost([](agon::extender::input::ProcessedKey){});
     keyboard.admissionBoundary();agon::extender::input::usbhost::transportBoundary();
@@ -205,6 +259,21 @@ void runConsole(VDUStreamProcessor *processor) {
     if(s.failure)s.parallel.cancel();
     const auto blockResult=block.poll(now,!used&&!discard&&s.cached<0&&s.pos>=4,
                                      !s.count&&!transmitting);
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+    // LC03-B physical phase diagnosis: USB only, on phase/result changes.
+    // Observations never advance the owner or stand in for peer evidence.
+    static unsigned lastBlockPhase=~0u,lastBlockResult=~0u;
+    const unsigned blockPhase=unsigned(s.parallel.handover.phase());
+    if(blockPhase!=lastBlockPhase || unsigned(blockResult)!=lastBlockResult) {
+      printf("Parallel state ms=%lu phase=%u result=%u pending=%u count=%u tx=%u boundary=%u clock=%d valid=%d ready_n_command=%u failure=%s\n",
+        (unsigned long)now,blockPhase,unsigned(blockResult),s.parallel.pending(),s.count,transmitting,
+        !used&&!discard&&s.cached<0&&s.pos>=4,
+        gpio_get_level(gpio_num_t(console_board::kClock)),
+        gpio_get_level(gpio_num_t(console_board::kValid)),
+        unsigned(s.parallel.handover.readyN()),s.failure?s.failure:"none");
+      lastBlockPhase=blockPhase;lastBlockResult=unsigned(blockResult);
+    }
+#endif
     if(blockResult==BlockResult::exclusive || blockResult==BlockResult::cleanupFault) {
       vTaskDelay(pdMS_TO_TICKS(1));continue;
     }
@@ -214,6 +283,39 @@ void runConsole(VDUStreamProcessor *processor) {
       vTaskDelay(pdMS_TO_TICKS(1));continue;
     }
     if(!blockDrain)block.recovered();
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+    if(!console_data_check->retire())s.fail("data check guards");
+    agon::extender::transport::P4ParallelDataCheck::Snapshot dataSnapshot;
+    if(console_data_check->takeSnapshot(dataSnapshot)) {
+      // Private receive/echo attribution only, after reciprocal UART recovery.
+      // Bounded USB stdout; no shared-UART diagnostics or payload-path logging.
+      char first[33]{},last[33]{};
+      constexpr char hex[]="0123456789abcdef";
+      for(unsigned i=0;i<dataSnapshot.count;++i) {
+        first[i*2]=hex[dataSnapshot.first[i]>>4];first[i*2+1]=hex[dataSnapshot.first[i]&15];
+        last[i*2]=hex[dataSnapshot.last[i]>>4];last[i*2+1]=hex[dataSnapshot.last[i]&15];
+      }
+      printf("Parallel data snapshot direction=%u length=%u fnv=%08lx first=%s last=%s\n",
+        unsigned(dataSnapshot.direction),unsigned(dataSnapshot.length),
+        (unsigned long)dataSnapshot.fnv,first,last);
+    }
+#endif
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+    agon::extender::transport::P4ParallelProbe::Receipt receipt;
+    if(console_probe->take(micros(),receipt)) {
+      char descriptor[33];
+      constexpr char hex[]="0123456789abcdef";
+      for(unsigned i=0;i<16;++i) {
+        descriptor[i*2]=hex[receipt.descriptor[i]>>4];
+        descriptor[i*2+1]=hex[receipt.descriptor[i]&15];
+      }
+      descriptor[32]=0;
+      printf("Parallel probe descriptor=%s direction=%u length=%u crc=%08lx first=%02x last=%02x guards=%u pattern=%s elapsed_us=%lu\n",
+        descriptor,unsigned(receipt.direction),unsigned(receipt.length),(unsigned long)receipt.crc,
+        unsigned(receipt.first),unsigned(receipt.last),unsigned(receipt.guards),
+        receipt.direction?(receipt.pattern?"1":"0"):"na",(unsigned long)receipt.elapsedUs);
+    }
+#endif
     // Only complete, already queued packets may drain. Do not pump USB,
     // pop keys, tick repeat, parse another VDU or enqueue a service response.
     if(!s.parallel.pending()) {

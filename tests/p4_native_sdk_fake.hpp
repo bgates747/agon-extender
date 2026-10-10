@@ -29,7 +29,7 @@ struct parlio_rx_unit_config_t {
  struct{bool free_clk;}flags;
 };
 struct parlio_rx_level_delimiter_config_t {
- unsigned valid_sig_line_id;int sample_edge,bit_pack_order;
+ unsigned valid_sig_line_id;int sample_edge,bit_pack_order;std::size_t eof_data_len;
  struct{bool active_low_en;}flags;
 };
 struct parlio_receive_config_t {void*delimiter;};
@@ -48,3 +48,14 @@ int parlio_new_rx_level_delimiter(parlio_rx_level_delimiter_config_t const*,void
 int parlio_rx_unit_register_event_callbacks(void*,parlio_rx_event_callbacks_t const*,void*);
 int parlio_rx_unit_enable(void*,bool);int parlio_rx_unit_disable(void*);int parlio_del_rx_unit(void*);
 int parlio_del_rx_delimiter(void*);int parlio_rx_unit_receive(void*,void*,std::size_t,parlio_receive_config_t const*);
+
+using pcnt_unit_handle_t=void*;using pcnt_channel_handle_t=void*;
+constexpr int PCNT_CHANNEL_EDGE_ACTION_INCREASE=1,PCNT_CHANNEL_EDGE_ACTION_HOLD=0,PCNT_CHANNEL_LEVEL_ACTION_KEEP=0,PCNT_CHANNEL_LEVEL_ACTION_HOLD=2;
+struct pcnt_unit_config_t{int low_limit,high_limit;struct{bool accum_count;}flags;};
+struct pcnt_chan_config_t{int edge_gpio_num,level_gpio_num;};
+int xPortGetCoreID();int gpio_get_level(int);int gpio_pullup_dis(int);int gpio_pulldown_dis(int);
+int pcnt_new_unit(pcnt_unit_config_t const*,void**);int pcnt_new_channel(void*,pcnt_chan_config_t const*,void**);
+int pcnt_channel_set_edge_action(void*,int,int);int pcnt_channel_set_level_action(void*,int,int);
+int pcnt_unit_add_watch_point(void*,int);int pcnt_unit_enable(void*);int pcnt_unit_clear_count(void*);
+int pcnt_unit_start(void*);int pcnt_unit_stop(void*);int pcnt_unit_get_count(void*,int*);
+int pcnt_unit_disable(void*);int pcnt_del_channel(void*);int pcnt_del_unit(void*);

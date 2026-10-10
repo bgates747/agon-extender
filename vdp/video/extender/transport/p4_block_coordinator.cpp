@@ -1,5 +1,8 @@
 #include "p4_block_coordinator.hpp"
 #include <driver/gpio.h>
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+#include <cstdio>
+#endif
 namespace agon::extender::transport {
 using H=P4ParallelHandover;
 using N=P4NativePayload;
@@ -13,7 +16,12 @@ bool P4BlockCoordinator::releasePads() noexcept {
   }
   return okay;
 }
-P4BlockCoordinator::Result P4BlockCoordinator::fail() noexcept {
+P4BlockCoordinator::Result P4BlockCoordinator::fail(const char *why) noexcept {
+#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+  if(!recovering_)printf("Parallel failure stage=%s phase=%u pending=%u session=%u native=%u\n",why,unsigned(control_.handover.phase()),control_.pending(),unsigned(control_.session.phase),payload_?unsigned(payload_->result()):255u);
+#else
+  (void)why;
+#endif
   // Retain the native object, DMA and callback context until its real cleanup
   // succeeds. Boot recovery must not replace this with optimistic GPIO reset.
   control_.cancel();recovering_=true;
@@ -40,7 +48,7 @@ P4BlockCoordinator::Result P4BlockCoordinator::poll(std::uint32_t now,
     // Prior object reached complete and was retired only after clean return.
     payload_.emplace(data_,clock_,valid_,ready_,core_);
   }
-  if(!control_.pending() || h.failed())return fail();
+  if(!control_.pending() || h.failed())return fail("control expired/cancelled");
   std::uint8_t done=0;
   const bool valid=gpio_get_level(gpio_num_t(valid_));
   const bool clock=gpio_get_level(gpio_num_t(clock_));
@@ -51,45 +59,45 @@ P4BlockCoordinator::Result P4BlockCoordinator::poll(std::uint32_t now,
     // boundary and all-eight-pad release. An ACK alone is never peer quiet.
     if(!boundary || !empty || valid || clock)return Result::drain;
     const auto parked=parking_->park(boundary,true);
-    if(parked==P4UartParking::Result::fault)return fail();
+    if(parked==P4UartParking::Result::fault)return fail("UART park");
     if(parked!=P4UartParking::Result::ready)return Result::drain;
     parked_=true;done|=H::quiet;
   }
   if(h.phase()==H::entryRelease) {
-    if(!parked_ || !releasePads())return fail();
+    if(!parked_ || !releasePads())return fail("entry release");
     released_=true;done|=H::released;
   }
   if(h.phase()==H::localArm) {
     if(payload_->result()==N::Result::idle) {
       const auto *d=control_.descriptor();
       std::uint8_t *buffer;std::size_t capacity;
-      if(!d || !control_.payloadBuffer(buffer,capacity))return fail();
+      if(!d || !control_.payloadBuffer(buffer,capacity))return fail("payload buffer");
       const auto length=std::size_t(d[10])|(std::size_t(d[11])<<8);
       if(payload_->arm(h,parked_,d[12]==1,buffer,capacity,length,now,2000)!=N::Result::pending)
-        return fail();
+        return fail("native arm");
     }
     done|=H::armed;released_=false;
   }
   if(h.phase()==H::block) {
     const auto r=payload_->poll(now);
     if(r==N::Result::complete){released_=true;done|=H::done;}
-    else if(r!=N::Result::pending)return fail();
+    else if(r!=N::Result::pending)return fail("native completion");
   }
   if(h.phase()==H::recoveryUart) {
     // This phase follows EMOS's fresh C=0,V=0 request and C=0,V=1 UART-up
     // acknowledgement, observed by the SAME handover after native pad release.
-    if(!released_ || clock || !valid)return fail();
+    if(!released_ || clock || !valid)return fail("UART return levels");
     if(!restored_) {
-      if(parking_->restore(released_,true)!=P4UartParking::Result::ready)return fail();
+      if(parking_->restore(released_,true)!=P4UartParking::Result::ready)return fail("UART restore");
       restored_=true;
     }
     done|=H::uartUp;
   }
   h.step(done);
-  if(h.failed())return fail();
-  if(gpio_set_level(gpio_num_t(ready_),h.readyN())!=ESP_OK)return fail();
+  if(h.failed())return fail("handover step");
+  if(gpio_set_level(gpio_num_t(ready_),h.readyN())!=ESP_OK)return fail("READY output");
   if(h.phase()==H::uart) {
-    if(!restored_ || !control_.payloadReturned(0,now))return fail();
+    if(!restored_ || !control_.payloadReturned(0,now))return fail("payload returned");
     payload_.reset();active_=false;
     return Result::uart;
   }

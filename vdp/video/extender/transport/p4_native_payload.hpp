@@ -12,12 +12,19 @@
 #include <esp_attr.h>
 #include "p4_parallel_egress.hpp"
 #include "p4_parallel_handover.hpp"
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#include "p4_valid_counter.hpp"
+#endif
 namespace agon::extender::transport {
 class P4NativePayload final : private ParallelTxBackend {
  public:
   enum class Result { idle, pending, complete, rejected, wrongOwner, fault, timeout, cleanupFault };
   P4NativePayload(std::array<int,8> data,int clock,int valid,int ready,int core) noexcept
-      : pins_(data),clock_(clock),valid_(valid),ready_(ready),core_(core),egress_(*this) {}
+      : pins_(data),clock_(clock),valid_(valid),ready_(ready),core_(core),egress_(*this)
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+      ,validCounter_(valid,core),clockCounter_(valid,core)
+#endif
+      {}
   P4NativePayload(P4NativePayload const&)=delete;
   P4NativePayload& operator=(P4NativePayload const&)=delete;
   // parked is completion of the coordinator's real P4UartParking::park,
@@ -39,15 +46,16 @@ class P4NativePayload final : private ParallelTxBackend {
   bool releaseDataPins() noexcept override;
   bool setReadyN(bool) noexcept override;
   bool startReceive() noexcept;
-  bool watchValid() noexcept;
   void discardBuffer() noexcept;
   Result finish(Result) noexcept;
-  static void IRAM_ATTR validEdge(void*) noexcept;
   static bool IRAM_ATTR receiveDone(parlio_rx_unit_handle_t,parlio_rx_event_data_t const*,void*) noexcept;
   static bool IRAM_ATTR transmitDone(parlio_tx_unit_handle_t,parlio_tx_done_event_data_t const*,void*) noexcept;
   std::array<int,8> pins_;
   int clock_,valid_,ready_,core_;
   P4ParallelEgress egress_;
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+  P4ValidCounter validCounter_,clockCounter_;
+#endif
   P4ParallelHandover const* handover_{};
   parlio_rx_unit_handle_t rx_{};
   parlio_rx_delimiter_handle_t delimiter_{};
@@ -59,7 +67,7 @@ class P4NativePayload final : private ParallelTxBackend {
   std::atomic<unsigned> edges_{};
   std::atomic<bool> done_{};
   std::atomic<bool> accepting_{};
-  bool enabled_{},watching_{},transmit_{};
+  bool enabled_{},transmit_{};
   Result result_{Result::idle};
 };
 }
