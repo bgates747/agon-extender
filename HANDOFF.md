@@ -1,3 +1,18 @@
+# Current checkpoint — offline build comparison complete, paused
+
+[Build comparison results](docs/tasks/PORT-008/BUILD-COMPARISON-R01-RESULTS.md)
+supersede older next-step claims below. Existing work was committed in logical
+groups before review (Extender 826c6da5 / 2ead90d6 / 43fb2706; EMOS a843a1e).
+Both original DevKit and current PC report silicon v1.3 and IDF 5.5.5. All 128
+compared retained relevant SDK files match the reproduction, but later retained
+build/config/compiler artifacts do not establish the original passing binary.
+Original flash 40 MHz versus reproduction 80 MHz is a concrete difference, not a
+proven cause. Recommend one otherwise unchanged standalone slow-profile record
+at 40 MHz; stop for Author discussion before rebuilding or touching hardware.
+No bench operations during this review. Latest completed experiment and verified
+keyboard/startup restoration remain as recorded below. Production unchanged.
+Unrelated EMOS scripts/application_peer.py remains uncommitted and untouched.
+
 # Current handback: comparison completed, normal input restored
 
 ## Completed historical comparison and verified restoration

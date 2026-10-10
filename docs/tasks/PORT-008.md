@@ -2661,7 +2661,11 @@ review remain, with no remedy or new production qualification yet.
 
 ## Current bounded follow-up — receiver build environment
 
-[Historical build comparison](PORT-008/BUILD-COMPARISON-R01.md) owns the next
-Author-approved offline review. Freeze all existing work first, then compare
-actual retained SDK/toolchain/silicon/configuration and RX DMA/cache paths.
-No new bench operation or wiring/probe change; report and pause afterward.
+[Historical build comparison](PORT-008/BUILD-COMPARISON-R01.md) completed the
+Author-approved offline review after freezing all existing work.
+[Results](PORT-008/BUILD-COMPARISON-R01-RESULTS.md): both chips report v1.3 and
+IDF 5.5.5; 128 retained relevant SDK files match the reproduction. Original
+flash ran at 40 MHz versus reproduction 80 MHz; original complete config/compiler
+invocation/binary not recovered. No SDK/DMA cause diagnosed. Proposed next
+control is one standalone slow-profile record at 40 MHz flash; paused for Author
+discussion before any rebuild or bench operation.
