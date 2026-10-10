@@ -1,3 +1,146 @@
+# Active checkpoint — bounded DevKit parallel test resumes
+
+Author confirms three10k control pulls installed and authorizes resume. Scope
+one1024byte24NOP comparison with exact historical receiver, no analyzer on target.
+Adapted single-record sender uses unchanged original wireasm/canary, restores
+normal startup beforeGPIO, records durable completion after pins release.
+Current September30 P4/EMOS pair verified; exact P4 rollback ready. SD in Agon.
+Evidence agents/port008-live-qualification/devkit-hardware-r01/control-bias-r01.
+Do not use old17second collector until new manifest/staging/install verified.
+Do not substitute failed current boot-handshake build on restoration. No games.
+
+# Current checkpoint — September 30 DevKit pair restored and verified
+
+Author returned rebuilt bench and confirmed card insertion with “go”. Exact
+last pre-PC pair is now installed: P4 `hwval-p4-fd0c1d368574-2026-09-30-18-44-01Z`,
+EMOS `hwval-emos-9b67182cca4c-2026-09-30-22-09-08Z`. P4 all four segments
+independently verified; EMOS complete131072byte readback matches retained ROM,
+SHA256341cab32e2ba0cc49d8327ec91fa0673d69e960836b5da18c14c37b07cc434e0.
+One Agon reset launched offline installer; FLASH reboot completed automatically.
+Fresh keyboard admission observed after30.9seconds. No retry/reset afterward.
+
+Original38byte /autoexec.txt restored and readback verified, SHA7b500d81...;
+normal startup only selects keyboard locale and EMOS KEYINPUT extender.
+Remote commands and foreground SD listener work:120 packets accepted,0discarded;
+listener exited, keyboard ready/neutral,held0,pending0. Legacy MOS prompt;
+card stays in Agon. Existing listener, mainboardVDP and wiring unchanged.
+One-shot installer files remain /extender/install, no startup trigger remains.
+ROM evidence under /agents/extender/results/devkit-prepc-20261010-072850-rom.bin.
+ROM/startup verification including command/setup/retrieval took87.1hostseconds.
+
+Local receipt: agents/port008-live-qualification/devkit-hardware-r01/
+prepared-pre-pc/restoration.local.json and component installation subdirectories.
+Older failed October10 reciprocal-handshake candidate and historical receiver
+are no longer installed. The formal production selector remains v0.1.0;
+this deliberate exact September30 restore is not a new release/promotion.
+Author corrects next step: restoration is preparation for the parallel
+comparison, not gameplay. Resume the existing single1024byte DevKit comparison
+after resolving the rebuilt harness READY bias. Last confirmed inventory was
+eight data pull-ups only; do not assume rebuilding added a READY pull-up. The
+historical OD receiver previously refused to arm with released READY low.
+No repeated flash/test until that prerequisite is resolved. No active bench
+operation; Author physical clarification is next. Earlier checkpoints below are superseded.
+
+# Current checkpoint — P4 restored; card ready for one-shot EMOS install
+
+Author returned rebuilt bench. Exact September 30 P4 DevKit firmware
+`hwval-p4-fd0c1d368574-2026-09-30-18-44-01Z` installed on original DevKit;
+all four segments independently verified. HTTP service responds. Input is NOT
+admitted yet: installed experimental EMOS still awaits replacement. Mainboard
+VDP unchanged. No Agon reset, firmware backup or parallel test performed.
+
+Card remains mounted Lenovo. All installer files read back verified. Root
+startup is now44bytes: VDU22mode3 then EXEC /extender/install/prepc.txt.
+That separate batch loads/runs /extender/install/preboot.bin (3520bytes), which
+restores AND verifies original38byte startup, then invokes
+FLASH mos /extender/install/em-prepc.bin -f. Helper return failure stops batch.
+Payload128579bytes/SHA812cd23f... unchanged. No keyboard admission dependency
+for installation. FLASH should reboot automatically; do not interrupt/repeat.
+
+Next: Author safely ejects Lenovo card and inserts Agon, then confirms. Only
+after that confirmation may agent reset Agon once and monitor installation.
+Full-ROM readback, startup readback and actual remote input proof remain pending.
+Evidence agents/port008-live-qualification/devkit-hardware-r01/prepared-pre-pc/
+(p4-installation and installer-stage-receipt.local.json). Earlier holds below
+are superseded by Author bench return; card return gate remains mandatory.
+
+# Current checkpoint — last working pre-PC DevKit pair prepared; bench withheld
+
+Author requests the last working DevKit installation immediately before the
+P4-PC change, not another parallel experiment. Author is rebuilding the bench:
+**no device access, flashing, reset or test until it is returned.**
+
+Selected exact September 30 installed pair:
+1. P4 `hwval-p4-fd0c1d368574-2026-09-30-18-44-01Z`, source `fd0c1d368574`.
+2. EMOS `hwval-emos-9b67182cca4c-2026-09-30-22-09-08Z`, source `9b67182cca4c`.
+
+Joint installed qualification passed 25/25 required checks; Author then accepted
+Nurples, clean exit, Legacy return and browser reset (DEV-20260930-19). Exact
+retained binaries are copied and hash-verified, P4 factory segments agree, and
+EMOS matches the retained padded full-ROM readback. No rebuild. This pair is
+newer than formal production v0.1.0; production selection remains unchanged.
+The older `prepared-firmware/` files are fallback only, not this restore target.
+
+Local preparation/manifest/README: `agents/port008-live-qualification/`
+`devkit-hardware-r01/prepared-pre-pc/`. On Author-confirmed Lenovo SD,
+`/extender/install/em-prepc.bin` is staged and readback-verified: 128579 bytes,
+SHA256 `812cd23f20b1254e019e5b6d6c33e00eaa30e05603774152b609b8ef83c154a4`.
+Normal 38-byte `/autoexec.txt` and matching `/emos/sdserve.bin` are unchanged;
+no automatic flash/test launch. Card left mounted. Staging receipt retained.
+
+Installed boards remain unchanged: standalone historical DevKit receiver
+(no network/keyboard service) and experimental October 10 EMOS. Recovery is
+NOT complete. When Author returns the bench, install the prepared pair together
+using reviewed offline bootstrap/recovery if input cannot be admitted. Do not
+assume the older P4 alone can satisfy the current experimental EMOS handshake.
+Keep mainboard VDP intact. No resistor or wiring alteration requested for this
+normal restore. Earlier READY-resistor proposal and comparison steps are parked.
+Reconfirm card return before any Agon reset. No active hardware operation.
+
+# Latest checkpoint — READY low; card inspected on Lenovo
+
+[Current task](docs/tasks/PORT-008/DEVKIT-HARDWARE-R01.md): planned Agon reset
+issued once, but original receiver reports READY low despite released OD output
+both before/after reset. Collector closed without any arm; no record verdict.
+No analyzer on target, CLOCK/VALID pre-arm inputs disabled so ignore their reads.
+Author returned SD to Lenovo. Read-only inspection verifies ORIGINAL38byte startup
+is now restored/hashmatches backup and sender11284bytes/hashunchanged. Sender
+restoration code apparently executed; no proof of transfer. Card remains mounted
+on Lenovo; do not reset Agon. Temporary test launch is no longer on the card.
+Historical DevKit receiver remains installed; no network/keyboard service.
+Source review: its READY release is OD/high impedance with no internal pull;
+original harness requires10k external pull-up. Author confirms ONLY eight
+data pulls to Agon3.3V fitted; READY pull-up absent. Proposed restoration of
+10k on blue PD4/header13 to GPIO20/EXT2-13, awaiting Author installation/acceptance.
+Keep card on Lenovo and both boards off during staging; current startup is
+normal, not a test launch. Do not claim low READY has a fully measured cause. Eight15k data pull-ups do not cover READY. Full harness
+confirmed by Author; do not infer missing wires from outdated draft records.
+EMOS/mainboardVDP/harness unchanged. No active operation. Evidence
+agents/port008-live-qualification/devkit-hardware-r01/run-result.json and
+lenovo-after-reset-check.json. Earlier checkpoints below are superseded.
+
+# Active checkpoint — original DevKit receiver installed
+
+[Current contract](docs/tasks/PORT-008/DEVKIT-HARDWARE-R01.md), frozen4d5084bb.
+Author confirms both boards powered, original full DevKit parallel harness in
+place, SD inserted in Agon. Analyzer stays on disconnected P4-PC; no target
+waveforms are available. Original DevKit receiver prx06-devkit-flash40-r01-
+b2026-10-10-06-16-42Z installed/all3segments independently verified; boot confirms
+40MHz and idle command prompt. No Agon reset/USB arm/payload invocation after
+installation. App SHA7ecfd6577b4c7499fb0f8a4287c315d504f04014bbb0d92cd4bca3cbe398078f.
+This standalone receiver has NO network/keyboard service. EMOS/mainboard VDP
+unchanged. Exact current DevKit EDP restore retained locally, but its admission
+previously failed busy; do not promise recovery passed.
+Temporary startup selects mode3, loads /extender/install/prx06pc.bin, runs.
+Original38bytes backed up under /agents/extender/backups/startup/devkit-hardware-r01.
+Sender restores/byte-verifies original startup before GPIO access; already-
+deployed11284byte binary hash verified. Existing autoexec.txt.p17bak untouched.
+Next Agon reset WILL launch sender. Collector must be ready before that reset;
+arm exactly one1024byte24NOP record, USB verdict only, no sweep/retry.
+No active flash/capture/reset/test process. Installation/evidence under
+agents/port008-live-qualification/devkit-hardware-r01. Older checkpoints below
+refer to prior PC experiments, not current installation/input/card state.
+
 # Current checkpoint — 40 MHz control fails, full EDP/input restored
 
 [40 MHz result](docs/tasks/PORT-008/FLASH40-CONTROL-R01-RESULTS.md) supersedes
