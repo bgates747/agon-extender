@@ -46,9 +46,9 @@ protocol records current readiness and is not itself permission to flash.
 Before planning or performing any physical ESP32-P4 build qualification,
 deployment, serial capture, network test, reset, or power operation, read the
 machine-local bench description in `HARDWARE.local.md` at the project root.
-That ignored file is authoritative for the current Pi host, SSH identity,
-stable P4 device identity, network reservation, remote tools, access scope, and
-deployment safety boundary. Do not duplicate those machine-specific values in
+That ignored file is authoritative for stable P4 device identity, bench
+reservation, remote tools, and deployment safety. Machine access is owned
+by the canonical network instructions linked below. Do not duplicate those machine-specific values in
 tracked source or documentation.
 
 Before preparing or running any eZ80 bench fixture, also read
@@ -303,3 +303,7 @@ it does not authorize unrelated downstream development or broader qualification.
 5. If version naming or a concrete validation/deployment dependency is unresolved,
    record the accepted result and remaining promotion boundary, then ask only for
    the missing decision. Do not silently declare promotion complete.
+
+## Network access authority
+
+For access between development machines, read the [canonical network instructions](https://github.com/bgates747/agon-dev-env/blob/feature/standardized-deployment/codex/environment.md#ssh-between-development-machines) in `~/Agon/mystuff/agon-dev-env/codex/environment.md` and its machine-local `.local/ssh-001/CONNECTIONS.md` guide. They own current hostnames, discovery, SSH identities, sudo, and LAN shares. Do not duplicate access recipes or revive old aliases, addresses, or share mappings in this project. Project-specific device/protocol and bench-safety instructions remain local.
