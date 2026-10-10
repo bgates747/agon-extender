@@ -1,3 +1,19 @@
+# Current checkpoint — 40 MHz control fails, full EDP/input restored
+
+[40 MHz result](docs/tasks/PORT-008/FLASH40-CONTROL-R01-RESULTS.md) supersedes
+older next-step claims below. Exactly one slow-profile historical receiver record
+fails with the same last byte f4, stored CRC f3f4/calculated ba67 as 80 MHz.
+Actual boot confirms 40 MHz; generated config differs only in flash-speed keys,
+receiver/canary allocated code/data sections unchanged. Full 45-second 24 MHz trace
+retained/verified; 1,024 qualified source clocks and five observed source data bits
+pass independently. No retry or later sweep records.
+Exact full EDP data-r02/all four segments restored/verified. P4 HTTP awaited before
+Agon recovery reset; original 38-byte startup readback verified, all 52 remote key
+packets accepted, ready/neutral/held0/pending0, listener exited. No active bench
+operation; SD remains Agon. EMOS/mainboard VDP/wiring/production unchanged.
+Evidence agents/port008-live-qualification/devkit-control-flash40-r01.
+Pause for Author discussion; slower flash alone did not repair corruption.
+
 # Current checkpoint — offline build comparison complete, paused
 
 [Build comparison results](docs/tasks/PORT-008/BUILD-COMPARISON-R01-RESULTS.md)

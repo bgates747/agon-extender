@@ -43,7 +43,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Current paired development fits ROM and has physical payload failures; not production qualified. Historical GPIO-only DevKit receiver also fails on P4-PC. Offline build comparison complete: same reported IDF/silicon, no relevant retained SDK source difference; original flash 40 MHz versus reproduction 80 MHz. Paused for discussion of the next bounded control; no ordinary parallel VDU/SD activation.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Current paired development fits ROM but physical payload qualification fails. Historical GPIO-only DevKit receiver fails on P4-PC at both 80 and 40 MHz flash with the same CRC signature; no relevant retained SDK source difference found. Full EDP/startup/input restored and verified. Paused before another bounded investigation; no ordinary parallel VDU/SD activation.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 

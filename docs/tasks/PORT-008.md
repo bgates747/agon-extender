@@ -2670,8 +2670,12 @@ invocation/binary not recovered. No SDK/DMA cause diagnosed. Proposed next
 control is one standalone slow-profile record at 40 MHz flash; paused for Author
 discussion before any rebuild or bench operation.
 
-## Authorized flash-speed control
+## Completed flash-speed control
 
-[40 MHz control](PORT-008/FLASH40-CONTROL-R01.md) owns the Author-approved
-single slow-profile historical record and exact full EDP/input restoration.
-Only flash frequency changes; no EMOS, wiring or production change.
+[40 MHz control](PORT-008/FLASH40-CONTROL-R01.md) completed the Author-approved
+single slow-profile historical record. [Results](PORT-008/FLASH40-CONTROL-R01-RESULTS.md):
+actual 40 MHz boot verified; same wrong last byte/stored/calculated CRC as 80 MHz.
+Exactly 1,024 source clocks, zero mismatches on five observed source data bits.
+Returning flash speed alone does not fix correctness. Exact full EDP/startup
+restored; actual remote commands/input verified, listener exited, bench idle.
+No EMOS/wiring/production change. Paused before any further experiment.
