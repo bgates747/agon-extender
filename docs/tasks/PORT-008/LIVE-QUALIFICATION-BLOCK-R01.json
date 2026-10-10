@@ -1,0 +1,29 @@
+{
+  "passed": false,
+  "parallel_invoked": false,
+  "failed_phase": "preflight",
+  "error": "TimeoutError(\"keyboard readiness deadline exceeded: {'protocol': 1, 'boot': 4413129, 'session': 0, 'sequence': 0, 'emitted': 0, 'accepted': 0, 'discarded': 0, 'pending': 0, 'held': 0, 'locale': 0, 'ready': False, 'physical_neutral': True, 'caps': False, 'reason': 0}\")",
+  "host_total_seconds": 22.02475396497175,
+  "collector_closed": true,
+  "collector_errors": [],
+  "no_flash": true,
+  "no_reset": true,
+  "result": "Preflight stopped: opening USB capture was followed by a fresh P4 boot and unavailable keyboard; no fixture invocation.",
+  "artifacts": [
+    {
+      "path": "agents/port008-live-qualification/lc03c/run.json",
+      "bytes": 504,
+      "sha256": "895246a6f52e3fbda83b9c2ffcdfa35885f7ed07181e4225ebf7e757df8d3fa4"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c/p4.log",
+      "bytes": 8532,
+      "sha256": "df90d8bf16fe34fce75f6064f4d299c0d4db3d5709a0bb3fae91cff7476d2234"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c/run.py",
+      "bytes": 3571,
+      "sha256": "4a295087357feb1cd98b89a9336060a861bd1e71517b4304d62232fd5b21227b"
+    }
+  ]
+}

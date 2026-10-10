@@ -1,0 +1,105 @@
+{
+  "result": "failed_first_case_recovered_without_replay",
+  "scope": "PORT-008 LC03-B private paired physical qualification; not performance or production acceptance",
+  "installed_pair": "Unchanged from LIVE-QUALIFICATION-INSTALL.json",
+  "planned_cases": 20,
+  "attempted_cases": 1,
+  "passed_cases": 0,
+  "remaining_not_run": 19,
+  "first_case": {
+    "direction": "Agon to P4",
+    "length_bytes": 1,
+    "descriptor_hex": "455802027d0c397701000100000038b6",
+    "service_status": 35,
+    "service_status_name": "EMOS_UNAVAILABLE",
+    "guards_intact": true,
+    "pattern_pass": false,
+    "completed_p4_receipts": 0,
+    "elapsed_mos_ticks": 604
+  },
+  "timing": {
+    "mos_tick_rate_hz": 120,
+    "calibrated": false,
+    "service_nominal_seconds": 5.033333333333333,
+    "fixture_total_mos_ticks": 720,
+    "fixture_nominal_seconds": 6,
+    "host_run_seconds": 147.22832158813253,
+    "host_scope": "Includes capture/setup, invocation and unsuccessful bounded listener wait; not transfer time"
+  },
+  "capture": {
+    "method": "raw POSIX, no modem-control ioctls, HUPCL cleared",
+    "collector_closed": true,
+    "errors": [],
+    "opening_keyboard_epoch_unchanged": true,
+    "recovery_closing_keyboard_epoch_unchanged": true,
+    "epoch_limit": "The keyboard status boot field is a transport epoch, not independently proof of physical P4 boot identity."
+  },
+  "recovery": {
+    "passed": true,
+    "parallel_replayed": false,
+    "agon_reset_pulses_total": 2,
+    "reset_scopes": [
+      "Initial boot-release recovery before fixture",
+      "Separate post-failure recovery to retrieve saved CSV only"
+    ],
+    "input_ready": true,
+    "physical_neutral": true,
+    "held": 0,
+    "pending": 0,
+    "listener_stopped": true,
+    "startup_exact_original_verified": true
+  },
+  "firmware_flashes": 0,
+  "startup_changes": 0,
+  "sd": {
+    "batch": "/extender/install/p8run01.txt",
+    "result": "/agents/extender/results/P8R01.CSV",
+    "moslet": "/emos/parprobe.bin",
+    "existing_result_overwritten": false,
+    "batch_replay_limit": "Result now exists; retained batch is evidence, not an automatic retry instruction."
+  },
+  "failure_boundary": "P4 received control operations 1,3,2; no completed receipt. Offer acknowledgement, handover, payload and return are not individually observed. Actual payload emission is unproved.",
+  "state": "Bench idle, input recovered; pause before diagnostic instrumentation or another block attempt.",
+  "artifacts": [
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/run.py",
+      "bytes": 4665,
+      "sha256": "fc5e9435359cb86e6e6bfd61a54df1ae6b0590bd1640219871b2ef332ac3004a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/run.json",
+      "bytes": 467,
+      "sha256": "ab7edbc62899ff38a74f8503fb3ebde47b2788fd26ec94a29f6cf42611e986a8"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/started.json",
+      "bytes": 198,
+      "sha256": "0f9b9ece2dca06a5816718b320c58d3774b4b91b2bc99915d91bf99c91672393"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/p4.log",
+      "bytes": 9395,
+      "sha256": "1a79526e7bd8f7f1d9cbf2432350f3afc323aba9447326063d0304ce9661d725"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/recover.py",
+      "bytes": 2125,
+      "sha256": "d53749f31655ff3229b5b7253a7043bece383aba7a51eeb1bfcdd85345871a3b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/recovery.json",
+      "bytes": 707,
+      "sha256": "70c812193b0d435ff6620f76d72b0bb253ed32628a87c3287eda0ac6847a1409"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/recovery-p4.log",
+      "bytes": 614,
+      "sha256": "ae43e585569958a47d8b142be502a8ca30a694c82d86489fa216b4308b17c7e3"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03c-r02/agon.csv",
+      "bytes": 274,
+      "sha256": "9745d28145ead9d797d82814c81f36d5061b62a5e1aca213728192fe41cdcb6d"
+    }
+  ]
+}

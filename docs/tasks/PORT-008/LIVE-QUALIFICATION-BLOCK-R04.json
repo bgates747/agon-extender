@@ -1,0 +1,203 @@
+{
+  "result": "forward_1_and_2_bytes_pass_255_rejected",
+  "scope": "Private PORT-008 LC03-B; full suite, throughput and F03 not qualified",
+  "time_contract_utc": {
+    "start": "2026-10-10T01:26:35Z",
+    "deadline": "2026-10-10T02:26:35Z"
+  },
+  "P4": {
+    "build_id": "port-008-probe-r10-b2026-10-10-01-45-13Z",
+    "manifest_sha256": "4e6660b5eb2463fa3ff80f649959925c4bf8940e203eda256a9f0478053ac77a",
+    "source_manifest_sha256": "7cf6dcfc721dc6187bcd343aaf697f8177cb40ddee5bade4fb63240d168d1e2f",
+    "artifacts": [
+      {
+        "name": "agon_extender.elf",
+        "bytes": 34977260,
+        "sha256": "e5edbfe8739d00aa657b0a2eccf0eba11e732ed23eb05d5e3dc8ef1b9cdf07bb"
+      },
+      {
+        "name": "agon_extender.bin",
+        "bytes": 1658928,
+        "sha256": "5e1e960d113e2c5c71d2c8d07b1e92bb83ee481ee26a8b50c273500500d62830"
+      },
+      {
+        "name": "agon_extender.factory.bin",
+        "bytes": 1790000,
+        "sha256": "32adee2444b9ba8f4bc9495e7080658f61f89c66b11d46ef50d3bf738643a740"
+      },
+      {
+        "name": "agon_extender.map",
+        "bytes": 12860114,
+        "sha256": "4466c745fe05ebca04bace58a60a3f8b08bb4e836afb8c7f312b2609b9272f95"
+      },
+      {
+        "name": "bootloader.bin",
+        "bytes": 24256,
+        "sha256": "d481665e1239967b9351230f9b4e34ac4cac7d03c18ae074fd907128e63b496e"
+      },
+      {
+        "name": "partition-table.bin",
+        "bytes": 3072,
+        "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+      },
+      {
+        "name": "ota_data_initial.bin",
+        "bytes": 8192,
+        "sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f"
+      },
+      {
+        "name": "flasher_args.json",
+        "bytes": 1065,
+        "sha256": "98f9a58f0fe191d289c98b092b9fb782866484cd88b4bba48ac6eb8dbc2add92"
+      },
+      {
+        "name": "compile_commands.json",
+        "bytes": 23508784,
+        "sha256": "bebeba070cd118d00bad04c5efcdaf1e8fef823f9095d4cb95cf8ff6ae0ac83b"
+      },
+      {
+        "name": "validation.json",
+        "bytes": 781,
+        "sha256": "e4e749ab46d9c7da508221f228b3cbb261c0e968a2bac3582390533b928df2fd"
+      },
+      {
+        "name": "size-sections.txt",
+        "bytes": 1950,
+        "sha256": "d701e98b8567550d18816365271a97dfdd499e231a5d88281bbf9e8bf2e12e16"
+      },
+      {
+        "name": "board.json",
+        "bytes": 2576,
+        "sha256": "93bb0899a3e8de7d0d79d1c692e8f0ec188e4885401afab99671715bbe3258d5"
+      },
+      {
+        "name": "agon_extender_board_config.hpp",
+        "bytes": 1148,
+        "sha256": "08630217966752b0562315cd2d3368f18881008fdef9e2b5371a20d1710ddccc"
+      },
+      {
+        "name": "display.json",
+        "bytes": 119,
+        "sha256": "86ce550af98b16e33a189ff2185e21c4eb5e8d005af5ce232f39ca961e24da02"
+      },
+      {
+        "name": "agon_extender_build_identity.hpp",
+        "bytes": 295,
+        "sha256": "a7cdc61752334acde7f4edf2700181a7b2d32e5cefdbbcec2ba150601015e652"
+      },
+      {
+        "name": "usb_fsls_only.cmake",
+        "bytes": 2919,
+        "sha256": "3f45d59d3d7611ab034c43ec6d1eafaefc63c5f0bf111167e1ff79d80851c08e"
+      },
+      {
+        "name": "hcd_dwc.c",
+        "bytes": 108318,
+        "sha256": "b185f579f7f3f006d6f742cac89bd175b8e4b7bd3e95ce81ba5e20b86021667b"
+      },
+      {
+        "name": "source.tar.gz",
+        "bytes": 27913748,
+        "sha256": "7e279656a8fe755fd0bb1bc73c0085b5cccd462e891df58c998246cb26cdd4ba"
+      },
+      {
+        "name": "source-inputs.json",
+        "bytes": 1144906,
+        "sha256": "976ba7e13220b1cb92ac2a5b0fb86c7acb94000be4ba0cb69084f955d5e92651"
+      }
+    ],
+    "flash_verified": true,
+    "independent_verification_log_sha256": "5d6d682332db9fec2ec788986f90c75c1a3c44865aeee6d57cd89e6fbaa1f391"
+  },
+  "transfer_EMOS": {
+    "build_id": "agon-emos-v0.1.24-b2026-10-10-01-48-39Z",
+    "image": {
+      "bytes": 131017,
+      "sha256": "55aafe657987754bd6dcda0d2747d145702da9d995e90d9409e8509ccd41c343"
+    },
+    "ROM_bytes_free": 55,
+    "ROM_readback_sha256": "69d7b11ac1fa6fcd48cc3770356c3b8806d8f308c345bd670075a7eb21b613dd",
+    "verified_install_receipt_sha256": "1d7c4af5ed52b119b249ed58625c21fd598712c1343bac27f8d853104a602b87"
+  },
+  "runs": [
+    {
+      "local_bundle": "lc03j",
+      "Agon_csv_sha256": "02e71b699403e2e3319dbd2165e6267d6a36659ddbaa250c3e7807d461dfc544",
+      "P4_log_sha256": "57b9fca9aa75c3e49f264961d1c15e1ca96890a038c092949bf239663d8c8ab9",
+      "run_receipt_sha256": "976d3c15882cd0dab49669cfcba509c895111faabdc8930227d40cae323beba6",
+      "recovery_receipt_sha256": "3d85a6dd12e66ffe8569e7d428b0bfb6c6b9db9fcff0dc95ead6a3a3b7f65ac4",
+      "passed": false,
+      "successful_cases": 2,
+      "first_failure": {
+        "direction": "Agon_to_P4",
+        "length_bytes": 255,
+        "service_status": 35,
+        "DMA_bytes": 255,
+        "qualified_clock_count": 256,
+        "VALID_edges": 4
+      },
+      "not_run_cases": 17,
+      "keyboard_recovered": true,
+      "collector_closed": true,
+      "startup_original_verified": true,
+      "no_automatic_replay": true
+    },
+    {
+      "local_bundle": "lc03k",
+      "Agon_csv_sha256": "b93f2cc38f36860379c3a835090375b29a807f93b1533cb201a7cc6ba2ab303a",
+      "P4_log_sha256": "5d77f885edf9b84995b20630abdb74fb75ceddc170672e03526a634e2a51436e",
+      "run_receipt_sha256": "9d389dc3f24b65cca4149920b10918b81d46f2f0ceac0ad04a31ff71931223d2",
+      "recovery_receipt_sha256": "153d52264becad97a24548962c24881b260883d69acbfa61fbd374bd6a23d7e3",
+      "passed": false,
+      "successful_cases": 2,
+      "first_failure": {
+        "direction": "Agon_to_P4",
+        "length_bytes": 255,
+        "service_status": 35,
+        "DMA_bytes": 255,
+        "qualified_clock_count": 256,
+        "VALID_edges": 10
+      },
+      "not_run_cases": 17,
+      "keyboard_recovered": true,
+      "collector_closed": true,
+      "startup_original_verified": true,
+      "no_automatic_replay": true
+    }
+  ],
+  "final_installed_EMOS": "agon-emos-v0.1.24-b2026-10-10-01-48-39Z",
+  "production_changed": false,
+  "mainboard_VDP_changed": false,
+  "committed": false,
+  "emulator_Author_gate_pending": true,
+  "final_handback_receipt_sha256": "b8e959a8221c03bfd5fa0a0a9b6408ce54568479479d6006dddeee6381f51bd7",
+  "bench_idle": true,
+  "keyboard_ready_neutral": true,
+  "SD_listener_offline_no_job": true,
+  "boot_candidate": {
+    "build_id": "agon-emos-v0.1.24-b2026-10-10-02-17-41Z",
+    "image_bytes": 131035,
+    "free_ROM_bytes": 37,
+    "full_firmware_guards_pass": true,
+    "installed": false,
+    "accepted": false,
+    "reason": "Paired reset-at-recoveryAck counterexample; experimental boot changes preserved and removed from maintained source",
+    "existing_restored_boot_adapter_cases": 736,
+    "source_restoration_hashes_sha256": "c34e02b4d8c9d8e48d4289620e349a3c5ca68f40f60c8bc06173c5114ad1fc4e",
+    "patch_sha256": "4c52ece6da26fb9e694681635994e903f21323c66bd079efab5162a7938c1849",
+    "ACK_counterexample_receipt_sha256": "3fc5816fa24dd230ea793efd704afb213de639cf1432d6daf2bcd106d8c5a12d"
+  },
+  "full_goal_complete": false,
+  "next_discriminating_check": "Independent physical CLOCK/VALID trace at both endpoints compared with PCNT and deterministic255-byte data; preserve exact rejection",
+  "software_checks": {
+    "PCNT": 70,
+    "native_P4": 209,
+    "block_coordinator": 315,
+    "paired_native_ordinary": 82,
+    "paired_native_probe": 111,
+    "linked_eZ80_native": 124,
+    "restored_boot_adapter": 736
+  },
+  "host_duration_scope": "Author repair window includes preparation/build/install/test/retrieval; MOS and P4 service timings are separate and not calibrated payload throughput",
+  "handback_utc": "2026-10-10T02:23:00Z"
+}

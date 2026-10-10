@@ -73,9 +73,18 @@ in the paired test; retaining the guard passes the reset sweep.
 
 ## Return and recovery
 
+The LC03-B physical repair clarifies the native completion boundary: EMOS can
+finish its byte loop and hold C=0,V=1 before the P4 native EOF callback arrives.
+During `block`, these levels do not prove a reset or successful completion. P4
+keeps UART parked and READY low until exact native completion/cleanup proof or
+the existing bounded deadline. A missing callback still faults; no pin-level
+sample can manufacture successful data or UART ownership. This also covers the
+case in which completion is already visible at that poll. Subsequent reciprocal
+release/status matching remains required.
+
 | Phase | CLOCK | VALID_N | READY_N | Required preceding completion |
 |---|---:|---:|---:|---|
-| Block stopped | 1 | 1 | 1 | P4 has stopped DMA and disabled its data outputs; EMOS block runner has returned |
+| Block stopped | 1 or 0 | 1 | 1 | P4 has stopped DMA and disabled its data outputs; EMOS block runner has returned |
 | EMOS released | 0 | 1 | 1 | EMOS disabled all data outputs; P4 observes this before proceeding |
 | Fresh release request | 0 | 0 | 1 | EMOS observed READY high after its own release |
 | Fresh release acknowledgement | 0 | 0 | 0 | P4 acknowledges release for this return phase |
@@ -109,6 +118,14 @@ yet, which prevents physical activation of this candidate. P08-F-D03 now
 requires this release handshake in the future parallel-capable pair: no old or
 absent peer, nor an expired timer, permits a UART fallback. Mainboard operation
 remains available when Extender cannot acknowledge.
+
+LC03-B physical correction: entry/payload deadlines still cancel uncertain
+admissions, but the P4 must not periodically rewind an already released boot
+handshake. Reusing READY polarity after a two-second restart allowed EMOS to
+accept a new exchange's level as its old acknowledgement. The P4 holds its
+released recovery phase until reciprocal peer progress or a genuine adapter
+fault. This indefinite safe wait enables no shared data output or UART fallback;
+see [bounded repair evidence](LIVE-QUALIFICATION-BLOCK-R03.md).
 
 ## Adapter requirements for F02c2/F02c3
 

@@ -314,6 +314,25 @@ guards. The private EMOS image has 599 bytes free. No activation caller, physica
 transfer, mode/API or SD integration is supplied. Stop for review before a
 separate bounded private hardware fixture; F03 remains open.
 
+LC03-A now supplies the [private qualification caller and diagnostic MOSlet](PORT-008/LIVE-QUALIFICATION.md).
+[Software/build results](PORT-008/LIVE-QUALIFICATION-RESULTS.md) pass, including
+20 modeled two-way blocks and corruption/failure checks. The private probe uses
+130984 ROM bytes /88 free; ordinary and unactivated native sizes are unchanged.
+The private pair is now [installed and boot-verified](PORT-008/LIVE-QUALIFICATION-INSTALL.md)
+after correcting P4 GPIO input setup and its SDK model. Complete EMOS ROM and
+the MOSlet match, original startup is restored, input is ready/neutral and the
+listener is offline. A subsequent [first physical attempt](PORT-008/LIVE-QUALIFICATION-BLOCK-R02.md)
+failed on1byte Agon→P4: service35, guards intact, no completed P4 receipt.
+The remaining19cases did not run; actual payload emission is not established.
+Input recovered without replay; startup unchanged and bench idle. Pause before
+phase instrumentation/retry; F03, formal ExExt and file integration remain open.
+
+Author authorized a one-hour repair after the failed first case.
+[Bounded repair findings and current result](PORT-008/LIVE-QUALIFICATION-BLOCK-R03.md)
+record the demonstrated handover/boot races, hardware EOF/VALID proof and
+seventeen-byte EMOS tail. Earlier installation statements are dated checkpoints;
+physical payload qualification remains a distinct gate.
+
 P08-F03 [ ] — When the Author releases the bench, prove handshake entry/exit,
 small eight-bit blocks both ways, direction/reset recovery and resumed UART
 input. Measure link-only correctness and throughput before file integration.
@@ -2625,3 +2644,24 @@ with audio grammar/status authority in PORT-004. Reuse EMOS-owned routing and
 normal reply paths; do not add transport bypasses. That planning checkpoint was
 followed by accepted audio-framing and virtual-key query work; see PORT-003's current scope. The wider inventory and explicit
 maintenance/mouse deferrals remain open. This record authorizes no new test.
+
+## Current private parallel qualification checkpoint
+
+[The second physical repair hour](PORT-008/LIVE-QUALIFICATION-BLOCK-R04.md)
+passes1and2byte forward blocks, but255bytes is reproducibly rejected by the
+independent hardware edge counters. The full two-way suite and F03 remain open.
+A separate warm-reset ambiguity remains open after a rejected paired correction;
+no formal ExExt, parallel VDU, SD transport or production promotion follows.
+
+The subsequent Author-approved [received-buffer snapshot](PORT-008/DATA-SNAPSHOT-R01.md)
+finds a wrong whole-buffer fingerprint before echo and an additional return-wire
+first-byte discrepancy despite correct stored first16bytes. Exact3456 clocks
+bothways; input/startup recovered. Native RX publication and TX DMA/output
+review remain, with no remedy or new production qualification yet.
+
+## Current bounded follow-up — receiver build environment
+
+[Historical build comparison](PORT-008/BUILD-COMPARISON-R01.md) owns the next
+Author-approved offline review. Freeze all existing work first, then compare
+actual retained SDK/toolchain/silicon/configuration and RX DMA/cache paths.
+No new bench operation or wiring/probe change; report and pause afterward.

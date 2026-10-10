@@ -1,0 +1,1422 @@
+{
+  "scope": "PORT-008 LC03-A private two-way qualification callers; software/build checks only",
+  "recorded_utc": "2026-10-09T20:43:04.093478+00:00",
+  "result": "off-bench pass; pause before LC03-B physical installation",
+  "bench_changed": false,
+  "production_changed": false,
+  "new_implementation_committed": false,
+  "source_bases": {
+    "extender": "97364a32a5b5076559ef0f38acc8b7f673bf379d",
+    "emos": "8f064299ad4380558199b0112f323659a2fc878e",
+    "mos_builder": "90034c2348761c42bab4217ce5b0f906922dc0e4"
+  },
+  "source_dirty": true,
+  "EMOS_builds": {
+    "start_utc": "2026-10-09T20:29:31.337072+00:00",
+    "variants": {
+      "ordinary": {
+        "build_identity": "agon-emos-v0.1.24-b2026-10-09-20-29-31Z",
+        "profile": "mos-agondev.mk",
+        "steps": [
+          {
+            "target": "prepare-mos",
+            "exit_code": 0,
+            "elapsed_seconds": 0.593813
+          },
+          {
+            "target": "firmware-check",
+            "exit_code": 0,
+            "elapsed_seconds": 57.064568
+          }
+        ],
+        "artifacts": {
+          "MOS.map": {
+            "bytes": 79438,
+            "sha256": "2b420234518cd80038dca92fc0b640bafa977eddf86dd1dd9a5d343b58619fa6"
+          },
+          "MOS.bin": {
+            "bytes": 128739,
+            "sha256": "747228aab012618321b73295d109195efbd86152fc058bb08e092d4412f741c3"
+          },
+          "MOS.elf": {
+            "bytes": 324564,
+            "sha256": "6cd22c907f7215613d6b0c5bc73bf56c40a995f01dfef1bfbad7ecc2b6151358"
+          },
+          "MOS.hex": {
+            "bytes": 362158,
+            "sha256": "9364bc66368c7dd35c1a7d72c289e461ada347db9eac3dea6b410d9147f84bdb"
+          },
+          "MOS.link.trace": {
+            "bytes": 1157,
+            "sha256": "a902cea830cace277158757fd8a01f8d41c59d3e5c817510fb1f7f85a8ddd9ee"
+          },
+          "MOS.link.d": {
+            "bytes": 2647,
+            "sha256": "1834d09f2da06cc5c2174ea790632923c608593faba5fe7b178943f67b66c34b"
+          }
+        }
+      },
+      "native": {
+        "build_identity": "agon-emos-v0.1.24-b2026-10-09-20-30-30Z",
+        "profile": "parallel-native-candidate.mk",
+        "steps": [
+          {
+            "target": "prepare-mos",
+            "exit_code": 0,
+            "elapsed_seconds": 1.118182
+          },
+          {
+            "target": "firmware-check",
+            "exit_code": 0,
+            "elapsed_seconds": 89.122421
+          }
+        ],
+        "artifacts": {
+          "MOS.map": {
+            "bytes": 80823,
+            "sha256": "6be0f40b629128b0d1ba6fb044857c1272807b62386a76884afa47d231d9198a"
+          },
+          "MOS.bin": {
+            "bytes": 130473,
+            "sha256": "1858b666ab622c5823b2fe70f6540c9934b6a9ad6c7871e333231d522bd9d3dc"
+          },
+          "MOS.elf": {
+            "bytes": 326364,
+            "sha256": "ab90f1e7818c313008646f4d7093035655b5f268666860b65bedc0bb4aa32efd"
+          },
+          "MOS.hex": {
+            "bytes": 367030,
+            "sha256": "b33a4f4cd65a1bbdccd0e456bbd6d9acdf3b488fd8eea1293e7537d0af242dee"
+          },
+          "MOS.link.trace": {
+            "bytes": 1253,
+            "sha256": "aad70f3c05ad5b46316e1cdaa44c75696eb9ae9e250e6c31a4b70d8aacff94bf"
+          },
+          "MOS.link.d": {
+            "bytes": 2857,
+            "sha256": "6afbc8fff6412cafd71921f12f62b2dd9e03ccf6d3e08e4c538c081b9253a819"
+          }
+        }
+      },
+      "probe": {
+        "build_identity": "agon-emos-v0.1.24-b2026-10-09-20-35-19Z",
+        "profile": "parallel-probe-candidate.mk",
+        "steps": [
+          {
+            "target": "prepare-mos",
+            "exit_code": 0,
+            "elapsed_seconds": 1.338697
+          },
+          {
+            "target": "firmware-check",
+            "exit_code": 0,
+            "elapsed_seconds": 91.352697
+          }
+        ],
+        "artifacts": {
+          "MOS.map": {
+            "bytes": 80886,
+            "sha256": "cb5e9e2ad700b7ab4c1c5a7e0c262f1da1a291d588ae7f9d021d60990c482867"
+          },
+          "MOS.bin": {
+            "bytes": 130984,
+            "sha256": "524c5f3ac1234b07774d13877a722e44689b37a7ac16fd54b4b104fd826b1eec"
+          },
+          "MOS.elf": {
+            "bytes": 326544,
+            "sha256": "ad89d69b8da65f5c6c6676952d696cd2c0b789bde9d99d1406ed2dc95db3061c"
+          },
+          "MOS.hex": {
+            "bytes": 368468,
+            "sha256": "1e649790066be5890690956f2129c24e5f58e24f1da3ca9d4ff661c80878d62b"
+          },
+          "MOS.link.trace": {
+            "bytes": 1253,
+            "sha256": "aad70f3c05ad5b46316e1cdaa44c75696eb9ae9e250e6c31a4b70d8aacff94bf"
+          },
+          "MOS.link.d": {
+            "bytes": 2857,
+            "sha256": "6afbc8fff6412cafd71921f12f62b2dd9e03ccf6d3e08e4c538c081b9253a819"
+          }
+        }
+      }
+    },
+    "end_utc": "2026-10-09T20:36:53.256642+00:00",
+    "probe_final_start_utc": "2026-10-09T20:35:19.752935+00:00"
+  },
+  "memory": {
+    "ordinary": {
+      "rom_capacity_bytes": 131072,
+      "rom_used_bytes": 128739,
+      "rom_free_bytes": 2333,
+      "static_ram_bytes": 4058,
+      "stack_reserve_bytes": 2048,
+      "heap_arena_bytes": 10278,
+      "build_identities": [
+        "agon-emos-v0.1.24-b2026-10-09-20-29-31Z"
+      ]
+    },
+    "native": {
+      "rom_capacity_bytes": 131072,
+      "rom_used_bytes": 130473,
+      "rom_free_bytes": 599,
+      "static_ram_bytes": 4064,
+      "stack_reserve_bytes": 2048,
+      "heap_arena_bytes": 10272,
+      "build_identities": [
+        "agon-emos-v0.1.24-b2026-10-09-20-30-30Z"
+      ]
+    },
+    "probe": {
+      "rom_capacity_bytes": 131072,
+      "rom_used_bytes": 130984,
+      "rom_free_bytes": 88,
+      "static_ram_bytes": 4079,
+      "stack_reserve_bytes": 2048,
+      "heap_arena_bytes": 10257,
+      "build_identities": [
+        "agon-emos-v0.1.24-b2026-10-09-20-35-19Z"
+      ]
+    }
+  },
+  "p4_builds": {
+    "source_unchanged": true,
+    "seconds": 528.0804177201353,
+    "checks": [
+      {
+        "variant": "probe",
+        "seconds": 527.0015636831522,
+        "pass": true
+      }
+    ]
+  },
+  "p4_build_identity": "UNVERSIONED-DO-NOT-DEPLOY",
+  "p4_display_output": "browser; HDMI installed composition not built in this increment",
+  "host_regressions": [
+    {
+      "test": "test_emos_uart_flow",
+      "seconds": 0.7798980930820107,
+      "exit_code": 0
+    },
+    {
+      "test": "test_emos_uart_probe",
+      "seconds": 0.6224043751135468,
+      "exit_code": 0
+    },
+    {
+      "test": "test_emos_resident_gateway",
+      "seconds": 0.42021980695426464,
+      "exit_code": 0
+    },
+    {
+      "test": "test_emos_uartflow_adapter",
+      "seconds": 1.1734484969638288,
+      "exit_code": 0
+    }
+  ],
+  "linked_execution_and_controls": [
+    {
+      "test": "linked-parallel_boot_startup",
+      "seconds": 12.889204409904778,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-parallel_native",
+      "seconds": 0.3684756481088698,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-parallel_control",
+      "seconds": 1.8374344827607274,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-uart_reservation",
+      "seconds": 0.06519612995907664,
+      "exit_code": 0
+    },
+    {
+      "test": "linked-uart_parking",
+      "seconds": 0.21923518320545554,
+      "exit_code": 0
+    },
+    {
+      "test": "probe-profile-controls",
+      "seconds": 25.339287359733135,
+      "exit_code": 0
+    },
+    {
+      "test": "native-profile-controls",
+      "seconds": 22.61989639978856,
+      "exit_code": 0
+    }
+  ],
+  "tool_checks": [
+    {
+      "test": "parallel_probe_results_test",
+      "seconds": 0.1090672928839922,
+      "exit_code": 0
+    },
+    {
+      "test": "native_p4_build_test",
+      "seconds": 0.12421616911888123,
+      "exit_code": 0
+    }
+  ],
+  "case_counts": {
+    "paired_base": 82,
+    "paired_probe_total_including_base": 111,
+    "gateway_bounds": 35,
+    "moslet_invocations": 11,
+    "linked_boot_runtime": 86,
+    "linked_native": 124,
+    "linked_control": 65,
+    "linked_parking": 289,
+    "linked_reservation": 22,
+    "probe_profile_controls": 8,
+    "native_profile_controls": 9,
+    "p4_build_selection": 13,
+    "offline_collector_methods": 2,
+    "offline_collector_negative_variants": 9
+  },
+  "physical_suite_pending": {
+    "lengths_bytes": [
+      1,
+      2,
+      255,
+      256,
+      4096
+    ],
+    "directions": [
+      "Agon to P4",
+      "P4 to Agon"
+    ],
+    "rounds": 2,
+    "blocks": 20
+  },
+  "limits": [
+    "No physical parallel byte, pulse, reset-recovery or throughput measurement.",
+    "Paired host tests model assembly/UART/SDK scheduling; linked tests execute actual eZ80 instructions with modeled physical inputs.",
+    "Diagnostic CSV alone cannot prove forward integrity: host must match complete P4 receipts and independent expected CRCs.",
+    "MOS nominal120Hz ticks are uncalibrated; P4 offer-to-receipt microseconds include coordination and driver setup.",
+    "P4 sentinel image is compile evidence, not an installable qualification identity.",
+    "New emulator-coupled implementation remains uncommitted pending Author review."
+  ],
+  "artifacts": [
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/bin/MOS.bin",
+      "bytes": 130473,
+      "sha256": "1858b666ab622c5823b2fe70f6540c9934b6a9ad6c7871e333231d522bd9d3dc"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/bin/MOS.elf",
+      "bytes": 326364,
+      "sha256": "ab90f1e7818c313008646f4d7093035655b5f268666860b65bedc0bb4aa32efd"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/bin/MOS.hex",
+      "bytes": 367030,
+      "sha256": "b33a4f4cd65a1bbdccd0e456bbd6d9acdf3b488fd8eea1293e7537d0af242dee"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/bin/MOS.link.d",
+      "bytes": 2857,
+      "sha256": "6afbc8fff6412cafd71921f12f62b2dd9e03ccf6d3e08e4c538c081b9253a819"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/bin/MOS.link.trace",
+      "bytes": 1253,
+      "sha256": "aad70f3c05ad5b46316e1cdaa44c75696eb9ae9e250e6c31a4b70d8aacff94bf"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/bin/MOS.map",
+      "bytes": 80823,
+      "sha256": "6be0f40b629128b0d1ba6fb044857c1272807b62386a76884afa47d231d9198a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/bin/nm.txt",
+      "bytes": 79003,
+      "sha256": "15d7469e12572d424d7fe3204ff3447efb20ba14e354bbdc1c6cca303f89814c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/ledger/BASELINE.json",
+      "bytes": 21932,
+      "sha256": "87d22c930e50227230ae0288560567dbd6de2eaff9d4437082439d7d02e08683"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/.mos-agondev-provenance-session.json",
+      "bytes": 174,
+      "sha256": "03ba7dc8ebcd1e45cecf278d6606013d3c15af0bf3e7262e7d91c4f90d77f988"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/hostfs_descriptor.json",
+      "bytes": 3507,
+      "sha256": "b0d680446725099bf7ba36aefba3d442d29123dd1c3ea0b63b7c99bde958f71c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/runtime/i48_required.json",
+      "bytes": 3582,
+      "sha256": "d5a0a175bbdfa6222396e46d429a4a201687023731ffb6303fefb0a8b28f21dc"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/crash.json",
+      "bytes": 16994,
+      "sha256": "af1ffbb990cfeccff0063310c870ba73b361bce945551c4b71ffe88bbe9eaae0"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/emos_console_io.json",
+      "bytes": 17061,
+      "sha256": "024b451aba659c676bd4bdfc565de1622dc02ee4a34df19aca20fa6f52e7457b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/emos_keyboard_io.json",
+      "bytes": 17073,
+      "sha256": "7055dc03654394b3e3a393fdd381255d7b8c02f7b36afa74bf3934737cb168ca"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/emos_parallel_io.json",
+      "bytes": 17073,
+      "sha256": "fd410b2aca56fd8138ee6b6fdad3b3aafa80783b1222b81149fc8b1d319a15a1"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/emos_parallel_native_io.json",
+      "bytes": 17120,
+      "sha256": "2471242665cfe263908065ac5efd127d194f74385d594294fe6db1147b882828"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/gpio.json",
+      "bytes": 16989,
+      "sha256": "e4409a141b4368b395c2ca9a4d92688078c34568fa80085c39680a4712925708"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/interrupts.json",
+      "bytes": 17031,
+      "sha256": "fe0bc5e1bd3c642fbac4e08f7534782085f7681314b6a5736cd403b43d98f37d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/keyboard.json",
+      "bytes": 17017,
+      "sha256": "0416c61d616a198814cf84ab4d8b54afea40b47de5f730001090d90d80449b6a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/misc.json",
+      "bytes": 16989,
+      "sha256": "532c75a455adfa848bc369dca654192b4b3468d1214148fbf7798db5f4cc239d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/mos_api.json",
+      "bytes": 17011,
+      "sha256": "1d86dc745a40cb990a8f7e8102fa85de9c1e62cfa6dc9481b999e37e3ce820c1"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/rtc.json",
+      "bytes": 16982,
+      "sha256": "e24a8916447ef68d5f7ed7a6a8a7ba1c5e78e2962b6979b313e6c9667eb53694"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/sd.json",
+      "bytes": 16975,
+      "sha256": "72b333a20b97812144d3e73d098204f62fb70bba45aae1ebb5a1b7a4080234ad"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/serial.json",
+      "bytes": 17003,
+      "sha256": "1bf42391ed5a3eb70844f18aa5b719d02dcea6311b2a45c779457630bbdc92bf"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/spi.json",
+      "bytes": 16982,
+      "sha256": "3408e81f358cf17cf04becbc05b15e9b6e706559d6b46f1e22e318b41ffb4af2"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src/vdp_protocol.json",
+      "bytes": 17045,
+      "sha256": "b52ece468d5d111fb3b41f7c9b96c8cc4cacc2b9d7442c543045172215b418b9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src_startup/cstartup.json",
+      "bytes": 17071,
+      "sha256": "b0d38cdfb9ef9ce77aa3e23b33cac8819713933205737c45849456b136a44729"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src_startup/globals.json",
+      "bytes": 17064,
+      "sha256": "ade0d851c97621c581c6985475d797fb5059ec7e7d7a5f415ba02d356efcbc28"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src_startup/init_params_f92.json",
+      "bytes": 17122,
+      "sha256": "c288c8f339badf4dfa7a438dd2099d1b167b3b03e2d021783981f35ecd4d11ea"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/assemble/src_startup/vectors16.json",
+      "bytes": 17080,
+      "sha256": "2c9eee78cbd6e44d3acbbec211bc7a892017e744a76491f8ac6e54f7e1bc07fe"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/main.json",
+      "bytes": 32914,
+      "sha256": "8e85d044bd031840ce6040101ea25a80cab48f141b0882db861e5fa1369e28ab"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/runtime/firmware_printf.json",
+      "bytes": 20335,
+      "sha256": "e8e55c4b1ac6c9c1e6b91efab306de9ec6e8a945b50f6c3cef502d867fd44ef4"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/clock.json",
+      "bytes": 31770,
+      "sha256": "5b59871f9231f5a2d7dd4fe4de35cdd704fbaa300f7f61ede6eed8bbecd485cb"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos.json",
+      "bytes": 33922,
+      "sha256": "2c31452ca6244847ed5ee127a5ed4efe4609f21a0b6eba191ad799561ba3e58e"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_admission.json",
+      "bytes": 30547,
+      "sha256": "4e5567b3c465c904e22a450cbd8979280fff41e976890c5fded15e85e46c966a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_console.json",
+      "bytes": 31029,
+      "sha256": "ac6c886177ac984da40b32d9d7e399a7e5f3af0290ab40044104aa85eeb180d9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_keyboard.json",
+      "bytes": 31694,
+      "sha256": "e669568cd37590849a15fef455eb578c35c52734f714a8dd8fe42031b83e1818"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_parallel.json",
+      "bytes": 29567,
+      "sha256": "a5301ebb49527a73f776f333c62733dda18dea7b6f7947ef285e8cb09b521a2f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_parallel_boot.json",
+      "bytes": 30685,
+      "sha256": "d1f8e1a783b855e1b23359f38fb74accf9e2f46512fdfa758de6190c1e3a0f45"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_parallel_coordinator.json",
+      "bytes": 31197,
+      "sha256": "6bdb20fc82937b6110ca3b70811d8183c0fce905daa8de5a47f570cbd74a7472"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_parallel_engine.json",
+      "bytes": 29425,
+      "sha256": "cd5d7d87fe9b7fab006f56fc697c625f7d72a0c81c2397bceb1931330d5b6d38"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_parallel_handover.json",
+      "bytes": 30155,
+      "sha256": "311c09870ae79a4991b9a541e43c4f9c50b8b546643e87735094b2dd1b634a6f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_parallel_native.json",
+      "bytes": 30902,
+      "sha256": "a0d1058d55e3d309a0d866b9e6822ad5bb88c92cf4e6572cd43ac841617cc971"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_parallel_startup.json",
+      "bytes": 30928,
+      "sha256": "692aabc01f3f5296c318c1f6d9940a65264b18331445333d28517756daa41504"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_sdlink.json",
+      "bytes": 30957,
+      "sha256": "3db62655cc1ffac1fd878ebafa7c4ef7f3b512c341b2953973f58a796ead24d3"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_telemetry.json",
+      "bytes": 28617,
+      "sha256": "b474dcf54a15bd8488119f5d722bd7b502ec05ec6ec599984d89ec57b6d41627"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_uart_flow.json",
+      "bytes": 30873,
+      "sha256": "445e8b5874b508e24f55f1569cf1c21194fa8afd7f3788f78211baf5eacd5d12"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/emos_uart_probe.json",
+      "bytes": 30588,
+      "sha256": "43f33c68eaaab92a70b38371dc5acc222d4f9421aef6ac78e2c5fd4f4b1685de"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/i2c.json",
+      "bytes": 29450,
+      "sha256": "69d64343529ed46f0c3664cafd28c0470e547534f290dd2f947b077efb5878a6"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/mos.json",
+      "bytes": 32685,
+      "sha256": "8b576c7ea3e4eec5e79fefa75bb21efee2278aad575534f05956c9d4652b5db7"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/mos_editor.json",
+      "bytes": 32389,
+      "sha256": "d5bf5a1aae7c0126815559991ed462cd81226c6d9fc59655b7e8233f819fa3f9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/mos_file.json",
+      "bytes": 30902,
+      "sha256": "189886172160a992206a5e1ef2cc176205d60095ed63aba4fa09bd2739cdd15b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/mos_sysvars.json",
+      "bytes": 31143,
+      "sha256": "0de47c8d7bd1c06f1cfd478fc70559e2d6a07268c7ef66aabff810f060b9c194"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/strings.json",
+      "bytes": 30063,
+      "sha256": "332db886726933e8e1070ec93289b4ed65415101c18b575388e20c1e66a97af0"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/tests.json",
+      "bytes": 31297,
+      "sha256": "015566730ab5de5c92e28edae5e8f06aa156cc88d1d07c0b38fdba7a24d33bef"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/timer.json",
+      "bytes": 29347,
+      "sha256": "1ee2488babbb379b81fe83085825b2821ef7fd4f7b60b2ea28411e7bb58e5878"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src/uart.json",
+      "bytes": 31140,
+      "sha256": "8043399145c0f906ee38f2add46b7d4760deedd80af20b9f8694c93772ab514d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src_fatfs/diskio.json",
+      "bytes": 29998,
+      "sha256": "c125e35b2a257fbef5190efbf5bc69872c725c0199c117b2bb22f09ce07a1f64"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src_fatfs/ff.json",
+      "bytes": 29681,
+      "sha256": "f38d303f31980167e011b3bbfe346559f1d764edf442efebecd35e0fd5302537"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src_fatfs/ffsystem.json",
+      "bytes": 29746,
+      "sha256": "27f8f2931a596e517eaf7d4414b981346c786ad7516705b78245578e5d60856c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src_fatfs/ffunicode.json",
+      "bytes": 29287,
+      "sha256": "0b285514a41d42ad6cbc5904e89e6b4a9c9ca636964c4867305313f4b31b9d92"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/compile/src_umm_malloc/umm_malloc.json",
+      "bytes": 30436,
+      "sha256": "151dd344870c271e41651cec07883cbdcc1eab62c20e364a93b12afee18df174"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/native/provenance/link/firmware.json",
+      "bytes": 56064,
+      "sha256": "30baf3af662be549fb3ff99cfa1c11529ffea27de3afbd62fbc4de9101b2ff9f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/bin/MOS.bin",
+      "bytes": 128739,
+      "sha256": "747228aab012618321b73295d109195efbd86152fc058bb08e092d4412f741c3"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/bin/MOS.elf",
+      "bytes": 324564,
+      "sha256": "6cd22c907f7215613d6b0c5bc73bf56c40a995f01dfef1bfbad7ecc2b6151358"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/bin/MOS.hex",
+      "bytes": 362158,
+      "sha256": "9364bc66368c7dd35c1a7d72c289e461ada347db9eac3dea6b410d9147f84bdb"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/bin/MOS.link.d",
+      "bytes": 2647,
+      "sha256": "1834d09f2da06cc5c2174ea790632923c608593faba5fe7b178943f67b66c34b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/bin/MOS.link.trace",
+      "bytes": 1157,
+      "sha256": "a902cea830cace277158757fd8a01f8d41c59d3e5c817510fb1f7f85a8ddd9ee"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/bin/MOS.map",
+      "bytes": 79438,
+      "sha256": "2b420234518cd80038dca92fc0b640bafa977eddf86dd1dd9a5d343b58619fa6"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/bin/nm.txt",
+      "bytes": 76917,
+      "sha256": "90c15642826dc1274ae390d7859ba571826300e26e7f9357678029a8f192e965"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/ledger/BASELINE.json",
+      "bytes": 21413,
+      "sha256": "7ad573f5e4ad2c325e041299f626a40752bd3b9c95dd251d4f2b1a79d4cd7fc9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/.mos-agondev-provenance-session.json",
+      "bytes": 174,
+      "sha256": "e344dfde5ba79c08fb30800c87aff6584b83d66439ddd282f6f63ea4430b3f54"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/hostfs_descriptor.json",
+      "bytes": 3507,
+      "sha256": "ce222167800a8e8a6a1b34edb5b47523d3cb42210f931bbdb7d92ecafeb01d86"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/runtime/i48_required.json",
+      "bytes": 3582,
+      "sha256": "800ab33d8dd2cd7f6837f5e29628f29a95e240d741408d7310e15616e470bcc4"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/crash.json",
+      "bytes": 16810,
+      "sha256": "5b4309b8b2f29a78a778c042080989652d7fe5350f22b0891159c36428218bdf"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/emos_console_io.json",
+      "bytes": 16877,
+      "sha256": "cfb388947e1f0b69bb61b682f64faa35e606572c3d6003c158cde329af598e61"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/emos_keyboard_io.json",
+      "bytes": 16889,
+      "sha256": "2120e48e6afde144691d1adc572e52d2a78a93bbca2846340c0dd432f7fc7a5a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/emos_parallel_io.json",
+      "bytes": 16889,
+      "sha256": "4beef4ec56da61e090d1424be8f8390292dc29796f374ac8252919de11c7438c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/gpio.json",
+      "bytes": 16805,
+      "sha256": "b0e1a7477377aad3f809354b676238f81d88224638861b98c8522f4e24cb588d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/interrupts.json",
+      "bytes": 16847,
+      "sha256": "034e2fe1b1899cd8cf03de538a3290feaa862b5cfb601240e2cab6b80280750d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/keyboard.json",
+      "bytes": 16833,
+      "sha256": "e12398ec6707a7cdaf13cb28b5e95f3355e0eb6b08a1284c19b537b13055916b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/misc.json",
+      "bytes": 16805,
+      "sha256": "891332d1bbb66dd5a3509661245414a860fb71e83aff37d71a8dc1fb1a2acdef"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/mos_api.json",
+      "bytes": 16827,
+      "sha256": "580d5619e2854e880ed32096957a39e77301159add87232445f4e7081a980dfa"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/rtc.json",
+      "bytes": 16798,
+      "sha256": "e991205b1f3f171c5d54dc84f997fe554ce92c4a4ba0612383b3ff01de582139"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/sd.json",
+      "bytes": 16791,
+      "sha256": "c25433cbc0f5d4a1d7c7c42140852b89551c768156bfdc6cbaca61df3edf96e7"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/serial.json",
+      "bytes": 16819,
+      "sha256": "6ff46fffd9d974ce79c82845baee16a86fd016c1fe3f5c52ec764f0a5754334b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/spi.json",
+      "bytes": 16798,
+      "sha256": "444a0b35e6d4db23a388d8c3ce50a0d094d8cb8ce1db45d520e6067401d19ad5"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src/vdp_protocol.json",
+      "bytes": 16861,
+      "sha256": "422d75fe71f4394030d4229fffb033ee535157d25cd3eb7650715315a02aa55b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src_startup/cstartup.json",
+      "bytes": 16887,
+      "sha256": "a372f81858cff78f2f89bc58f0a72ac63722489a522ede6677c06077c06c3939"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src_startup/globals.json",
+      "bytes": 16880,
+      "sha256": "2f4a85958b3db4d6d68bf91182af725a2e938af77b9985f123d5dee58851c96c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src_startup/init_params_f92.json",
+      "bytes": 16938,
+      "sha256": "8ae3a3e9a743be0c315b80a2141d300f299c0a687e119c433b8e6c7991f09812"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/assemble/src_startup/vectors16.json",
+      "bytes": 16896,
+      "sha256": "bb7d6c6eaa8fa2c3d983c6cfe73b9ed002555719eec7665cdc5ece62bd4c0520"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/main.json",
+      "bytes": 32776,
+      "sha256": "4a2b0d0c2c2fbe14177858bf6b1cf3ae68f45d7d5f318c3abeb1ace16e56420b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/runtime/firmware_printf.json",
+      "bytes": 20335,
+      "sha256": "86fd58d57c8af0920403dc7a615444954decb6190a644cf5d1226fad91b414e0"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/clock.json",
+      "bytes": 31632,
+      "sha256": "be1a97fb561ae96b6c6474a43f803e97a9991354aadee9ee3847a924d1aa4bd9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos.json",
+      "bytes": 33784,
+      "sha256": "fae6a1b5f4716f0f56966520b8b947bcf7e0de0f3bb0ec0106d37339f2830a5a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_admission.json",
+      "bytes": 30409,
+      "sha256": "0091fce23f92e44299a338cf244b4f62bd82557bcf4949b55e66b728f34b88a3"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_console.json",
+      "bytes": 30891,
+      "sha256": "01c2ba3b520ffaae1d9672ab28ab11e35f3fd77bbb4c094892ea22c9a6087d9e"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_keyboard.json",
+      "bytes": 31556,
+      "sha256": "5fddb004796468a0e4b7acb4744f5036ea274874f9740e95155051ad7c0cfc94"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_parallel.json",
+      "bytes": 29429,
+      "sha256": "33fd1dd0bb4925630837c988712a8e09155b9c28e70533c231ef24a495a9f9bc"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_parallel_boot.json",
+      "bytes": 30547,
+      "sha256": "a071e6a71e1d2ded15db3f5d7c6642789967addd9098d85f7e606dbafc26d9d3"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_parallel_engine.json",
+      "bytes": 29287,
+      "sha256": "8c77de2bc7b97c4f8f2cf35845d7a68e0bd77f9514ec4681eedb2cdaa8f124b8"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_parallel_handover.json",
+      "bytes": 30017,
+      "sha256": "b66d0ca3e57adb8efbe70ef5bbd54f7039c1e4a9d1db1b50508f1c45f4f945b9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_parallel_startup_disabled.json",
+      "bytes": 30221,
+      "sha256": "b9c9035be651482fbc567053324b0e7fc19d4d3303a541eac15d48d6ae9bbeae"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_sdlink.json",
+      "bytes": 30819,
+      "sha256": "294e4fc7fe3f2537de874e5c9fd7f17d854608ea15e2d0c01732b5c4f48a88e0"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_telemetry.json",
+      "bytes": 28479,
+      "sha256": "ab715140ca3f9fbfca080e289133456312dc9e7f743c83ee5d0a9ba8b20d1cd0"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_uart_flow.json",
+      "bytes": 30735,
+      "sha256": "79fa7ff4546da509362f29e3bd1e5d21081c77247c8c5ae5af41c09eb5904a4a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/emos_uart_probe.json",
+      "bytes": 30450,
+      "sha256": "4b79937cb1858c26ec76b17e46ec8c12981248cfd79f2c98ac9371ce61ac0258"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/i2c.json",
+      "bytes": 29312,
+      "sha256": "ad10e7ee9cd0ff6e1c90441f65e3eb27f541e20a0f1d06af4edcdbdc81a76d5e"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/mos.json",
+      "bytes": 32547,
+      "sha256": "e47ed4707bb2294cc6cc06d555a37d82771cd25869316f6702eef7c55c849857"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/mos_editor.json",
+      "bytes": 32251,
+      "sha256": "0f5488bd83acdb266b3d29a88f20c211da350780bef091e35a762f69084fed4a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/mos_file.json",
+      "bytes": 30764,
+      "sha256": "4196aadd882969967c42588ccf7f06d68cd44b6e141452bb6586b6c4fc9d2b26"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/mos_sysvars.json",
+      "bytes": 31005,
+      "sha256": "2d8304245083364f1973e419ee68c3114d53e99a328e0beaf64768d2c8172247"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/strings.json",
+      "bytes": 29925,
+      "sha256": "d198375bb940f9e77ceabb76f5e26f0d6c542b51b50f0f1c48ab2840f0ce5c39"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/tests.json",
+      "bytes": 31159,
+      "sha256": "f7fcece69017643bd425cba2be5aaa117aeb9415f7fa8179b9e19c35ef147d2d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/timer.json",
+      "bytes": 29209,
+      "sha256": "f533ed863dd29f66430b25fac72af0f127e4fe93553080c22080912c9c4711d6"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src/uart.json",
+      "bytes": 31002,
+      "sha256": "591b9ee99c37bb80525b2a343771c5e23a78c62d71eff106dd2130d8dbe7f5bf"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src_fatfs/diskio.json",
+      "bytes": 29860,
+      "sha256": "a00b178184ab01729fd6f98493d34eb235e7bcb89ab10012e53423a69214285d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src_fatfs/ff.json",
+      "bytes": 29543,
+      "sha256": "605bbf551e3acc0ff7c61380127cc3c4a586e595df8538c15ff527a7b8e660a8"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src_fatfs/ffsystem.json",
+      "bytes": 29608,
+      "sha256": "f03064c5292faa1028a525b58954be79c875a13df920dacd092f08204f1dcbe7"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src_fatfs/ffunicode.json",
+      "bytes": 29149,
+      "sha256": "430106eeee98546d4b5bbcfa9cfda4f44a1decaf4249a1b32d8ad6085c5b1620"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/compile/src_umm_malloc/umm_malloc.json",
+      "bytes": 30298,
+      "sha256": "73b84cd72c5f66ceaba36d9dabb653a61e975ae6a076dd8b1458febb68faf34c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-final/ordinary/provenance/link/firmware.json",
+      "bytes": 52848,
+      "sha256": "cb3ce1ff0c70264003b6a7d0c18f06060f0398210b11d4f12ffb17cf18157824"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/bin/MOS.bin",
+      "bytes": 130984,
+      "sha256": "524c5f3ac1234b07774d13877a722e44689b37a7ac16fd54b4b104fd826b1eec"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/bin/MOS.elf",
+      "bytes": 326544,
+      "sha256": "ad89d69b8da65f5c6c6676952d696cd2c0b789bde9d99d1406ed2dc95db3061c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/bin/MOS.hex",
+      "bytes": 368468,
+      "sha256": "1e649790066be5890690956f2129c24e5f58e24f1da3ca9d4ff661c80878d62b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/bin/MOS.link.d",
+      "bytes": 2857,
+      "sha256": "6afbc8fff6412cafd71921f12f62b2dd9e03ccf6d3e08e4c538c081b9253a819"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/bin/MOS.link.trace",
+      "bytes": 1253,
+      "sha256": "aad70f3c05ad5b46316e1cdaa44c75696eb9ae9e250e6c31a4b70d8aacff94bf"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/bin/MOS.map",
+      "bytes": 80886,
+      "sha256": "cb5e9e2ad700b7ab4c1c5a7e0c262f1da1a291d588ae7f9d021d60990c482867"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/bin/nm.txt",
+      "bytes": 79163,
+      "sha256": "cc2cc5ada9fe255eee10eeb99f7fb563d194ecccf9922477a2ea4966994277cc"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/ledger/BASELINE.json",
+      "bytes": 21928,
+      "sha256": "f78bdc95a1581c7a8529a859add0570f247bc6085b2a1f27acbb00830ac8b51b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/.mos-agondev-provenance-session.json",
+      "bytes": 174,
+      "sha256": "e4e8e6962852c2ee36bc29f4340768eefec9e79d58ea591f7a91f6ce47c521e9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/hostfs_descriptor.json",
+      "bytes": 3507,
+      "sha256": "d8e3d1a4f89b9f7664dff28f94a4aacc7658e80882d30998e5014b87e5ef0959"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/runtime/i48_required.json",
+      "bytes": 3582,
+      "sha256": "edb53c85de16493a38db6cccbc98f4a0b0ca3e9ef7481d0ecfbc73f938568f4b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/crash.json",
+      "bytes": 16994,
+      "sha256": "f6130ab3b869f6f73b91d6ba899112b39147bd3a514f4470d5648153454de358"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/emos_console_io.json",
+      "bytes": 17061,
+      "sha256": "563eec3144ead80728aeb653f11e648432d02e64eefa0957c0f3531f1ee92fa6"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/emos_keyboard_io.json",
+      "bytes": 17073,
+      "sha256": "90756e8eb07afb8895578913a0ac7c82d2b9f6e89f2ab306deeda0c480915d16"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/emos_parallel_io.json",
+      "bytes": 17073,
+      "sha256": "8ed73973d93eadac5ed91a44dfd783f9533e3452f0eda2a1c3bfc4a21183e5b2"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/emos_parallel_native_io.json",
+      "bytes": 17120,
+      "sha256": "e34a1b512ae6630a328600a3087daed2adcd34bc53614f8b83adb2365ab0c980"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/gpio.json",
+      "bytes": 16989,
+      "sha256": "5f632e69c04decfaa4266ff061df0dfefaaded8073280c4462eea86a2400be1e"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/interrupts.json",
+      "bytes": 17031,
+      "sha256": "ac11e108bdb6c079d9efd7e8414f354f0fa84f7c6cc97994451ed0146e72486f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/keyboard.json",
+      "bytes": 17017,
+      "sha256": "011c02f9fa37c276e07c5f3a9ef9218063d4f6e8c5cca8e1907e7dd87d2df888"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/misc.json",
+      "bytes": 16989,
+      "sha256": "1940fff14960d0a6f02823a19a492770eef38f78cea2a583d49217097e08bbc8"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/mos_api.json",
+      "bytes": 17011,
+      "sha256": "de193aa3029a81a078b7a85cbece00644a75829c7d9e9325b1d1ee21ac840b7e"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/rtc.json",
+      "bytes": 16982,
+      "sha256": "2d09a52f8c40b5bf5061c03b26fd064112512d81f21753d203918627b46daab5"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/sd.json",
+      "bytes": 16975,
+      "sha256": "a4b2d27468e7023e09e01f2c26dcc2b97f03a222b0319b6ebddbbf7c9343f45a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/serial.json",
+      "bytes": 17003,
+      "sha256": "cd74e2b5c94475fc6a65acf0dcfddadfb8fc1648381225654c0b7570dea5b40d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/spi.json",
+      "bytes": 16982,
+      "sha256": "df21f30f8de6e072b52f9aa0101420ae2343a639984e8697d5186ba62941b172"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src/vdp_protocol.json",
+      "bytes": 17045,
+      "sha256": "9418af69c36df1d89d8b7fd630eaf3bb5e83476afa352d2b8dea6b2c21ddabd9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src_startup/cstartup.json",
+      "bytes": 17071,
+      "sha256": "cbd5d05fc8e9a77cb926d65e71b9b0c2be8f28956ec82dbf07beb5f915701327"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src_startup/globals.json",
+      "bytes": 17064,
+      "sha256": "e5a859ed8cbdf3f55ca443cfc2a73d221d5b54e185e22d7e49306ce0075500db"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src_startup/init_params_f92.json",
+      "bytes": 17122,
+      "sha256": "d26d1de66292675ed8205dd4799e22622ef74421c3f2be2bde730bbf643cc98e"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/assemble/src_startup/vectors16.json",
+      "bytes": 17080,
+      "sha256": "550a57851a64bdf7a503fe1b14a32b0b83db9959c5e83be04b8535e4100d5f76"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/main.json",
+      "bytes": 33013,
+      "sha256": "6f169a303c0b074416f63a198ba252c497657c410d387913cacb07956fb9eb13"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/runtime/firmware_printf.json",
+      "bytes": 20335,
+      "sha256": "66df72eefaccc6d53f25d220fd40824aa98f1ffdddd2c1c1caa5bbd008a382eb"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/clock.json",
+      "bytes": 31869,
+      "sha256": "30bae789467d6878e7387199d248b4f5d5870edea901ae571261d5ce3080bba7"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos.json",
+      "bytes": 34021,
+      "sha256": "7a27bbe0bb9d827cfc61dd3fa8e92a675d5631b9401418bafdd5f94039b31871"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_admission.json",
+      "bytes": 30646,
+      "sha256": "062c57b4d87a4a503ac18c0446447e7ac6b623ffa5e59f35280a53055ada81bb"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_console.json",
+      "bytes": 31128,
+      "sha256": "9c75734611d4d9ee321f41ac201d04240961c95facfcd00766a4f84a5d4a61ca"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_keyboard.json",
+      "bytes": 31793,
+      "sha256": "3447c0d4f43d6f4cd2d1048c46cd3389d4d44c818ae04a3c8f130d1318c07f30"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_parallel.json",
+      "bytes": 29666,
+      "sha256": "ac4e5bba32048d4d3decf2f6025dd13cdcf00fda056c9cf4cdb099762d7c95d4"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_parallel_boot.json",
+      "bytes": 30784,
+      "sha256": "24a536b3e38196cd1bc67292c15cf4f33c7f58c0004e6ab060f01bbb84668871"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_parallel_coordinator.json",
+      "bytes": 31296,
+      "sha256": "2adca9997a578a017b8d43d3656ff7168965f7c16c5fede16cfed7576a84a1a5"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_parallel_engine.json",
+      "bytes": 29524,
+      "sha256": "41e5d0c6aa8dbae4dab0206d3e4bfca2f5b5780886239820df5e04aea3d29190"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_parallel_handover.json",
+      "bytes": 30254,
+      "sha256": "cc6cea12df901c3f5c8e8d57712223d8a3112b45c1b6996fb8896e5c0496f3f6"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_parallel_native.json",
+      "bytes": 31001,
+      "sha256": "28bd558aa57799a555d34decd4620e6b5c0fe7df7156629a1a653d031f754e29"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_parallel_startup.json",
+      "bytes": 31027,
+      "sha256": "e533cb8b12775fa49191e0d2d8b816234cd7dbc20d83834afed0d90bdedd3b11"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_sdlink.json",
+      "bytes": 31056,
+      "sha256": "39949c047117fcc9a1cce71408d037c4bfce47a2974738f9dc999cace28b8a42"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_telemetry.json",
+      "bytes": 28716,
+      "sha256": "d04e91015e94fc14e9c1c0b95fb9710c8c743f27e760c30cab3a78f3e0e5745c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_uart_flow.json",
+      "bytes": 30972,
+      "sha256": "45341c046dc9ad4f9546b46a063931837bf4871e31d15ee981c2401b730e9eb2"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/emos_uart_probe.json",
+      "bytes": 30687,
+      "sha256": "dbfd748c2e2c859c5de9c69d9a9e6d95b97dc150070562c46be6a0497edb6202"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/i2c.json",
+      "bytes": 29549,
+      "sha256": "21a4b2e65684e458270f0ff784ce3186568c101c8efabd01423b415835d746df"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/mos.json",
+      "bytes": 32784,
+      "sha256": "7f5d7b0a87dbf4e08a504dbc225b3ba9784b688a3855908030ca9bc813abbaa9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/mos_editor.json",
+      "bytes": 32488,
+      "sha256": "7ffff765d45ab9c5e81f4a3b53b7824a7e5e1ec2f9c62ed6799a1e7bceeba6bf"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/mos_file.json",
+      "bytes": 31001,
+      "sha256": "3e5f69ec113852f554d7f45ceb80295e279a5035b080f0cdcce326955802c8f3"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/mos_sysvars.json",
+      "bytes": 31242,
+      "sha256": "b868d3b5ccb01c70b6a5dbce68847f648411a8667a2250edd95c6a2b8c387cda"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/strings.json",
+      "bytes": 30162,
+      "sha256": "27e993247ec3aa463ea724ca4c24e8e1d5442c710ca477bf09ab9247c529f1fb"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/tests.json",
+      "bytes": 31396,
+      "sha256": "be49611838d9c9a3532852a867be69e1398c813281c26da60443b3e7d2fb0719"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/timer.json",
+      "bytes": 29446,
+      "sha256": "01a27665297f5257b791f38d8536c68a2868814f5fe1d9b17310f469bf599c32"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src/uart.json",
+      "bytes": 31239,
+      "sha256": "5de254ca6c2b1b7575d2ef827949cab7cbdc9a19a0227ae8c0d7b0bf9b8ddaf5"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src_fatfs/diskio.json",
+      "bytes": 30097,
+      "sha256": "7f97010c6daf0db057f31461f9d2e487dbac2e3f3c1af0717b45b8bd6ce9c128"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src_fatfs/ff.json",
+      "bytes": 29780,
+      "sha256": "830413f564341604902102fa2e476f38bb22e34bf36274fe93d815f93654bc5b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src_fatfs/ffsystem.json",
+      "bytes": 29845,
+      "sha256": "04d67342f98d0b6e1faf94415c79a7492dfff93e3a5147f4d6e19f056c24310f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src_fatfs/ffunicode.json",
+      "bytes": 29386,
+      "sha256": "27365a5a4479086f60226384ea7a8c64d54a8b80ba70f2ad1328f5cd7c0b9c6c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/compile/src_umm_malloc/umm_malloc.json",
+      "bytes": 30535,
+      "sha256": "9f64452469eb59cf007b764a990d7f3bece7f88bcdd8e97eed657a3e6c51d642"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-qualified/probe/provenance/link/firmware.json",
+      "bytes": 56064,
+      "sha256": "c646a6d42cd250275a100aa826ccf826d262e14d620a55a33c21fa623ca07ccc"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/emos-source.tar.gz",
+      "bytes": 1500112,
+      "sha256": "8c5075d92e02f9c0c70654e43f8565940555930fc2e674651780c3a6dd654395"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/final-tool-checks/checks.json",
+      "bytes": 209,
+      "sha256": "b126f39506f93a6ef0fbbdea7934442c355fccf0c4ef342da43721109fc4f23b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/final-tool-checks/native_p4_build_test.log",
+      "bytes": 112,
+      "sha256": "0fe5cb662bfff14a9884376c5dc9b13021e73aa15d1c18bc3ecfc2226a9f364f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/final-tool-checks/parallel_probe_results_test.log",
+      "bytes": 100,
+      "sha256": "279538fe812d165bb22f5a84ab94b40efa9072957816601b6c80f1ba281fa35e"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/gateway.log",
+      "bytes": 163,
+      "sha256": "6bc4620a5f2f272800115b82cda9219ec2b4abde2a164481a422b96dcaec9baa"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/host-regressions/checks.json",
+      "bytes": 411,
+      "sha256": "8981d180e6368564bf8a3aa3a32a0549307f0469ff124b68312a14ee1d562353"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/host-regressions/test_emos_resident_gateway.log",
+      "bytes": 147,
+      "sha256": "fb283ffb2b6c2228997e82e86720f726f276751478ab207f57fea6c16d38ad27"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/host-regressions/test_emos_uart_flow.log",
+      "bytes": 98,
+      "sha256": "484304328268146c6ecb364cb9a14ef86d19316cca29933805cf752bd90125fe"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/host-regressions/test_emos_uart_probe.log",
+      "bytes": 98,
+      "sha256": "6521eca3d9802f0345836e6a655aaa88e8212b521e2c7871124da9f14abfee46"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/host-regressions/test_emos_uartflow_adapter.log",
+      "bytes": 219,
+      "sha256": "624bbf1d3210f517cc300dfc7b058eef9ec9afb0b34f0990c95258fd08c8b13a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/checks.json",
+      "bytes": 717,
+      "sha256": "4a282b293a91b35a7d0f8a22a5b022d589dd234ff0f5ddd77ae3cf30f0d7eceb"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/linked-parallel_boot_startup.log",
+      "bytes": 545,
+      "sha256": "5347bc02f071a6ca1806856f2aace1cd7dcfd99c3ede21180385ac4c07cb2a33"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/linked-parallel_control.log",
+      "bytes": 619,
+      "sha256": "b966d2ea7aa4c1d1a08baee2efe0c8a616f51b1077144b5957ae8b43a597c14b"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/linked-parallel_native.log",
+      "bytes": 423,
+      "sha256": "c0a1523c3410c02db520dac88307ee03910dfce38af0f746d928a2f429d46d24"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/linked-uart_parking.log",
+      "bytes": 366,
+      "sha256": "f2df0c9d474d4de0aa1e20340aa69620311ccc2d388d9631f890b0849fbfdc14"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/linked-uart_reservation.log",
+      "bytes": 410,
+      "sha256": "74ed56444b4f7873579526473a0d346e0b7b77c766549c370412863a16a71608"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/native-profile-controls.log",
+      "bytes": 1670,
+      "sha256": "37851a88f4a6480296b0ad4ba52ec3f9a2914228aa84ae33ae531012a01ebc53"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/linked/probe-profile-controls.log",
+      "bytes": 2509,
+      "sha256": "6de6444e63bd1fb022209b76b70c98fd4efce9589ef18ac03a7703c118fcf738"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/moslet/Makefile",
+      "bytes": 473,
+      "sha256": "a2b03a213f7695185266c3354491cec1fc47e823262e9cf5170a8c93033e3241"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/moslet/README.md",
+      "bytes": 1823,
+      "sha256": "6e601bfc02ef38097bdf90a3192427c8d8df3b39ae6742b3c450c0c0fc9b57f0"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/moslet/bin/parprobe.bin",
+      "bytes": 10750,
+      "sha256": "a0204b44567f8c45c053b48b582a229373676d51bc1d07d359ef03a15fb181b8"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/moslet/src/main.c",
+      "bytes": 3719,
+      "sha256": "ceb55666b57124fe0d09f28b516a8868629440168d4b2ef0bc3dbd72ab8440dd"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/moslet/src/pattern.h",
+      "bytes": 905,
+      "sha256": "f848ceaeb0e5c82c8bbe20c2c1694f17208b68de440c26852fc6514e17708520"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/moslet-build.log",
+      "bytes": 128,
+      "sha256": "38c45ea819692b05e5d4649297edbcd74361e75070a03fb3e8e9cbfd82014ca2"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/moslet-host.log",
+      "bytes": 2780,
+      "sha256": "77c4fa15e5f8d8610781441f98e087808ae04ca12f2a7ea8c9e0013ab02af301"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/board.json",
+      "bytes": 2576,
+      "sha256": "93bb0899a3e8de7d0d79d1c692e8f0ec188e4885401afab99671715bbe3258d5"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/build/agon_extender.bin",
+      "bytes": 1650272,
+      "sha256": "aaea2b411b9bdcfed25df1a2666706ae6f2221a8ed2d17df1acaf3c958a9ef07"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/build/agon_extender.elf",
+      "bytes": 34849324,
+      "sha256": "b125b776072c52617e6034c9180626ff21cae93a05721d3a06f16ae2c30da202"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/build/agon_extender.factory.bin",
+      "bytes": 1781344,
+      "sha256": "1b88c5b08e5063d18f6639da05d25f07f830eebe15062f2a1c6d515cde688149"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/build/agon_extender.map",
+      "bytes": 12839377,
+      "sha256": "5a2bf0cd2dfbe280f89cb21ffa0850c2f32afcec6c2d2eaaa5bf4afb36c30233"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/display.json",
+      "bytes": 119,
+      "sha256": "86ce550af98b16e33a189ff2185e21c4eb5e8d005af5ce232f39ca961e24da02"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/manifest.json",
+      "bytes": 5877,
+      "sha256": "26c908943e4e0640597767da7ab1d6605aa7bf2e23a0ea75135199553c385301"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/source-inputs.json",
+      "bytes": 1144722,
+      "sha256": "51f08d465cd9ab4df8b749ebbf53e7e6dc088942eb42f381e10fdc06d7ca23e6"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/source.tar.gz",
+      "bytes": 27908935,
+      "sha256": "7b3b4a20d8b8742b0e2ecf80c733d5b9b72f180e08bac54c47d394ece444e5d9"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/p4-final/p4-probe/validation.json",
+      "bytes": 782,
+      "sha256": "00abf674706119b3039a2ef25b3b992aa321ad90de3e07b2facbb5230defd7ed"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03a/paired.log",
+      "bytes": 493,
+      "sha256": "8374d1c0bae973ac8b7ee8279ae7d94ec14181b9357ff553f0a70a78c372f1ae"
+    }
+  ],
+  "final_source_integrity": {
+    "p4_inputs_verified": 5495,
+    "emos_build_and_qualification_files_verified": 111,
+    "retained_artifacts_verified": 222
+  }
+}

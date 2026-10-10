@@ -64,3 +64,33 @@ and formal ExExt/application/SD integration remain open.
 Author authorized the next bounded increment on2026-10-09:
 [private qualification caller](LIVE-QUALIFICATION.md), LC03-A. Prepare and
 validate the diagnostic pair before a separate physical installation tranche.
+
+LC03-A is now complete off-bench: [results](LIVE-QUALIFICATION-RESULTS.md).
+Private callers and the MOSlet pass full-build and modeled/linked checks.
+Author subsequently authorized LC03-B installation; the private pair now
+[passes physical boot release and exact ROM/fixture verification](LIVE-QUALIFICATION-INSTALL.md).
+Original startup is restored and input is ready/neutral. No parallel payload
+has run; pause before the existing bounded two-way cases. F03 remains open.
+
+Author resumed the bounded test. The [first physical block attempt](LIVE-QUALIFICATION-BLOCK-R02.md)
+failed:1byte Agon→P4 returned35 after604 nominal120Hz ticks, guards intact,
+no completed P4 receipt;19remaining cases did not run. Raw USB capture avoided
+the earlier capture-associated reset. Input recovered through a separate Agon
+reset for CSV retrieval only; no replay/flash, startup unchanged, bench idle.
+Earlier readiness/no-payload statements describe their checkpoints. Actual
+payload emission and the precise failure phase remain unproved. LC03-B/F03
+stay open; pause for review before phase instrumentation or another block.
+
+Author subsequently authorized a bounded one-hour repair goal. The
+[repair evidence](LIVE-QUALIFICATION-BLOCK-R03.md) identifies the pending-native
+handover race, hardware VALID/EOF proof changes, EMOS inactive clock tail, and
+timed boot-handshake rewind. Its final receipt supersedes the earlier installed
+pair/bench checkpoint without changing the older failed-run evidence. LC03-B
+physical payload success and F03 remain distinct gates.
+
+The second authorized hour reaches physical1and2byte forward success, then
+reproducibly rejects255bytes under exact hardware edge proof.
+[Current fixed-count RX and boot-race findings](LIVE-QUALIFICATION-BLOCK-R04.md)
+own the latest checkpoint. A proposed fresh-boot announcement failed a further paired reset-at-ACK
+regression; its source was preserved separately and restored. It is not
+installable. Fresh-transition recovery proof remains required. Ordinary block-return sequencing is unchanged.

@@ -1,0 +1,249 @@
+{
+  "scope": "PORT-008 LC03-B authorized paired installation attempt",
+  "recorded_utc": "2026-10-10T00:08:02.053633+00:00",
+  "result": "Corrected private P4/EMOS pair installed and verified; required boot release and input readiness pass; payload suite pending",
+  "initial_attempt": {
+    "scope": "PORT-008 LC03-B authorized paired installation attempt",
+    "recorded_utc": "2026-10-09T23:37:15.649815+00:00",
+    "result": "P4 flash verified; paired boot readiness failed; EMOS ROM readback pending",
+    "P4_build": "port-008-probe-r01-b2026-10-09-23-24-35Z",
+    "EMOS_expected_build": "agon-emos-v0.1.24-b2026-10-09-20-35-19Z",
+    "EMOS_flash_submitted_once": true,
+    "EMOS_installation_verified": false,
+    "P4_segments_independently_verified": true,
+    "Agon_reset_pulses": 1,
+    "parallel_payload_run": false,
+    "startup_restored": false,
+    "startup_state": "Temporary qualification startup remains; original bytes retained locally.",
+    "mainboard_VDP_changed": false,
+    "prior_firmware_backup": false,
+    "serial_collector_closed": true,
+    "bench_released": false,
+    "physical_failure": "P4 HTTP/USB boot healthy; no post-handshake console banner; keyboard session0/readyfalse and SD boot0/offline after90seconds. No pin trace or mainboard visual observation yet.",
+    "Author_observation": "MOS prompt; autoexec line 2 reported EMOS dispatcher busy."
+  },
+  "P4_build": "port-008-probe-r04-b2026-10-09-23-44-55Z",
+  "P4_application_sha256": "8f6a5f8084d38dcb61b5677be8057200b8710d5a07e083153f4f5d0d6c8fcff8",
+  "EMOS_build": "agon-emos-v0.1.24-b2026-10-09-20-35-19Z",
+  "EMOS_image_sha256": "524c5f3ac1234b07774d13877a722e44689b37a7ac16fd54b4b104fd826b1eec",
+  "EMOS_complete_ROM_sha256": "da4ac8ee514a4c07f3544a45c3fbdab7cf78f5682c51117f2cb656d0819690ff",
+  "EMOS_installation_verified": true,
+  "P4_segments_independently_verified": true,
+  "Agon_reset_pulses": 2,
+  "parallel_payload_run": false,
+  "startup_restored": true,
+  "startup_restored_sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5",
+  "root_temporary_startup_sibling_removed": true,
+  "mainboard_VDP_changed": false,
+  "prior_firmware_backup": false,
+  "serial_collector_closed": true,
+  "bench_released": true,
+  "final_state": {
+    "keyboard_ready": true,
+    "physical_neutral": true,
+    "held": 0,
+    "pending": 0,
+    "listener_online": false,
+    "listener_pending": false
+  },
+  "confirmed_defect": "P4 gpio_reset_pin disabled CLOCK/VALID input; SDK mock had incorrectly retained input mode. Corrected ordering re-enables input after reset while keeping initial output-release fence.",
+  "corrected_composition": "GPIO input correction, private bounded USB boot observation and restored retained USB FS/LS-only selection; EMOS bytes unchanged.",
+  "validation": {
+    "private_build_control_tests": 14,
+    "boot_cases": 732,
+    "paired_native_base_cases": 82,
+    "private_total_cases": 111,
+    "coordinator_cases": 264,
+    "payload_cases": 151,
+    "corrected_P4_build_host_seconds": 376.6134507609531,
+    "old_code_corrected_SDK_model": "Expected assert(x.live()) failure"
+  },
+  "remaining": "Existing 20-case real two-way suite, byte alignment, electrical release, F03 reset/fault recovery and throughput unproved. Production unchanged.",
+  "artifacts": [
+    {
+      "path": "agents/port008-live-qualification/lc03b/build-result.json",
+      "bytes": 48,
+      "sha256": "4ccbee14dc74fb1951a0d66364223e747a882333b332e6951cea5f63f7e3b514"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/staging.json",
+      "bytes": 735,
+      "sha256": "beadf626f8195b92bb2f3471d8c56cae02ae1f30568f668a9efdc608c4606326"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/flash-started.json",
+      "bytes": 234,
+      "sha256": "d4645f8545feb9b0f2a8e1ce56bf07127a0f5df843ff969f4e153afdb12ddc27"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-write.log",
+      "bytes": 6907,
+      "sha256": "0bbf850187b91d59076ab49229e2a593d5e32b6ac45e3de95bfdb7e3d53ca6fb"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-verify.log",
+      "bytes": 1443,
+      "sha256": "1be32bc1446548ef044dfb59edbbfde3d40f6167e61305ea7ecc179d50c3b16f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/boot.log",
+      "bytes": 9837,
+      "sha256": "755bee879dae4c6d4b86cfe34496ee9153d212a5c3ce4e8c75fc904fc2fadbb7"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/original-autoexec.txt",
+      "bytes": 38,
+      "sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/manifest.json",
+      "bytes": 5744,
+      "sha256": "abdc0e4758ab49f63f754d389d8e1243a92ba8c6064d45bc85007559e4c4ad29"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/validation.json",
+      "bytes": 782,
+      "sha256": "00abf674706119b3039a2ef25b3b992aa321ad90de3e07b2facbb5230defd7ed"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/source-inputs.json",
+      "bytes": 1144722,
+      "sha256": "4d77c0bf90468684de9b27566b441eabdece241533763d2954f624629eb933ca"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/source.tar.gz",
+      "bytes": 27909864,
+      "sha256": "47d708e96150f89b99f2aff4a4ead17dbd3f14ab1c3be9925944731e4cabf9ae"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/build/agon_extender.bin",
+      "bytes": 1650304,
+      "sha256": "f1bf3f92511bd62df7b2b8843510fc609c4f7d946ed3666b6d7c98a7f9904939"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/build/bootloader/bootloader.bin",
+      "bytes": 24256,
+      "sha256": "1e684c7781292494e6a8489250685b1ee2cd7f10e3eed3062504d79418a0cf0a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/build/partition_table/partition-table.bin",
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4/build/ota_data_initial.bin",
+      "bytes": 8192,
+      "sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/input-fix-fsls-build-result.json",
+      "bytes": 47,
+      "sha256": "3ba01ccbfa27fbd64b6c20f5b9ada3e1a744a32ece075fb7809bb41bea8e6fcd"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/input-fix-write.log",
+      "bytes": 6907,
+      "sha256": "fa2999f20de67d341107df7dd2aedca9552161c12786555384529cabd1b87a1c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/input-fix-verify.log",
+      "bytes": 1503,
+      "sha256": "f8ceb82e315f39bbd456bf0e30fff3cdd744f6bb0178532825d6bbda9d394f16"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/input-fix-boot.log",
+      "bytes": 11817,
+      "sha256": "070ad58aad3e7adfeb30dc54bbd80272ae62086c33c73ae21e4954ec58f8955f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/installation.json",
+      "bytes": 1238,
+      "sha256": "d714fbdec57a7c63655f8e31c12ed388fd97e135e480963f7de63071fabc145c"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/installed-rom.bin",
+      "bytes": 131072,
+      "sha256": "da4ac8ee514a4c07f3544a45c3fbdab7cf78f5682c51117f2cb656d0819690ff"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/startup-recovery-inspection.json",
+      "bytes": 240,
+      "sha256": "c05fc5131b513efb46c459df00f5519efb75308c4a0e56c00912c4b0b447b67a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/sdk-gpio-reset.json",
+      "bytes": 1940,
+      "sha256": "3a7dcf0f0972341294935e56b9c84257db55f6988b418c05ebbf0c6cb5bc440f"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/boot-input-negative-control.log",
+      "bytes": 1334,
+      "sha256": "22da6bc3961af9e535f2ce759df8a0e98f6476bdeebf9bd1e595d9b39cc00eed"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/input-fix-checks.json",
+      "bytes": 422,
+      "sha256": "b14f4d024e33c6a2f9c7e61943b2a5532a5ce718806b5f8ad227895770273d37"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/parallel_boot_release_test-input-fix.log",
+      "bytes": 414,
+      "sha256": "ce5e3629fa7770a6c04e4d7842c550b2c153c72ab4ee7f77beb14c9801575472"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/parallel_native_coordinator_test-input-fix.log",
+      "bytes": 493,
+      "sha256": "d6a108d899e907cdb622efeb730fb437907895fff707a9dd668e38b21844938d"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4_block_coordinator_test-input-fix.log",
+      "bytes": 288,
+      "sha256": "3f5f1fe72be7d8c8a18ad506322e21a52b7174101a3cf62d87e30f98c6867eb8"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4_native_payload_test-input-fix.log",
+      "bytes": 410,
+      "sha256": "267e79ad3c9e8c7f31cda2735be3cdef701d5bd7936ee70edd25a3ae212dd5aa"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/manifest.json",
+      "bytes": 6447,
+      "sha256": "2a48dcbfddb8c7e51f78bbc9806806e31b30daf8d19d7993faf93048101ff497"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/validation.json",
+      "bytes": 781,
+      "sha256": "e4e749ab46d9c7da508221f228b3cbb261c0e968a2bac3582390533b928df2fd"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/source-inputs.json",
+      "bytes": 1144722,
+      "sha256": "f24c6a0ba05424ed0525ad5d9241e65c4f35ae845dd2aa1c0b5fc372ddde6f84"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/source.tar.gz",
+      "bytes": 27910274,
+      "sha256": "644a25996352342bea89286c1c4a7afca555995bb771c116ea036f7bd9694841"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/build/agon_extender.bin",
+      "bytes": 1650752,
+      "sha256": "8f6a5f8084d38dcb61b5677be8057200b8710d5a07e083153f4f5d0d6c8fcff8"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/build/bootloader/bootloader.bin",
+      "bytes": 24256,
+      "sha256": "9ad24c4dc64deb7f1321ce0caff57e943cd8cb98e43c705ed96ae2877d0f6c77"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/build/partition_table/partition-table.bin",
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    {
+      "path": "agents/port008-live-qualification/lc03b/p4-input-fix-fsls/build/ota_data_initial.bin",
+      "bytes": 8192,
+      "sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f"
+    }
+  ]
+}

@@ -528,3 +528,32 @@ The 2026-10-09 diagnostic extraction ordinary candidate and its three MOSlets
 have subsequently passed [bounded hardware qualification](tasks/PORT-008/DIAGNOSTIC-ROM-RECOVERY-HARDWARE.md).
 This development installation does not replace the selected production bundle
 or qualify the private parallel coordinator.
+
+The private PORT-008 qualification composition selects EMOS
+`port/parallel-probe-candidate.mk`; its fixed diagnostic MOSlet is maintained in
+`../agon-emos/projects/parprobe`. The P4 builder/validator option
+`--parallel-probe-candidate` requires `--parallel-boot-candidate` on P4-PC/console.
+It adds only private bounded storage/receipts to the existing native coordinator;
+ordinary builds exclude this service. Current full builds use 130984 EMOS ROM
+bytes /88 free, versus 130473 /599 free without the caller and 128739 /2333 free
+ordinary. All existing link/ROM/ownership guards remain enabled. The retained
+P4 browser-output compile image is `UNVERSIONED-DO-NOT-DEPLOY`; identified
+physical installation and the installed HDMI composition remain a separate
+review boundary. See [qualification results](tasks/PORT-008/LIVE-QUALIFICATION-RESULTS.md).
+
+For the separately authorized LC03-B physical probe only,
+`--allow-dirty-parallel-qualification` freezes exact source and admits an
+identified `port-008-probe-rNN-bTIMESTAMP` build. It requires both private parallel
+flags and P4-PC/console/browser selection, rejects release identities and cannot
+combine with the HDMI experimental exception. Source/archive and end-of-build
+unchanged-input checks remain mandatory. This is an experimental installation
+identity, not production qualification; ordinary identified builds still require
+clean committed inputs. A sentinel compile image must never be relabeled.
+
+The subsequent physical qualification pair uses P4r10 fixed-count RX/PCNT
+proofs and EMOS forward-only inactive preclocks. Installed private EMOS is
+131017bytes/55free. A later **uninstalled, rejected** boot-announcement compile candidate
+is 131,035 bytes / 37 free. A paired reset-phase counterexample prevents its
+installation; the experimental source changes were preserved and restored. These are private probe sizes, not ordinary/release sizes; retain
+the unchanged131072-byte limit and full guards. [Current repair evidence](tasks/PORT-008/LIVE-QUALIFICATION-BLOCK-R04.md)
+distinguishes exact installed bytes, compile-only work and physical failures.
