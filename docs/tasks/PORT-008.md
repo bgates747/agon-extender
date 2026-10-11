@@ -30,6 +30,38 @@ ordered EDP processing/reply boundaries.
 Older bench restrictions and failure statements below are dated evidence;
 current bench ownership and identity remain in the ignored local record.
 
+### Authorized next tranche — phase attribution, 2026-10-11
+
+The Author approved the three-step proposal: attribute costs first, then discuss
+persistent UART shutdown in ExExt, then repeat the stream/game comparisons.
+Execute only the [phase-attribution contract](PORT-008/PHASE-TIMING-R01.md)
+PT01–PT06 now. No transport optimization, hardware addition or broader goal
+resumption is implied. Its later P08-P02/P03 steps remain gated on results and
+Author discussion. Preserve exact recovery bytes and unrelated work.
+
+### Deferred investigation — hardware assistance, 2026-10-11
+
+P08-H01 [ ] — Investigate modest external circuitry for the bidirectional
+parallel transport, after software coordination costs are understood. Deferred;
+no component selection, wiring change or implementation authorized.
+
+Compare a 74-series status latch, byte data latch, direction transceiver and
+hardware FIFO. For each option, identify exactly which EMOS/eZ80 or P4/EDP
+operation it replaces, the additional pins and signals, reset/power-loss behavior,
+bidirectional ownership and expected benefit. A status latch retains handshake
+state; a data latch retains one byte; a transceiver controls electrical direction;
+a FIFO can buffer multiple bytes. None alone proves autonomous eZ80 transmission
+or removes the CPU cost of writing each byte. Verify candidate part contracts and
+existing harness constraints before proposing circuitry.
+
+Discussion candidate, not an accepted architecture change: EMOS and EDP could
+negotiate UART shutdown once at ExExt entry and retain parallel operation until
+exit. This still requires safe direction changes, bounded opportunities for EDP
+to return keyboard/query packets, and entry/exit/reset recovery. The completed
+stream comparison has not isolated UART transition cost, so no saving is claimed.
+Next proposed software work is bounded phase attribution before optimization;
+implementation awaits Author authorization.
+
 ### Selected bench-free tranche — eight-bit payload, 2026-10-08
 
 The Author clarified that the target is **eight-bit bidirectional payload on

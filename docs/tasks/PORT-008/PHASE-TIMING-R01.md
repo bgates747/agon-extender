@@ -1,0 +1,106 @@
+# PORT-008 — Attribute ordinary parallel block costs, r01
+
+## Executive summary
+
+Author approved phase attribution on 2026-10-11. Measure the existing EMOS/EDP
+path before changing it: the completed matched-stream comparison identifies
+large residual-block and reply costs but does not separate their causes.
+Reuse its four exact payloads, PRT clock and full-buffer proof. This tranche
+covers instrumentation, offline correctness, a bounded hardware comparison and
+verified restoration. Persistent UART shutdown and circuitry remain later work.
+The broader eight-hour ExExt goal remains paused; production stays unchanged.
+
+## Contract and boundaries
+
+PT01 [ ] — Freeze phase definitions and a minimal probe design. Inspect actual
+reservation/offer, UART park, native byte runner, UART restore, completion/release,
+VBlank service, return poll/fetch and packet publication. Record caller context,
+clock scope, nesting and probe overhead. No per-byte probes or logging in timed
+intervals. Prefer MOSlet RAM storage/formatting; retain only unavoidable resident
+hooks in an explicit diagnostic profile. Stop for discussion if ROM fit requires
+removing product behavior or if a safe observation cannot preserve semantics.
+
+PT02 [ ] — Implement the frozen probes and fixture. Reuse buffered 5/&C2
+streams of 256, 4096, 4097 and 8192 bytes, one warm-up and five measured samples
+per length. Keep P4 stream-r14 unchanged if eZ80 observations suffice; do not
+substitute source HEAD, an uninstalled candidate or the old UART-only partner.
+Record forward and reverse blocks, repeated polls, ISR work and nested intervals
+without double-counting totals. Explicitly drain partial batches through EMOS.
+No private application GPIO or transport ownership bypass.
+
+PT03 [ ] — Compile and run instruction-model/host checks. Verify ROM fit,
+probe register/stack/IFF preservation, disabled-hook behavior, overflow refusal,
+record capacity and interval interpretation. Compare the ordinary composition
+with retained pre-probe bytes apart from build identity. Bind the MOSlet to the
+exact diagnostic ELF and full ROM fingerprint. Commit controlled inputs before
+hardware. These are CPU-model checks, not physical timing or emulator UI proof.
+
+PT04 [ ] — Acquire the free bench only for deployment/execution. Read current
+local identity, installed receipts and bench constraints. Verify the exact paired
+images and fixture by readback. Preserve mainboard fsim VDP, original startup,
+all wiring and games. Select mode 3 only in temporary autoexec; no startup test.
+Invoke each group explicitly from the admitted CLI. No browser video or active
+HTTP monitoring during timed intervals. Collect byte dumps outside timing.
+One complete group per length, with fresh completed-case repeats only for missing
+integrity evidence. Never replay uncertain work. Compare endpoint times against
+the preceding instrumented campaign as an overhead/context check, not an
+identical-build causal experiment.
+
+PT05 [ ] — Validate all selected samples and report. Retain timestamps, callsite
+identity, repeat origins, full 8192-byte proof, saturated/overflowed exclusions,
+start/end and firmware hashes. Use the preceding integrity-only chronological
+selection rule when a USB dump is incomplete. Show phase median/range in µs
+and share of a clearly defined enclosing interval; distinguish inclusive/nested
+intervals and unobserved time. Separate forward drain, receipt and query/reply.
+Do not call elapsed cycles CPU utilization, payload-loop speed raw bandwidth,
+or query completion render/scanout completion. Select the next optimization
+from measurements and pause for Author discussion before implementing it.
+
+PT06 [ ] — Restore and independently verify the exact original UART pair and
+38-byte startup, resolve known temporary sibling files, demonstrate CLI/input,
+close collectors/listeners and release the bench. Preserve the documented
+mixed-pair admission limitation and restore through a compatible pair if needed.
+No new version tag or production promotion follows diagnostic results.
+
+## Research précis and measurement design
+
+1. Official read-only references: agon-docs commit
+   `f9806bd3cbff6ed5d1c08bef1d51fed11764b86b`,
+   [RST18 contract](../../../../../agon-docs/docs/mos/API.md),
+   [GPIO mapping](../../../../../agon-docs/docs/GPIO.md);
+   clean agon-mos v3.0.2 and agon-vdp v2.16.0. This work introduces no VDU API.
+2. Reuse [completed measurement contract](STREAM-TIMING-R01.md),
+   [physical results](STREAM-TIMING-R01-RESULTS.md) and
+   [fixture](../../../tests/performance/stream_timing/README.md).
+   PRT1 /256 gives nominal 72,000 counts/s, 13.889 µs/count and a 0.9102-second
+   single-pass limit. MOS increments two coarse units per VBlank (~120/s here).
+   Keep ordinary interrupts and clock source/divisor unchanged.
+3. EMOS-owned implementation: `agon-emos/src/emos_exext.c` (queue, reservation,
+   offer, VBlank service and publication), `emos_parallel_coordinator.c`
+   (park/payload/unpark/completion), `emos_parallel_native_body.inc` (bounded
+   byte runner). Calls can execute inside the real VBlank service as well as
+   foreground output. Actual publication remains in real ISR context.
+4. Use boundary probes with bounded RAM storage; no SD, USB or network output
+   during timed intervals. An explicitly diagnostic-only hook may dispatch
+   into exact-bound MOSlet RAM, armed only while that fixture owns PRT1 and its
+   record storage. Preserve all registers/flags/IFF and disarm before saving or
+   returning. Ordinary builds must contain no hook or diagnostic dispatch.
+   Freeze actual sites and addressing once compile feasibility is established.
+5. Retain probe/read controls; do not subtract an assumed constant overhead.
+   If eZ80 intervals identify time waiting for EDP but not its internal cause,
+   report that remaining boundary and propose a separate bounded P4 experiment.
+   Do not silently enlarge this into a profiling framework.
+
+## Following steps — not this tranche
+
+P08-P02 [ ] — After phase results and Author discussion, prototype UART shutdown
+once at ExExt entry/restoration at exit. Both EMOS and EDP must preserve direction
+ownership, bounded keyboard/query return opportunities and reset recovery. An
+accepted contract/architecture amendment must precede that behavior change.
+
+P08-P03 [ ] — After an approved implementation, repeat byte-verified comparisons,
+then use existing finite Nurples, Rally and Aginvadors fixtures. No game change
+or performance acceptance is implied by the current instrumentation approval.
+
+P08-H01 remains deferred in the parent task: external latches/transceiver/FIFO
+investigation follows a concrete operation/cost to replace, not a chip-first guess.
