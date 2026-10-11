@@ -316,3 +316,18 @@ a related single-level announcement; its counterexample is explicitly covered.
    restoration completed. Future preparation selects route before mode in
    startup, checks each CLI preparation command and invokes only a verified
    loaded fixture. Original startup/configs are restored for offline work.
+
+### EX06 paired build checkpoint
+
+The stronger held-prefix pair is frozen before physical validation:
+EMOS source653961b, build `agon-emos-v0.1.24-b2026-10-11-12-31-04Z`,
+130513bytes/559free, SHA256
+`5a0bb3dd95bdf670b3b0b3b281ab90b665bb665e41c4e169deac787cdca2ddfd`;
+P4 source2b75db68, build `port-008-stream-r04-b2026-10-11-12-24-35Z`,
+app SHA256 `af88216b9df6433c6b320f9146c2130af08355f03e6fff1aa82e63d767ab3c8c`.
+Complete firmware/link checks and both linked nested/non-nested keyboard ISR
+cases pass. The exact boot-leaf inventory now admits two connect fences (after
+prefix and on failure), plus the existing start fence; no unrelated caller is
+admitted. P4 has normal HDMI/services and no private probe/data-check firmware.
+Successful per-block version2 USB printing is removed; first-fault reporting
+remains. These identities are experimental and do not change production.
