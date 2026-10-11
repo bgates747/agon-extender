@@ -592,3 +592,20 @@ retention was actually exercised; do not claim an unperformed removal test.
 
 The renewed deadline remains 09:35:10UTC. Preserve informative evidence and a
 verified usable ordinary pair at closeout. No production promotion is implied.
+
+DI05-B7a [x] and DI05-B7b [x] — Exact filtered canonical data-r12 verified on
+all four flash segments. Before/after transfers each have 512 bit7 mismatches,
+zero lower-seven-bit errors, status0 and intact guards. The intervening P4-local
+mount returns ESP_ERR_TIMEOUT and releases LDO4, as predicted by its source.
+This pair is inconclusive about an enabled rail; it does not refute the supply
+lead. Evidence remains under ignored pc-power-r01 with fresh P8PW01A/B results.
+
+DI05-B7b2 [ ] — Build a full-HDMI canonical-pin control that acquires a fixed
+3.3V LDO4 supply before console GPIO initialization and retains it for the boot
+lifetime, independently of local card presence. P4-local SD uses that fixed rail
+without acquiring an adjustable owner, lowering voltage, or releasing it after
+mount failure; keep its 20MHz/3.3V non-UHS configuration. The DevKit retains its
+existing adjustable SD-only power path. Retain the proven CLOCK filter as an
+owned native resource with checked cleanup. First run independent reverse and
+forward; then genuine echo boundaries if both pass. This retained-rail trial is
+a focused hypothesis test, not a root-cause declaration or production promotion.
