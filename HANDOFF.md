@@ -1,4 +1,22 @@
-# Current checkpoint — modern DevKit B passes both directions
+# Current checkpoint — P4-PC fails without probes; ordinary state restored
+
+Author reattached P4-PC, sniffers removed. Exact earlier filtered data-r12
+installed/all4segments independentlyverified. One1024-byte reverse has512errors,
+allmissingbit7; lower7bits/bytepositions exact, status0/guardsintact, P4sourceexact.
+SamePCimagewithprobes had480errors; matchedDevKitfilteredsourcewithoutprobesPASS.
+Probe removal is not a remedy. No new forward/echo/capture. Rootcause unproved.
+
+Evidence agents/port008-live-qualification/pc-no-probes-r01, fresh AgonCSV
+/agents/extender/results/P8NP01R.CSV. DI05-B4 comparison complete; repair and
+real1/255/4096echo remain incomplete. No native source patch adopted.
+Exact preceding full-HDMI matcheddata-r01 restored/all4segments independently
+verified. CurrentEMOSv0.1.24/mainboardVDP unchanged, original38bytestartup and
+diagnosticreadback verified. Listeneroffline, keyboardready/neutrallocale1held0
+pending0, resetreleased; cardinAgon. All3installed-current records refreshed.
+P4-PC remains connected withoutsniffers; DevKitcontrolretainedseparately. Noactive
+collector/flash/transfer/reset hold. No promotion. Otheragentdirt untouched.
+
+# Historical checkpoint — modern DevKit B passes both directions
 
 Author connected repaired original DevKit harness/USB, with no analyzer. Modern
 data-r17-b2026-10-11-07-32-07Z installed/all4segments independentlyverified;

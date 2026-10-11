@@ -6,11 +6,11 @@ The modern DevKit control now passes independent 1,024-byte transfers in both
 directions, using the same filtered native transport source and unchanged EMOS.
 P4-PC reverse remains defective: filtering preserves all seven lower bits but
 leaves bit7 corruption, which survives peripheral lane permutations on physical
-GPIO46. This narrows the fault to differences between the two bench compositions;
-it does not establish a wiring, pad, silicon or HDMI cause. DevKit had no analyzer
-attached, unlike the recent P4-PC trials, so probe loading remains a hypothesis.
-The verified DevKit image remains installed with ordinary input ready and the
-original startup unchanged. Production remains unchanged. P4-PC repair and
+GPIO46. P4-PC still fails after probe removal: all512 expected high-bit bytes
+lose bit7, while the lower seven bits are exact. Removing probes is therefore
+not a remedy. Wiring, pad, silicon and HDMI differences remain unisolated.
+The exact preceding matched P4-PC HDMI image is restored, ordinary input ready
+and original startup unchanged. Production remains unchanged. P4-PC repair and
 real 1/255/4096-byte echo qualification remain incomplete under DI05-B/C.
 
 DI01 [x] — Reuse the existing private retained-data endpoint and snapshot hook.
@@ -413,7 +413,7 @@ P4-PC image; no board swap, probe move or further P4-PC experiment occurred here
 
 ### DI05-B4 — Author-approved P4-PC comparison without probes
 
-DI05-B4 [ ] — Author confirms P4-PC reattached, analyzer leads removed and bench
+DI05-B4 [x] — Author confirms P4-PC reattached, analyzer leads removed and bench
 available. Install the exact retained filtered data-r12 image from the earlier
 P4-PC control, independently verify all segments, and keep EMOS, wiring, fixture,
 source pattern and startup unchanged. Hold Agon reset during P4 installation;
@@ -427,3 +427,42 @@ This comparison tests whether removing the probes changes the filtered P4-PC
 result. It does not isolate HDMI, silicon, pad configuration or harness loading
 from each other, and cannot replace real echo qualification. Evidence is retained
 separately as pc-no-probes-r01; do not overwrite either earlier board control.
+
+### DI05-B4 result — P4-PC still fails without analyzer probes
+
+Author confirmed P4-PC harness/USB reattached with sniffers removed. Correct
+stable USB identity and admitted neutral input were observed before installation.
+The host installed the exact earlier filtered control, data-r12-b2026-10-11-06-59-57Z
+(appSHA9d4dc94f0a95af58ec7826cad16d8681f952fa52cb3edc04b3cf57ca539cbeaa),
+independently verified all four segments, and recovered admitted input with Agon
+held in reset only across installation. Original startup and diagnostic executable
+were read back unchanged before one CLI reverse invocation.
+
+| Reverse control, worst incorrect-byte count first | Incorrect bytes /1,024 | Lower-seven-bit errors | Received high-bit bytes |
+|---|---:|---:|---:|
+| P4-PC, filtered data-r12, no probes | 512 | 0 | 0 |
+| P4-PC, same filtered data-r12, probes attached | 480 | 0 | 32 |
+| DevKit, matched filtered transport source, no probes | 0 | 0 | 512 |
+
+Every expected high bit is missing in the new P4-PC result. All low-seven-bit
+values and byte positions match; first mismatch is offset2,0x7b instead of0xfb.
+Agon status0/guards intact do not negate the corruption. P4's independent source
+remains exact before/after transfer, FNVcfb78805. Fresh full receive bytes are
+retained in /agents/extender/results/P8NP01R.CSV and local pc-no-probes-r01.
+No forward or roundtrip was invoked after this failure; no wire capture exists.
+
+Probe removal is not a fix and analyzer attachment is not required for the defect
+to manifest. This result does not prove whether probes influenced the occasional
+high samples in earlier runs; there is no no-probe waveform capture. It also does
+not distinguish board/harness loading, physical GPIO46 behavior or HDMI activity.
+The DevKit pass rules out a universal failure of the shared filtered transport
+plus EMOS, but does not qualify every composition of that code.
+
+Stopped payload testing and restored exact matched full-HDMI data-r01; all four
+segments independently verified. Original startup and diagnostic executable
+readback verified, listener closed, keyboardready/neutral locale1held0pending0,
+reset released, card in Agon. EMOS/mainboard VDP unchanged; no wiring change or
+backup. All three installed-current records identify this fresh P4-PC restoration.
+Evidence retains installation/restoration receipts, P4 source report, full CSV,
+host comparison, final state and file hashes. No active collector/flash/transfer
+or reset hold remains; no promotion or completed repair is claimed.
