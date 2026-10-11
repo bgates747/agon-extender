@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "scope": "R07-01 source inventory only; no new build or hardware observation",
+  "review_date": "2026-10-11",
+  "extender_source_commit": "188a45715144208d222b26dff5f56f52b7890eef",
+  "references": [
+    {
+      "owner": "agon-docs",
+      "commit": "f9806bd3cbff6ed5d1c08bef1d51fed11764b86b"
+    },
+    {
+      "owner": "agon-vdp",
+      "commit": "c7ac293d2aa81ddfa693390549bcd909069c8fc3"
+    },
+    {
+      "owner": "agon-mos",
+      "commit": "8336409351ee5314e02801a7b72a4f1bb5282519"
+    }
+  ],
+  "vdp_gl_import": {
+    "tag": "all-the-plots",
+    "commit": "ac2dd5986daf496c43ae8e7fe41836274aec54a0"
+  },
+  "retained_build": {
+    "build_id": "port-008-stream-r17-b2026-10-11-22-37-46Z",
+    "board": "p4-pc",
+    "display_output": "hdmi",
+    "source_commit": "0982d5678f0307d3fe2a6bc0b280cb295c0a27d2",
+    "source_dirty": true,
+    "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+    "sdkconfig_sha256": "42c5d0b36fd6c625fdbe79c5a1b405bbcbb31e4dbd7a3442fe76a7c43976b2fa",
+    "dependencies_lock_sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+  },
+  "source_inventory_comparison": {
+    "entries_checked": 5501,
+    "mismatches": 0
+  },
+  "source_files": [
+    {
+      "path": "vdp/video/agon_screen.h",
+      "bytes": 24064,
+      "sha256": "c01cbb68c4f8817d3402071a34e7162ff6dd6aa559d597d0030ce98248d62ebd",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/agon_palette.h",
+      "bytes": 3298,
+      "sha256": "f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/vdu_sprites.h",
+      "bytes": 12554,
+      "sha256": "95aeb568f8ec1fad96ffe320e506c13be32b1fb0404dce5a072a26ca8041bb78",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/sprites.h",
+      "bytes": 7012,
+      "sha256": "02dbe5921f2651b113530dbeb2f8d8b85d47f3f25b33488adf3cbc2ae9e44904",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/stock_runtime_controller.cpp",
+      "bytes": 1986,
+      "sha256": "bf9db30f280e9c322705faa6008cffbe3df3bb3feafdab708197ff425a614dd6",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/stock_runtime_controller.hpp",
+      "bytes": 7655,
+      "sha256": "4412569372a185a59daa956b80e7728f92fca24e3f598aa5b49f44d93bf3dd06",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/stock_p4_service.cpp",
+      "bytes": 17066,
+      "sha256": "0557671674d931a910f9ea1e762f8d40142dbbde8320c321e1b823c41c8fdf13",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/stock_scanline.cpp",
+      "bytes": 8129,
+      "sha256": "25706d16604a6408d9601da0d64d4f884c27ab89b8215c2f09af0ca6ec6b093f",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/rgb888_pixel.hpp",
+      "bytes": 1795,
+      "sha256": "6d965ab9d94029598c03c558bf6e288becd2c3b4f0d284a09e09248ea75475e4",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/p4_rgb888_controller.cpp",
+      "bytes": 33035,
+      "sha256": "90862c6bf2917c7f39fdc0704d8d3d69281bc11f566f3c8629e2f63208dec46a",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/p4_rgb888_controller.hpp",
+      "bytes": 9104,
+      "sha256": "91c393e42e6399cc5ffe589cae528e555d6ce0f45bca7f2ed05583bbe6fc4c89",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/checked_viewport_allocation.hpp",
+      "bytes": 5309,
+      "sha256": "a32be0e54c3635895fb36d628f6405e9b2ca1aecff25de9364c67d5b89e6cdf6",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_output.cpp",
+      "bytes": 30837,
+      "sha256": "6783870841142ac63e14acc9ca2dd52eec9769dbb019795428d68f568bb45d55",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_ppa_scaler.cpp",
+      "bytes": 2049,
+      "sha256": "4d3324e1a2a4b296b6598cc4d2a7c4d4da1a6223cb6fccd5df57632dbab2aba0",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/presentation_snapshot_pool.cpp",
+      "bytes": 13910,
+      "sha256": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/presentation_snapshot_pool.hpp",
+      "bytes": 7075,
+      "sha256": "ace23a0f2ab3993bcc41d1a31e5785ac69756160a8930cc95ca4071ea8ef22e4",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/strip_driver.cmake",
+      "bytes": 3119,
+      "sha256": "4bd208049179b4e1baf21823192ef297cd38f45a1cda27670bcfd344427f4c94",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/strip_config.h",
+      "bytes": 835,
+      "sha256": "8fc0c30f67eafd8bf831a6c864f40657466ffe88d7e925c37b3e2ee4d29d1769",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/strip_runtime.inc",
+      "bytes": 18999,
+      "sha256": "7e488fe02c7bf386278dc7cf5ece7d57712d711c1b5bc4eeac25c170f8efd3d8",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/scene.cpp",
+      "bytes": 3395,
+      "sha256": "dba1ee4a7d8016928bc38625882917ab3677a00598717bca560da3bd85de83b9",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/scene.hpp",
+      "bytes": 4039,
+      "sha256": "4fba9c712b5cfab1229960bcf89a47d768a57a5bdfe400e22c7f045017879cd2",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/patch_dpi.py",
+      "bytes": 6622,
+      "sha256": "838ed8d3be9c9ccb3c5a7cc39c5acdc551ca6615cda6c4193da766c6ae82f247",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/patch_dw_gdma.py",
+      "bytes": 1484,
+      "sha256": "9854b24c71f7de24f0cb580d06de897c88d1c959c679d2e5b749a89f2cd1b392",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/video/extender/web/browser_video_provider.cpp",
+      "bytes": 5503,
+      "sha256": "66c5d7396cc99cf3a494573b76e1112c6994434b2e153c684ac5facb9b9dc4fa",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/displaycontroller.cpp",
+      "bytes": 60519,
+      "sha256": "7868637cdb57763c28b4a56fc2d439348dbb4b77ad1cec77d851bfd1bcb0e471",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp",
+      "bytes": 31184,
+      "sha256": "d2bd84041f9ee261484eb0b3fd66b91eb15cd238d28781b4969c757fa04a4801",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp",
+      "bytes": 18650,
+      "sha256": "4447b81ad53a7dc262e782600259e18fcf866dafe7e64f2c239b35dc186141fa",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+      "bytes": 30280,
+      "sha256": "ed4b6ef1c2ef6a81bb3eef1cf7a507b528cf70dc6eec8e5db88b9654905ce2ee",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.cpp",
+      "bytes": 31338,
+      "sha256": "0a82d8a4d35b783dbe6d397433808c7ce981f7c274eb27edcef9e9907102fd85",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.cpp",
+      "bytes": 31107,
+      "sha256": "575626e044d79b31682ba4197fd9dcd029dc31c6089785f43c40e61369724a96",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+      "bytes": 32372,
+      "sha256": "44e4242f1636f9e8279933280fe4f83a3490074171f8a5562288311975861a64",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.cpp",
+      "bytes": 30667,
+      "sha256": "c106c53979d2dc1239636e2ccf98916944cac38d325b24b1e5fabdbb7bccd4ba",
+      "compiled_translation_unit": true
+    },
+    {
+      "path": "vdp/dsi-strip-test/main/stock_sprite_body.inc",
+      "bytes": 3090,
+      "sha256": "4f6030cb3d89dba1d0b9dfb7885cdca2d9d80dbd6fc95adeb716624151d7ed81",
+      "compiled_translation_unit": false
+    },
+    {
+      "path": "vdp/components/esp_lcd_lt8912b/UPSTREAM.json",
+      "bytes": 687,
+      "sha256": "49b6260fcf2751affe817ecc0c495029cadff64a5fe4ce0292c4dfdff92b85d5",
+      "compiled_translation_unit": false
+    }
+  ],
+  "reference_files": [
+    {
+      "owner": "agon-docs",
+      "path": "docs/vdp/VDU-Commands.md",
+      "bytes": 40794,
+      "sha256": "7c78638f0b52efb4189c94636ce9c304d275c4b81751667a82c6d65e22bfafc3"
+    },
+    {
+      "owner": "agon-docs",
+      "path": "docs/vdp/Screen-Modes.md",
+      "bytes": 8058,
+      "sha256": "c943727090b872f50e9c6a5298db96a8b6e369aef35e0577204e19532bc55a55"
+    },
+    {
+      "owner": "agon-docs",
+      "path": "docs/vdp/Bitmaps-API.md",
+      "bytes": 34554,
+      "sha256": "2e226dd7f253fd35c7cfee4bcb338e478ed306abe26166b606c59321b23ee321"
+    },
+    {
+      "owner": "agon-docs",
+      "path": "docs/vdp/Copper-API.md",
+      "bytes": 7611,
+      "sha256": "6a430a0778aef13443d5488a086b3f93bc56a1b8ebf5deab55e2c72255c15286"
+    },
+    {
+      "owner": "agon-vdp",
+      "path": "video/agon_screen.h",
+      "bytes": 13931,
+      "sha256": "648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343"
+    }
+  ],
+  "retained_evidence": [
+    {
+      "path": "agents/completion-removal-r01/p4-r17/manifest.json",
+      "bytes": 12620,
+      "sha256": "66d05276df2e20a9c2c93eab7aae95033d1c6fbc998f7ed0726535ffca66ad83"
+    },
+    {
+      "path": "agents/completion-removal-r01/p4-r17/source-inputs.json",
+      "bytes": 1145837,
+      "sha256": "6cce7119d821da21e0e6605e24a024c73af33f80397ee8adbc6f045a46b7ef30"
+    },
+    {
+      "path": "agents/completion-removal-r01/p4-r17/dependencies.lock",
+      "bytes": 14602,
+      "sha256": "542fa22729fa25dd84e19bd2891f626c15ae4b8c4a088904af6e5afd31cf92ad"
+    },
+    {
+      "path": "agents/completion-removal-r01/p4-r17/sdkconfig",
+      "bytes": 92352,
+      "sha256": "42c5d0b36fd6c625fdbe79c5a1b405bbcbb31e4dbd7a3442fe76a7c43976b2fa"
+    },
+    {
+      "path": "agents/completion-removal-r01/p4-r17/build/compile_commands.json",
+      "bytes": 22624470,
+      "sha256": "107aaa30b03034d50541d2a6129500558583fb52aac666fd693104c5399bbf39"
+    }
+  ],
+  "generated_artifacts": [
+    {
+      "name": "agon_extender.bin",
+      "bytes": 1780560,
+      "sha256": "963737f032817cfa97af12ed4d4466d6f4748d8800305a9ce05b469c32ae6c2e"
+    },
+    {
+      "name": "esp_lcd_panel_dpi.c",
+      "bytes": 34061,
+      "sha256": "d45e491c0d5deda0c38d51c532ceb3199ecf2d9bd580444da5ef2f1bf7bae93d"
+    },
+    {
+      "name": "dw_gdma.c",
+      "bytes": 29717,
+      "sha256": "c3339df081ad83ba1e977399d54c99af24dda90791378caa05823ea498ffff90"
+    }
+  ]
+}

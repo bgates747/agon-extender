@@ -9,9 +9,11 @@ path. Compare P4 CPU palette expansion and supported PPA/display operations. The
 unproven: existing direct RGB888 rendering removed an expensive conversion
 stage, and indexed storage could reintroduce it.
 
-**State: R07-01 authorized, source inventory in progress.** Author approved one
+**State: R07-01 complete; paused for Author review.** Author approved one
 unattended tranche on 2026-10-11: pin revisions and map the current pipeline,
-then report and stop. R07-02–07 remain unstarted. No implementation, benchmark,
+then report and stop. The [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
+and [source baseline](RESEARCH-007/SOURCE-BASELINE.json) record that work.
+R07-02–07 remain unstarted. No implementation, benchmark,
 new mode, deployment or bench action is authorized. Fsim retains the bench;
 PORT-008's separate matched-pair hardware comparison is not part of this task.
 
@@ -74,7 +76,7 @@ scanout publication before calling palette animation cheap end to end.
 
 ## Investigation subtasks
 
-### R07-01 [ ] Pin contracts and inventory the current pipeline
+### R07-01 [x] Pin contracts and inventory the current pipeline
 
 Review official Agon documentation first, then tagged VDP/MOS sources where
 implementation detail is needed. Pin exact project, reference, SDK and output
@@ -83,6 +85,14 @@ formats, saved backgrounds, rolling composition buffers, palette state and
 final scanout ownership. Explain which current modes already use one-byte
 storage and which use direct RGB888. Prepare a bounded source-linked précis;
 do not reconstruct the pipeline from this feedback alone.
+
+Completed 2026-10-11: official contracts and exact local tags reviewed; 5,501
+retained r17 source hashes match the inspected checkout. The report separates
+packed/indexed stock controllers, one-byte physical RGB222, selected three-byte
+HDMI drawing storage, one-byte software-sprite saved areas, output strips/images,
+PPA staging and the allocated but bypassed browser snapshot pool. Current HDMI
+source, retained build and approved production are explicitly distinguished.
+No new compilation, measurements or device access; pause before R07-02.
 
 ### R07-02 [ ] Establish semantic feasibility
 

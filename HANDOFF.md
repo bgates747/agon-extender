@@ -1,4 +1,17 @@
-# Current checkpoint — software completion removed, offline only
+# Current review — indexed framebuffer source inventory complete
+
+[RESEARCH-007](docs/tasks/RESEARCH-007.md) R07-01 alone is complete;
+[pipeline inventory](docs/tasks/RESEARCH-007/PIPELINE-INVENTORY.md) and normalized
+source hashes pin the inspected current rendering path and retained r17 graph.
+Packed lower-colour indices and one-byte native RGB222 already exist. Selected
+HDMI geometries use three-byte B,G,R drawing storage, while software-sprite saved
+backgrounds remain one byte/pixel. RGB888 panel images, DMA2D/SRAM strips, PPA
+staging and the allocated but bypassed browser snapshot pool are mapped.
+All 5,501 retained source inputs match; no runtime performance claim. No code,
+build, emulator, device, SD, startup or production changes. Fsim retains bench;
+stop for review before R07-02. The separate ExExt checkpoint below is unchanged.
+
+# ExExt checkpoint — software completion removed, offline only
 
 [Completion-removal contract](docs/tasks/PORT-008/COMPLETION-REMOVAL-R01.md)
 CP01–CP05 complete after freeze/push. [Results](docs/tasks/PORT-008/COMPLETION-REMOVAL-R01-RESULTS.md)
