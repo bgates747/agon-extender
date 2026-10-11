@@ -1,3 +1,33 @@
+# Current checkpoint — DevKit reverse B prepared; awaiting USB connection
+
+Author directs B to the original DevKit, not another P4-PC trial. Historical
+DevKit forward22-recordpass does not establish modern reverse integrity.
+New filtered-CLOCK P4-PC lane swap/inversion/stronger-drive trials still fail
+only bit7:484/473/484 wrong of1,024; lower7exact each. Data-r16 CPU-waveform
+control compiled but NOT installed/run. Raw traces retained; wiring/loading
+remains live. Do not claim bad silicon or a completed fix.
+
+DevKit comparison image port-008-data-r17-b2026-10-11-07-32-07Z is compiled/validated and allmanifestartifact
+hashes independently checked; appSHA ca1e8109d5c708d071b8d585114a14479e9dbaa5a34ad7f82dcff901bc877163. Native TX/coordinator/independent
+endpoint/console source exactly matches PCfilteredr12. Generated DevKit pins,
+browser/noHDMI and full USB host are explicit differences; not a single-variable
+wire test. Build/run prep agents/port008-live-qualification/devkit-reverse-r01,
+read RUNBOOK.local.md. Selector/tests now permit this private DevKit data ID.
+16native-build+5boardchecks pass. Alltemporary native/console edits removed.
+No DevKit installation, reverse pass or new production qualification claimed.
+
+P4-PC exact matcheddata-r01 restored/all4segments independentlyverified;
+EMOSv0.1.24/mainboardVDP unchanged. Original38byte startup and paridump readback
+verified, listenerclosed, resetreleased, keyboardready/neutralheld0pending0.
+Freshreceipt reverse-remedy-handback-r02; all3installed-currentrecords refreshed.
+Card in Agon. No active hardware owner process; currentP4-PCruntime retained.
+Next Author action: connect DevKit USB only to Pi, leave Agon on P4-PC until
+correctDevKitimage installed/verified. Only then poweroff/reconnectrepaired
+DevKit harness and confirmAgon/card before reset/test. No probe move needed for
+first bytecheck. No flash/reset until corresponding connectivity confirmed.
+Goal remains incomplete/pending physical setup; renewedhourdeadline08:12:01UTC.
+Unrelated HOST-001 and EMOSapplication_peer work still untouched.
+
 # Current checkpoint — reverse remedy run; not fixed
 
 The authorized one-hour PORT-008 investigation narrowed but did not fix reverse

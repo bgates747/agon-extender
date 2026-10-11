@@ -16,6 +16,25 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_devkit_data_comparison_keeps_private_identity_and_boot_owner(self):
+        from build_p4 import check_parallel_qualification_identity as check
+        good = "port-008-data-r17-b2026-10-11-07-35-00Z"
+        self.assertTrue(check(good, True, True, False, "p4-console", "p4-devkit", "browser", True))
+        for identity, boot, probe, output in (
+            ("extender-vdp-v1.0.0", True, False, "browser"),
+            (good, False, False, "browser"),
+            (good, True, True, "browser"),
+            (good, True, False, "hdmi"),
+        ):
+            with self.subTest(identity=identity, boot=boot, probe=probe, output=output), self.assertRaises(SystemExit):
+                check(identity, True, boot, probe, "p4-console", "p4-devkit", output, True)
+        from build_p4 import select_display_profile
+        profile = select_display_profile(self.document, "p4-console", "p4-devkit", "browser",
+                                         parallel_boot_candidate=True, parallel_data_check=True)
+        self.assertIn("AGON_EXTENDER_PARALLEL_DATA_CHECK=1", profile["definitions"])
+        self.assertIn("esp_driver_parlio", profile["requires"])
+        self.assertNotIn("esp_driver_pcnt", profile["requires"])
+
     def test_devkit_control_cannot_select_pc_diagnostics_or_release_identity(self):
         from build_p4 import check_parallel_qualification_identity as check
         good = "port-008-devkit-r01-b2026-10-10-06-00-00Z"

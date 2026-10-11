@@ -48,9 +48,12 @@ def check_parallel_qualification_identity(build_id: str, selected: bool,
     if not selected:
         return False
     devkit_control = (profile, board, output) == ("p4-console", "p4-devkit", "browser") and not probe and not data_check
+    # PORT-008 DI05-B3: the same data-only reverse check on the original board.
+    # Keep its own data identity and native boot owner; DevKit has no HDMI bridge.
+    devkit_data = (profile, board, output) == ("p4-console", "p4-devkit", "browser") and not probe and data_check
     lineage = "devkit" if devkit_control else "data" if data_check else "probe"
     match = re.fullmatch(r"port-008-"+lineage+r"-r[0-9]{2,}-b(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z", build_id)
-    composition = devkit_control or ((profile,board)==("p4-console","p4-pc") and ((data_check and not probe and output=="hdmi") or (not data_check and probe and output=="browser")))
+    composition = devkit_control or devkit_data or ((profile,board)==("p4-console","p4-pc") and ((data_check and not probe and output=="hdmi") or (not data_check and probe and output=="browser")))
     if not match or not boot or not composition:
         raise SystemExit("parallel qualification requires a matching PORT-008 identity and bounded board composition")
     try:
@@ -495,7 +498,7 @@ def main() -> None:
                         help="tracked board name (default: p4-devkit)")
     parser.add_argument("--usb-fsls-only", action="store_true",
                         help="experimental P4-PC-only full/low-speed USB host backport")
-    parser.add_argument("--parallel-data-check", action="store_true", help="comparison-only HDMI roundtrip; excludes PCNT and probe logging")
+    parser.add_argument("--parallel-data-check", action="store_true", help="comparison-only native roundtrip; excludes PCNT and probe logging")
     parser.add_argument("--parallel-probe-candidate", action="store_true", help="private PORT-008 qualification storage/receipts")
     parser.add_argument("--parallel-boot-candidate", action="store_true", help="private PORT-008 startup; no ExExt payload")
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser",

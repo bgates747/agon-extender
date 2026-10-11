@@ -294,3 +294,76 @@ DI05-C1 [ ] — Preserve results, remove rejected experiments, restore verified
 ordinary firmware/input and original startup before the deadline. No production
 promotion without the existing acceptance/version gates. Repaired historical
 forward DevKit results do not establish modern reverse behavior there.
+
+### Renewed run results and Author-directed DevKit B comparison
+
+The Author clarified that the B test must use the original DevKit. Historical
+DevKit forward passes do not establish modern reverse integrity. Stop further
+P4-PC remedy trials and prepare this comparison before requesting a board swap.
+A DevKit USB-only installation may precede the harness swap after the Author
+confirms that USB-only topology; keep the Agon/P4-PC untouched during that
+flash. Payload execution and Agon reset require subsequent Author confirmation
+of the repaired original DevKit harness and Agon/card connectivity. No probe
+move is required for the first full-byte comparison. Never infer harness
+connectivity from USB alone.
+
+The renewed P4-PC trials kept filtered CLOCK and unchanged EMOS/wiring. All
+lower seven bits match across all 1,024 bytes in every trial. Rows are ranked by
+incorrect-byte count, worst first; these are integrity counts, not performance.
+
+| P4-PC comparison | Data build / local evidence | Incorrect bytes / 1,024 | Lower-seven-bit errors | Result |
+|---|---|---:|---:|---|
+| Swap peripheral lanes0/7 with compensating DMA bytes | r13 / reverse-remedy-r11 | 484 | 0 | Failure stays on physical D7 |
+| GPIO-owned output enable plus drive setting3 | r15 / reverse-remedy-r13 | 484 | 0 | No correction; pad route/enable unchanged before/after DMA |
+| Earlier filtered baseline | r12 / reverse-remedy-r10 | 480 | 0 | Remaining errors only bit7 |
+| Invert DMA bit7 and compensate at GPIO output matrix | r14 / reverse-remedy-r12 | 473 | 0 | No correction |
+
+Each new trial retains a separately verified four-segment image, source archive,
+USB log, full Agon received bytes, and a 15-second 24 MHz capture. All status
+values are0 and guards intact. The three new traces contain2,048 active CLOCK
+transitions; observed D7 is high for only162/174/190 samples over approximately
+141,000 active samples. The stronger-drive trial reports GPIO input enabled,
+output enabled, push-pull, functionGPIO and matrix signal195 both before and
+after DMA; its final self-read is high. This does not establish voltage margins,
+exclude a wrong/load-bearing connection, or prove a silicon fault. No unrelated
+P4 GPIO46 owner was found in the bounded source review.
+
+An additional CPU-waveform control (data-r16) compiled but was **not flashed or
+run** after the Author selected DevKit as B. It is unused preparation, not test
+evidence. The maintained native payload source is restored after freezing the
+DevKit comparison archive; no failed workaround becomes a production fix.
+
+DI05-B3 [ ] — Prepare and execute the same independently generated1,024-byte
+reverse payload on the original DevKit, with the filtered CLOCK/native adapter,
+current EMOS, unchanged Agon MOSlet, and original startup. Use the generated
+DevKit GPIO/UART/fence tuple and silicon range, never the P4-PC image or pins.
+Keep full received-byte comparison and guards authoritative; transport status0
+alone is insufficient. Invoke from the admitted MOS CLI, with fresh evidence
+under /agents/extender/results. First verify startup and executable readback.
+The first comparison needs no analyzer: the retained P4-PC probes do not observe
+DevKit signals. If reverse passes, run independent forward and validate retained
+P4 bytes. Stop on failure; preserve ordinary input and report before new remedies.
+
+DevKit lacks the P4-PC HDMI bridge. Its maintained browser presentation and full
+USB host are selected instead of P4-PC HDMI/full-low-speed-only USB. Record
+these composition differences explicitly: a DevKit pass establishes a working
+modern reverse path there, but cannot by itself distinguish P4-PC wiring from
+board-specific output or HDMI workload. Do not call it a single-variable test
+or claim P4-PC fixed. Exact source, build configuration and hashes remain with
+the ignored build/run evidence. The bounded build selector now admits the
+DevKit data-check composition only with its data identity, native boot owner
+and no diagnostic probe; release identities/unsupported outputs stay rejected.
+
+At the board-swap boundary the preceding matched P4-PC data-r01 was restored;
+all four segments independently verified. Original startup/MOSlet readback,
+listener exit, admitted neutral keyboard and released reset verified. EMOS and
+mainboard VDP unchanged. No P4-PC flash/reset/transfer continues while awaiting
+Author confirmation of DevKit connectivity. Production selection unchanged.
+
+DevKit preparation complete: port-008-data-r17-b2026-10-11-07-32-07Z, app SHA256
+ca1e8109d5c708d071b8d585114a14479e9dbaa5a34ad7f82dcff901bc877163.
+Maintained build validation and all retained artifact hashes pass;16 native-build
+selection checks and5 board checks pass. Frozen native/coordinator/endpoint/
+console source exactly matches the P4-PC filtered baseline. Temporary native
+and console source restored. Image is **not installed or hardware tested**;
+DI05-B3 remains open at the Author USB/harness confirmation boundary.
