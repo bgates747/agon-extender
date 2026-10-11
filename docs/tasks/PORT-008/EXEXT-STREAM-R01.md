@@ -193,3 +193,23 @@ belong in ignored local records. Evidence/run identities remain immutable.
    reservation released during offline review/build; reacquisition required.
    Ignored evidence: `agents/exext-stream-r01/bench-r01`, including immutable
    initial installation failure, post-reset ROM verification and CLI receipts.
+
+## EX04 corrective boundary — idle SD admission
+
+The normal first-error log in full-HDMI stream-r03 reports `invalid ExExt
+control carrier` immediately after the first two completed blocks. Source
+review identifies an independent producer: `emos_admission_idle()` accepted
+any non-Legacy mode after an ExCom capability grant. It could inject F6 SD
+control through ordinary UART sending while ExExt permits F7 coordination only.
+This is a transport-owner integration defect, not evidence of new D7 corruption.
+
+1. Restrict automatic SD admission explicitly to Legacy/ExCom before processing
+   pending replies, decisions or CLOSE. Reset its stale grant without sending
+   another record in unsupported modes. File-service migration remains excluded.
+2. While ExExt owns the route, refuse the ordinary private UART sender. Only
+   the already-reserved parallel coordinator can use the dedicated control
+   sender. Keep Legacy/ExCom behavior and the boot/transition handshake intact.
+3. Add actual-source regression coverage for prior ExCom grants and pending SD
+   states entering ExExt, and for ordinary-send rejection versus admitted
+   coordinator-control sending. Build/verify the revised EMOS separately, then
+   repeat the short physical CLI check before proceeding to fixtures.

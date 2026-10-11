@@ -58,5 +58,5 @@ at an idle UART boundary; the console lease and stream queues remain intact.
    owner; uncertain output is never replayed automatically.
 5. This first adapter's block negotiations and byte kernel have not yet been
    measured under gameplay. IRQ-disabled output refuses admission. No SD
-   service migration, new renderer/mode, generalized callback ABI or automatic
+   service migration (automatic SD admission stays Legacy/ExCom only), new renderer/mode, generalized callback ABI or automatic
    UART payload fallback is provided. Legacy/ExCom remain separate paths.
