@@ -26,6 +26,53 @@ Record exact references and a bounded source-linked report; make no architecture
 decision or performance claim. Do not execute benchmarks, modify code or touch
 devices. Commit/push documentation and stop before R07-02.
 
+## Clarification — direct indexed HDMI versus PPA expansion
+
+Author clarification on 2026-10-11: the specific question is whether P4-PC can
+generate HDMI from a **one-byte-per-pixel programmable palette-index image**,
+rather than merely store compact pixels internally. A previous unqualified
+“yes” does not establish direct indexed scanout. Distinguish these mechanisms:
+
+1. **Direct indexed scanout: no support established.** The P4 DSI output path
+   inspected in the selected ESP-IDF 5.5.5 exposes no arbitrary palette/CLUT
+   expansion stage. Its `mipi_dsi_brg_ll_set_input_color_format` in
+   `components/hal/esp32p4/include/hal/mipi_dsi_brg_ll.h` selects physical RGB/YUV
+   formats (with grayscale in the newer-silicon branch), not programmable
+   indices. The external LT8912B bridge receives the DSI video stream; no indexed
+   expansion capability there has been established either. This is the bounded
+   finding for the inspected path, not proof that every undocumented hardware
+   arrangement is impossible. Eight-bit grayscale is not indexed palette colour.
+2. **PPA hardware palette expansion: documented in newer SDK documentation.**
+   Espressif's [PPA CLUT documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32p4/api-reference/peripherals/ppa.html#color-look-up-table-clut)
+   explicitly describes indexed L8/L4 input and a programmable table of up to
+   256 ARGB8888 colours, configured through `ppa_set_color_lookup_table`.
+   The documented L8 blend input uses eight-bit indices, not luminance. PPA
+   produces expanded output pixels in a destination buffer; this is a hardware
+   conversion operation, not the DSI scanout engine reading indices directly.
+   Palette replacement must not overlap transactions using the same CLUT.
+3. **Current SDK limitation: the inspected 5.5.5 API does not enable this path.**
+   At pinned IDF commit `b774170ff46c393eeb5e495ea37936038d3f4f4f`,
+   `components/hal/include/hal/ppa_types.h` comments out L8/L4 with a TODO for
+   CLUT support, and `components/hal/esp32p4/include/hal/ppa_ll.h` comments out
+   those formats in its support checks. That same low-level header contains
+   CLUT register helpers. Thus missing public driver support must not be
+   reported as proof that the PPA hardware lacks a CLUT. Newer documentation
+   does not by itself qualify our silicon, installed driver or firmware.
+4. **Promising but unproven: indexed PSRAM image → PPA → RGB scanout strips.**
+   The P4 could potentially ask PPA to expand successive indexed blocks into
+   small RGB buffers, then have DSI DMA scan those buffers through LT8912B to
+   HDMI. If feasible, the P4 CPU would not expand individual pixels and a full
+   expanded RGB image might be unnecessary. R07-03–05 must establish actual
+   silicon/driver support, destination-memory access, completion/cache ownership,
+   palette consistency, sprite/Copper integration and refill deadlines before
+   claiming this works. No performance or compatibility benefit is yet measured.
+
+These are preliminary capability leads from the clarification, not completion
+of R07-03 or authorization to upgrade the SDK, write a custom driver, change the
+renderer, build or deploy. The online `latest` documentation is mutable; R07-03
+must pin the supporting SDK revision and relevant primary hardware references.
+The Author requested this record only, followed by a stop.
+
 ## Origin and boundaries
 
 1. [Supplied feedback](RESEARCH-007/WEB-FEEDBACK.md) preserves the proposal and
