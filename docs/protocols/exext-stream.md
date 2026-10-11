@@ -2,7 +2,8 @@
 
 The explicit paired experimental builds route unchanged application VDU bytes
 and actual VDP/keyboard replies through the existing eight-bit parallel pipe.
-Software checks pass; physical integration and performance are under
+Software checks and bounded paired reset/CLI checks pass; full application
+correctness and performance remain under
 [PORT-008](../tasks/PORT-008/EXEXT-STREAM-R01.md). This is outside selected
 production and does not change the current Legacy/ExCom operating contract.
 
@@ -43,7 +44,9 @@ at an idle UART boundary; the console lease and stream queues remain intact.
 ## Scheduling and limits
 
 1. EMOS batches up to4096 forward bytes, flushing full buffers or residual
-   output on mainboard VBlank. It polls up to256 return bytes per service.
+   output on mainboard VBlank. It fetches up to256 return bytes per service into
+   a512-byte staging buffer, retaining any incomplete framed packet outside
+   the UART control parser. Complete VDP packets alone enter that parser.
    P4 has separate8192-byte input/output rings and one4096-byte DMA payload.
 2. The real saved VBlank bridge temporarily enables interrupts for bounded UART
    control waits. A shared busy guard excludes nested transport and foreground
@@ -51,7 +54,10 @@ at an idle UART boundary; the console lease and stream queues remain intact.
    masked under an actual VBlank handler, including during foreground stop.
    EMOS retains unpublished bytes and publishes at most one keyboard event per
    VBlank: stock MOS's latest-event latch must expose down before a bundled up.
-   Other replies drain in order to that boundary; no new block overwrites it.
+   Other replies drain in order to that boundary; no new block overwrites
+   unpublished complete events. A split packet retains its tail and admits the
+   next bounded return fetch. The existing UART control reservation therefore
+   never sees an incomplete VDP packet left by the parallel carrier.
 3. P4's bounded I/O-only progress hook services control/handover while a retained
    VDU command waits for split parameters/uploads. It never reenters the parser.
    Full input rings apply backpressure before physical admission.
@@ -75,4 +81,6 @@ and UART restoration. An old initial READY level cannot authorize UART.
 P4 invalidates pad-release proof before attaching UART, including the interval
 before LIVE. Native block return continues through its separate owner. These
 changes require the matched experimental builds; no older-pair qualification
-is inferred. Physical reset checks remain pending in EX06.
+is inferred. The first matched held-prefix pair passes three Agon-only warm resets after
+independent installed-byte verification. Reset during an owned payload, P4-only
+restart and power-loss controls remain within EX06; those are distinct claims.
