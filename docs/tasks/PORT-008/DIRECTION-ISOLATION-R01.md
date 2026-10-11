@@ -484,7 +484,7 @@ The bounded maintained-source review found no second GPIO46 owner. Absence of
 a source reference does not prove absence of peripheral or electrical conflict.
 The ignored offline-followup record retains the input hashes and recount.
 
-DI05-B5 [ ] — Proposed control, not yet authorized beyond the elapsed hour:
+DI05-B5 [ ] — Proposed control, deferred behind the direct electrical isolation:
 the host builds a P4-PC browser-only comparison from the same filtered native
 TX, coordinator, independent endpoint and console sources. Keep the P4-PC pin
 map, USB composition, SDK, EMOS, harness, startup and Agon MOSlet unchanged.
@@ -502,4 +502,43 @@ A browser-only pass would narrow the fault to the differing output composition;
 it would not fix or qualify the full-HDMI target. A failure would leave the
 physical GPIO46/harness path unresolved. No wiring change or further payload
 remedy follows automatically. No new build, flash or transfer was performed in
-this offline review; the Author's one-hour limit is the next execution gate.
+this offline review. The Author subsequently authorized another hour below.
+
+### Renewed hour and direct electrical isolation — 2026-10-11
+
+The Author authorized another hour at08:35:10UTC, ending09:35:10UTC, then asked
+for direct isolation of an electrical fault. Prioritize the physical-path control
+below over changing HDMI composition. No physical change is presumed from that
+discussion. Reuse the existing full-byte independent transfer fixture, modern
+EMOS and full-HDMI runtime; preserve the original startup and ordinary input.
+
+DI05-B6a [ ] — Prepare a private P4-PC image whose generated data mapping swaps
+only D6/GPIO36 and D7/GPIO46. Use an explicit experimental board identity,
+olimex-p4-pc-revc-d6d7-control-r01, frozen in the source/build evidence; restore
+the maintained canonical board file after compilation. Keep the exact filtered
+native leaf and independent endpoint used for the failing control. Validate
+generated pins, selected sources, SDK, USB and all artifact hashes. Do not
+install or reset before the Author confirms the corresponding physical swap.
+
+DI05-B6b [ ] — Author powers down and swaps only the brown D6 and green D7
+connections at the P4 end, preserving each wire's existing220ohm series resistor
+and Agon endpoint. Brown moves toGPIO46 and green toGPIO36. The host waits for
+explicit wiring/power/card confirmation, then installs/verifies the matching
+image while holding Agon reset. Admit ordinary input and read back startup and
+fixture; one fresh1,024-byte reverse transfer provides exhaustive Agon bytes.
+
+DI05-B6c [ ] — Classify the result by physical path: errors moving to logical
+D6 implicate GPIO46 or its local board/connector/configuration; errors remaining
+on D7 implicate the green harness/resistor/Agon input path; disappearance leaves
+an intermittent connection possible. None alone proves a silicon defect or
+excludes all dynamic electrical loading. Retain both bit-wise error counts and
+the full-byte result. No automatic rewiring or speculative electrical remedy.
+
+After the test, leave an explicitly identified firmware/wiring pair. Canonical
+full-HDMI restoration requires the Author to restore the original two wires;
+do not infer that physical restoration occurred. If additional measurements
+are needed, the host may prepare bounded low/high drive within the existing
+EMOS-owned lease and the Author measures each side of the suspect series
+resistor against common ground. Digital sniffers provide logic thresholds,
+not analog voltage/ringing evidence. No unowned application GPIO bypass.
+Stop at the renewed deadline; preserve unresolved findings and a usable pair.
