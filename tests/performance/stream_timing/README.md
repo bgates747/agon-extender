@@ -2,7 +2,7 @@
 
 Experimental MOSlet and offline validator for
 [PORT-008 stream timing](../../../docs/tasks/PORT-008/STREAM-TIMING-R01.md).
-Compiled/model checks are available; physical execution and timing are pending.
+The original matched physical comparison is complete; phase attribution below is a separate diagnostic tranche.
 This is not a production utility or permission to acquire an occupied bench.
 
 ## Build and correctness checks
@@ -123,3 +123,35 @@ This is not a production utility or permission to acquire an occupied bench.
 5. The native assembly body is shared. The ordinary profile assembles the timer
    probe out; its complete ROM matches the preceding stream implementation
    except for its build-identity string. The timing composition adds 80 ROM bytes.
+
+## Phase attribution composition
+
+[Approved contract](../../../docs/tasks/PORT-008/PHASE-TIMING-R01.md) owns this
+bounded investigation. Build the EMOS `port/exext-phase-timing.mk` profile, then
+use the existing builder with `--phase --emos-objects RETAINED_C_OBJECT_DIRECTORY`.
+Retain `emos_exext.o` and `emos_parallel_coordinator.o` beside the exact ELF/image.
+The builder verifies sixteen original relocations against final CALL bytes and
+records their return-PC names in `phase-sites.json`. The MOSlet uses the same
+CLI arguments/lengths, requires ExExt and additionally saves `results.csv.phases.csv`.
+The original `wire_prt` column is zero: this composition does not measure M02.
+
+The sole RAM recorder has 512 eight-byte records. Its private &B0020 jump vector
+occupies verified zero header padding; the builder patches only those four bytes
+and hashes the final deployed binary. Reset-zero EMOS arming and full ROM
+fingerprint/binding prevent accidental ordinary invocation; they are not a
+security boundary. Only PRT1 is read by the recorder; EMOS owns every GPIO,
+control exchange, payload and returned packet. Normal builds erase these calls.
+Results/formatting and probe code remain in MOSlet RAM. The profile is temporary.
+
+Run `cargo run --manifest-path tests/performance/stream_timing/Cargo.toml
+--bin phase-check -- EXACT_EMOS_DIRECTORY FIXTURE_DIRECTORY` for actual linked
+ROM-gate/RAM-handler preservation, disabled path, latch order and overflow checks.
+Host checks are `python -m unittest discover -s tests/performance/stream_timing
+-p 'test*.py' -v`. These model correctness and offline interpretation, not physical
+clocks. `phase_analyze.py` requires conserved forward bytes including the seven-byte
+query, matched phase scopes and unsaturated monotonic samples. Inclusive VBlank
+service and publication overlap block intervals; never add them to phase totals.
+
+Use the same per-sample full-buffer USB proof and integrity-only repeat selection
+as the original comparison. Record both phase/endpoint CSV hashes and original
+repeat indices together. Stop and discuss results before transport changes.

@@ -20,7 +20,7 @@ intervals. Prefer MOSlet RAM storage/formatting; retain only unavoidable residen
 hooks in an explicit diagnostic profile. Stop for discussion if ROM fit requires
 removing product behavior or if a safe observation cannot preserve semantics.
 
-PT02 [ ] — Implement the frozen probes and fixture. Reuse buffered 5/&C2
+PT02 [x] — Implement the frozen probes and fixture. Reuse buffered 5/&C2
 streams of 256, 4096, 4097 and 8192 bytes, one warm-up and five measured samples
 per length. Keep P4 stream-r14 unchanged if eZ80 observations suffice; do not
 substitute source HEAD, an uninstalled candidate or the old UART-only partner.
@@ -28,7 +28,7 @@ Record forward and reverse blocks, repeated polls, ISR work and nested intervals
 without double-counting totals. Explicitly drain partial batches through EMOS.
 No private application GPIO or transport ownership bypass.
 
-PT03 [ ] — Compile and run instruction-model/host checks. Verify ROM fit,
+PT03 [x] — Compile and run instruction-model/host checks. Verify ROM fit,
 probe register/stack/IFF preservation, disabled-hook behavior, overflow refusal,
 record capacity and interval interpretation. Compare the ordinary composition
 with retained pre-probe bytes apart from build identity. Bind the MOSlet to the
@@ -136,3 +136,16 @@ remain visible as gaps in enclosing endpoint timing. Exact wire-drain M02 stays
 in the preceding frozen campaign; this profile measures native runner completion,
 not its last electrical edge. Return blocks have the same phase probes as forward
 blocks, distinguished by the admitted offer at offer_begin.
+
+## Offline checkpoint
+
+The diagnostic EMOS compiles at 131,063 bytes (9 free), with all mandatory
+link/baud/owner checks. Source 291ac9e; P4 unchanged. Its ordinary control
+compiles at 130,968 bytes and matches the retained preceding ordinary image
+apart from six timestamp bytes. Thus the diagnostic profile costs 95 resident
+ROM bytes; no product function is removed. The exact-bound MOSlet/recorder
+compiles within 32 KiB at &B0000. Three thousand seventy-two actual linked
+probe cases cover all AF flags, SP/registers/IFF, disabled no-read behavior,
+low/high PRT latch, saturation values, final capacity slot and overflow disarm.
+Existing native/output/real-VBlank checks and eight host tests pass.
+No physical phase measurement, speedup or production acceptance yet.

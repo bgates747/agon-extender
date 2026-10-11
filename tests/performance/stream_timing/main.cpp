@@ -22,6 +22,23 @@ static const unsigned lengths[]={256,4096,4097,8192};
 struct Row {unsigned bytes,repeat,submit,wire,receipt,reply,mos_ticks,flags;};
 static Row rows[24];
 static unsigned used;
+#ifdef ST_PHASE
+extern "C" volatile uint24_t phase_count;
+extern "C" volatile uint8_t phase_overflow,phase_records[4096];
+extern "C" void phase_probe(void);
+static FILE *phase_file;
+static unsigned phase_probe_prt;
+static void arm(bool active){*(volatile uint8_t*)ST_ARMED=active;}
+static unsigned value(const volatile uint8_t *p,unsigned n){
+ unsigned v=0;for(unsigned i=0;i<n;++i)v|=unsigned(p[i])<<(i*8);return v;
+}
+static bool save_phases(unsigned length,unsigned repeat){
+ for(unsigned i=0;i<phase_count;++i){const auto p=phase_records+i*8;
+  if(fprintf(phase_file,"%u,%u,%u,%u,%u,%u,%u\n",length,repeat,i,value(p,3),value(p+3,2),value(p+5,2),value(p+7,1))<0)return false;
+ }
+ return fflush(phase_file)==0;
+}
+#endif
 static bool parallel;
 enum {OutputFault=1,DrainFault=2,ReplyFault=4,Overflow=8,MissingStamp=16};
 static uint24_t now(){return bench_clock(sv);}
@@ -92,11 +109,24 @@ int main(int argc,char **argv){
  }
  const unsigned expected=selected?6:24;
  parallel=!strcmp(argv[1],"exext");sv=mos_sysvars();
+#ifdef ST_PHASE
+ if(!parallel){printf("Phase timing requires ExExt\n");return 2;}
+#endif
  if(!rom_matches()||*(volatile uint8_t*)ST_BACKEND!=(parallel?2:1)||
     *(volatile uint8_t*)ST_FAULT||(parallel&&!*(volatile uint8_t*)ST_OWNED)){
   printf("Timing refused: ROM or route does not match binding\n");return 2;
  }
  if(!gt_prt_init()){printf("Timing refused: PRT1 unavailable\n");return 3;}
+#ifdef ST_PHASE
+ arm(false);
+ char phase_path[256];
+ if(strlen(argv[2])+11>=sizeof phase_path){gt_prt_close();return 4;}
+ snprintf(phase_path,sizeof phase_path,"%s.phases.csv",argv[2]);
+ phase_file=fopen(phase_path,"w");
+ if(!phase_file){gt_prt_close();return 4;}
+ fprintf(phase_file,"wire_bytes,repeat,index,return_pc,raw_prt,offer_bytes,reverse\n");
+ phase_count=0;phase_overflow=0;gt_prt_begin();arm(true);phase_probe();phase_probe();arm(false);phase_probe_prt=gt_prt_read();
+#endif
  const auto run_begin=now();
  gt_prt_begin();const unsigned read_overhead=gt_prt_read();
  bool ok=prepare();
@@ -111,35 +141,59 @@ int main(int argc,char **argv){
   payload(length);
   for(unsigned repeat=0;repeat<6;++repeat){
    if(!poison()){ok=false;break;}
+#ifdef ST_PHASE
+   phase_count=0;phase_overflow=0;
+#else
    *(volatile uint16_t*)ST_LAST_RAW=65535;
+#endif
    Row r={length,repeat,0,0,0,0,0,0};
    const auto begin=now();gt_prt_begin();
+#ifdef ST_PHASE
+   arm(true);
+#endif
    if(!sent(bytes,length))r.flags|=OutputFault;
    r.submit=gt_prt_read();
    if(!r.flags&&!drain())r.flags|=DrainFault;
    r.receipt=gt_prt_read();
+#ifdef ST_PHASE
+   r.wire=0; // M02 is deliberately unobserved in this phase composition.
+#else
    if(parallel){
     // Explicit 24-bit assembly subtraction avoids AgonDev's unavailable
     // compiler-generated 16-bit complement helper (__snot).
     r.wire=st_wire_read();if(r.wire==0)r.flags|=MissingStamp;
    } else r.wire=r.receipt;
+#endif
    if(!r.flags&&!fence())r.flags|=ReplyFault;
-   r.reply=gt_prt_read();r.mos_ticks=uint24_t(now()-begin);
+   r.reply=gt_prt_read();
+#ifdef ST_PHASE
+   arm(false);if(phase_overflow)r.flags|=32;
+#endif
+   r.mos_ticks=uint24_t(now()-begin);
    if(r.submit==65535||r.wire==65535||r.receipt==65535||r.reply==65535)r.flags|=Overflow;
    rows[used++]=r;
    if(r.flags){ok=false;break;}
    // Repeat0 is retained as an unmeasured-analysis warm-up; its PRT values
    // remain visible but never enter the five-sample performance summaries.
    if(!dump()){ok=false;break;}
+#ifdef ST_PHASE
+   if(!save_phases(length,repeat)){ok=false;break;}
+#endif
   }
  }
  const auto run_ticks=uint24_t(now()-run_begin);gt_prt_close();
+#ifdef ST_PHASE
+ arm(false);if(fclose(phase_file))ok=false;
+#endif
  FILE *f=fopen(argv[2],"w");if(!f){printf("Timing failed: cannot save\n");return 4;}
  bool saved=fprintf(f,"route,wire_bytes,repeat,submit_prt,wire_prt,receipt_prt,reply_prt,mos_ticks,flags,read_overhead,empty_drain_prt,vblank_prt,vblank_mos,divider,run_ticks\n")>0;
  for(unsigned i=0;i<used;++i){const auto &r=rows[i];
   if(fprintf(f,"%s,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,256,%u\n",argv[1],r.bytes,r.repeat,r.submit,r.wire,r.receipt,r.reply,r.mos_ticks,r.flags,read_overhead,empty_drain,vblank_prt,vblank_mos,run_ticks)<0)saved=false;
  }
  if(fclose(f))saved=false;
+#ifdef ST_PHASE
+ printf("Two RAM probes plus call/arm/read control: %u PRT counts\n",phase_probe_prt);
+#endif
  printf("Timing %s: %u/%u rows; buffer-byte validation requires retained USB dumps\n",ok&&saved?"captured":"incomplete",used,expected);
  printf("%s\n",ST_BUILD_ID);
  return ok&&saved&&used==expected?0:5;

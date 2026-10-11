@@ -10,3 +10,7 @@ path = "abi_cpu.rs"
 
 [dependencies]
 ez80 = { git = "https://github.com/tomm/ez80.git", rev = "13c151e89f520b3bae3343bea9d67d06e8037cfa" }
+
+[[bin]]
+name = "phase-check"
+path = "phase_cpu.rs"
