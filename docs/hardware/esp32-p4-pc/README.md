@@ -29,6 +29,12 @@ verification boundaries are recorded in `HARDWARE.local.md`.
 
 ## Rev C shared GPIO/SD supply
 
+**Mandatory P4-PC startup requirement: enable and retain LDO4 at 3.3 V before
+using transport GPIO46. This applies even with no SD card.** Select
+`--board p4-pc` when building for Rev C; `--board p4-devkit` selects different
+pins and power ownership. The builder defaults to DevKit and does not detect
+the attached board. See [board build selection](../../building.md#board-selection-and-compile-time-pin-mapping).
+
 GPIO39–48 use VDDPST_5, which the Rev C PCB connects to ESP_LDO_VO4.
 Transport D7/GPIO46 therefore needs LDO4 even when no P4-local SD card is used.
 The maintained P4-PC console initializes and retains a fixed 3.3V supply before
@@ -42,6 +48,13 @@ The manufacturer PCB source at the Rev C commit above and Espressif's
 establish the connection. The [direction-isolation results](../../tasks/PORT-008/DIRECTION-ISOLATION-R01.md)
 record the independently compared physical transfers and current qualification
 boundary. This correction does not establish successful P4-PC SD mounting.
+
+Espressif's [hardware design guide](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32p4/schematic-checklist-esp32p4.html)
+documents GPIO46's VDD_IO_5 bank and the software-controlled LDO output, which
+defaults to off. No matching issue appears in the
+[chip v1.3 errata](https://docs.espressif.com/projects/esp-chip-errata/en/latest/esp32p4/_tags/v1-3.html)
+checked on 2026-10-11. This was our board integration defect; the regulator is
+operating according to its documented initialization requirement.
 
 ## Retained Rev B snapshot
 

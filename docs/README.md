@@ -56,7 +56,11 @@ acceptance; use the production manifests rather than historical overlay recipes.
 Other boards and complete peripheral compatibility remain unqualified.
 The native [build guide](building.md#board-selection-and-compile-time-pin-mapping)
 provides separate DevKit and candidate P4-PC board selections from one VDP source
-tree. P4-PC pin and USB-hub configuration is compile-time input; it does not
+tree. **Choose the physical board explicitly: P4-PC requires LDO4 powered at
+3.3 V from startup for transport GPIO46/D7, even without an SD card; DevKit
+does not share that dependency.** The build option selects this power policy
+automatically; the default remains DevKit. P4-PC pin and USB-hub configuration
+is compile-time input; it does not
 establish hardware qualification or add HDMI output. A separately selected
 experimental [P4-PC HDMI output](tasks/HDMI-001.md) provides fixed720p RGB888,
 centered unscaled images with cropping, and retained browser keyboard/services.

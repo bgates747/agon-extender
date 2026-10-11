@@ -1,6 +1,11 @@
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
 #include "esp_heap_caps.h"
 #endif
+// IMPORTANT BOARD FORK (FWBUG-014): P4-PC Rev C transport D7/GPIO46 shares
+// SD's LDO4-powered bank. The generated --board selection requires fixed 3.3V
+// from console startup, even without a card; mount failure cannot release it.
+// DevKit D7/GPIO9 has no such dependency and keeps its SD-only power lifecycle.
+// See docs/building.md and docs/hardware/esp32-p4-pc/README.md.
 // Olimex DevKit SD1 mounting follows OLIMEX/ESP32-P4-DevKit commit
 // 26705d36407a07324348927dfd30fbf4ffc1d94c sdmmc example. No format path.
 // Separate HTTP task prevents long card operations occupying the video server.

@@ -127,6 +127,8 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
     printf("Console control version=%u op=%u active=%u\n",p[2],p[3],console_stream->session.active());
 }
 ConsoleStream *beginConsole() {
+  // MANDATORY BOARD FORK (FWBUG-014): --board p4-pc enables fixed 3.3V LDO4
+  // for D7/GPIO46 before any pad setup; --board p4-devkit makes this a no-op.
   // Supply ownership is independent of an SD card or EMOS transport lease.
   // Fail before touching shared pads if the board's I/O bank cannot be powered.
   if(!agon::extender::local_sd::beginSharedIoSupply())abort();

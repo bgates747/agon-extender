@@ -12,6 +12,26 @@ P4-PC Rev C is a candidate, not a qualified production target.
 | `p4-devkit` | `olimex-p4-devkit-revd1-r01` | Console, MOS recovery, bounded parallel qualification |
 | `p4-pc` | `olimex-p4-pc-revc-r01` | Console only |
 
+## Mandatory board-specific I/O power
+
+**Pass `--board p4-devkit` or `--board p4-pc` explicitly.** The builder defaults
+to DevKit and does not autodetect hardware. This choice controls I/O supply
+initialization, not just GPIO assignments; images are not interchangeable.
+
+| Selected board | Generated `kTransportSharesSdIoSupply` | Required power ownership |
+|---|---|---|
+| `p4-pc` Rev C | `true` | Console startup retains LDO4 at fixed 3.3 V before touching GPIO46/D7; local SD cannot lower or release that shared rail |
+| `p4-devkit` Rev D1 | `false` | D7/GPIO9 does not use the SD bank; SD retains its existing independent power lifecycle |
+
+The P4-PC requirement applies with no card mounted and after SD mount failure.
+It is derived automatically from the reviewed board identity, not a separate
+optional feature flag. A missing supply previously corrupted the high bit in
+parallel transfers. Keep this distinction when reusing local SD or transport
+code. The [manufacturer/power references](../../../docs/hardware/esp32-p4-pc/README.md)
+and [FWBUG-014](../../../docs/firmware-bugs.md#fwbug-014--p4-pc-transport-d7-supply-depends-on-lazy-sd-mounting)
+record the requirement and physical evidence. These are maintained development
+changes; historical production archives retain their original bytes.
+
 ## Inputs and outputs
 
 1. `transport.data` lists D0–D7 in logical bus order. The P4 UART uses D0 as
@@ -46,10 +66,14 @@ unchanged compile-time profile. Physical qualification remains pending.
 
 Five consecutive odd-side contacts and six even-side contacts preserve the
 Agon signal ordering. EXT1-19/GPIO47 and EXT1-20/GPIO48 remain spare. The Author
-requests omission of the old 220 Ω series resistors and reports approximately
-15 kΩ fitted pull resistors. The later DevKit direct-harness record specifies
-eight 15 kΩ pull-ups on PC0–PC7 to Agon 3.3 V; earlier three handshake biases
-are a different circuit. This board file allocates pins only; it does not
+originally requested omission of the old series resistors. The repaired harness
+now has **220 Ω in series on all eleven signals**, eight 15 kΩ data pull-ups
+to Agon 3.3 V, READY_N/VALID_N 10 kΩ pull-ups and CLOCK 10 kΩ pull-down to common
+ground. The linked draft drawing preserves the original pin allocation and
+does not depict the later series-resistor additions. Current construction and
+bounded transfer evidence are recorded in the
+[direction investigation](../../../docs/tasks/PORT-008/DIRECTION-ISOLATION-R01.md).
+This board file allocates pins only; it does not
 certify resistor placement, either-order power behavior or a finished harness.
 GPIO20 battery sensing and GPIO32 external-power sensing must remain
 disconnected. Independently powered positive rails must not be joined.

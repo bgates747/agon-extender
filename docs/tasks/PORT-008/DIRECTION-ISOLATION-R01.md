@@ -688,3 +688,19 @@ are closed as superseded, explicitly unexecuted controls. This does not complete
 the broader PORT-008 work, establish strict-counter physical qualification,
 measure throughput, qualify P4-local card mounting or promote production.
 No production version/tag changed. FWBUG-014 records this bounded correction.
+
+## Board-selection documentation closeout — 2026-10-11
+
+The Author requested prominent documentation and code warnings about the two
+boards' different supply requirements. The existing `--board p4-pc` / `--board
+p4-devkit` selection already controls `kTransportSharesSdIoSupply`; no separate
+optional supply flag is needed. The handbook, build guide, board-input README
+and manufacturer reference now lead with the mandatory PC supply requirement
+and the DevKit default. Generator, SD and console-startup comments identify the
+fork and FWBUG-014. The board README also corrects its stale series-resistor
+omission to the repaired eleven-signal harness.
+
+All five existing board tests pass (0.209 s), including compiled C++ assertions
+for both supply selections. Both generated headers are byte-identical to those
+before this documentation/comment edit. No runtime logic, board JSON, installed
+firmware, frozen evidence, production selection or hardware state changed.

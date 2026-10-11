@@ -18,7 +18,7 @@ wrapper. Use **`p4-console` explicitly** and a fresh output path:
 
 ```sh
 .venv/bin/python scripts/build_p4.py \
-  --profile p4-console \
+  --profile p4-console --board p4-devkit \
   --output agents/builds/console-local \
   --build-id UNVERSIONED-DO-NOT-DEPLOY
 ```
@@ -70,6 +70,25 @@ acknowledgement is supplied.
 
 ### Board selection and compile-time pin mapping
 
+**Select the physical board explicitly for every new build.** `--board p4-pc`
+and `--board p4-devkit` select electrical initialization as well as pin numbers.
+Omitting the option defaults to DevKit; the builder does not detect the attached
+board. The two firmware variants are not interchangeable.
+
+| Build option | Transport D7 | I/O power policy in maintained development source |
+|---|---|---|
+| `--board p4-pc` (Rev C) | GPIO46, VDD_IO_5 | Enable LDO4 at fixed 3.3 V before console GPIO setup and retain it for the boot lifetime, including absent/failed local SD |
+| `--board p4-devkit` (Rev D1) | GPIO9, VDD_LP | Transport does not depend on SD LDO4; retain the existing SD-only power lifecycle |
+
+**P4-PC LDO4 is mandatory even when the P4-local SD service is unused.** A
+missing supply caused reverse transfers to lose bit 7. SDMMC must not disable
+this rail or switch it to 1.8 V. This is a board integration requirement, not
+a matching published silicon erratum. The board selector automatically generates
+`kTransportSharesSdIoSupply` (`true` for PC, `false` for DevKit); there is no
+separate user toggle to accidentally disable the requirement. See
+[board supply details](hardware/esp32-p4-pc/README.md) and
+[the defect and evidence](firmware-bugs.md#fwbug-014--p4-pc-transport-d7-supply-depends-on-lazy-sd-mounting).
+
 The native builder selects hardware independently of the software profile:
 
 ```sh
@@ -98,12 +117,6 @@ uses that header for UART routing, its startup input fence and TX cancellation,
 Ethernet, local SD and USB hub setup. The build manifest records board identity,
 configuration/header hashes and compiler identity. Validation checks actual
 compiler dependencies and the effective application/bootloader silicon range.
-
-The generated board header also identifies the Rev C shared GPIO/SD supply.
-P4-PC console startup retains LDO4 at 3.3V before configuring console pads:
-GPIO46/D7 belongs to that power bank even without a local SD card. SD mount
-failure must not disable it. The DevKit SD power path remains independent of
-its transport pads. See [board supply details](hardware/esp32-p4-pc/README.md).
 
 Both variants retain browser output. Selecting the PC board does not add HDMI,
 select a new display family or change EMOS's ownership of transport admission.

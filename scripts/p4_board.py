@@ -2,6 +2,11 @@
 
 Board files describe wiring, not software/source selection or transport
 admission. Generated outputs are disposable and never an editable authority.
+
+IMPORTANT: --board selects electrical initialization, not just pin numbers.
+P4-PC Rev C requires boot-owned 3.3V LDO4 for transport D7/GPIO46 even without
+local SD. DevKit D7/GPIO9 does not share that bank. Derive the supply policy
+here so a separate optional flag cannot disable the board requirement.
 """
 from __future__ import annotations
 
@@ -121,8 +126,11 @@ def render_header(board: dict) -> str:
               "UsbPeripheralMap": usb["peripheral_map"]}
     values.update({"Sd" + k.capitalize(): sd[k] for k in ("clk", "cmd", "d0", "d1", "d2", "d3")})
     text += "".join(f"inline constexpr int k{key} = {value};\n" for key, value in values.items())
-    # Rev C powers GPIO39-48 (including transport D7/GPIO46) from the SD
-    # LDO4 rail. DevKit transport pads use independently powered I/O banks.
+    # MANDATORY BOARD FORK (FWBUG-014): Rev C powers GPIO39-48, including
+    # transport D7/GPIO46, from LDO4. Retain fixed 3.3V from console startup,
+    # including absent/failed SD; SD must not switch this bank to 1.8V.
+    # DevKit transport pads use independently powered I/O banks. This follows
+    # --board automatically; it must not become a separately optional toggle.
     shared_supply = board["board"] == "p4-pc"
     text += f"inline constexpr bool kTransportSharesSdIoSupply = {str(shared_supply).lower()};\n"
     text += "}\n"
