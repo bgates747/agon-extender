@@ -1,5 +1,7 @@
 // Prepended shared SDK/parking model. No endpoint handover state is forced
 // live: actual startup/foreground C and P4 coordinator advance the handshake.
+// Boot pad acknowledgement is modeled here; parallel_boot_release_test runs
+// the actual P4 boot adapter, including its held CLOCK-high reset prefix.
 extern "C" {
 #include "eZ80.h"
 #include "emos_console.h"
@@ -38,6 +40,9 @@ static t_emosParallelHandover *h(){return emos_parallel_boot_handover();}
 static void synchronize(){
  valid=bool(hostPdDr&0x80);clockLevel=bool(hostPdDr&0x20);
  if(owner)result=owner->poll(++now,true,true);
+ else if(clockLevel) {
+  peer.handover.cancel();ready=!valid;
+ }
  else {
   BYTE done=(valid?H::validHigh:0)|(clockLevel?H::clockHigh:0);
   if(peer.handover.phase()==H::recoveryRelease)done|=H::released;
