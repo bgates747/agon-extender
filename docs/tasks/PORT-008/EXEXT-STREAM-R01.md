@@ -244,3 +244,23 @@ All mandatory complete-firmware/link checks pass. Linked real VBlank execution
 passes combined down/up on successive ticks, both with and without a nested
 IRQ; callbacks and primary/alternate/IX/IY/SP/IFF are preserved. The modeled
 physical service does not establish electrical or gameplay performance.
+
+## EX04 installed publication correction and fixture preparation
+
+1. EMOS-r05 full128KiB ROM readback matches the identified image plus erased
+   padding. Automatic post-FLASH startup again needed one normal Agon reset.
+   Original38-byte startup was restored and verified; P4 stream-r03 and the
+   preceding consumer's custom mainboard VDP remain unchanged.
+2. Exact `EMOS STATUS` text passes in both ExCom and ExExt; ExExt reports
+   Exclusive Extended / VDU route2. A later uppercase `EMOS LEGACY` loses G
+   (`EMOS LEACY` in sampled text). Lowercase mode exit and listener entry work.
+   This is an unresolved input-load limit, not a complete interactive pass.
+   The first fixture preparation stopped before card mutations when listener
+   readiness failed. Keep this failure alongside the successful status receipt.
+3. Rebuild existing unmarked Aginvadors/Rally timing derivatives from the
+   owners' current sources. Aginvadors source7321a0f; binary SHA256
+   `cad392b4a04eb495d6cd7d5b2d5928a35e9c131ede10bcce9edf7cce5ff19338`.
+   Rally source498e4c3; exact source/file hashes remain in its retained build
+   manifest. Optional shared timing helpers require `maybe_unused` annotations
+   for these warning-as-error builds; no timed behavior changes. Nurples uses
+   retained SCAN-r02 fixtures. No game-owner source edits or deployment yet.

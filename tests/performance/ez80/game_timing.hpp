@@ -62,7 +62,7 @@ static bool save(const char*path){
  if(f)mos_fclose(f);
  mos_setkbvector(nullptr,0);return ok;
 }
-static bool save_pacing(const char*path){
+[[maybe_unused]] static bool save_pacing(const char*path){
  gt_prt_close();
  if(markers||transport_fault){mos_setkbvector(nullptr,0);return false;}
  uint8_t f=mos_fopen(path,FA_WRITE|FA_CREATE_ALWAYS);bool ok=f!=0;
@@ -80,7 +80,7 @@ static bool save_pacing(const char*path){
 }
 // Post-measurement synchronization frame for the host video observer.  It is
 // deliberately emitted only after run_end, so it cannot affect cadence.
-static void boundary(){
+[[maybe_unused]] static void boundary(){
  uint8_t marker[]={23,1,0,26,18,0,191,16};
  bench_count(marker,sizeof marker);
  for(unsigned i=0;i<10;i++)waitvblank();
