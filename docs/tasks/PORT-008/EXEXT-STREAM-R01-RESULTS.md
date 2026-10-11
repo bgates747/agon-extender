@@ -346,3 +346,24 @@ separate diagnostic will resolve the wrapped read-error status before a remedy.
    held Agon reset. This **does not close reset qualification**: initial admission
    still fails and a later ordinary Agon-only reset recovers. Original startup
    and T09 config are restored/readback checked before the EMOS installation.
+
+
+## SD-selected deferral — physical frozen Nurples pass
+
+The corrected EMOS image independently matches a complete 128 KiB ROM readback
+(SHA256 `431e27eb36679c53273e4a8a39e68eb5fde1dad34747932d5ab9b23cf1525d45`).
+With stream-r14 and the same frozen unfenced T09 fixture, setup completes and
+all 120 measured updates save, with zero fault/late rows or abort. Original
+startup and configuration are restored/readback checked. This supports the
+ExExt ISR/SD scheduling cause; it does not qualify every SD workload.
+
+| Route/control | Application updates/s | Median active submission | Median whole update | Median pacing interval |
+|---|---:|---:|---:|---:|
+| ExExt, SD-selected deferral | 13.33 | 2.722 ms (16.33% of 60 Hz budget) | 67.035 ms | 63.819 ms |
+| Earlier ExCom control | 60.00 | 5.778 ms (34.67%) | 16.549 ms | 10.757 ms |
+
+ExExt application rate is 77.78% below the earlier ExCom control. Firmware
+identities differ; this is not an isolated wire-bandwidth comparison. The
+pacing interval includes preempting synchronous ExExt ISR work and therefore
+must not be called spare CPU time. Scanout remains about 60 Hz. Finite gameplay
+completion does not establish interactive playability or absence of flicker.

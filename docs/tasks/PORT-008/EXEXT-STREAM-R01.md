@@ -566,3 +566,21 @@ wait for that exact marker before releasing the held Agon reset. HTTP service
 readiness remains a separate condition. The marker is an observation, never a
 UART ownership grant; actual acknowledgement and keyboard admission remain
 mandatory. No per-block logging or diagnostic firmware endpoint is added.
+
+
+### EX-C14 bounded byte-kernel control-pulse review — frozen 2026-10-11 16:50 UTC
+
+The SD-selected deferral now passes frozen T09 (120 measured updates, no fault),
+but ExExt reaches only 13.33 application updates/s versus the earlier ExCom
+control's 60. Investigate the existing physical-service cost without changing
+rendering, application pacing or ownership. First combine each falling/rising
+CLOCK pair into one local assembly helper: one IFF save/restore and one atomic
+Port D read, two writes preserving the latest unowned bits. Keep exact edges,
+READY checks, preamble/tail, direction and cleanup. Permit only two additional
+instructions in that short masked interval; never mask an entire payload or
+cache unowned bits across interrupt-enabled work. Tighten the linked helper
+inventory to both exact helpers, retain mutation controls, and run the actual
+linked eZ80 byte/edge/ISR/register tests before a new physical candidate.
+Measure instruction counts separately from physical completion/game timing.
+Retain the SD-corrected pair for rollback; reject the change if correctness or
+required ROM/link gates fail. Continue the already-required game coverage.
