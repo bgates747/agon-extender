@@ -264,3 +264,28 @@ physical service does not establish electrical or gameplay performance.
    manifest. Optional shared timing helpers require `maybe_unused` annotations
    for these warning-as-error builds; no timed behavior changes. Nurples uses
    retained SCAN-r02 fixtures. No game-owner source edits or deployment yet.
+
+## EX06 reset-request correction boundary
+
+Ordinary Agon reset can preserve the same CLOCK-low/VALID-high levels as live
+UART. EMOS then mistakes old READY-high for a fresh released-peer indication,
+drives VALID-low, and leaves P4's new recovery waiting for VALID-high. The
+earlier physical-leaf model retried fences on deadlines; those retries concealed
+the missing initial request. This explains why an extra reset or paired reset
+can recover without repairing the protocol.
+
+1. EMOS must release its data pads, hold CLOCK-high/VALID-low as an explicit
+   reset request, and wait for P4 READY-low before starting the established
+   CLOCK-low/VALID-high release/acknowledgement sequence. P4's existing live
+   adapter observes the invalid live levels, releases its pads and asserts
+   READY-low in recovery; no new peer wire opcode is needed. An old low from
+   an unfinished block grants no UART: the subsequent high/low/high release
+   sequence and actual adapter proofs remain mandatory.
+2. Execute actual startup/pad/core code with an already-live peer and unequal
+   polling. Retain negative coverage demonstrating the old stale-ready race.
+   No timed UART fallback, peer-output assumption or repeated FLASH. Build and
+   freeze an independently identified EMOS image before installation; repeat
+   Agon-only resets and exact CLI input after installed ROM verification.
+3. In parallel with this preparation, use established paired-reset recovery
+   only to run the already-planned focused reply/upload controls on r05. Keep
+   those results distinct from reset correctness and uppercase-input coverage.
