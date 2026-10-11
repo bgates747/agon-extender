@@ -185,3 +185,12 @@ The first Aginvadors ExCom setup stops before RUN because its40column display
 wraps the LOAD echo. The observer now permits only whitespace/explicit unknown
 edge-cell substitutions; original startup is restored. No game failure or pass
 is attributed to this unexecuted setup.
+
+## Stream-r10 physical allocation repeat
+
+All four installed segments verify. T09 again stops loading image3/350, now
+with339bytes requested: SDK reports no memory for GDMA link-list items before
+native completion (done0/bytes0). PSRAM payload placement alone is insufficient;
+this is not a game pass or electrical corruption evidence. Paired reset recovers
+stable input; original startup/config restore is readback checked. The bench is
+released for bounded ExExt driver-resource reuse with a stable callback owner.

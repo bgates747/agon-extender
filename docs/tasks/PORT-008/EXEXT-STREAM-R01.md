@@ -466,3 +466,22 @@ T01/T03 and retain game timing scopes. No wire format, renderer or EMOS change.
    A compile/heap hypothesis is not a game pass. If allocation still fails,
    retain the first error and review the internal DMA reserve before widening
    scope. Restore original startup/configs and release the bench offline.
+
+## EX05 retained driver resources — frozen 2026-10-11 14:49 UTC
+
+Stream-r10 moves payloads to PSRAM but T09 still fails internal GDMA descriptor
+allocation (requested339bytes), before a saved result. The matched ExCom T09
+passes120rows at60updates/s. Within EX05, keep the explicit ExExt native owner,
+its cache-aligned4096byte PSRAM payload and disabled PARLIO RX/TX driver resources
+across successful blocks. Create each direction on first admitted use, before
+game assets exhaust internal DMA memory. Retain existing one-shot lifetimes for
+other qualification compositions. Reattach only the admitted direction's GPIO
+matrix after actual UART parking, disable/fence before return, and destroy all
+resources on faults/reset cancellation before retiring the callback owner.
+
+Test actual repeated variable-sized RX/TX blocks, retained callbacks, failed
+creation/disable/fencing/cancel, and matched coordinator completion. SDK5.5.5
+public create/enable/disable APIs remain authoritative; any GPIO reattachment
+mirrors its exact processor-specific routing and is documented beside code.
+Build/verify normal full-HDMI firmware, repeat frozen T09 first, then finite
+games. No renderer, wire format, deadline, ownership or UART fallback change.
