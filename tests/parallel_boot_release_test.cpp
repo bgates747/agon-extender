@@ -336,9 +336,9 @@ int main(){unsigned cases=0;
    hostPdDr=(hostPdDr&~0xa0)|0x80;
    assert(startup.poll(++now,restore,cancel));
    assert(restores==1&&!cancels && owner.pending());
-   assert(owner.payloadReturned(0,now));
-   std::memcpy(request,owner.descriptor(),16);request[3]=PARALLEL_COMPLETE;
-   parallel_control_pad(request);assert(owner.request(request,now,0,reply));
+   assert(owner.payloadReturned(now));assert(!owner.pending());
+   request[3]=4;parallel_control_pad(request);
+   assert(!owner.request(request,now,0,reply)); // Removed COMPLETE is never required/accepted.
    std::uint8_t *got=nullptr,direction=99;std::size_t length=0;
    assert(owner.takeCompleted(got,length,direction));
    assert(got==buffer && length==16 && direction==0 && !reply[13]);

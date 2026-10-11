@@ -35,28 +35,36 @@ static void offer(agon::extender::transport::ParallelControl &c,unsigned n,bool 
 }
 static void complete(agon::extender::transport::ParallelControl &c,std::uint8_t*d,
                      std::uint8_t *b,unsigned n,bool tx,unsigned now){
- std::uint8_t reply[16];d[3]=PARALLEL_COMPLETE;parallel_control_pad(d);
- assert(c.request(d,now,0,reply)&&reply[3]==PARALLEL_COMPLETE_ACK&&!reply[13]);
+ (void)now;std::uint8_t reply[16];d[3]=4;parallel_control_pad(d);
+ assert(!c.pending() && !c.request(d,now,0,reply)); // Obsolete COMPLETE cannot admit.
  std::uint8_t *out,direction;std::size_t length;
  assert(c.takeCompleted(out,length,direction)&&out==b&&length==n&&direction==tx);
 }
-static void drive(C &owner,bool tx,unsigned n,std::uint8_t*b,unsigned &now){
- valid=0;clockLevel=0;assert(owner.poll(++now,true,true)==CR::exclusive); // park
- assert(owner.poll(++now,true,true)==CR::exclusive); // release
- assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0); // request
- valid=1;assert(owner.poll(++now,true,true)==CR::exclusive&&ready==1);
- clockLevel=1;assert(owner.poll(++now,true,true)==CR::exclusive);
- assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0&&!watch&&counterRunning); // arm
+static void drive(C &owner,bool tx,unsigned n,std::uint8_t*b,unsigned &now,agon::extender::transport::ParallelControl *control=nullptr){
+ auto poll=[&](){
+  auto r=owner.poll(++now,true,true);
+  if(control && r!=CR::uart){
+   std::uint8_t *out=nullptr,direction=0;std::size_t length=0;
+   assert(!control->takeCompleted(out,length,direction));
+  }
+  return r;
+ };
+ valid=0;clockLevel=0;assert(poll()==CR::exclusive); // park
+ assert(poll()==CR::exclusive); // release
+ assert(poll()==CR::exclusive&&ready==0); // request
+ valid=1;assert(poll()==CR::exclusive&&ready==1);
+ clockLevel=1;assert(poll()==CR::exclusive);
+ assert(poll()==CR::exclusive&&ready==0&&!watch&&counterRunning); // arm
  if(!tx)for(unsigned i=0;i<n;++i)dma[i]=std::uint8_t(73*i+17);
  signal(false);clockEdges(n);if(tx)completed(tx,n);
- assert(owner.poll(++now,true,true)==CR::exclusive&&allocation); // hold last byte
+ assert(poll()==CR::exclusive&&allocation); // hold last byte
  signal(true);if(!tx)completed(tx,n); // RX callback may follow the complete byte record.
- assert(owner.poll(++now,true,true)==CR::exclusive&&ready==1&&!allocation);
+ assert(poll()==CR::exclusive&&ready==1&&!allocation);
  assert(!uartRestored); // DMA end is NOT permission to restore UART
- clockLevel=0;valid=1;assert(owner.poll(++now,true,true)==CR::exclusive);
- valid=0;assert(owner.poll(++now,true,true)==CR::exclusive&&ready==0);
- valid=1;assert(owner.poll(++now,true,true)==CR::exclusive);
- assert(owner.poll(++now,true,true)==CR::uart&&uartRestored&&ready==1);
+ clockLevel=0;valid=1;assert(poll()==CR::exclusive);
+ valid=0;assert(poll()==CR::exclusive&&ready==0);
+ valid=1;assert(poll()==CR::exclusive);
+ assert(poll()==CR::uart&&uartRestored&&ready==1);
  for(unsigned i=0;i<n;++i)assert(b[i]==std::uint8_t(73*i+17));
 }
 int main(){unsigned cases=0;
@@ -76,9 +84,8 @@ int main(){unsigned cases=0;
    uartIdle=false;assert(owner.poll(++now,true,true)==CR::drain&&op==before);uartIdle=true;
    ring=1;assert(owner.poll(++now,true,true)==CR::drain&&op==before);ring=0;
    fifo=1;assert(owner.poll(++now,true,true)==CR::drain&&op==before);fifo=0;
-   drive(owner,tx,n,b.data(),now);
-   assert(c.pending());std::uint8_t *out=nullptr,direction=0;std::size_t length=0;
-   assert(!c.takeCompleted(out,length,direction)); // not yet matched
+   drive(owner,tx,n,b.data(),now,&c);
+   assert(!c.pending() && !c.uartTransitionAllowed()); // Local consumer owns completed storage.
    complete(c,d,b.data(),n,tx,now);++cases;
   }
   assert(restores==2&&!allocation&&!outputs);
@@ -153,7 +160,7 @@ int main(){unsigned cases=0;
   agon::extender::transport::ParallelControl countControl;std::uint8_t b[8],d[16];
   for(unsigned i=0;i<8;++i)b[i]=std::uint8_t(73*i+17);
   boot(countControl,b,8);C count(countControl,pins,14,16,15,18,17,20,19,0);
-  offer(countControl,8,tx,d);unsigned now=0;drive(count,tx,8,b,now);const int total=op;
+  offer(countControl,8,tx,d);unsigned now=0;drive(count,tx,8,b,now,&countControl);const int total=op;
   complete(countControl,d,b,8,tx,now);
   for(int failure=0;failure<total;++failure) {
    reset();clockLevel=0;uartRestored=false;ring=fifo=0;
@@ -183,7 +190,7 @@ int main(){unsigned cases=0;
   }
  }
  // Cancellation in every physical phase, plus a stuck cleanup attempt.
- for(bool timeout:{false,true})for(bool tx:{false,true})for(unsigned stage=0;stage<13;++stage) {
+ for(bool timeout:{false,true})for(bool tx:{false,true})for(unsigned stage=0;stage<12;++stage) {
   reset();clockLevel=0;uartRestored=false;ring=fifo=0;
   agon::extender::transport::ParallelControl c;std::uint8_t b[8]{},d[16];
   boot(c,b,8);C owner(c,pins,14,16,15,18,17,20,19,0);offer(c,8,tx,d);
@@ -200,7 +207,7 @@ int main(){unsigned cases=0;
   }
   if(timeout){
    // Observe the last transition before expiring that phase's own deadline.
-   owner.poll(++now,true,true);now+=2000;
+   c.expire(++now);now+=2000;
   } else c.cancel();
   if(allocation) {
    fail=op;assert(owner.poll(++now,true,true)==CR::cleanupFault&&allocation);
@@ -212,7 +219,7 @@ int main(){unsigned cases=0;
   assert(!allocation&&!enabled&&!watch&&!outputs&&!c.pending()&&c.handover.failed());++cases;
  }
  // Ordinary console changes revoke only dormant capability: the UART grant
- // and ready level must survive. Pending payload/receipt cannot be bypassed.
+ // and ready level must survive. Pending payload/completed storage cannot be bypassed.
  {
   reset();clockLevel=0;uartRestored=false;
   agon::extender::transport::ParallelControl c;std::uint8_t b[8],d[16];
@@ -223,9 +230,9 @@ int main(){unsigned cases=0;
   c.session.phase=PARALLEL_SESSION_ACTIVE;c.session.bytes[4]=c.session.bytes[5]=0;
   C owner(c,pins,14,16,15,18,17,20,19,0);offer(c,8,true,d);unsigned now=0;
   assert(!c.uartTransitionAllowed()&&!c.revokeUartCapability());
-  drive(owner,true,8,b,now);assert(!c.uartTransitionAllowed());
-  std::uint8_t reply[16];d[3]=PARALLEL_COMPLETE;parallel_control_pad(d);
-  assert(c.request(d,now,0,reply));assert(!c.revokeUartCapability());
+  drive(owner,true,8,b,now,&c);assert(!c.uartTransitionAllowed());
+  std::uint8_t reply[16];d[3]=4;parallel_control_pad(d);
+  assert(!c.request(d,now,0,reply));assert(!c.revokeUartCapability());
   std::uint8_t*out,direction;std::size_t length;assert(c.takeCompleted(out,length,direction));
   assert(c.revokeUartCapability()&&c.handover.phase()==H::uart&&ready==1);++cases;
  }

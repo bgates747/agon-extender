@@ -51,8 +51,9 @@ class ResultTests(unittest.TestCase):
                 compare(a, b)
 
     def test_crc_free_descriptor_evidence(self):
-        agon, peer = sample(3)
-        self.assertEqual(len(compare(agon, peer)["cases"]), 20)
+        for version in (3, 4):
+            agon, peer = sample(version)
+            self.assertEqual(len(compare(agon, peer)["cases"]), 20)
 
     def test_mirrored_pattern(self):
         root = Path(__file__).resolve().parents[1]

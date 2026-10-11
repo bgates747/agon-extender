@@ -1,5 +1,5 @@
 // PORT-008 ordinary ExExt queue binding. One retained-parser task owns this
-// object and the native coordinator; DMA bytes stay provisional until receipt.
+// object and the native coordinator; bytes stay provisional until physical return.
 // UART control is separate. No VDU parser, ISR or network writer lives here.
 #pragma once
 #include <array>

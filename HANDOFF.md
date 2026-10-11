@@ -1,15 +1,20 @@
-# Current checkpoint — paired CRC removal complete, offline only
+# Current checkpoint — software completion removed, offline only
 
-[CRC-removal contract](docs/tasks/PORT-008/CRC-REMOVAL-R01.md) CR01–CR05
-complete after freeze/push. [Results](docs/tasks/PORT-008/CRC-REMOVAL-R01-RESULTS.md)
-record CRC-free parallel wire3 in both EMOS/P4, sixteen-byte carrier with padding
-sent zero/ignored, full compiles and paired/linked tests. ExExt EMOS 130,598 bytes,
-474 free (370 reclaimed). Ordinary version1 ExCom CRC remains. No physical speed
-claim or installation: original UART pair/startup below remains unchanged.
-Next bounded cut is now authorized: [completion removal](docs/tasks/PORT-008/COMPLETION-REMOVAL-R01.md)
-retains native/DMA completion and reciprocal pad release. Offline only while
-fsim uses the bench; no flashing/device access. Freeze contract before code.
-The broad eight-hour goal remains paused; production unchanged.
+[Completion-removal contract](docs/tasks/PORT-008/COMPLETION-REMOVAL-R01.md)
+CP01–CP05 complete after freeze/push. [Results](docs/tasks/PORT-008/COMPLETION-REMOVAL-R01-RESULTS.md)
+record paired CRC-free format4: COMPLETE/ACK removed; native/DMA cleanup and
+reciprocal UART return own completion. P4 stages its local result before final
+READY-high and retains storage until consumption. Full ordinary/ExExt EMOS and
+P4-PC HDMI builds, actual-owner host and linked eZ80 checks pass. ExExt EMOS
+130,334 bytes, 738 free (another 264 reclaimed); ordinary 128,482 bytes, 2,590 free.
+Builds are exploratory/uninstalled, with exact local snapshots and evidence.
+No speedup or stock-equivalence claim. Fsim owns the bench; this tranche made
+no hardware, SD, startup or production change. The installed-pair section below
+records the last verified handback, not a new observation during fsim's work.
+Next: discuss remaining minimum control/scheduling and a separately authorized
+matched-pair hardware comparison. Format3 cannot pair with format4. Old diagnostic
+completion-phase callsites are retired; rebind any later phase fixture to the new
+ELF/ROM. The broad eight-hour goal remains paused; production unchanged.
 
 ## Start here
 

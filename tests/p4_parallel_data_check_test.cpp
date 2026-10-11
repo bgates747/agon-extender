@@ -13,7 +13,7 @@ static void boot(ParallelControl &c) {
 static void physical(ParallelControl &c) {
  for(auto bits:std::initializer_list<unsigned>{H::quiet,H::released,0,H::validHigh,H::validHigh|H::clockHigh,
                H::validHigh|H::clockHigh|H::armed,H::done,H::validHigh,0,H::validHigh,H::uartUp})c.handover.step(bits);
- assert(c.handover.phase()==H::uart);assert(c.payloadReturned(0,1));
+ assert(c.handover.phase()==H::uart);assert(c.payloadReturned(1));
 }
 static void offer(ParallelControl &c,P4ParallelDataCheck &e,unsigned n,unsigned direction) {
  uint8_t d[16]={'E','X',PARALLEL_WIRE_VERSION,PARALLEL_OFFER,1,2,3,4,1,0,uint8_t(n),uint8_t(n>>8),uint8_t(direction),0,0,0},reply[16];
@@ -21,9 +21,8 @@ static void offer(ParallelControl &c,P4ParallelDataCheck &e,unsigned n,unsigned 
 }
 static P4ParallelDataCheck::Snapshot complete(ParallelControl &c,P4ParallelDataCheck &e,unsigned n,unsigned direction) {
  P4ParallelDataCheck::Snapshot s;assert(e.retire()&&!e.takeSnapshot(s));physical(c);
- assert(e.retire()&&!e.takeSnapshot(s));
- uint8_t d[16]={'E','X',PARALLEL_WIRE_VERSION,PARALLEL_COMPLETE,1,2,3,4,1,0,uint8_t(n),uint8_t(n>>8),uint8_t(direction),0,0,0},reply[16];
- parallel_control_pad(d);assert(c.request(d,1,0,reply));assert(e.retire()&&e.takeSnapshot(s));assert(!e.takeSnapshot(s));return s;
+ assert(!c.pending() && e.retire()&&e.takeSnapshot(s));
+ assert(s.length==n && s.direction==direction);assert(!e.takeSnapshot(s));return s;
 }
 int main(){unsigned cases=0;
  for(unsigned n:{1u,16u,17u,255u,1024u,4096u})for(unsigned dir:{0u,1u})for(bool corrupt:{false,true}) {

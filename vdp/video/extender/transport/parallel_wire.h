@@ -1,7 +1,7 @@
-/* PORT-008 CRC-REMOVAL-R01: experimental paired parallel format3.
+/* PORT-008 COMPLETION-REMOVAL-R01: experimental paired parallel format4.
  * No transport CRC/checksum. Keep the 16-byte carrier for this isolated cut;
  * transmit zero in former CRC slots14-15 and IGNORE them on receipt.
- * Format2 peers cannot admit. Ordinary version1 console controls are separate.
+ * Formats2/3 peers cannot admit; COMPLETE/ACK is removed. Ordinary version1 console controls are separate.
  * Mirrored exactly in EMOS. See PARALLEL-ADMISSION.md for ownership/lifetime.
  * session[0..3] is established by the coordinator, never by an offer;
  * session[4..5] is the last consumed sequence. Reset/cancel invalidates it.
@@ -9,11 +9,9 @@
 #ifndef EMOS_PARALLEL_WIRE_H
 #define EMOS_PARALLEL_WIRE_H
 #include <string.h>
-#define PARALLEL_WIRE_VERSION 3
+#define PARALLEL_WIRE_VERSION 4
 #define PARALLEL_OFFER 2
 #define PARALLEL_ACK 0x82
-#define PARALLEL_COMPLETE 4
-#define PARALLEL_COMPLETE_ACK 0x84
 #define PARALLEL_STREAM_START 6
 #define PARALLEL_STREAM_POLL 8
 #define PARALLEL_STREAM_STOP 10
@@ -23,12 +21,11 @@
 static inline void parallel_control_pad(unsigned char *p) {
     p[14] = p[15] = 0;
 }
-/* The retained offer supplies authority, never the arriving result. Failure
- * status is a valid result, not permission to publish a received prefix. */
+/* Only an exact admission ACK grants entry. Physical return owns completion. */
 static inline unsigned char parallel_block_matches(const unsigned char *offer,
     const unsigned char *p, unsigned char operation) {
     if (offer[2]!=PARALLEL_WIRE_VERSION || memcmp(offer,p,3) || p[3]!=operation || memcmp(offer+4,p+4,9) ||
-        p[13] > (operation==PARALLEL_ACK ? 0 : 1)) return 0;
+        p[13]) return 0;
     return 1;
 }
 static inline unsigned char parallel_offer_valid(const unsigned char *session,

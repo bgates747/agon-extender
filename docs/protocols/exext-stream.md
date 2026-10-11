@@ -11,11 +11,13 @@ preceding verified UART pair. Experimental binaries require explicit matched
 selection and are not the current bench recommendation. This is outside selected
 production and does not change the current Legacy/ExCom operating contract.
 
-The maintained source now uses **CRC-free parallel format3** under
-[CRC-REMOVAL-R01](../tasks/PORT-008/CRC-REMOVAL-R01.md). Earlier physical
-measurements used format2 with CRC; they do not measure the new source. This
-first removal cut retains the same electrical phases, carrier width and receipt
-lifetime. It does not yet correct the scheduling departures described below.
+The maintained source now uses **CRC-free parallel format4** under
+[completion removal](../tasks/PORT-008/COMPLETION-REMOVAL-R01.md). Earlier
+physical measurements used format2 with CRC; the intermediate format3 removed
+CRC but still required COMPLETE/ACK. Neither measures the new source. Format4
+removes that software exchange and finishes at actual physical return, keeping
+the existing electrical phases and carrier width. Formats2/3 cannot admit.
+This does not yet correct the scheduling departures described below.
 
 ## Owners and activation
 
@@ -24,7 +26,7 @@ lifetime. It does not yet correct the scheduling departures described below.
    matched UART/parallel handover and VDP parser. Applications use unchanged
    RST10/RST18/MOS interfaces, without direct GPIO or transport access.
 2. EMOS first obtains the existing version1 console lease, synchronizes display
-   queries, then negotiates the format3 exact-block capability and stream
+   queries, then negotiates the format4 exact-block capability and stream
    START. Only successful preparation permits the ExExt route commit. Entry
    requires Legacy; return to Legacy before selecting ExCom or ExExt again.
 3. UART carries framed control between parallel blocks. Ordinary VDU, keyboard
@@ -33,12 +35,12 @@ lifetime. It does not yet correct the scheduling departures described below.
 
 ## Stream control
 
-Use the existing19-byte forward carrier:23,0,F7 followed by16 bytes; returned
-control remains FF,16 followed by16 bytes. Body0–2 is `EX`,wire version3;
+Use the existing 19-byte forward carrier:23,0,F7 followed by16 bytes; returned
+control remains FF,16 followed by16 bytes. Body0–2 is `EX`,wire version4;
 body4–9 is the active six-byte session identity, including current block number.
 Body12–13 is zero; body14–15 is transmitted zero and ignored on receipt. There is no parallel
-CRC or substitute checksum, including session and stream controls. Format2
-peers cannot admit format3; install a matching pair. Ordinary version1 console
+CRC or substitute checksum, including session and stream controls. Formats2/3
+peers cannot admit format4; install a matching pair. Ordinary version1 console
 activation and unrelated SD verification remain unchanged. Requests have
 body10–11 zero; acknowledgements report pending return bytes, capped4096.
 
@@ -48,11 +50,20 @@ body10–11 zero; acknowledgements report pending return bytes, capped4096.
 | POLL |8|136|Report returned bytes without consuming them |
 | STOP |10|138|Wait for queued input to drain; report returned bytes; close only when none remain |
 
-Exact-length direction0/1 OFFER and COMPLETE retain the existing physical
-coordinator, strict next block number, reciprocal UART restoration and matched
-completion receipt. Neither DMA completion nor a queued reply alone publishes
-bytes. Before block-number wrap, EMOS negotiates a fresh transport capability
-at an idle UART boundary; the console lease and stream queues remain intact.
+An exact-length direction0/1 OFFER/ACK admits the existing physical coordinator
+and strict next block number. Successful native transfer, actual DMA cleanup,
+pad release and reciprocal UART restoration complete the block. There is no
+software COMPLETE/ACK operation. P4 stages completed storage before final
+READY-high, then its sole consumer publishes received bytes or retires sent bytes
+before admitting another OFFER. EMOS finishes after fresh peer READY-high and
+local reservation release. DMA EOF alone, a timer or an old READY level cannot
+publish bytes; faults cancel unpublished completion and retain the cleanup fence.
+
+Before block-number wrap, EMOS negotiates a fresh transport capability at an
+idle UART boundary; the console lease and stream queues remain intact. The
+sixteen-byte padded carrier and other session/queue controls remain for this
+bounded cut. Removal saves one 19-byte request/18-byte reply per block, not a
+measured time or bandwidth estimate. Endpoint-wide atomic commit is not added.
 
 ## Scheduling and limits
 

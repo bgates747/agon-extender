@@ -1,4 +1,4 @@
-// Experimental F7 CRC-free format3 owner binding. No GPIO, UART writer or mode authority.
+// Experimental F7 CRC-free format4 owner binding. No GPIO, UART writer or mode authority.
 // The physical adapter must complete handover recovery before any request can
 // succeed. Ordinary UART-only startup deliberately never supplies that proof.
 #pragma once
@@ -11,10 +11,10 @@ class ParallelControl final {
   P4ParallelHandover handover;
   t_parallelSession session{};
 
-  // Caller owns this storage through native DMA cleanup and the final receipt.
+  // Caller owns storage through native/DMA cleanup and local consumer handoff.
   // Provisioning storage grants neither mode admission nor physical ownership.
   bool provide(uint8_t *buffer, size_t capacity) {
-    if (pending_ || receipt_ || handover.phase()!=P4ParallelHandover::uart) return false;
+    if (pending_ || completed_ || handover.phase()!=P4ParallelHandover::uart) return false;
     buffer_=buffer; capacity_=capacity; return true;
   }
 
@@ -22,27 +22,12 @@ class ParallelControl final {
     expire(now);
     if (p[3]==PARALLEL_OFFER) {
       const size_t length=p[10] | (size_t(p[11])<<8);
-      if (pending_ || receipt_ || !buffer_ || length>capacity_ ||
+      if (pending_ || completed_ || !buffer_ || length>capacity_ ||
           !handover.sessionAdmit(PARALLEL_EXEXT,session,p,reply)) return false;
-      memcpy(offer_,p,16); pending_=true; returned_=false;
+      memcpy(offer_,p,16); pending_=true;
       phase_=handover.phase(); phase_at_=now; return true;
     }
-    if (p[3]==PARALLEL_COMPLETE) {
-      if (!pending_ || !returned_ || handover.phase()!=P4ParallelHandover::uart ||
-          !parallel_block_matches(offer_,p,PARALLEL_COMPLETE)) return false;
-      memcpy(reply,p,16); reply[3]=PARALLEL_COMPLETE_ACK;
-      reply[13]=(local_status_ || p[13] || handover.failed()) ? 1 : 0;
-      parallel_control_pad(reply);
-      if (reply[13]) {
-        // UART is already restored. Revoke capability without requesting a
-        // new pad fence ahead of the queued failure reply. Physical faults
-        // use cancel() instead and can never manufacture this return proof.
-        pending_=returned_=false; parallel_session_invalidate(&session);
-      }
-      else { pending_=false; receipt_=true; }
-      return true;
-    }
-    if (pending_ || receipt_) return false;
+    if (pending_ || completed_) return false;
     uint8_t nonce[4];
     for (unsigned i=0;i<4;++i) nonce[i]=uint8_t(challenge>>(8*i));
     if (!handover.sessionRequest(PARALLEL_EXEXT,session,p,nonce,reply)) return false;
@@ -59,24 +44,26 @@ class ParallelControl final {
       if (phase_!=handover.phase()) { phase_=handover.phase(); phase_at_=now; }
     }
   }
-  // The physical owner must complete reciprocal UART restore first. Calling
-  // this method is not a substitute for stop/release/restore adapter proofs.
-  bool payloadReturned(uint8_t status,uint32_t now) {
+  // Physical coordinator only, after exact native completion, DMA cleanup,
+  // reciprocal release and UART restore, BEFORE it advertises final READY-high.
+  // This is a local handoff, not a wire receipt. Faults call cancel(), never
+  // this method. A failed READY write also cancels before any consumer runs.
+  bool payloadReturned(uint32_t now) {
     expire(now);
-    if (!pending_ || returned_ || status>1 ||
+    if (!pending_ || handover.failed() || session.phase!=PARALLEL_SESSION_ACTIVE ||
         handover.phase()!=P4ParallelHandover::uart) return false;
-    returned_=true; local_status_=status; phase_at_=now; return true;
+    pending_=false; completed_=true; return true;
   }
   bool takeCompleted(uint8_t *&buffer,size_t &length,uint8_t &direction) {
-    if (!receipt_ || handover.failed() || handover.phase()!=P4ParallelHandover::uart ||
+    if (!completed_ || handover.failed() || handover.phase()!=P4ParallelHandover::uart ||
         session.phase!=PARALLEL_SESSION_ACTIVE) return false;
     buffer=buffer_; length=offer_[10] | (size_t(offer_[11])<<8);
-    direction=offer_[12]; receipt_=false; return true;
+    direction=offer_[12]; completed_=false; return true;
   }
   bool pending() const { return pending_; }
   // Physical coordinator only: bytes remain provisional until takeCompleted.
   bool payloadBuffer(uint8_t *&buffer,size_t &capacity) const {
-    if(!pending_ || returned_)return false;
+    if(!pending_)return false;
     buffer=buffer_;capacity=capacity_;return buffer_!=nullptr;
   }
   const uint8_t *descriptor() const { return pending_ ? offer_ : nullptr; }
@@ -84,14 +71,14 @@ class ParallelControl final {
   // not the already-proven UART pad ownership. Active work must finish or be
   // explicitly cancelled/recovered before a console transition is admitted.
   bool uartTransitionAllowed() const {
-    return handover.phase()==P4ParallelHandover::uart && !pending_ && !receipt_;
+    return handover.phase()==P4ParallelHandover::uart && !pending_ && !completed_;
   }
   bool revokeUartCapability() {
     if(!uartTransitionAllowed())return false;
     parallel_session_invalidate(&session);return true;
   }
   void cancel() {
-    pending_=returned_=receipt_=false;
+    pending_=completed_=false;
     handover.sessionCancel(session);
   }
  private:
@@ -101,7 +88,6 @@ class ParallelControl final {
   uint8_t offer_[16]{};
   uint8_t *buffer_{};
   size_t capacity_{};
-  uint8_t local_status_{};
-  bool pending_{},returned_{},receipt_{};
+  bool pending_{},completed_{};
 };
 } // namespace agon::extender::transport

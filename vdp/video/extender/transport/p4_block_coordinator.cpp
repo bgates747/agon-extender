@@ -101,9 +101,15 @@ P4BlockCoordinator::Result P4BlockCoordinator::poll(std::uint32_t now,
   }
   h.step(done);
   if(h.failed())return fail("handover step");
+  if(h.phase()==H::uart) {
+    // COMPLETION-REMOVAL-R01: validate/stage local completion BEFORE the final
+    // READY-high tells EMOS it may retire this block. No later serial receipt.
+    // The sole parser cannot consume staging until this poll returns; a failed
+    // READY write below cancels it and retains native cleanup ownership.
+    if(!restored_ || !control_.payloadReturned(now))return fail("payload returned");
+  }
   if(gpio_set_level(gpio_num_t(ready_),h.readyN())!=ESP_OK)return fail("READY output");
   if(h.phase()==H::uart) {
-    if(!restored_ || !control_.payloadReturned(0,now))return fail("payload returned");
 #if !defined(AGON_EXTENDER_EXEXT_STREAM)
     payload_.reset();
 #endif

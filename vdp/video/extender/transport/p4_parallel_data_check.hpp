@@ -2,9 +2,9 @@
 // No PCNT, phase logging or timing instrumentation. Ordinary mode retains
 // one successfully received block and echo it on the next same-length read.
 // EMOS remains sole admission/handshake owner; the MOSlet compares every byte.
-// PORT-008 DATA-SNAPSHOT-R01: a bounded post-receipt fingerprint/byte snapshot
+// PORT-008 DATA-SNAPSHOT-R01: a bounded post-completion fingerprint/byte snapshot
 // distinguishes retained RX corruption from TX output corruption. Publication
-// follows matched completion/UART restore; no logging or inspection in DMA/ISR.
+// follows native completion/reciprocal UART restore; no logging or inspection in DMA/ISR.
 #pragma once
 #include <array>
 #include "parallel_control.hpp"

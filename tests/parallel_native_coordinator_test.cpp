@@ -31,7 +31,7 @@ static std::unique_ptr<C> owner;
 static t_parallelSession session;
 static std::vector<BYTE> peerData,localData;
 static BYTE irq=1,reserved=1,tick;
-static unsigned now,cases,parks,unparks,releases,closeCalls,faults,clocks;
+static unsigned now,cases,parks,unparks,releases,closeCalls,faults,clocks,controls,nestedChecks;
 static int faultPhase=-1,stallPhase=-1;
 static bool frozen,missing,corrupt,unparkFailure,parkFailure,nativeFailure,releaseFailure,nested;
 static unsigned parkDelay;
@@ -106,15 +106,11 @@ extern "C" void emos_vdp_effect(BYTE){assert(false);}
 extern "C" BYTE emos_keyboard_parallel_send(const BYTE*p,UINT16 n){
  assert(irq&&reserved==1&&uart1_keyboard_owned==1);
  if(n==3)return 0;
- assert(n==16);BYTE reply[16];
+ assert(n==16 && p[3]!=4);++controls;BYTE reply[16];
  assert(peer.request(p,now,0x12340000+(++challengeSerial),reply));
 #if defined(EMOS_PARALLEL_PROBE)
  if(probe && p[3]==PARALLEL_OFFER)assert(probe->acceptedOffer(now*1000));
 #endif
- if(nested&&p[3]==PARALLEL_COMPLETE){
-  assert(!emos_parallel_boot_block_begin());
-  assert(!emos_parallel_native_coordinate(&session,p,localData.data(),localData.size()));
- }
 #if defined(EMOS_PARALLEL_PROBE)
  if(p[3]==missingProbeOp)return 0;
 #endif
@@ -125,6 +121,10 @@ extern "C" BYTE emos_keyboard_parallel_send(const BYTE*p,UINT16 n){
 extern "C" BYTE emos_parallel_native_bytes(BYTE*b,UINT24 n,BYTE reverse){
  assert(irq&&reserved==1&&h()->phase==EPH_BLOCK&&peer.handover.phase()==H::block);
  assert(n==peerData.size()&&!watch&&counterRunning&&allocation);
+ if(nested){
+  ++nestedChecks;assert(!emos_parallel_boot_block_begin());
+  assert(!emos_parallel_native_coordinate(&session,peer.descriptor(),localData.data(),localData.size()));
+ }
  if(nativeFailure)return EMOS_PARALLEL_NOT_OWNED;
  signal(false);hostPdDr&=~0x80;
  if(reverse)std::memcpy(b,dma,n);else std::memcpy(dma,b,n);
@@ -144,7 +144,7 @@ static void setup(unsigned n,bool reverse){
  probe.reset();corruptPayload=corruptGuard=false;missingProbeOp=0;
 #endif
  owner.reset();reset();peer={};session={};irq=reserved=1;tick=250;now=0;clocks=0;
- parks=unparks=releases=closeCalls=faults=0;faultPhase=stallPhase=-1;
+ parks=unparks=releases=closeCalls=faults=controls=nestedChecks=0;faultPhase=stallPhase=-1;
  frozen=missing=corrupt=unparkFailure=parkFailure=nativeFailure=releaseFailure=nested=false;parkDelay=0;
  uartIdle=true;uartRestored=false;ring=fifo=restores=0;emos_key_faulted=0;uart1_keyboard_owned=0;
  hostPcDdr=255;hostPcAlt1=hostPcAlt2=0;hostPdDr=0x4b;hostPdDdr=hostPdAlt1=hostPdAlt2=0;
@@ -175,12 +175,22 @@ int main(){
  for(bool reverse:{false,true})for(unsigned n:{1,2,255,256,4096}){
   setup(n,reverse);
   for(unsigned round=0;round<2;++round){reserved=1;auto d=admit(reverse);parkDelay=3;nested=true;
+   auto before=controls;
    assert(emos_parallel_native_coordinate(&session,d.data(),localData.data(),n));
+   assert(controls==before && !peer.pending() && nestedChecks==round+1);
    assert(releases==round+1&&unparks==round+1&&!faults&&!closeCalls);
    assert(!std::memcmp(peerData.data(),localData.data(),n));
    BYTE*out,direction;size_t length;assert(peer.takeCompleted(out,length,direction)&&out==peerData.data()&&length==n&&direction==reverse);
    assert(!peer.takeCompleted(out,length,direction));++cases;
   }
+ }
+ // Once admitted, no UART completion exchange can lose or corrupt success.
+ for(bool reverse:{false,true}) {
+  setup(255,reverse);auto d=admit(reverse);auto before=controls;
+  missing=corrupt=true;
+  assert(emos_parallel_native_coordinate(&session,d.data(),localData.data(),255));
+  assert(controls==before && !reserved && !peer.pending());
+  BYTE *out,direction;size_t length;assert(peer.takeCompleted(out,length,direction));++cases;
  }
  // Invalid inputs and interrupt-disabled/nested ownership: no park or pin mutation.
  for(unsigned refusal=0;refusal<10;++refusal){
@@ -198,18 +208,16 @@ int main(){
   BYTE before=hostPdDr;assert(!emos_parallel_native_coordinate(&session,d.data(),b,capacity));
   assert(!parks&&!unparks&&!releases&&before==hostPdDr&&!allocation);peer.cancel();++cases;
  }
- for(bool reverse:{false,true})for(unsigned failure=0;failure<7;++failure){
+ for(bool reverse:{false,true})for(unsigned failure=0;failure<5;++failure){
   setup(8,reverse);auto d=admit(reverse);
   if(failure==0)parkFailure=true;
   if(failure==1)nativeFailure=true;
   if(failure==2)unparkFailure=true;
-  if(failure==3)missing=true;
-  if(failure==4)corrupt=true;
-  if(failure==5)emos_key_faulted=1;
-  if(failure==6)releaseFailure=true;
+  if(failure==3)emos_key_faulted=1;
+  if(failure==4)releaseFailure=true;
   assert(!emos_parallel_native_coordinate(&session,d.data(),localData.data(),8));
   // An already faulted contender is rejected before ownership is accepted.
-  if(failure==5){assert(!parks&&!unparks&&!releases);peer.cancel();++cases;}
+  if(failure==3){assert(!parks&&!unparks&&!releases);peer.cancel();++cases;}
   else failed();
  }
  for(bool stoppedClock:{false,true})for(int phase:{EPH_DRAIN,EPH_ENTRY_ACK,EPH_ENTRY_CLEAR,EPH_ENTRY_ARM,EPH_RETURN_ACK,EPH_RETURN_REQUEST,EPH_RETURN_PEER}){
@@ -249,9 +257,9 @@ int main(){
  corruptGuard=true;
  assert(emos_parallel_probe(out.data(),256,0));
  assert(probe->take(now*1000,receipt)&&!receipt.guards);++cases;
- // Lost PREPARE/COMMIT/OFFER/COMPLETE reply: execute the real wrapper fence,
+ // Lost PREPARE/COMMIT/OFFER reply: execute the real wrapper fence,
  // not just logical session invalidation. No success receipt is claimed.
- for(BYTE op:{BYTE(PARALLEL_PREPARE),BYTE(PARALLEL_COMMIT),BYTE(PARALLEL_OFFER),BYTE(PARALLEL_COMPLETE)}){
+ for(BYTE op:{BYTE(PARALLEL_PREPARE),BYTE(PARALLEL_COMMIT),BYTE(PARALLEL_OFFER)}){
   setup(256,false);reserved=0;probe=std::make_unique<Probe>(peer);assert(probe->begin());
   missingProbeOp=op;assert(!emos_parallel_probe(out.data(),256,0));
   assert(reserved==1&&!emos_parallel_boot_uart_allowed());

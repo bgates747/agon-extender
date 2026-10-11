@@ -1,6 +1,6 @@
 // PORT-008 LC02 private physical owner. The sole console/ISR core calls poll.
 // No mode authority or buffer consumer: ParallelControl retains admission and
-// the caller retains its buffer through matched completion and receipt take.
+// the caller retains its buffer through physical completion and consumer take.
 #pragma once
 #include <optional>
 #include "parallel_control.hpp"

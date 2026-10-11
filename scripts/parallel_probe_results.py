@@ -51,9 +51,9 @@ def compare(agon_text, p4_text):
         direction, j = divmod(position, 5)
         n = SIZES[j]
         d = bytes.fromhex(row["descriptor"])
-        # Historical format2 checks its CRC; current format3 ignores padding.
+        # Historical format2 checks its CRC; formats3/4 ignore padding.
         # Payload evidence below is independent of transport admission.
-        if (len(d) != 16 or d[:2] != b"EX" or d[2] not in (2,3) or d[3] != 2 or not any(d[4:8]) or
+        if (len(d) != 16 or d[:2] != b"EX" or d[2] not in (2,3,4) or d[3] != 2 or not any(d[4:8]) or
                 d[8:10] != b"\x01\x00" or int.from_bytes(d[10:12], "little") != n or
                 d[12:14] != bytes((direction, 0)) or
                 (d[2] == 2 and d[14:] != binascii.crc_hqx(d[:14], 0xFFFF).to_bytes(2, "little"))):

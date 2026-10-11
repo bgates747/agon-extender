@@ -150,7 +150,7 @@ P08-D02 [ ] — Define the minimum necessary link control and paired deployment
 under D03. Do not assume the existing control envelope, session or version
 exchanges must survive. Explain any remaining link-only framing and how EMOS/P4
 avoid incompatible pairing; remove obsolete CRC fields/checks. Stock VDU/reply
-formats stay unchanged. The first authorized [CRC-removal cut](CRC-REMOVAL-R01.md) uses wire3, keeps the sixteen-byte carrier, sends zero/ignores former CRC bytes14–15, and rejects format2. Later minimum carrier/session/scheduling choices remain open. This does not authorize unrelated changes to ExCom or SD file verification.
+formats stay unchanged. The first authorized [CRC-removal cut](CRC-REMOVAL-R01.md) uses wire3, keeps the sixteen-byte carrier, sends zero/ignores former CRC bytes14–15, and rejects format2. Later minimum carrier/session/scheduling choices remain open. This does not authorize unrelated changes to ExCom or SD file verification. The completed [completion-removal cut](COMPLETION-REMOVAL-R01-RESULTS.md) uses format4, retires at actual physical return and removes COMPLETE/ACK; formats2/3 cannot admit. Builds/owner/linked checks pass, another 264 ROM bytes reclaimed. No hardware access while fsim uses the bench; later control/scheduling choices and matched-pair deployment remain gated.
 
 P08-D03 [x] — Transport-only first pass. Author clarifies: if stock does not do
 it, this transport must not add it, except for operations demonstrably necessary

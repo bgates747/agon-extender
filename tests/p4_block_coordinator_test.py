@@ -43,7 +43,7 @@ int main(){
  for(unsigned round=0;round<3;++round)for(bool tx:{false,true})for(unsigned n:{1,339,3456,4096}) {
   valid=clockLevel=1;for(unsigned i=0;i<n;++i)b[i]=std::uint8_t(73*i+17);
   offer(c,n,tx,d,++sequence,now);uartRestored=false;
-  drive(owner,tx,n,b.data(),now);complete(c,d,b.data(),n,tx,now);
+  drive(owner,tx,n,b.data(),now,&c);complete(c,d,b.data(),n,tx,now);
   assert(allocation&&!enabled&&!outputs&&rxCreates==1&&txCreates<=1);
  }
  assert(rxCreates==1&&txCreates==1&&restores==24);

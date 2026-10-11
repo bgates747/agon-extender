@@ -1,5 +1,5 @@
 /* PORT-008 CRC-REMOVAL-R01: experimental session lifecycle, mirrored in EMOS.
- * Retains prepare/challenge/commit for this first removal cut; no CRC.
+ * Retains prepare/challenge/commit across the bounded removal cuts; no CRC.
  * The owner wrapper must establish UART recovery and serializer authority.
  * No parser, GPIO, mode commitment, clock or autonomous request lives here.
  * Invalidation retains the last nonce solely to reject reuse; phase, not

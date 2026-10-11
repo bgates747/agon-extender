@@ -335,7 +335,7 @@ void runConsole(VDUStreamProcessor *processor) {
     }
     if(!blockDrain)block.recovered();
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
-    if(!s.parallelVdu.retire())s.fail("parallel stream receipt");
+    if(!s.parallelVdu.retire())s.fail("parallel stream completion");
 #endif
 #if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
     if(!console_data_check->retire())s.fail("data check guards");

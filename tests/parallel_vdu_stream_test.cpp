@@ -26,14 +26,13 @@ static void block(ParallelControl &c,ParallelVduStream &s,std::vector<uint8_t> &
  const auto before=s.available(),out=s.pending();assert(s.retire());assert(s.available()==before && s.pending()==out);
  for(auto b:std::initializer_list<unsigned>{H::quiet,H::released,0,H::validHigh,H::validHigh|H::clockHigh,
      H::validHigh|H::clockHigh|H::armed,H::done,H::validHigh,0,H::validHigh,H::uartUp})c.handover.step(b);
- assert(c.payloadReturned(0,1));assert(s.retire());assert(s.available()==before && s.pending()==out);
- d[3]=PARALLEL_COMPLETE;parallel_control_pad(d);assert(c.request(d,1,0,reply));assert(s.retire());
+ assert(c.payloadReturned(1));assert(s.retire());
  assert(s.available()==before+(reverse?0:bytes.size()));assert(s.pending()==out-(reverse?bytes.size():0));
 }
 int main() {
  unsigned cases=0;ParallelControl c;boot(c);ParallelVduStream s(c);assert(s.begin());uint8_t r[16];
  assert(!command(c,s,PARALLEL_STREAM_START,r,false));assert(!s.active());
- assert(!command(c,s,PARALLEL_STREAM_START,r,true,2));assert(!s.active());
+ for(unsigned version:{2u,3u}){assert(!command(c,s,PARALLEL_STREAM_START,r,true,version));assert(!s.active());}
  assert(command(c,s,PARALLEL_STREAM_START,r,true,PARALLEL_WIRE_VERSION,0xa55a));assert(s.active());
  assert(!r[14] && !r[15]);
  assert(!command(c,s,PARALLEL_STREAM_START,r));
@@ -47,7 +46,7 @@ int main() {
   std::vector<uint8_t> got(n);assert(s.read(got.data(),n)==n && got==p);assert(s.read()==-1);++cases;
  }
  // A reverse block can contain partial/multiple packets; ordering is retained
- // across wrap and only a matched receipt retires bytes.
+ // across wrap; only physical completion retires bytes.
  for(unsigned n:{1u,4u,16u,255u,256u,4096u}) {
   std::vector<uint8_t> p(n);for(unsigned i=0;i<n;++i){p[i]=uint8_t(i^0x81);assert(s.write(p[i]));}
   assert(command(c,s,PARALLEL_STREAM_POLL,r));assert(unsigned(r[10]|(unsigned(r[11])<<8))==n);
@@ -60,5 +59,5 @@ int main() {
  std::vector<uint8_t> full(4096,0xa5);block(c,s,full,false);block(c,s,full,false);
  uint8_t d[16]={'E','X',PARALLEL_WIRE_VERSION,PARALLEL_OFFER};d[10]=1;
  assert(!s.canOffer(d));s.cancel();assert(!s.active() && !s.available() && !s.pending());++cases;
- printf("PASS %u actual queue/admission/receipt/split-stream/backpressure cases\n",cases);
+ printf("PASS %u actual queue/admission/physical-completion/split-stream/backpressure cases\n",cases);
 }

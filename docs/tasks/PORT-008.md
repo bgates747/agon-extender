@@ -46,8 +46,8 @@ operations. **No CRC in ExExt**; accelerating it is rejected. P08-P05/D01–D03
 in the contract own the minimal-link review/removal and paired deployment;
 ADR-0026 and normative architecture record the requirement. Existing offers,
 completion exchanges, polls, sessions and batching must justify their necessity
-for the physical link. No transport-only CRC-free implementation
-or performance acceptance yet. Direct ExCom ↔ ExExt transition review is queued
+for the physical link. Bounded CRC/completion removal below passes offline only;
+no performance acceptance or stock-equivalence claim. Direct ExCom ↔ ExExt review is queued
 as P08-P04. Later UART shutdown/game comparisons remain gated on Author
 discussion. Preserve exact recovery bytes; broader goal stays paused.
 
@@ -73,13 +73,16 @@ completion receipt lifetime remain. No hardware timing/deployment or production
 change. Proposed next cut removes COMPLETE/ACK after actual physical completion;
 stop for discussion. Existing scheduling departures remain under P08-P05/D02.
 
-### Software completion removal authorized, offline only — 2026-10-11
+### Software completion removal complete, offline only — 2026-10-11
 
-Author authorizes the [next bounded cut](PORT-008/COMPLETION-REMOVAL-R01.md)
-while fsim uses the bench. Remove COMPLETE/ACK after preserving actual native
-completion, cleanup and reciprocal UART return. Paired experimental format4
-rejects formats2/3. Compile/test offline only; no flashing or device access.
-P08-D02 retains later control/scheduling choices; broader goal stays paused.
+[Contract/results](PORT-008/COMPLETION-REMOVAL-R01-RESULTS.md) complete while
+fsim uses the bench. COMPLETE/ACK is removed; native completion, DMA cleanup and
+reciprocal UART return establish completion. P4 stages before final READY-high
+and retains storage until consumption. Format4 rejects formats2/3. Full builds,
+actual-owner host and linked eZ80 checks pass. ExExt EMOS reclaims another 264
+bytes, 738 free. No device/SD/flash/reset or production change; no speedup claim.
+P08-D02 retains later control/scheduling choices. Stop for discussion before
+another cut or matched-pair hardware comparison; broad goal stays paused.
 
 ### Deferred investigation — hardware assistance, 2026-10-11
 

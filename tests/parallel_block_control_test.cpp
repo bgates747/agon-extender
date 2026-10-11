@@ -1,5 +1,5 @@
-// Actual EMOS foreground/ISR + P4 control owner. Only UART and physical
-// adapter completions are scripted. No native GPIO/timing/throughput claim.
+// Actual EMOS foreground/ISR + P4 control owner. UART and physical completions
+// are scripted; no native GPIO/timing/throughput claim.
 #include <array>
 #include <cassert>
 #include <cstdint>
@@ -41,11 +41,11 @@ extern "C" BYTE emos_keyboard_parallel_send(const BYTE *p,UINT16 n){
   assert(irq && reserved);++sends;
   if(fail_send)return EMOS_KEY_BUSY;
   if(n==3){const BYTE prefix[]={23,0,CONSOLE_OPCODE};assert(!std::memcmp(p,prefix,3));return EMOS_KEY_OK;}
-  assert(n==16 && !p[14] && !p[15]);Packet reply{};
+  assert(n==16 && !p[14] && !p[15] && p[3]!=4);Packet reply{};
   if(!peer.request(p,now,0x12345678,reply.data()))return EMOS_KEY_OK;
   if(missing)return EMOS_KEY_OK;
   auto original=reply;
-  if(corrupt>=0){reply[corrupt]^=1u<<bit;}
+  if(corrupt>=0)reply[corrupt]^=1u<<bit;
   receive(reply,15);receive(reply);
   if(duplicate){original[10]^=0x20;parallel_control_pad(original.data());receive(original);}
   return EMOS_KEY_OK;
@@ -68,9 +68,13 @@ static Packet offer(unsigned length=256,unsigned direction=0){
   parallel_control_pad(p.data());return p;
 }
 static bool take(){BYTE *buffer=nullptr,direction=99;size_t length=0;return peer.takeCompleted(buffer,length,direction);}
+static void obsolete(const Packet &offer){
+  auto p=offer;Packet reply{};reply.fill(0xa5);auto unchanged=reply;
+  p[3]=4;assert(!peer.request(p.data(),now,7,reply.data()));assert(reply==unchanged);
+  for(BYTE version:{BYTE(2),BYTE(3)}){p=offer;p[2]=version;assert(!peer.request(p.data(),now,7,reply.data()));assert(reply==unchanged);}
+}
 static void runPhysical(){
-  // Simulated COMPLETED operations drive the actual paired sequencers. This
-  // intentionally does not claim UART drain or peripheral completion happened.
+  // Completed model inputs exercise actual paired sequencers, not real pads.
   BYTE ed=0,pd=0,ea=0,pa=0;bool ended=false;
   for(unsigned loops=0;loops<100;++loops){
     BYTE action=emos_parallel_handover_step(&e,BYTE(ed|(peer.handover.readyN()?EPH_READY_HIGH:0)));
@@ -94,99 +98,73 @@ static void runPhysical(){
   assert(false);
 }
 static void start(Packet const &p){
-  assert(emos_parallel_block_offer(&e,&session,3,p.data()));
+  obsolete(p);assert(emos_parallel_block_offer(&e,&session,3,p.data()));
   assert(peer.pending() && e.phase==EPH_DRAIN && peer.handover.phase()==P::drain);
   assert(!std::memcmp(peer.descriptor(),p.data(),16));assert(!take());
 }
-static void returned(BYTE status=0){runPhysical();assert(peer.payloadReturned(status,now));assert(!take());}
+static void returned(){
+  auto before=sends;runPhysical();assert(peer.payloadReturned(now));
+  assert(!peer.pending() && sends==before); // No software COMPLETE/ACK.
+}
 int main(){
-  // Repeated blocks, both directions, smallest/packet/boundary lengths. Preserve
-  // actual queued key press/release order through all phase/result waits.
   for(unsigned direction:{0u,1u})for(unsigned length:{1u,2u,255u,256u,4095u,4096u}){
     reset();agon::extender::input::UsbKeyQueue keys;
     for(unsigned down:{1u,0u}){agon::extender::input::ProcessedKey key{};key.virtual_key=42;key.down=down;assert(keys.push(key));}
     for(unsigned repeat=0;repeat<3;++repeat){
-      auto p=offer(length,direction);start(p);auto same=p;Packet ack{};
-      assert(!peer.request(same.data(),now,7,ack.data()));assert(!peer.provide(storage.data(),storage.size()));
-      assert(!emos_parallel_block_complete(&e,&session,p.data(),0));assert(!peer.payloadReturned(0,now));
-      returned();assert(!keys.empty());duplicate=true;
-      assert(emos_parallel_block_complete(&e,&session,p.data(),0));assert(irq==1);
-      assert(!peer.request(p.data(),now,7,ack.data())); // receipt still owns buffer
+      auto p=offer(length,direction);start(p);Packet ack{};
+      assert(!peer.request(p.data(),now,7,ack.data()));assert(!peer.provide(storage.data(),storage.size()));
+      assert(!peer.payloadReturned(now));returned();assert(!keys.empty());
+      obsolete(p);assert(!peer.request(p.data(),now,7,ack.data()));
+      assert(!peer.payloadReturned(now));assert(!peer.uartTransitionAllowed());
+      assert(!peer.provide(storage.data(),storage.size()));
       BYTE *data=nullptr,dir=99;size_t n=0;
       assert(peer.takeCompleted(data,n,dir));assert(data==storage.data() && n==length && dir==direction);
-      assert(!take());assert(session.phase==3 && peer.session.phase==3);++cases;
+      assert(!take());assert(peer.uartTransitionAllowed());assert(session.phase==3 && peer.session.phase==3);++cases;
     }
     for(unsigned down:{1u,0u}){agon::extender::input::ProcessedKey key{};assert(keys.pop(key));assert(key.virtual_key==42 && key.down==bool(down));}
     assert(keys.empty());
   }
-  // Changed reply metadata must match; former CRC bytes are ignored. Payload
-  // failure status=1 is legitimate but still must prevent success publication.
-  for(bool completion:{false,true})for(int field=0;field<16;++field)for(unsigned b=0;b<8;++b){
-    reset();auto p=offer();if(completion){start(p);returned();}
-    corrupt=field;bit=b;
-    bool accepted=completion ? emos_parallel_block_complete(&e,&session,p.data(),0)
-                             : emos_parallel_block_offer(&e,&session,3,p.data());
+  // Semantic ACK identity remains strict; the former CRC slots stay ignored.
+  for(int field=0;field<16;++field)for(unsigned b=0;b<8;++b){
+    reset();auto p=offer();corrupt=field;bit=b;
+    bool accepted=emos_parallel_block_offer(&e,&session,3,p.data());
     assert(accepted==(field>=14));
     if(!accepted)assert(session.phase==0 && e.phase==EPH_RETURN_RELEASE);
     ++cases;
   }
-  // Wrong incoming completion fields cannot mutate the P4 pending descriptor.
-  for(int field=0;field<14;++field)for(unsigned b=0;b<8;++b){
-    reset();auto p=offer();start(p);returned();Packet request=p,reply{};
-    request[3]=PARALLEL_COMPLETE;request[field]^=1u<<b;parallel_control_pad(request.data());
-    bool accepted=peer.request(request.data(),now,7,reply.data());
-    assert(accepted==(field==13 && b==0));
-    if(!accepted){assert(peer.pending() && !std::memcmp(peer.descriptor(),p.data(),16));assert(!take());}
-    else assert(!take() && peer.session.phase==0);
-    ++cases;
-  }
-  for(unsigned local:{0u,1u})for(unsigned remote:{0u,1u}){
-    reset();auto p=offer();start(p);returned(BYTE(remote));
-    bool ok=emos_parallel_block_complete(&e,&session,p.data(),BYTE(local));
-    assert(ok==(!local && !remote));assert(take()==ok);
-    if(!ok)assert(session.phase==0 && peer.session.phase==0 && peer.handover.phase()==P::uart);
-    ++cases;
-  }
-  reset();auto failedOffer=offer();start(failedOffer);returned();e.failed=1;
-  assert(!emos_parallel_block_complete(&e,&session,failedOffer.data(),0));
-  assert(!take() && session.phase==0 && peer.session.phase==0);++cases;
-  for(bool completion:{false,true})for(unsigned failure=0;failure<4;++failure){
-    reset();auto p=offer();if(completion){start(p);returned();}
-    if(failure==0)missing=true;
-    if(failure==1)missing=frozen=true;
+  for(unsigned failure=0;failure<4;++failure){
+    reset();auto p=offer();if(failure==0)missing=true;if(failure==1)missing=frozen=true;
     if(failure==2)fail_send=true;
     if(failure==3)reserved=0;
-    assert(!(completion ? emos_parallel_block_complete(&e,&session,p.data(),0)
-                        : emos_parallel_block_offer(&e,&session,3,p.data())));
-    assert(clock_reads<262150);assert(irq==1);
-    if(failure!=3)assert(session.phase==0);
-    ++cases;
+    assert(!emos_parallel_block_offer(&e,&session,3,p.data()));
+    assert(clock_reads<262150 && irq==1);if(failure!=3)assert(session.phase==0);++cases;
   }
-  for(uint32_t at:{100u,0xfffffff0u})for(bool afterReturn:{false,true}){
-    reset();now=at;auto p=offer();start(p);if(afterReturn)returned();
+  for(uint32_t at:{100u,0xfffffff0u}){
+    reset();now=at;auto p=offer();start(p);
     peer.expire(now+1999);assert(peer.pending());peer.expire(now+2000);
     assert(!peer.pending() && !take() && peer.session.phase==0 && peer.handover.phase()==P::recoveryRelease);++cases;
   }
-  // Deadline advances only on an observed, timely phase change; late progress
-  // cannot revive an expired block. Cancellation revokes even an unread receipt.
+  // Old deadline checked before accepting late phase progress or publication.
   reset();auto p=offer();start(p);peer.handover.step(P::quiet);
   peer.expire(now+1999);peer.expire(now+3998);assert(peer.pending());
   peer.expire(now+3999);assert(!peer.pending());++cases;
-  reset();p=offer();start(p);peer.handover.step(P::quiet);peer.expire(now+2000);assert(!peer.pending());++cases;
-  reset();p=offer();start(p);returned();assert(emos_parallel_block_complete(&e,&session,p.data(),0));peer.cancel();assert(!take());++cases;
-  reset();p=offer();start(p);returned();peer.handover.cancel();peer.expire(now);
-  assert(!peer.pending() && peer.session.phase==0 && !take());
-  assert(!peer.provide(storage.data(),storage.size()));++cases;
-  reset();p=offer();start(p);returned();assert(emos_parallel_block_complete(&e,&session,p.data(),0));
-  peer.handover.cancel();assert(!take());++cases;
-  // No buffer/capacity or no reservation/mode/active session: refuse admission.
+  reset();p=offer();start(p);runPhysical();assert(!peer.payloadReturned(now+2000));assert(!take());++cases;
+  // Completed local storage has no remote-receipt deadline; it is still
+  // exclusive until consumer take. Explicit cancellation revokes that storage.
+  reset();p=offer();start(p);returned();peer.expire(now+5000);
+  assert(!peer.uartTransitionAllowed() && take());++cases;
+  reset();p=offer();start(p);returned();peer.cancel();assert(!take());++cases;
+  reset();p=offer();start(p);runPhysical();peer.handover.cancel();
+  assert(!peer.payloadReturned(now) && !take());peer.expire(now);
+  assert(!peer.pending() && peer.session.phase==0 && !peer.provide(storage.data(),storage.size()));++cases;
+  reset();p=offer();start(p);returned();peer.handover.cancel();assert(!take());++cases;
   for(unsigned failure=0;failure<7;++failure){
     reset();p=offer();if(failure==0)peer.provide(nullptr,0);if(failure==1)peer.provide(storage.data(),255);
     if(failure==2)reserved=0;
     if(failure==3)session.phase=0;
     if(failure==4)emos_console_owned=1;
-    if(failure==5){p[10]=p[11]=0;parallel_control_pad(p.data());}
+    if(failure==5)p[10]=p[11]=0;
     assert(!emos_parallel_block_offer(&e,&session,failure==6?1:3,p.data()));assert(!peer.pending());emos_console_owned=0;++cases;
   }
-  std::cout<<"PASS "<<cases<<" paired block-control cases; no GPIO timing claim\n";
+  std::cout<<"PASS "<<cases<<" paired block-control cases; physical handoff, no serial completion or GPIO timing claim\n";
 }

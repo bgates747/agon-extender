@@ -596,11 +596,12 @@ binding on `p4-console`, with an explicit `port-008-stream-rNN-bTIMESTAMP`
 identity and frozen source snapshot. Do not combine it with private probe/data
 check profiles. Match EMOS's `port/exext-stream-candidate.mk` through the normal
 component wrapper and all profile-owned link/ROM checks. The experimental
-composition now selects CRC-free parallel wire3 on both processors. Match
-EMOS and P4; historical wire2 images are not compatible. The sixteen-byte
+composition now selects CRC-free parallel wire4 on both processors, without
+software COMPLETE/ACK. Match EMOS and P4; wire2/3 images are not compatible. The sixteen-byte
 carrier remains temporarily, with former CRC slots sent zero and ignored.
 Ordinary version1 console activation retains its CRC. See the
-[removal contract](tasks/PORT-008/CRC-REMOVAL-R01.md) for the compile-only boundary.
+[completion-removal contract](tasks/PORT-008/COMPLETION-REMOVAL-R01.md) for
+the offline boundary; native completion/cleanup and reciprocal pad release remain.
 The composition replaces the obsolete indefinite forward epoch implementation;
 it does not relax the ROM guard. See the [stream contract](protocols/exext-stream.md)
 and [current implementation work](tasks/PORT-008/EXEXT-STREAM-R01.md). A passing
