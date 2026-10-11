@@ -61,8 +61,7 @@ handback proof. Count, direction, readiness and shared-pin release remain necess
 VBlank-gated partial output, one-key-per-tick publication and IRQ-disabled output
 refusal are stock-behavior departures. First proposed code cut removes transport
 CRC; later cuts simplify receipt/control and scheduling. P08-D02 owns paired
-carrier/version choice. Source review only; stop for discussion before coding,
-deployment or permanent UART shutdown. No broader goal resumption.
+carrier/version choice. Source review complete. Author now authorizes the [first CRC-removal code cut](PORT-008/CRC-REMOVAL-R01.md), offline only, after contract freeze/push. Wire3 retains the carrier and electrical path while removing parallel CRC. Deployment, permanent UART shutdown and broader goal resumption remain gated.
 
 ### Deferred investigation — hardware assistance, 2026-10-11
 

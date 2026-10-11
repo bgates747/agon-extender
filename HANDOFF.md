@@ -13,7 +13,7 @@ TR01–TR04 is complete after freezing/pushing the contract. Its
 removal matrix and minimum path. CRC removal is the proposed first code cut;
 COMPLETE/ACK removal follows actual physical completion proof. Partial-output
 VBlank gating, key publication cadence and IRQ-disabled refusal also depart from
-stock. Source review only; stop for discussion before coding or deployment. The
+stock. Author now authorizes the [CRC-removal tranche](docs/tasks/PORT-008/CRC-REMOVAL-R01.md): freeze/push first, then paired wire3 CRC removal and offline checks. Retain sixteen-byte carrier and electrical path; bytes14–15 sent zero/ignored. No deployment in this tranche. The
 broad eight-hour goal remains paused.
 
 ## Start here

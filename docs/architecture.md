@@ -382,6 +382,12 @@ above the byte-transport boundary: application calls, ordered command/reply
 bytes, parsers, callbacks, sysvars and interrupt semantics. Reuse upstream code
 wherever processor differences permit. Physical transfer timing can differ;
 behavioral equivalence and performance still require separate qualification.
+The first CRC-removal implementation cut selects parallel wire discriminator3
+for both processors, retaining the sixteen-byte carrier with bytes14–15 sent
+zero and ignored on receipt. Format2 cannot grant admission. Ordinary version1
+console activation is unchanged; this experimental transition does not select
+a production image or require the final minimum carrier to retain that width.
+
 Keyboard source remains independently selected. The current
 [eight-bit candidate decision](decisions/ADR-0026-four-lane-exext-transport.md)
 uses the existing dedicated READY/CLOCK/VALID wires for phase handshakes.

@@ -91,3 +91,14 @@ The no-CRC decision above remains binding. This amendment concerns the ExExt
 transport pass; it does not reopen rendering, output-device or unrelated service
 design. PORT-008 P08-P05/D02/D03 own the bounded implementation review; deployed
 behavior and qualification remain unchanged.
+
+## First CRC-removal implementation cut — 2026-10-11 amendment
+
+Under the Author-authorized first code cut, EMOS and P4 use the existing parallel
+wire discriminator value3 for the CRC-free experimental pair. They retain the
+sixteen-byte carrier initially; bytes14–15 are transmitted zero and ignored on
+receipt. Format2 cannot grant parallel admission. Ordinary version1 console
+activation remains unchanged. This is a bounded implementation transition, not
+a permanent requirement for the final minimum control carrier. It changes no
+installed image or production selection. The linked PORT-008 task retains the
+remaining design questions and deployment gates.
