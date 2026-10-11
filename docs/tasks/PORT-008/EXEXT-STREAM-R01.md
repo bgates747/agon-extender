@@ -11,6 +11,9 @@ the established transport, renderer, MOS dispatch and packet handlers. Success
 requires installed-byte verification, functional tests and deterministic Nurples
 evidence; a compile or an echo alone is insufficient.
 
+Current [bounded results](EXEXT-STREAM-R01-RESULTS.md) distinguish physical
+passes, host checks, measured scopes and untested limits.
+
 ## Scope and boundaries
 
 1. EMOS exclusively owns mode commitment, bus admission, eZ80 GPIO and transport
