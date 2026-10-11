@@ -51,12 +51,17 @@ or performance acceptance yet. Direct ExCom ↔ ExExt transition review is queue
 as P08-P04. Later UART shutdown/game comparisons remain gated on Author
 discussion. Preserve exact recovery bytes; broader goal stays paused.
 
-### Authorized next tranche — minimum transport review, 2026-10-11
+### Completed minimum transport review, 2026-10-11
 
 [Minimum-transport contract](PORT-008/MINIMAL-TRANSPORT-REVIEW.md) TR01–TR04
-is authorized: trace stock and candidate send/receive paths, classify every
-addition and deliver a concrete removal list/minimum path. Freeze/push before
-review. Offline source work only; stop for discussion before implementation,
+is complete after freezing/pushing the contract. [Results](PORT-008/MINIMAL-TRANSPORT-RESULTS.md)
+trace stock/candidate paths and classify fourteen additions. CRC can go outright;
+separate COMPLETE/ACK is a removal candidate after retaining actual DMA/physical
+handback proof. Count, direction, readiness and shared-pin release remain necessary.
+VBlank-gated partial output, one-key-per-tick publication and IRQ-disabled output
+refusal are stock-behavior departures. First proposed code cut removes transport
+CRC; later cuts simplify receipt/control and scheduling. P08-D02 owns paired
+carrier/version choice. Source review only; stop for discussion before coding,
 deployment or permanent UART shutdown. No broader goal resumption.
 
 ### Deferred investigation — hardware assistance, 2026-10-11

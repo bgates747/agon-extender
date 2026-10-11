@@ -9,7 +9,9 @@ go. Current construction/offer/completion consumes 70.3–80.7% of measured orde
 reply time, so review that wrapper before changing the native byte runner.
 This tranche ends with a source-backed minimal path and an implementation order.
 It does not implement or deploy the removal, resume the paused eight-hour goal,
-or select permanent UART shutdown. Stop for discussion at the review result.
+or select permanent UART shutdown. TR01–TR04 are complete; the
+[source-backed result](MINIMAL-TRANSPORT-RESULTS.md) contains the removal matrix
+and proposed code cuts. Stop for discussion before implementation.
 
 ## Authority and scope
 
@@ -33,25 +35,25 @@ or select permanent UART shutdown. Stop for discussion at the review result.
 
 ## Work items
 
-TR01 [ ] — Establish the stock path. Read official MOS RST10/RST18, packet and
+TR01 [x] — Establish the stock path. Read official MOS RST10/RST18, packet and
 keyboard callback documentation before source. Trace actual MOS serial send,
 receive ISR/parser and VDP Stream read/write. Record tags/commits and exact
 source locations, flow-control behavior, blocking and interrupt context.
 
-TR02 [ ] — Map the candidate end to end. Trace ordinary ExExt output, full and
+TR02 [x] — Map the candidate end to end. Trace ordinary ExExt output, full and
 partial batches, query replies, keyboard packets and real VBlank service through
 EMOS and P4. Identify each CRC, offer/ACK, completion, poll, session, buffer and
 UART handover. Separate existing byte semantics from added link machinery and
 name both processor owners. Include the 4096→4097 boundary and reverse traffic.
 
-TR03 [ ] — Produce the removal/retention matrix. For every added operation,
+TR03 [x] — Produce the removal/retention matrix. For every added operation,
 classify remove, retain for physical necessity, simplify, or unresolved. Cite
 the concrete electrical/peripheral or stock-behavior requirement for retention.
 Identify callers and affected tests; retain only the minimum data needed for
 direction, byte count, ownership and backpressure. Treat permanent UART shutdown
 as a later alternative, not a prerequisite for this review.
 
-TR04 [ ] — Write the smallest viable path and implementation sequence. Distinguish
+TR04 [x] — Write the smallest viable path and implementation sequence. Distinguish
 immediate CRC removal from control simplifications needing a paired protocol
 change or Author decision. State compile/offline checks and reuse the existing
 256/4096/4097/8192-byte comparison matrix for later hardware validation. Report

@@ -1,4 +1,4 @@
-# Current checkpoint — minimum transport review authorized
+# Current checkpoint — minimum transport review complete
 
 The bounded phase tranche is complete, including byte proof and exact UART
 restoration. Control construction/offer/completion dominates; merely parking
@@ -6,11 +6,15 @@ and restoring UART is a much smaller measured cost. The Author requires removal
 of ExExt CRC and a transport-only first pass preserving stock behavior above
 byte transport. Existing extra control machinery must justify physical necessity.
 Author also requests review of direct ExCom ↔ ExExt switching. No transport
-optimization has been implemented. Author now authorizes
+optimization has been implemented. The authorized
 [minimum-transport review](docs/tasks/PORT-008/MINIMAL-TRANSPORT-REVIEW.md)
-TR01–TR04: freeze/push, trace stock versus candidate and deliver a removal list.
-Source review only; stop for discussion before coding or deployment. The broad
-eight-hour goal remains paused.
+TR01–TR04 is complete after freezing/pushing the contract. Its
+[results](docs/tasks/PORT-008/MINIMAL-TRANSPORT-RESULTS.md) contain a fourteen-row
+removal matrix and minimum path. CRC removal is the proposed first code cut;
+COMPLETE/ACK removal follows actual physical completion proof. Partial-output
+VBlank gating, key publication cadence and IRQ-disabled refusal also depart from
+stock. Source review only; stop for discussion before coding or deployment. The
+broad eight-hour goal remains paused.
 
 ## Start here
 
@@ -36,8 +40,9 @@ eight-hour goal remains paused.
    transport and necessary link operations. Keep stock streams/parsers/replies,
    callbacks/sysvars/interrupt behavior. Review offers, completion exchanges,
    polls, sessions and batching against specific physical necessity. P08-D02
-   owns minimum link control/paired deployment; P08-P05 owns the next bounded
-   contract. Keep electrical ownership/handshakes. No CRC-free build exists yet.
+   owns minimum link control/paired deployment; P08-P05 owns implementation.
+   Review contract/results are complete, including code/test locations. Keep
+   electrical ownership/handshakes. No CRC-free build exists yet.
    ADR-0026 and normative architecture record the new requirement.
 4. P08-P04 queues direct ExCom ↔ ExExt review. The runner currently returns via
    Legacy because EMOS rejects direct extended-to-extended requests. No change

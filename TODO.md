@@ -39,7 +39,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Ordinary ExExt goal paused after regression. [Stream comparison](docs/tasks/PORT-008/STREAM-TIMING-R01-RESULTS.md) and [phase attribution](docs/tasks/PORT-008/PHASE-TIMING-R01-RESULTS.md) complete; original UART pair restored. Author requires stock behavior with minimum link machinery and no CRC. [Minimum-transport review](docs/tasks/PORT-008/MINIMAL-TRANSPORT-REVIEW.md) TR01–TR04 authorized next: trace paths and deliver removal list before coding. Direct ExCom ↔ ExExt review queued. UART shutdown, games and hardware assistance remain later/gated. Production unchanged.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Ordinary ExExt goal paused after regression; original UART pair restored. Stream/phase comparisons and [minimum-transport review](docs/tasks/PORT-008/MINIMAL-TRANSPORT-RESULTS.md) complete. Removal matrix distinguishes CRC/software receipts from necessary physical handshaking and records non-stock VBlank scheduling/IRQ refusal. Discuss first paired CRC-removal code cut and P08-D02 carrier choice before coding. Direct ExCom ↔ ExExt, UART shutdown and games remain later/gated. Production unchanged.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 

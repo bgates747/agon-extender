@@ -19,6 +19,10 @@ next implementation boundary.
 Author authorizes the [minimum-transport review](MINIMAL-TRANSPORT-REVIEW.md)
 TR01–TR04 after freezing current work. This is the next source-review tranche;
 implementation and deployment remain gated on its result discussion.
+The review is now complete: [removal matrix/minimum path](MINIMAL-TRANSPORT-RESULTS.md).
+CRC removal is the proposed first code cut; separate completion receipt removal
+follows. VBlank output/return scheduling and IRQ-disabled output refusal remain
+explicit stock-behavior departures under P08-P05. No source/deployment change.
 
 ## Contract and boundaries
 
