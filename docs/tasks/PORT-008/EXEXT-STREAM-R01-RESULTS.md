@@ -1,10 +1,11 @@
 # Ordinary ExExt — bounded results
 
-Ordinary parallel VDU/reply routing now passes two focused physical fixtures.
-Three warm resets pass on the earlier held-prefix pair, but later resets into
-ExExt fail admission and require paired recovery. Cached keyboard input now
-passes physically; larger sprite-stream traffic faults before completion. Full
-transition/gameplay qualification remains incomplete. Production remains unchanged.
+Ordinary parallel VDU/reply routing, cached keyboard input and one finite
+Aginvadors run now pass physically. Aginvadors reaches only14.29updates/s,
+and Nurples setup currently fails an SD read, before its timed gameplay.
+A captured FR_DISK_ERR separates that failure from a rendering hang. Warm
+reset admission remains unreliable; later Agon-only resets can recover.
+Full transition/gameplay qualification remains incomplete. Production is unchanged.
 [Work contract](EXEXT-STREAM-R01.md) owns the remaining implementation/tests.
 
 ## Firmware and physical scope
@@ -316,3 +317,32 @@ A fresh original T09 on this pair again returns to a freshly observed MOS
 prompt with no completion marker. The host observer stops without resetting
 the Agon; normal listener entry fails, requiring deliberate recovery. The
 separate diagnostic will resolve the wrapped read-error status before a remedy.
+
+
+## Nurples SD isolation and checked chip-select scheduling
+
+1. A separately named, byte-verified diagnostic derivative changes only the
+   existing loader error display. It reports **FRESULT01 / FR_DISK_ERR** at
+   file offset **0x0487FC**, SP0x0BFF63. The frozen gameplay fixture and source
+   remain untouched. This is a setup failure, not a completed timing run.
+2. Stock MOSv3.0.2 owns active-low SD chip select PB4 and a100ms response-token
+   deadline. Synchronous ExExt service in VBlank can preempt that foreground
+   transaction. The bounded remedy defers physical ExExt work while PB4 is low;
+   already-received packet publication and stock clock ticks continue. No stock
+   SD timeout, parser or renderer is changed. Hardware causality remains a gate.
+3. The initial compiled guard was rejected by the actual linked-eZ80 test:
+   AgonDev exposed PB_DR as a numeric address, so the expression was constant.
+   That image was **not flashed**. The reusable MOS builder now maps PB_DR0x9A
+   through its existing volatile I/O facade and checks actual IN0 generation.
+4. Corrected EMOS build `agon-emos-v0.1.24-b2026-10-11-16-39-51Z` is130,967bytes,
+   with105bytes free. Image SHA256
+   `b02c2f9f277dcd49d702d69d18d4b7a2f8cbb08457bbe942ec2f4b08693fc48a`.
+   Real linked VBlank tests pass SD-selected deferral/resumption, nested and
+   non-nested IRQ, ordered down/up callbacks, primary/alternate registers,
+   IX/IY/SP/IFF. Host owner tests also preserve already-buffered publication
+   while SD is selected. Physical installation and frozen T09 repeat follow.
+5. Stream-r14 adds a one-time USB marker after boot pad fencing. All four flash
+   segments verify, and the installer observes that marker before releasing
+   held Agon reset. This **does not close reset qualification**: initial admission
+   still fails and a later ordinary Agon-only reset recovers. Original startup
+   and T09 config are restored/readback checked before the EMOS installation.
