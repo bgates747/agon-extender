@@ -6,8 +6,12 @@ SRAM and PSRAM destinations, two palettes without rewriting indices, nonzero
 source-row offset, missing/disabled-table rejection and an output guard. **No
 hardware run has been authorized or performed.** It does not generate HDMI.
 
-Current fixture identity: `ppa-clut-example-r02`. The source-only r01 was revised
-before its first build so the final input-integrity check invalidates CPU cache.
+Current fixture identity: `ppa-clut-example-r03`. The source-only r01 was revised
+so the final input-integrity check invalidates CPU cache. Preparation of r02
+exposed two build-integration issues, corrected before meaningful target results:
+explicitly depend on `esp_psram` to include its Kconfig/initialization, and force
+the sample consumer's overlay headers before the stock HAL as well as doing so
+for the PPA component. The SDK itself remains unchanged.
 
 ## Origin and SDK boundary
 
@@ -37,6 +41,8 @@ before its first build so the final input-integrity check invalidates CPU cache.
 
 Use the repository Python environment and retained native tools. The helper
 reuses `scripts/build_p4.py` tool validation. Both output paths must be fresh:
+select host-native `--tools-path` and `--python-env` overrides where required,
+as described in [the build guide](../../../building.md).
 
 ```sh
 .venv/bin/python docs/tasks/RESEARCH-007/clut-example/build.py \

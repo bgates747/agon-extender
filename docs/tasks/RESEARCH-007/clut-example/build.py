@@ -43,7 +43,7 @@ def main() -> int:
             parser.error("selected SDK input hash changed: " + entry["path"])
     compiler = native.checked_tools(args.tools_path.resolve(), args.python_env.resolve())
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d-%H-%M-%SZ")
-    build_id = "ppa-clut-example-r02-b" + stamp
+    build_id = "ppa-clut-example-r03-b" + stamp
     project = out / "project"
     project.mkdir(parents=True)
     for name in ["CMakeLists.txt", "sdkconfig.defaults", "main"]:
@@ -81,6 +81,11 @@ def main() -> int:
             f.write('\n# R07-03 isolated header backport; no SDK tree mutation.\n'
                     'target_include_directories(${COMPONENT_LIB} BEFORE PUBLIC '
                     '"${CMAKE_CURRENT_LIST_DIR}/overlay")\n')
+        # PUBLIC/BEFORE orders this component's own headers, but IDF can place
+        # the stock HAL first for consumers. Pin the sample's include order too.
+        with (project / "main/CMakeLists.txt").open("a") as f:
+            f.write('\ntarget_include_directories(${COMPONENT_LIB} BEFORE PRIVATE '
+                    '"${CMAKE_CURRENT_LIST_DIR}/../components/esp_driver_ppa/overlay")\n')
 
     env = os.environ.copy()
     env.update(IDF_PATH=str(native.IDF), IDF_TOOLS_PATH=str(args.tools_path.resolve()),

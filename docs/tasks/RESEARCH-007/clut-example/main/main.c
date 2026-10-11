@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
- * RESEARCH-007, ppa-clut-example-r02. Compile-only experimental test article.
+ * RESEARCH-007, ppa-clut-example-r03. Compile-only experimental test article.
  *
  * Operation/verification idioms adapted from Espressif's Apache-2.0 CLUT tests
  * in commit76b4cf1336168aad6d1db4b8d1d2743137db4092. See ../README.md.
