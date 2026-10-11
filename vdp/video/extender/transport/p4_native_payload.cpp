@@ -3,9 +3,7 @@
 #include <driver/gpio.h>
 #include <esp_heap_caps.h>
 #include <freertos/FreeRTOS.h>
-#if defined(AGON_EXTENDER_PARALLEL_PROBE)
 #include <cstdio>
-#endif
 namespace agon::extender::transport {
 static_assert(std::atomic<std::size_t>::is_always_lock_free &&
               std::atomic<unsigned>::is_always_lock_free &&
@@ -198,11 +196,13 @@ bool P4NativePayload::releaseDataPins() noexcept {
   return okay;
 }
 P4NativePayload::Result P4NativePayload::finish(Result outcome) noexcept {
-#if defined(AGON_EXTENDER_PARALLEL_PROBE)
-  if(outcome!=Result::complete)printf("Parallel native outcome=%u tx=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d valid_edges=%d qualified_clocks=%d\n",
-    unsigned(outcome),unsigned(transmit_),unsigned(done_.load()),unsigned(completed_.load()),unsigned(edges_.load()),
-    gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)),validCounter_.diagnosticCount(),clockCounter_.diagnosticCount());
-#endif
+  // EX06: report the first failed leaf's retained facts before cleanup. USB
+  // stdout only, after failure; no probe/counter or successful payload cost.
+  if(outcome!=Result::complete && result_==Result::pending)
+    printf("Parallel native outcome=%u tx=%u requested=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d\n",
+      unsigned(outcome),unsigned(transmit_),unsigned(length_),unsigned(done_.load()),
+      unsigned(completed_.load()),unsigned(edges_.load()),
+      gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)));
   const bool stopped=stop(),released=releaseDataPins();
   if(!stopped || !released || !setReadyN(true))return result_=Result::cleanupFault;
   if(outcome==Result::complete && !transmit_)std::memcpy(buffer_,dma_,length_);
@@ -217,6 +217,10 @@ P4NativePayload::Result P4NativePayload::poll(std::uint32_t now) noexcept {
   if(transmit_) {
     auto r=egress_.poll(now);
     if(r==ParallelTxResult::pending)return result_;
+    if(r!=ParallelTxResult::complete)
+      printf("Parallel native TX result=%u requested=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d\n",
+        unsigned(r),unsigned(length_),unsigned(done_.load()),unsigned(completed_.load()),
+        unsigned(edges_.load()),gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)));
     if(r!=ParallelTxResult::cleanupFault)discardBuffer();
     return result_=r==ParallelTxResult::complete?Result::complete:
         r==ParallelTxResult::cleanupFault?Result::cleanupFault:

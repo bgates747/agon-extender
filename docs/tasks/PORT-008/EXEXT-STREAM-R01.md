@@ -401,3 +401,15 @@ reset-during-payload or power-loss case. Mainboard fsim VDP remains unchanged.
    its implementation owner. Consumer Apple IIe test derivatives reuse the
    existing finite Choplifter/Lode Runner workloads; only startup-owned mode
    selection and durable Lode reporting differ. Owner/production code is intact.
+
+### EX04 next bounded physical correction
+
+Full-HDMI stream-r06 (isolated SDK teardown fix) independently verifies and
+completes the cached-input test: six correct callbacks and cached-map changes
+while the application only reads cached memory for five seconds. However,
+Agon-only reset into ExExt fails admission twice, and recovered T07 sprite setup
+faults at native completion before any result. T08/T09 remain unrun. Preserve
+the separate limits; paired recovery is not a warm-reset pass. Extend existing
+USB failure reporting with failed-leaf direction/length/callback facts, rebuild
+the normal candidate, then isolate the failed transfer. Keep native success
+paths, ownership, deadlines and production selection unchanged.
