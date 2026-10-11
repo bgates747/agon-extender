@@ -75,6 +75,18 @@ in these rows means the replacement EMOS build, not code executing on P4.
 No single-root-cause claim joins the sprite panic, palette iterator fault and
 queued operand lifetime finding. They have different evidence and triggers.
 
+## FWBUG-014 — P4-PC transport D7 supply depends on lazy SD mounting
+
+| Field | Record |
+|---|---|
+| Component | Project-owned EDP P4-PC Rev C console integration; filtered data-r12 reproduces the defect. No stock MOS/VDP fault or silicon erratum established. |
+| Trigger | P4-PC GPIO46 is transport D7, but its VDD_IO_5 bank is supplied by LDO4. The old code acquired that supply only on first local SD mount and released it after mount failure. Reverse parallel transfers before/after a failing mount receive D7 low. |
+| Mainboard | eZ80 receives 512 incorrect high-bit bytes of 1,024 with intact guards/status 0. Lower seven bits are exact. The matched DevKit control passes with D7 on GPIO9. This is not evidence of a defective Agon input. |
+| Extender | Physical P4-PC comparison without probes: fixed 3.3V boot-owned supply passes independent1024-byte transfers in both directions, including reverse after a failed SD mount. No wire change. |
+| Reproducer/evidence | [PORT-008 direction isolation](tasks/PORT-008/DIRECTION-ISOLATION-R01.md), DI05-B7; exact candidate data-r19 and retained receive-byte/control identities are recorded there. |
+| Disposition | Corrected in maintained development source; local SD cannot lower or release the shared bank. Real 1/255/4096 echo remains pending. Production promotion and broader qualification are not claimed. |
+| Owner | PORT-008; this is a finding within its existing remedy scope, not a new work queue. |
+
 ## Existing MOS test-suite coverage
 
 [Cross-reference against mos-tests](firmware-bugs/mos-tests-coverage.md) records

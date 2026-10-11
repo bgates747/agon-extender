@@ -11,6 +11,7 @@ using R=P::Result;
 constexpr std::array<int,8> pins{{17,18,19,20,32,33,36,46}};
 static int core,op,fail=-1,ready=1,valid=1,clockLevel=1;
 static bool enabled,txLive,rxLive,delLive,outputs,watch;
+static bool filterLive,filterEnabled;
 struct Counter {bool live,channel,enabled,running,watch,cleared;int raw,edge,level,positive,negative,high,low;};
 static Counter counters[2];
 static bool counterRunning;
@@ -36,11 +37,19 @@ int gpio_reset_pin(int){if(fails())return ESP_FAIL;outputs=false;return 0;}
 int gpio_set_direction(int,int m){assert(m==GPIO_MODE_INPUT);if(fails())return ESP_FAIL;outputs=false;return 0;}
 int gpio_pullup_dis(int){return fails()?ESP_FAIL:0;}
 int gpio_pulldown_dis(int){return fails()?ESP_FAIL:0;}
+int gpio_new_pin_glitch_filter(gpio_pin_glitch_filter_config_t const*c,void**u){
+ assert(c->gpio_num==14&&c->clk_src==GLITCH_FILTER_CLK_SRC_DEFAULT&&!filterLive);
+ if(fails())return ESP_FAIL;
+ filterLive=true;*u=reinterpret_cast<void*>(4);return ESP_OK;
+}
+int gpio_glitch_filter_enable(void*){assert(filterLive&&!filterEnabled);if(fails())return ESP_FAIL;filterEnabled=true;return ESP_OK;}
+int gpio_glitch_filter_disable(void*){assert(filterEnabled&&!enabled&&!txLive);if(fails())return ESP_FAIL;filterEnabled=false;return ESP_OK;}
+int gpio_del_glitch_filter(void*){assert(filterLive&&!filterEnabled&&!enabled&&!txLive);if(fails())return ESP_FAIL;filterLive=false;return ESP_OK;}
 void*heap_caps_aligned_alloc(std::size_t a,std::size_t n,int caps){
  assert(a==64&&caps==7&&!allocation);if(fails())return nullptr;
  requested=n;allocation=std::malloc(n);return allocation;
 }
-void heap_caps_free(void*p){assert(p&&p==allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch);std::free(p);allocation=nullptr;}
+void heap_caps_free(void*p){assert(p&&p==allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!filterLive&&!filterEnabled);std::free(p);allocation=nullptr;}
 int parlio_new_tx_unit(parlio_tx_unit_config_t const*c,void**u){
  assert(c->data_width==8&&c->trans_queue_depth==1&&c->clk_src==PARLIO_CLK_SRC_EXTERNAL);
  assert(c->clk_in_gpio_num==14&&c->clk_out_gpio_num==-1&&c->valid_gpio_num==-1);
@@ -117,7 +126,7 @@ int pcnt_del_channel(void*u){auto&x=channel(u);assert(x.channel&&!x.enabled);if(
 int pcnt_del_unit(void*u){auto&x=unit(u);assert(x.live&&!x.channel&&!x.enabled);x.live=false;return ESP_OK;}
 
 static void reset(){
- assert(!allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!outputs&&!countersLive()&&!counterRunning);
+ assert(!allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!outputs&&!countersLive()&&!counterRunning&&!filterLive&&!filterEnabled);
  for(auto&x:counters)x={};
  clockStopRace=0;
  core=0;op=0;fail=-1;ready=valid=clockLevel=1;edge=nullptr;edgeContext=context=nullptr;tc={};rc={};

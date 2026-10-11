@@ -31,6 +31,14 @@ leases can make P4-local operations temporarily busy during staged jobs.
    not automatically safe either: HTTP may replace/delete their backing files.
    No image-lease API is implemented; detached service tests keep guests disabled.
 
+P4-PC Rev C development console builds keep the shared GPIO/SD bank powered
+at 3.3V from startup. A local-card mount failure does not turn off transport
+D7/GPIO46. PC SDMMC remains four-bit, default 20MHz and 3.3V; UHS voltage switching
+is disabled on this shared bank. The DevKit retains its SD-only power lifecycle.
+The [board reference](hardware/esp32-p4-pc/README.md) and
+[physical transfer results](tasks/PORT-008/DIRECTION-ISOLATION-R01.md) describe
+this correction; they do not qualify P4-PC local-card operation or hotplug.
+
 ## Python CLI
 
 Use Python 3.9 or newer (standard library only), using this checkout's virtual

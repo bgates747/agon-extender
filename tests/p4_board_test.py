@@ -57,6 +57,7 @@ class BoardTest(unittest.TestCase):
                 (work / "board.hpp").write_text(render_header(board))
                 checks = '#include "board.hpp"\nusing namespace agon::extender::board;\n'
                 checks += f"static_assert(kFencePins.size()=={fence_count});\n"
+                checks += f"static_assert(kTransportSharesSdIoSupply=={str(name=='p4-pc').lower()});\n"
                 for key, value in zip(("Tx", "Rx", "Rts", "Cts"), uart):
                     checks += f"static_assert(kUart{key}=={value});\n"
                 for index, value in enumerate(data):

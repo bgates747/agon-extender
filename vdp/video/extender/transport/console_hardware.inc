@@ -8,6 +8,7 @@
 #include <hal/uart_ll.h>
 #include <esp_random.h>
 #include "console_uart_owner.hpp"
+#include "../storage/local/http.hpp"
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
 #include "p4_boot_startup.hpp"
 #include "p4_uart_reset.hpp"
@@ -126,6 +127,9 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
     printf("Console control version=%u op=%u active=%u\n",p[2],p[3],console_stream->session.active());
 }
 ConsoleStream *beginConsole() {
+  // Supply ownership is independent of an SD card or EMOS transport lease.
+  // Fail before touching shared pads if the board's I/O bank cannot be powered.
+  if(!agon::extender::local_sd::beginSharedIoSupply())abort();
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
   agon::extender::input::remoteLocked([](auto &r){r.begin(esp_random());return 0;});
 #endif

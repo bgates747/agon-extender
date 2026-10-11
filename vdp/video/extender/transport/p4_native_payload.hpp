@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <driver/parlio_rx.h>
 #include <driver/parlio_tx.h>
+#include <driver/gpio_filter.h>
 #include <esp_attr.h>
 #include "p4_parallel_egress.hpp"
 #include "p4_parallel_handover.hpp"
@@ -60,6 +61,7 @@ class P4NativePayload final : private ParallelTxBackend {
   parlio_rx_unit_handle_t rx_{};
   parlio_rx_delimiter_handle_t delimiter_{};
   parlio_tx_unit_handle_t tx_{};
+  gpio_glitch_filter_handle_t clockFilter_{};
   std::uint8_t *dma_{},*buffer_{};
   std::size_t length_{};
   std::uint32_t began_{},timeout_{};
@@ -68,6 +70,7 @@ class P4NativePayload final : private ParallelTxBackend {
   std::atomic<bool> done_{};
   std::atomic<bool> accepting_{};
   bool enabled_{},transmit_{};
+  bool clockFilterEnabled_{};
   Result result_{Result::idle};
 };
 }

@@ -12,6 +12,7 @@
 #include <driver/sdmmc_host.h>
 #include <sdmmc_cmd.h>
 #include <sd_pwr_ctrl_by_on_chip_ldo.h>
+#include <esp_ldo_regulator.h>
 #include <esp_log.h>
 #include <cstring>
 #include <algorithm>
@@ -20,6 +21,17 @@
 #endif
 namespace agon::extender::local_sd {
 namespace {
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+constexpr bool sharedIoSupply=board::kTransportSharesSdIoSupply;
+#else
+constexpr bool sharedIoSupply=false;
+#endif
+// PORT-008 DI05-B7: Rev C VDDPST_5 (GPIO39-48) is ESP_LDO_VO4.
+// A lazy SD-only owner leaves transport D7/GPIO46 unpowered before a mount,
+// and turns it off again after card failure. Keep a fixed-voltage board owner;
+// SDMMC must neither acquire an adjustable owner nor switch this bank to 1.8V.
+// Source: OLIMEX/ESP32-P4-PC 04032d68, Rev C PCB; ESP32-P4 v1.3 datasheet.
+esp_ldo_channel_handle_t sharedPower=nullptr;
 constexpr const char *root="/p4sd";
 httpd_handle_t server=nullptr;
 sdmmc_card_t *card=nullptr;
@@ -35,7 +47,11 @@ bool mount(){
 #else
   ldo.ldo_chan_id=4;
 #endif
-  mountError=sd_pwr_ctrl_new_on_chip_ldo(&ldo,&power);if(mountError!=ESP_OK)return false;
+  if(sharedIoSupply) {
+    if(!beginSharedIoSupply()){mountError=ESP_FAIL;return false;}
+  } else {
+    mountError=sd_pwr_ctrl_new_on_chip_ldo(&ldo,&power);if(mountError!=ESP_OK)return false;
+  }
   sdmmc_host_t host=SDMMC_HOST_DEFAULT();host.pwr_ctrl_handle=power;
   sdmmc_slot_config_t slot=SDMMC_SLOT_CONFIG_DEFAULT();slot.width=4;
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
@@ -46,10 +62,17 @@ bool mount(){
   slot.d1=GPIO_NUM_40;slot.d2=GPIO_NUM_41;slot.d3=GPIO_NUM_42;
 #endif
   slot.flags|=SDMMC_SLOT_FLAG_INTERNAL_PULLUP;
+  // Fixed 3.3V and default 20MHz on the shared Agon bank. With no adjustable
+  // SD power handle, explicitly prevent the UHS 1.8V transition.
+  if(sharedIoSupply)slot.flags&=~SDMMC_SLOT_FLAG_UHS1;
   esp_vfs_fat_sdmmc_mount_config_t cfg{};cfg.format_if_mount_failed=false;
   cfg.max_files=4;cfg.allocation_unit_size=16384;
   mountError=esp_vfs_fat_sdmmc_mount(root,&host,&slot,&cfg,&card);
-  if(mountError!=ESP_OK){card=nullptr;sd_pwr_ctrl_del_on_chip_ldo(power);power=nullptr;}
+  if(mountError!=ESP_OK){
+    card=nullptr;
+    if(power){sd_pwr_ctrl_del_on_chip_ldo(power);power=nullptr;}
+    // sharedPower belongs to the board, not this mount attempt. Retain it.
+  }
   ESP_LOGI("p4_sd","Mount: %s (format disabled)",esp_err_to_name(mountError));
   return card!=nullptr;
 }
@@ -275,6 +298,20 @@ esp_err_t mutate(httpd_req_t *r) {
   if (!ok) return failure(r, recursive || parents || replace);
   return reply(r, "200 OK", "Complete");
 }
+}
+bool beginSharedIoSupply() noexcept {
+  if(!sharedIoSupply || sharedPower)return true;
+  esp_ldo_channel_config_t config{};
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+  config.chan_id=board::kSdLdo;
+#else
+  config.chan_id=4;
+#endif
+  config.voltage_mv=3300;
+  const auto error=esp_ldo_acquire_channel(&config,&sharedPower);
+  ESP_LOGI("p4_io_power","Shared GPIO/SD supply: %s, fixed 3300mV",
+      esp_err_to_name(error));
+  return error==ESP_OK;
 }
 const char *mediaRoot() noexcept { return root; }
 bool prepareSpool(std::string &directory) noexcept {

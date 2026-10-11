@@ -121,6 +121,10 @@ def render_header(board: dict) -> str:
               "UsbPeripheralMap": usb["peripheral_map"]}
     values.update({"Sd" + k.capitalize(): sd[k] for k in ("clk", "cmd", "d0", "d1", "d2", "d3")})
     text += "".join(f"inline constexpr int k{key} = {value};\n" for key, value in values.items())
+    # Rev C powers GPIO39-48 (including transport D7/GPIO46) from the SD
+    # LDO4 rail. DevKit transport pads use independently powered I/O banks.
+    shared_supply = board["board"] == "p4-pc"
+    text += f"inline constexpr bool kTransportSharesSdIoSupply = {str(shared_supply).lower()};\n"
     text += "}\n"
     return text
 

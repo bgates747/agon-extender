@@ -61,6 +61,14 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
   dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length,MALLOC_CAP_INTERNAL|MALLOC_CAP_DMA|MALLOC_CAP_8BIT));
   if(!dma_)return false;
   std::memcpy(dma_,data,length);
+  // PORT-008 DI05: observed extra CLOCK edges skipped TX bytes. The P4's
+  // fixed pin filter rejects sub-two-sample pulses before PARLIO; it does not
+  // alter the eZ80 protocol. Keep its lifetime inside this admitted native leaf.
+  gpio_pin_glitch_filter_config_t filter{};
+  filter.gpio_num=static_cast<gpio_num_t>(clock_);filter.clk_src=GLITCH_FILTER_CLK_SRC_DEFAULT;
+  if(gpio_new_pin_glitch_filter(&filter,&clockFilter_)!=ESP_OK)return false;
+  if(gpio_glitch_filter_enable(clockFilter_)!=ESP_OK)return false;
+  clockFilterEnabled_=true;
   parlio_tx_unit_config_t config{};
   for(auto& pin:config.data_gpio_nums)pin=GPIO_NUM_NC;
   for(std::size_t i=0;i<pins_.size();++i)config.data_gpio_nums[i]=static_cast<gpio_num_t>(pins_[i]);
@@ -157,7 +165,17 @@ bool P4NativePayload::stop() noexcept {
     if(rx_) {if(parlio_del_rx_unit(rx_)==ESP_OK)rx_=nullptr;else okay=false;}
     if(!rx_ && delimiter_) {if(parlio_del_rx_delimiter(delimiter_)==ESP_OK)delimiter_=nullptr;else okay=false;}
   }
-  const bool stopped=okay && !enabled_ && !tx_ && !rx_ && !delimiter_;
+  // Do not remove CLOCK filtering while the TX peripheral may still run.
+  // Failed cleanup retains this object and DMA until cancel() can retry.
+  if(clockFilter_ && !enabled_ && !tx_) {
+    if(clockFilterEnabled_) {
+      if(gpio_glitch_filter_disable(clockFilter_)==ESP_OK)clockFilterEnabled_=false;else okay=false;
+    }
+    if(!clockFilterEnabled_) {
+      if(gpio_del_glitch_filter(clockFilter_)==ESP_OK)clockFilter_=nullptr;else okay=false;
+    }
+  }
+  const bool stopped=okay && !clockFilter_ && !enabled_ && !tx_ && !rx_ && !delimiter_;
   if(stopped)accepting_.store(false,std::memory_order_release);
   // Keep DMA through pad-release proof and RX publication. A cleanup fault
   // retains storage and callback context until the owner retries cancel().

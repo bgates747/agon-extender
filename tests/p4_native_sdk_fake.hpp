@@ -11,6 +11,12 @@ constexpr int PARLIO_SAMPLE_EDGE_NEG=2,PARLIO_BIT_PACK_ORDER_LSB=0,PARLIO_RX_UNI
 #define IRAM_ATTR
 using parlio_rx_unit_handle_t=void*;using parlio_tx_unit_handle_t=void*;
 using parlio_rx_delimiter_handle_t=void*;
+using gpio_glitch_filter_handle_t=void*;
+constexpr int GLITCH_FILTER_CLK_SRC_DEFAULT=0;
+struct gpio_pin_glitch_filter_config_t {int clk_src;gpio_num_t gpio_num;};
+int gpio_new_pin_glitch_filter(gpio_pin_glitch_filter_config_t const*,void**);
+int gpio_glitch_filter_enable(void*);int gpio_glitch_filter_disable(void*);
+int gpio_del_glitch_filter(void*);
 struct parlio_rx_event_data_t {void*delimiter;void*data;std::size_t recv_bytes;};
 struct parlio_tx_done_event_data_t {};
 struct parlio_rx_event_callbacks_t {bool(*on_receive_done)(void*,parlio_rx_event_data_t const*,void*);};

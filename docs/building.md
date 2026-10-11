@@ -99,6 +99,12 @@ Ethernet, local SD and USB hub setup. The build manifest records board identity,
 configuration/header hashes and compiler identity. Validation checks actual
 compiler dependencies and the effective application/bootloader silicon range.
 
+The generated board header also identifies the Rev C shared GPIO/SD supply.
+P4-PC console startup retains LDO4 at 3.3V before configuring console pads:
+GPIO46/D7 belongs to that power bank even without a local SD card. SD mount
+failure must not disable it. The DevKit SD power path remains independent of
+its transport pads. See [board supply details](hardware/esp32-p4-pc/README.md).
+
 Both variants retain browser output. Selecting the PC board does not add HDMI,
 select a new display family or change EMOS's ownership of transport admission.
 The PC mapping is a candidate direct harness: eight shared UART/parallel lanes

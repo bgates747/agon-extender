@@ -27,6 +27,22 @@ The Pi 5 now hosts development and the P4-PC bench; standalone P4-PC tests
 precede Agon reconnection. Current topology and remaining identity/wiring
 verification boundaries are recorded in `HARDWARE.local.md`.
 
+## Rev C shared GPIO/SD supply
+
+GPIO39–48 use VDDPST_5, which the Rev C PCB connects to ESP_LDO_VO4.
+Transport D7/GPIO46 therefore needs LDO4 even when no P4-local SD card is used.
+The maintained P4-PC console initializes and retains a fixed 3.3V supply before
+console GPIO setup. SDMMC uses four data lines at its default 20MHz/3.3V and
+cannot acquire an adjustable owner, switch the shared bank to 1.8V or turn it
+off after mount failure. DevKit transport D7/GPIO9 uses a different I/O bank;
+its existing SD-only supply lifecycle remains unchanged.
+
+The manufacturer PCB source at the Rev C commit above and Espressif's
+[chip v1.3 datasheet](https://documentation.espressif.com/esp32-p4-chip-revision-v1.3_datasheet_en.html)
+establish the connection. The [direction-isolation results](../../tasks/PORT-008/DIRECTION-ISOLATION-R01.md)
+record the independently compared physical transfers and current qualification
+boundary. This correction does not establish successful P4-PC SD mounting.
+
 ## Retained Rev B snapshot
 
 | Resource | Local copy |

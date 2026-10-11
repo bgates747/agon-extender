@@ -10,7 +10,7 @@ class NativePayloadTests(unittest.TestCase):
   try:
    with tempfile.TemporaryDirectory() as tmp:
     d=Path(tmp)
-    for header in ('driver/pulse_cnt.h','driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h',
+    for header in ('driver/pulse_cnt.h','driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h','driver/gpio_filter.h',
                    'esp_attr.h','esp_heap_caps.h','freertos/FreeRTOS.h'):
      p=d/header;p.parent.mkdir(parents=True,exist_ok=True)
      p.write_text('#include "p4_native_sdk_fake.hpp"\n')

@@ -2,16 +2,16 @@
 
 ## Executive summary
 
-The modern DevKit control now passes independent 1,024-byte transfers in both
-directions, using the same filtered native transport source and unchanged EMOS.
-P4-PC reverse remains defective: filtering preserves all seven lower bits but
-leaves bit7 corruption, which survives peripheral lane permutations on physical
-GPIO46. P4-PC still fails after probe removal: all512 expected high-bit bytes
-lose bit7, while the lower seven bits are exact. Removing probes is therefore
-not a remedy. Wiring, pad, silicon and HDMI differences remain unisolated.
-The exact preceding matched P4-PC HDMI image is restored, ordinary input ready
-and original startup unchanged. Production remains unchanged. P4-PC repair and
-real 1/255/4096-byte echo qualification remain incomplete under DI05-B/C.
+The P4-PC corruption now has a working development remedy. GPIO46/D7 uses a
+bank supplied by LDO4; the previous console did not initialize that supply
+until a local SD mount and released it after mount failure. Fixed 3.3V supply
+initialization before console GPIO setup produces zero errors in independent
+1,024-byte transfers in both directions, including reverse after a failed SD
+mount. The original harness, EMOS and full HDMI composition remain in place.
+CLOCK filtering also has an owned native cleanup lifecycle. See DI05-B7 and
+[FWBUG-014](../../firmware-bugs.md). The genuine 1/255/4096-byte echo check is
+still pending. Production selection is unchanged; broad qualification and
+successful P4-local card mounting are not claimed.
 
 DI01 [x] — Reuse the existing private retained-data endpoint and snapshot hook.
 EMOS sends a position-dependent1,024-byte pattern through its existing gateway
@@ -569,13 +569,13 @@ b774170ff46c393eeb5e495ea37936038d3f4f4f documents this ownership in
 `components/sdmmc/sdmmc_init.c`. Prior mainboard listener access does not invoke
 this P4-local service. SD mount and GPIO-bank supply must not be conflated.
 
-DI05-B7a [ ] — Host installs/verifies the exact canonical filtered data-r12
+DI05-B7a [x] — Host installs/verifies the exact canonical filtered data-r12
 control. EMOS, mainboard VDP, startup, harness, HDMI and fixture remain fixed.
 Invoke one fresh independent 1,024-byte reverse transfer before any P4-local
 card request. Retain all bytes, guards, bit-wise mismatch counts and P4 source
 report. This deliberately retained failing A control does not block paired B.
 
-DI05-B7b [ ] — Host makes one P4-local SD status request, retaining its response
+DI05-B7b [x] — Host makes one P4-local SD status request, retaining its response
 and USB mount log, then repeats the identical reverse workload to a fresh SD
 result. Do not write, format or otherwise modify the P4 card. A failed mount
 that releases the rail is an inconclusive power control. No rewiring, analyzer,
@@ -593,9 +593,9 @@ retention was actually exercised; do not claim an unperformed removal test.
 The renewed deadline remains 09:35:10UTC. Preserve informative evidence and a
 verified usable ordinary pair at closeout. No production promotion is implied.
 
-DI05-B7a [x] and DI05-B7b [x] — Exact filtered canonical data-r12 verified on
+DI05-B7a/b results — Exact filtered canonical data-r12 verified on
 all four flash segments. Before/after transfers each have 512 bit7 mismatches,
-zero lower-seven-bit errors, status0 and intact guards. The intervening P4-local
+zero lower-seven-bit errors, status 0 and intact guards. The intervening P4-local
 mount returns ESP_ERR_TIMEOUT and releases LDO4, as predicted by its source.
 This pair is inconclusive about an enabled rail; it does not refute the supply
 lead. Evidence remains under ignored pc-power-r01 with fresh P8PW01A/B results.
@@ -609,3 +609,44 @@ existing adjustable SD-only power path. Retain the proven CLOCK filter as an
 owned native resource with checked cleanup. First run independent reverse and
 forward; then genuine echo boundaries if both pass. This retained-rail trial is
 a focused hypothesis test, not a root-cause declaration or production promotion.
+
+
+### DI05-B7b2 result — shared-supply correction passes independent transfers
+
+The P4-PC failure is attributable to missing initialization of the board's
+GPIO46 I/O supply. This is an Extender board integration defect, not an
+established silicon erratum or a demonstrated broken harness. No physical wire
+change or analyzer was involved. Recorded as [FWBUG-014](../../firmware-bugs.md).
+
+| P4-PC variant / control | Reverse bytes compared | Wrong bytes | Wrong D7 bits | Wrong lower-seven-bit bytes |
+|---|---:|---:|---:|---:|
+| Filtered data-r12, before local SD request | 1024 | 512 | 512 | 0 |
+| Filtered data-r12, after failed mount releases supply | 1024 | 512 | 512 | 0 |
+| Fixed shared 3.3V supply, data-r19, before SD request | 1024 | 0 | 0 | 0 |
+| Same data-r19, after failed SD mount | 1024 | 0 | 0 | 0 |
+
+Rows are ranked by corruption, worst first. These are byte-integrity counts,
+not throughput measurements. D7 high levels are now received in all 512 expected
+high bytes. Both passing reverse results have status 0 and intact guards.
+Independent Agon-to-P4 forward 1,024 also passes the P4's full retained-byte
+comparison with zero mismatches and FNV cfb78805; Agon status 0/guards intact.
+The P4-local card still returns ESP_ERR_TIMEOUT. Its failure no longer removes
+the shared supply or corrupts the following reverse transfer. Physical card
+removal, successful P4-local mounting and analog rail measurements were not
+performed or inferred from that failure.
+
+The exact candidate is port-008-data-r19-b2026-10-11-08-59-02Z,
+app SHA-256 71c4be69b0f3b9bed0f517d0331936b63c37ca407de5478f6ce937914ddfb38a.
+All four flash segments were independently verified. P4 boot reports successful
+fixed 3300mV acquisition. Native CLOCK filtering now belongs to its payload
+object and retains DMA/context on failed filter cleanup. Host ASan/UBSan checks
+pass 213 actual native cases; five board-generation/validation tests also pass.
+EMOS v0.1.24, stock mainboard VDP, canonical harness and original 38-byte startup
+are unchanged. CLI input remains admitted/neutral after each result retrieval.
+The three-workload host runtime was 59.243s, excluding preparation/installation.
+
+Ignored pc-power-r01 retains the failing controls; pc-supply-r01 retains exact
+source/build/install receipts, USB reports and fresh P8PS01R/F/S results. The
+echo-endpoint companion is building from the maintained corrected source.
+Real 1/255/4096 echo remains pending; do not treat independent directions as echo
+qualification. No production selection or tag changed.
