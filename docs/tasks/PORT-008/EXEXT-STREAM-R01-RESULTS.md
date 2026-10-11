@@ -367,3 +367,27 @@ identities differ; this is not an isolated wire-bandwidth comparison. The
 pacing interval includes preempting synchronous ExExt ISR work and therefore
 must not be called spare CPU time. Scanout remains about 60 Hz. Finite gameplay
 completion does not establish interactive playability or absence of flicker.
+
+
+## Rally and paired-clock kernel checkpoint
+
+Rally ExExt saves 120 ordered records and returns to an admitted MOS CLI.
+Normal CLI collection retrieves the fresh result without a reset or replay;
+the graphics screen sampler cannot read its completion text. Observed application
+rate is 2.092 updates/s versus earlier ExCom 8.304 and Legacy 10.141. **117 rows
+saturate the PRT counter**; clipped active/logic totals are not precise durations
+or spare CPU percentages. These are finite execution results, not playability.
+
+The paired-clock EMOS kernel passes 124 actual-linked byte/edge/register/ISR
+interleaving cases and ten actual-ELF profile/mutation controls. For a4096-byte
+payload with interrupts initially enabled, counted eZ80 instructions fall from
+148,488 to103,080 forward (−30.58%) and148,052 to102,820 reverse (−30.55%).
+These are instruction counts, not physical elapsed times. No renderer changes.
+The new image is130,968bytes (104 free), build
+`agon-emos-v0.1.24-b2026-10-11-16-52-19Z`, source
+`2b75451b37402bfc0eb5fee8cd22fd8b8f3fd4ea`, image SHA256
+`25196ce7b88a1e2f05ba3445f43d625623759ba304b51e58f9443c0b564677ca`.
+Complete installed ROM readback matches SHA256
+`e44c60b60359f64cc3a48a4559ce7ab4090fff0a7b742e4d4fd70adb517b6578`.
+Startup is restored/readback checked, input ready/neutral. Physical comparison
+uses the existing unmarked empty-loop control before frozen Nurples repetition.
