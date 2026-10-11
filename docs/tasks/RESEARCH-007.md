@@ -9,10 +9,20 @@ path. Compare P4 CPU palette expansion and supported PPA/display operations. The
 unproven: existing direct RGB888 rendering removed an expensive conversion
 stage, and indexed storage could reintroduce it.
 
-**State: recorded, not started.** Author requested filing the supplied web-agent
-feedback on 2026-10-09 while network topology changes. No investigation,
-implementation, benchmark, new mode, deployment or bench action is authorized
-by this record. PORT-008 coordinator work remains paused independently.
+**State: R07-01 authorized, source inventory in progress.** Author approved one
+unattended tranche on 2026-10-11: pin revisions and map the current pipeline,
+then report and stop. R07-02–07 remain unstarted. No implementation, benchmark,
+new mode, deployment or bench action is authorized. Fsim retains the bench;
+PORT-008's separate matched-pair hardware comparison is not part of this task.
+
+## Current tranche boundary — 2026-10-11
+
+R07-01 alone is authorized. Read official contracts, then the selected current
+source and retained build manifests. Inventory storage formats, row tables,
+assets, saved sprite backgrounds, palette state, composition and output owners.
+Record exact references and a bounded source-linked report; make no architecture
+decision or performance claim. Do not execute benchmarks, modify code or touch
+devices. Commit/push documentation and stop before R07-02.
 
 ## Origin and boundaries
 
