@@ -21,7 +21,7 @@ void esp_rom_gpio_connect_in_signal(int,int,bool);
 unsigned uart_ll_get_rxfifo_len(uart_dev_t*);bool uart_ll_is_tx_idle(uart_dev_t*);
 """
  (d/'p4_native_sdk_fake.hpp').write_text(fake)
- for name in ('driver/pulse_cnt.h','driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h',
+ for name in ('driver/pulse_cnt.h','driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h','driver/gpio_filter.h',
   'driver/uart.h','esp_attr.h','esp_heap_caps.h','freertos/FreeRTOS.h',
   'esp_rom_gpio.h','hal/uart_ll.h','soc/uart_periph.h'):
   p=d/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('#include "p4_native_sdk_fake.hpp"\n')

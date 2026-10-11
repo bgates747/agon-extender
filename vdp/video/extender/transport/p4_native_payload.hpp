@@ -13,7 +13,7 @@
 #include <esp_attr.h>
 #include "p4_parallel_egress.hpp"
 #include "p4_parallel_handover.hpp"
-#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
 #include "p4_valid_counter.hpp"
 #endif
 namespace agon::extender::transport {
@@ -22,7 +22,7 @@ class P4NativePayload final : private ParallelTxBackend {
   enum class Result { idle, pending, complete, rejected, wrongOwner, fault, timeout, cleanupFault };
   P4NativePayload(std::array<int,8> data,int clock,int valid,int ready,int core) noexcept
       : pins_(data),clock_(clock),valid_(valid),ready_(ready),core_(core),egress_(*this)
-#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
       ,validCounter_(valid,core),clockCounter_(valid,core)
 #endif
       {}
@@ -54,7 +54,7 @@ class P4NativePayload final : private ParallelTxBackend {
   std::array<int,8> pins_;
   int clock_,valid_,ready_,core_;
   P4ParallelEgress egress_;
-#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
   P4ValidCounter validCounter_,clockCounter_;
 #endif
   P4ParallelHandover const* handover_{};

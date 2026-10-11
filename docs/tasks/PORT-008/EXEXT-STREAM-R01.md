@@ -43,12 +43,12 @@ evidence; a compile or an echo alone is insufficient.
 
 ## Frozen work sequence
 
-EX01 [ ] — Review the current mode dispatcher, P4 Stream/owner, eZ80 IRQ and
+EX01 [x] — Review the current mode dispatcher, P4 Stream/owner, eZ80 IRQ and
 packet paths, ROM budget and retained fixtures. Record a bounded implementation
 design including idle input, split commands/uploads and synchronous replies.
 Reconcile the parent task's stale physical-failure summary against DI05's pass.
 
-EX02 [ ] — Implement the EMOS-owned ordinary ExExt adapter and P4 parser/reply
+EX02 [x] — Implement the EMOS-owned ordinary ExExt adapter and P4 parser/reply
 bindings using maintained component sources. Keep actual packet publication
 through existing stock/EMOS effects and callbacks. Add focused real-source tests
 for batching, split streams, direction ownership, idle servicing and failures.
@@ -62,10 +62,16 @@ candidate. Preserve original startup and ordinary application files. Demonstrate
 CLI entry/exit, text, small/bulk VDU, actual reply/sysvar effects and keyboard
 press/release with no application output. Test split commands and buffer uploads.
 
-EX05 [ ] — Reuse focused existing fixtures and deterministic Nurples runs in
-Legacy, ExCom and ExExt where applicable. Record application work/pacing and
-rendering/transport scopes separately, plus input/reply behavior. Never infer
-playability solely from presented FPS or a deterministic run without input.
+EX05 [ ] — Reuse focused existing fixtures and deterministic Nurples, Rally
+and Aginvadors runs in Legacy, ExCom and ExExt where applicable. Include the
+Apple IIe emulator from `../agon-6502`, specifically Choplifter and Lode Runner:
+these exercise framebuffer uploads rather than only drawing commands/sprites.
+Use the owning projects' current builds and retained deterministic workloads;
+do not adopt their unrelated pending optimizations. Record application
+work/pacing and rendering/transport scopes separately, plus input/reply behavior
+and the exact mode/resolution. Never infer playability solely from presented
+FPS or a deterministic run without input, or promise a transport speedup for
+CPU-bound emulation. Preserve the external projects' dirty work and ownership.
 
 EX06 [ ] — Exercise bounded mode-transition and reset/recovery controls. After
 an uncertain transfer, fence and recover rather than replay automatically. If
@@ -92,3 +98,68 @@ limits, final readiness, durations and the Author's morning review procedure.
 
 Private endpoints, tool locations, installed receipts and bench coordination
 belong in ignored local records. Evidence/run identities remain immutable.
+
+## Implementation review — first bounded adapter
+
+1. Official reference identities: MOS `v3.0.2`,
+   `8336409351ee5314e02801a7b72a4f1bb5282519`; VDP `v2.16.0`,
+   `c7ac293d2aa81ddfa693390549bcd909069c8fc3`. Their existing keyboard
+   map API permits an application to cache a pointer and subsequently call no
+   MOS API. A foreground-call-only return pump therefore cannot provide input.
+2. Retain the proven version-2 exact-length offer, physical coordinator and
+   completion exchange. Add an explicitly negotiated ordinary-stream binding
+   and a bounded queue-status query. Control envelopes remain UART-only;
+   ordinary VDU, VDP replies and keyboard packets use exact parallel blocks.
+   EMOS batches byte output and services residual output/returns on VBlank.
+   This first binding establishes correctness; negotiated block overhead must
+   be measured rather than assumed to outperform UART for every workload.
+3. The existing synchronous coordinator needs UART reply interrupts. The
+   VBlank bridge will save the complete interrupted register state, set a
+   non-reentrancy guard, temporarily admit interrupts during bounded transport
+   service, then mask interrupts before publishing complete returned packets
+   through the existing keyboard/VDP parser. Nested VBlank ticks may advance
+   the normal clock but must skip transport service while that guard is held.
+   Foreground writers hold the same guard. No parser or callback runs in a
+   fabricated foreground interrupt context; returned packet effects run under
+   the real VBlank handler. Test this bridge in the linked eZ80 harness.
+4. P4 retains one parser/transport task. Its ordinary parallel receive ring is
+   separate from the UART control recognizer and its packet output queue.
+   A bounded I/O-only progress hook services handover/control while a retained
+   VDP command waits for the rest of a split parameter/upload. The hook never
+   reenters the VDP parser. Complete validated blocks alone enter the input
+   ring or retire bytes from the output queue; failed blocks are not replayed.
+5. Keep the console lease identity independent of the parallel session and
+   block descriptor. Start the stream only after normal console preparation
+   and initial query synchronization; drain it before LEAVE. The experimental
+   build profile alone enables the adapter. Legacy and ExCom retain their
+   existing parser, writer and keyboard paths.
+6. On 2026-10-11 the Author explicitly broadened EX05 beyond Nurples and
+   reaffirmed that fsim owns the bench until its noticeboard handback. Its
+   deadline alone does not prove that an active run or service has ended.
+
+## First implementation checkpoint — 2026-10-11
+
+1. EX01/EX02 complete for the first bounded binding; physical operation and
+   sustained performance remain EX04–EX06. The current physical root cause is
+   resolved by boot-owned P4-PC GPIO-bank power, retained without alteration.
+2. Actual P4 queue tests pass17 cases, broader parallel host discovery passes16
+   suites, including82 ordinary/111 diagnostic paired native coordinator cases.
+   Actual EMOS stream batching/idle keyboard/stop-drain/fault-owner tests pass;
+   console tests pass both ordinary and stream builds, including independent
+   lease identity and ExExt sysvar publication. Modeled peers are not hardware.
+3. Linked eZ80 execution of the actual VBlank/register-save/ExExt/parser/callback
+   paths passes ordinary and injected nested IRQ cases. Only physical transport
+   service and the general keyboard-tick prelude are modeled. Primary/alternate
+   registers, IX/IY, SP, IFF and genuine callback delivery are checked.
+4. First complete P4-PC full-HDMI build passes. Revised STOP drain/close logic
+   is building separately. Complete experimental EMOS passes all profile-owned
+   UART/native/pad/keyboard/console/ROM checks:130335bytes,737free. Preserve this
+   image independently; later builds receive new identities and fresh receipts.
+5. STOP with pending returned bytes acknowledges their count and retains the
+   stream, allowing reverse drain and actual-ISR publication before retrying.
+   Empty STOP alone closes it. Transport sessions renew at a proved idle UART
+   boundary before16-bit block numbers wrap; no uncertain payload is replayed.
+6. The explicit experimental EMOS profile replaces the obsolete indefinite
+   forward-epoch implementation, rather than relaxing the128KiB ROM guard.
+   No diagnostics enter normal firmware. IRQ-disabled ordinary output refuses
+   the parallel route; its application-compatibility impact remains to measure.

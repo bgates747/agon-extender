@@ -3,6 +3,10 @@
 #include <Stream.h>
 #include <driver/uart.h>
 #include <cstring>
+#include <functional>
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+#include "parallel_vdu_stream.hpp"
+#endif
 #include "console_session.hpp"
 #include "parallel_control.hpp"
 #include "../input/processed_keyboard.hpp"
@@ -10,6 +14,10 @@ class ConsoleStream final : public Stream {
  public:
   agon::extender::transport::ConsoleSession session;
   agon::extender::transport::ParallelControl parallel;
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  agon::extender::transport::ParallelVduStream parallelVdu{parallel};
+  std::function<void()> progress;
+#endif
   uint8_t setup[4]{},output[8192]{};
   unsigned pos{4},read_pos{},count{};
   int cached{-1};
@@ -21,18 +29,30 @@ class ConsoleStream final : public Stream {
   void transportLost() {
     // No old setup/peek/reply byte may survive into a new physical UART epoch.
     session.cancel();parallel.cancel();pos=4;cached=-1;read_pos=count=0;
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    parallelVdu.cancel();
+#endif
     std::memset(setup,0,sizeof(setup));failure=nullptr;
   }
   void fail(const char *why) { if (!failure) failure=why; }
   void feed(const uint8_t *p) { std::memcpy(setup,p,4);pos=0; }
   int available() override {
     if (pos<4) return 4-pos;
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(parallelVdu.active())return int(parallelVdu.available())+(cached>=0);
+#endif
     size_t n=0;if(session.active()) uart_get_buffered_data_len(UART_NUM_1,&n);
     return int(n)+(cached>=0);
   }
   int read() override {
     if(pos<4) return setup[pos++];
     if(cached>=0) {int b=cached;cached=-1;return b;}
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(parallelVdu.active()) {
+      if(!parallelVdu.available() && progress)progress();
+      return parallelVdu.read();
+    }
+#endif
     uint8_t b;
     const bool received=session.active() && uart_read_bytes(UART_NUM_1,&b,1,0)==1;
 #if defined(AGON_EXTENDER_FRAME_TIMING)
@@ -49,6 +69,18 @@ class ConsoleStream final : public Stream {
     while (pos < 4 && used < n) p[used++] = setup[pos++];
     if (cached >= 0 && used < n) { p[used++] = uint8_t(cached); cached = -1; }
     if (used == n || !session.active()) return used;
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(parallelVdu.active()) {
+      const auto started=millis();
+      while(used<n && !failure && parallelVdu.active()) {
+        used+=parallelVdu.read(p+used,n-used);
+        if(used==n || millis()-started>=getTimeout())break;
+        if(progress)progress();
+        if(!parallelVdu.available())vTaskDelay(1);
+      }
+      return used;
+    }
+#endif
     const int got = uart_read_bytes(UART_NUM_1, p + used, n - used,
                                     pdMS_TO_TICKS(getTimeout()));
     if (got > 0) {
@@ -65,15 +97,28 @@ class ConsoleStream final : public Stream {
   int peek() override { if(pos<4)return setup[pos];if(cached<0)cached=read();return cached; }
   void flush() override { /* Stream flush does not cancel pending UART bytes. */ }
   size_t write(uint8_t b) override {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(parallelVdu.active()) {
+      if(!parallelVdu.write(b)){fail("parallel reply queue overflow");return 0;}
+      return 1;
+    }
+#endif
+    return writeControl(b);
+  }
+  size_t writeControl(uint8_t b) {
     if(count==sizeof(output)) { fail("reply queue overflow");return 0; }
     output[(read_pos+count)%sizeof(output)]=b;++count;return 1;
   }
   size_t write(const uint8_t *p,size_t n) override {size_t i=0;while(i<n && write(p[i]))++i;return i;}
+  void controlReply(const uint8_t *p,size_t n) {
+    writeControl(CONSOLE_REPLY);writeControl(uint8_t(n));
+    for(size_t i=0;i<n;++i)writeControl(p[i]);
+  }
 };
 class VDUStreamProcessor;
 ConsoleStream *beginConsole();
 void runConsole(VDUStreamProcessor *);
-void consoleControl(VDUStreamProcessor *, const uint8_t *p);
+bool consoleControl(VDUStreamProcessor *, const uint8_t *p);
 void consoleSdReceive(const uint8_t *p,unsigned n);
 void consoleSdIncomplete();
 void consoleLayout(int region);

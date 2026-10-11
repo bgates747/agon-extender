@@ -588,3 +588,15 @@ EMOS unchanged. It is setup/recovery for the historical receiver comparison,
 not a new production selection or DevKit payload qualification. The physical
 three-wire handshake must actually be connected. Ordinary DevKit builds and
 selected production remain unchanged.
+
+## Experimental ordinary ExExt composition
+
+`--parallel-boot-candidate --exext-stream` selects the first ordinary stream
+binding on `p4-console`, with an explicit `port-008-stream-rNN-bTIMESTAMP`
+identity and frozen source snapshot. Do not combine it with private probe/data
+check profiles. Match EMOS's `port/exext-stream-candidate.mk` through the normal
+component wrapper and all profile-owned link/ROM checks. The experimental
+composition replaces the obsolete indefinite forward epoch implementation;
+it does not relax the ROM guard. See the [stream contract](protocols/exext-stream.md)
+and [current implementation work](tasks/PORT-008/EXEXT-STREAM-R01.md). A passing
+build does not qualify wiring, game performance or production selection.

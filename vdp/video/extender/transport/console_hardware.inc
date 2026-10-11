@@ -80,26 +80,40 @@ void consoleLayout(int region) {
   console_locale_pending=region>=0 && region<=1;
 }
 void consolePoll() { if(console_locale_pending) console_admit_pending=true; }
-void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
+bool consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   uint8_t reply[CONSOLE_SIZE];
   if (p[2]==PARALLEL_WIRE_VERSION) {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(p[3]==PARALLEL_STREAM_START || p[3]==PARALLEL_STREAM_POLL || p[3]==PARALLEL_STREAM_STOP) {
+      if(!console_stream->parallelVdu.request(p,reply,console_stream->session.active()))return false;
+      console_stream->controlReply(reply,sizeof(reply));return true;
+    }
+    // Backpressure leaves a complete control envelope with the UART owner;
+    // do not admit a physical transfer before storage is available.
+    if(p[3]==PARALLEL_OFFER && !console_stream->parallelVdu.canOffer(p))return false;
+#endif
     // Shared F7 framing, distinct capability. No display reset or mode commit.
-    if (!console_stream->parallel.request(p,millis(),esp_random(),reply)) return;
+    if (!console_stream->parallel.request(p,millis(),esp_random(),reply)) return false;
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(p[3]==PARALLEL_OFFER && !console_stream->parallelVdu.acceptedOffer()) {
+      console_stream->parallel.cancel();console_stream->fail("parallel stream storage");return false;
+    }
+#endif
 #if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
     if(p[3]==PARALLEL_OFFER && (!console_data_check || !console_data_check->acceptedOffer())) {
-      console_stream->parallel.cancel();console_stream->fail("data check storage");return;
+      console_stream->parallel.cancel();console_stream->fail("data check storage");return false;
     }
 #endif
 #if defined(AGON_EXTENDER_PARALLEL_PROBE)
     if(p[3]==PARALLEL_OFFER && (!console_probe || !console_probe->acceptedOffer(micros()))) {
-      console_stream->parallel.cancel();console_stream->fail("private probe storage");return;
+      console_stream->parallel.cancel();console_stream->fail("private probe storage");return false;
     }
 #endif
   } else {
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
-    if(!console_stream->parallel.uartTransitionAllowed())return;
+    if(!console_stream->parallel.uartTransitionAllowed())return false;
 #endif
-    if (!console_stream->session.request(p,millis(),esp_random(),reply)) return;
+    if (!console_stream->session.request(p,millis(),esp_random(),reply)) return false;
     // An ordinary lease change revokes capability but preserves proven UART
     // ownership. Physical cancel would fence/discard this command's own reply.
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
@@ -119,12 +133,12 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   }
   // QUAL-003: PREPARE_KEEP deliberately leaves Canvas, contexts and resource
   // buffers intact. Its fresh lease is still required before ordinary output.
-  console_stream->write(CONSOLE_REPLY);console_stream->write(CONSOLE_SIZE);
-  console_stream->write(reply,sizeof(reply));
+  console_stream->controlReply(reply,sizeof(reply));
 #if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
   if(p[2]!=PARALLEL_WIRE_VERSION)
 #endif
     printf("Console control version=%u op=%u active=%u\n",p[2],p[3],console_stream->session.active());
+  return true;
 }
 ConsoleStream *beginConsole() {
   // MANDATORY BOARD FORK (FWBUG-014): --board p4-pc enables fixed 3.3V LDO4
@@ -196,6 +210,9 @@ void runConsole(VDUStreamProcessor *processor) {
   console_probe.emplace(console_stream->parallel);
   if(!console_probe->begin())abort();
 #endif
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  if(!console_stream->parallelVdu.begin())abort();
+#endif
   agon::extender::transport::P4BlockCoordinator block(console_stream->parallel,
       console_board::kDataPins,console_board::kClock,console_board::kValid,
       console_board::kReady,console_board::kUartTx,console_board::kUartRx,
@@ -258,12 +275,20 @@ void runConsole(VDUStreamProcessor *processor) {
     return cleared;
   };
 #endif
-  for(;;) {
+  // I/O-only recursion is deliberately bounded: retained reads may service
+  // UART control/native handover, but never reenter processNext or callbacks.
+  std::function<void(bool)> step;
+  step=[&](bool parseCommands) {
     const uint32_t now=millis();
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
     using BlockResult=agon::extender::transport::P4BlockCoordinator::Result;
     if(s.failure)s.parallel.cancel();
-    const auto blockResult=block.poll(now,!used&&!discard&&s.cached<0&&s.pos>=4,
+    const auto blockResult=block.poll(now,!used&&!discard&&
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+                                     (s.parallelVdu.active() || (s.cached<0&&s.pos>=4)),
+#else
+                                     s.cached<0&&s.pos>=4,
+#endif
                                      !s.count&&!transmitting);
 #if defined(AGON_EXTENDER_PARALLEL_PROBE)
     // LC03-B physical phase diagnosis: USB only, on phase/result changes.
@@ -281,14 +306,17 @@ void runConsole(VDUStreamProcessor *processor) {
     }
 #endif
     if(blockResult==BlockResult::exclusive || blockResult==BlockResult::cleanupFault) {
-      vTaskDelay(pdMS_TO_TICKS(1));continue;
+      vTaskDelay(pdMS_TO_TICKS(1));return;
     }
     const bool blockDrain=blockResult==BlockResult::drain;
     // No parser, USB admission or UART writer runs while release is unresolved.
     if(!blockDrain && !startup.poll(now,restoreUart,cancelTransport)) {
-      vTaskDelay(pdMS_TO_TICKS(1));continue;
+      vTaskDelay(pdMS_TO_TICKS(1));return;
     }
     if(!blockDrain)block.recovered();
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(!s.parallelVdu.retire())s.fail("parallel stream receipt");
+#endif
 #if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
     if(!console_data_check->retire())s.fail("data check guards");
     agon::extender::transport::P4ParallelDataCheck::Snapshot dataSnapshot;
@@ -371,7 +399,7 @@ void runConsole(VDUStreamProcessor *processor) {
         // The ordinary cancellation helper rebinds UART pads. The private
         // shared-bus owner must instead finish native cleanup and a NEW fence
         // before discarding queues; its boot recovery owns any later restore.
-        s.fail("TX stalled");continue;
+        s.fail("TX stalled");return;
 #else
         console_cancel_tx();s.count=0;transmitting=false;s.session.cancel();s.parallel.cancel();
         console_keys.reset();keyboard.admissionBoundary();
@@ -396,8 +424,31 @@ void runConsole(VDUStreamProcessor *processor) {
       else if(sent) {s.read_pos=(s.read_pos+sent)%sizeof(s.output);s.count-=sent;transmitting=true;tx_at=now;}
     }
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
-    if(blockDrain)continue;
+    if(blockDrain)return;
 #endif
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(s.parallelVdu.active()) {
+      // Control has its own recognizer while VDU parameters/uploads remain in
+      // the retained parser. A complete temporarily blocked OFFER/STOP stays
+      // here while the outer parser consumes its ring; no byte is discarded.
+      uint8_t b;
+      if(used==3+CONSOLE_SIZE && consoleControl(processor,incoming+3))used=0;
+      for(unsigned budget=0;used<3+CONSOLE_SIZE && budget<32 &&
+          uart_read_bytes(UART_NUM_1,&b,1,0)==1;++budget) {
+        if(!used) {if(b!=23){s.fail("non-control UART in ExExt");break;}partial_at=now;}
+        incoming[used++]=b;
+        if((used==2 && b!=0) || (used==3 && b!=CONSOLE_OPCODE)) {
+          s.fail("invalid ExExt control carrier");break;
+        }
+        if(used==3+CONSOLE_SIZE) {
+          if(consoleControl(processor,incoming+3))used=0;
+          break;
+        }
+      }
+      if(used && uint32_t(now-partial_at)>=1000)s.fail("ExExt control timeout");
+    }
+#endif
+    if(!parseCommands)return;
     if(console_admit_pending && !s.count && !transmitting) {
       keyboard.admit();console_admit_pending=console_locale_pending=false;
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
@@ -495,7 +546,7 @@ void runConsole(VDUStreamProcessor *processor) {
     }
     agon::extender::screen_text::poll(processor->getContext().get(), canvasW, canvasH);
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
-    if(s.parallel.pending())continue;
+    if(s.parallel.pending())return;
 #endif
     keyboard.repeat_delay=kbRepeatDelay;keyboard.repeat_rate=kbRepeatRate;
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
@@ -526,7 +577,7 @@ void runConsole(VDUStreamProcessor *processor) {
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
       // Re-enter the physical owner at the top of the loop. Do not take the
       // ordinary UART-rebinding fault path on shared parallel/UART wiring.
-      continue;
+      return;
 #else
       s.parallel.cancel();
 #if defined(AGON_EXTENDER_TELEMETRY)
@@ -545,5 +596,9 @@ void runConsole(VDUStreamProcessor *processor) {
     // E07P: stock VDP 2.16.0 processLoop has no hardware-path sleep here.
     // Keep the same continuously serviced owner; unconditional delay delayed
     // newly queued replies. Existing stock-shaped IDLE watchdog policy remains.
-  }
+  };
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  s.progress=[&](){step(false);};
+#endif
+  for(;;)step(true);
 }

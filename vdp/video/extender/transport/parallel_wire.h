@@ -12,6 +12,9 @@
 #define PARALLEL_ACK 0x82
 #define PARALLEL_COMPLETE 4
 #define PARALLEL_COMPLETE_ACK 0x84
+#define PARALLEL_STREAM_START 6
+#define PARALLEL_STREAM_POLL 8
+#define PARALLEL_STREAM_STOP 10
 #define PARALLEL_EXEXT 3
 #define PARALLEL_SESSION_SIZE 6
 /* The retained offer supplies authority, never the arriving result. Failure

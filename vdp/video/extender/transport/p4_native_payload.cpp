@@ -87,7 +87,7 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
   // until EMOS's latched VALID release; GPIO detach then provides high impedance.
   transfer.idle_value=dma_[length-1];transfer.flags.queue_nonblocking=true;
   return parlio_tx_unit_transmit(tx_,dma_,length*8,&transfer)==ESP_OK
-#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
       && validCounter_.begin()
 #endif
       ;
@@ -117,7 +117,7 @@ bool P4NativePayload::startReceive() noexcept {
   enabled_=true;
   parlio_receive_config_t receive{};receive.delimiter=delimiter_;
   return parlio_rx_unit_receive(rx_,dma_,length_,&receive)==ESP_OK
-#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
       && clockCounter_.beginClock(clock_,length_) && validCounter_.begin()
 #endif
       ;
@@ -128,11 +128,12 @@ ParallelTxProgress P4NativePayload::progress() noexcept {
   const auto bytes=done?completed_.load(std::memory_order_relaxed):0;
   const auto status=(edges&4)?ParallelTxStatus::failed:done?ParallelTxStatus::complete:ParallelTxStatus::pending;
   const bool exact=done && bytes==length_ && !(edges&4);
-#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
-  // Author-requested uninstrumented comparison ONLY: real fixed-length DMA
+#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) || defined(AGON_EXTENDER_EXEXT_STREAM)
+  // Qualified fixed-length composition, also reused by ordinary ExExt: DMA
   // completion proves clocks occurred; inactive VALID permits retirement.
-  // This does not prove pulse/edge counts. The MOSlet must read back and compare
-  // every byte. Keep the normal strict qualification composition unchanged.
+  // This does not prove pulse/edge counts or payload integrity. Retained
+  // diagnostic MOSlets compare every byte; ordinary VDU is a byte stream.
+  // Keep the separate strict edge-count qualification composition unchanged.
   return {status,bytes,exact,exact && bool(gpio_get_level(gpio_num_t(valid_)))};
 #else
   if(!transmit_) {
@@ -152,7 +153,7 @@ bool P4NativePayload::stop() noexcept {
   // PCNT owns no application callback, but failed stop/delete still retains
   // this owner and DMA. Its finite capture window is bounded by the native deadline.
   bool okay=true;
-#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
   okay=validCounter_.cleanup();
   if(!clockCounter_.cleanup())okay=false;
 #endif
