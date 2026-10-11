@@ -194,3 +194,35 @@ native completion (done0/bytes0). PSRAM payload placement alone is insufficient;
 this is not a game pass or electrical corruption evidence. Paired reset recovers
 stable input; original startup/config restore is readback checked. The bench is
 released for bounded ExExt driver-resource reuse with a stable callback owner.
+
+
+## Stream-r12 retained resources — unresolved physical repeat
+
+Source47d230e779be459087756cac4f06347e84796367 builds full HDMI stream-r12,
+app SHA256 `3607a08b85ccdfa1dae5f8c11e3db43ab806a52bccab3fbeea7e3cd865316ca4`.
+All four segments verify. T09 no longer logs the prior GDMA allocation failure,
+but saves no result and does not respond to normal CLI/listener recovery. HDMI
+scanout remains60.07Hz with no reported native failure, panic or rolling faults.
+Those counters do not establish payload integrity or successful game execution.
+Paired and Agon-only reset attempts fail keyboard admission. Verified rollback
+to stream-r10 restores input; Legacy listener confirms the T09 result is absent.
+Original38byte startup and T09config are restored/readback checked. EMOS-r07
+and mainboard fsim VDP remain unchanged. Bench released for offline isolation.
+
+## Finite Aginvadors UART controls
+
+Same finite120update fixture and assets;120ordered CSV rows per route, source255,
+no flags or timer overflow. Rank by larger median active time. Percentages use
+a16.6667ms60Hz budget; active excludes pacing. Both routes use EMOS-r07 and
+full-HDMI stream-r10, mainboard fsim VDP unchanged. Not a stock VDP comparison.
+
+|Route|Updates/s|Median active|60Hz budget used|p95active|Median submission|Median pacing|
+|---|---:|---:|---:|---:|---:|---:|
+|ExCom|51.06|14.631ms|87.78%|20.345ms|8.773ms|3.131ms|
+|Legacy|51.06|14.216ms|85.30%|18.316ms|8.130ms|4.388ms|
+
+ExCom median active is2.92% above Legacy (Legacy baseline). Original startup
+restoration/readback passes after both. This is finite timing evidence, not
+interactive acceptance or a60updates/s claim. First Rally control omitted
+external road assets; runner corrected to include both tracks and restore
+startup even if result retrieval fails. No Rally runtime pass/failure inferred.

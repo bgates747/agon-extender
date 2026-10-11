@@ -485,3 +485,23 @@ public create/enable/disable APIs remain authoritative; any GPIO reattachment
 mirrors its exact processor-specific routing and is documented beside code.
 Build/verify normal full-HDMI firmware, repeat frozen T09 first, then finite
 games. No renderer, wire format, deadline, ownership or UART fallback change.
+
+
+## EX05 retained payload isolation — frozen 2026-10-11 15:36 UTC
+
+The retained-unit stream-r12 removes the observed allocation failure but its
+T09 saves no result and does not answer CLI recovery. HDMI remains healthy;
+this is neither a payload-integrity pass nor an application pass. Paired reset
+also fails admission. Independently verified stream-r10 restores input and the
+Legacy listener; original startup/config restoration is readback checked.
+
+Keep the retained native owner and disabled driver units, but allocate their
+one4096byte aligned payload in internal DMA-capable RAM at first admission,
+before assets load. This isolates the newly introduced cached PSRAM payload
+from resource retention, reusing the qualified internal-memory path. Do not
+claim cache corruption or alter the SDK cache operations without evidence.
+Run the actual native/coordinator failure-lifetime tests and real-target compile;
+freeze/build normal HDMI firmware. Verify all segments, then run T01/T03 before
+T09, comparing saved replies/data rather than accepting DMA byte counts alone.
+Continue independent game controls and restore startup/configs after each run.
+Warm-reset admission remains a separate unresolved gate.
