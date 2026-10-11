@@ -62,15 +62,19 @@ This is not a production utility or permission to acquire an occupied bench.
    and no reset-producing line-control changes. Begin collection before each
    explicit invocation. Buffer command &80 logs each byte with an ESP_LOGI prefix;
    these large dumps occur outside timing and must be retained completely.
-   The fixture allows up to 120 nominal seconds for each dump's ordered reply;
-   ordinary measured replies retain their four-second fault bound. Neither is
+   The fixture allows up to 7200 MOS units for each dump's ordered reply;
+   ordinary measured replies retain their 240-MOS-unit fault bound. At the
+   measured 60 Hz VBlank cadence these are about 60 seconds and two seconds,
+   respectively: stock MOS increments its coarse clock by two per VBlank.
+   The initial preparation described them incorrectly as 120/four seconds;
+   the frozen fixture's constants and measured intervals are unchanged. Neither is
    an advance runtime estimate or permission for an automatic board reset.
 4. At a verified CLI, select `EMOS EXCOM` or `EMOS EXEXT`, change to the isolated
    test directory, and load the MOSlet at its linked address:
 
    ```text
-   LOAD stream.bin B0000
-   RUN B0000 excom uart0256.csv 256
+   LOAD stream.bin &B0000
+   RUN &B0000 excom uart0256.csv 256
    ```
 
    Use `exext` for the parallel case. Run lengths 256, 4096, 4097 and 8192;
@@ -85,6 +89,12 @@ This is not a production utility or permission to acquire an occupied bench.
    ascending payload-length order. The validator requires all 24 rows per route,
    correct timer scope, and all 8192 poisoned/updated buffer bytes after every
    sample. It writes a fresh JSON result and side-by-side Markdown tables.
+   Large serial dumps have occasionally lost bytes despite zero fixture flags,
+   including with a dedicated reader and host tmpfs. Reject incomplete samples;
+   do not pad missing bytes or assume a query proves data integrity. The
+   [physical run record](../../../docs/tasks/PORT-008/STREAM-TIMING-R01-RESULTS.md)
+   documents completed-case repeats and integrity-only sample selection with
+   original row/chunk provenance. Preserve raw captures before assembling inputs.
 6. Restore the exact working UART pair/startup, verify CLI/input, close collectors
    and release the bench. Do not promote or leave this diagnostic pair installed
    without explicit Author acceptance.
@@ -100,7 +110,9 @@ This is not a production utility or permission to acquire an occupied bench.
    and 0.9102 seconds of single-pass range. Overflow invalidates a sample. Read
    overhead, empty-drain overhead and a VBlank/MOS-clock cross-check are retained;
    they are not subtracted as if constant. `run_ticks` includes setup and dumps
-   before CSV saving, not just timed sending.
+   before CSV saving, not just timed sending. MOS clock units increment by two
+   per VBlank; retain the raw units and measured calibration rather than
+   assuming either centiseconds or one unit per VBlank.
 3. Physical drain is observed in software. Parallel snapshots after the final
    rising edge and loop-exit bookkeeping; UART polls shift-register-empty.
    Interrupt preemption and observation overhead can delay either observation.

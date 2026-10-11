@@ -71,7 +71,9 @@ static bool dump(){
  // compare every byte; a successful query alone does not verify buffer data.
  static const uint8_t command[]={23,0,0xA0,0,0xE1,0x80};
  // Thousands of individually formatted USB log lines may drain slowly. This
- // separate 120-second bound is outside measurement; ordinary fences stay 4s.
+ // separate 7200-MOS-unit bound is outside measurement. MOS increments by two
+ // per VBlank: at 60Hz this is ~60s; ordinary 240-unit fences are ~2s. The
+ // frozen r09 artifact used these same constants with inaccurate comments.
  return sent(command,sizeof command)&&drain()&&fence(7200);
 }
 static bool rom_matches(){
