@@ -1,4 +1,27 @@
-# Current checkpoint — DevKit reverse B prepared; awaiting USB connection
+# Current checkpoint — modern DevKit B passes both directions
+
+Author connected repaired original DevKit harness/USB, with no analyzer. Modern
+data-r17-b2026-10-11-07-32-07Z installed/all4segments independentlyverified;
+appSHA ca1e8109d5c708d071b8d585114a14479e9dbaa5a34ad7f82dcff901bc877163.
+Agon held reset across install, released after HTTP. EMOSv0.1.24/mainboardVDP
+unchanged. Original38-byte startup and diagnostic executable readback verified.
+
+Independent1024-byte reverse PASS: allAgonbytesexact,0mismatches,guardsintact,
+status0. Independentforward PASS: P4fullretainedcomparison0mismatches,FNVcfb78805,
+Agonguards/statusPASS. FreshSD P8DB01R.CSV/P8DB01F.CSV underagents/extender/results.
+Evidence agents/port008-live-qualification/devkit-reverse-r01; final-verification
+owns handback/filehashes. DI05-B3 complete; PCfault and real1/255/4096echo remain.
+
+DevKit remains installed/connected, browser/noHDMI, at its verified DHCP address
+recorded in ignored config. Neutralreadykeyboardlocale1held0pending0, listener
+offline, resetreleased; cardinAgon. All3installed-current records refreshed.
+No active hostprocess. No productionpromotion or further P4-PC experiment.
+Samefilterednative/coordinator/endpointsource asPCbaseline; USB/HDMI/board and
+analyzerabsence differ. Probe loading remains possible. Next comparison would
+be P4-PC filtered reverse with noanalyzer; await Author physical confirmation,
+do not infer a swap or reinstall pre-handshake firmware. Otheragentdirt untouched.
+
+# Historical checkpoint — DevKit reverse B prepared; awaiting USB connection
 
 Author directs B to the original DevKit, not another P4-PC trial. Historical
 DevKit forward22-recordpass does not establish modern reverse integrity.

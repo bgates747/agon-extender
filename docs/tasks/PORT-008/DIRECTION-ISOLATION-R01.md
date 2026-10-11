@@ -2,14 +2,16 @@
 
 ## Executive summary
 
-The modern 1,024-byte forward path passes exact P4 retained-byte comparison.
-Reverse remains defective after the authorized one-hour investigation. The
-strongest candidate, a P4 CLOCK input glitch filter, preserves all seven lower
-bits across 1,024 bytes but still corrupts bit 7 in 480 bytes. A lane permutation
-keeps the fault on physical GPIO46, while a CPU-driven constant high works.
-This narrows the investigation without establishing an electrical or silicon
-root cause. The exact preceding matched HDMI image and ordinary input are
-restored; production remains unchanged. DI05-B/C remain incomplete.
+The modern DevKit control now passes independent 1,024-byte transfers in both
+directions, using the same filtered native transport source and unchanged EMOS.
+P4-PC reverse remains defective: filtering preserves all seven lower bits but
+leaves bit7 corruption, which survives peripheral lane permutations on physical
+GPIO46. This narrows the fault to differences between the two bench compositions;
+it does not establish a wiring, pad, silicon or HDMI cause. DevKit had no analyzer
+attached, unlike the recent P4-PC trials, so probe loading remains a hypothesis.
+The verified DevKit image remains installed with ordinary input ready and the
+original startup unchanged. Production remains unchanged. P4-PC repair and
+real 1/255/4096-byte echo qualification remain incomplete under DI05-B/C.
 
 DI01 [x] — Reuse the existing private retained-data endpoint and snapshot hook.
 EMOS sends a position-dependent1,024-byte pattern through its existing gateway
@@ -333,7 +335,7 @@ run** after the Author selected DevKit as B. It is unused preparation, not test
 evidence. The maintained native payload source is restored after freezing the
 DevKit comparison archive; no failed workaround becomes a production fix.
 
-DI05-B3 [ ] — Prepare and execute the same independently generated1,024-byte
+DI05-B3 [x] — Prepare and execute the same independently generated1,024-byte
 reverse payload on the original DevKit, with the filtered CLOCK/native adapter,
 current EMOS, unchanged Agon MOSlet, and original startup. Use the generated
 DevKit GPIO/UART/fence tuple and silicon range, never the P4-PC image or pins.
@@ -367,3 +369,44 @@ selection checks and5 board checks pass. Frozen native/coordinator/endpoint/
 console source exactly matches the P4-PC filtered baseline. Temporary native
 and console source restored. Image is **not installed or hardware tested**;
 DI05-B3 remains open at the Author USB/harness confirmation boundary.
+
+### DI05-B3 result — modern DevKit passes both directions
+
+The Author confirmed that the repaired DevKit harness and USB were connected,
+with no analyzer probes. This superseded the proposed USB-only installation
+ordering. The host verified the DevKit's stable USB identity, held the Agon in
+reset while installing the prepared image, independently verified all four flash
+segments, confirmed DevKit HTTP startup, then released the Agon. No EMOS or
+mainboard VDP change, firmware backup, startup edit or autoexec test occurred.
+
+The unchanged EMOS admitted Extender keyboard input. Through the ordinary
+foreground listener, the host read back the exact original 38-byte startup and
+the diagnostic MOSlet before invoking either test from the CLI. The native TX,
+coordinator, endpoint and console sources match the frozen P4-PC filtered
+baseline; generated pins, board/silicon, browser/no-HDMI, USB composition and
+analyzer absence remain explicit differences.
+
+| Independent direction | DevKit, 1,024 bytes | Retained correctness evidence |
+|---|---|---|
+| DevKit → Agon | PASS; 0 mismatches, status0, guards intact | All1,024 Agon bytes retained in CSV and compared independently on the host |
+| Agon → DevKit | PASS; 0 mismatches, status0, guards intact | P4 compares every retained byte; post-return USB report has mismatches0 and FNV cfb78805 |
+
+Fresh Agon records are /agents/extender/results/P8DB01R.CSV and P8DB01F.CSV.
+Local evidence devkit-reverse-r01 retains the exact source/build, installation
+receipt, boot/USB logs, both CSVs, host comparison and final-verification hashes.
+Flash/write verification took17.76hostseconds; the two tests plus CLI invocation
+and SD retrieval took35.13hostseconds. These are host wall-clock workflow durations,
+not payload throughput measurements. No wire capture was taken or claimed.
+
+The listener was closed; admitted keyboard is neutral, held0/pending0, locale1;
+Pi reset is released. Original startup is unchanged and SD stays in the Agon.
+All three machine-local installed-current records now identify this DevKit image,
+not the disconnected P4-PC. No active collector, transfer, flash or reset hold
+remains. DevKit data-r17 is an experimental browser-runtime control, not promoted
+production. Its independent endpoint is not an echo test: 1/255/4096-byte real
+roundtrips and the P4-PC correction are still unproved.
+
+The next useful P4-PC comparison is the same filtered reverse test with analyzer
+leads disconnected, before requesting electrical changes. It requires the
+Author's physical board/harness confirmation and a separately verified matching
+P4-PC image; no board swap, probe move or further P4-PC experiment occurred here.
