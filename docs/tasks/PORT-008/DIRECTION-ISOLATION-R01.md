@@ -410,3 +410,20 @@ The next useful P4-PC comparison is the same filtered reverse test with analyzer
 leads disconnected, before requesting electrical changes. It requires the
 Author's physical board/harness confirmation and a separately verified matching
 P4-PC image; no board swap, probe move or further P4-PC experiment occurred here.
+
+### DI05-B4 — Author-approved P4-PC comparison without probes
+
+DI05-B4 [ ] — Author confirms P4-PC reattached, analyzer leads removed and bench
+available. Install the exact retained filtered data-r12 image from the earlier
+P4-PC control, independently verify all segments, and keep EMOS, wiring, fixture,
+source pattern and startup unchanged. Hold Agon reset during P4 installation;
+release after HTTP startup, verify input and read back startup/fixture through
+the ordinary listener. Invoke one fresh1,024-byte reverse test from admitted CLI
+and compare every retained byte/guards. No analyzer capture, probe move, electrical
+change, autoexec invocation or speculative remedy. If reverse passes, separately
+check forward retention. If reverse fails, stop payload work and restore exact
+preceding matched data-r01, verify ordinary input/startup and retain the failure.
+This comparison tests whether removing the probes changes the filtered P4-PC
+result. It does not isolate HDMI, silicon, pad configuration or harness loading
+from each other, and cannot replace real echo qualification. Evidence is retained
+separately as pc-no-probes-r01; do not overwrite either earlier board control.
