@@ -238,3 +238,26 @@ ExExt payload/retention/failure cases,24reused coordinator transfers and reset
 cleanup, retained213native/319coordinator cases, and paired native controls.
 Real P4 translation unit also compiles. The4KiB payload now uses the qualified
 internal DMA allocation; resource reuse is unchanged. Physical gates follow.
+
+
+## Finite Rally UART controls
+
+Same existing120update deterministic attract fixture, mode136, host-only
+PRT markers (source255); all120ordered rows save with no timer overflow.
+Road assets and binary are byte-readback verified on first deployment and
+reused unchanged for ExCom; prior result is retained under the owned test
+directory before invocation. Mainboard fsim VDP remains unchanged. Worst
+median active work first; these are application measurements, not HDMI FPS.
+
+|Route|Updates/s|Median active|60Hz budget used|p95active|Median submission|
+|---|---:|---:|---:|---:|---:|
+|ExCom|8.30|116.457ms|698.74%|176.458ms|64.512ms|
+|Legacy|10.14|98.314ms|589.89%|127.934ms|53.884ms|
+
+ExCom median active is18.45% above Legacy (Legacy baseline). This instrumented
+fixture is not a60Hz pacing target; do not compare it to prior interactive FPS
+without matching source/build/workload. The ExCom screen observer fails to
+recognize completion on the graphical/custom-font display. Subsequent normal
+CLI return/listener retrieves the fresh complete CSV **without any reset**,
+then restores/readback-checks original startup. Treat that as durable finite
+execution evidence, not a transport hang or interactive keyboard acceptance.
