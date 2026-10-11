@@ -76,7 +76,12 @@ class ConsoleStream final : public Stream {
         used+=parallelVdu.read(p+used,n-used);
         if(used==n || millis()-started>=getTimeout())break;
         if(progress)progress();
-        if(!parallelVdu.available())vTaskDelay(1);
+        // EX-C15: a split upload may enter this I/O-only progress loop while
+        // EMOS is holding a native handshake level. Match the outer owner's
+        // prompt reentry during a pending block; one tick per phase needlessly
+        // stalls that peer. Keep the ordinary idle wait before its next offer.
+        // Interrupts and higher-priority tasks remain enabled throughout.
+        if(!parallelVdu.available() && !parallel.pending())vTaskDelay(1);
       }
       return used;
     }
