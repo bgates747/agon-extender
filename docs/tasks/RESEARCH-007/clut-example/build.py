@@ -43,7 +43,7 @@ def main() -> int:
             parser.error("selected SDK input hash changed: " + entry["path"])
     compiler = native.checked_tools(args.tools_path.resolve(), args.python_env.resolve())
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d-%H-%M-%SZ")
-    build_id = "ppa-clut-example-r03-b" + stamp
+    build_id = "ppa-clut-example-r04-b" + stamp
     project = out / "project"
     project.mkdir(parents=True)
     for name in ["CMakeLists.txt", "sdkconfig.defaults", "main"]:

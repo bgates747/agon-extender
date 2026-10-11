@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
- * RESEARCH-007, ppa-clut-example-r03. Compile-only experimental test article.
+ * RESEARCH-007, ppa-clut-example-r04. Compile-only experimental test article.
  *
  * Operation/verification idioms adapted from Espressif's Apache-2.0 CLUT tests
  * in commit76b4cf1336168aad6d1db4b8d1d2743137db4092. See ../README.md.
@@ -117,6 +117,10 @@ static void exercise_destination(ppa_client_handle_t client, const uint8_t *indi
         ESP_ERROR_CHECK(esp_cache_msync(out, STRIP_BYTES + GUARD_BYTES,
                                        ESP_CACHE_MSYNC_FLAG_DIR_C2M));
         ESP_ERROR_CHECK(ppa_do_blend(client, &operation));
+        /* Include the guard cache line: the driver's picture-only sync cannot
+         * make a physical overrun into that extra line visible to this check. */
+        ESP_ERROR_CHECK(esp_cache_msync(out, STRIP_BYTES + GUARD_BYTES,
+                                       ESP_CACHE_MSYNC_FLAG_DIR_M2C));
         ESP_ERROR_CHECK(check_strip(out, indices, palette));
         ESP_LOGI(TAG, "%s theme=%u: 512x32 RGB888 strip verified; indices unchanged",
                  region, theme);
