@@ -1,8 +1,6 @@
 #include "p4_block_coordinator.hpp"
 #include <driver/gpio.h>
-#if defined(AGON_EXTENDER_PARALLEL_PROBE)
 #include <cstdio>
-#endif
 namespace agon::extender::transport {
 using H=P4ParallelHandover;
 using N=P4NativePayload;
@@ -17,11 +15,9 @@ bool P4BlockCoordinator::releasePads() noexcept {
   return okay;
 }
 P4BlockCoordinator::Result P4BlockCoordinator::fail(const char *why) noexcept {
-#if defined(AGON_EXTENDER_PARALLEL_PROBE)
+  // Always retain the first failure after the payload owner has refused work.
+  // This USB-only error has no per-byte cost and is not qualification tracing.
   if(!recovering_)printf("Parallel failure stage=%s phase=%u pending=%u session=%u native=%u\n",why,unsigned(control_.handover.phase()),control_.pending(),unsigned(control_.session.phase),payload_?unsigned(payload_->result()):255u);
-#else
-  (void)why;
-#endif
   // Retain the native object, DMA and callback context until its real cleanup
   // succeeds. Boot recovery must not replace this with optimistic GPIO reset.
   control_.cancel();recovering_=true;

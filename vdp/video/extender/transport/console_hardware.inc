@@ -241,6 +241,7 @@ void runConsole(VDUStreamProcessor *processor) {
   uint32_t partial_at=0,tx_at=0;
   bool transmitting=false;
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
+  bool failureReported=false;
   auto cancelTransport=[&](){
     // P4BootStartup completed a NEW physical fence before this callback.
     // Do not call console_cancel_tx: its ordinary fault path rebinds GPIO.
@@ -251,6 +252,7 @@ void runConsole(VDUStreamProcessor *processor) {
     console_probe->cancel();
 #endif
     s.transportLost();used=discard=0;need=3;partial_at=tx_at=0;transmitting=false;
+    failureReported=false;
     console_keys.reset();keyboard.lost([](agon::extender::input::ProcessedKey){});
     keyboard.admissionBoundary();agon::extender::input::usbhost::transportBoundary();
     agon::extender::input::processedKeyboard().reset();
@@ -282,7 +284,12 @@ void runConsole(VDUStreamProcessor *processor) {
     const uint32_t now=millis();
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
     using BlockResult=agon::extender::transport::P4BlockCoordinator::Result;
-    if(s.failure)s.parallel.cancel();
+    if(s.failure) {
+      // Report once before reset recovery clears the original reason. USB
+      // stdout only; no shared-UART output or successful-path instrumentation.
+      if(!failureReported)printf("Console transport fault: %s\n",s.failure);
+      failureReported=true;s.parallel.cancel();
+    }
     const auto blockResult=block.poll(now,!used&&!discard&&
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
                                      (s.parallelVdu.active() || (s.cached<0&&s.pos>=4)),

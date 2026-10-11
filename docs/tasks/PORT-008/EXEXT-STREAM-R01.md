@@ -53,7 +53,7 @@ bindings using maintained component sources. Keep actual packet publication
 through existing stock/EMOS effects and callbacks. Add focused real-source tests
 for batching, split streams, direction ownership, idle servicing and failures.
 
-EX03 [ ] — Build complete EMOS and P4-PC images through maintained wrappers;
+EX03 [x] — Build complete EMOS and P4-PC images through maintained wrappers;
 run their required link/ROM/configuration checks and affected host/linked-eZ80
 tests. Record exact identities and hashes. Freeze each hardware candidate first.
 
@@ -163,3 +163,33 @@ belong in ignored local records. Evidence/run identities remain immutable.
    forward-epoch implementation, rather than relaxing the128KiB ROM guard.
    No diagnostics enter normal firmware. IRQ-disabled ordinary output refuses
    the parallel route; its application-compatibility impact remains to measure.
+
+## First physical integration checkpoint — 2026-10-11
+
+1. Complete P4-PC full-HDMI `port-008-stream-r02-b2026-10-11-10-59-20Z`
+   passes its build checks and independent verification of all four installed
+   flash segments. Application SHA256:
+   `7eb66d7a5d446aabe47781f08898e3356bf98800a14c80c4ee3de95c44889d19`.
+2. Complete EMOS `agon-emos-v0.1.24-b2026-10-11-11-06-08Z`, source
+   `451bf616195f4cdbd3b09f80fc896fcddaba9c4a`, is130335bytes/737free.
+   Image SHA256 `1321853bc8667e8b5562da34b856feb04ce7751895824ec087d8a3139c757c58`;
+   all131072 installed ROM bytes match the image plus erased padding, SHA256
+   `fb3ebcb4dfedfa628b7dfab52e682e2a30d8d8aad28f964a97ffc516ea0bfbe2`.
+   The automatic post-flash startup did not regain readiness; one subsequent
+   normal Agon reset recovered it. This is a retained startup failure, not a
+   demonstrated fix. Original startup restored and verified byte for byte.
+3. Ordinary ExCom entry, CLI typing and EMOS STATUS pass on the installed pair.
+   Returning to Legacy also completes. First ExExt entry negotiates capability
+   and two OFFER/COMPLETE exchanges, then loses remote readiness before the
+   next CLI test. No ordinary ExExt or gameplay pass claimed. One normal Agon
+   reset restores Legacy/input. Do not replay the uncertain stream.
+4. Retain the first failure through normal USB-only error reporting: the native
+   coordinator already knows its refusal stage, but only the private probe
+   printed it; console recovery otherwise discards its original fault reason.
+   Reporting once after failure has no successful per-byte instrumentation.
+   Rebuild and repeat only the bounded CLI check before larger workloads.
+5. Mainboard VDP remains the preceding consumer's qualified custom build, not
+   stock2.16.0. No claim of stock-renderer comparison from this bench. Hardware
+   reservation released during offline review/build; reacquisition required.
+   Ignored evidence: `agents/exext-stream-r01/bench-r01`, including immutable
+   initial installation failure, post-reset ROM verification and CLI receipts.
