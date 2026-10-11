@@ -1,0 +1,18 @@
+{
+  "26363": "publish_begin",
+  "26692": "publish_end",
+  "26725": "service_begin",
+  "26746": "poll_begin",
+  "26795": "poll_end",
+  "26825": "service_end",
+  "26866": "reserve_begin",
+  "26894": "reserve_end",
+  "27236": "offer_begin",
+  "31368": "coordinate_begin",
+  "31477": "park_end",
+  "31581": "payload_begin",
+  "31621": "payload_end",
+  "31668": "unpark_end",
+  "31838": "completion_begin",
+  "31875": "completion_end"
+}

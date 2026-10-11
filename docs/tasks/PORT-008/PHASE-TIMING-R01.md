@@ -8,7 +8,11 @@ large residual-block and reply costs but does not separate their causes.
 Reuse its four exact payloads, PRT clock and full-buffer proof. This tranche
 covers instrumentation, offline correctness, a bounded hardware comparison and
 verified restoration. Persistent UART shutdown and circuitry remain later work.
-The broader eight-hour ExExt goal remains paused; production stays unchanged.
+PT01–PT06 are complete: 24 selected samples/full 196,608-byte proof and exact
+UART restoration. [Results](PHASE-TIMING-R01-RESULTS.md) retain phase attribution,
+provenance and limits. The broader eight-hour ExExt goal remains paused;
+production stays unchanged. Author subsequently requires removal of ExExt CRC;
+P08-P05/D01/D02 below own that next implementation boundary.
 
 ## Contract and boundaries
 
@@ -35,7 +39,7 @@ with retained pre-probe bytes apart from build identity. Bind the MOSlet to the
 exact diagnostic ELF and full ROM fingerprint. Commit controlled inputs before
 hardware. These are CPU-model checks, not physical timing or emulator UI proof.
 
-PT04 [ ] — Acquire the free bench only for deployment/execution. Read current
+PT04 [x] — Acquire the free bench only for deployment/execution. Read current
 local identity, installed receipts and bench constraints. Verify the exact paired
 images and fixture by readback. Preserve mainboard fsim VDP, original startup,
 all wiring and games. Select mode 3 only in temporary autoexec; no startup test.
@@ -46,7 +50,7 @@ integrity evidence. Never replay uncertain work. Compare endpoint times against
 the preceding instrumented campaign as an overhead/context check, not an
 identical-build causal experiment.
 
-PT05 [ ] — Validate all selected samples and report. Retain timestamps, callsite
+PT05 [x] — Validate all selected samples and report. Retain timestamps, callsite
 identity, repeat origins, full 8192-byte proof, saturated/overflowed exclusions,
 start/end and firmware hashes. Use the preceding integrity-only chronological
 selection rule when a USB dump is incomplete. Show phase median/range in µs
@@ -56,7 +60,7 @@ Do not call elapsed cycles CPU utilization, payload-loop speed raw bandwidth,
 or query completion render/scanout completion. Select the next optimization
 from measurements and pause for Author discussion before implementing it.
 
-PT06 [ ] — Restore and independently verify the exact original UART pair and
+PT06 [x] — Restore and independently verify the exact original UART pair and
 38-byte startup, resolve known temporary sibling files, demonstrate CLI/input,
 close collectors/listeners and release the bench. Preserve the documented
 mixed-pair admission limitation and restore through a compatible pair if needed.
@@ -93,7 +97,7 @@ No new version tag or production promotion follows diagnostic results.
 
 ## Following steps — not this tranche
 
-P08-P02 [ ] — After phase results and Author discussion, prototype UART shutdown
+P08-P02 [ ] — After phase results, CRC removal and Author discussion, consider UART shutdown
 once at ExExt entry/restoration at exit. Both EMOS and EDP must preserve direction
 ownership, bounded keyboard/query return opportunities and reset recovery. An
 accepted contract/architecture amendment must precede that behavior change.
@@ -101,6 +105,35 @@ accepted contract/architecture amendment must precede that behavior change.
 P08-P03 [ ] — After an approved implementation, repeat byte-verified comparisons,
 then use existing finite Nurples, Rally and Aginvadors fixtures. No game change
 or performance acceptance is implied by the current instrumentation approval.
+
+P08-P04 [ ] — Author requested review after this tranche: remove the operator's
+intermediate Legacy step when switching ExCom ↔ ExExt if EMOS can safely perform
+that handover itself. Review the existing transition guard, both processors'
+ownership/release ordering and failure recovery before proposing a change.
+This review is queued; phase acquisition must not change mode-switch behavior.
+
+P08-P05 [ ] — Author requires no CRC in ExExt (2026-10-11). Prepare the next
+bounded implementation contract to remove CRC generation and validation from
+both EMOS and EDP's ExExt transport control exchanges. Do not substitute a faster
+CRC or another per-block checksum. Preserve physical ownership/handshakes,
+length/direction interpretation and required packet framing. Byte checking in
+the host qualification fixture remains outside transport timing. Resolve paired
+wire-format/version compatibility before deployment, compile both components,
+then reuse these exact byte-verified streams. Current phase instrumentation
+measures the preceding CRC-bearing candidate, not this accepted future design.
+No implementation starts in the phase tranche; pause for Author discussion.
+
+## Accepted decision and remaining design boundary
+
+P08-D01 [x] — No CRC in the ExExt transport. Author explicitly rejected the
+agent's recommendation to accelerate the existing CRC routine. Remove the
+transport CRC work instead. Recorded in ADR-0026 and the normative architecture.
+This is a design requirement; no CRC-free firmware has been built or tested.
+
+P08-D02 [ ] — Define the paired CRC-free control envelope/version handling.
+Resolve how EMOS/EDP reject or avoid mixed protocol pairs and how the unused
+trailing CRC fields are treated or removed. Do not add an alternative checksum.
+This does not authorize unrelated changes to ExCom or SD file verification.
 
 P08-H01 remains deferred in the parent task: external latches/transceiver/FIFO
 investigation follows a concrete operation/cost to replace, not a chip-first guess.
@@ -148,4 +181,42 @@ compiles within 32 KiB at &B0000. Three thousand seventy-two actual linked
 probe cases cover all AF flags, SP/registers/IFF, disabled no-read behavior,
 low/high PRT latch, saturation values, final capacity slot and overflow disarm.
 Existing native/output/real-VBlank checks and eight host tests pass.
-No physical phase measurement, speedup or production acceptance yet.
+This was the pre-hardware checkpoint; the completed physical results above
+supersede its acquisition boundary. No speedup or production acceptance.
+
+PT04 setup correction: ExCom→ExExt is intentionally rejected by
+`emos_request_mode`; the new runner initially omitted the intermediate Legacy
+request after mode-3 preparation. Zero fixture invocations occurred. Corrected
+the runner to enter Legacy before ExExt; ordinary setup-only bundle discarded.
+No firmware, reset or protocol change and no uncertain test replay.
+
+The corrected transition succeeded, but the runner initially rejected retained
+old error text under `--keep-display`. Fresh cleared STATUS confirms ExExt.
+Moved the assertion to that fresh authoritative STATUS; still zero fixture
+invocations before correction and no firmware change/reset.
+
+Subsequent setup-only assertion encountered a wrapped CLI command at the long
+fixture-directory prompt. Changed to the root before fresh STATUS/CD checks;
+zero invocations in that discarded setup attempt. No reset or firmware change.
+
+## Physical closeout
+
+Five completed invocations save 30 original zero-flag endpoint/phase rows.
+Two USB dumps are incomplete; one matching fresh-repeat sample supplies missing
+proof under the frozen integrity-only rule. All 24 selected rows/full buffers
+validate. EMOS CRC/construction/offer/completion control intervals dominate;
+the next offer after a full block also takes an extra ~33–35 ms. These probes
+do not isolate that interval's EMOS/P4 share. Park/restore alone is small.
+
+Author rejects CRC optimization and requires no CRC in ExExt. Stock MOS/VDP
+ordinary UART has no such check; the project introduced it in custom control
+packets. This measured candidate retains those checks; no CRC-free image is
+claimed. Keep required electrical ownership/handshakes and host byte proof.
+
+Exact original data-r20 P4/all four segments and old EMOS/full 128 KiB ROM
+verify, original 38-byte startup readback restored, actual Legacy CLI and five
+seconds of stable input pass. Listener/collector/test stopped, reset released;
+bench released 2026-10-11T21:30:45Z. Mainboard fsim VDP, wiring, games and
+production unchanged. Old P4 lacks the newer pad-release log marker; waiting
+for it was an installer setup mistake, not a product failure. No extra reset
+or flash was needed. Stop for next-tranche discussion.

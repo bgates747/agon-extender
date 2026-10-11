@@ -57,3 +57,17 @@ without this handshake, Extender input/output remains unavailable; MOS and the
 mainboard keyboard remain usable. There is no timed UART ownership fallback.
 Each reset invalidates the prior block admission. This accepted policy governs
 the candidate implementation, not the current UART-only production image.
+
+## ExExt CRC policy — 2026-10-11 amendment
+
+EMOS and P4 EDP must not compute or require CRC for the ExExt transport,
+including its control exchanges. The Author rejects accelerating the candidate's
+repeated CRC checks and requires removing that work instead. No alternative
+per-block checksum is selected. Physical direction ownership and reciprocal
+handshakes remain required; transport CRC is not their substitute.
+
+The CRC-bearing candidate measured by PORT-008 remains historical evidence,
+not this accepted final design. Qualification may independently compare payload
+bytes outside measured intervals. This amendment changes no deployed image or
+unrelated SD verification contract. PORT-008 P08-D02 owns the remaining paired
+wire-format/version decision and implementation boundary.

@@ -1,0 +1,4 @@
+seed=0 crc=85e9 instructions=12634; instruction count only, not physical cycles/time
+seed=19 crc=cf7f instructions=12647; instruction count only, not physical cycles/time
+seed=73 crc=c155 instructions=12653; instruction count only, not physical cycles/time
+seed=255 crc=6c0d instructions=12630; instruction count only, not physical cycles/time

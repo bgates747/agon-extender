@@ -1,0 +1,537 @@
+{
+  "provenance": {
+    "rule": {
+      "rule": "First chronological zero-flag row with valid exact-bound phase trace and complete 8192-byte dump, retaining original repeat index; later complete-case invocations fill only missing byte proof. Never select on timing, splice fields, or replay uncertain work.",
+      "frozen_contract": "docs/tasks/PORT-008/PHASE-TIMING-R01.md PT04/PT05"
+    },
+    "groups": [
+      {
+        "group": "exext-256",
+        "route": "exext",
+        "wire_bytes": 256,
+        "start_utc": "2026-10-11T21:12:44Z",
+        "host_seconds": 73.42389534367248,
+        "run_units": "1634",
+        "vblank_prt": "1205",
+        "vblank_mos": "2",
+        "complete_dumps": 5,
+        "files": {
+          "results.csv": {
+            "bytes": 459,
+            "sha256": "b3811fcc847b25c8b727d18c219e27fa32f02b425300897a86a8ed2c2a40cc98"
+          },
+          "p4.log": {
+            "bytes": 1476613,
+            "sha256": "26dcf09dd570136b9ea67091e2206b9a0c60ca4c3613ca07758bca8c6400c212"
+          },
+          "receipt.json": {
+            "bytes": 17848,
+            "sha256": "773389b2bbce0b5dda8d6be82ea7ca05e305f8063dc4d63082f9cfc725ede5a3"
+          },
+          "completion.txt": {
+            "bytes": 2501,
+            "sha256": "195ddced75fb3216bca138e472253d73d00714c0c290f9fcdcbdf63822578156"
+          },
+          "phases.csv": {
+            "bytes": 5738,
+            "sha256": "9e8ef75490fd4cf5be65de517216919f6b8ddbe1adceae5e8006df8d856dd6da"
+          }
+        }
+      },
+      {
+        "group": "exext-256-r02",
+        "route": "exext",
+        "wire_bytes": 256,
+        "start_utc": "2026-10-11T21:21:59Z",
+        "host_seconds": 76.45827184524387,
+        "run_units": "1616",
+        "vblank_prt": "1199",
+        "vblank_mos": "2",
+        "complete_dumps": 5,
+        "files": {
+          "results.csv": {
+            "bytes": 459,
+            "sha256": "342f7ee788ee9d8f39c5b3d172d4b694662e5b0a6c17000556ac0a64c3d15c74"
+          },
+          "p4.log": {
+            "bytes": 1475649,
+            "sha256": "ef7708d3ac3fed4fb543e50aedfa0ceba660268f6ce57ed79312127684963fd2"
+          },
+          "receipt.json": {
+            "bytes": 17848,
+            "sha256": "94af06de05efb5d2eff9aeda3999c4242b06aefe25d4f0c46fbb0c2c3af732f8"
+          },
+          "completion.txt": {
+            "bytes": 2501,
+            "sha256": "2b976de58143ccdef399acba7b2546d6b8c98c2bd5920bb4b6588335a29812d3"
+          },
+          "phases.csv": {
+            "bytes": 5738,
+            "sha256": "f96bfc70889a34c9a1a045344c233b58e9569dbf22316bc009c09bbfbc04830e"
+          }
+        }
+      },
+      {
+        "group": "exext-4096",
+        "route": "exext",
+        "wire_bytes": 4096,
+        "start_utc": "2026-10-11T21:16:57Z",
+        "host_seconds": 77.82578542595729,
+        "run_units": "1708",
+        "vblank_prt": "1199",
+        "vblank_mos": "2",
+        "complete_dumps": 6,
+        "files": {
+          "results.csv": {
+            "bytes": 489,
+            "sha256": "5c44db0542b232d39ac1097f7d176e6552e2ebe691b052bf1dd8dd301d57f6f0"
+          },
+          "p4.log": {
+            "bytes": 1477531,
+            "sha256": "1342d3269261b5a47b543d8e639eb50b20697976de3065b0508a7224b8595cce"
+          },
+          "receipt.json": {
+            "bytes": 17910,
+            "sha256": "1240957e60deb5d984c2de4aa64ab5ccc69d87d8dc305e1615bb23fe4c5b78df"
+          },
+          "completion.txt": {
+            "bytes": 2501,
+            "sha256": "1fc6022d55974bbfdebcc899c29864ef781477e9f116a409cbe9b0bbb74a728f"
+          },
+          "phases.csv": {
+            "bytes": 6014,
+            "sha256": "7fed787d2adb63db1461b542273b59fed9c7e48a5a97f94daa979e1662437d53"
+          }
+        }
+      },
+      {
+        "group": "exext-4097",
+        "route": "exext",
+        "wire_bytes": 4097,
+        "start_utc": "2026-10-11T21:18:28Z",
+        "host_seconds": 78.52717792894691,
+        "run_units": "1748",
+        "vblank_prt": "1200",
+        "vblank_mos": "2",
+        "complete_dumps": 6,
+        "files": {
+          "results.csv": {
+            "bytes": 492,
+            "sha256": "849079202f5cbdaaee91271f7945cec11b92992a49d3678a331e95a7dce141e8"
+          },
+          "p4.log": {
+            "bytes": 1478113,
+            "sha256": "d4859e52c9d5cf607798729acb2e8cab2f45e1759b42844ddfcbbbfff9114b45"
+          },
+          "receipt.json": {
+            "bytes": 21379,
+            "sha256": "61f9447673898f3e9d860e43e7f9c29ed19c4b36de6d3cb6bb21684c18afa18e"
+          },
+          "completion.txt": {
+            "bytes": 2501,
+            "sha256": "7d88db672f2713c88783aa6f4fb8ce81afc8c5add5ed4e29306f20b8e2ce58c7"
+          },
+          "phases.csv": {
+            "bytes": 7634,
+            "sha256": "83e45a1ec636b8c7915833e51e7a7c058f54445283870477b962736e6013d31e"
+          }
+        }
+      },
+      {
+        "group": "exext-8192",
+        "route": "exext",
+        "wire_bytes": 8192,
+        "start_utc": "2026-10-11T21:19:58Z",
+        "host_seconds": 79.26258378801867,
+        "run_units": "1796",
+        "vblank_prt": "1201",
+        "vblank_mos": "2",
+        "complete_dumps": 6,
+        "files": {
+          "results.csv": {
+            "bytes": 495,
+            "sha256": "34ea1ca39843c953a7c4ad480b69beef2019dde3a5659ee57641089f5d4d0491"
+          },
+          "p4.log": {
+            "bytes": 1478049,
+            "sha256": "39c9b755ab6db09c28dee3c4175853eae1ec8d38d94b7c63ad4524633c28646b"
+          },
+          "receipt.json": {
+            "bytes": 21447,
+            "sha256": "b74e68fea6780c2b0c4dd8aa49be485a94a943cfd2eda871c3a028b4b0031d95"
+          },
+          "completion.txt": {
+            "bytes": 2501,
+            "sha256": "8f3ee331ed4f54bdbbced136f934fa8203dd669fec5b59d719af9ea9d1c7e4bf"
+          },
+          "phases.csv": {
+            "bytes": 7814,
+            "sha256": "1d8601b771323ad3a19a1efa54d114472ce78d78daa108d2226fa8f1dcfcf7ba"
+          }
+        }
+      }
+    ],
+    "selected": [
+      {
+        "route": "exext",
+        "wire_bytes": 256,
+        "repeat": 0,
+        "group": "exext-256",
+        "csv_row_including_header": 2,
+        "chunk_index": 0,
+        "normalized_chunk_sha256": "c3c6a7de3272d9de6d25fa7e75dc1174b0973860a25b30b5fc9755f7ad64c8df"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 256,
+        "repeat": 1,
+        "group": "exext-256-r02",
+        "csv_row_including_header": 3,
+        "chunk_index": 1,
+        "normalized_chunk_sha256": "2acdef66e84501ac303eb20601fb86d8836cb1439b3cb1cf97963ea6ae572e4c"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 256,
+        "repeat": 2,
+        "group": "exext-256",
+        "csv_row_including_header": 4,
+        "chunk_index": 2,
+        "normalized_chunk_sha256": "fe16851ee872b55d474370fc57668194785f484a6b89dcd7de04ac082da7462c"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 256,
+        "repeat": 3,
+        "group": "exext-256",
+        "csv_row_including_header": 5,
+        "chunk_index": 3,
+        "normalized_chunk_sha256": "6cc4cfb617479dd972fdd3986235794ab782af191f153b14f7f8e3f4e17dc227"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 256,
+        "repeat": 4,
+        "group": "exext-256",
+        "csv_row_including_header": 6,
+        "chunk_index": 4,
+        "normalized_chunk_sha256": "eeb064729a6d6b355eede9de362ab49f89a2efc2052389dfb34c9d01071fb365"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 256,
+        "repeat": 5,
+        "group": "exext-256",
+        "csv_row_including_header": 7,
+        "chunk_index": 5,
+        "normalized_chunk_sha256": "53f6240210a47737add860d4ba0cef72351ce375fc0de234788e4ffb70a42cec"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4096,
+        "repeat": 0,
+        "group": "exext-4096",
+        "csv_row_including_header": 2,
+        "chunk_index": 0,
+        "normalized_chunk_sha256": "569646e36b0fc80909377cd8bbb727dd8ec0cc78e055f6e0675e64d35cb5193a"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4096,
+        "repeat": 1,
+        "group": "exext-4096",
+        "csv_row_including_header": 3,
+        "chunk_index": 1,
+        "normalized_chunk_sha256": "1d1ea0685a122a5b78c04cb344485a76e85c32198532053b0532f951b249ed6a"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4096,
+        "repeat": 2,
+        "group": "exext-4096",
+        "csv_row_including_header": 4,
+        "chunk_index": 2,
+        "normalized_chunk_sha256": "477e54911de357b9e4572d5d4272d7aa2567bfc1b8842b9c06ff5cfff12876f8"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4096,
+        "repeat": 3,
+        "group": "exext-4096",
+        "csv_row_including_header": 5,
+        "chunk_index": 3,
+        "normalized_chunk_sha256": "b25dacb5555f1f2366edf01e8ea371680f6ca39c101eca4e34605c8ba79ebc09"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4096,
+        "repeat": 4,
+        "group": "exext-4096",
+        "csv_row_including_header": 6,
+        "chunk_index": 4,
+        "normalized_chunk_sha256": "373ce765bb496302800c175dbababe287aea9ed6abf6c7e77fad3a1a1af0b6de"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4096,
+        "repeat": 5,
+        "group": "exext-4096",
+        "csv_row_including_header": 7,
+        "chunk_index": 5,
+        "normalized_chunk_sha256": "ff106d4cb35f280a0f0c5b26e36a3a8f25be5663083efb6c377fa87976540204"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4097,
+        "repeat": 0,
+        "group": "exext-4097",
+        "csv_row_including_header": 2,
+        "chunk_index": 0,
+        "normalized_chunk_sha256": "cb38f6fe0a4d8838e96274290e79d1f6c8ae37631938200e25c390fbf1fa240c"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4097,
+        "repeat": 1,
+        "group": "exext-4097",
+        "csv_row_including_header": 3,
+        "chunk_index": 1,
+        "normalized_chunk_sha256": "41599c930a589a553852802af227424305a1027b0808bb593f21c308288450fa"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4097,
+        "repeat": 2,
+        "group": "exext-4097",
+        "csv_row_including_header": 4,
+        "chunk_index": 2,
+        "normalized_chunk_sha256": "392993b93abd2d5773426c73c85cf2a3fc4daf6b02b94f159eb01ae6c74944ae"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4097,
+        "repeat": 3,
+        "group": "exext-4097",
+        "csv_row_including_header": 5,
+        "chunk_index": 3,
+        "normalized_chunk_sha256": "c6f3e3ab26ee7eeee2fca6711accff4089cfb03ef52bb857c40a1244c1b0bf04"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4097,
+        "repeat": 4,
+        "group": "exext-4097",
+        "csv_row_including_header": 6,
+        "chunk_index": 4,
+        "normalized_chunk_sha256": "b0aaddbf7f1b2d4e389750d7f09bc2b0c82131e2f42457feb7adbc78d0bcdf8d"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 4097,
+        "repeat": 5,
+        "group": "exext-4097",
+        "csv_row_including_header": 7,
+        "chunk_index": 5,
+        "normalized_chunk_sha256": "9d88d30d65eaca8fb4b8c1c70f1e86a29d3e0a2ed10ce95b5dd46829fa73318b"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 8192,
+        "repeat": 0,
+        "group": "exext-8192",
+        "csv_row_including_header": 2,
+        "chunk_index": 0,
+        "normalized_chunk_sha256": "f6c437bf8c7b9080db87135831e2eaf19f122fd134369f582bdb75bb9d6311ea"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 8192,
+        "repeat": 1,
+        "group": "exext-8192",
+        "csv_row_including_header": 3,
+        "chunk_index": 1,
+        "normalized_chunk_sha256": "cc97c3c2e35a425032e9d9245ada1e03c3ade81f57b14aa6212a9de4028ad8c7"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 8192,
+        "repeat": 2,
+        "group": "exext-8192",
+        "csv_row_including_header": 4,
+        "chunk_index": 2,
+        "normalized_chunk_sha256": "f105cef89e631855c18d125541f7f8bf6e1d7359bd595caa9ce375662a4e7ccd"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 8192,
+        "repeat": 3,
+        "group": "exext-8192",
+        "csv_row_including_header": 5,
+        "chunk_index": 3,
+        "normalized_chunk_sha256": "c3ad7a2d7103531c4151f214e0de036f579f5339accf2b22fc623d1a0eadacd3"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 8192,
+        "repeat": 4,
+        "group": "exext-8192",
+        "csv_row_including_header": 6,
+        "chunk_index": 4,
+        "normalized_chunk_sha256": "93944b2c4fe1222887961c21f32023f69b3c643918ca07312abf4328e0fa0744"
+      },
+      {
+        "route": "exext",
+        "wire_bytes": 8192,
+        "repeat": 5,
+        "group": "exext-8192",
+        "csv_row_including_header": 7,
+        "chunk_index": 5,
+        "normalized_chunk_sha256": "9286936bcab2f9cb4c274f2115fd10db75936d455a728d8fd520124fc89a76ae"
+      }
+    ],
+    "excluded_samples": [
+      {
+        "group": "exext-256-r02",
+        "repeat": 0,
+        "reason": "buffer bytes differ or capture truncated at sample 0"
+      },
+      {
+        "group": "exext-256",
+        "repeat": 1,
+        "reason": "buffer bytes differ or capture truncated at sample 0"
+      }
+    ]
+  },
+  "emos": {
+    "identity": "agon-emos-v0.1.24-b2026-10-11-20-54-06Z",
+    "source_commit": "291ac9eb3b733b62254e0bd09dba89c310c369c6",
+    "image_sha256": "f13cca9c3ca811e0a349b51d039075b760343b23269950d556cabc80b2452609",
+    "ROM_bytes": 131063,
+    "ROM_free": 9,
+    "profile": "port/exext-phase-timing.mk",
+    "P4_unchanged": "port-008-stream-r14-b2026-10-11-16-29-33Z",
+    "source_dirty": false
+  },
+  "fixture": {
+    "schema": 1,
+    "phase": true,
+    "phase_sites": {
+      "26363": "publish_begin",
+      "26692": "publish_end",
+      "26725": "service_begin",
+      "26746": "poll_begin",
+      "26795": "poll_end",
+      "26825": "service_end",
+      "26866": "reserve_begin",
+      "26894": "reserve_end",
+      "27236": "offer_begin",
+      "31368": "coordinate_begin",
+      "31477": "park_end",
+      "31581": "payload_begin",
+      "31621": "payload_end",
+      "31668": "unpark_end",
+      "31838": "completion_begin",
+      "31875": "completion_end"
+    },
+    "private_vector": 720928,
+    "build_id": "port-008-phase-timing-r01-b2026-10-11-21-02-50Z",
+    "created_utc": "2026-10-11T21:02:51.010056+00:00",
+    "status": "compiled; no physical timing or byte-integrity result",
+    "divider": 256,
+    "nominal_hz": 18432000,
+    "range_seconds": 0.9102083333333333,
+    "header_bytes": 11,
+    "payloads": [
+      {
+        "wire_bytes": 256,
+        "data_bytes": 245,
+        "sha256": "982697b0cd1786e1991ae49818e6da3311143adef50bc0cac50a2119d49f6412"
+      },
+      {
+        "wire_bytes": 4096,
+        "data_bytes": 4085,
+        "sha256": "be630ed64339c54353fcf0e69d08ebbffbbc2ac6fbe13ff4a6811650daa260d9"
+      },
+      {
+        "wire_bytes": 4097,
+        "data_bytes": 4086,
+        "sha256": "a886dd29558d55236b379fce70a8f33a476b769bb2ff97fd54b0638cd5ac3a6e"
+      },
+      {
+        "wire_bytes": 8192,
+        "data_bytes": 8181,
+        "sha256": "5ac3ebc88ba584a9a4ec318040d6d635d49250cdd660a02bcf023c8f5587e95b"
+      }
+    ],
+    "binding": {
+      "ST_FLUSH": 25845,
+      "ST_BACKEND": 770926,
+      "ST_FAULT": 775779,
+      "ST_OWNED": 771126,
+      "ST_ARMED": 775246,
+      "ST_HOOK": 8387,
+      "ST_OFFER": 775247
+    },
+    "rom_fnv1a": 2875977385,
+    "emos_sha256": "f13cca9c3ca811e0a349b51d039075b760343b23269950d556cabc80b2452609",
+    "emos_elf_sha256": "86e78c43a552f60e28d935e8cc4ef3d6104186b198f88e3ce955582cb6eaccad",
+    "fixture_layout": "MOSlet at 0xB0000, 32 KiB including BSS/stack/heap",
+    "fixture_sha256": "d8b2ca624ccedbfd0d5a65760dff06f82aba862f9b96c60f8c86e337d48f2bff"
+  },
+  "restoration": {
+    "verified": true,
+    "EMOS_build": "agon-emos-v0.1.24-b2026-10-10-01-48-39Z",
+    "EMOS_ROM_sha256": "69d7b11ac1fa6fcd48cc3770356c3b8806d8f308c345bd670075a7eb21b613dd",
+    "complete_ROM_bytes": 131072,
+    "startup_sha256": "7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5",
+    "original_startup_verified": true,
+    "temporary_backup_resolved": true,
+    "stable_input_seconds": 5,
+    "reset_released": true,
+    "mainboard_VDP_changed": false,
+    "production_selection_changed": false,
+    "hardware_end_utc": "2026-10-11T21:30:45Z"
+  },
+  "P4": {
+    "build_id": "port-008-stream-r14-b2026-10-11-16-29-33Z",
+    "app_sha256": "5833c4aa3a54e734c91b855b37271c43c7e5db8b7b2269a3410bddb7f5e1c4ad",
+    "unchanged_from_preceding_comparison": true
+  },
+  "evidence_silo": "agents/phase-timing-r01/bench-r01",
+  "local_receipts": {
+    "prepared.json": "5b83a3fcae848e685fa5e64d01ff8db29ab167f70d70e013e89e4368f8fbc881",
+    "final-handback.json": "11388c63c2d55ab83feefd19fed118903a78a08e399ac188e532ada6a0aff982",
+    "restore-emos/installation.json": "62fde5dfa536bfd9feffc7e4b623e7c8e6b253ed34c6bf17738afef804ac2d84",
+    "restore-p4/restoration/receipt.json": "708cdb40b3ebf446cfe10564ee4e0a4f64ad79cc908e27d7bd345e451d289619",
+    "restore-p4/restored.json": "b1084549939e12f6932c52093f3078c15963a02a12252bb5e752b18e1f3da0bd"
+  },
+  "crc_model": {
+    "model_revision": "13c151e89f520b3bae3343bea9d67d06e8037cfa",
+    "source": "tests/performance/stream_timing/crc_cpu.rs",
+    "source_sha256": "eb86c363a53e1fdb7394976be21c002188370aa8c38bbb824e3984bac5d01711",
+    "output_sha256": "6325fee779cd7ee5c8904608d66042d620e9ac8e5299956479708588b13571d7",
+    "scope": "actual retained ROM leaf, four patterned 14-byte inputs; decoded instruction counts only, no physical cycles/time"
+  },
+  "retained_files": {
+    "phases.csv": {
+      "bytes": 27015,
+      "sha256": "e584688afa0e72df46b2e68917a1a659319b61eb3fa3c6b951e8a4d4dafbb32a"
+    },
+    "crc-cpu.txt": {
+      "bytes": 344,
+      "sha256": "6325fee779cd7ee5c8904608d66042d620e9ac8e5299956479708588b13571d7"
+    },
+    "samples.csv": {
+      "bytes": 1476,
+      "sha256": "a07476dc79ac821e1cb835f3e7a1c55a7197caa7bd59bb3c89b33a259354bc44"
+    },
+    "phase-sites.json": {
+      "bytes": 432,
+      "sha256": "265431da189964e1243e5f1cd52ae02fa720b00fdd661c33c479bb5cb16afa9c"
+    },
+    "results.json": {
+      "bytes": 76851,
+      "sha256": "a437fcd40a2394c0385a662d319e1b07a0f59342b82d845356f44a33fb61d0c0"
+    }
+  }
+}

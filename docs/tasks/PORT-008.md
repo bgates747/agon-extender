@@ -30,14 +30,22 @@ ordered EDP processing/reply boundaries.
 Older bench restrictions and failure statements below are dated evidence;
 current bench ownership and identity remain in the ignored local record.
 
-### Authorized next tranche — phase attribution, 2026-10-11
+### Completed phase attribution and next discussion, 2026-10-11
 
 The Author approved the three-step proposal: attribute costs first, then discuss
 persistent UART shutdown in ExExt, then repeat the stream/game comparisons.
-Execute only the [phase-attribution contract](PORT-008/PHASE-TIMING-R01.md)
-PT01–PT06 now. No transport optimization, hardware addition or broader goal
-resumption is implied. Its later P08-P02/P03 steps remain gated on results and
-Author discussion. Preserve exact recovery bytes and unrelated work.
+The [phase-attribution contract](PORT-008/PHASE-TIMING-R01.md) PT01–PT06 is
+complete. [Results](PORT-008/PHASE-TIMING-R01-RESULTS.md) retain 24 selected
+fully byte-verified samples and exact original UART restoration. Control
+construction/offer/completion consumes 70.3–80.7% of measured ordered reply
+time; post-full-block offer latency adds ~33–35 ms. Park/restore alone is small.
+
+Author requires **no CRC in ExExt** and rejects making the added CRC faster.
+P08-P05/D01/D02 in the contract own removal and paired-format design; ADR-0026
+and normative architecture record the requirement. No CRC-free implementation
+or performance acceptance yet. Direct ExCom ↔ ExExt transition review is queued
+as P08-P04. Later UART shutdown/game comparisons remain gated on Author
+discussion. Preserve exact recovery bytes; broader goal stays paused.
 
 ### Deferred investigation — hardware assistance, 2026-10-11
 

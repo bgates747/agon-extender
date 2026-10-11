@@ -430,6 +430,13 @@ carry control or keyboard bytes concurrently on shared payload pins. Byte timing
 protocol and routing integration remain under PORT-008 and SETUP-005. The older
 forward-only circuit remains held evidence. EMOS ownership is unchanged.
 
+ExExt transport must not compute or require CRC, including for control
+exchanges. The CRC-bearing experimental candidate is superseded in design by
+the Author's 2026-10-11 instruction to remove that overhead. Reciprocal
+electrical ownership/handshaking remains required. The
+[accepted decision](decisions/ADR-0026-four-lane-exext-transport.md) governs this
+requirement; deployed CRC-free behavior has not yet been qualified.
+
 Both exclusive modes may claim compatibility only for the declared normal
 application-facing surface; Extender v1 explicitly excludes local printer/USB
 serial, console/terminal, ZDI, Intel HEX, YMODEM, updater, and debug facilities

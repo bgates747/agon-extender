@@ -155,3 +155,15 @@ service and publication overlap block intervals; never add them to phase totals.
 Use the same per-sample full-buffer USB proof and integrity-only repeat selection
 as the original comparison. Record both phase/endpoint CSV hashes and original
 repeat indices together. Stop and discuss results before transport changes.
+
+The [completed phase results](../../../docs/tasks/PORT-008/PHASE-TIMING-R01-RESULTS.md)
+measure the preceding CRC-bearing experimental transport. Author now requires
+no CRC in ExExt; these frozen bytes are evidence, not the final protocol design.
+The read-only `crc-check` CPU-model binary calls that retained ROM's `_console_crc`
+leaf with four fourteen-byte reference inputs and counts decoded instructions.
+It adds no CRC to firmware and supplies no physical CRC timing:
+
+```sh
+cargo run --offline --manifest-path tests/performance/stream_timing/Cargo.toml \
+  --bin crc-check -- EXACT_EMOS_ARTIFACT_DIRECTORY
+```
