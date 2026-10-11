@@ -425,3 +425,39 @@ Raw ignored run indices: `focused-r04/exext-170750`,
 `games-r01/empty-legacy-170333`, `games-r01/empty-exext-170525`.
 Each original startup/configuration is restored and byte-readback verified.
 Finite completion does not establish interactive playability or visual quality.
+
+
+## Apple IIe Lode Runner — matched finite endpoint controls
+
+P4stream-r14/EMOSpaired-clock image, browser disconnected, mode136 selected only
+by startup. The existing consumer fixture executes524,288emulated instructions,
+scripted Return and one real read-only DOS sector read; all256 final monochrome
+pixel samples and disk/CPU endpoint checks pass on both routes. Exact assets
+and executable are reused without alteration between runs.
+
+| Measure | ExExt | Legacy/mainboard custom VDP | ExExt change vs Legacy |
+|---|---:|---:|---:|
+| Measured MOS-clock interval |4108ticks =34.233s|766ticks =6.383s|+436.29% elapsed time |
+| Paced presentations during that interval |336|215|Adaptive work differs; not a fixed frame-count comparison |
+| Derived paced presentations/s |9.81|33.68|−70.86%; not physical display FPS |
+| Final sampled pixels matching |256/256|256/256|Same final pixel oracle |
+| DOS reads/errors |1/0|1/0|Both pass |
+
+The executed instruction budget matches but the real-time adaptive presenter
+submits different frame counts. This is an end-to-end consumer comparison,
+not isolated renderer or bus bandwidth. The raw16-bit flip-wait accumulator
+has no overflow attribution; retain it as evidence, not precise headroom.
+Host setup/waits/collection are excluded from the MOS-clock intervals. Raw runs:
+`games-r01/loderunner-exext-171252` and `games-r01/loderunner-legacy-172052`.
+Original startup is restored/readback checked, input ready/neutral after each.
+
+## Split-upload progress control — candidate not yet installed
+
+Execute the maintained P4 `ConsoleStream::readBytes` method with modeled
+byte arrivals/ownership/clock boundaries. Its old unconditional sleep incurs
+three ticks across three pending-handshake progress calls; the negative control
+fails the no-sleep assertion. The candidate preserves exact split byte order,
+idle waits, timeout and fault exit while promptly reentering pending blocks.
+Four existing actual reset/parser tests and17queue/receipt cases also pass.
+Normal full-HDMI build and physical Nurples comparison remain required; this
+source finding alone establishes neither the dominant bottleneck nor a speedup.

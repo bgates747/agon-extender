@@ -41,7 +41,12 @@ Extended) is the planned enhanced mode that carries ordinary VDU output over
 the eight-bit parallel path, without application output-call changes; it needs
 separate compatibility qualification. **Dual** is the planned mainboard-VDU /
 Extender-EDU two-display mode. Neither is presented here as an available CLI
-command. The [architecture](architecture.md) owns the full mode/API distinction.
+command in the selected production bundle. Explicit paired experimental builds
+provide `EMOS EXEXT`; their [stream contract](protocols/exext-stream.md) and
+[bounded results](tasks/PORT-008/EXEXT-STREAM-R01-RESULTS.md) govern that path.
+Game performance and reset admission remain limited; ordinary production
+instructions must not assume it. The [architecture](architecture.md) owns the
+full mode/API distinction.
 
 ## Choose the job
 

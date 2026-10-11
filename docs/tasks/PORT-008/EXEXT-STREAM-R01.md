@@ -586,7 +586,7 @@ Retain the SD-corrected pair for rollback; reject the change if correctness or
 required ROM/link gates fail. Continue the already-required game coverage.
 
 
-### EX-C15 split-upload scheduling isolation — frozen 2026-10-11 17:21 UTC
+### EX-C15 split-upload scheduling isolation — frozen 2026-10-11 17:20 UTC
 
 EX-C15 [ ] — P4's ordinary coordinator already reenters owned handshake phases
 without sleeping, but the retained parser's ExExt `readBytes` progress loop still

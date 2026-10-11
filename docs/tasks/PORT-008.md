@@ -8,9 +8,12 @@ The Author authorizes the eight-hour
 [ordinary ExExt work contract](PORT-008/EXEXT-STREAM-R01.md). The previous P4-PC
 corruption is corrected: independent directions and real 1/255/4096-byte echo
 pass in the [direction isolation](PORT-008/DIRECTION-ISOLATION-R01.md). This
-clears the bounded payload obstacle; it does not yet implement ordinary ExExt.
-The active goal binds unchanged VDU applications, actual replies and keyboard
-traffic to the parallel pipe, with current Legacy/ExCom and rollback preserved.
+clears the bounded payload obstacle. The experimental ordinary binding now
+passes CLI, actual replies, cached-input and finite Nurples/Aginvadors/Rally
+execution; game rates remain below UART and warm-reset admission is unreliable.
+The [current results](PORT-008/EXEXT-STREAM-R01-RESULTS.md) separate those limits
+from passed checks. Legacy/ExCom and rollback remain preserved; production
+selection has not changed.
 Older bench restrictions and failure statements below are dated evidence;
 current bench ownership and identity remain in the ignored local record.
 

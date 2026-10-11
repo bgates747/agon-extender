@@ -373,7 +373,7 @@ policy that silently upgrades ExCom to parallel operation.
 |---|---|---|---|
 | Legacy | Mainboard VDP, stock mainboard UART | Ordinary EDU plane inactive; documented service exceptions remain | Implemented bounded production subset |
 | ExCom | P4 EDP over UART; no parallel traffic | Separate EMOS-owned interface to EDP where supported | Implemented bounded production subset |
-| ExExt | P4 EDP with enhanced transport for standard VDU commands; eight-bit bidirectional payload target with existing-wire handshake and UART/parallel phases | Separate EMOS-owned interface | Planned; byte timing, handover, integration and compatibility unqualified |
+| ExExt | P4 EDP with enhanced transport for standard VDU commands; eight-bit bidirectional payload target with existing-wire handshake and UART/parallel phases | Separate EMOS-owned interface | Experimental ordinary binding passes bounded CLI/reply/input/finite-game checks; sustained performance and reset/compatibility qualification incomplete; outside production |
 | Dual | Mainboard VDP; never mirrored | P4 EDP, separate result domain | Planned; general EDU interface unimplemented |
 
 ExExt lets existing VDU applications benefit from faster transport without
