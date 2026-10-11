@@ -94,3 +94,33 @@ T03 pass has its own complete saved record.
    full-HDMI candidate must now compile, independently verify after installation
    and repeat T07 before expanding to T08/T09/games. Existing warm-reset
    limitations remain open; paired recovery is a separate operation.
+
+
+## Stream-r08 physical receive correction and remaining game failure
+
+Normal full-HDMI `port-008-stream-r08-b2026-10-11-13-48-07Z`, source
+`b73a5d9d856c5d8afa9870d2f16e37dafeded478`, app SHA256
+`e1eb1daed0019c30bc25218c2217707e39dd64a76a94b1b4bdd4e82158e8f917`,
+independently verifies all four segments. EMOS-r07 and mainboard fsim VDP are
+unchanged. Results below rank slowest observed application rate first;
+completion includes pixel-query transport and is not display FPS.
+
+| Existing case | Saved records | Whole-update completion median | Application updates/s | Status |
+|---|---:|---:|---:|---|
+| T07:32 software sprites |120/120|67.00ms|9.96|No abort/packet fault; formerly missing RX tail now completes |
+| T08:scrolling plus32 software sprites |120/120|50.06ms|14.75|Fresh completion observed; file retrieved after recovery; no abort/packet fault |
+| T09:short deterministic Nurples, unfenced |No result file|Unmeasured|Unmeasured|No completion; input/listener does not answer; intentionally recovered, no automatic replay |
+
+The screen sampler's transient409 on a display-context change stops the first
+T09 observer; bounded resumed observation still finds no completion. Recovery
+collection confirms no T09 file, so this is not a hidden pass. P4 keeps clean
+60.07Hz HDMI counters and emits no native transport failure/panic. Agon-only
+reset does not restore keyboard admission. The paired helper's fixed four-second
+P4-start delay also fails; one subsequent Agon reset with P4 fully initialized
+recovers. Startup and T08/T09 configs are restored/readback checked. Require
+actual P4 HTTP initialization before releasing Agon in future paired helpers;
+this setup correction does not itself close the warm-reset failure.
+
+Stream-r09 freezes only the separately tested poll-snapshot ordering correction.
+Its full build passes; physical T01/T03 comparison and a fresh T09 attempt must
+follow before judging that change or proceeding to longer gameplay.
