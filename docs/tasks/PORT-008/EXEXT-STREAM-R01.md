@@ -213,3 +213,25 @@ This is a transport-owner integration defect, not evidence of new D7 corruption.
    states entering ExExt, and for ordinary-send rejection versus admitted
    coordinator-control sending. Build/verify the revised EMOS separately, then
    repeat the short physical CLI check before proceeding to fixtures.
+
+## EX04 input-publication correction — 2026-10-11
+
+1. EMOS-r04 installs and all128KiB read back exactly. ExCom CLI succeeds.
+   ExExt now stays admitted without the stray SD control carrier, but its
+   returned block can contain key down/up together. Publishing every packet
+   under one VBlank hides the down state from stock MOS editor/getkey; slow
+   typing still loses characters. This is a semantic scheduling defect, not
+   evidence of a corrupt parallel byte or repaired interactive compatibility.
+2. Stock MOS3.0.2 `mos_editor.c::getKey` and `mos_api.asm::mos_api_getkey`
+   wait on `keycount` and require `keydown`. Its `vdp_protocol_KEY` replaces
+   those globals for every down/up packet. Preserve those handlers/callbacks;
+   EMOS must retain unpublished return bytes and admit at most one keyboard
+   event per real VBlank, allowing foreground execution before the next event.
+   Non-key replies may drain until that boundary. Never overwrite retained
+   bytes with a new return block. Mode exit must drain through the same ISR.
+3. Add actual-source combined down/up and interleaved-reply tests, plus linked
+   real-eZ80 ISR/context checks over successive VBlanks. Build/check ROM and
+   freeze the new identified image before physical installation. Repeat exact
+   CLI text and mode exit, then continue EX04/EX05. Do not call earlier ready
+   flags proof of received CLI text. Reset/release-handshake behavior remains
+   a distinct EX06 concern; no extra bench/wiring/renderer scope is added.
