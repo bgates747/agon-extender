@@ -235,3 +235,12 @@ This is a transport-owner integration defect, not evidence of new D7 corruption.
    CLI text and mode exit, then continue EX04/EX05. Do not call earlier ready
    flags proof of received CLI text. Reset/release-handshake behavior remains
    a distinct EX06 concern; no extra bench/wiring/renderer scope is added.
+
+The publication correction builds as
+`agon-emos-v0.1.24-b2026-10-11-11-53-09Z`, source
+`0c32deea8b593adfe7c7907bfbc19832923d4fdf`,130424bytes/648free,
+image SHA256 `ca2a15a2b05c5b92850ad350c1d72348db6943c0a58a876891b7b8da29ce1ced`.
+All mandatory complete-firmware/link checks pass. Linked real VBlank execution
+passes combined down/up on successive ticks, both with and without a nested
+IRQ; callbacks and primary/alternate/IX/IY/SP/IFF are preserved. The modeled
+physical service does not establish electrical or gameplay performance.

@@ -49,6 +49,9 @@ at an idle UART boundary; the console lease and stream queues remain intact.
    control waits. A shared busy guard excludes nested transport and foreground
    writers. Returned bytes enter the retained parser/callbacks with interrupts
    masked under an actual VBlank handler, including during foreground stop.
+   EMOS retains unpublished bytes and publishes at most one keyboard event per
+   VBlank: stock MOS's latest-event latch must expose down before a bundled up.
+   Other replies drain in order to that boundary; no new block overwrites it.
 3. P4's bounded I/O-only progress hook services control/handover while a retained
    VDU command waits for split parameters/uploads. It never reenters the parser.
    Full input rings apply backpressure before physical admission.
