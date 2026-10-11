@@ -268,3 +268,29 @@ Three installed-current records identify the fresh handback receipt. Production
 selection unchanged. Subsequent work should isolate filtered CLOCK and GPIO46
 behavior, preferably with a controlled alternate pad/physical signal comparison;
 no wiring change or further bench experiment is authorized by this suggestion.
+
+
+## Renewed one-hour continuation — 2026-10-11
+
+Author approved another bounded run at 07:12:01 UTC; deadline 08:12:01 UTC.
+Prior turn yielded new wire evidence and restored operation; the objective
+remains complete reverse integrity and both-direction/roundtrip verification.
+Keep existing DI05-B/C open rather than redefining success around seven bits.
+
+DI05-B1 [ ] — Recheck physical GPIO46 versus peripheral data routing with the
+CLOCK filter held constant. Keep wiring a live hypothesis: a P4-side probe and
+static-high response do not exclude external loading or a wrong connection.
+Compare a compensated output inversion, lane permutation or independent
+peripheral waveform only under the existing EMOS-owned parked-bus lease.
+Use focused experiments, exact artifacts and exhaustive received-byte checks;
+no public diagnostic API, direct Agon GPIO bypass or unrequested rewiring.
+
+DI05-B2 [ ] — If a focused remedy passes, implement the smallest proper owned
+resource lifecycle and regression coverage, then repeat independent forward and
+reverse and existing 1/255/4096-byte roundtrips. A failed or nonmatching control
+is evidence, never a substitute pass. Diagnostics remain outside resident EMOS.
+
+DI05-C1 [ ] — Preserve results, remove rejected experiments, restore verified
+ordinary firmware/input and original startup before the deadline. No production
+promotion without the existing acceptance/version gates. Repaired historical
+forward DevKit results do not establish modern reverse behavior there.
