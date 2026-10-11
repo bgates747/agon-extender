@@ -2,6 +2,18 @@
 
 ## Current scope
 
+### Active goal — ordinary ExExt stream, 2026-10-11
+
+The Author authorizes the eight-hour
+[ordinary ExExt work contract](PORT-008/EXEXT-STREAM-R01.md). The previous P4-PC
+corruption is corrected: independent directions and real 1/255/4096-byte echo
+pass in the [direction isolation](PORT-008/DIRECTION-ISOLATION-R01.md). This
+clears the bounded payload obstacle; it does not yet implement ordinary ExExt.
+The active goal binds unchanged VDU applications, actual replies and keyboard
+traffic to the parallel pipe, with current Legacy/ExCom and rollback preserved.
+Older bench restrictions and failure statements below are dated evidence;
+current bench ownership and identity remain in the ignored local record.
+
 ### Selected bench-free tranche — eight-bit payload, 2026-10-08
 
 The Author clarified that the target is **eight-bit bidirectional payload on
