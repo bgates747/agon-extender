@@ -5,6 +5,17 @@
 #include <freertos/FreeRTOS.h>
 #include <cstdio>
 namespace agon::extender::transport {
+// EX05: game assets left internal DMA memory too fragmented for the next
+// PARLIO descriptor list. P4 GDMA supports cache-aligned PSRAM payloads; keep
+// descriptors/control in SDK-owned internal memory, but do not spend another
+// 4KiB of that scarce pool on a transient payload. The pinned RX driver splits
+// and synchronizes cached buffers; TX performs its own C2M synchronization.
+// Earlier qualification profiles retain their measured internal allocation.
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+constexpr unsigned payloadCaps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;
+#else
+constexpr unsigned payloadCaps = MALLOC_CAP_INTERNAL | MALLOC_CAP_DMA | MALLOC_CAP_8BIT;
+#endif
 static_assert(std::atomic<std::size_t>::is_always_lock_free &&
               std::atomic<unsigned>::is_always_lock_free &&
               std::atomic<bool>::is_always_lock_free,"ISR publication must be lock-free");
@@ -56,7 +67,7 @@ P4NativePayload::Result P4NativePayload::arm(P4ParallelHandover const& h,
   return result_;
 }
 bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcept {
-  dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length,MALLOC_CAP_INTERNAL|MALLOC_CAP_DMA|MALLOC_CAP_8BIT));
+  dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length,payloadCaps));
   if(!dma_)return false;
   std::memcpy(dma_,data,length);
   // PORT-008 DI05: observed extra CLOCK edges skipped TX bytes. The P4's
@@ -93,7 +104,7 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
 bool P4NativePayload::startReceive() noexcept {
   // Fixed-count EOF matches the earlier physical RX prototype. PCNT, not
   // a synthetic EOF or task-level pin sample, rejects short/extra records.
-  dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length_,MALLOC_CAP_INTERNAL|MALLOC_CAP_DMA|MALLOC_CAP_8BIT));
+  dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length_,payloadCaps));
   if(!dma_)return false;
   parlio_rx_unit_config_t config{};
   for(auto& pin:config.data_gpio_nums)pin=GPIO_NUM_NC;

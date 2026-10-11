@@ -48,15 +48,7 @@ class ParallelVduStream final {
       // reverse block. This closes the key-arrival race between POLL and STOP.
       // Only the zero-pending acknowledgement commits the UART transition.
       if(!txCount_)active_=false;
-    } else if(p[3]==PARALLEL_STREAM_POLL) {
-      // EX05: control can arrive immediately after a forward receipt, before
-      // the retained VDU parser consumes that block. An early empty snapshot
-      // makes EMOS wait another VBlank for the reply to its own queued query.
-      // Hold this complete envelope while the outer parser drains input.
-      // A parser awaiting another upload block has no queued bytes, so POLL
-      // can still complete through the I/O-only hook without parser reentry.
-      if(!active_ || rxCount_ || waiting_)return false;
-    } else return false;
+    } else if(p[3]!=PARALLEL_STREAM_POLL || !active_)return false;
     std::memcpy(reply,p,16);reply[3]|=0x80;
     const auto n=std::min<std::size_t>(txCount_,payload_.size());
     reply[10]=std::uint8_t(n);reply[11]=std::uint8_t(n>>8);

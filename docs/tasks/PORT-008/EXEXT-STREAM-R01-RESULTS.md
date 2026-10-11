@@ -124,3 +124,26 @@ this setup correction does not itself close the warm-reset failure.
 Stream-r09 freezes only the separately tested poll-snapshot ordering correction.
 Its full build passes; physical T01/T03 comparison and a fresh T09 attempt must
 follow before judging that change or proceeding to longer gameplay.
+
+## Stream-r09 — no query gain; actual game allocation failure
+
+All four stream-r09 segments independently verify; EMOS-r07/mainboard VDP
+remain unchanged. Each tiny-query case saves120valid rows. Ranking is by
+slowest stream-r09 whole-update rate; these are fenced application cycles,
+not HDMI frames or raw parallel throughput.
+
+| Case | r05 median | r09 median | Median latency difference vs r05 | r09 updates/s |
+|---|---:|---:|---:|---:|
+|T01|50.0417ms|50.0486ms|+0.014%|15.79|
+|T03|50.0556ms|50.0625ms|+0.014%|16.44|
+
+Fresh T09 stops at loading image3/350; no result file exists after recovery.
+The USB log now captures `gdma_new_link_list: no mem for link list items`, then
+PARLIO RX creation failure and native-arm failure for3456bytes (completion0,
+received0). This is a concrete transport resource failure, not evidence of
+electrical corruption or slow HDMI. Internal free-memory reporting includes
+regions that do not satisfy DMA capabilities; it is not a DMA allocation proof.
+The HTTP-initialized paired-reset helper recovers stable input, and original
+startup/T09config are restored/readback checked. Warm-reset coverage remains
+separate. The poll-ordering experiment is reverted; cache-aligned PSRAM payload
+placement is the next bounded candidate.

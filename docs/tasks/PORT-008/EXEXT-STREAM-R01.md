@@ -449,3 +449,20 @@ backpressure shape. An upload waiting for more bytes can acknowledge when the
 ring is empty through the non-reentrant I/O-only hook. Test actual queue owner
 negative/positive ordering, rebuild/verify normal full-HDMI firmware, compare
 T01/T03 and retain game timing scopes. No wire format, renderer or EMOS change.
+
+## EX05 memory boundary — frozen 2026-10-11 14:25 UTC
+
+1. Stream-r09 repeats T01/T03 with no useful latency improvement (about50ms
+   median), and its fresh T09 stops loading image3/350. Actual SDK errors report
+   failure allocating GDMA link-list items, followed by native-arm failure for
+   a3456byte forward block. No result is saved. HDMI stays healthy.
+2. Revert the ineffective poll-deferral experiment. In explicit ExExt only,
+   place the transient cache-aligned payload in PSRAM using the pinned driver's
+   existing external-memory DMA and cache synchronization support. Keep SDK
+   descriptors/control internal and retain all pad/callback lifetime guards.
+   Earlier native qualification profiles retain their measured allocation.
+3. Run actual native-leaf failure/lifetime controls for both allocations; build
+   full HDMI firmware, verify all installed segments and repeat the same T09.
+   A compile/heap hypothesis is not a game pass. If allocation still fails,
+   retain the first error and review the internal DMA reserve before widening
+   scope. Restore original startup/configs and release the bench offline.
