@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "task_id": "RESEARCH-007",
+  "subtask_id": "R07-03",
+  "qualification_scope": "Target compilation/link only; no device execution, HDMI output or performance measurement.",
+  "builds": [
+    {
+      "build_id": "ppa-clut-example-r05-b2026-10-11-23-50-31Z",
+      "status": "experimental",
+      "scope": "compile/link only; not deployed or physically tested",
+      "variant": "stock-sdk-negative-control",
+      "source_commit": "9c9179f775394d1292535f0b8bae96056eaaa37a",
+      "source_dirty": true,
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "compiler_sha256": "a58c7ac425b8b06ba0a4cb6f774553bcccf2ed2c496e738e50ea6c490227b784",
+      "upstream_clut_commit": "76b4cf1336168aad6d1db4b8d1d2743137db4092",
+      "exit_code": 1,
+      "source_inputs": [
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/CMakeLists.txt",
+          "sha256": "bc4ca963534b8a23367992c4c3488498873ae65fbac8dfb25cf8dcd3609b6653"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/README.md",
+          "sha256": "3de32f5d92c7bf45bcf6f6a6a372493e73ca227f200385e70108d8f0e6db6d3d"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/backport.json",
+          "sha256": "3a0772f88023b360953fba4005d486de7b4ad4df71b0da44f93ddbc423dab4e5"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/build.py",
+          "sha256": "f58ed58d07ad426c65535410e9f8833f620de2afbdadfb078c2891ee2b06f75c"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/clut-backport.patch",
+          "sha256": "c41572a6268ce54a4233a376c1984fc638a3a45b38572b2576c6b0cdd0ad6703"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/main/CMakeLists.txt",
+          "sha256": "a37fead850035812029402f461b5293e63e14a275f995431e1ab0d339b3f8f2c"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/main/main.c",
+          "sha256": "c5e218d5f5623d23b04fa90d4b3999bf75c5c42c53414ffafe83242a66bca95d"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/sdkconfig.defaults",
+          "sha256": "778ea64d0016841442b916413d5aa4d28eeb04ebfd317e26069e5614282c7ed1"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "sdkconfig",
+          "bytes": 52404,
+          "sha256": "a30059c0a3d9994d8132ad035f61b8b634a5cb9e67fb3c6c05001da8eabcd1e1"
+        },
+        {
+          "path": "build/compile_commands.json",
+          "bytes": 3720998,
+          "sha256": "2fd81554d2ac254d2caa99b82fb92c6222f18b1c56c352fdc571d1f3c898cd92"
+        }
+      ],
+      "source_dirty_context": "Only the capability-report draft was untracked when these committed sample inputs were built; all recorded sample hashes match.",
+      "retained_evidence_directory": "agents/research007/indexed-r01/stock-sdk-control-r05",
+      "build_log_sha256": "727f1e3743affe930a626c5d7ffa3d7befe3e401b6b2fc40085a34f982ed79a5",
+      "manifest_sha256": "ed22f5be989b1167d79396e9bb051723f46193a488adbc4775dca0637ad3f0ce",
+      "compiler_errors": [
+        "main/main.c:90:25: error: 'PPA_BLEND_COLOR_MODE_L8' undeclared (first use in this function); did you mean 'PPA_BLEND_COLOR_MODE_A8'?",
+        "main/main.c:114:25: error: implicit declaration of function 'ppa_set_color_lookup_table' [-Wimplicit-function-declaration]",
+        "main/main.c:114:52: error: 'PPA_CLUT_BLEND_BG' undeclared (first use in this function)"
+      ],
+      "expected_result_verified": "Compilation fails on the three missing public CLUT API/type names; no application ELF produced."
+    },
+    {
+      "build_id": "ppa-clut-example-r05-b2026-10-11-23-49-28Z",
+      "status": "experimental",
+      "scope": "compile/link only; not deployed or physically tested",
+      "variant": "clut-backport",
+      "source_commit": "9c9179f775394d1292535f0b8bae96056eaaa37a",
+      "source_dirty": true,
+      "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+      "compiler_sha256": "a58c7ac425b8b06ba0a4cb6f774553bcccf2ed2c496e738e50ea6c490227b784",
+      "upstream_clut_commit": "76b4cf1336168aad6d1db4b8d1d2743137db4092",
+      "exit_code": 0,
+      "source_inputs": [
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/CMakeLists.txt",
+          "sha256": "bc4ca963534b8a23367992c4c3488498873ae65fbac8dfb25cf8dcd3609b6653"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/README.md",
+          "sha256": "3de32f5d92c7bf45bcf6f6a6a372493e73ca227f200385e70108d8f0e6db6d3d"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/backport.json",
+          "sha256": "3a0772f88023b360953fba4005d486de7b4ad4df71b0da44f93ddbc423dab4e5"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/build.py",
+          "sha256": "f58ed58d07ad426c65535410e9f8833f620de2afbdadfb078c2891ee2b06f75c"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/clut-backport.patch",
+          "sha256": "c41572a6268ce54a4233a376c1984fc638a3a45b38572b2576c6b0cdd0ad6703"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/main/CMakeLists.txt",
+          "sha256": "a37fead850035812029402f461b5293e63e14a275f995431e1ab0d339b3f8f2c"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/main/main.c",
+          "sha256": "c5e218d5f5623d23b04fa90d4b3999bf75c5c42c53414ffafe83242a66bca95d"
+        },
+        {
+          "path": "docs/tasks/RESEARCH-007/clut-example/sdkconfig.defaults",
+          "sha256": "778ea64d0016841442b916413d5aa4d28eeb04ebfd317e26069e5614282c7ed1"
+        }
+      ],
+      "artifacts": [
+        {
+          "path": "sdkconfig",
+          "bytes": 52404,
+          "sha256": "a30059c0a3d9994d8132ad035f61b8b634a5cb9e67fb3c6c05001da8eabcd1e1"
+        },
+        {
+          "path": "build/compile_commands.json",
+          "bytes": 3719909,
+          "sha256": "ad54e12717bcd3c75083febd5db7a28af54de6a059d5fc4da6460ea1b752164a"
+        },
+        {
+          "path": "build/ppa_clut_example.elf",
+          "bytes": 4711612,
+          "sha256": "993c80e91f67d7462dd4e926d4f3688034dc6df9a958e77ed90715abf69d41ca"
+        },
+        {
+          "path": "build/ppa_clut_example.bin",
+          "bytes": 209088,
+          "sha256": "8004b5f02d01e773acc70b5378c8d55a216661c20f3336bdcd32582f17da77c6"
+        }
+      ],
+      "source_dirty_context": "Only the capability-report draft was untracked when these committed sample inputs were built; all recorded sample hashes match.",
+      "retained_evidence_directory": "agents/research007/indexed-r01/backported-build-r05",
+      "build_log_sha256": "4221c0b1c7ca8ae88242a701cb09c1293927e90e8b6a8d5f2e6b4f53d5ee2aff",
+      "manifest_sha256": "aee45d985d13115238eb0e9e2ad38cbb6cd296d694640b7c0c4a4bfcc3bb93f1",
+      "compiler_errors": [],
+      "verification": {
+        "schema_version": 1,
+        "build_id": "ppa-clut-example-r05-b2026-10-11-23-49-28Z",
+        "actual_header_dependencies": {
+          "main": [
+            "project/components/esp_driver_ppa/overlay/hal/ppa_types.h"
+          ],
+          "ppa_core": [
+            "project/components/esp_driver_ppa/overlay/hal/ppa_types.h",
+            "project/components/esp_driver_ppa/overlay/hal/ppa_ll.h"
+          ],
+          "ppa_blend": [
+            "project/components/esp_driver_ppa/overlay/hal/ppa_types.h",
+            "project/components/esp_driver_ppa/overlay/hal/ppa_ll.h"
+          ]
+        },
+        "linked_symbols": [
+          "ppa_set_color_lookup_table",
+          "ppa_do_blend",
+          "app_main"
+        ],
+        "main_object_undefined_calls": [
+          "ppa_set_color_lookup_table",
+          "ppa_do_blend"
+        ],
+        "build_identity_present_in_binary": true,
+        "base_sdk_input_hashes_unchanged": true,
+        "source_inputs_match": true,
+        "compile_warnings": []
+      },
+      "verification_sha256": "ca959698fc75d521df9ee667cad35035d4f4baf70afc28f9b61cee7d1a0e4086",
+      "effective_configuration": {
+        "CONFIG_ESP32P4_SELECTS_REV_LESS_V3": "y",
+        "CONFIG_ESP32P4_REV_MIN_FULL": "1",
+        "CONFIG_ESP32P4_REV_MAX_FULL": "199",
+        "CONFIG_SPIRAM": "y",
+        "CONFIG_SPIRAM_SPEED": "200",
+        "CONFIG_SPIRAM_BOOT_INIT": "y",
+        "CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ": "360",
+        "CONFIG_CACHE_L1_CACHE_LINE_SIZE": "64",
+        "CONFIG_CACHE_L2_CACHE_LINE_SIZE": "64",
+        "CONFIG_ESP_MAIN_TASK_STACK_SIZE": "8192"
+      }
+    }
+  ],
+  "base_sdk_git_clean": true,
+  "all_six_base_sdk_input_hashes_unchanged": true,
+  "production_renderer_and_selection_changed": false
+}

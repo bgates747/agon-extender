@@ -1,15 +1,18 @@
-# Current review — indexed framebuffer source inventory complete
+# Current review — indexed PPA capability and compile-only example complete
 
-[RESEARCH-007](docs/tasks/RESEARCH-007.md) R07-01 alone is complete;
-[pipeline inventory](docs/tasks/RESEARCH-007/PIPELINE-INVENTORY.md) and normalized
-source hashes pin the inspected current rendering path and retained r17 graph.
-Packed lower-colour indices and one-byte native RGB222 already exist. Selected
-HDMI geometries use three-byte B,G,R drawing storage, while software-sprite saved
-backgrounds remain one byte/pixel. RGB888 panel images, DMA2D/SRAM strips, PPA
-staging and the allocated but bypassed browser snapshot pool are mapped.
-All 5,501 retained source inputs match; no runtime performance claim. No code,
-build, emulator, device, SD, startup or production changes. Fsim retains bench;
-stop for review before R07-02. The separate ExExt checkpoint below is unchanged.
+[RESEARCH-007](docs/tasks/RESEARCH-007.md) R07-01 and R07-03 complete;
+[capability report](docs/tasks/RESEARCH-007/CAPABILITY-REPORT.md) distinguishes
+direct indexed scanout (not documented) from PPA programmable CLUT expansion
+(explicitly documented on v1.3 silicon). Isolated
+[sample](docs/tasks/RESEARCH-007/clut-example/README.md) r05 compiles/links real
+CLUT calls through a six-file upstream-derived generated override; product
+SDK5.5.5 and renderer stay unchanged. Independent physical-memory checks are
+prepared, not run. No ISR submission or fused L8 scaling through public APIs;
+two input streams and shared palette ownership constrain later integration.
+No device, SD, startup, emulator, performance or production change. R07-02 and
+R07-04–07 remain unstarted; stop for review. Fsim retains bench. The completed
+[inventory](docs/tasks/RESEARCH-007/PIPELINE-INVENTORY.md) and separate ExExt
+checkpoint below are unchanged.
 
 # ExExt checkpoint — software completion removed, offline only
 

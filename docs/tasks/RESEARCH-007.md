@@ -9,11 +9,13 @@ path. Compare P4 CPU palette expansion and supported PPA/display operations. The
 unproven: existing direct RGB888 rendering removed an expensive conversion
 stage, and indexed storage could reintroduce it.
 
-**State: R07-01 complete; R07-03 capability research and compile-only example
-authorized, in progress.** On 2026-10-11 the Author requested detailed exploration
+**State: R07-01 and R07-03 complete; paused before integration or bench work.**
+On 2026-10-11 the Author requested detailed exploration
 of indexed HDMI/PPA expansion, sample code and target compilation. The
 [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
-and [source baseline](RESEARCH-007/SOURCE-BASELINE.json) record that work.
+and [source baseline](RESEARCH-007/SOURCE-BASELINE.json) record R07-01;
+the [capability report](RESEARCH-007/CAPABILITY-REPORT.md) and
+[isolated example](RESEARCH-007/clut-example/README.md) record R07-03.
 R07-02 and R07-04–07 remain unstarted. This is an isolated experimental example,
 not product integration. No benchmark, new mode, deployment or bench action is
 authorized. Fsim retains the bench;
@@ -74,11 +76,13 @@ rather than merely store compact pixels internally. A previous unqualified
    palette consistency, sprite/Copper integration and refill deadlines before
    claiming this works. No performance or compatibility benefit is yet measured.
 
-These are preliminary capability leads from the clarification, not completion
-of R07-03 or authorization to upgrade the SDK, write a custom driver, change the
-renderer, build or deploy. The online `latest` documentation is mutable; R07-03
-must pin the supporting SDK revision and relevant primary hardware references.
-The Author requested this record only, followed by a stop.
+This clarification originally recorded preliminary leads only. The later
+bounded R07-03 authorization above permitted isolated example compilation and
+upstream-derived driver overrides. Its completed report confirms v1.3 silicon
+CLUT support and records actual target compilation; it does not authorize a
+product SDK upgrade, renderer integration or deployment. The online `latest`
+documentation remains mutable; pinned source and PDF identities bound the
+completed findings.
 
 ## Origin and boundaries
 
@@ -157,7 +161,7 @@ changes to affect existing pixels. Describe exact support, incompatibilities
 and any true-colour fallback. Treat custom 256 colours as a separate unaccepted
 feature, not a prerequisite for investigating stock 16/64-colour modes.
 
-### R07-03 [ ] Verify P4 PPA and display-peripheral capabilities
+### R07-03 [x] Verify P4 PPA and display-peripheral capabilities
 
 Read pinned Espressif documentation, headers and driver/source for the selected
 P4 silicon and SDK. Verify whether L8 is supported in the relevant operation,
@@ -170,18 +174,27 @@ finding; do not silently substitute a different interpretation of L8.
 
 The 2026-10-11 authorization includes these bounded implementation checks:
 
-1. **R07-03A [ ]** Pin primary hardware/SDK evidence and identify the precise
+1. **R07-03A [x]** Pin primary hardware/SDK evidence and identify the precise
    public-driver gap, supported operations and silicon constraints.
-2. **R07-03B [ ]** Write an isolated target example using verified palette
+2. **R07-03B [x]** Write an isolated target example using verified palette
    expansion operations, reusing upstream definitions/helpers where possible.
    Explain any necessary low-level access beside the code. The example must
    not initialize DSI/HDMI, keyboard, network, SD or product services.
-3. **R07-03C [ ]** Cross-compile/link for ESP32-P4 with retained tool identities.
+3. **R07-03C [x]** Cross-compile/link for ESP32-P4 with retained tool identities.
    Record exact configuration, source and artifact hashes, compile failures
    that reveal genuine API constraints, and limits of compile-only validation.
-4. **R07-03D [ ]** Report direct-scanout and strip-conversion conclusions with
+4. **R07-03D [x]** Report direct-scanout and strip-conversion conclusions with
    sources. Leave physical correctness, deadline/performance and renderer
    integration unverified; stop without device access.
+
+Completed 2026-10-11: the v1.3 TRM explicitly documents programmable BLEND L8/L4
+CLUT expansion; DSI/LT8912B expose no documented programmable-index scanout.
+The isolated `ppa-clut-example-r05` target compiles/links actual upstream-derived
+CLUT calls with unchanged base SDK and product sources. The unmodified SDK
+control demonstrates its missing public API. See the capability report for
+exact build/hash evidence, preparation corrections and ISR, two-input, scaling,
+palette and strip-deadline limits. No physical correctness, throughput, gameplay
+or product-integration result; pause before remaining subtasks.
 
 ### R07-04 [ ] Compare CPU and output-stage alternatives
 
