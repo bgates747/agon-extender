@@ -61,6 +61,20 @@ P4BootRelease::Result P4BootRelease::poll(P4ParallelHandover &h, bool uartRestor
   if (failed_ || xPortGetCoreID()!=core_) return fault;
   // No payload/entry actions are supported by this boot-only adapter.
   if (h.phase()>P4ParallelHandover::uart) return fault;
+  if(gpio_get_level(gpio_num_t(clock_))) {
+    // PORT-008 EX06 reset prefix, ONLY after begin() released every data pad.
+    // C1/V0 -> READY high; C1/V1 -> READY low. Holding CLOCK high prevents an
+    // old low acknowledgement from skipping peer observation of this epoch.
+    // Restart the boot core while fenced; ordinary block return bypasses this
+    // adapter through P4BootStartup's block owner and keeps its own sequence.
+    if(!released_){failed_=true;return fault;}
+    h.cancel();initial_=true;
+    if(gpio_set_level(gpio_num_t(ready_),
+        gpio_get_level(gpio_num_t(valid_))?0:1)!=ESP_OK) {
+      failed_=true;gpio_set_direction(gpio_num_t(ready_),GPIO_MODE_INPUT);return fault;
+    }
+    return waiting;
+  }
   if (h.phase()==P4ParallelHandover::recoveryRelease && !initial_) {
     // External cancellation must begin a new physical fence, not borrow the
     // old release completion after a coordinator enabled UART outputs.
@@ -84,7 +98,9 @@ P4BootRelease::Result P4BootRelease::poll(P4ParallelHandover &h, bool uartRestor
     released_=false;failed_=true;
     return fault;
   }
-  if (action==P4ParallelHandover::restore) return restore;
+  // The caller attaches UART outputs immediately after this return. Its old
+  // released-pad proof cannot survive that operation, even before LIVE.
+  if (action==P4ParallelHandover::restore) {released_=false;return restore;}
   if (action==P4ParallelHandover::live) {released_=false;return live;}
   return waiting;
 }

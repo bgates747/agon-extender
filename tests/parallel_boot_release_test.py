@@ -19,7 +19,7 @@ class BootTests(unittest.TestCase):
  @timed
  def test_paired_adapters(self):
   with tempfile.TemporaryDirectory() as tmp:
-   d=Path(tmp);flags=['-Wall','-Wextra','-Werror','-pedantic','-Wno-endif-labels',
+   d=Path(tmp);flags=['-Wall','-Wextra','-Werror','-pedantic','-Wno-endif-labels','-DEMOS_PARALLEL_NATIVE_COORDINATOR',
     '-ffunction-sections','-fsanitize=address,undefined','-fno-sanitize-recover=all']
    for header in ('driver/uart.h','driver/gpio.h','freertos/FreeRTOS.h',
                   'esp_rom_gpio.h','soc/uart_periph.h'):
@@ -28,7 +28,7 @@ class BootTests(unittest.TestCase):
    inc=[f'-I{d}',f'-I{ROOT/"tests"}',f'-I{EMOS/"tests/host"}',
         f'-I{EMOS/"src"}',f'-I{ROOT/"vdp/video"}']
    objects=[]
-   for source in ['emos_parallel_boot','emos_parallel_handover']:
+   for source in ['emos_parallel_boot','emos_parallel_handover','emos_parallel_startup']:
     obj=d/(source+'.o');objects.append(str(obj))
     subprocess.run(['cc','-std=c17',*flags,*inc,'-include','eZ80.h','-c',str(EMOS/'src'/(source+'.c')),
                     '-o',str(obj)],check=True)

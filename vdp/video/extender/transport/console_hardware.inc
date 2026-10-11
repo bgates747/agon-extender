@@ -134,9 +134,9 @@ bool consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   // QUAL-003: PREPARE_KEEP deliberately leaves Canvas, contexts and resource
   // buffers intact. Its fresh lease is still required before ordinary output.
   console_stream->controlReply(reply,sizeof(reply));
-#if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+  // Successful native block exchanges are the ordinary ExExt hot path. USB
+  // stdout backpressure must not become per-block work; first faults still log.
   if(p[2]!=PARALLEL_WIRE_VERSION)
-#endif
     printf("Console control version=%u op=%u active=%u\n",p[2],p[3],console_stream->session.active());
   return true;
 }

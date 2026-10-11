@@ -6,12 +6,15 @@
 #include <cassert>
 #include <cstring>
 #include <iostream>
+#include <functional>
 extern "C" {
 #include "emos_parallel_handover.h"
+#include "emos_keyboard.h"
 #include "eZ80.h"
 volatile BYTE hostPcDr,hostPcDdr,hostPcAlt1,hostPcAlt2;
 volatile BYTE hostPdDr,hostPdDdr,hostPdAlt1,hostPdAlt2;
 volatile BYTE hostUart1Ier,hostUart1Mctl;
+volatile BYTE uart1_keyboard_owned,emos_key_source,emos_key_faulted;
 }
 using H=agon::extender::transport::P4ParallelHandover;
 using B=agon::extender::transport::P4BootRelease;
@@ -20,6 +23,22 @@ static int core=0,failOperation=-1,operation=0;
 static unsigned pMask=0,eMask=0,reads=0;
 static int directions[50]{},levels[50]{};
 static bool armed=false;
+static std::function<void()> foregroundPeer;
+static unsigned foregroundSteps;
+extern "C" BYTE emos_keyboard_clock(void){return BYTE(foregroundSteps);}
+extern "C" BYTE emos_keyboard_deadline_step(t_emosDeadline *){
+ if(++foregroundSteps>2000)return 0;
+ if(foregroundPeer)foregroundPeer();
+ hostPdDr=(hostPdDr&~0x10)|(levels[15]?0x10:0);return 1;
+}
+extern "C" BYTE emos_keyboard_transport_claim(void){
+ assert(!pMask);eMask=5;uart1_keyboard_owned=1;return 0;
+}
+extern "C" void emos_keyboard_transport_release(void){eMask=0;uart1_keyboard_owned=0;}
+extern "C" void emos_keyboard_fault(void){emos_key_faulted=1;}
+extern "C" void uart1_keyboard_close(void){eMask=0;uart1_keyboard_owned=0;}
+extern "C" BYTE emos_keyboard_lock(void){return 1;}
+extern "C" void emos_keyboard_unlock(BYTE){}
 static void ownership(){assert(!(pMask & eMask));}
 static bool fails(){return operation++==failOperation;}
 int xPortGetCoreID(){return core;}
@@ -97,6 +116,29 @@ struct Pair {
  void resetP(){pMask=0;pUp=false;assert(b.begin(p));ownership();}
 };
 int main(){unsigned cases=0;
+ // Execute the REAL foreground startup owner against an already-live P4.
+ // No periodic fence retries: delayed peer polling exposes stale READY-high.
+ for(unsigned pd:{3u,7u,19u}) for(unsigned resetPhase=0;resetPhase<=H::uart;++resetPhase) {
+  Pair q;agon::extender::transport::P4BootStartup startup(q.p,data,15,14,16,0);
+  assert(startup.begin(0));bool live=false;unsigned now=0;
+  auto restore=[&](){pMask=10;ownership();return true;};
+  auto cancel=[&](){assert(!pMask);return true;};
+  if(resetPhase==H::uart) {
+   for(;now<1000&&(!live||q.e.phase!=EPH_UART);++now){q.etick();live=startup.poll(now,restore,cancel);}
+   assert(live && q.e.phase==EPH_UART && levels[15]);
+  } else {
+   for(;now<1000&&unsigned(q.p.phase())!=resetPhase;++now){q.etick();startup.poll(now,restore,cancel);}
+   assert(unsigned(q.p.phase())==resetPhase);
+  }
+  eMask=0;uart1_keyboard_owned=emos_key_source=emos_key_faulted=0;
+  foregroundSteps=0;
+  // EMOS reset setup completes before P4 gets to observe its controls.
+  emos_parallel_boot_start();
+  foregroundPeer=[&](){if(foregroundSteps%pd==0)startup.poll(++now,restore,cancel);};
+  emos_parallel_boot_connect();foregroundPeer={};
+  assert(emos_parallel_boot_uart_allowed() && q.p.phase()==H::uart);
+  assert(!eMask);++cases;
+ }
  for(unsigned ed:{1,2,7})for(unsigned pd:{1,3,9}){
   Pair x;for(unsigned n=0;n<1000&&!x.live();++n)x.tick(n,ed,pd);assert(x.live());++cases;
   for(unsigned at=0;at<35;++at)for(bool re:{false,true}){

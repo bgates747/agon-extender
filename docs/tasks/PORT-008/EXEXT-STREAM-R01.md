@@ -289,3 +289,30 @@ can recover without repairing the protocol.
 3. In parallel with this preparation, use established paired-reset recovery
    only to run the already-planned focused reply/upload controls on r05. Keep
    those results distinct from reset correctness and uppercase-input coverage.
+
+### EX06 stronger reset proof before deployment
+
+The first C1/V0-to-low proposal passes live-UART reset but fails when EMOS
+resets during another recovery phase. It is superseded before deployment.
+Retained earlier research in LIVE-QUALIFICATION-BLOCK-R04 had already rejected
+a related single-level announcement; its counterexample is explicitly covered.
+
+1. EMOS now requests C1/V0 while data pads are released, waits READY-high,
+   holds C1/V1 until READY-low, then enters the existing C0/V1 recovery.
+   An old high can advance only to the held CLOCK-high request, never to UART.
+2. P4's boot adapter, after actual pad release, acknowledges C1/V0 high and
+   C1/V1 low in every recovery phase. CLOCK-low resumes the established release
+   cycle. P4 invalidates its released-pad proof before asking its owner to
+   attach UART outputs, rather than waiting until LIVE. Native block ownership
+   remains separate; the boot adapter never handles an active payload phase.
+3. Actual EMOS foreground startup plus both physical pad/core adapters pass754
+   ASan/UBSan cases, including every recovery phase with delayed P4 polling and
+   no automatic retry. Old startup reproduces the live-ready race; the weaker
+   one-level remedy fails all-phase coverage. These are software checks, not
+   physical reset qualification. Complete paired builds and bench checks follow.
+4. No SCAN timing result is claimed from the preliminary r05 invocation: console
+   entry reset the P4 display to mode0, a CLI path lost one character, and LOAD
+   failed. The provisional runner incorrectly proceeded to RUN; recovery and
+   restoration completed. Future preparation selects route before mode in
+   startup, checks each CLI preparation command and invokes only a verified
+   loaded fixture. Original startup/configs are restored for offline work.

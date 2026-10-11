@@ -87,8 +87,9 @@ int main(){Processor p;p.consoleTransportBoundary();
     def test_console_owner_ordering(self):
         s=(VIDEO/'extender/transport/console_hardware.inc').read_text()
         run=s.split('void runConsole(VDUStreamProcessor *processor)',1)[1]
-        loop=run.split('for(;;)',1)[1]
-        self.assertLess(loop.index('startup.poll('),loop.index('usbhost::pump('))
+        step=run.split('step=[&](bool parseCommands) {',1)[1].split('\n  };',1)[0]
+        self.assertLess(step.index('startup.poll('),step.index('usbhost::pump('))
+        self.assertIn('for(;;)step(true)',run)
         cancel=run.split('auto cancelTransport=[&](){',1)[1].split('\n  };',1)[0]
         # Comments mention the forbidden helper; executable calls must not.
         code='\n'.join(line.split('//',1)[0] for line in cancel.splitlines())

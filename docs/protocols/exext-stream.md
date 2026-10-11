@@ -63,3 +63,16 @@ at an idle UART boundary; the console lease and stream queues remain intact.
    measured under gameplay. IRQ-disabled output refuses admission. No SD
    service migration (automatic SD admission stays Legacy/ExCom only), new renderer/mode, generalized callback ABI or automatic
    UART payload fallback is provided. Legacy/ExCom remain separate paths.
+
+## Experimental reset prefix
+
+The revised experimental pair adds a boot-only prefix to distinguish an eZ80
+reset from unchanged live UART levels. EMOS first releases its data pads and
+holds CLOCK-high/VALID-low until READY-high, then CLOCK-high/VALID-high until
+READY-low. P4 acknowledges these only after its actual data-pad fence. EMOS
+then holds CLOCK-low/VALID-high and completes the established reciprocal release
+and UART restoration. An old initial READY level cannot authorize UART.
+P4 invalidates pad-release proof before attaching UART, including the interval
+before LIVE. Native block return continues through its separate owner. These
+changes require the matched experimental builds; no older-pair qualification
+is inferred. Physical reset checks remain pending in EX06.
