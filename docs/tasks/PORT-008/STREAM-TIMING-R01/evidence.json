@@ -840,5 +840,14 @@
       "data_bytes": 8181,
       "sha256": "5ac3ebc88ba584a9a4ec318040d6d635d49250cdd660a02bcf023c8f5587e95b"
     }
-  ]
+  ],
+  "p4_build_provenance": {
+    "build_id": "port-008-stream-r14-b2026-10-11-16-29-33Z",
+    "base_commit": "0154daf7d308866ec01ee233aaa481ebf219832a",
+    "source_dirty": true,
+    "source_snapshot_verified": true,
+    "source_archive_sha256": "e0acc254cf2660ab4b47a3c87c9d5abacade9b0f51c7af4c6af5b510c481e6ff",
+    "source_inputs_sha256": "a610a71cdb3705731e49139d55b146a0656a143a86abdf8dbd1759f3e7f69d30",
+    "manifest_sha256": "f1998a512a4d75879d3a0511dd51497b64a95b408e5b5d4652889d4caeb8e3fd"
+  }
 }

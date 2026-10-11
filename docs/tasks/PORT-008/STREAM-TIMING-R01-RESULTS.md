@@ -57,7 +57,7 @@ workload optimization was made. Exact UART pair/startup restoration and independ
 | Component | Selected identity | Verification |
 |---|---|---|
 | Timing EMOS | `agon-emos-v0.1.24-b2026-10-11-19-00-57Z`, source `d7f25d8` | Full 128 KiB ROM readback |
-| P4 EDP | `port-008-stream-r14-b2026-10-11-16-29-33Z`, source `0154daf7d308866ec01ee233aaa481ebf219832a` | All four flash segments independently verified |
+| P4 EDP | `port-008-stream-r14-b2026-10-11-16-29-33Z`, base `0154daf7d308866ec01ee233aaa481ebf219832a` plus retained source snapshot | All four flash segments independently verified |
 | MOSlet | `port-008-stream-timing-r01-b2026-10-11-19-32-51Z` | Exact ROM fingerprint/bindings; full SD readback; linked ABI checks |
 | Mainboard VDP | fsim custom image; unchanged | Identity from preceding verified fsim handover, no fresh readback |
 
@@ -71,7 +71,14 @@ workload optimization was made. Exact UART pair/startup restoration and independ
    `b20f3845d6d9e22494aa63c920afbc1b6dd03bcfd793c22e36e0ff241987e24f`.
 4. Mainboard VDP SHA256:
    `67f6f11f53209ef06ab9452024caf87beb357a2a8280a858df4e5cd3a796f9bb`.
-5. Full serial captures, installation/readback receipts and machine-local
+5. The P4 build declares dirty source and a verified snapshot. Its Git base
+   alone does not reproduce these bytes. Retained `p4-r14/source.tar.gz` SHA256:
+   `e0acc254cf2660ab4b47a3c87c9d5abacade9b0f51c7af4c6af5b510c481e6ff`.
+   Source-input inventory SHA256:
+   `a610a71cdb3705731e49139d55b146a0656a143a86abdf8dbd1759f3e7f69d30`.
+   Full local build-manifest SHA256:
+   `f1998a512a4d75879d3a0511dd51497b64a95b408e5b5d4652889d4caeb8e3fd`.
+6. Full serial captures, installation/readback receipts and machine-local
    invocation journals remain in ignored `agents/stream-timing-r01/bench-r01/`.
    Payload hashes and reproducible source are in the
    [fixture instructions](../../../tests/performance/stream_timing/README.md).
