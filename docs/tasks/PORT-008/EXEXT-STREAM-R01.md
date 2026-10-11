@@ -505,3 +505,16 @@ freeze/build normal HDMI firmware. Verify all segments, then run T01/T03 before
 T09, comparing saved replies/data rather than accepting DMA byte counts alone.
 Continue independent game controls and restore startup/configs after each run.
 Warm-reset admission remains a separate unresolved gate.
+
+
+## EX05 bounded blocked-task observation
+
+Stream-r13 passes T01/T03 (120valid records each) but the fresh T09 currently
+shows no completion. If the existing observer reaches its timeout without a
+result, mark that attempt incomplete before debugger attachment. Use the
+identified P4's built-in USB-JTAG with its exact retained ELF to halt briefly
+and inspect task stacks/retained transport state. No firmware, wire, application
+or renderer change. This is intrusive diagnostic evidence, never performance
+evidence; resume/detach, close debugger/collector, then recover and restore
+startup/configs before another measured invocation. Do not infer an electrical
+failure from matching DMA counts, or add speculative clock/delay changes.
