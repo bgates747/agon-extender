@@ -261,3 +261,35 @@ recognize completion on the graphical/custom-font display. Subsequent normal
 CLI return/listener retrieves the fresh complete CSV **without any reset**,
 then restores/readback-checks original startup. Treat that as durable finite
 execution evidence, not a transport hang or interactive keyboard acceptance.
+
+
+## Internal DMA physical controls and post-failure observation
+
+All four installed stream-r13 segments verify. With EMOS-r07 unchanged, T01
+and T03 each save 120 valid rows with no abort or invalid flags. T01 reaches
+15.82 updates/s and T03 15.45; median query completion is 50.069/50.188 ms.
+These fenced measurements include the request/return schedule and are not
+raw parallel bandwidth. Original startup and both configurations are restored
+and verified before the next invocation.
+
+The separate unfenced T09 attempt produces no timing file. After its observer
+deadline, intrusive USB-JTAG captures show the P4 process task actively polling
+UART control, not blocked inside the renderer or PARLIO driver. Its ordinary
+stream is active, receive and return queues empty, handover in UART, no pending
+block, and no recorded transport failure. Retained stream bytes contain the
+game's `AGNB image load failed: 02`, the fixture's setup-failure message and
+MOS prompt text. Error 02 is the AGNB loader's FatFS-read error wrapper. The
+actual FatFS status and failing offset have not yet been captured. This attempt
+is a **setup failure, not a completed gameplay benchmark**. A zero allocation
+failure count does not establish byte integrity.
+
+The debugger resumes and detaches; OpenOCD closes without a firmware change or
+requested reset. These halted observations are never timing evidence. A paired
+reset and then verified stream-r10 rollback initially fail input admission.
+After P4 initialization completes, one ordinary Agon-only reset restores input.
+The Legacy listener finds no T09 file and restores/readback-checks the original
+38-byte startup and T09 configuration. The boot-ordering failure remains open;
+HTTP availability alone is insufficient proof that the P4 console owner is ready.
+
+Local evidence indexes: focused-r04/exext-154654 and exext-155007, debug-r13
+and debug-r13-state, bench-r14 installation/restoration, and after-r13-reset-r17.
