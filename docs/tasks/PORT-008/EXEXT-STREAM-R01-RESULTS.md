@@ -1,10 +1,12 @@
 # Ordinary ExExt — bounded results
 
-Ordinary parallel VDU/reply routing, cached keyboard input and one finite
-Aginvadors run now pass physically. Aginvadors reaches only14.29updates/s,
-and Nurples setup currently fails an SD read, before its timed gameplay.
-A captured FR_DISK_ERR separates that failure from a rendering hang. Warm
-reset admission remains unreliable; later Agon-only resets can recover.
+Ordinary parallel VDU/reply routing, cached keyboard input and finite Nurples,
+Aginvadors and Rally runs now pass physically. ExExt remains much slower than
+UART under these games: latest Nurples is14.55 application updates/s versus
+an earlier ExCom60. SD-selected ISR deferral fixes the isolated Nurples loader
+failure. An empty-loop control remains59.02updates/s, narrowing the slowdown
+to nonempty rendering/transport work rather than idle polling alone. Warm-reset
+admission remains unreliable; later deliberate Agon-only resets can recover.
 Full transition/gameplay qualification remains incomplete. Production is unchanged.
 [Work contract](EXEXT-STREAM-R01.md) owns the remaining implementation/tests.
 
@@ -391,3 +393,35 @@ Complete installed ROM readback matches SHA256
 `e44c60b60359f64cc3a48a4559ce7ab4090fff0a7b742e4d4fd70adb517b6578`.
 Startup is restored/readback checked, input ready/neutral. Physical comparison
 uses the existing unmarked empty-loop control before frozen Nurples repetition.
+
+
+## Paired-clock physical comparison and empty-loop isolation
+
+P4 remains `port-008-stream-r14-b2026-10-11-16-29-33Z`; EMOS is the independently
+ROM-verified `agon-emos-v0.1.24-b2026-10-11-16-52-19Z`. No mainboard VDP,
+renderer, wiring or application pacing change. Browser video is disconnected.
+
+Worst application rate first. Empty controls have120updates and no PRT overflow;
+Nurples has120warm-up plus120measured updates and no fault/late/abort. Rate
+uses nominal120MOS clock units/s; precise counters assume18.432MHz/256.
+
+| Workload/route | Application updates/s | Median whole update | Median active work/submission | Comparison |
+|---|---:|---:|---:|---|
+| Nurples ExExt, preceding SD-corrected EMOS |13.33|67.035ms|2.722ms|Baseline for kernel comparison |
+| Nurples ExExt, paired-clock EMOS |14.55|50.215ms|2.708ms|+9.09% rate; −25.09% median whole duration |
+| Empty ExExt, paired-clock EMOS |59.02|16.646ms|0.00694ms|−1.64% rate vs matched Legacy empty control |
+| Empty Legacy, same pair |60.00|16.625ms|0.00694ms|Empty-control baseline |
+| Earlier Nurples ExCom |60.00|16.549ms|5.778ms|Latest ExExt rate remains75.76% lower; builds differ |
+
+The paired kernel's31% instruction reduction is not a31% physical speedup.
+Nurples's ExExt median pacing interval is47.750ms and includes preempting
+synchronous transport ISR work; it is not spare CPU. Its95th-percentile active
+interval is79.403ms (476.42% of a60Hz budget), so the small median does not
+establish ample headroom. Empty ExExt whole-update p95 is20.448ms versus
+Legacy16.628ms. The empty fixture issues no VDU during its measured window;
+its result rejects a blanket claim that idle POLL alone lowers every loop to15Hz.
+
+Raw ignored run indices: `focused-r04/exext-170750`,
+`games-r01/empty-legacy-170333`, `games-r01/empty-exext-170525`.
+Each original startup/configuration is restored and byte-readback verified.
+Finite completion does not establish interactive playability or visual quality.

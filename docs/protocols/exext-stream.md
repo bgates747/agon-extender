@@ -2,8 +2,9 @@
 
 The explicit paired experimental builds route unchanged application VDU bytes
 and actual VDP/keyboard replies through the existing eight-bit parallel pipe.
-Software checks and bounded paired reset/CLI checks pass; full application
-correctness and performance remain under
+Software checks, ordinary CLI/replies, cached-input delivery and finite game
+execution pass in bounded runs. ExExt game rates currently regress from UART;
+reset admission and broader application qualification remain under
 [PORT-008](../tasks/PORT-008/EXEXT-STREAM-R01.md). This is outside selected
 production and does not change the current Legacy/ExCom operating contract.
 
@@ -65,8 +66,13 @@ at an idle UART boundary; the console lease and stream queues remain intact.
    real ISR publish effects, then retries. Only empty STOP allows normal LEAVE
    using the independent original console lease. Failed completion fences the
    owner; uncertain output is never replayed automatically.
-5. This first adapter's block negotiations and byte kernel have not yet been
-   measured under gameplay. IRQ-disabled output refuses admission. No SD
+5. EMOS defers physical ExExt work while stock SD chip select PB4 is low,
+   preserving normal clock ticks and already-received packet publication. A
+   later eligible VBlank resumes service; stock SD timeouts remain unchanged.
+6. Measured finite games remain slower than UART. Empty-loop execution stays
+   near60Hz, so idle polling alone does not explain the nonempty-work slowdown.
+   Pacing intervals include preempting synchronous transport and are not spare
+   CPU. IRQ-disabled output refuses admission. No SD
    service migration (automatic SD admission stays Legacy/ExCom only), new renderer/mode, generalized callback ABI or automatic
    UART payload fallback is provided. Legacy/ExCom remain separate paths.
 
@@ -81,6 +87,9 @@ and UART restoration. An old initial READY level cannot authorize UART.
 P4 invalidates pad-release proof before attaching UART, including the interval
 before LIVE. Native block return continues through its separate owner. These
 changes require the matched experimental builds; no older-pair qualification
-is inferred. The first matched held-prefix pair passes three Agon-only warm resets after
-independent installed-byte verification. Reset during an owned payload, P4-only
-restart and power-loss controls remain within EX06; those are distinct claims.
+is inferred. An earlier held-prefix pair passes three Agon-only warm resets, but later full
+application runs expose unreliable admission, including after a P4 install. The
+USB boot-pad marker and HTTP readiness do not prove release acknowledgement.
+Do not generalize those earlier passes to the current pair. Reset during an
+owned payload, P4-only restart and power-loss remain unqualified; deliberate
+later Agon-only resets have recovered UART readiness without a timed grant.
