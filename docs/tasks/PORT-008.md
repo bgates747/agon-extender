@@ -40,9 +40,13 @@ fully byte-verified samples and exact original UART restoration. Control
 construction/offer/completion consumes 70.3–80.7% of measured ordered reply
 time; post-full-block offer latency adds ~33–35 ms. Park/restore alone is small.
 
-Author requires **no CRC in ExExt** and rejects making the added CRC faster.
-P08-P05/D01/D02 in the contract own removal and paired-format design; ADR-0026
-and normative architecture record the requirement. No CRC-free implementation
+Author requires a **transport-only first pass**: preserve stock MOS/VDP behavior
+and byte streams, changing only their physical transport and necessary link
+operations. **No CRC in ExExt**; accelerating it is rejected. P08-P05/D01–D03
+in the contract own the minimal-link review/removal and paired deployment;
+ADR-0026 and normative architecture record the requirement. Existing offers,
+completion exchanges, polls, sessions and batching must justify their necessity
+for the physical link. No transport-only CRC-free implementation
 or performance acceptance yet. Direct ExCom ↔ ExExt transition review is queued
 as P08-P04. Later UART shutdown/game comparisons remain gated on Author
 discussion. Preserve exact recovery bytes; broader goal stays paused.

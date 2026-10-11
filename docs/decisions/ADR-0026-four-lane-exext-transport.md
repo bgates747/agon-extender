@@ -71,3 +71,23 @@ not this accepted final design. Qualification may independently compare payload
 bytes outside measured intervals. This amendment changes no deployed image or
 unrelated SD verification contract. PORT-008 P08-D02 owns the remaining paired
 wire-format/version decision and implementation boundary.
+
+## Stock behavior; transport-only first pass — 2026-10-11 amendment
+
+The Author requires EMOS and P4 EDP to preserve stock MOS/VDP behavior above
+the byte-transport boundary. The first pass changes which wires carry the
+ordered command and return streams. Application APIs, VDU bytes and reply
+formats, parsing, callbacks, sysvars and interrupt semantics remain stock;
+reuse upstream code wherever processor differences permit. Physical transfer
+timing can differ without authorizing higher-level behavioral changes.
+
+EMOS and EDP may add only the operations necessary for physical ownership,
+byte delivery and the replacement peripheral. Reciprocal release/direction
+and byte-sampling handshakes are required by the shared wiring. Each further
+addition must have a specific physical-link justification. Existing block
+offers, completion messages, return polls, sessions and buffering are candidate
+implementation choices, not accepted requirements merely because code exists.
+The no-CRC decision above remains binding. This amendment concerns the ExExt
+transport pass; it does not reopen rendering, output-device or unrelated service
+design. PORT-008 P08-P05/D02/D03 own the bounded implementation review; deployed
+behavior and qualification remain unchanged.

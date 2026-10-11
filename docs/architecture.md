@@ -377,8 +377,11 @@ policy that silently upgrades ExCom to parallel operation.
 | Dual | Mainboard VDP; never mirrored | P4 EDP, separate result domain | Planned; general EDU interface unimplemented |
 
 ExExt lets existing VDU applications benefit from faster transport without
-rewriting their output calls. It does not promise ExCom-equivalent timing or
-compatibility: differences may prove small, but require separate qualification.
+rewriting their output calls. The first pass preserves stock MOS/VDP behavior
+above the byte-transport boundary: application calls, ordered command/reply
+bytes, parsers, callbacks, sysvars and interrupt semantics. Reuse upstream code
+wherever processor differences permit. Physical transfer timing can differ;
+behavioral equivalence and performance still require separate qualification.
 Keyboard source remains independently selected. The current
 [eight-bit candidate decision](decisions/ADR-0026-four-lane-exext-transport.md)
 uses the existing dedicated READY/CLOCK/VALID wires for phase handshakes.
@@ -436,6 +439,14 @@ the Author's 2026-10-11 instruction to remove that overhead. Reciprocal
 electrical ownership/handshaking remains required. The
 [accepted decision](decisions/ADR-0026-four-lane-exext-transport.md) governs this
 requirement; deployed CRC-free behavior has not yet been qualified.
+
+EMOS and EDP may add only operations necessary for physical ownership, byte
+delivery and the replacement peripheral. Every project-added control exchange,
+session or buffering policy must have that specific justification; existing
+candidate code does not make it a requirement. Preserve stock packet framing
+and upper-layer behavior. This transport-only first pass changes no rendering,
+output-device or unrelated service contract. The accepted decision above and
+PORT-008 own the review of the current candidate against this boundary.
 
 Both exclusive modes may claim compatibility only for the declared normal
 application-facing surface; Extender v1 explicitly excludes local printer/USB

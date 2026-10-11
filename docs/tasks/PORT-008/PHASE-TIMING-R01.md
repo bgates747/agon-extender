@@ -11,8 +11,10 @@ verified restoration. Persistent UART shutdown and circuitry remain later work.
 PT01–PT06 are complete: 24 selected samples/full 196,608-byte proof and exact
 UART restoration. [Results](PHASE-TIMING-R01-RESULTS.md) retain phase attribution,
 provenance and limits. The broader eight-hour ExExt goal remains paused;
-production stays unchanged. Author subsequently requires removal of ExExt CRC;
-P08-P05/D01/D02 below own that next implementation boundary.
+production stays unchanged. Author subsequently requires a transport-only first
+pass: preserve stock behavior and remove project-added work that the physical
+link does not require, including all ExExt CRC. P08-P05/D01–D03 below own that
+next implementation boundary.
 
 ## Contract and boundaries
 
@@ -112,16 +114,21 @@ that handover itself. Review the existing transition guard, both processors'
 ownership/release ordering and failure recovery before proposing a change.
 This review is queued; phase acquisition must not change mode-switch behavior.
 
-P08-P05 [ ] — Author requires no CRC in ExExt (2026-10-11). Prepare the next
-bounded implementation contract to remove CRC generation and validation from
-both EMOS and EDP's ExExt transport control exchanges. Do not substitute a faster
-CRC or another per-block checksum. Preserve physical ownership/handshakes,
-length/direction interpretation and required packet framing. Byte checking in
-the host qualification fixture remains outside transport timing. Resolve paired
-wire-format/version compatibility before deployment, compile both components,
-then reuse these exact byte-verified streams. Current phase instrumentation
-measures the preceding CRC-bearing candidate, not this accepted future design.
-No implementation starts in the phase tranche; pause for Author discussion.
+P08-P05 [ ] — Prepare the next bounded implementation contract for the Author's
+transport-only first pass (2026-10-11). Preserve stock ordered VDU bytes and
+return packets, parsers, callbacks, sysvars and interrupt behavior; substitute
+EMOS/P4 parallel byte transport for UART. Remove all ExExt CRC generation and
+validation; do not substitute a faster CRC or another checksum. Review current
+block offers/ACKs, completion exchanges, return polls, sessions, batching and
+UART handovers individually. Retain an addition only where EMOS/P4 require it
+for physical ownership, byte delivery or peripheral operation, and record the
+specific necessity and smallest implementation. Existing candidate code is not
+justification for retaining it. Preserve stock packet framing/length handling;
+do not impose a new application protocol. Byte checking in the host qualification
+fixture remains outside transport timing. Resolve paired deployment, compile both
+components, then reuse these exact byte-verified streams. Current measurements
+describe the preceding candidate, not the accepted future design. No implementation
+starts in the phase tranche; pause for Author discussion.
 
 ## Accepted decision and remaining design boundary
 
@@ -130,10 +137,25 @@ agent's recommendation to accelerate the existing CRC routine. Remove the
 transport CRC work instead. Recorded in ADR-0026 and the normative architecture.
 This is a design requirement; no CRC-free firmware has been built or tested.
 
-P08-D02 [ ] — Define the paired CRC-free control envelope/version handling.
-Resolve how EMOS/EDP reject or avoid mixed protocol pairs and how the unused
-trailing CRC fields are treated or removed. Do not add an alternative checksum.
-This does not authorize unrelated changes to ExCom or SD file verification.
+P08-D02 [ ] — Define the minimum necessary link control and paired deployment
+under D03. Do not assume the existing control envelope, session or version
+exchanges must survive. Explain any remaining link-only framing and how EMOS/P4
+avoid incompatible pairing; remove obsolete CRC fields/checks. Stock VDU/reply
+formats stay unchanged. This does not authorize unrelated changes to ExCom or
+SD file verification.
+
+P08-D03 [x] — Transport-only first pass. Author clarifies: if stock does not do
+it, this transport must not add it, except for operations demonstrably necessary
+to use the different physical link. Reuse stock MOS/VDP behavior and code above
+the byte-transport boundary wherever processor differences permit. EMOS remains
+the eZ80 transport owner and EDP the P4 endpoint. Preserve application calls,
+ordered byte streams in both directions, command execution, reply/keyboard
+publication, callbacks and interrupt semantics. Physical transfer timing may
+differ; redesigning higher-level behavior is outside this pass. Electrical
+direction/release and byte-sampling handshakes remain necessary on the shared
+wires, but do not justify extra integrity checks or general protocol machinery.
+Recorded in ADR-0026 and normative architecture. This narrows the next contract;
+it does not establish a working implementation or authorize deployment.
 
 P08-H01 remains deferred in the parent task: external latches/transceiver/FIFO
 investigation follows a concrete operation/cost to replace, not a chip-first guess.

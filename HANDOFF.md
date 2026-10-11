@@ -3,8 +3,10 @@
 The bounded phase tranche is complete, including byte proof and exact UART
 restoration. Control construction/offer/completion dominates; merely parking
 and restoring UART is a much smaller measured cost. The Author requires removal
-of ExExt CRC, rejects optimizing it, and requests review of direct ExCom ↔ ExExt
-switching. No transport optimization has been implemented. Stop for discussion
+of ExExt CRC and a transport-only first pass preserving stock behavior above
+byte transport. Existing extra control machinery must justify physical necessity.
+Author also requests review of direct ExCom ↔ ExExt switching. No transport
+optimization has been implemented. Stop for discussion
 before the next coding tranche; the broad eight-hour goal remains paused.
 
 ## Start here
@@ -27,8 +29,11 @@ before the next coding tranche; the broad eight-hour goal remains paused.
    Native runner is 2.1–15.8%. Offers following full 4096-byte blocks add ~33–35 ms;
    EMOS/P4 share unresolved. These are not rendering FPS or raw byte bandwidth.
 3. Stock ordinary MOS/VDP UART has no CRC. Our custom control protocol added it.
-   P08-D01 accepted: no CRC in ExExt; no substitute per-block checksum. P08-D02
-   owns paired format/version design; P08-P05 owns the next bounded removal
+   P08-D01/D03 accepted: no CRC or substitute checksum; first pass changes only
+   transport and necessary link operations. Keep stock streams/parsers/replies,
+   callbacks/sysvars/interrupt behavior. Review offers, completion exchanges,
+   polls, sessions and batching against specific physical necessity. P08-D02
+   owns minimum link control/paired deployment; P08-P05 owns the next bounded
    contract. Keep electrical ownership/handshakes. No CRC-free build exists yet.
    ADR-0026 and normative architecture record the new requirement.
 4. P08-P04 queues direct ExCom ↔ ExExt review. The runner currently returns via
