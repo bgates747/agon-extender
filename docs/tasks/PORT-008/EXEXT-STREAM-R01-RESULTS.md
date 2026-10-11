@@ -461,3 +461,16 @@ idle waits, timeout and fault exit while promptly reentering pending blocks.
 Four existing actual reset/parser tests and17queue/receipt cases also pass.
 Normal full-HDMI build and physical Nurples comparison remain required; this
 source finding alone establishes neither the dominant bottleneck nor a speedup.
+
+
+## Choplifter preparation admission failure
+
+All isolated Choplifter assets verify byte-for-byte, but the startup reset on
+P4stream-r14/EMOSpaired-clock does not regain keyboard admission. Two later
+Agon-only resets also fail. No CD/LOAD/RUN is sent by that failed preparation;
+there is no gameplay or performance result from it. A fresh paired reset,
+without reflashing either board, restores stable input. The verified fixture
+then receives its first explicit invocation through the resumed-once wrapper.
+This is informative EX06 evidence: later Agon reset is not a guaranteed recovery,
+and the boot-fence marker does not close reset qualification. Original startup
+restoration remains mandatory when that finite invocation finishes.
