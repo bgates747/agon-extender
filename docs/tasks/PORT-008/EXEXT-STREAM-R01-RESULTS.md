@@ -293,3 +293,26 @@ HTTP availability alone is insufficient proof that the P4 console owner is ready
 
 Local evidence indexes: focused-r04/exext-154654 and exext-155007, debug-r13
 and debug-r13-state, bench-r14 installation/restoration, and after-r13-reset-r17.
+
+
+## EMOS byte-append installation and first finite ExExt game
+
+The complete 128 KiB installed EMOS-r08 ROM matches the retained image padded
+with erased flash; SHA256
+`a6fbd92d0587605eef9d57c00fe8ca86372d39bea7a4ddc248e673dc4f0e08bf`.
+Original startup and stable neutral input verify. Stream-r13 is independently
+reinstalled and all four segments verify; mainboard fsim VDP is unchanged.
+
+Aginvadors mode 8 completes 120 ordered records on ExExt at 14.29 updates/s,
+versus the preceding UART controls' 51.06. That is a 72.03% lower update rate
+with Legacy as baseline; the EMOS/P4 builds also differ, so this is an observed
+route/build comparison, not an isolated wire-bandwidth measurement. Seventy-two
+records report fine-timer saturation; do not use their clipped PRT totals as
+exact durations. The overall rate uses the full-run MOS clock. Fresh result
+and original startup restoration/readback both pass. Local run index:
+`games-r01/inv-exext-161420`. This is finite execution, not playability acceptance.
+
+A fresh original T09 on this pair again returns to a freshly observed MOS
+prompt with no completion marker. The host observer stops without resetting
+the Agon; normal listener entry fails, requiring deliberate recovery. The
+separate diagnostic will resolve the wrapped read-error status before a remedy.

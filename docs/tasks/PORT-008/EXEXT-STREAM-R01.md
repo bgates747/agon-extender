@@ -520,7 +520,7 @@ startup/configs before another measured invocation. Do not infer an electrical
 failure from matching DMA counts, or add speculative clock/delay changes.
 
 
-## EX04–EX06 bounded continuation — frozen 2026-10-11 16:15 UTC
+## EX04–EX06 bounded continuation — frozen 2026-10-11 16:09 UTC
 
 EX-C11 [ ] — Keep the original installed EMOS-r07 result identities intact.
 Install and full-ROM-verify the already compiled r08 byte-append candidate,
@@ -539,3 +539,20 @@ release handshake; a later deliberate Agon-only reset may retry startup after
 the P4 has finished initializing. No timed grant or automatic payload replay.
 Restore and verify startup/configuration, close collectors/debuggers, and leave
 a usable UART combination before the goal deadline even if ExExt remains open.
+
+
+### EX-C12 follow-through — frozen 2026-10-11 16:24 UTC
+
+The AGNB diagnostic is a separate application derivative: retain the frozen
+binary, rebuild it unchanged as a compiler/source control, then record the real
+FatFS failure status, logical offset and foreground SP in a full error viewport.
+It must never select a video mode or alter the measured hot loop.
+
+Official MOS v3.0.2 `src/sd.asm` and `src/spi.asm` establish active-low PB4
+chip select and the 100 ms SD response-token timeout. Investigate whether the
+new synchronous ExExt VBlank service preempts this foreground transaction long
+enough to cause the read failure. If confirmed, defer ExExt physical service
+while SD chip select is asserted; keep normal clock ticks and already-received
+packet publication, and resume transport at the next eligible tick. No stock
+SD timeout change, new GPIO wiring or timed ownership grant is authorized.
+Verify both deferred and resumed service using the actual owner and linked ISR.
