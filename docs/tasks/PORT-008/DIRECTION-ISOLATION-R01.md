@@ -9,8 +9,8 @@ initialization before console GPIO setup produces zero errors in independent
 1,024-byte transfers in both directions, including reverse after a failed SD
 mount. The original harness, EMOS and full HDMI composition remain in place.
 CLOCK filtering also has an owned native cleanup lifecycle. See DI05-B7 and
-[FWBUG-014](../../firmware-bugs.md). The genuine 1/255/4096-byte echo check is
-still pending. Production selection is unchanged; broad qualification and
+[FWBUG-014](../../firmware-bugs.md). The genuine 1/255/4096-byte echo check now
+passes all three pairs. Production selection is unchanged; broad qualification and
 successful P4-local card mounting are not claimed.
 
 DI01 [x] — Reuse the existing private retained-data endpoint and snapshot hook.
@@ -46,7 +46,7 @@ the exact preceding matched full-HDMI comparison P4 image, verify all segments,
 original startup and ready/neutral input, close listener/collector and record
 handback. Do not roll back to pre-handshake firmware against current EMOS.
 
-DI05 [ ] — Author authorized a one-hour diagnosis and remedy on 2026-10-11,
+DI05 [x] — Author authorized a one-hour diagnosis and remedy on 2026-10-11,
 06:11:05–07:11:05 UTC. Compare the P4 TX driver/pad sequence and EMOS sampling
 against pinned driver contracts and retained forward proof. Obtain bounded
 received-byte/wire evidence where needed; change one relevant variable at a
@@ -154,11 +154,11 @@ EMOS byte-read contracts. Distinguish a byte alignment error from sampled bit
 corruption before choosing a remedy. Pinned IDF source performs C2M cache sync
 inside transmit; adding a redundant flush without evidence is not a remedy.
 
-DI05-B [ ] — Build and bench-test the focused correction. Retain the failing
+DI05-B [x] — Build and bench-test the focused correction. Retain the failing
 control, exact source/build hashes, full-byte comparison and any helpful wire
 capture. Use CLI invocation, fresh result paths and unchanged startup.
 
-DI05-C [ ] — Rerun both directions, 1/255/4096-byte roundtrips and ordinary
+DI05-C [x] — Rerun both directions, 1/255/4096-byte roundtrips and ordinary
 startup/input readiness. Record limits and leave a verified usable pair.
 
 ### DI05-A — Control trace and first focused candidate
@@ -279,7 +279,7 @@ Prior turn yielded new wire evidence and restored operation; the objective
 remains complete reverse integrity and both-direction/roundtrip verification.
 Keep existing DI05-B/C open rather than redefining success around seven bits.
 
-DI05-B1 [ ] — Recheck physical GPIO46 versus peripheral data routing with the
+DI05-B1 [x] — Recheck physical GPIO46 versus peripheral data routing with the
 CLOCK filter held constant. Keep wiring a live hypothesis: a P4-side probe and
 static-high response do not exclude external loading or a wrong connection.
 Compare a compensated output inversion, lane permutation or independent
@@ -287,12 +287,12 @@ peripheral waveform only under the existing EMOS-owned parked-bus lease.
 Use focused experiments, exact artifacts and exhaustive received-byte checks;
 no public diagnostic API, direct Agon GPIO bypass or unrequested rewiring.
 
-DI05-B2 [ ] — If a focused remedy passes, implement the smallest proper owned
+DI05-B2 [x] — If a focused remedy passes, implement the smallest proper owned
 resource lifecycle and regression coverage, then repeat independent forward and
 reverse and existing 1/255/4096-byte roundtrips. A failed or nonmatching control
 is evidence, never a substitute pass. Diagnostics remain outside resident EMOS.
 
-DI05-C1 [ ] — Preserve results, remove rejected experiments, restore verified
+DI05-C1 [x] — Preserve results, remove rejected experiments, restore verified
 ordinary firmware/input and original startup before the deadline. No production
 promotion without the existing acceptance/version gates. Repaired historical
 forward DevKit results do not establish modern reverse behavior there.
@@ -484,7 +484,7 @@ The bounded maintained-source review found no second GPIO46 owner. Absence of
 a source reference does not prove absence of peripheral or electrical conflict.
 The ignored offline-followup record retains the input hashes and recount.
 
-DI05-B5 [ ] — Proposed control, deferred behind the direct electrical isolation:
+DI05-B5 [x] — Closed without execution: the shared-supply remedy below resolves the target failure. Original proposed control:
 the host builds a P4-PC browser-only comparison from the same filtered native
 TX, coordinator, independent endpoint and console sources. Keep the P4-PC pin
 map, USB composition, SDK, EMOS, harness, startup and Agon MOSlet unchanged.
@@ -520,14 +520,14 @@ native leaf and independent endpoint used for the failing control. Validate
 generated pins, selected sources, SDK, USB and all artifact hashes. Do not
 install or reset before the Author confirms the corresponding physical swap.
 
-DI05-B6b [ ] — Author powers down and swaps only the brown D6 and green D7
+DI05-B6b [x] — Superseded without execution by DI05-B7. No wires were moved. Original physical control: Author powers down and swaps only the brown D6 and green D7
 connections at the P4 end, preserving each wire's existing220ohm series resistor
 and Agon endpoint. Brown moves toGPIO46 and green toGPIO36. The host waits for
 explicit wiring/power/card confirmation, then installs/verifies the matching
 image while holding Agon reset. Admit ordinary input and read back startup and
 fixture; one fresh1,024-byte reverse transfer provides exhaustive Agon bytes.
 
-DI05-B6c [ ] — Classify the result by physical path: errors moving to logical
+DI05-B6c [x] — Superseded with DI05-B6b; no physical-swap result exists. Original classification: Classify the result by physical path: errors moving to logical
 D6 implicate GPIO46 or its local board/connector/configuration; errors remaining
 on D7 implicate the green harness/resistor/Agon input path; disappearance leaves
 an intermittent connection possible. None alone proves a silicon defect or
@@ -581,7 +581,7 @@ result. Do not write, format or otherwise modify the P4 card. A failed mount
 that releases the rail is an inconclusive power control. No rewiring, analyzer,
 autoexec edit or HDMI-composition change is part of this pair.
 
-DI05-B7c [ ] — If the control proves the lead, P4 startup must initialize and
+DI05-B7c [x] — If the control proves the lead, P4 startup must initialize and
 retain the shared GPIO supply independently of card presence and requests.
 Reuse the SDK's power controller with a single owner; prevent an SD failure or
 voltage change from disabling/lowering the Agon bank. Adopt the CLOCK filter
@@ -600,7 +600,7 @@ mount returns ESP_ERR_TIMEOUT and releases LDO4, as predicted by its source.
 This pair is inconclusive about an enabled rail; it does not refute the supply
 lead. Evidence remains under ignored pc-power-r01 with fresh P8PW01A/B results.
 
-DI05-B7b2 [ ] — Build a full-HDMI canonical-pin control that acquires a fixed
+DI05-B7b2 [x] — Build a full-HDMI canonical-pin control that acquires a fixed
 3.3V LDO4 supply before console GPIO initialization and retains it for the boot
 lifetime, independently of local card presence. P4-local SD uses that fixed rail
 without acquiring an adjustable owner, lowering voltage, or releasing it after
@@ -650,3 +650,41 @@ source/build/install receipts, USB reports and fresh P8PS01R/F/S results. The
 echo-endpoint companion is building from the maintained corrected source.
 Real 1/255/4096 echo remains pending; do not treat independent directions as echo
 qualification. No production selection or tag changed.
+
+
+### DI05 closeout — real echo passes; corrected full-HDMI image retained
+
+The genuine echo endpoint retains each block received from EMOS and returns
+those bytes on the next reverse request. It does not generate a replacement
+pattern. The existing MOSlet compares every returned byte, checks both guards
+and stops on the first error. These are the required final results:
+
+| Payload bytes | Agon→P4 status / guards | P4→Agon status / guards | Returned-byte comparison |
+|---:|---|---|---|
+| 1 | 0 / intact | 0 / intact | All exact |
+| 255 | 0 / intact | 0 / intact | All exact |
+| 4096 | 0 / intact | 0 / intact | All exact |
+
+All six rows passed; no analyzer or physical rewiring was used. The existing
+/emos/parcheck.bin was read back before invocation and after collection,
+SHA-256 f144d58df1dbe20494a291f1dbf6c179098bdcfd4691cf13986854d27269f56a.
+Fresh durable output is /agents/extender/results/P8PE01.CSV. The complete
+invocation/collection took 21.180s on the host, excluding build/installation;
+this is not a parallel payload-throughput measurement.
+
+Installed and retained: port-008-data-r20-b2026-10-11-09-07-32Z,
+app SHA-256 01cbd53255fbbae4760bc2ba64fc0f987cb9ef828b397d17a7cd7a64b9322771.
+All four flash segments independently verified; the native source includes the
+fixed shared 3.3V supply and owned CLOCK filter. The full modern HDMI composition,
+canonical board mapping, unchanged EMOS v0.1.24 and stock mainboard VDP remain.
+Original 38-byte startup is unchanged/read back; listener is closed, ordinary
+keyboard input is ready/neutral, reset line is released as input/pull-down.
+Collectors, flashers and builds have ended. Ignored installed-current receipts
+and current handoff are refreshed. The retained exact build/source/evidence
+bundle is pc-supply-echo-r01; r19 preserves independent direction attribution.
+
+DI05 is complete within the renewed hour. No wire swap is required; B5 and B6b/c
+are closed as superseded, explicitly unexecuted controls. This does not complete
+the broader PORT-008 work, establish strict-counter physical qualification,
+measure throughput, qualify P4-local card mounting or promote production.
+No production version/tag changed. FWBUG-014 records this bounded correction.

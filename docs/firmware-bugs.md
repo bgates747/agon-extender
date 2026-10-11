@@ -84,7 +84,7 @@ queued operand lifetime finding. They have different evidence and triggers.
 | Mainboard | eZ80 receives 512 incorrect high-bit bytes of 1,024 with intact guards/status 0. Lower seven bits are exact. The matched DevKit control passes with D7 on GPIO9. This is not evidence of a defective Agon input. |
 | Extender | Physical P4-PC comparison without probes: fixed 3.3V boot-owned supply passes independent1024-byte transfers in both directions, including reverse after a failed SD mount. No wire change. |
 | Reproducer/evidence | [PORT-008 direction isolation](tasks/PORT-008/DIRECTION-ISOLATION-R01.md), DI05-B7; exact candidate data-r19 and retained receive-byte/control identities are recorded there. |
-| Disposition | Corrected in maintained development source; local SD cannot lower or release the shared bank. Real 1/255/4096 echo remains pending. Production promotion and broader qualification are not claimed. |
+| Disposition | Corrected in maintained development source; local SD cannot lower or release the shared bank. Real 1/255/4096-byte echo now passes all three pairs on exact full-HDMI data-r20. Production promotion and broader qualification are not claimed. |
 | Owner | PORT-008; this is a finding within its existing remedy scope, not a new work queue. |
 
 ## Existing MOS test-suite coverage

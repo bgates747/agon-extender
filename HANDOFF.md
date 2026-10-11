@@ -1,4 +1,25 @@
-# Current checkpoint — P4-PC fails without probes; ordinary state restored
+# Current checkpoint — P4-PC parallel correction passes
+
+Original canonical harness unchanged; no probes. Initializing LDO4 at fixed
+3.3V before console GPIO setup resolves missing D7/GPIO46. Owned CLOCK filtering
+passes 213 native host cases. Independent 1,024-byte transfers pass both ways,
+including reverse after a P4-local SD mount timeout. Genuine 1/255/4096-byte
+echo passes all six status/guard/byte-comparison rows. EMOS, mainboard VDP and
+original startup are unchanged. No wire swap was performed or is needed.
+
+Installed full-HDMI port-008-data-r20-b2026-10-11-09-07-32Z,
+app SHA-256 01cbd53255fbbae4760bc2ba64fc0f987cb9ef828b397d17a7cd7a64b9322771;
+all four flash segments independently verified. Evidence: ignored
+agents/port008-live-qualification/pc-power-r01 (failing controls), pc-supply-r01
+(independent pass), pc-supply-echo-r01 (echo/final verification). All three
+installed-current records refreshed. Card in Agon, keyboard ready/neutral,
+listener offline, reset released. No active bench operation or build remains.
+Production unchanged. Successful P4-local card mounting, strict-counter physical
+qualification and broader PORT-008 integration remain outside this result.
+DI05 complete; physical cross-swap control superseded without execution.
+The Author requires all work to stop at any question until a reply arrives.
+
+# Historical checkpoint — P4-PC failed without probes; ordinary state restored
 
 Offline follow-up: retained CPU-high control has D7 high for all1,024 samples; both modern board boot logs identify v1.3 silicon. Proposed DI05-B5 P4-PC browser/no-HDMI control is recorded, NOT built/run. The authorized hour elapsed; await Author continued authorization. No hardware operation after verified handback.
 
