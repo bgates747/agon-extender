@@ -210,6 +210,12 @@ IO-MUX sampling cycles; this one positive change warrants a controlled repeat,
 not adoption as a complete remedy. Earlier digital traces show 1,024 commanded
 rising/falling edges, source-byte skips and brief D7 spikes. Their 24 MHz sample
 rate cannot exclude shorter glitches or determine voltage/edge margins.
+Final filtered-run capture review finds 2,048 CLOCK transitions within the
+141,436-sample active interval, while observed D7 is high for only 182 samples
+(0.129%). Agon receives no high-bit bytes before offset917. These observations
+corroborate that D7 is not holding its expected levels on the observed P4-side
+wire, even after lower-bit ordering becomes exact. Retained analysis lives
+beside reverse-remedy-r10; this does not establish the electrical cause.
 Constant-high behavior and lane swaps narrow the physical-pad/output path;
 they do not prove a broken GPIO, bad harness or silicon erratum.
 
