@@ -312,7 +312,15 @@ void runConsole(VDUStreamProcessor *processor) {
       lastBlockPhase=blockPhase;lastBlockResult=unsigned(blockResult);
     }
 #endif
-    if(blockResult==BlockResult::exclusive || blockResult==BlockResult::cleanupFault) {
+    if(blockResult==BlockResult::exclusive) {
+      // The admitted block already has bounded peer/deadline checks. Sleeping
+      // one RTOS tick at every held handshake phase adds milliseconds to even
+      // a one-byte exchange and stalls MOS keyboard/query foreground work.
+      // Re-enter this sole owner promptly, as the ordinary parser loop does;
+      // interrupts and higher-priority tasks remain enabled throughout.
+      return;
+    }
+    if(blockResult==BlockResult::cleanupFault) {
       vTaskDelay(pdMS_TO_TICKS(1));return;
     }
     const bool blockDrain=blockResult==BlockResult::drain;

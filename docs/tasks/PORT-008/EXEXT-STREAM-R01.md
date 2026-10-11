@@ -331,3 +331,33 @@ prefix and on failure), plus the existing start fence; no unrelated caller is
 admitted. P4 has normal HDMI/services and no private probe/data-check firmware.
 Successful per-block version2 USB printing is removed; first-fault reporting
 remains. These identities are experimental and do not change production.
+
+### EX06 first installed reset result
+
+All four P4 flash segments and complete128KiB EMOS ROM independently verify.
+Automatic post-FLASH startup reaches the listener on the first attempt; no extra
+reset or repeat FLASH is needed. Original startup is restored/readback checked.
+Three subsequent Agon-only reset pulses each return stable admitted/neutral P4
+input. This closes the observed warm-reset reproduction for this pair, not every
+reset-during-payload or power-loss case. Mainboard fsim VDP remains unchanged.
+
+### EX04 tiny-query and partial-return correction
+
+1. T01 produces120valid ordered rows, no abort/saturation/packet fault. Its
+   pixel-query completion median is67.0ms (402% of one60Hz cycle), with only
+   12.57application updates/s. P4 HDMI remains60.07scanouts/s: these scopes differ.
+2. T03 does not run: `run` arrives as `un`. The runner initially mistakes the
+   prior case's completion text for success, but missing durable T03 evidence
+   rejects it. Require fresh completion/invocation evidence and inspect CLI
+   errors before accepting any result. Startup and both configs are restored.
+3. An actual-EMOS-owner negative with the real parser-boundary reservation
+   condition reproduces a deadlock when a packet crosses the256-byte return
+   cut. EMOS now retains incomplete packets outside the UART control parser,
+   publishing only whole packets under the real ISR.512bytes of RAM accommodate
+   a257-byte packet and next256-byte fetch. STOP can fetch the incomplete tail.
+   All4096 offset/length/STOP cases pass; complete builds and hardware follow.
+4. P4 removes its one-millisecond sleep between admitted native block phases.
+   Existing deadlines, cleanup/recovery pacing, sole owner and IRQ/task
+   preemption stay intact. This follows the continuously serviced ordinary
+   parser loop. Compare tiny-query and input behavior before broader games;
+   do not infer improvement from the source edit.
