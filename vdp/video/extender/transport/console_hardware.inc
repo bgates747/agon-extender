@@ -298,6 +298,12 @@ void runConsole(VDUStreamProcessor *processor) {
       printf("Parallel data snapshot direction=%u length=%u fnv=%08lx first=%s last=%s\n",
         unsigned(dataSnapshot.direction),unsigned(dataSnapshot.length),
         (unsigned long)dataSnapshot.fnv,first,last);
+      if(dataSnapshot.independent)
+        printf("Parallel independent direction=%u length=%u mismatches=%u first_offset=%u actual=%02x expected=%02x prepared_fnv=%08lx\n",
+          unsigned(dataSnapshot.direction),unsigned(dataSnapshot.length),
+          unsigned(dataSnapshot.mismatches),unsigned(dataSnapshot.firstMismatch),
+          unsigned(dataSnapshot.actual),unsigned(dataSnapshot.expected),
+          (unsigned long)dataSnapshot.preparedFnv);
     }
 #endif
 #if defined(AGON_EXTENDER_PARALLEL_PROBE)

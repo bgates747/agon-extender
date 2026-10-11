@@ -423,3 +423,10 @@ Author approved [modern direction isolation](DIRECTION-ISOLATION-R01.md):
 forward1024byte retained comparison and independently generated reverse1024byte
 comparison, followed by exact full-HDMI paired recovery and discussion before
 any transport remedy. Execution follows the committed/pushed contract.
+
+[Direction isolation result](DIRECTION-ISOLATION-R01.md): modern forward1,024byte
+retention passes exact comparison; independently generated reverse produces955
+wrong Agon bytes, first offset2. P4 source remains correct before/after transfer.
+This establishes a reverse-path fault independent of echo contamination, without
+isolating P4 TX/DMA, wires or Agon sampling. Preceding matched HDMI pair restored,
+startup/input verified, listener closed. No remedy attempted; discussion gate.

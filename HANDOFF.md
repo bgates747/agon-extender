@@ -1,3 +1,22 @@
+# Current checkpoint — reverse parallel corruption isolated
+
+The committed/pushed direction-isolation contract has executed through DI04.
+Modern forward Agon → P4: all 1,024 retained bytes match exactly.
+Independent reverse P4 → Agon: 955/1,024 bytes wrong, first offset 2,
+actual 0x7b versus expected 0xfb. P4 source correct before/after transmission;
+no echo contamination. Both native statuses 0, guards intact. No replay.
+One transfer each; other sizes, P4 DMA/pad versus wire/Agon sampling unresolved.
+No remedy attempted; DI05 requires Author discussion.
+
+Exact preceding matched full-HDMI P4 data-r01 restored, all four segments
+verified. Existing modern EMOS unchanged. Pi reset hold released; input ready,
+neutral, held/pending zero. Startup original 38 bytes verified, listener closed.
+Card remains in Agon. No active hardware process. Production unchanged.
+All three installed-current records point to fresh restoration receipt.
+Evidence: agents/port008-live-qualification/direction-isolation-r01/.
+Task: docs/tasks/PORT-008/DIRECTION-ISOLATION-R01.md.
+Pre-work commits c07ac854 and 0a25f10a pushed. Results/source remain local for review.
+
 # Current checkpoint — modern paired transfer fails at 255 bytes
 
 Author approved modern pair after historical22recordpass. Installed/verified
