@@ -226,3 +226,15 @@ restoration/readback passes after both. This is finite timing evidence, not
 interactive acceptance or a60updates/s claim. First Rally control omitted
 external road assets; runner corrected to include both tracks and restore
 startup even if result retrieval fails. No Rally runtime pass/failure inferred.
+
+
+## Stream-r13 internal retained DMA candidate
+
+Source `c27a927db8a40f62dabe6f46030bad9b553ea07c` builds
+`port-008-stream-r13-b2026-10-11-15-31-39Z`, app1781360bytes, SHA256
+`1abba98a93a775a2ba629b12a2d33cc1b699592c2a44a62ad5e7455c35de4268`.
+Full normal-HDMI build/validation passes. Host sanitizer checks pass246native
+ExExt payload/retention/failure cases,24reused coordinator transfers and reset
+cleanup, retained213native/319coordinator cases, and paired native controls.
+Real P4 translation unit also compiles. The4KiB payload now uses the qualified
+internal DMA allocation; resource reuse is unchanged. Physical gates follow.

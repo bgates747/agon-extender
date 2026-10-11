@@ -487,7 +487,7 @@ Build/verify normal full-HDMI firmware, repeat frozen T09 first, then finite
 games. No renderer, wire format, deadline, ownership or UART fallback change.
 
 
-## EX05 retained payload isolation — frozen 2026-10-11 15:36 UTC
+## EX05 retained payload isolation — frozen 2026-10-11 15:30 UTC
 
 The retained-unit stream-r12 removes the observed allocation failure but its
 T09 saves no result and does not answer CLI recovery. HDMI remains healthy;
