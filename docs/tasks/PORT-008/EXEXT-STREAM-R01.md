@@ -556,3 +556,13 @@ while SD chip select is asserted; keep normal clock ticks and already-received
 packet publication, and resume transport at the next eligible tick. No stock
 SD timeout change, new GPIO wiring or timed ownership grant is authorized.
 Verify both deferred and resumed service using the actual owner and linked ISR.
+
+
+### EX-C13 installation readiness — frozen 2026-10-11 16:29 UTC
+
+Add one ordinary USB startup message only after the P4 console owner successfully
+fences its pads and enters reciprocal-release startup. Hardware installers may
+wait for that exact marker before releasing the held Agon reset. HTTP service
+readiness remains a separate condition. The marker is an observation, never a
+UART ownership grant; actual acknowledgement and keyboard admission remain
+mandatory. No per-block logging or diagnostic firmware endpoint is added.

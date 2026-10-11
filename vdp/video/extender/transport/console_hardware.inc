@@ -185,7 +185,12 @@ void runConsole(VDUStreamProcessor *processor) {
     return uart_set_pin(UART_NUM_1,console_board::kUartTx,console_board::kUartRx,
         console_board::kUartRts,console_board::kUartCts)==ESP_OK;
   };
-  startup.begin(millis());
+  // HTTP can start before retained VDP/display initialization finishes. The
+  // installer must not release a held Agon reset on HTTP readiness alone:
+  // EMOS has a bounded boot handshake. This one-time USB marker observes the
+  // actual console owner's completed pad fence; it grants no UART ownership.
+  if(startup.begin(millis()))
+    printf("Parallel boot pads released; awaiting EMOS\n");
   while(!startup.poll(millis(),restoreUart)) {
 #if defined(AGON_EXTENDER_PARALLEL_PROBE)
     // LC03-B boot diagnosis only: USB console, never the shared UART. Sample
