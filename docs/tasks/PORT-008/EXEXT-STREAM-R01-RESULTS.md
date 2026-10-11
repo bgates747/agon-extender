@@ -147,3 +147,41 @@ The HTTP-initialized paired-reset helper recovers stable input, and original
 startup/T09config are restored/readback checked. Warm-reset coverage remains
 separate. The poll-ordering experiment is reverted; cache-aligned PSRAM payload
 placement is the next bounded candidate.
+
+## Matched ExCom Nurples control and byte-append CPU check
+
+Fresh unfenced T09 on the retained full-HDMI stream-r09/EMOS-r07 UART-only
+ExCom route saves120/120ordered rows after120warm-up updates:60.00updates/s,
+median active work5.78ms (34.67% of a60Hz budget), p95active6.10ms (36.58%).
+No abort/game/packet flags. This validates the same fixture/assets that stop
+during ExExt image upload; it is not hardware-input or full-game acceptance.
+Original startup/config restore is independently read back.
+
+The explicit ExExt PSRAM candidate `port-008-stream-r10-b2026-10-11-14-25-13Z`
+uses source `ad3c8e93436134e632a1e9110038a136cac375ef`, app SHA256
+`efd317086df87e7b4d07af0f50d415cc5a7bf8715039290104f56d173278acfc`.
+Actual native tests pass78 PSRAM payload/failure cases and213 retained internal
+payload cases; coordinator and queue tests pass. Physical Nurples remains the
+next gate. No source changes are made to the pinned SDK checkout.
+
+Separately, EMOS byte-only RAM appends avoid the general memcpy path while
+preserving interrupt exclusion, boundary flushing and public byte ABI. Actual
+linked eZ80 instruction counts below exclude physical transfers and public
+PUTCH save/restore; no bytes/s inference is justified.
+
+|1000byte append method|Prior instructions|Candidate instructions|Difference vs prior|
+|---|---:|---:|---:|
+|1000single-byte calls|165000|72000|−56.36%|
+|One counted call|1145|1145|0%|
+
+The wrapper-built EMOS candidate is130960bytes (112free), source
+`62928801038f8ca16ca8299714899adb2574c72a`, build
+`agon-emos-v0.1.24-b2026-10-11-14-27-50Z`, image SHA256
+`30e527b5d5efc3c43a30a7d295c1d7c0df52356ca80c43fec19d6b99723f0341`.
+Actual linked primary/alternate registers, stack, IFF, nested VBlank and bundled
+key publication checks pass. Hardware installation/performance are pending.
+
+The first Aginvadors ExCom setup stops before RUN because its40column display
+wraps the LOAD echo. The observer now permits only whitespace/explicit unknown
+edge-cell substitutions; original startup is restored. No game failure or pass
+is attributed to this unexecuted setup.
