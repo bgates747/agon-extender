@@ -584,3 +584,21 @@ linked eZ80 byte/edge/ISR/register tests before a new physical candidate.
 Measure instruction counts separately from physical completion/game timing.
 Retain the SD-corrected pair for rollback; reject the change if correctness or
 required ROM/link gates fail. Continue the already-required game coverage.
+
+
+### EX-C15 split-upload scheduling isolation — frozen 2026-10-11 17:21 UTC
+
+EX-C15 [ ] — P4's ordinary coordinator already reenters owned handshake phases
+without sleeping, but the retained parser's ExExt `readBytes` progress loop still
+sleeps one RTOS tick whenever its ring is empty, even during a pending physical
+block. Isolate only that redundant delay: continue the existing non-reentrant
+I/O hook promptly while the native/control block is pending; retain the idle
+sleep when waiting for a new application block. Keep interrupts/tasks enabled,
+all existing deadlines, exact receipts, byte ordering and Legacy/ExCom paths.
+Execute the actual maintained read method with fake byte/clock boundaries:
+owned-phase progress, idle wait, exact split assembly, timeout and fault exit.
+Require a negative control showing the old unconditional sleep fails the owned
+phase assertion. Build/freeze normal full-HDMI firmware; after the current
+finite Apple invocation ends and startup is restored, independently verify it
+and compare the same frozen Nurples workload. No protocol/renderer/EMOS change,
+new diagnostics, task restructuring or claimed speedup before physical evidence.
