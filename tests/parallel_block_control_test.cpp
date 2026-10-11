@@ -28,7 +28,6 @@ static unsigned sends,clock_reads,cases;
 static bool missing,frozen,fail_send,duplicate;
 static int corrupt=-1;
 static unsigned bit;
-static bool reseal;
 extern "C" BYTE emos_keyboard_parallel_reserved(void){return irq && reserved;}
 extern "C" BYTE emos_keyboard_clock(void){++clock_reads;if(!frozen)tick+=2;return tick;}
 extern "C" BYTE emos_keyboard_lock(void){BYTE old=irq;irq=0;return old;}
@@ -42,13 +41,13 @@ extern "C" BYTE emos_keyboard_parallel_send(const BYTE *p,UINT16 n){
   assert(irq && reserved);++sends;
   if(fail_send)return EMOS_KEY_BUSY;
   if(n==3){const BYTE prefix[]={23,0,CONSOLE_OPCODE};assert(!std::memcmp(p,prefix,3));return EMOS_KEY_OK;}
-  assert(n==16);Packet reply{};
+  assert(n==16 && !p[14] && !p[15]);Packet reply{};
   if(!peer.request(p,now,0x12345678,reply.data()))return EMOS_KEY_OK;
   if(missing)return EMOS_KEY_OK;
   auto original=reply;
-  if(corrupt>=0){reply[corrupt]^=1u<<bit;if(reseal)parallel_session_seal(reply.data());}
+  if(corrupt>=0){reply[corrupt]^=1u<<bit;}
   receive(reply,15);receive(reply);
-  if(duplicate){original[10]^=0x20;parallel_session_seal(original.data());receive(original);}
+  if(duplicate){original[10]^=0x20;parallel_control_pad(original.data());receive(original);}
   return EMOS_KEY_OK;
 }
 static void recover(P &p){
@@ -58,15 +57,15 @@ static void recover(P &p){
 static void reset(){
   peer=Owner{};recover(peer.handover);peer.provide(storage.data(),storage.size());
   e={EPH_UART,1,0,1};session={};irq=reserved=1;emos_key_faulted=0;tick=0;now=100;
-  sends=clock_reads=0;missing=frozen=fail_send=duplicate=reseal=false;corrupt=-1;
+  sends=clock_reads=0;missing=frozen=fail_send=duplicate=false;corrupt=-1;
   BYTE txn[4]={1,2,3,4};assert(emos_parallel_session_negotiate(&e,&session,txn));sends=0;
 }
 static Packet offer(unsigned length=256,unsigned direction=0){
-  Packet p{};p[0]='E';p[1]='X';p[2]=2;p[3]=PARALLEL_OFFER;
+  Packet p{};p[0]='E';p[1]='X';p[2]=PARALLEL_WIRE_VERSION;p[3]=PARALLEL_OFFER;
   std::memcpy(p.data()+4,session.bytes,4);
   unsigned seq=(session.bytes[4]|(unsigned(session.bytes[5])<<8))+1;
   p[8]=BYTE(seq);p[9]=BYTE(seq>>8);p[10]=BYTE(length);p[11]=BYTE(length>>8);p[12]=BYTE(direction);
-  parallel_session_seal(p.data());return p;
+  parallel_control_pad(p.data());return p;
 }
 static bool take(){BYTE *buffer=nullptr,direction=99;size_t length=0;return peer.takeCompleted(buffer,length,direction);}
 static void runPhysical(){
@@ -120,22 +119,21 @@ int main(){
     for(unsigned down:{1u,0u}){agon::extender::input::ProcessedKey key{};assert(keys.pop(key));assert(key.virtual_key==42 && key.down==bool(down));}
     assert(keys.empty());
   }
-  // Every reply bit, including recomputed-CRC semantic alterations. Payload
+  // Changed reply metadata must match; former CRC bytes are ignored. Payload
   // failure status=1 is legitimate but still must prevent success publication.
-  for(bool completion:{false,true})for(int field=0;field<16;++field)for(unsigned b=0;b<8;++b)for(bool crc:{false,true}){
+  for(bool completion:{false,true})for(int field=0;field<16;++field)for(unsigned b=0;b<8;++b){
     reset();auto p=offer();if(completion){start(p);returned();}
-    corrupt=field;bit=b;reseal=crc;
+    corrupt=field;bit=b;
     bool accepted=completion ? emos_parallel_block_complete(&e,&session,p.data(),0)
                              : emos_parallel_block_offer(&e,&session,3,p.data());
-    // Recomputing the checksum cancels an alteration of the CRC bytes itself.
-    assert(accepted==(crc && field>=14));
+    assert(accepted==(field>=14));
     if(!accepted)assert(session.phase==0 && e.phase==EPH_RETURN_RELEASE);
     ++cases;
   }
   // Wrong incoming completion fields cannot mutate the P4 pending descriptor.
   for(int field=0;field<14;++field)for(unsigned b=0;b<8;++b){
     reset();auto p=offer();start(p);returned();Packet request=p,reply{};
-    request[3]=PARALLEL_COMPLETE;request[field]^=1u<<b;parallel_session_seal(request.data());
+    request[3]=PARALLEL_COMPLETE;request[field]^=1u<<b;parallel_control_pad(request.data());
     bool accepted=peer.request(request.data(),now,7,reply.data());
     assert(accepted==(field==13 && b==0));
     if(!accepted){assert(peer.pending() && !std::memcmp(peer.descriptor(),p.data(),16));assert(!take());}
@@ -187,7 +185,7 @@ int main(){
     if(failure==2)reserved=0;
     if(failure==3)session.phase=0;
     if(failure==4)emos_console_owned=1;
-    if(failure==5){p[10]=p[11]=0;parallel_session_seal(p.data());}
+    if(failure==5){p[10]=p[11]=0;parallel_control_pad(p.data());}
     assert(!emos_parallel_block_offer(&e,&session,failure==6?1:3,p.data()));assert(!peer.pending());emos_console_owned=0;++cases;
   }
   std::cout<<"PASS "<<cases<<" paired block-control cases; no GPIO timing claim\n";

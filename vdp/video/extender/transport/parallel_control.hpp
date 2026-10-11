@@ -1,4 +1,4 @@
-// Private F7 version-2 owner binding. No GPIO, UART writer or mode authority.
+// Experimental F7 CRC-free format3 owner binding. No GPIO, UART writer or mode authority.
 // The physical adapter must complete handover recovery before any request can
 // succeed. Ordinary UART-only startup deliberately never supplies that proof.
 #pragma once
@@ -32,7 +32,7 @@ class ParallelControl final {
           !parallel_block_matches(offer_,p,PARALLEL_COMPLETE)) return false;
       memcpy(reply,p,16); reply[3]=PARALLEL_COMPLETE_ACK;
       reply[13]=(local_status_ || p[13] || handover.failed()) ? 1 : 0;
-      parallel_session_seal(reply);
+      parallel_control_pad(reply);
       if (reply[13]) {
         // UART is already restored. Revoke capability without requesting a
         // new pad fence ahead of the queued failure reply. Physical faults

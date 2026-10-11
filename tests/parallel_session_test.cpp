@@ -35,10 +35,10 @@ static unsigned char call(unsigned op,t_emosParallelHandover &h,t_parallelSessio
 }
 static P ready(){P p;for(auto c:std::array<unsigned char,5>{P::released|P::validHigh,P::validHigh,0,P::validHigh,P::validHigh|P::uartUp})p.step(c);assert(p.phase()==P::uart);return p;}
 static t_emosParallelHandover eh(){return {EPH_UART,1,0,1};}
-static void seal(Packet &p){parallel_session_seal(p.data());}
+static void seal(Packet &p){parallel_control_pad(p.data());}
 static Packet tx(unsigned n){Packet p{};p[0]=n;p[1]=n>>8;return p;}
 static Packet offer(const t_parallelSession &s,unsigned length,unsigned dir){
-  Packet p{};p[0]='E';p[1]='X';p[2]=2;p[3]=2;std::memcpy(p.data()+4,s.bytes,4);
+  Packet p{};p[0]='E';p[1]='X';p[2]=PARALLEL_WIRE_VERSION;p[3]=2;std::memcpy(p.data()+4,s.bytes,4);
   p[8]=1;p[10]=length;p[11]=length>>8;p[12]=dir;seal(p);return p;
 }
 static bool peer(P &p,t_parallelSession &s,const Packet &r,const Packet &n,Packet &out,unsigned mode=3){
@@ -59,26 +59,27 @@ int main(int argc,char **argv){
   for(unsigned mode:{0u,1u,2u,4u,255u})assert(!peer(p,s,request,nonce,reply,mode));
   assert(!peer(p,s,request,Packet{},reply));
   for(unsigned i=0;i<16;i++)for(unsigned bit=0;bit<8;bit++){
-    auto bad=request;bad[i]^=1u<<bit;assert(!peer(p,s,bad,nonce,reply));
-    if(i<14){seal(bad);if(i==4||i==5||i==6||i==7)continue;assert(!peer(p,s,bad,nonce,reply));}
+    auto bad=request;bad[i]^=1u<<bit;auto pc=p;auto sc=s;Packet out{};
+    // A different nonzero transaction is legal; bytes14-15 are ignored.
+    assert(peer(pc,sc,bad,nonce,out)==((i>=4 && i<8 && !(i==4 && bit==0))||i>=14));
   }
   assert(peer(p,s,request,nonce,reply));assert(s.phase==4);auto prepareReply=reply;
   for(unsigned i=0;i<16;i++)for(unsigned bit=0;bit<8;bit++){
-    auto bad=reply;bad[i]^=1u<<bit;auto before=e;assert(!call(2,h,e,bad));assert(!std::memcmp(&before,&e,11));
-    if(i<8||i==12||i==13){seal(bad);assert(!call(2,h,e,bad));}
+    auto bad=reply;bad[i]^=1u<<bit;auto ec=e;auto hc=h;
+    assert(bool(call(2,hc,ec,bad))==((i>=8 && i<12)||i>=14));
   }
   Packet zero=reply;std::memset(zero.data()+8,0,4);seal(zero);assert(!call(2,h,e,zero));
   reserved=0;assert(!call(2,h,e,reply));reserved=1;
   assert(call(2,h,e,reply)==2);commit=reply;commit[3]=3;seal(commit);assert(!call(2,h,e,reply));
   for(unsigned i=0;i<16;i++)for(unsigned bit=0;bit<8;bit++){
-    auto bad=commit;bad[i]^=1u<<bit;assert(!peer(p,s,bad,nonce,reply));
-    if(i<14){seal(bad);assert(!peer(p,s,bad,nonce,reply));}
+    auto bad=commit;bad[i]^=1u<<bit;auto pc=p;auto sc=s;Packet out{};
+    assert(peer(pc,sc,bad,nonce,out)==(i>=14));
   }
   assert(peer(p,s,commit,nonce,reply));auto commitReply=reply;
   assert(!peer(p,s,commit,nonce,ack));assert(!call(3,h,e,offer(e,1,0),ack));
   for(unsigned i=0;i<16;i++)for(unsigned bit=0;bit<8;bit++){
-    auto bad=commitReply;bad[i]^=1u<<bit;assert(!call(2,h,e,bad));
-    if(i<14){seal(bad);assert(!call(2,h,e,bad));}
+    auto bad=commitReply;bad[i]^=1u<<bit;auto ec=e;auto hc=h;
+    assert(bool(call(2,hc,ec,bad))==(i>=14));
   }
   assert(call(2,h,e,commitReply)==3);assert(!call(2,h,e,commitReply));
   assert(!std::memcmp(e.bytes,s.bytes,6));

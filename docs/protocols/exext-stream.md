@@ -11,6 +11,12 @@ preceding verified UART pair. Experimental binaries require explicit matched
 selection and are not the current bench recommendation. This is outside selected
 production and does not change the current Legacy/ExCom operating contract.
 
+The maintained source now uses **CRC-free parallel format3** under
+[CRC-REMOVAL-R01](../tasks/PORT-008/CRC-REMOVAL-R01.md). Earlier physical
+measurements used format2 with CRC; they do not measure the new source. This
+first removal cut retains the same electrical phases, carrier width and receipt
+lifetime. It does not yet correct the scheduling departures described below.
+
 ## Owners and activation
 
 1. EMOS alone commits the display route, reserves its UART1 serializer and
@@ -18,7 +24,7 @@ production and does not change the current Legacy/ExCom operating contract.
    matched UART/parallel handover and VDP parser. Applications use unchanged
    RST10/RST18/MOS interfaces, without direct GPIO or transport access.
 2. EMOS first obtains the existing version1 console lease, synchronizes display
-   queries, then negotiates the version2 exact-block capability and stream
+   queries, then negotiates the format3 exact-block capability and stream
    START. Only successful preparation permits the ExExt route commit. Entry
    requires Legacy; return to Legacy before selecting ExCom or ExExt again.
 3. UART carries framed control between parallel blocks. Ordinary VDU, keyboard
@@ -28,9 +34,12 @@ production and does not change the current Legacy/ExCom operating contract.
 ## Stream control
 
 Use the existing19-byte forward carrier:23,0,F7 followed by16 bytes; returned
-control remains FF,16 followed by16 bytes. Body0–2 is `EX`,wire version2;
+control remains FF,16 followed by16 bytes. Body0–2 is `EX`,wire version3;
 body4–9 is the active six-byte session identity, including current block number.
-Body12–13 is zero; body14–15 is the established CRC16/CCITT. Requests have
+Body12–13 is zero; body14–15 is transmitted zero and ignored on receipt. There is no parallel
+CRC or substitute checksum, including session and stream controls. Format2
+peers cannot admit format3; install a matching pair. Ordinary version1 console
+activation and unrelated SD verification remain unchanged. Requests have
 body10–11 zero; acknowledgements report pending return bytes, capped4096.
 
 | Operation | Request | Acknowledgement | Effect |

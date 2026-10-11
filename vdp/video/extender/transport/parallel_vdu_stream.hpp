@@ -37,8 +37,6 @@ class ParallelVduStream final {
        owner_.session.phase!=PARALLEL_SESSION_ACTIVE ||
        p[0]!='E' || p[1]!='X' || p[2]!=PARALLEL_WIRE_VERSION ||
        std::memcmp(p+4,owner_.session.bytes,6) || p[10] || p[11] || p[12] || p[13])return false;
-    const auto crc=console_crc(p);
-    if(p[14]!=std::uint8_t(crc) || p[15]!=std::uint8_t(crc>>8))return false;
     if(p[3]==PARALLEL_STREAM_START) {
       if(active_ || rxCount_ || txCount_)return false;
       active_=true;
@@ -52,7 +50,7 @@ class ParallelVduStream final {
     std::memcpy(reply,p,16);reply[3]|=0x80;
     const auto n=std::min<std::size_t>(txCount_,payload_.size());
     reply[10]=std::uint8_t(n);reply[11]=std::uint8_t(n>>8);
-    parallel_session_seal(reply);return true;
+    parallel_control_pad(reply);return true;
   }
   bool canOffer(const std::uint8_t *d) const {
     const auto n=std::size_t(d[10])|(std::size_t(d[11])<<8);

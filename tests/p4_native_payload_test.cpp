@@ -149,8 +149,8 @@ static H admitted(unsigned n,bool tx){
  H h;h.step(H::released);h.step(H::validHigh);h.step(0);h.step(H::validHigh);h.step(H::uartUp);
  assert(h.phase()==H::uart);
  std::uint8_t session[6]={1,2,3,4,0,0};
- std::uint8_t offer[16]={'E','X',2,2,1,2,3,4,1,0,std::uint8_t(n),std::uint8_t(n>>8),std::uint8_t(tx),0,0,0},ack[16];
- auto crc=console_crc(offer);offer[14]=crc;offer[15]=crc>>8;
+ std::uint8_t offer[16]={'E','X',PARALLEL_WIRE_VERSION,2,1,2,3,4,1,0,std::uint8_t(n),std::uint8_t(n>>8),std::uint8_t(tx),0,0,0},ack[16];
+ parallel_control_pad(offer);
  assert(h.admit(PARALLEL_EXEXT,session,offer,ack));
  h.step(H::quiet);h.step(H::released);h.step(0);h.step(H::validHigh);h.step(H::validHigh|H::clockHigh);
  assert(h.phase()==H::localArm);return h;

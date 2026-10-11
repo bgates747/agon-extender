@@ -43,6 +43,7 @@ for precise limits rather than assuming support from a research or example file.
 | Processor ownership and accepted architecture | [Architecture](architecture.md), [repository ownership](../OWNERSHIP.md) |
 | EMOS resident gateway and prefixed utilities | [EMOS documentation](https://github.com/bgates747/agon-emos/blob/main/docs/README.md) |
 | ExCom control / display-preserving switching | [Console protocol](protocols/excom-console.md) |
+| Experimental ExExt transport; outside production | [Parallel stream protocol](protocols/exext-stream.md) |
 | SD wire protocol | [SD protocol](protocols/mainboard-sd.md) |
 | Browser frame encodings and pacing boundary | [Video protocol](protocols/browser-video.md) |
 | Firmware/build identity rules | [Version policy](versions/README.md) |

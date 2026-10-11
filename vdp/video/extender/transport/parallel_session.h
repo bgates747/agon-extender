@@ -1,5 +1,5 @@
-/* PORT-008 F02c2b3: private, dormant session lifecycle. Mirrored in EMOS.
- * Reuses the existing console prepare/challenge/commit idiom and CRC.
+/* PORT-008 CRC-REMOVAL-R01: experimental session lifecycle, mirrored in EMOS.
+ * Retains prepare/challenge/commit for this first removal cut; no CRC.
  * The owner wrapper must establish UART recovery and serializer authority.
  * No parser, GPIO, mode commitment, clock or autonomous request lives here.
  * Invalidation retains the last nonce solely to reject reuse; phase, not
@@ -8,7 +8,6 @@
 #ifndef EMOS_PARALLEL_SESSION_H
 #define EMOS_PARALLEL_SESSION_H
 #include <string.h>
-#include "control_crc.h"
 /* Include the owner's parallel-wire header first (its filename differs). */
 #define PARALLEL_PREPARE 1
 #define PARALLEL_COMMIT 3
@@ -30,15 +29,9 @@ static inline void parallel_session_invalidate(t_parallelSession *s) {
     s->phase = PARALLEL_SESSION_IDLE;
     s->bytes[4] = s->bytes[5] = 0;
 }
-static inline void parallel_session_seal(unsigned char *p) {
-    unsigned short crc = console_crc(p);
-    p[14] = (unsigned char)crc; p[15] = (unsigned char)(crc >> 8);
-}
 static inline unsigned char parallel_session_valid(const unsigned char *p) {
-    unsigned short crc = console_crc(p);
     return p[0]=='E' && p[1]=='X' && p[2]==PARALLEL_WIRE_VERSION &&
-        p[12]==PARALLEL_EXEXT && !p[13] && parallel_nonzero(p+4) &&
-        p[14]==(unsigned char)crc && p[15]==(unsigned char)(crc>>8);
+        p[12]==PARALLEL_EXEXT && !p[13] && parallel_nonzero(p+4);
 }
 static inline unsigned char parallel_session_begin(t_parallelSession *s,
     const unsigned char *transaction, unsigned char *request) {
@@ -49,7 +42,7 @@ static inline unsigned char parallel_session_begin(t_parallelSession *s,
     memset(request,0,16);
     request[0]='E'; request[1]='X'; request[2]=PARALLEL_WIRE_VERSION;
     request[3]=PARALLEL_PREPARE; request[12]=PARALLEL_EXEXT;
-    memcpy(request+4,transaction,4); parallel_session_seal(request);
+    memcpy(request+4,transaction,4); parallel_control_pad(request);
     s->phase=PARALLEL_SESSION_PREPARING;
     return 1;
 }
@@ -61,7 +54,7 @@ static inline unsigned char parallel_session_accept(t_parallelSession *s,
         memcpy(s->bytes,reply+8,4);
         /* The console owner may reuse its request/reply buffer in place. */
         if (commit != reply) memcpy(commit,reply,16);
-        commit[3]=PARALLEL_COMMIT; parallel_session_seal(commit);
+        commit[3]=PARALLEL_COMMIT; parallel_control_pad(commit);
         s->phase=PARALLEL_SESSION_COMMITTING;
     } else if (s->phase==PARALLEL_SESSION_COMMITTING && reply[3]==(PARALLEL_COMMIT|0x80) &&
                !memcmp(reply+8,s->bytes,4)) s->phase=PARALLEL_SESSION_ACTIVE;
@@ -82,7 +75,7 @@ static inline unsigned char parallel_session_peer(t_parallelSession *s,
         s->phase=PARALLEL_SESSION_ACTIVE;
     else return 0;
     memcpy(reply,request,16); memcpy(reply+8,s->bytes,4);
-    reply[3]|=0x80; parallel_session_seal(reply);
+    reply[3]|=0x80; parallel_control_pad(reply);
     return 1;
 }
 #endif

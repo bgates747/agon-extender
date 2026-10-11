@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from parallel_probe_results import compare, pattern, SIZES
 
 
-def sample():
+def sample(version=2):
     out = io.StringIO()
     out.write("# start_mos_ticks=100; nominal120_Hz_not_calibrated\n")
     writer = csv.writer(out)
@@ -20,8 +20,8 @@ def sample():
         for direction in range(2):
             for j, n in enumerate(SIZES):
                 index = round_ * 10 + direction * 5 + j + 1
-                d = bytearray(b"EX\x02\x02") + index.to_bytes(4, "little") + b"\x01\x00" + n.to_bytes(2, "little") + bytes((direction, 0))
-                d += binascii.crc_hqx(d, 0xFFFF).to_bytes(2, "little")
+                d = bytearray(b"EX" + bytes((version,2))) + index.to_bytes(4, "little") + b"\x01\x00" + n.to_bytes(2, "little") + bytes((direction, 0))
+                d += binascii.crc_hqx(d, 0xFFFF).to_bytes(2, "little") if version == 2 else b"\xa5\x5a"
                 seed = index ^ 1 ^ 0xD3 if direction else (17 + round_ * 109 + j * 11) & 255
                 data = pattern(n, seed)
                 crc, first, last = f"{zlib.crc32(data):08x}", f"{data[0]:02x}", f"{data[-1]:02x}"
@@ -49,6 +49,10 @@ class ResultTests(unittest.TestCase):
         for a, b in variants:
             with self.subTest(a=a[:20], b=b[:80]), self.assertRaises(ValueError):
                 compare(a, b)
+
+    def test_crc_free_descriptor_evidence(self):
+        agon, peer = sample(3)
+        self.assertEqual(len(compare(agon, peer)["cases"]), 20)
 
     def test_mirrored_pattern(self):
         root = Path(__file__).resolve().parents[1]

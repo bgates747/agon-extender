@@ -1,20 +1,14 @@
-# Current checkpoint — minimum transport review complete
+# Current checkpoint — paired CRC removal complete, offline only
 
-The bounded phase tranche is complete, including byte proof and exact UART
-restoration. Control construction/offer/completion dominates; merely parking
-and restoring UART is a much smaller measured cost. The Author requires removal
-of ExExt CRC and a transport-only first pass preserving stock behavior above
-byte transport. Existing extra control machinery must justify physical necessity.
-Author also requests review of direct ExCom ↔ ExExt switching. No transport
-optimization has been implemented. The authorized
-[minimum-transport review](docs/tasks/PORT-008/MINIMAL-TRANSPORT-REVIEW.md)
-TR01–TR04 is complete after freezing/pushing the contract. Its
-[results](docs/tasks/PORT-008/MINIMAL-TRANSPORT-RESULTS.md) contain a fourteen-row
-removal matrix and minimum path. CRC removal is the proposed first code cut;
-COMPLETE/ACK removal follows actual physical completion proof. Partial-output
-VBlank gating, key publication cadence and IRQ-disabled refusal also depart from
-stock. Author now authorizes the [CRC-removal tranche](docs/tasks/PORT-008/CRC-REMOVAL-R01.md): freeze/push first, then paired wire3 CRC removal and offline checks. Retain sixteen-byte carrier and electrical path; bytes14–15 sent zero/ignored. No deployment in this tranche. The
-broad eight-hour goal remains paused.
+[CRC-removal contract](docs/tasks/PORT-008/CRC-REMOVAL-R01.md) CR01–CR05
+complete after freeze/push. [Results](docs/tasks/PORT-008/CRC-REMOVAL-R01-RESULTS.md)
+record CRC-free parallel wire3 in both EMOS/P4, sixteen-byte carrier with padding
+sent zero/ignored, full compiles and paired/linked tests. ExExt EMOS 130,598 bytes,
+474 free (370 reclaimed). Ordinary version1 ExCom CRC remains. No physical speed
+claim or installation: original UART pair/startup below remains unchanged.
+Next proposed bounded cut removes software COMPLETE/ACK while retaining actual
+native/DMA completion and reciprocal pad release. Stop for Author discussion.
+The broad eight-hour goal remains paused; production unchanged.
 
 ## Start here
 
@@ -42,12 +36,17 @@ broad eight-hour goal remains paused.
    polls, sessions and batching against specific physical necessity. P08-D02
    owns minimum link control/paired deployment; P08-P05 owns implementation.
    Review contract/results are complete, including code/test locations. Keep
-   electrical ownership/handshakes. No CRC-free build exists yet.
+   electrical ownership/handshakes. CRC-free exploratory builds now pass offline;
+   no installation or physical comparison yet.
    ADR-0026 and normative architecture record the new requirement.
 4. P08-P04 queues direct ExCom ↔ ExExt review. The runner currently returns via
    Legacy because EMOS rejects direct extended-to-extended requests. No change
    made. Persistent UART shutdown and game comparisons remain later/gated.
-5. Diagnostic EMOS hooks remain in explicit profiles only. The RAM recorder
+5. Version-record validation exposes a pre-existing light2-harness-r02
+   connectivity hash mismatch; both files unchanged from the contract baseline.
+   Not fixed in this cut. A stale mode-lifecycle fake now supplies controlReply;
+   current/negative controls pass. No product mode-lifecycle change.
+6. Diagnostic EMOS hooks remain in explicit profiles only. The RAM recorder
    has 512 eight-byte entries; exact ELF/ROM callsite binding required. No logging
    occurs inside measurements. The read-only CRC model counts old ROM leaf
    instructions; it adds no CRC code to product firmware and measures no time.

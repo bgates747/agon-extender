@@ -36,7 +36,7 @@ uint32_t emos_gateway_call(uint8_t *r){
  uint8_t *input=(void*)(uintptr_t)read24(r+10),*out=(void*)(uintptr_t)read24(r+16);
  unsigned cap=read24(r+19),n=cap-16,reverse=input[1];assert(input[0]==6&&n&&n<=4096);
  assert(reverse==((calls-1)%10)/5);
- memset(out,0,16);memcpy(out,"EX\x02\x02",4);out[4]=calls;out[8]=1;
+ memset(out,0,16);memcpy(out,"EX\x03\x02",4);out[4]=calls;out[8]=1;
  out[10]=n;out[11]=n>>8;out[12]=reverse;
  if(reverse)for(unsigned i=0;i<n;++i)out[16+i]=parallel_probe_pattern(i,parallel_probe_seed(out));
  r[22]=cap;r[23]=cap>>8;

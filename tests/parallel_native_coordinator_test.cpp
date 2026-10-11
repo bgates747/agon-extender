@@ -119,7 +119,7 @@ extern "C" BYTE emos_keyboard_parallel_send(const BYTE*p,UINT16 n){
  if(p[3]==missingProbeOp)return 0;
 #endif
  if(missing)return 0;
- if(corrupt){reply[10]^=1;parallel_session_seal(reply);}
+ if(corrupt){reply[10]^=1;parallel_control_pad(reply);}
  BYTE old=emos_keyboard_lock();emos_console_packet(CONSOLE_REPLY,reply,16);emos_keyboard_unlock(old);return 0;
 }
 extern "C" BYTE emos_parallel_native_bytes(BYTE*b,UINT24 n,BYTE reverse){
@@ -157,10 +157,10 @@ static void setup(unsigned n,bool reverse){
  BYTE txn[4]={1,2,3,4};assert(emos_parallel_session_negotiate(h(),&session,txn));
 }
 static std::array<BYTE,16> admit(bool reverse){
- std::array<BYTE,16>d{'E','X',2,PARALLEL_OFFER};
+ std::array<BYTE,16>d{'E','X',PARALLEL_WIRE_VERSION,PARALLEL_OFFER};
  std::memcpy(d.data()+4,session.bytes,4);d[8]=BYTE(session.bytes[4]+1);
  d[10]=BYTE(localData.size());d[11]=BYTE(localData.size()>>8);d[12]=reverse;
- parallel_session_seal(d.data());assert(emos_parallel_block_offer(h(),&session,PARALLEL_EXEXT,d.data()));return d;
+ parallel_control_pad(d.data());assert(emos_parallel_block_offer(h(),&session,PARALLEL_EXEXT,d.data()));return d;
 }
 static void failed(){
  assert((!releases||releaseFailure)&&reserved==1&&session.phase==PARALLEL_SESSION_IDLE);
@@ -189,11 +189,11 @@ int main(){
   if(refusal==1)reserved=2;
   if(refusal==2)capacity=7;
   if(refusal==3)b=nullptr;
-  if(refusal==4){d[10]=0;parallel_session_seal(d.data());}
-  if(refusal==5){d[11]=17;parallel_session_seal(d.data());}
-  if(refusal==6)d[14]^=1;
-  if(refusal==7){d[12]=2;parallel_session_seal(d.data());}
-  if(refusal==8){d[4]^=1;parallel_session_seal(d.data());}
+  if(refusal==4){d[10]=0;parallel_control_pad(d.data());}
+  if(refusal==5){d[11]=17;parallel_control_pad(d.data());}
+  if(refusal==6)d[2]=2; // Historical CRC format cannot admit.
+  if(refusal==7){d[12]=2;parallel_control_pad(d.data());}
+  if(refusal==8){d[4]^=1;parallel_control_pad(d.data());}
   if(refusal==9){BYTE old=emos_keyboard_lock();assert(!emos_parallel_boot_block_begin());emos_keyboard_unlock(old);reserved=0;}
   BYTE before=hostPdDr;assert(!emos_parallel_native_coordinate(&session,d.data(),b,capacity));
   assert(!parks&&!unparks&&!releases&&before==hostPdDr&&!allocation);peer.cancel();++cases;

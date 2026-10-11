@@ -23,7 +23,6 @@ static unsigned sends,clock_reads,cases;
 static bool frozen,missing,duplicate,fail_send,drop_reservation;
 static int corrupt=-1;
 static unsigned corrupt_bit;
-static bool reseal;
 extern "C" BYTE emos_keyboard_parallel_reserved(void){return irq && reserved;}
 extern "C" BYTE emos_keyboard_clock(void){++clock_reads;if(!frozen)tick+=2;return tick;}
 extern "C" BYTE emos_keyboard_lock(void){BYTE old=irq;irq=0;return old;}
@@ -38,18 +37,19 @@ extern "C" BYTE emos_keyboard_parallel_send(const BYTE *p,UINT16 n){
   if(fail_send)return EMOS_KEY_BUSY;
   if(n==3){const BYTE prefix[]={23,0,CONSOLE_OPCODE};assert(!std::memcmp(p,prefix,3));return EMOS_KEY_OK;}
   assert(n==16 && parallel_session_valid(p));
-  Packet reply{};assert(peer.request(p,100,0x12345678,reply.data()));
+  assert(!p[14] && !p[15]);
+  Packet reply{};if(!peer.request(p,100,0x12345678,reply.data()))return EMOS_KEY_OK;
   if(missing)return EMOS_KEY_OK;
   auto original=reply;
-  if(corrupt>=0){reply[corrupt]^=1u<<corrupt_bit;if(reseal)parallel_session_seal(reply.data());}
+  if(corrupt>=0){reply[corrupt]^=1u<<corrupt_bit;}
   receive(reply,15); // malformed frame length cannot publish a reply
   receive(reply);
-  if(duplicate){original[8]^=0x20;parallel_session_seal(original.data());receive(original);}
+  if(duplicate){original[8]^=0x20;parallel_control_pad(original.data());receive(original);}
   if(drop_reservation)reserved=0;
   return EMOS_KEY_OK;
 }
 static P ready(){P p;for(auto c:std::array<BYTE,5>{P::released|P::validHigh,P::validHigh,0,P::validHigh,P::validHigh|P::uartUp})p.step(c);assert(p.phase()==P::uart);return p;}
-static void reset(){peer=Owner{};peer.handover=ready();irq=reserved=1;emos_key_faulted=0;tick=0;sends=clock_reads=0;frozen=missing=duplicate=fail_send=drop_reservation=reseal=false;corrupt=-1;}
+static void reset(){peer=Owner{};peer.handover=ready();irq=reserved=1;emos_key_faulted=0;tick=0;sends=clock_reads=0;frozen=missing=duplicate=fail_send=drop_reservation=false;corrupt=-1;}
 static void negotiate(bool expected){
   t_emosParallelHandover h{EPH_UART,1,0,1};t_parallelSession s{};
   BYTE transaction[4]={1,2,3,4};
@@ -59,17 +59,16 @@ static void negotiate(bool expected){
   else if(sends){assert(s.phase==0 && h.phase==EPH_RETURN_RELEASE);}
   else assert(s.phase==0 && h.phase==EPH_UART);
   // No wait remains: an unsolicited late reply cannot advance the lifecycle.
-  Packet late{};late[0]='E';late[1]='X';late[2]=2;late[3]=0x83;late[4]=1;late[12]=3;parallel_session_seal(late.data());receive(late);
+  Packet late{};late[0]='E';late[1]='X';late[2]=PARALLEL_WIRE_VERSION;late[3]=0x83;late[4]=1;late[12]=3;parallel_control_pad(late.data());receive(late);
   assert(s.phase==(expected?3:0));++cases;
 }
 int main(){
   reset();negotiate(true);assert(sends==4);
   reset();duplicate=true;negotiate(true); // first complete reply is immutable
   for(unsigned i=0;i<16;++i)for(unsigned bit=0;bit<8;++bit){
-    reset();corrupt=i;corrupt_bit=bit;negotiate(false);
-    // CRC-correct altered semantic fields must still be refused; prepare's
-    // fresh challenge itself has no prior identity to compare against.
-    if(i<8 || i==12 || i==13){reset();corrupt=i;corrupt_bit=bit;reseal=true;negotiate(false);}
+    // Reserved bytes do not reject a reply. Altered identities fail their
+    // semantic comparisons; a changed fresh nonce fails the following commit.
+    reset();corrupt=i;corrupt_bit=bit;negotiate(i>=14);
   }
   reset();missing=true;negotiate(false);assert(clock_reads<1000);
   reset();missing=frozen=true;negotiate(false);assert(clock_reads<262150);

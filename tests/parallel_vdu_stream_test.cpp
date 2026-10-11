@@ -2,6 +2,8 @@
 #include <cstring>
 #include <vector>
 #include <cstdio>
+// This standalone parallel owner must compile without a CRC dependency.
+#pragma GCC poison console_crc console_seal
 #include "extender/transport/parallel_vdu_stream.hpp"
 using namespace agon::extender::transport;
 using H=P4ParallelHandover;
@@ -10,29 +12,33 @@ static void boot(ParallelControl &c) {
  assert(c.handover.phase()==H::uart);c.session.phase=PARALLEL_SESSION_ACTIVE;
  const uint8_t s[]={1,2,3,4,0,0};memcpy(c.session.bytes,s,6);
 }
-static bool command(ParallelControl &c,ParallelVduStream &s,unsigned op,uint8_t *r,bool lease=true) {
- uint8_t p[16]={'E','X',2,uint8_t(op)};memcpy(p+4,c.session.bytes,6);parallel_session_seal(p);
+static bool command(ParallelControl &c,ParallelVduStream &s,unsigned op,uint8_t *r,bool lease=true,unsigned version=PARALLEL_WIRE_VERSION,unsigned padding=0) {
+ uint8_t p[16]={'E','X',uint8_t(version),uint8_t(op)};memcpy(p+4,c.session.bytes,6);parallel_control_pad(p);p[14]=uint8_t(padding);p[15]=uint8_t(padding>>8);
  return s.request(p,r,lease);
 }
 static void block(ParallelControl &c,ParallelVduStream &s,std::vector<uint8_t> &bytes,bool reverse) {
  auto seq=unsigned(c.session.bytes[4]|(unsigned(c.session.bytes[5])<<8))+1;
- uint8_t d[16]={'E','X',2,PARALLEL_OFFER};memcpy(d+4,c.session.bytes,4);
+ uint8_t d[16]={'E','X',PARALLEL_WIRE_VERSION,PARALLEL_OFFER};memcpy(d+4,c.session.bytes,4);
  d[8]=uint8_t(seq);d[9]=uint8_t(seq>>8);d[10]=uint8_t(bytes.size());d[11]=uint8_t(bytes.size()>>8);d[12]=reverse;
- parallel_session_seal(d);uint8_t reply[16];assert(s.canOffer(d));assert(c.request(d,0,0,reply));assert(s.acceptedOffer());
+ parallel_control_pad(d);uint8_t reply[16];assert(s.canOffer(d));assert(c.request(d,0,0,reply));assert(s.acceptedOffer());
  uint8_t *p;size_t cap;assert(c.payloadBuffer(p,cap));
  if(reverse)assert(!memcmp(p,bytes.data(),bytes.size()));else memcpy(p,bytes.data(),bytes.size());
  const auto before=s.available(),out=s.pending();assert(s.retire());assert(s.available()==before && s.pending()==out);
  for(auto b:std::initializer_list<unsigned>{H::quiet,H::released,0,H::validHigh,H::validHigh|H::clockHigh,
      H::validHigh|H::clockHigh|H::armed,H::done,H::validHigh,0,H::validHigh,H::uartUp})c.handover.step(b);
  assert(c.payloadReturned(0,1));assert(s.retire());assert(s.available()==before && s.pending()==out);
- d[3]=PARALLEL_COMPLETE;parallel_session_seal(d);assert(c.request(d,1,0,reply));assert(s.retire());
+ d[3]=PARALLEL_COMPLETE;parallel_control_pad(d);assert(c.request(d,1,0,reply));assert(s.retire());
  assert(s.available()==before+(reverse?0:bytes.size()));assert(s.pending()==out-(reverse?bytes.size():0));
 }
 int main() {
  unsigned cases=0;ParallelControl c;boot(c);ParallelVduStream s(c);assert(s.begin());uint8_t r[16];
  assert(!command(c,s,PARALLEL_STREAM_START,r,false));assert(!s.active());
- assert(command(c,s,PARALLEL_STREAM_START,r));assert(s.active());
- assert(!command(c,s,PARALLEL_STREAM_START,r));++cases;
+ assert(!command(c,s,PARALLEL_STREAM_START,r,true,2));assert(!s.active());
+ assert(command(c,s,PARALLEL_STREAM_START,r,true,PARALLEL_WIRE_VERSION,0xa55a));assert(s.active());
+ assert(!r[14] && !r[15]);
+ assert(!command(c,s,PARALLEL_STREAM_START,r));
+ assert(command(c,s,PARALLEL_STREAM_POLL,r,true,PARALLEL_WIRE_VERSION,0xffff));
+ assert(!r[14] && !r[15]);++cases;
  // Deliberately split an upload/VDU command at every relevant block boundary;
  // the consumer sees precisely the original byte stream, including zeroes.
  for(unsigned n:{1u,2u,3u,17u,255u,256u,1024u,4096u}) {
@@ -52,7 +58,7 @@ int main() {
  assert(!command(c,s,PARALLEL_STREAM_POLL,r));++cases;
  assert(command(c,s,PARALLEL_STREAM_START,r));
  std::vector<uint8_t> full(4096,0xa5);block(c,s,full,false);block(c,s,full,false);
- uint8_t d[16]={'E','X',2,PARALLEL_OFFER};d[10]=1;
+ uint8_t d[16]={'E','X',PARALLEL_WIRE_VERSION,PARALLEL_OFFER};d[10]=1;
  assert(!s.canOffer(d));s.cancel();assert(!s.active() && !s.available() && !s.pending());++cases;
  printf("PASS %u actual queue/admission/receipt/split-stream/backpressure cases\n",cases);
 }

@@ -4,7 +4,6 @@
 // wire decoder, autonomous request or operating-mode authority here.
 #pragma once
 #include <cstdint>
-#include "control_crc.h"
 #include "parallel_wire.h"
 #include "parallel_session.h"
 

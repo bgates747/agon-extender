@@ -11,6 +11,8 @@ those bytes on receipt. This is an experimental paired format, not a production
 version or a new negotiation mechanism. Compile and exercise real maintained
 owners and linked eZ80 code offline. Do not deploy or claim physical speedup.
 Separate COMPLETE/ACK removal is the following tranche, not this one.
+CR01–CR05 are complete; [results](CRC-REMOVAL-R01-RESULTS.md) record source,
+compile/offline checks, ROM reduction and unchanged bench boundary.
 
 ## Authority and research boundary
 
@@ -44,28 +46,28 @@ and the contract before code. Update current task navigation and EMOS owner
 instructions. Leave unrelated other-agent repository dirt alone. P08-D02 stays
 open for the later minimum carrier/session/scheduling design.
 
-CR02 [ ] — Remove parallel CRC in both owners, including shared request/reply
+CR02 [x] — Remove parallel CRC in both owners, including shared request/reply
 branches, session, admission, offer, completion, START/POLL/STOP and the private
 probe constructor. Mirror wire/session headers exactly. Transmit zeros in the
 former CRC slots without validating them; remove parallel dependency on the CRC
 header. Retain existing semantic length/direction/identity/phase checks and
 physical completion fences. A format2 peer must be rejected before admission.
 
-CR03 [ ] — Adapt existing paired host and linked instruction tests. Replace
+CR03 [x] — Adapt existing paired host and linked instruction tests. Replace
 CRC-corruption assumptions with actual semantic rejection and explicit ignored
 reserved-byte checks. Test both directions/boundaries, session/control lifecycle,
 missing peer, stale versions, reverse fragments, split commands and real callback
 ordering using existing fixtures. Verify ordinary version1 CRC still works.
 Tests must not imply all bit errors are detected by the new transport.
 
-CR04 [ ] — Build ordinary and ExExt EMOS through profile-owned link/ROM guards;
+CR04 [x] — Build ordinary and ExExt EMOS through profile-owned link/ROM guards;
 compile the complete P4 ExExt composition. Run relevant linked output/IRQ/control
 checks against the exact new ELF. Record ROM usage versus the same-profile
 baseline and exact output identities/hashes in local build evidence. Confirm
 parallel owners have no CRC calls and ordinary ExCom code remains. Dirty builds
 are exploratory only; clean committed builds precede later qualification.
 
-CR05 [ ] — Update current protocol/build guidance, bounded results, handoff and
+CR05 [x] — Update current protocol/build guidance, bounded results, handoff and
 owner task. Commit/push changes in logical groups, check mailbox and stop for
 Author discussion. No flash, hardware timing, production selection/tag or broad
 goal resumption. Next proposed code cut removes the separate software completion

@@ -15,20 +15,10 @@ using Body=std::array<uint8_t,16>;
 using Session=std::array<uint8_t,6>;
 static size_t cases=0;
 static std::ofstream vectors;
-// Independent table-driven CRC, not the production helper.
-static void seal(Body &b) {
-  uint16_t table[256];
-  for(unsigned i=0;i<256;++i) {
-    uint16_t v=static_cast<uint16_t>(i<<8);
-    for(unsigned k=0;k<8;++k) v=(v&0x8000)?static_cast<uint16_t>((v<<1)^0x1021):static_cast<uint16_t>(v<<1);
-    table[i]=v;
-  }
-  uint16_t c=0xffff;
-  for(unsigned i=0;i<14;++i) c=static_cast<uint16_t>((c<<8)^table[(c>>8)^b[i]]);
-  b[14]=uint8_t(c);b[15]=uint8_t(c>>8);
-}
+// CRC-free carrier: padding is ignored, never an integrity check.
+static void seal(Body &b) { b[14]=b[15]=0; }
 static Body offer(unsigned len=1,unsigned direction=0,unsigned seq=1) {
-  Body b{'E','X',2,2,0x12,0x34,0x56,0x78,uint8_t(seq),uint8_t(seq>>8),uint8_t(len),uint8_t(len>>8),uint8_t(direction),0,0,0};seal(b);return b;
+  Body b{'E','X',PARALLEL_WIRE_VERSION,2,0x12,0x34,0x56,0x78,uint8_t(seq),uint8_t(seq>>8),uint8_t(len),uint8_t(len>>8),uint8_t(direction),0,0,0};seal(b);return b;
 }
 static Body ack(Body b) {b[3]=0x82;seal(b);return b;}
 static Session initial() {return {0x12,0x34,0x56,0x78,0,0};}
@@ -109,21 +99,21 @@ int main(int argc,char **argv) {
   for(unsigned d=2;d<256;++d)reject(offer(1,d));
   for(unsigned seq:{0u,2u,256u,65535u})reject(offer(1,0,seq));
   for(unsigned phase=0;phase<14;++phase)if(phase!=EPH_UART) {auto s=initial();auto o=offer();echeck(3,phase,s,o,ack(o),false);}
-  // Every bit in either envelope, with and without a recomputed checksum.
-  // A changed legal length/direction offer is valid, but its original ACK is not.
+  // Metadata still governs admission; legal length/direction changes are not
+  // corruption-detected. Padding in offers and ACKs has no effect at all.
   auto original=offer(27,1);auto originalAck=ack(original);
   for(unsigned i=0;i<16;++i)for(unsigned bit=0;bit<8;++bit) {
-    auto bad=original;bad[i]^=uint8_t(1u<<bit);reject(bad);
-    for(bool reseal:{false,true}) {
-      auto changed=originalAck;changed[i]^=uint8_t(1u<<bit);if(reseal)seal(changed);
-      auto s=initial();echeck(3,EPH_UART,s,original,changed,changed==originalAck);
-    }
-    if(i<14) {seal(bad);auto s=initial();echeck(3,EPH_UART,s,bad,originalAck,false);}
+    auto bad=original;bad[i]^=uint8_t(1u<<bit);
+    const bool legal=i==10 || (i==11 && bit<4) || (i==12 && bit==0) || i>=14;
+    P p;ready(p);auto ps=initial();Body reply{};
+    assert(p.admit(3,ps.data(),bad.data(),reply.data())==legal);++cases;
+    auto es=initial();echeck(3,EPH_UART,es,bad,ack(bad),legal);
+    es=initial();echeck(3,EPH_UART,es,bad,originalAck,i>=14);
+    auto changed=originalAck;changed[i]^=uint8_t(1u<<bit);
+    es=initial();echeck(3,EPH_UART,es,original,changed,i>=14);
   }
-  // Sealed malformed fields must fail syntax, not merely CRC.
-  for(unsigned offset:{0u,1u,2u,3u,4u,5u,6u,7u,13u}) {
-    auto bad=original;bad[offset]^=1;seal(bad);reject(bad);
-  }
+  // A historical format2 peer cannot admit, even with an otherwise valid body.
+  auto old=original;old[2]=2;reject(old);
   Session zero{};reject(offer(),zero);
   auto s=initial();s[0]^=1;reject(offer(),s);
   s=initial();s[4]=255;s[5]=255;reject(offer(1,0,0),s);reject(offer(1,0,1),s);

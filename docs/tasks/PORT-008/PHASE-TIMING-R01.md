@@ -143,7 +143,8 @@ starts in the phase tranche; pause for Author discussion.
 P08-D01 [x] — No CRC in the ExExt transport. Author explicitly rejected the
 agent's recommendation to accelerate the existing CRC routine. Remove the
 transport CRC work instead. Recorded in ADR-0026 and the normative architecture.
-This is a design requirement; no CRC-free firmware has been built or tested.
+The [CRC-removal tranche](CRC-REMOVAL-R01-RESULTS.md) now passes paired/linked
+offline checks and complete target builds. No physical deployment or timing pass.
 
 P08-D02 [ ] — Define the minimum necessary link control and paired deployment
 under D03. Do not assume the existing control envelope, session or version

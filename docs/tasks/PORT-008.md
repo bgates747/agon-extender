@@ -63,6 +63,16 @@ refusal are stock-behavior departures. First proposed code cut removes transport
 CRC; later cuts simplify receipt/control and scheduling. P08-D02 owns paired
 carrier/version choice. Source review complete. Author now authorizes the [first CRC-removal code cut](PORT-008/CRC-REMOVAL-R01.md), offline only, after contract freeze/push. Wire3 retains the carrier and electrical path while removing parallel CRC. Deployment, permanent UART shutdown and broader goal resumption remain gated.
 
+### Paired CRC removal complete, offline only — 2026-10-11
+
+[CRC-removal contract/results](PORT-008/CRC-REMOVAL-R01-RESULTS.md) complete:
+parallel wire3 has no CRC on either owner; ordinary version1 console activation
+retains its existing CRC. Paired host, linked eZ80 and complete target builds
+pass. ExExt EMOS reclaims 370 bytes,474 free. Carrier width, electrical handover and
+completion receipt lifetime remain. No hardware timing/deployment or production
+change. Proposed next cut removes COMPLETE/ACK after actual physical completion;
+stop for discussion. Existing scheduling departures remain under P08-P05/D02.
+
 ### Deferred investigation — hardware assistance, 2026-10-11
 
 P08-H01 [ ] — Investigate modest external circuitry for the bidirectional

@@ -29,6 +29,8 @@ struct ControlOutput {
   std::vector<uint8_t> bytes;
   void write(uint8_t b) { bytes.push_back(b); events.emplace_back("control.byte"); }
   void write(const uint8_t *p, size_t n) { for(size_t i=0;i<n;++i)write(p[i]); }
+  // Match the maintained Stream helper; this seam had drifted before CRC removal.
+  void controlReply(const uint8_t *p, size_t n) { write(CONSOLE_REPLY);write(uint8_t(n));write(p,n); }
 } stream;
 ControlOutput *console_stream = &stream;
 
@@ -74,7 +76,7 @@ int main() {
   request[3]=CONSOLE_PREPARE; // wrong CRC: no mode change or ACK
   consoleControl(&processor,request);
   if(attemptIndex!=1 || stream.bytes.size()!=count) return 44;
-  // Version-2 control is framed by this real owner, without a VDU mode reset.
+  // Parallel control is framed by this real owner, without a VDU mode reset.
   uint8_t v2[16]{},v2reply[16]{},commit[16]{};t_parallelSession e{};
   const uint8_t txn[4]={4};parallel_session_begin(&e,txn,v2);
   events.clear();stream.bytes.clear();consoleControl(&processor,v2);

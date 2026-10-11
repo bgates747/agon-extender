@@ -28,14 +28,14 @@ static void boot(agon::extender::transport::ParallelControl &c,std::uint8_t *b,u
 }
 static void offer(agon::extender::transport::ParallelControl &c,unsigned n,bool tx,
                   std::uint8_t *d,unsigned sequence=1,unsigned now=0){
- const std::uint8_t start[16]={'E','X',2,2,1,2,3,4,std::uint8_t(sequence),0,
+ const std::uint8_t start[16]={'E','X',PARALLEL_WIRE_VERSION,2,1,2,3,4,std::uint8_t(sequence),0,
    std::uint8_t(n),std::uint8_t(n>>8),std::uint8_t(tx),0,0,0};
- std::memcpy(d,start,16);parallel_session_seal(d);std::uint8_t reply[16];
+ std::memcpy(d,start,16);parallel_control_pad(d);std::uint8_t reply[16];
  assert(c.request(d,now,0,reply)&&reply[3]==PARALLEL_ACK);
 }
 static void complete(agon::extender::transport::ParallelControl &c,std::uint8_t*d,
                      std::uint8_t *b,unsigned n,bool tx,unsigned now){
- std::uint8_t reply[16];d[3]=PARALLEL_COMPLETE;parallel_session_seal(d);
+ std::uint8_t reply[16];d[3]=PARALLEL_COMPLETE;parallel_control_pad(d);
  assert(c.request(d,now,0,reply)&&reply[3]==PARALLEL_COMPLETE_ACK&&!reply[13]);
  std::uint8_t *out,direction;std::size_t length;
  assert(c.takeCompleted(out,length,direction)&&out==b&&length==n&&direction==tx);
@@ -224,7 +224,7 @@ int main(){unsigned cases=0;
   C owner(c,pins,14,16,15,18,17,20,19,0);offer(c,8,true,d);unsigned now=0;
   assert(!c.uartTransitionAllowed()&&!c.revokeUartCapability());
   drive(owner,true,8,b,now);assert(!c.uartTransitionAllowed());
-  std::uint8_t reply[16];d[3]=PARALLEL_COMPLETE;parallel_session_seal(d);
+  std::uint8_t reply[16];d[3]=PARALLEL_COMPLETE;parallel_control_pad(d);
   assert(c.request(d,now,0,reply));assert(!c.revokeUartCapability());
   std::uint8_t*out,direction;std::size_t length;assert(c.takeCompleted(out,length,direction));
   assert(c.revokeUartCapability()&&c.handover.phase()==H::uart&&ready==1);++cases;
