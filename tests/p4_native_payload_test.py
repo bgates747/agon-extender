@@ -11,7 +11,7 @@ class NativePayloadTests(unittest.TestCase):
    d=Path(tmp)
    for header in ('driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h',
                   'driver/gpio_filter.h','esp_attr.h','esp_heap_caps.h','freertos/FreeRTOS.h',
-                  'esp_rom_gpio.h','esp_private/gpio.h','soc/parlio_periph.h'):
+                  'esp_rom_gpio.h','esp_private/gpio.h','soc/parlio_periph.h','soc/io_mux_reg.h'):
     p=d/header;p.parent.mkdir(parents=True,exist_ok=True)
     p.write_text('#include "p4_native_sdk_fake.hpp"\n')
    prefix=(ROOT/'tests/p4_native_payload_test.cpp').read_text().split('int main(){')[0]

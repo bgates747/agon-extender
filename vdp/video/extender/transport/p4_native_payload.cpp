@@ -8,6 +8,7 @@
 #include <esp_rom_gpio.h>
 #include <esp_private/gpio.h>
 #include <soc/parlio_periph.h>
+#include <soc/io_mux_reg.h>
 #endif
 namespace agon::extender::transport {
 // EX05: game assets left internal DMA memory too fragmented for the next
