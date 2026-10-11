@@ -2,7 +2,7 @@
 
 ## Current scope
 
-### Active goal — ordinary ExExt stream, 2026-10-11
+### Paused goal — ordinary ExExt stream, 2026-10-11
 
 The Author authorizes the eight-hour
 [ordinary ExExt work contract](PORT-008/EXEXT-STREAM-R01.md). The previous P4-PC
@@ -16,6 +16,10 @@ verified UART pair and defer further candidate installation.
 The [current results](PORT-008/EXEXT-STREAM-R01-RESULTS.md) separate those limits
 from passed checks. Legacy/ExCom and rollback remain preserved; production
 selection has not changed.
+The next proposed investigation is the [matched UART/parallel stream timing
+contract](PORT-008/STREAM-TIMING-R01.md), drafted for Author review. It measures
+identical payloads at submission, physical drain and EDP completion boundaries;
+implementation and bench execution remain pending approval.
 Older bench restrictions and failure statements below are dated evidence;
 current bench ownership and identity remain in the ignored local record.
 
