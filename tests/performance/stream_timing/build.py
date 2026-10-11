@@ -5,6 +5,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -41,7 +42,7 @@ def main():
  (a.output/'src').mkdir(parents=True);(a.output/'include').mkdir()
  shutil.copy2(HERE/'main.cpp',a.output/'src/main.cpp')
  shutil.copy2(HERE/'counter.asm',a.output/'src/counter.asm')
- (a.output/'include/binding.inc').write_text(f'.equ ST_LAST_RAW,0x{binding["ST_LAST_RAW"]:06X}\n')
+ (a.output/'include/binding.inc').write_text(''.join(f'.equ {k},0x{binding[k]:06X}\n' for k in ('ST_LAST_RAW','ST_FLUSH')))
  for name in ('prt.asm','entries.asm'):
   content=(HERE.parent/'ez80'/name).read_text()
   if name=='prt.asm':content=content.replace('ld a,007h','ld a,00fh').replace('/16','/256')
@@ -50,6 +51,8 @@ def main():
  (a.output/'Makefile').write_text('NAME=stream\nRAM_START=0xB0000\nRAM_SIZE=0x8000\nLDHAS_ARG_PROCESSING=1\nLDHAS_EXIT_HANDLER=0\ninclude $(shell agondev-config --makefile)\nCXXFLAGS += -std=c++17 -fno-delete-null-pointer-checks\nASMFLAGS += -Iinclude\n')
  env=dict(os.environ);env['PATH']=str(a.toolchain/'bin')+os.pathsep+env.get('PATH','')
  subprocess.run(['make','-C',str(a.output)],env=env,check=True)
+ linked=re.findall(r'^\s+(0x[0-9a-f]+)\s+(_\w+)\s*$',(a.output/'bin/stream.map').read_text(),re.M)
+ (a.output/'nm.txt').write_text(''.join(f'{int(addr,16):08x} T {name}\n' for addr,name in linked))
  binary=(a.output/'bin/stream.bin').read_bytes()
  if len(binary)>=32768 or binary[0x40:0x45]!=b'MOS\x00\x01':p.error('invalid ADL MOSlet header/size')
  for item in manifest():(a.output/f"stream-{item['wire_bytes']}.bin").write_bytes(stream(item['wire_bytes']))

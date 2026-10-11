@@ -251,3 +251,22 @@ ST05–ST06 remain unexecuted. The existing UART rollback pair remains installed
    after the transport investigation; keep the shared ordinary native body,
    correctness tests and fixture source reusable. No production bundle/tag or
    broader ExExt goal continuation is authorized by this checkpoint.
+
+
+## ST04 admission and fixture ABI correction — 2026-10-11
+
+Author releases the bench for execution. The first timing EMOS FLASH submission
+is followed by missing listener readiness with the older data-r20 P4. Complete
+the planned stream-r14 partner installation (all four segments independently
+verify), then verify the full timing EMOS ROM before any fixture invocation.
+No uncertain test is replayed; none has run at this checkpoint.
+
+Predeployment review catches a MOSlet ABI error: the private resident ZDS C
+writer returns byte status in A and may use IY, whereas AgonDev expects its
+return in HL and preserved IY. A MOSlet assembly bridge now supplies null/zero
+arguments, preserves IX/IY and converts status to HL. No EMOS image change.
+Actual linked bridge tests pass empty drain, four refusals and five timestamp
+values with stack/register/IFF preservation. Prior fixture build remains frozen
+preparation evidence and must not be deployed. Selected replacement:
+`port-008-stream-timing-r01-b2026-10-11-19-32-51Z`, SHA256
+`b20f3845d6d9e22494aa63c920afbc1b6dd03bcfd793c22e36e0ff241987e24f`. Its exact EMOS bindings are unchanged.

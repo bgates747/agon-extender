@@ -12,6 +12,7 @@ extern "C" uint24_t bench_count(const uint8_t *,uint24_t),bench_clock(const vola
 extern "C" uint24_t gt_prt_init(void),gt_prt_read(void);
 extern "C" void gt_prt_begin(void),gt_prt_close(void);
 extern "C" uint24_t st_wire_read(void);
+extern "C" uint24_t st_flush(void);
 // entries.asm has an unused private graphics callback; never installed here.
 extern "C" void graphics_receive(const uint8_t *) {}
 
@@ -26,7 +27,7 @@ enum {OutputFault=1,DrainFault=2,ReplyFault=4,Overflow=8,MissingStamp=16};
 static uint24_t now(){return bench_clock(sv);}
 static bool sent(const uint8_t *p,unsigned n){return bench_count(p,n)==0;}
 static bool drain(){
- if(parallel) return ((uint8_t(*)(const uint8_t*,uint24_t))ST_FLUSH)(nullptr,0)==0;
+ if(parallel) return st_flush()==0;
  const auto begin=now();
  do {
   const uint24_t result=((uint24_t(*)(void))ST_UART)();

@@ -64,7 +64,7 @@ HOST-001, external game and consumer changes remain untouched.
    stream-r11 except build identity. No new EDP instrumentation is needed;
    retained P4 stream-r14 is the paired candidate, not uninstalled r15.
 3. Retained build/provenance/checks: ignored agents/stream-timing-r01/;
-   final MOSlet fixture-r08. Reproducible source/procedure:
+   final MOSlet fixture-r09 (MOSlet ABI correction; linked bridge checks pass). Reproducible source/procedure:
    tests/performance/stream_timing/README.md. Nothing has been deployed.
 4. Obtain Author release of the newer fsim review reservation before ST04.
    Do not reset, flash, probe or assume idle CLI from older receipts. The mainboard

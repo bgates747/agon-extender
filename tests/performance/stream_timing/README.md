@@ -35,6 +35,17 @@ This is not a production utility or permission to acquire an occupied bench.
 5. EMOS's retained `parallel_native`, `exext_output`, `exext_irq` and
    `stream_timing` linked CPU tests cover actual compiled hooks and owners.
    They model I/O and do not measure physical transfer speed.
+6. Run the actual MOSlet/resident ABI bridge check using the generated symbol
+   maps and the same pinned CPU model:
+
+   ```sh
+   cargo run --manifest-path tests/performance/stream_timing/Cargo.toml \
+     --bin abi-check -- EXACT_EMOS_ARTIFACT_DIRECTORY FIXTURE_BUILD_DIRECTORY
+   ```
+
+   The fixture's assembly bridge preserves IX/IY and converts ZDS C's A return
+   to AgonDev's HL return. Calling that private C symbol through an ordinary
+   AgonDev function pointer is incorrect even when its stack arguments match.
 
 ## Later bench procedure
 
