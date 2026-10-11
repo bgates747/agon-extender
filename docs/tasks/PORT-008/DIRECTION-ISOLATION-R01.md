@@ -512,7 +512,7 @@ below over changing HDMI composition. No physical change is presumed from that
 discussion. Reuse the existing full-byte independent transfer fixture, modern
 EMOS and full-HDMI runtime; preserve the original startup and ordinary input.
 
-DI05-B6a [ ] — Prepare a private P4-PC image whose generated data mapping swaps
+DI05-B6a [x] — Prepare a private P4-PC image whose generated data mapping swaps
 only D6/GPIO36 and D7/GPIO46. Use an explicit experimental board identity,
 olimex-p4-pc-revc-d6d7-control-r01, frozen in the source/build evidence; restore
 the maintained canonical board file after compilation. Keep the exact filtered
@@ -542,3 +542,53 @@ EMOS-owned lease and the Author measures each side of the suspect series
 resistor against common ground. Digital sniffers provide logic thresholds,
 not analog voltage/ringing evidence. No unowned application GPIO bypass.
 Stop at the renewed deadline; preserve unresolved findings and a usable pair.
+
+
+### DI05-B7 — Shared GPIO supply control, before any wire swap
+
+The Author confirms that the original wires remain unchanged and requires the
+agent to stop all work whenever it asks a question. The cross-swap image
+port-008-data-r18-b2026-10-11-08-39-53Z compiled and passed artifact verification
+(app SHA-256 002441bdae7bccf812fa75e0bac03704e8aa947e4d93ecb7972fbb61f28ee20b),
+but was NOT installed. DI05-B6b/c are deferred pending this more direct source
+finding; do not install the swapped image on canonical wiring.
+
+The official [Rev C PCB source](https://github.com/OLIMEX/ESP32-P4-PC/blob/04032d68e5c727870f9d40beb9e37b7ab3a66916/HARDWARE/ESP32-P4-PC-Rev.C/ESP32-P4-PC_Rev_C.kicad_pcb)
+connects VDDPST_5 to ESP_LDO_VO4. The
+[Espressif v1.3 datasheet](https://documentation.espressif.com/esp32-p4-chip-revision-v1.3_datasheet_en.html)
+places GPIO46 in VDD_IO_5, while GPIO36 is in VDD_IO_4. The board powers the
+latter bank from +3.3V. This is a supply-initialization hypothesis, not yet a
+hardware root-cause finding.
+
+In maintained `vdp/video/extender/storage/local/http.cpp`, the first local-SD
+request calls mount(), acquires LDO4 and lets SDMMC set 3.3V. Network startup
+only registers the routes; it does not mount the card. Mount failure releases
+the LDO handle. The pinned IDF 5.5.5 source at commit
+b774170ff46c393eeb5e495ea37936038d3f4f4f documents this ownership in
+`components/sdmmc/sd_pwr_ctrl/sd_pwr_ctrl_by_on_chip_ldo.c` and
+`components/sdmmc/sdmmc_init.c`. Prior mainboard listener access does not invoke
+this P4-local service. SD mount and GPIO-bank supply must not be conflated.
+
+DI05-B7a [ ] — Host installs/verifies the exact canonical filtered data-r12
+control. EMOS, mainboard VDP, startup, harness, HDMI and fixture remain fixed.
+Invoke one fresh independent 1,024-byte reverse transfer before any P4-local
+card request. Retain all bytes, guards, bit-wise mismatch counts and P4 source
+report. This deliberately retained failing A control does not block paired B.
+
+DI05-B7b [ ] — Host makes one P4-local SD status request, retaining its response
+and USB mount log, then repeats the identical reverse workload to a fresh SD
+result. Do not write, format or otherwise modify the P4 card. A failed mount
+that releases the rail is an inconclusive power control. No rewiring, analyzer,
+autoexec edit or HDMI-composition change is part of this pair.
+
+DI05-B7c [ ] — If the control proves the lead, P4 startup must initialize and
+retain the shared GPIO supply independently of card presence and requests.
+Reuse the SDK's power controller with a single owner; prevent an SD failure or
+voltage change from disabling/lowering the Agon bank. Adopt the CLOCK filter
+with an owned lifecycle rather than leaving temporary diagnostics in firmware.
+Compile/check the correction, then verify independent forward/reverse and real
+1/255/4096-byte echo on the modern full-HDMI pair. Record whether no-card supply
+retention was actually exercised; do not claim an unperformed removal test.
+
+The renewed deadline remains 09:35:10UTC. Preserve informative evidence and a
+verified usable ordinary pair at closeout. No production promotion is implied.
