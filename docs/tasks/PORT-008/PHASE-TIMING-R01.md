@@ -12,7 +12,7 @@ The broader eight-hour ExExt goal remains paused; production stays unchanged.
 
 ## Contract and boundaries
 
-PT01 [ ] — Freeze phase definitions and a minimal probe design. Inspect actual
+PT01 [x] — Freeze phase definitions and a minimal probe design. Inspect actual
 reservation/offer, UART park, native byte runner, UART restore, completion/release,
 VBlank service, return poll/fetch and packet publication. Record caller context,
 clock scope, nesting and probe overhead. No per-byte probes or logging in timed
@@ -104,3 +104,35 @@ or performance acceptance is implied by the current instrumentation approval.
 
 P08-H01 remains deferred in the parent task: external latches/transceiver/FIFO
 investigation follows a concrete operation/cost to replace, not a chip-first guess.
+
+## PT01 probe definition — frozen before physical execution
+
+Sixteen unique probe aliases share one guarded ROM leaf. C call boundaries
+record caller PCs; the fixture builder derives their names from original object
+relocations and verifies each final CALL byte. The RAM jump vector is &B0020
+in the diagnostic MOSlet header padding, armed through one reset-zero EMOS byte.
+No hook executes before admission/fingerprint checks or after results saving begins.
+The RAM recorder masks only its bounded append, preserving all registers, flags
+and IFF. Each record retains raw PRT1, caller PC and current offer length/direction.
+Overflow disarms acquisition and invalidates the sample. No native per-byte probe.
+
+| Boundaries | Interval scope |
+|---|---|
+| reserve_begin → reserve_end | EMOS keyboard/UART serializer reservation |
+| reserve_end → offer_begin | Offer construction and optional session renewal |
+| offer_begin → coordinate_begin | UART offer/ACK plus coordinator admission guards |
+| coordinate_begin → park_end | Coordinator setup and successful UART drain/park, including pending polls |
+| park_end → payload_begin | Electrical entry/release/arm handshake |
+| payload_begin → payload_end | Guarded native runner, including preclocks, byte loop and EOF cleanup; not isolated raw byte-loop bandwidth |
+| payload_end → unpark_end | Electrical return handshake plus UART restoration |
+| unpark_end → completion_begin | Remaining handover steps before matched receipt |
+| completion_begin → completion_end | Matched completion exchange |
+| poll_begin → poll_end | Return-availability UART control exchange and reservation/release |
+| service_begin → service_end | Inclusive real VBlank synchronous service; nested block/poll work must not be added twice |
+| publish_begin → publish_end | Actual buffered packet publication in the real VBlank handler |
+
+Post-completion owner release/queue handling and time outside these intervals
+remain visible as gaps in enclosing endpoint timing. Exact wire-drain M02 stays
+in the preceding frozen campaign; this profile measures native runner completion,
+not its last electrical edge. Return blocks have the same phase probes as forward
+blocks, distinguished by the admitted offer at offer_begin.
