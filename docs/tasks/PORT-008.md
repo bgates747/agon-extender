@@ -17,9 +17,14 @@ The [current results](PORT-008/EXEXT-STREAM-R01-RESULTS.md) separate those limit
 from passed checks. Legacy/ExCom and rollback remain preserved; production
 selection has not changed.
 The Author approved the [matched UART/parallel stream timing
-contract](PORT-008/STREAM-TIMING-R01.md). Its fixture, timing-only EMOS build and
-offline checks are complete. Physical comparison awaits release of the current
-Author/fsim bench reservation; no hardware timings or new installation yet.
+contract](PORT-008/STREAM-TIMING-R01.md) is complete, including physical
+comparison, full-buffer validation and exact UART restoration.
+[Results](PORT-008/STREAM-TIMING-R01-RESULTS.md) retain 48 byte-proved samples:
+parallel wire drain is 6.57× UART time at 256 bytes, 2.30× at 4097 bytes and
+1.37× at 8192 bytes; exactly 4096 bytes is 17.2% faster. Ordered replies remain
+slower throughout. Bench released with full ROM/P4/startup verification and
+stable input. Stop for discussion before phase profiling or optimization;
+the broader ExExt goal remains paused and production unchanged.
 It separates identical-payload submission, physical drain, parallel receipt and
 ordered EDP processing/reply boundaries.
 Older bench restrictions and failure statements below are dated evidence;

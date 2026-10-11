@@ -1,0 +1,396 @@
+{
+  "integrity": {
+    "uart": {
+      "samples": 24,
+      "verified_bytes": 196608
+    },
+    "parallel": {
+      "samples": 24,
+      "verified_bytes": 196608
+    }
+  },
+  "controls": {
+    "uart": [
+      {
+        "wire_bytes": 256,
+        "read_overhead": 0,
+        "empty_drain_prt": 0,
+        "vblank_prt": 1200,
+        "vblank_mos": 2,
+        "run_ticks": 1276
+      },
+      {
+        "wire_bytes": 4096,
+        "read_overhead": 0,
+        "empty_drain_prt": 0,
+        "vblank_prt": 1200,
+        "vblank_mos": 2,
+        "run_ticks": 1286
+      },
+      {
+        "wire_bytes": 4097,
+        "read_overhead": 0,
+        "empty_drain_prt": 0,
+        "vblank_prt": 1200,
+        "vblank_mos": 2,
+        "run_ticks": 1298
+      },
+      {
+        "wire_bytes": 8192,
+        "read_overhead": 0,
+        "empty_drain_prt": 0,
+        "vblank_prt": 1200,
+        "vblank_mos": 2,
+        "run_ticks": 1386
+      }
+    ],
+    "parallel": [
+      {
+        "wire_bytes": 256,
+        "read_overhead": 0,
+        "empty_drain_prt": 1,
+        "vblank_prt": 1199,
+        "vblank_mos": 2,
+        "run_ticks": 1394
+      },
+      {
+        "wire_bytes": 4096,
+        "read_overhead": 0,
+        "empty_drain_prt": 1,
+        "vblank_prt": 1202,
+        "vblank_mos": 2,
+        "run_ticks": 1440
+      },
+      {
+        "wire_bytes": 4097,
+        "read_overhead": 0,
+        "empty_drain_prt": 1,
+        "vblank_prt": 1198,
+        "vblank_mos": 2,
+        "run_ticks": 1484
+      },
+      {
+        "wire_bytes": 8192,
+        "read_overhead": 0,
+        "empty_drain_prt": 1,
+        "vblank_prt": 1203,
+        "vblank_mos": 2,
+        "run_ticks": 1510
+      }
+    ]
+  },
+  "comparison": [
+    {
+      "wire_bytes": 256,
+      "variants": {
+        "uart": {
+          "submit_prt": {
+            "median_ticks": 167,
+            "min_ticks": 167,
+            "max_ticks": 168,
+            "median_us": 2319.444444444445,
+            "median_equivalent_cycles": 42752,
+            "equivalent_cycles_per_wire_byte": 167.0
+          },
+          "wire_prt": {
+            "median_ticks": 168,
+            "min_ticks": 168,
+            "max_ticks": 169,
+            "median_us": 2333.3333333333335,
+            "median_equivalent_cycles": 43008,
+            "equivalent_cycles_per_wire_byte": 168.0
+          },
+          "receipt_prt": {
+            "median_ticks": 168,
+            "min_ticks": 168,
+            "max_ticks": 169,
+            "median_us": 2333.3333333333335,
+            "median_equivalent_cycles": 43008,
+            "equivalent_cycles_per_wire_byte": 168.0
+          },
+          "reply_prt": {
+            "median_ticks": 415,
+            "min_ticks": 408,
+            "max_ticks": 438,
+            "median_us": 5763.88888888889,
+            "median_equivalent_cycles": 106240,
+            "equivalent_cycles_per_wire_byte": 415.0
+          }
+        },
+        "parallel": {
+          "submit_prt": {
+            "median_ticks": 6,
+            "min_ticks": 6,
+            "max_ticks": 6,
+            "median_us": 83.33333333333334,
+            "median_equivalent_cycles": 1536,
+            "equivalent_cycles_per_wire_byte": 6.0
+          },
+          "wire_prt": {
+            "median_ticks": 1104,
+            "min_ticks": 1103,
+            "max_ticks": 1106,
+            "median_us": 15333.333333333334,
+            "median_equivalent_cycles": 282624,
+            "equivalent_cycles_per_wire_byte": 1104.0
+          },
+          "receipt_prt": {
+            "median_ticks": 1468,
+            "min_ticks": 1464,
+            "max_ticks": 1483,
+            "median_us": 20388.88888888889,
+            "median_equivalent_cycles": 375808,
+            "equivalent_cycles_per_wire_byte": 1468.0
+          },
+          "reply_prt": {
+            "median_ticks": 4802,
+            "min_ticks": 4798,
+            "max_ticks": 4831,
+            "median_us": 66694.44444444445,
+            "median_equivalent_cycles": 1229312,
+            "equivalent_cycles_per_wire_byte": 4802.0
+          }
+        }
+      },
+      "parallel_elapsed_change_percent": {
+        "submit_prt": -96.40718562874252,
+        "wire_prt": 557.1428571428571,
+        "reply_prt": 1057.1084337349398
+      }
+    },
+    {
+      "wire_bytes": 4097,
+      "variants": {
+        "uart": {
+          "submit_prt": {
+            "median_ticks": 2657,
+            "min_ticks": 2656,
+            "max_ticks": 2658,
+            "median_us": 36902.77777777778,
+            "median_equivalent_cycles": 680192,
+            "equivalent_cycles_per_wire_byte": 166.02196729314133
+          },
+          "wire_prt": {
+            "median_ticks": 2658,
+            "min_ticks": 2657,
+            "max_ticks": 2661,
+            "median_us": 36916.66666666667,
+            "median_equivalent_cycles": 680448,
+            "equivalent_cycles_per_wire_byte": 166.08445203807665
+          },
+          "receipt_prt": {
+            "median_ticks": 2658,
+            "min_ticks": 2657,
+            "max_ticks": 2661,
+            "median_us": 36916.66666666667,
+            "median_equivalent_cycles": 680448,
+            "equivalent_cycles_per_wire_byte": 166.08445203807665
+          },
+          "reply_prt": {
+            "median_ticks": 5118,
+            "min_ticks": 5109,
+            "max_ticks": 5191,
+            "median_us": 71083.33333333334,
+            "median_equivalent_cycles": 1310208,
+            "equivalent_cycles_per_wire_byte": 319.7969245789602
+          }
+        },
+        "parallel": {
+          "submit_prt": {
+            "median_ticks": 2585,
+            "min_ticks": 2580,
+            "max_ticks": 2599,
+            "median_us": 35902.77777777778,
+            "median_equivalent_cycles": 661760,
+            "equivalent_cycles_per_wire_byte": 161.52306565779838
+          },
+          "wire_prt": {
+            "median_ticks": 6109,
+            "min_ticks": 6036,
+            "max_ticks": 6153,
+            "median_us": 84847.22222222223,
+            "median_equivalent_cycles": 1563904,
+            "equivalent_cycles_per_wire_byte": 381.7193068098609
+          },
+          "receipt_prt": {
+            "median_ticks": 6482,
+            "min_ticks": 6399,
+            "max_ticks": 6514,
+            "median_us": 90027.77777777778,
+            "median_equivalent_cycles": 1659392,
+            "equivalent_cycles_per_wire_byte": 405.02611667073467
+          },
+          "reply_prt": {
+            "median_ticks": 9607,
+            "min_ticks": 9600,
+            "max_ticks": 10810,
+            "median_us": 133430.55555555556,
+            "median_equivalent_cycles": 2459392,
+            "equivalent_cycles_per_wire_byte": 600.2909445936051
+          }
+        }
+      },
+      "parallel_elapsed_change_percent": {
+        "submit_prt": -2.7098231087692937,
+        "wire_prt": 129.83446200150487,
+        "reply_prt": 87.71004298554124
+      }
+    },
+    {
+      "wire_bytes": 8192,
+      "variants": {
+        "uart": {
+          "submit_prt": {
+            "median_ticks": 5313,
+            "min_ticks": 5311,
+            "max_ticks": 5314,
+            "median_us": 73791.66666666667,
+            "median_equivalent_cycles": 1360128,
+            "equivalent_cycles_per_wire_byte": 166.03125
+          },
+          "wire_prt": {
+            "median_ticks": 5314,
+            "min_ticks": 5312,
+            "max_ticks": 5315,
+            "median_us": 73805.55555555556,
+            "median_equivalent_cycles": 1360384,
+            "equivalent_cycles_per_wire_byte": 166.0625
+          },
+          "receipt_prt": {
+            "median_ticks": 5314,
+            "min_ticks": 5312,
+            "max_ticks": 5315,
+            "median_us": 73805.55555555556,
+            "median_equivalent_cycles": 1360384,
+            "equivalent_cycles_per_wire_byte": 166.0625
+          },
+          "reply_prt": {
+            "median_ticks": 10174,
+            "min_ticks": 10135,
+            "max_ticks": 10256,
+            "median_us": 141305.55555555556,
+            "median_equivalent_cycles": 2604544,
+            "equivalent_cycles_per_wire_byte": 317.9375
+          }
+        },
+        "parallel": {
+          "submit_prt": {
+            "median_ticks": 7650,
+            "min_ticks": 7558,
+            "max_ticks": 7714,
+            "median_us": 106250.00000000001,
+            "median_equivalent_cycles": 1958400,
+            "equivalent_cycles_per_wire_byte": 239.0625
+          },
+          "wire_prt": {
+            "median_ticks": 7262,
+            "min_ticks": 7172,
+            "max_ticks": 7327,
+            "median_us": 100861.11111111112,
+            "median_equivalent_cycles": 1859072,
+            "equivalent_cycles_per_wire_byte": 226.9375
+          },
+          "receipt_prt": {
+            "median_ticks": 7652,
+            "min_ticks": 7560,
+            "max_ticks": 7716,
+            "median_us": 106277.77777777778,
+            "median_equivalent_cycles": 1958912,
+            "equivalent_cycles_per_wire_byte": 239.125
+          },
+          "reply_prt": {
+            "median_ticks": 13221,
+            "min_ticks": 13207,
+            "max_ticks": 14411,
+            "median_us": 183625.0,
+            "median_equivalent_cycles": 3384576,
+            "equivalent_cycles_per_wire_byte": 413.15625
+          }
+        }
+      },
+      "parallel_elapsed_change_percent": {
+        "submit_prt": 43.98644833427443,
+        "wire_prt": 36.65788483251789,
+        "reply_prt": 29.948889325732253
+      }
+    },
+    {
+      "wire_bytes": 4096,
+      "variants": {
+        "uart": {
+          "submit_prt": {
+            "median_ticks": 2658,
+            "min_ticks": 2657,
+            "max_ticks": 2658,
+            "median_us": 36916.66666666667,
+            "median_equivalent_cycles": 680448,
+            "equivalent_cycles_per_wire_byte": 166.125
+          },
+          "wire_prt": {
+            "median_ticks": 2659,
+            "min_ticks": 2658,
+            "max_ticks": 2659,
+            "median_us": 36930.555555555555,
+            "median_equivalent_cycles": 680704,
+            "equivalent_cycles_per_wire_byte": 166.1875
+          },
+          "receipt_prt": {
+            "median_ticks": 2659,
+            "min_ticks": 2658,
+            "max_ticks": 2659,
+            "median_us": 36930.555555555555,
+            "median_equivalent_cycles": 680704,
+            "equivalent_cycles_per_wire_byte": 166.1875
+          },
+          "reply_prt": {
+            "median_ticks": 5169,
+            "min_ticks": 5100,
+            "max_ticks": 5179,
+            "median_us": 71791.66666666667,
+            "median_equivalent_cycles": 1323264,
+            "equivalent_cycles_per_wire_byte": 323.0625
+          }
+        },
+        "parallel": {
+          "submit_prt": {
+            "median_ticks": 2588,
+            "min_ticks": 2584,
+            "max_ticks": 2591,
+            "median_us": 35944.444444444445,
+            "median_equivalent_cycles": 662528,
+            "equivalent_cycles_per_wire_byte": 161.75
+          },
+          "wire_prt": {
+            "median_ticks": 2201,
+            "min_ticks": 2198,
+            "max_ticks": 2202,
+            "median_us": 30569.444444444445,
+            "median_equivalent_cycles": 563456,
+            "equivalent_cycles_per_wire_byte": 137.5625
+          },
+          "receipt_prt": {
+            "median_ticks": 2589,
+            "min_ticks": 2586,
+            "max_ticks": 2593,
+            "median_us": 35958.333333333336,
+            "median_equivalent_cycles": 662784,
+            "equivalent_cycles_per_wire_byte": 161.8125
+          },
+          "reply_prt": {
+            "median_ticks": 8404,
+            "min_ticks": 8396,
+            "max_ticks": 8409,
+            "median_us": 116722.22222222223,
+            "median_equivalent_cycles": 2151424,
+            "equivalent_cycles_per_wire_byte": 525.25
+          }
+        }
+      },
+      "parallel_elapsed_change_percent": {
+        "submit_prt": -2.63355906696765,
+        "wire_prt": -17.224520496427232,
+        "reply_prt": 62.584639195202165
+      }
+    }
+  ]
+}

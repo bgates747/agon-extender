@@ -114,7 +114,7 @@ claiming emulated GPIO timing. Test timer saturation and the distinction between
 enqueue, physical drain and receipt using existing host tests. Respect the
 separate human approval gate for emulator changes. Freeze build/fixture hashes.
 
-ST04 [ ] — Prepare and execute the bounded physical comparison after approval
+ST04 [x] — Prepare and execute the bounded physical comparison after approval
 and bench acquisition. Read current local hardware and fixture constraints.
 Verify exact installed bytes, input readiness and idle CLI before invocation.
 Select the mode only in autoexec before the fixture; do not switch modes in the
@@ -124,7 +124,7 @@ readiness failure; retain informative evidence and do not replay uncertain runs.
 Do not request analyzer relocation unless software measurements leave a specific
 electrical/timing ambiguity that requires Author discussion.
 
-ST05 [ ] — Validate and report. Preserve raw samples, start/end duration,
+ST05 [x] — Validate and report. Preserve raw samples, start/end duration,
 firmware/fixture identities, payload hashes, timer calibration and error flags.
 Tabulate UART and parallel side by side, worst slowdown first, showing median,
 range, equivalent cycles/byte and percentage difference against UART for
@@ -132,7 +132,7 @@ comparable endpoints. Show M03 separately. State whether the evidence locates
 cost in submission, payload transmission, handover or EDP/reply processing;
 leave unmeasured attribution explicitly unresolved. These are not HDMI FPS.
 
-ST06 [ ] — Restore and hand back. Restore the exact retained UART firmware pair
+ST06 [x] — Restore and hand back. Restore the exact retained UART firmware pair
 and startup unless the Author explicitly accepts leaving the timing candidate.
 Verify usable CLI/input, released reset and no running listener/collector/test.
 Release the bench, update the parent task/results and stop for discussion before
@@ -160,11 +160,12 @@ optimization. Passing timing acquisition is not acceptance of ExExt performance.
 
 ## Current disposition
 
-Execution approved by the Author; ST01–ST03 offline preparation is complete. Hardware
-execution awaits release of the newer fsim/Author bench reservation recorded
-in HARDWARE.local.md. No hardware operations while that reservation stands.
-The paused goal and existing regression rollback remain in force. No new
-architectural decision or firmware acceptance is implied.
+The Author released the bench. ST01–ST05 are complete:
+[physical results](STREAM-TIMING-R01-RESULTS.md) retain 48 fully byte-verified
+samples, all timing endpoints, calibration, ranges and capture provenance.
+ST06 exact UART restoration, complete ROM/P4/startup checks and input handback
+are complete. The bench is released. The earlier broad goal remains
+paused; no optimization, production promotion or firmware acceptance follows.
 
 
 ## ST01 frozen implementation selection
@@ -270,3 +271,30 @@ values with stack/register/IFF preservation. Prior fixture build remains frozen
 preparation evidence and must not be deployed. Selected replacement:
 `port-008-stream-timing-r01-b2026-10-11-19-32-51Z`, SHA256
 `b20f3845d6d9e22494aa63c920afbc1b6dd03bcfd793c22e36e0ff241987e24f`. Its exact EMOS bindings are unchanged.
+
+ST04 setup correction: MOS RUN parses this address as `&B0000`; the bare
+`B0000` invocation is rejected as Invalid parameter before application entry.
+LOAD likewise requires `&B0000`: its bare-address parse silently falls back
+to the default load address, leaving the old listener at &B0000. Both corrected
+before the timing fixture entered; no transport sample from either attempt;
+ordinary setup capture discarded under the bench evidence retention policy.
+
+## ST04 capture selection clarification — 2026-10-11
+
+Individual verbose USB dumps can lose bytes even when the fixture saves six
+fault-free rows and returns to the CLI. Do not qualify an incomplete sample.
+Complete the independent cases, then make fresh completed-case invocations.
+For each route, length and original repeat index 0–5, select the first
+chronological invocation with zero flags and a complete, exact 8192-byte dump.
+Use a later original row only when that index lacks complete earlier evidence.
+Never renumber a row or substitute individual timing fields. Preserve all
+original CSVs/logs, source hashes, selected row/chunk origins and exclusions.
+Selection depends only on integrity, not elapsed time; the unchanged validator
+must accept all 24 selected rows and complete dumps per route. This preserves
+the warm-up exclusion and five fully verified comparison samples per length.
+
+Clock clarification: stock MOS adds two coarse units per VBlank. The measured
+60 Hz cadence therefore gives about 120 units/s. The frozen fixture's 7200/240
+unit dump/reply bounds are approximately 60/two seconds here, rather than the
+120/four-second descriptions in the preparation checkpoint above. PRT1 timing,
+timeout constants and frozen bytes are unchanged; keep the raw calibration.
