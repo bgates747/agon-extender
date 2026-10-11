@@ -418,3 +418,8 @@ remains installed; mainboard VDP and production unchanged. Existing warm-reset
 fault remains unresolved. No active transfer, collector, reset or flash.
 Ignored pc-modern-r01 retains installation identities, segment/ROM verification,
 CSV, exact helpers and handback. Earlier historical/harness evidence is unchanged.
+
+Author approved [modern direction isolation](DIRECTION-ISOLATION-R01.md):
+forward1024byte retained comparison and independently generated reverse1024byte
+comparison, followed by exact full-HDMI paired recovery and discussion before
+any transport remedy. Execution follows the committed/pushed contract.
