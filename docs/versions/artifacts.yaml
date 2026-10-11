@@ -1,10 +1,22 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r171
-updated_at: 2026-10-08T01:21:51Z
+registry_revision: r172
+updated_at: 2026-10-11T23:39:19Z
 
 artifacts:
+  - artifact_id: ppa-clut-example
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: ppa-clut-example-r01
+    status: experimental
+    variants: [stock-sdk-negative-control, clut-backport]
+    description: Isolated P4 L8 palette expansion to RGB888 strips with a narrow upstream driver backport.
+    notes:
+      - RESEARCH-007; Author authorizes detailed research and target compile/link only.
+      - No HDMI or product integration, hardware execution, deployment or performance claim.
+      - Base SDK and product sources remain unchanged; generated overrides live in ignored build storage.
+
   - artifact_id: dsi-strip
     kind: experimental_firmware
     identity_scheme: revision
