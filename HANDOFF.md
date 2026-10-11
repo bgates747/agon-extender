@@ -1,4 +1,4 @@
-# Current checkpoint — phase attribution complete; no CRC in ExExt
+# Current checkpoint — minimum transport review authorized
 
 The bounded phase tranche is complete, including byte proof and exact UART
 restoration. Control construction/offer/completion dominates; merely parking
@@ -6,8 +6,11 @@ and restoring UART is a much smaller measured cost. The Author requires removal
 of ExExt CRC and a transport-only first pass preserving stock behavior above
 byte transport. Existing extra control machinery must justify physical necessity.
 Author also requests review of direct ExCom ↔ ExExt switching. No transport
-optimization has been implemented. Stop for discussion
-before the next coding tranche; the broad eight-hour goal remains paused.
+optimization has been implemented. Author now authorizes
+[minimum-transport review](docs/tasks/PORT-008/MINIMAL-TRANSPORT-REVIEW.md)
+TR01–TR04: freeze/push, trace stock versus candidate and deliver a removal list.
+Source review only; stop for discussion before coding or deployment. The broad
+eight-hour goal remains paused.
 
 ## Start here
 

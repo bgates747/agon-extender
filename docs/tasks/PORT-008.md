@@ -51,6 +51,14 @@ or performance acceptance yet. Direct ExCom ↔ ExExt transition review is queue
 as P08-P04. Later UART shutdown/game comparisons remain gated on Author
 discussion. Preserve exact recovery bytes; broader goal stays paused.
 
+### Authorized next tranche — minimum transport review, 2026-10-11
+
+[Minimum-transport contract](PORT-008/MINIMAL-TRANSPORT-REVIEW.md) TR01–TR04
+is authorized: trace stock and candidate send/receive paths, classify every
+addition and deliver a concrete removal list/minimum path. Freeze/push before
+review. Offline source work only; stop for discussion before implementation,
+deployment or permanent UART shutdown. No broader goal resumption.
+
 ### Deferred investigation — hardware assistance, 2026-10-11
 
 P08-H01 [ ] — Investigate modest external circuitry for the bidirectional

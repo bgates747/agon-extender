@@ -16,6 +16,10 @@ pass: preserve stock behavior and remove project-added work that the physical
 link does not require, including all ExExt CRC. P08-P05/D01–D03 below own that
 next implementation boundary.
 
+Author authorizes the [minimum-transport review](MINIMAL-TRANSPORT-REVIEW.md)
+TR01–TR04 after freezing current work. This is the next source-review tranche;
+implementation and deployment remain gated on its result discussion.
+
 ## Contract and boundaries
 
 PT01 [x] — Freeze phase definitions and a minimal probe design. Inspect actual
