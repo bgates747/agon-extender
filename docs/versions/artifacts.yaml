@@ -1,14 +1,14 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r175
+registry_revision: r176
 updated_at: 2026-10-11T23:39:19Z
 
 artifacts:
   - artifact_id: ppa-clut-example
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: ppa-clut-example-r04
+    latest_identity: ppa-clut-example-r05
     status: experimental
     variants: [stock-sdk-negative-control, clut-backport]
     description: Isolated P4 L8 palette expansion to RGB888 strips with a narrow upstream driver backport.
@@ -19,6 +19,7 @@ artifacts:
       - r02 invalidates PSRAM input cache before checking source integrity; r01 source-only, never built or deployed.
       - r03 includes PSRAM configuration/initialization and explicit consumer header precedence; r02 configuration attempts stopped before meaningful target results.
       - r04 invalidates RGB output and its guard before verification; r03 source-only, never built or deployed.
+      - r05 publishes the entire index source before its cropped conversion and whole-buffer integrity check; earlier compiled r04 remains uninstalled.
 
   - artifact_id: dsi-strip
     kind: experimental_firmware

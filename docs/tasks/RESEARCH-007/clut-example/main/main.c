@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
- * RESEARCH-007, ppa-clut-example-r04. Compile-only experimental test article.
+ * RESEARCH-007, ppa-clut-example-r05. Compile-only experimental test article.
  *
  * Operation/verification idioms adapted from Espressif's Apache-2.0 CLUT tests
  * in commit76b4cf1336168aad6d1db4b8d1d2743137db4092. See ../README.md.
@@ -139,6 +139,9 @@ void app_main(void)
     for (unsigned y = 0; y < SOURCE_HEIGHT; ++y) {
         for (unsigned x = 0; x < WIDTH; ++x) indices[y * WIDTH + x] = (x + 17 * y) & 255;
     }
+    /* The driver flushes the selected lower half only. Publish the untouched
+     * upper half too before the final whole-source physical integrity check. */
+    ESP_ERROR_CHECK(esp_cache_msync(indices, INDEX_BYTES, ESP_CACHE_MSYNC_FLAG_DIR_C2M));
     /* Zeroed A8 foreground is transparent, but its DMA read still occurs. */
     ppa_client_handle_t client;
     const ppa_client_config_t config = {
