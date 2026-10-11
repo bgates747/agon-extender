@@ -5,7 +5,10 @@ and actual VDP/keyboard replies through the existing eight-bit parallel pipe.
 Software checks, ordinary CLI/replies, cached-input delivery and finite game
 execution pass in bounded runs. ExExt game rates currently regress from UART;
 reset admission and broader application qualification remain under
-[PORT-008](../tasks/PORT-008/EXEXT-STREAM-R01.md). This is outside selected
+[PORT-008](../tasks/PORT-008/EXEXT-STREAM-R01.md). The 2026-10-11 performance
+experiment is rejected for ordinary use; the bench is restored to its
+preceding verified UART pair. Experimental binaries require explicit matched
+selection and are not the current bench recommendation. This is outside selected
 production and does not change the current Legacy/ExCom operating contract.
 
 ## Owners and activation

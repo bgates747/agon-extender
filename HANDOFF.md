@@ -1,68 +1,53 @@
-# Current checkpoint — experimental ordinary ExExt
+# Current checkpoint — verified UART rollback after failed ExExt performance
 
-The ordinary parallel adapter runs unchanged VDU applications and returns real
-VDP/keyboard packets. Bounded CLI, cached-input, Nurples, Aginvadors, Rally and
-Lode Runner checks pass; **game performance remains below UART and reset
-admission is not reliable**. This is experimental work, outside selected
-production. The eight-hour goal ends2026-10-11 at18:25:14UTC; active physical
-work and current reservation are recorded only in `HARDWARE.local.md`.
+The Author reports a major regression. The ordinary parallel adapter passes
+bounded functional checks but fails ordinary-use performance expectations and
+reliable reset admission. The pre-goal UART pair is restored and the bench released; experimental
+source and evidence are preserved. Production selection remains unchanged.
 
 ## Start here
 
-1. Follow `AGENTS.md`, the handbook, selected production manifests and local
-   hardware/bench constraints before any operation. The Author requires work
-   to stop at a question until a reply arrives. Do not infer hardware changes.
-2. [Current work contract](docs/tasks/PORT-008/EXEXT-STREAM-R01.md) owns EX01–EX07
-   and the bounded correction gates. [Results](docs/tasks/PORT-008/EXEXT-STREAM-R01-RESULTS.md)
-   own measurements, exact firmware identities and their scope/limits.
-3. The [experimental protocol](docs/protocols/exext-stream.md) describes ownership,
-   batching, real-ISR publication, SD-selected deferral and recovery boundaries.
-   UART control coordinates each block; ordinary ExExt VDU/reply payload uses
-   eight-bit parallel. Legacy/ExCom keep their existing UART behavior.
+1. Read `AGENTS.md`, the handbook, production manifests and local hardware/bench
+   constraints. The Author requires all work to stop at a question until answered.
+2. [Work contract](docs/tasks/PORT-008/EXEXT-STREAM-R01.md) records the eight-hour
+   goal and rollback disposition. [Results](docs/tasks/PORT-008/EXEXT-STREAM-R01-RESULTS.md)
+   contain exact identities, comparisons, corrective controls and remaining limits.
+3. Current hardware ownership/readiness, endpoint identities and retained receipts
+   belong in ignored `HARDWARE.local.md` and the local evidence index. Do not
+   infer current bench firmware from Git HEAD or a production manifest.
 
-## Current verified pair and active comparison
+## Installed pair
 
-1. Installed P4 is `port-008-stream-r14-b2026-10-11-16-29-33Z`, full HDMI,
-   app SHA256 `5833c4aa3a54e734c91b855b37271c43c7e5db8b7b2269a3410bddb7f5e1c4ad`.
+1. P4 `port-008-data-r20-b2026-10-11-09-07-32Z`; app SHA256
+   `01cbd53255fbbae4760bc2ba64fc0f987cb9ef828b397d17a7cd7a64b9322771`.
    All four flash segments independently verify.
-2. Installed EMOS is `agon-emos-v0.1.24-b2026-10-11-16-52-19Z`, source
-   `2b75451b37402bfc0eb5fee8cd22fd8b8f3fd4ea`,130968bytes/104free.
-   Complete128KiB ROM SHA256
-   `e44c60b60359f64cc3a48a4559ce7ab4090fff0a7b742e4d4fd70adb517b6578` matches.
-3. Mainboard VDP remains the preceding fsim consumer's custom image; it is not
-   stock. No wire/probe change or firmware backup was required. Machine-local
-   receipts, exact recovery helpers and installed records remain under ignored
-   `agents/exext-stream-r01` and the existing bench records.
-4. A normal full-HDMI P4stream-r15 candidate compiles/validates, **not installed**.
-   It only avoids one-tick sleeps during pending handshakes inside split-upload
-   reads. Actual maintained-read negative/positive tests pass; physical benefit
-   remains unproved. Finish the active Choplifter run and restore startup before
-   any installation. Do not interrupt or replay an uncertain invocation.
+2. EMOS `agon-emos-v0.1.24-b2026-10-10-01-48-39Z`; complete128KiB ROM SHA256
+   `69d7b11ac1fa6fcd48cc3770356c3b8806d8f308c345bd670075a7eb21b613dd`.
+   Image and complete ROM readback match the preserved pre-goal build.
+3. Mainboard VDP remains the fsim consumer's custom image, not stock. No wiring,
+   probes or user game files changed. Original38byte startup and Nurples T09
+   configuration are readback restored after the finite UART control.
+4. A later cached-input preparation loses admission before LOAD/RUN, also on
+   the old pair. Paired reset recovers; Legacy CLI/ECHO and five seconds of
+   neutral readiness pass. No running fixture/listener/collector/reset hold.
 
-## Practical findings
+## Decisive results and continuation boundary
 
-1. Frozen Nurples T09 completes120measured updates at14.55/s with the paired
-   CLOCK helper, versus13.33/s before that optimization and earlier ExCom60/s.
-   The roughly31% instruction reduction is only a9.09% observed update-rate gain.
-   Pacing intervals include preempting synchronous transport, not spare CPU.
-2. Matched empty-loop controls yield Legacy60.00/ExExt59.02updates/s. Idle POLL
-   alone does not explain the large nonempty-workload slowdown.
-3. Lode Runner's fixed524288instruction test, all256pixel samples and one DOS
-   read pass on both routes. ExExt takes34.233s versusLegacy6.383s, with different
-   adaptive presentation counts; this is not an isolated bandwidth comparison.
-4. The Nurples loader failure was FR_DISK_ERR, resolved in the bounded repeat
-   by deferring physical ExExt ISR work while stock SD PB4 is selected. Actual
-   linked-eZ80 tests caught a missing volatile PB_DR facade before flashing;
-   the owning MOS builder correction is committed separately.
-5. Required release acknowledgement remains mandatory. Neither HTTP readiness
-   nor the USB boot-fence marker is a UART grant. Later deliberate Agon resets
-   recover some failed admissions; reset/power-loss qualification stays open.
+1. Frozen Nurples T09 returns to60.00application updates/s after UART rollback,
+   versus14.55in the experimental ExExt pair. Both save120valid measured rows.
+2. Lode Runner's fixed CPU workload takes34.233sExExt versus6.383sLegacy; all256
+   sampled pixels and the DOS read pass, but adaptive presentation counts differ.
+3. Rally and Aginvadors finish finite ExExt runs slowly; fine-timer overflow
+   prevents precise per-interval timing claims. Choplifter finishes both existing
+   native-core endpoint variants in276.117/266.867nominal seconds on ExExt; no
+   matched UART comparison is claimed. These rates are not physical display FPS.
+4. Empty-loop Legacy/ExExt controls stay60/59.02updates/s. Root cause is still
+   unproved; idle polling alone does not explain loaded-workload performance.
+5. P4stream-r15 split-upload progress change compiles/validates and remains
+   **uninstalled**. Further candidate installation is deferred pending review.
+6. The original eight-hour objective is incomplete. No acceptance, promotion or
+   version tag is implied. Continue only from the recorded unresolved contract;
+   do not silently replace the restored pair or replay uncertain invocations.
 
-## Remaining boundary
-
-Finish the frozen physical comparisons, latest input/recovery controls and final
-startup/input restoration. Commit/push only owned changes; unrelated HOST-001,
-external consumer and other agent changes remain untouched. Preserve passing
-and informative failure evidence. Do not promote/tag without Author acceptance
-and an agreed version. Prior checkpoint narrative remains in Git/task evidence;
-this file is the current handoff, not a second operating manual or task queue.
+Only owned documentation/source checkpoints are committed. Other agents'
+HOST-001, external game and consumer changes remain untouched.

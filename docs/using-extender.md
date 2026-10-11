@@ -44,8 +44,9 @@ Extender-EDU two-display mode. Neither is presented here as an available CLI
 command in the selected production bundle. Explicit paired experimental builds
 provide `EMOS EXEXT`; their [stream contract](protocols/exext-stream.md) and
 [bounded results](tasks/PORT-008/EXEXT-STREAM-R01-RESULTS.md) govern that path.
-Game performance and reset admission remain limited; ordinary production
-instructions must not assume it. The [architecture](architecture.md) owns the
+The 2026-10-11 experiment shows a major gameplay-performance regression and
+unreliable reset admission; use the verified Legacy/ExCom pair for ordinary
+operation. Ordinary production instructions must not assume ExExt support. The [architecture](architecture.md) owns the
 full mode/API distinction.
 
 ## Choose the job

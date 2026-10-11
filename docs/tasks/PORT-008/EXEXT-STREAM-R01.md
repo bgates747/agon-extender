@@ -522,18 +522,18 @@ failure from matching DMA counts, or add speculative clock/delay changes.
 
 ## EX04–EX06 bounded continuation — frozen 2026-10-11 16:09 UTC
 
-EX-C11 [ ] — Keep the original installed EMOS-r07 result identities intact.
+EX-C11 [x] — Keep the original installed EMOS-r07 result identities intact.
 Install and full-ROM-verify the already compiled r08 byte-append candidate,
 then repeat finite game controls on an explicitly verified P4 image. This
 changes no parser, display, GPIO mapping or wire protocol.
 
-EX-C12 [ ] — Investigate the T09 AGNB read failure separately from rendering.
+EX-C12 [x] — Investigate the T09 AGNB read failure separately from rendering.
 Reuse the frozen workload first; if a diagnostic derivative is required, give
 it its own identity, retain the original bytes, and capture the actual FatFS
 status/offset outside measured updates. Do not report setup failure as gameplay
 throughput or infer corruption solely from an unreadable graphical screen.
 
-EX-C13 [ ] — Bound recovery by actual readiness. After P4 installation, HTTP
+EX-C13 [x] — Bound recovery by actual readiness. After P4 installation, HTTP
 initialization does not prove console-owner readiness. Preserve the required
 release handshake; a later deliberate Agon-only reset may retry startup after
 the P4 has finished initializing. No timed grant or automatic payload replay.

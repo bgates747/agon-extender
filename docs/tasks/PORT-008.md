@@ -10,7 +10,9 @@ corruption is corrected: independent directions and real 1/255/4096-byte echo
 pass in the [direction isolation](PORT-008/DIRECTION-ISOLATION-R01.md). This
 clears the bounded payload obstacle. The experimental ordinary binding now
 passes CLI, actual replies, cached-input and finite Nurples/Aginvadors/Rally
-execution; game rates remain below UART and warm-reset admission is unreliable.
+execution; game rates show a major regression from UART and warm-reset admission
+is unreliable. The Author reports a major regression; restore the exact preceding
+verified UART pair and defer further candidate installation.
 The [current results](PORT-008/EXEXT-STREAM-R01-RESULTS.md) separate those limits
 from passed checks. Legacy/ExCom and rollback remain preserved; production
 selection has not changed.

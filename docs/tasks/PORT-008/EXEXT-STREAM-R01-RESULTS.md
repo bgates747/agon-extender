@@ -1,14 +1,15 @@
 # Ordinary ExExt — bounded results
 
-Ordinary parallel VDU/reply routing, cached keyboard input and finite Nurples,
-Aginvadors and Rally runs now pass physically. ExExt remains much slower than
-UART under these games: latest Nurples is14.55 application updates/s versus
-an earlier ExCom60. SD-selected ISR deferral fixes the isolated Nurples loader
-failure. An empty-loop control remains59.02updates/s, narrowing the slowdown
-to nonempty rendering/transport work rather than idle polling alone. Warm-reset
-admission remains unreliable; later deliberate Agon-only resets can recover.
-Full transition/gameplay qualification remains incomplete. Production is unchanged.
-[Work contract](EXEXT-STREAM-R01.md) owns the remaining implementation/tests.
+**Disposition: failed performance experiment; restore the verified pre-goal UART
+pair.** Ordinary ExExt VDU/reply routing and finite endpoint checks work, but
+the measured adapter is unsuitable for normal use: Nurples reaches14.55updates/s
+versus earlier ExCom60, and Lode Runner takes34.233s versus Legacy6.383s for
+fixed emulated CPU work. Warm-reset admission is unreliable. Passing finite
+checks do not establish playability, acceptable latency or production readiness.
+The Author reports a major regression. Retain this evidence and the compiled,
+uninstalled split-upload candidate; stop candidate installation. Production
+selection remains unchanged. [Work contract](EXEXT-STREAM-R01.md) owns the
+remaining investigation and qualification.
 
 ## Firmware and physical scope
 
@@ -459,7 +460,8 @@ three ticks across three pending-handshake progress calls; the negative control
 fails the no-sleep assertion. The candidate preserves exact split byte order,
 idle waits, timeout and fault exit while promptly reentering pending blocks.
 Four existing actual reset/parser tests and17queue/receipt cases also pass.
-Normal full-HDMI build and physical Nurples comparison remain required; this
+Normal full-HDMI stream-r15 compiles and validates, but remains uninstalled.
+Its physical Nurples comparison is deferred after the regression report; this
 source finding alone establishes neither the dominant bottleneck nor a speedup.
 
 
@@ -474,3 +476,121 @@ then receives its first explicit invocation through the resumed-once wrapper.
 This is informative EX06 evidence: later Agon reset is not a guaranteed recovery,
 and the boot-fence marker does not close reset qualification. Original startup
 restoration remains mandatory when that finite invocation finishes.
+
+
+## Choplifter — finite ExExt completion, no speedup claim
+
+The first actual invocation after paired admission recovery completes both
+existing native-core variants. Each executes4,194,304emulated instructions from
+the retained maximum-difficulty state. All native endpoints pass;
+`PERF015 status=0 log_failed=0`. The P4/EMOS pair is stream-r14/paired-clock r11,
+browser disconnected, mode136 selected in startup. The earlier failed reset
+attempts never invoked the application.
+
+| Existing consumer variant | Raw MOS ticks | Nominal elapsed at120units/s | Display calls |
+|---|---:|---:|---:|
+| Baseline core |33134|276.117s|2718|
+| Candidate core |32024|266.867s|2645|
+
+These are separate emulator-core variants, not UART/parallel transport variants.
+Adaptive presentation counts differ. Do not infer isolated graphics bandwidth,
+HDMI FPS, interactive response or a matched UART speed ratio from this run.
+The raw result is retained below; exact executable SHA256 is
+`9c4915582788ccfe6851e242795958898513a715a698eb4965a929f8496e63e7`.
+
+```text
+PERF015 baseline=388ef52 candidate=3bad6f2 cumulative=1 difficulty=3 helicopter_collision_immune=1; TIME units=raw MOS ticks; variant 0=baseline 1=candidate
+BEGIN choplifter-max 1 0 0
+TIME choplifter-max 1 0 0 33134 2718
+BEGIN choplifter-max 1 0 1
+TIME choplifter-max 1 0 1 32024 2645
+PASS: PERF014 all native endpoints
+PERF015 status=0 log_failed=0
+```
+
+The host collector initially counts the header's `TIME units` as a third data
+record and fails its post-collection assertion. It has already saved the raw
+result, restored the original startup with byte readback and closed the listener.
+Record-line validation confirms exactly two BEGIN and two numeric TIME records;
+no rerun or reset is used to repair that metadata. This is a collector defect,
+not a fixture or firmware failure.
+
+
+## Regression decision — no ordinary-use acceptance
+
+The Author's regression report agrees with the saved measurements. Functional
+completion alone is insufficient. The current ordinary parallel adapter is not
+accepted for gameplay or unattended ordinary use. The compiled stream-r15
+split-upload change remains uninstalled; a plausible scheduling improvement
+is not permission to leave the slower, reset-sensitive pair on the bench.
+
+Application-rate comparisons, largest relative reduction first. Rates are
+application updates/s, **not display FPS**; UART controls and ExExt candidates
+use different component builds, so these establish end-to-end regression and
+do not isolate one source change. Rally's117 and Aginvadors's72 overflowing
+fine-timer rows cannot support precise PRT-duration/headroom comparisons.
+
+| Workload | ExExt updates/s | Retained UART control updates/s | Rate change vs UART |
+|---|---:|---:|---:|
+| Nurples T09 |14.55|60.00 ExCom|−75.76%|
+| Rally finite timing loop |2.09|8.30 ExCom|−74.81%|
+| Aginvadors finite timing loop |14.29|51.06 ExCom|−72.02%|
+
+Lode Runner's separate fixed-CPU-work comparison takes436.29%longer in ExExt;
+its adaptive frame counts differ and its elapsed-time metric is not ranked
+against these application-rate reductions. Choplifter only has the completed
+ExExt pair above; no matched UART claim is made. Idle empty-loop controls stay
+near60updates/s, so this is a loaded-workload regression. Root cause and the
+benefit of the uninstalled candidate remain unproved. The required safe handback
+is the exact pre-goal UART pair, independently verified, with the original
+startup and mainboard consumer VDP preserved.
+
+
+## Verified pre-goal UART rollback and Nurples control
+
+After the Author reports the regression, EMOS is flashed once to its preserved
+`agon-emos-v0.1.24-b2026-10-10-01-48-39Z` image, SHA256
+`55aafe657987754bd6dcda0d2747d145702da9d995e90d9409e8509ccd41c343`.
+Its complete128KiB ROM readback matches
+`69d7b11ac1fa6fcd48cc3770356c3b8806d8f308c345bd670075a7eb21b613dd`.
+The matching P4 `port-008-data-r20-b2026-10-11-09-07-32Z` is restored with
+all four flash segments independently verified; app SHA256
+`01cbd53255fbbae4760bc2ba64fc0f987cb9ef828b397d17a7cd7a64b9322771`.
+Keyboard admission returns after the matched P4 restoration. The intervening
+old-EMOS/new-P4 pair does not regain admission; it is not a supported pair.
+No mainboard VDP, wiring, user application or selected production change.
+
+The same frozen software-sprite Nurples T09 workload, mode20, completes120warm-up
+and120measured updates on ExCom after rollback. Browser video is disconnected.
+No workload, pacing, sprite or renderer modification is made for this control.
+
+| Measure | Restored UART ExCom | Experimental ExExt | Scope |
+|---|---:|---:|---|
+| Application updates/s |60.00|14.55|ExExt75.76%below restored UART; same frozen workload, different firmware pairs |
+| Median whole update |16.549ms|50.215ms|Unfenced submission/pacing, not renderer completion |
+| Median active interval |5.653ms (33.92%of60Hz budget)|2.708ms|ExExt pacing includes preempting transport; its small active median is not headroom |
+| Active interval p95 |6.056ms (36.33%of60Hz budget)|79.403ms (476.42%)|No overflow in either Nurples run |
+| Valid measured updates / fault rows |120/0|120/0|Finite completion; not interactive Author acceptance |
+
+The startup preparation's early epoch-stability assertion races a later input
+admission during autoexec. Input then settles without another reset. The
+maintained runner's CD/LOAD echo checks, fresh completion and saved result all
+pass; the invocation is not replayed. Original startup and T09configuration
+are byte-readback restored after completion. Raw rollback receipts and control
+remain in the ignored local evidence index, not a new production bundle.
+
+
+A subsequent cached-input control on the restored pair fails readiness while
+sending its first CD command, before LOAD/RUN. It is not an input-fixture pass.
+This demonstrates that warm-reset/admission unreliability is also observable
+with the preserved pre-goal pair; attribution exclusively to the new ExExt
+code is unsupported. No uncertain application invocation is replayed. Restore
+normal startup and admitted neutral CLI input before releasing the bench.
+
+
+Final handback: paired reset recovers the restored pair; the original38byte
+startup is byte-readback restored, the listener is closed and reset is released.
+Normal Legacy CLI accepts an ECHO command and input stays ready/neutral for
+five seconds, held0/pending0. No fixture, collector, debugger or flash remains
+active. Bench reservation is released. This is a usable handback, not broad
+warm-reset qualification or a successful cached-input fixture run.
