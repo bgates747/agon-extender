@@ -6,8 +6,9 @@ record CRC-free parallel wire3 in both EMOS/P4, sixteen-byte carrier with paddin
 sent zero/ignored, full compiles and paired/linked tests. ExExt EMOS 130,598 bytes,
 474 free (370 reclaimed). Ordinary version1 ExCom CRC remains. No physical speed
 claim or installation: original UART pair/startup below remains unchanged.
-Next proposed bounded cut removes software COMPLETE/ACK while retaining actual
-native/DMA completion and reciprocal pad release. Stop for Author discussion.
+Next bounded cut is now authorized: [completion removal](docs/tasks/PORT-008/COMPLETION-REMOVAL-R01.md)
+retains native/DMA completion and reciprocal pad release. Offline only while
+fsim uses the bench; no flashing/device access. Freeze contract before code.
 The broad eight-hour goal remains paused; production unchanged.
 
 ## Start here

@@ -102,3 +102,17 @@ activation remains unchanged. This is a bounded implementation transition, not
 a permanent requirement for the final minimum control carrier. It changes no
 installed image or production selection. The linked PORT-008 task retains the
 remaining design questions and deployment gates.
+
+## Software completion removal — 2026-10-11 amendment
+
+The Author authorizes the second offline implementation cut. EMOS and P4 finish
+successful blocks after their native completion, DMA cleanup and reciprocal
+UART-return proof, without the additional software COMPLETE/ACK exchange.
+P4 validates local completion before final READY-high and retains the completed
+buffer until its sole consumer takes it; failures revoke unpublished completion
+and retain cleanup/fencing. EMOS releases its reservation after successful
+physical return. Neither endpoint infers success from a timeout or replays
+uncertain data. The existing experimental discriminator advances to4 because
+formats2/3 require the removed exchange; mixed pairs cannot admit. The padded
+CRC-free carrier, other controls and existing scheduling remain in this cut.
+No hardware operation, production selection or stock-equivalence claim follows.

@@ -382,11 +382,15 @@ above the byte-transport boundary: application calls, ordered command/reply
 bytes, parsers, callbacks, sysvars and interrupt semantics. Reuse upstream code
 wherever processor differences permit. Physical transfer timing can differ;
 behavioral equivalence and performance still require separate qualification.
-The first CRC-removal implementation cut selects parallel wire discriminator3
-for both processors, retaining the sixteen-byte carrier with bytes14–15 sent
-zero and ignored on receipt. Format2 cannot grant admission. Ordinary version1
-console activation is unchanged; this experimental transition does not select
-a production image or require the final minimum carrier to retain that width.
+The CRC-free experimental pair retains the sixteen-byte carrier with bytes14–15
+sent zero and ignored on receipt. The authorized completion-removal cut selects
+parallel wire discriminator4 and rejects formats2/3: successful native/DMA cleanup
+and reciprocal UART return govern local publication/retirement, without a later
+software COMPLETE/ACK exchange. P4 validates completion before advertising final
+READY-high and retains storage until its sole consumer takes it. Timeout/fault
+never authorizes publication. Ordinary version1 console activation is unchanged;
+this experimental transition does not select a production image or require the
+final minimum carrier to retain that width. Physical qualification is separate.
 
 Keyboard source remains independently selected. The current
 [eight-bit candidate decision](decisions/ADR-0026-four-lane-exext-transport.md)

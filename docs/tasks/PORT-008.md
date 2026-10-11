@@ -73,6 +73,14 @@ completion receipt lifetime remain. No hardware timing/deployment or production
 change. Proposed next cut removes COMPLETE/ACK after actual physical completion;
 stop for discussion. Existing scheduling departures remain under P08-P05/D02.
 
+### Software completion removal authorized, offline only — 2026-10-11
+
+Author authorizes the [next bounded cut](PORT-008/COMPLETION-REMOVAL-R01.md)
+while fsim uses the bench. Remove COMPLETE/ACK after preserving actual native
+completion, cleanup and reciprocal UART return. Paired experimental format4
+rejects formats2/3. Compile/test offline only; no flashing or device access.
+P08-D02 retains later control/scheduling choices; broader goal stays paused.
+
 ### Deferred investigation — hardware assistance, 2026-10-11
 
 P08-H01 [ ] — Investigate modest external circuitry for the bidirectional
