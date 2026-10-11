@@ -48,11 +48,7 @@ int gpio_glitch_filter_disable(void*){assert(filterEnabled&&!enabled);if(fails()
 int gpio_del_glitch_filter(void*){assert(filterLive&&!filterEnabled&&!enabled&&!txLive);if(fails())return ESP_FAIL;filterLive=false;return ESP_OK;}
 void*heap_caps_aligned_alloc(std::size_t a,std::size_t n,int caps){
  assert(a==64&&!allocation);
-#ifdef AGON_EXTENDER_EXEXT_STREAM
- assert(caps==(MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
-#else
  assert(caps==(MALLOC_CAP_INTERNAL|MALLOC_CAP_DMA|MALLOC_CAP_8BIT));
-#endif
 if(fails())return nullptr;
  requested=n;allocation=std::malloc(n);return allocation;
 }

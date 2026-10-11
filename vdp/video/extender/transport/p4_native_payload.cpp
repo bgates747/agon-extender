@@ -11,17 +11,13 @@
 #include <soc/io_mux_reg.h>
 #endif
 namespace agon::extender::transport {
-// EX05: game assets left internal DMA memory too fragmented for the next
-// PARLIO descriptor list. P4 GDMA supports cache-aligned PSRAM payloads; keep
-// descriptors/control in SDK-owned internal memory, but do not spend another
-// 4KiB of that scarce pool on a transient payload. The pinned RX driver splits
-// and synchronizes cached buffers; TX performs its own C2M synchronization.
-// Earlier qualification profiles retain their measured internal allocation.
-#if defined(AGON_EXTENDER_EXEXT_STREAM)
-constexpr unsigned payloadCaps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;
-#else
+// EX05: game assets fragmented internal DMA memory when each block recreated
+// driver descriptors. Explicit ExExt now allocates this small payload and both
+// driver units on first admitted use, retaining them across successful blocks.
+// Keep the qualified internal DMA payload path: the PSRAM retained-unit trial
+// did not finish T09 and its cache/payload integrity remains unproven. Other
+// profiles retain their original one-admission lifetime.
 constexpr unsigned payloadCaps = MALLOC_CAP_INTERNAL | MALLOC_CAP_DMA | MALLOC_CAP_8BIT;
-#endif
 static_assert(std::atomic<std::size_t>::is_always_lock_free &&
               std::atomic<unsigned>::is_always_lock_free &&
               std::atomic<bool>::is_always_lock_free,"ISR publication must be lock-free");

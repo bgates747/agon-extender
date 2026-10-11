@@ -5,8 +5,8 @@ from time import monotonic
 import subprocess, tempfile, unittest
 ROOT=Path(__file__).resolve().parents[1]
 class NativePayloadTests(unittest.TestCase):
- def test_exext_psram_payload(self):
-  """Actual ExExt leaf: cached payload placement, EOF/pad fence and failure retention."""
+ def test_exext_retained_internal_payload(self):
+  """Actual ExExt leaf: retained internal DMA payload placement, EOF/pad fence and failure retention."""
   with tempfile.TemporaryDirectory() as tmp:
    d=Path(tmp)
    for header in ('driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h',
@@ -68,7 +68,7 @@ int main(){unsigned cases=0;
   fail=-1;(void)p.cancel();assert(!allocation&&!enabled&&!outputs&&!rxLive&&!txLive);
   ++cases;
  }
- reset();std::cout<<"PASS "<<cases<<" ExExt PSRAM payload/retention cases\\n";
+ reset();std::cout<<"PASS "<<cases<<" ExExt internal DMA payload/retention cases\\n";
 }
 ''')
    exe=d/'exext'
