@@ -10,7 +10,8 @@ class NativePayloadTests(unittest.TestCase):
   with tempfile.TemporaryDirectory() as tmp:
    d=Path(tmp)
    for header in ('driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h',
-                  'driver/gpio_filter.h','esp_attr.h','esp_heap_caps.h','freertos/FreeRTOS.h'):
+                  'driver/gpio_filter.h','esp_attr.h','esp_heap_caps.h','freertos/FreeRTOS.h',
+                  'esp_rom_gpio.h','esp_private/gpio.h','soc/parlio_periph.h'):
     p=d/header;p.parent.mkdir(parents=True,exist_ok=True)
     p.write_text('#include "p4_native_sdk_fake.hpp"\n')
    prefix=(ROOT/'tests/p4_native_payload_test.cpp').read_text().split('int main(){')[0]
@@ -26,16 +27,45 @@ int main(){unsigned cases=0;
   else for(unsigned i=0;i<n;++i)dma[i]=std::uint8_t(i*73+17);
   signal(false);clockEdges(n);completed(tx,n);
   assert(p.poll(1)==R::pending&&allocation); // completion alone cannot release
-  signal(true);assert(p.poll(2)==R::complete&&!allocation&&!outputs);
+  signal(true);assert(p.poll(2)==R::complete&&allocation&&!outputs);
+  completed(tx,n);assert(p.poll(3)==R::complete); // retired callback cannot republish
   assert(b.front()==0xa5&&b.back()==0xa5);
   for(unsigned i=0;i<n;++i)assert(b[i+1]==std::uint8_t(i*73+17));
+  assert(p.cancel()==R::fault&&!allocation);
   ++cases;
  }
- for(bool tx:{false,true})for(int f=0;f<32;++f){
+ // Once both directions are initialized, descriptor resources survive blocks
+ // of changing lengths and are not reconstructed under later heap pressure.
+ reset();P owner(pins,14,16,15,0);std::vector<std::uint8_t> bytes(4096);
+ for(unsigned cycle=0;cycle<4;++cycle)for(bool tx:{false,true})
+  for(unsigned n:{1,255,339,3456,4096}) {
+   auto h=admitted(n,tx);
+   assert(owner.arm(h,true,tx,bytes.data(),bytes.size(),n,0,100)==R::pending);
+   signal(false);completed(tx,n);signal(true);
+   assert(owner.poll(2)==R::complete&&allocation&&!enabled&&!outputs);
+   assert(rxCreates==1&&txCreates<=1);++cases;
+  }
+ assert(rxCreates==1&&txCreates==1);
+ assert(owner.cancel()==R::fault&&!allocation&&!rxLive&&!txLive);
+ for(bool tx:{false,true})for(int f=0;f<48;++f){
   reset();auto h=admitted(4096,tx);P p(pins,14,16,15,0);
   std::vector<std::uint8_t>b(4096,0xa5);fail=f;
   (void)p.arm(h,true,tx,b.data(),b.size(),b.size(),0,100);
   fail=-1;(void)p.cancel();assert(!allocation&&!outputs&&!enabled);
+  ++cases;
+ }
+ // Inject failures only AFTER both retained directions have succeeded.
+ for(bool tx:{false,true})for(int f=0;f<48;++f) {
+  reset();P p(pins,14,16,15,0);std::vector<std::uint8_t>b(4096);
+  for(bool seed:{false,true}) {
+   auto h=admitted(4096,seed);
+   assert(p.arm(h,true,seed,b.data(),b.size(),4096,0,100)==R::pending);
+   signal(false);completed(seed,4096);signal(true);assert(p.poll(1)==R::complete);
+  }
+  auto h=admitted(339,tx);op=0;fail=f;
+  auto r=p.arm(h,true,tx,b.data(),b.size(),339,0,100);
+  if(r==R::pending){signal(false);completed(tx,339);signal(true);(void)p.poll(1);}
+  fail=-1;(void)p.cancel();assert(!allocation&&!enabled&&!outputs&&!rxLive&&!txLive);
   ++cases;
  }
  reset();std::cout<<"PASS "<<cases<<" ExExt PSRAM payload/retention cases\\n";

@@ -4,6 +4,11 @@
 #include <esp_heap_caps.h>
 #include <freertos/FreeRTOS.h>
 #include <cstdio>
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+#include <esp_rom_gpio.h>
+#include <esp_private/gpio.h>
+#include <soc/parlio_periph.h>
+#endif
 namespace agon::extender::transport {
 // EX05: game assets left internal DMA memory too fragmented for the next
 // PARLIO descriptor list. P4 GDMA supports cache-aligned PSRAM payloads; keep
@@ -43,11 +48,18 @@ P4NativePayload::Result P4NativePayload::arm(P4ParallelHandover const& h,
     bool parked,bool transmit,std::uint8_t* buffer,std::size_t capacity,
     std::size_t length,std::uint32_t now,std::uint32_t timeout) noexcept {
   if(xPortGetCoreID()!=core_)return Result::wrongOwner;
-  if(result_!=Result::idle || !parked || h.failed() || h.phase()!=P4ParallelHandover::localArm ||
+  if((result_!=Result::idle
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+      && result_!=Result::complete
+#endif
+     ) || !parked || h.failed() || h.phase()!=P4ParallelHandover::localArm ||
       !buffer || !length || length>4096 || capacity<length || !timeout || timeout>2000 ||
       !gpio_get_level(static_cast<gpio_num_t>(clock_)) ||
       !gpio_get_level(static_cast<gpio_num_t>(valid_)))return Result::rejected;
   // No GPIO/peripheral mutation before every bound and ownership check passes.
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  keepResources_=true;
+#endif
   handover_=&h;buffer_=buffer;length_=length;transmit_=transmit;began_=now;timeout_=timeout;
   result_=Result::pending;edges_.store(0);done_.store(false);completed_.store(0);
   accepting_.store(true,std::memory_order_release);
@@ -55,8 +67,7 @@ P4NativePayload::Result P4NativePayload::arm(P4ParallelHandover const& h,
   if(transmit_) {
     auto r=egress_.begin(buffer,length,now,timeout);
     if(r!=ParallelTxResult::pending) {
-      if(r!=ParallelTxResult::cleanupFault)discardBuffer();
-      return result_=r==ParallelTxResult::cleanupFault?Result::cleanupFault:Result::fault;
+      return finish(r==ParallelTxResult::cleanupFault?Result::cleanupFault:Result::fault);
     }
   } else {
     // Reuse the proved byte-count EOF rather than the P4 level-inactive EOF
@@ -66,8 +77,39 @@ P4NativePayload::Result P4NativePayload::arm(P4ParallelHandover const& h,
   }
   return result_;
 }
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+bool P4NativePayload::attachDataPins(bool transmit) noexcept {
+  // ExExt retains disabled SDK units between blocks to avoid allocating GDMA
+  // descriptors after game assets consume internal DMA RAM. UART restoration
+  // resets these pads, so replay the pinned IDF5.5.5 PARLIO GPIO routing only
+  // AFTER actual parking/admission. P4 has exactly one group and unit per
+  // direction; another target must supply its own adapter, not assume index0.
+  static_assert(SOC_PARLIO_GROUPS==1 && SOC_PARLIO_TX_UNITS_PER_GROUP==1 &&
+                SOC_PARLIO_RX_UNITS_PER_GROUP==1,"P4-only retained unit mapping");
+  const auto &g=parlio_periph_signals.groups[0];
+  for(std::size_t i=0;i<pins_.size();++i) {
+    const auto pin=gpio_num_t(pins_[i]);
+    if(transmit) {
+      gpio_func_sel(pin,PIN_FUNC_GPIO);
+      esp_rom_gpio_connect_out_signal(pin,g.tx_units[0].data_sigs[i],false,false);
+    } else {
+      if(gpio_input_enable(pin)!=ESP_OK)return false;
+      esp_rom_gpio_connect_in_signal(pin,g.rx_units[0].data_sigs[i],false);
+    }
+  }
+  if(gpio_input_enable(gpio_num_t(clock_))!=ESP_OK ||
+     gpio_input_enable(gpio_num_t(valid_))!=ESP_OK)return false;
+  esp_rom_gpio_connect_in_signal(clock_,transmit?g.tx_units[0].clk_in_sig:
+      g.rx_units[0].clk_in_sig,false);
+  return true;
+}
+#endif
 bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcept {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  if(!dma_)dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,4096,payloadCaps));
+#else
   dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length,payloadCaps));
+#endif
   if(!dma_)return false;
   std::memcpy(dma_,data,length);
   // PORT-008 DI05: observed extra CLOCK edges skipped TX bytes. The P4's
@@ -75,7 +117,7 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
   // alter the eZ80 protocol. Keep its lifetime inside this admitted native leaf.
   gpio_pin_glitch_filter_config_t filter{};
   filter.gpio_num=static_cast<gpio_num_t>(clock_);filter.clk_src=GLITCH_FILTER_CLK_SRC_DEFAULT;
-  if(gpio_new_pin_glitch_filter(&filter,&clockFilter_)!=ESP_OK)return false;
+  if(!clockFilter_ && gpio_new_pin_glitch_filter(&filter,&clockFilter_)!=ESP_OK)return false;
   if(gpio_glitch_filter_enable(clockFilter_)!=ESP_OK)return false;
   clockFilterEnabled_=true;
   parlio_tx_unit_config_t config{};
@@ -84,12 +126,22 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
   config.clk_src=PARLIO_CLK_SRC_EXTERNAL;config.clk_in_gpio_num=static_cast<gpio_num_t>(clock_);
   config.input_clk_src_freq_hz=config.output_clk_freq_hz=10000000;
   config.clk_out_gpio_num=config.valid_gpio_num=GPIO_NUM_NC;
-  config.data_width=8;config.trans_queue_depth=1;config.max_transfer_size=length;
+  config.data_width=8;config.trans_queue_depth=1;config.max_transfer_size=
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+      4096;
+#else
+      length;
+#endif
   config.shift_edge=PARLIO_SHIFT_EDGE_NEG;config.bit_pack_order=PARLIO_BIT_PACK_ORDER_LSB;
-  if(parlio_new_tx_unit(&config,&tx_)!=ESP_OK)return false;
-  parlio_tx_event_callbacks_t callbacks{};callbacks.on_trans_done=transmitDone;
-  if(parlio_tx_unit_register_event_callbacks(tx_,&callbacks,this)!=ESP_OK ||
-      parlio_tx_unit_enable(tx_)!=ESP_OK)return false;
+  if(!tx_) {
+    if(parlio_new_tx_unit(&config,&tx_)!=ESP_OK)return false;
+    parlio_tx_event_callbacks_t callbacks{};callbacks.on_trans_done=transmitDone;
+    if(parlio_tx_unit_register_event_callbacks(tx_,&callbacks,this)!=ESP_OK)return false;
+  }
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  if(!attachDataPins(true))return false;
+#endif
+  if(parlio_tx_unit_enable(tx_)!=ESP_OK)return false;
   enabled_=true;
   parlio_transmit_config_t transfer{};
   // IDF retains idle data even after disable. Hold the final byte, never zero,
@@ -104,25 +156,39 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
 bool P4NativePayload::startReceive() noexcept {
   // Fixed-count EOF matches the earlier physical RX prototype. PCNT, not
   // a synthetic EOF or task-level pin sample, rejects short/extra records.
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  if(!dma_)dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,4096,payloadCaps));
+#else
   dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length_,payloadCaps));
+#endif
   if(!dma_)return false;
   parlio_rx_unit_config_t config{};
   for(auto& pin:config.data_gpio_nums)pin=GPIO_NUM_NC;
   for(std::size_t i=0;i<pins_.size();++i)config.data_gpio_nums[i]=static_cast<gpio_num_t>(pins_[i]);
-  config.data_width=8;config.trans_queue_depth=1;config.max_recv_size=length_;
+  config.data_width=8;config.trans_queue_depth=1;config.max_recv_size=
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+      4096;
+#else
+      length_;
+#endif
   config.dma_burst_size=64;config.clk_src=PARLIO_CLK_SRC_EXTERNAL;
   config.ext_clk_freq_hz=config.exp_clk_freq_hz=10000000;
   config.clk_in_gpio_num=static_cast<gpio_num_t>(clock_);config.clk_out_gpio_num=GPIO_NUM_NC;
   config.valid_gpio_num=static_cast<gpio_num_t>(valid_);config.flags.free_clk=true;
-  if(parlio_new_rx_unit(&config,&rx_)!=ESP_OK)return false;
+  if(!rx_) {
+    if(parlio_new_rx_unit(&config,&rx_)!=ESP_OK)return false;
+    parlio_rx_event_callbacks_t callbacks{};callbacks.on_receive_done=receiveDone;
+    if(parlio_rx_unit_register_event_callbacks(rx_,&callbacks,this)!=ESP_OK)return false;
+  }
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  if(!attachDataPins(false))return false;
+#endif
   parlio_rx_level_delimiter_config_t delimiter{};
   delimiter.valid_sig_line_id=PARLIO_RX_UNIT_MAX_DATA_WIDTH-1;
   delimiter.sample_edge=PARLIO_SAMPLE_EDGE_NEG;delimiter.bit_pack_order=PARLIO_BIT_PACK_ORDER_LSB;
   delimiter.flags.active_low_en=true;delimiter.eof_data_len=length_;
   if(parlio_new_rx_level_delimiter(&delimiter,&delimiter_)!=ESP_OK)return false;
-  parlio_rx_event_callbacks_t callbacks{};callbacks.on_receive_done=receiveDone;
-  if(parlio_rx_unit_register_event_callbacks(rx_,&callbacks,this)!=ESP_OK ||
-      parlio_rx_unit_enable(rx_,true)!=ESP_OK)return false;
+  if(parlio_rx_unit_enable(rx_,true)!=ESP_OK)return false;
   enabled_=true;
   parlio_receive_config_t receive{};receive.delimiter=delimiter_;
   return parlio_rx_unit_receive(rx_,dma_,length_,&receive)==ESP_OK
@@ -170,28 +236,52 @@ bool P4NativePayload::stop() noexcept {
     auto status=transmit_?parlio_tx_unit_disable(tx_):parlio_rx_unit_disable(rx_);
     if(status==ESP_OK)enabled_=false;else okay=false;
   }
-  if(!enabled_) {
+  if(!enabled_
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+     && !keepResources_
+#endif
+    ) {
     if(tx_) {if(parlio_del_tx_unit(tx_)==ESP_OK)tx_=nullptr;else okay=false;}
     if(rx_) {if(parlio_del_rx_unit(rx_)==ESP_OK)rx_=nullptr;else okay=false;}
-    if(!rx_ && delimiter_) {if(parlio_del_rx_delimiter(delimiter_)==ESP_OK)delimiter_=nullptr;else okay=false;}
   }
+  if(!enabled_
+#if !defined(AGON_EXTENDER_EXEXT_STREAM)
+     && !rx_
+#endif
+     && delimiter_) {if(parlio_del_rx_delimiter(delimiter_)==ESP_OK)delimiter_=nullptr;else okay=false;}
   // Do not remove CLOCK filtering while the TX peripheral may still run.
   // Failed cleanup retains this object and DMA until cancel() can retry.
-  if(clockFilter_ && !enabled_ && !tx_) {
+  if(clockFilter_ && !enabled_
+#if !defined(AGON_EXTENDER_EXEXT_STREAM)
+     && !tx_
+#endif
+    ) {
     if(clockFilterEnabled_) {
       if(gpio_glitch_filter_disable(clockFilter_)==ESP_OK)clockFilterEnabled_=false;else okay=false;
     }
-    if(!clockFilterEnabled_) {
+    if(!clockFilterEnabled_
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+       && !keepResources_
+#endif
+      ) {
       if(gpio_del_glitch_filter(clockFilter_)==ESP_OK)clockFilter_=nullptr;else okay=false;
     }
   }
-  const bool stopped=okay && !clockFilter_ && !enabled_ && !tx_ && !rx_ && !delimiter_;
+  const bool stopped=okay && !clockFilterEnabled_ && !enabled_ && !delimiter_
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+      && (keepResources_ || (!clockFilter_ && !tx_ && !rx_));
+#else
+      && !clockFilter_ && !tx_ && !rx_;
+#endif
   if(stopped)accepting_.store(false,std::memory_order_release);
   // Keep DMA through pad-release proof and RX publication. A cleanup fault
   // retains storage and callback context until the owner retries cancel().
   return stopped;
 }
 void P4NativePayload::discardBuffer() noexcept {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  if(keepResources_)return;
+#endif
   if(dma_){heap_caps_free(dma_);dma_=nullptr;}
 }
 bool P4NativePayload::releaseDataPins() noexcept {
@@ -214,6 +304,9 @@ P4NativePayload::Result P4NativePayload::finish(Result outcome) noexcept {
       unsigned(outcome),unsigned(transmit_),unsigned(length_),unsigned(done_.load()),
       unsigned(completed_.load()),unsigned(edges_.load()),
       gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)));
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  if(outcome!=Result::complete)keepResources_=false;
+#endif
   const bool stopped=stop(),released=releaseDataPins();
   if(!stopped || !released || !setReadyN(true))return result_=Result::cleanupFault;
   if(outcome==Result::complete && !transmit_)std::memcpy(buffer_,dma_,length_);
@@ -232,10 +325,14 @@ P4NativePayload::Result P4NativePayload::poll(std::uint32_t now) noexcept {
       printf("Parallel native TX result=%u requested=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d\n",
         unsigned(r),unsigned(length_),unsigned(done_.load()),unsigned(completed_.load()),
         unsigned(edges_.load()),gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)));
-    if(r!=ParallelTxResult::cleanupFault)discardBuffer();
-    return result_=r==ParallelTxResult::complete?Result::complete:
+    const auto outcome=r==ParallelTxResult::complete?Result::complete:
         r==ParallelTxResult::cleanupFault?Result::cleanupFault:
         r==ParallelTxResult::timeout?Result::timeout:Result::fault;
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(outcome!=Result::complete)return finish(outcome);
+#endif
+    if(r!=ParallelTxResult::cleanupFault)discardBuffer();
+    return result_=outcome;
   }
   if(std::uint32_t(now-began_)>=timeout_)return finish(Result::timeout);
   const auto p=progress();

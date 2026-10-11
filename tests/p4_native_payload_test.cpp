@@ -12,6 +12,7 @@ constexpr std::array<int,8> pins{{17,18,19,20,32,33,36,46}};
 static int core,op,fail=-1,ready=1,valid=1,clockLevel=1;
 static bool enabled,txLive,rxLive,delLive,outputs,watch;
 static bool filterLive,filterEnabled;
+static unsigned rxCreates,txCreates;
 struct Counter {bool live,channel,enabled,running,watch,cleared;int raw,edge,level,positive,negative,high,low;};
 static Counter counters[2];
 static bool counterRunning;
@@ -43,7 +44,7 @@ int gpio_new_pin_glitch_filter(gpio_pin_glitch_filter_config_t const*c,void**u){
  filterLive=true;*u=reinterpret_cast<void*>(4);return ESP_OK;
 }
 int gpio_glitch_filter_enable(void*){assert(filterLive&&!filterEnabled);if(fails())return ESP_FAIL;filterEnabled=true;return ESP_OK;}
-int gpio_glitch_filter_disable(void*){assert(filterEnabled&&!enabled&&!txLive);if(fails())return ESP_FAIL;filterEnabled=false;return ESP_OK;}
+int gpio_glitch_filter_disable(void*){assert(filterEnabled&&!enabled);if(fails())return ESP_FAIL;filterEnabled=false;return ESP_OK;}
 int gpio_del_glitch_filter(void*){assert(filterLive&&!filterEnabled&&!enabled&&!txLive);if(fails())return ESP_FAIL;filterLive=false;return ESP_OK;}
 void*heap_caps_aligned_alloc(std::size_t a,std::size_t n,int caps){
  assert(a==64&&!allocation);
@@ -63,14 +64,14 @@ int parlio_new_tx_unit(parlio_tx_unit_config_t const*c,void**u){
  assert(c->shift_edge==PARLIO_SHIFT_EDGE_NEG);
  for(unsigned i=0;i<16;++i)assert(c->data_gpio_nums[i]==(i<8?pins[i]:-1));
  if(fails())return ESP_FAIL;
- txLive=true;outputs=true;*u=reinterpret_cast<void*>(1);return 0;
+ ++txCreates;txLive=true;outputs=true;*u=reinterpret_cast<void*>(1);return 0;
 }
 int parlio_tx_unit_register_event_callbacks(void*,parlio_tx_event_callbacks_t const*c,void*x){if(fails())return ESP_FAIL;tc=*c;context=x;return 0;}
 int parlio_tx_unit_enable(void*){if(fails())return ESP_FAIL;enabled=true;return 0;}
 int parlio_tx_unit_disable(void*){if(fails())return ESP_FAIL;enabled=false;return 0;}
 int parlio_del_tx_unit(void*){assert(!enabled);if(fails())return ESP_FAIL;txLive=false;return 0;}
 int parlio_tx_unit_transmit(void*,void const*p,std::size_t bits,parlio_transmit_config_t const*c){
- assert(bits%8==0&&requested==bits/8&&p==allocation&&c->flags.queue_nonblocking);
+ assert(bits%8==0&&requested>=bits/8&&p==allocation&&c->flags.queue_nonblocking);
  if(fails())return ESP_FAIL;
  dma=const_cast<std::uint8_t*>(static_cast<std::uint8_t const*>(p));size=bits/8;idle=c->idle_value;
  assert(idle==dma[size-1]);return 0;
@@ -81,10 +82,10 @@ int parlio_new_rx_unit(parlio_rx_unit_config_t const*c,void**u){
  assert(c->ext_clk_freq_hz==10000000&&c->exp_clk_freq_hz==10000000&&c->max_recv_size==requested);
  for(unsigned i=0;i<16;++i)assert(c->data_gpio_nums[i]==(i<8?pins[i]:-1));
  if(fails())return ESP_FAIL;
- watch=false;rxLive=true;*u=reinterpret_cast<void*>(2);return 0;
+ ++rxCreates;watch=false;rxLive=true;*u=reinterpret_cast<void*>(2);return 0;
 }
 int parlio_new_rx_level_delimiter(parlio_rx_level_delimiter_config_t const*c,void**u){
- assert(c->valid_sig_line_id==15&&c->sample_edge==PARLIO_SAMPLE_EDGE_NEG&&c->flags.active_low_en&&c->eof_data_len==requested);
+ assert(c->valid_sig_line_id==15&&c->sample_edge==PARLIO_SAMPLE_EDGE_NEG&&c->flags.active_low_en&&c->eof_data_len<=requested);
  if(fails())return ESP_FAIL;
  delLive=true;*u=reinterpret_cast<void*>(3);return 0;
 }
@@ -92,9 +93,9 @@ int parlio_rx_unit_register_event_callbacks(void*,parlio_rx_event_callbacks_t co
 int parlio_rx_unit_enable(void*,bool b){assert(b);if(fails())return ESP_FAIL;enabled=true;return 0;}
 int parlio_rx_unit_disable(void*){if(fails())return ESP_FAIL;enabled=false;return 0;}
 int parlio_del_rx_unit(void*){assert(!enabled);if(fails())return ESP_FAIL;rxLive=false;return 0;}
-int parlio_del_rx_delimiter(void*){assert(!rxLive);if(fails())return ESP_FAIL;delLive=false;return 0;}
+int parlio_del_rx_delimiter(void*){assert(!enabled);if(fails())return ESP_FAIL;delLive=false;return 0;}
 int parlio_rx_unit_receive(void*,void*p,std::size_t n,parlio_receive_config_t const*c){
- assert(p==allocation&&n==requested&&c->delimiter==reinterpret_cast<void*>(3));
+ assert(p==allocation&&n<=requested&&c->delimiter==reinterpret_cast<void*>(3));
  if(fails())return ESP_FAIL;
  dma=static_cast<std::uint8_t*>(p);size=n;return 0;
 }
@@ -122,7 +123,7 @@ int pcnt_unit_stop(void*u){auto&x=unit(u);assert(x.enabled&&x.running);if(fails(
  if(x.edge==14&&clockStopRace){
   if(clockStopRace==1)++x.raw;
   else for(auto&v:counters)if(v.running&&v.edge==16)v.raw+=2;
-  clockStopRace=0;
+  clockStopRace=0;rxCreates=txCreates=0;
  }
  x.running=false;running();return ESP_OK;}
 int pcnt_unit_disable(void*u){auto&x=unit(u);assert(x.enabled&&!x.running);if(fails())return ESP_FAIL;x.enabled=false;return ESP_OK;}
@@ -131,10 +132,21 @@ int pcnt_del_channel(void*u){auto&x=channel(u);assert(x.channel&&!x.enabled);if(
 // failure/reset case is tested separately by p4_valid_counter_test.cpp.
 int pcnt_del_unit(void*u){auto&x=unit(u);assert(x.live&&!x.channel&&!x.enabled);x.live=false;return ESP_OK;}
 
+#ifdef AGON_EXTENDER_EXEXT_STREAM
+NativeParlioSignals parlio_periph_signals={{{{{{},100}},{{{},200}}}}};
+void gpio_func_sel(int p,int f){assert(f==PIN_FUNC_GPIO&&p!=14&&p!=16);}
+int gpio_input_enable(int){return fails()?ESP_FAIL:ESP_OK;}
+void esp_rom_gpio_connect_out_signal(int p,int,bool invert,bool enable){
+ assert(p!=14&&p!=16&&!invert&&!enable&&!enabled);outputs=true;
+}
+#ifndef NATIVE_COORDINATOR_MODEL
+void esp_rom_gpio_connect_in_signal(int,int,bool invert){assert(!invert);}
+#endif
+#endif
 static void reset(){
  assert(!allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!outputs&&!countersLive()&&!counterRunning&&!filterLive&&!filterEnabled);
  for(auto&x:counters)x={};
- clockStopRace=0;
+ clockStopRace=0;rxCreates=txCreates=0;
  core=0;op=0;fail=-1;ready=valid=clockLevel=1;edge=nullptr;edgeContext=context=nullptr;tc={};rc={};
 }
 static H admitted(unsigned n,bool tx){

@@ -38,11 +38,17 @@ P4BlockCoordinator::Result P4BlockCoordinator::poll(std::uint32_t now,
   if(recovering_)return payload_?fail():Result::recovery;
   control_.expire(now);
   if(!active_) {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(payload_ && h.failed())return fail("retained owner cancellation");
+#endif
     if(!control_.pending() || h.phase()!=H::drain)
       return h.phase()==H::uart?Result::uart:Result::recovery;
     active_=true;parked_=released_=restored_=false;
     // Prior object reached complete and was retired only after clean return.
-    payload_.emplace(data_,clock_,valid_,ready_,core_);
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(!payload_)
+#endif
+      payload_.emplace(data_,clock_,valid_,ready_,core_);
   }
   if(!control_.pending() || h.failed())return fail("control expired/cancelled");
   std::uint8_t done=0;
@@ -64,7 +70,11 @@ P4BlockCoordinator::Result P4BlockCoordinator::poll(std::uint32_t now,
     released_=true;done|=H::released;
   }
   if(h.phase()==H::localArm) {
-    if(payload_->result()==N::Result::idle) {
+    if(payload_->result()==N::Result::idle
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+       || payload_->result()==N::Result::complete
+#endif
+      ) {
       const auto *d=control_.descriptor();
       std::uint8_t *buffer;std::size_t capacity;
       if(!d || !control_.payloadBuffer(buffer,capacity))return fail("payload buffer");
@@ -94,7 +104,10 @@ P4BlockCoordinator::Result P4BlockCoordinator::poll(std::uint32_t now,
   if(gpio_set_level(gpio_num_t(ready_),h.readyN())!=ESP_OK)return fail("READY output");
   if(h.phase()==H::uart) {
     if(!restored_ || !control_.payloadReturned(0,now))return fail("payload returned");
-    payload_.reset();active_=false;
+#if !defined(AGON_EXTENDER_EXEXT_STREAM)
+    payload_.reset();
+#endif
+    active_=false;
     return Result::uart;
   }
   return h.phase()==H::drain?Result::drain:Result::exclusive;

@@ -65,3 +65,12 @@ int pcnt_channel_set_edge_action(void*,int,int);int pcnt_channel_set_level_actio
 int pcnt_unit_add_watch_point(void*,int);int pcnt_unit_enable(void*);int pcnt_unit_clear_count(void*);
 int pcnt_unit_start(void*);int pcnt_unit_stop(void*);int pcnt_unit_get_count(void*,int*);
 int pcnt_unit_disable(void*);int pcnt_del_channel(void*);int pcnt_del_unit(void*);
+
+#ifdef AGON_EXTENDER_EXEXT_STREAM
+constexpr int SOC_PARLIO_GROUPS=1,SOC_PARLIO_TX_UNITS_PER_GROUP=1,SOC_PARLIO_RX_UNITS_PER_GROUP=1,PIN_FUNC_GPIO=1;
+struct NativeParlioSignals {struct {struct {int data_sigs[16],clk_in_sig;} tx_units[1],rx_units[1];} groups[1];};
+extern NativeParlioSignals parlio_periph_signals;
+void gpio_func_sel(int,int);int gpio_input_enable(int);
+void esp_rom_gpio_connect_in_signal(int,int,bool);
+void esp_rom_gpio_connect_out_signal(int,int,bool,bool);
+#endif

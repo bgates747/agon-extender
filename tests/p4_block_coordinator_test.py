@@ -23,10 +23,43 @@ unsigned uart_ll_get_rxfifo_len(uart_dev_t*);bool uart_ll_is_tx_idle(uart_dev_t*
  (d/'p4_native_sdk_fake.hpp').write_text(fake)
  for name in ('driver/pulse_cnt.h','driver/parlio_rx.h','driver/parlio_tx.h','driver/gpio.h','driver/gpio_filter.h',
   'driver/uart.h','esp_attr.h','esp_heap_caps.h','freertos/FreeRTOS.h',
-  'esp_rom_gpio.h','hal/uart_ll.h','soc/uart_periph.h'):
+  'esp_rom_gpio.h','esp_private/gpio.h','soc/parlio_periph.h','hal/uart_ll.h','soc/uart_periph.h'):
   p=d/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text('#include "p4_native_sdk_fake.hpp"\n')
 
 class CoordinatorTest(unittest.TestCase):
+ def test_exext_retained_coordinator(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   d=Path(tmp);prepare_sdk(d)
+   prefix=(ROOT/'tests/p4_native_payload_test.cpp').read_text().split('int main(){')[0]
+   prefix=prefix.replace('static H admitted(', '[[maybe_unused]] static H admitted(')
+   body=(ROOT/'tests/p4_block_coordinator_test.cpp').read_text().split('int main(){')[0]
+   body=body.replace('assert(value==GPIO_MATRIX_CONST_ONE_INPUT&&!invert);','assert((value==GPIO_MATRIX_CONST_ONE_INPUT||value==14||value==16||value>=17)&&!invert);')
+   body=body.replace('&&!watch&&counterRunning','&&!watch&&!counterRunning').replace('ready==1&&!allocation','ready==1&&allocation')
+   source=d/'reuse.cpp';source.write_text(prefix+body+'''
+int main(){
+ reset();uartIdle=true;uartRestored=false;ring=fifo=restores=0;
+ agon::extender::transport::ParallelControl c;std::vector<std::uint8_t>b(4096);std::uint8_t d[16];
+ boot(c,b.data(),b.size());C owner(c,pins,14,16,15,18,17,20,19,0);unsigned now=0,sequence=0;
+ for(unsigned round=0;round<3;++round)for(bool tx:{false,true})for(unsigned n:{1,339,3456,4096}) {
+  valid=clockLevel=1;for(unsigned i=0;i<n;++i)b[i]=std::uint8_t(73*i+17);
+  offer(c,n,tx,d,++sequence,now);uartRestored=false;
+  drive(owner,tx,n,b.data(),now);complete(c,d,b.data(),n,tx,now);
+  assert(allocation&&!enabled&&!outputs&&rxCreates==1&&txCreates<=1);
+ }
+ assert(rxCreates==1&&txCreates==1&&restores==24);
+ c.cancel();assert(owner.poll(++now,true,true)==CR::recovery);
+ assert(!allocation&&!enabled&&!outputs&&!rxLive&&!txLive);
+ std::cout<<"PASS24reusedcoordinatorblocksandresetcleanup\\n";
+}
+''')
+   exe=d/'reuse'
+   subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-pedantic',
+    '-DAGON_EXTENDER_EXEXT_STREAM','-DNATIVE_COORDINATOR_MODEL',
+    '-fsanitize=address,undefined','-fno-sanitize-recover=all',f'-I{d}',f'-I{ROOT/"vdp/video"}',
+    str(source),*[str(ROOT/'vdp/video/extender/transport'/(s+'.cpp')) for s in
+     ('p4_block_coordinator','p4_native_payload','p4_uart_parking','p4_parallel_handover','p4_parallel_egress')],
+    '-o',str(exe)],check=True)
+   subprocess.run([str(exe)],check=True,timeout=30)
  def test_coordinator(self):
   clock=monotonic()
   with tempfile.TemporaryDirectory() as tmp:

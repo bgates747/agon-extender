@@ -1,4 +1,6 @@
-// PORT-008 F02c3 private, one-admission native leaf. No console/mode/API caller.
+// PORT-008 F02c3 private native leaf. No direct console/mode/API caller.
+// ExExt retains disabled driver resources across admitted blocks; other
+// qualification profiles retain the original one-admission lifetime.
 // Keep this owner alive until cleanup succeeds: an unsuccessful driver stop
 // retains DMA storage and callback context. The real coordinator must park UART,
 // retain its descriptor, and complete matched UART status before publishing data.
@@ -47,6 +49,10 @@ class P4NativePayload final : private ParallelTxBackend {
   bool releaseDataPins() noexcept override;
   bool setReadyN(bool) noexcept override;
   bool startReceive() noexcept;
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+  bool attachDataPins(bool transmit) noexcept;
+  bool keepResources_{};
+#endif
   void discardBuffer() noexcept;
   Result finish(Result) noexcept;
   static bool IRAM_ATTR receiveDone(parlio_rx_unit_handle_t,parlio_rx_event_data_t const*,void*) noexcept;
