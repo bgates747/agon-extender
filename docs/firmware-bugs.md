@@ -101,3 +101,15 @@ implementation findings with their original stable IDs and mixed validation
 states. Those records remain linked coverage rather than being relabelled as
 current confirmed bugs. Add individual entries here as their source, applicable
 build and reproducible conditions are reconciled; retain the original finding ID.
+
+
+## FWBUG-015 — DW-GDMA group clock released before shared interrupt
+
+| Field | Record |
+|---|---|
+| Component | ESP-IDF5.5.5 `b774170ff46c393eeb5e495ea37936038d3f4f4f`, `components/esp_hw_support/dma/dw_gdma.c::channel_destroy` |
+| Trigger | Delete the last DW-GDMA channel during HDMI mode replacement while its shared interrupt remains registered. Group release gates the status-register bus before `esp_intr_free`. |
+| Mainboard | Not applicable: original mainboard ESP32 VGA does not use the P4 DW-GDMA driver. |
+| Extender evidence | Full-HDMI stream-r05 physical mode transition panics in `shared_intr_isr`, reading DW-GDMA status0x50081030. Source order independently exposes that interval; unrelated memory corruption has not yet been excluded by physical repeat controls. |
+| Disposition | Bounded isolated SDK derivative and source-derived lifetime regression under [PORT-008 EX06](tasks/PORT-008/EXEXT-STREAM-R01.md). Original SDK remains read-only. No renderer/transport-data change or production acceptance. |
+| Removal condition | Pinned SDK update supplying equivalent IRQ-before-group/clock teardown, followed by mode-transition regression. |

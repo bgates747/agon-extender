@@ -361,3 +361,40 @@ reset-during-payload or power-loss case. Mainboard fsim VDP remains unchanged.
    preemption stay intact. This follows the continuously serviced ordinary
    parser loop. Compare tiny-query and input behavior before broader games;
    do not infer improvement from the source edit.
+
+
+### EX04 installed focused comparison and EX06 teardown boundary
+
+1. Full-HDMI stream-r05 (source7710a90e, app SHA256
+   `4d5fbbf73679c69806da1e9ceea8292ab9e0a1c6780b5ffaaf16c9d34b41fe7d`)
+   and EMOS-r07 (source47803b0, image SHA256
+   `3c2565bbbe53ac7502aeff8fba93f4518c3351d2bbc4574a8e579804322b7d22`)
+   independently verify. EMOS remains130849bytes/223free; no ROM limit waiver.
+2. T01/T03 each save120valid ordered records with no fault/abort. T01 tiny-query
+   completion median50.04ms versus67.0ms previously:25.3% less latency,
+  16.63updates/s versus12.57. T03 median50.06ms and16.44updates/s. These
+   fenced replies include transport and scheduling; they are not game FPS.
+3. The next idle-input fixture never launches: after startup route/mode changes,
+   P4 crashes in ESP-IDF `shared_intr_isr` while reading DW-GDMA status register
+  0x50081030. Preserve the captured physical failure; no idle-input pass follows.
+   One normal Agon reset after P4's reboot restores stable input. Original
+   startup is restored and the bench released for offline work.
+4. Pinned ESP-IDF5.5.5 commitb774170ff46c393eeb5e495ea37936038d3f4f4f
+   `components/esp_hw_support/dma/dw_gdma.c::channel_destroy` unregisters
+   the channel/group before freeing its shared interrupt. Last group release
+   gates the register bus clock. The shared dispatcher can therefore read that
+   now inaccessible status register during this interval. This exact source
+   order plus the fault address supports a teardown-race explanation; hardware
+   repeat controls are required before declaring the remedy proven.
+5. Within EX06 mode-transition preservation, derive only this pinned SDK unit,
+   joining/freeing its interrupt before dropping the group/clock reference.
+   Keep the upstream checkout untouched, hash-check the input and record the
+   generated source. Reuse the existing isolated DPI-derivative build mechanism.
+   Add a source-derived negative/positive lifetime test, rebuild the normal
+   full-HDMI candidate, verify installed bytes, repeat route/mode transitions,
+   then resume the cached-map and game tests. No renderer/pixel/mode change,
+   added diagnostics in EMOS or parallel electrical workaround is authorized.
+6. Track the driver finding as [FWBUG-015](../../firmware-bugs.md); EX06 remains
+   its implementation owner. Consumer Apple IIe test derivatives reuse the
+   existing finite Choplifter/Lode Runner workloads; only startup-owned mode
+   selection and durable Lode reporting differ. Owner/production code is intact.
