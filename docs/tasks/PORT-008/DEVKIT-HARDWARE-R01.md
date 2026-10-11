@@ -2,15 +2,148 @@
 
 ## Executive summary
 
-**Current disposition:** the Author parked the comparison and requested the last
-working pre-PC DevKit pair. Restoration is now complete: exact September 30 P4
-segments and the entire EMOS ROM independently verify, normal startup is restored,
-and real remote commands/SD service work. No wiring or mainboard VDP change.
-The Author clarifies that restoration prepares the original DH parallel
-comparison; DR01–DR04 record the completed prerequisite. Resolve the rebuilt
-harness READY bias before another historical receiver installation. Production selection is unchanged. No further bench test is running.
+**Current disposition:** The repaired DevKit passes all 22 historical forward
+1 KiB records, including the fastest zero-NOP profile. All byte counts,
+sequences, patterns and CRCs match. Fastest median receiver time is 1,193 µs
+(0.819 MiB/s per-record payload rate, not sustained file-transfer throughput).
+Exact normal September30 DevKit firmware was restored and all four segments
+independently verified; original startup read back, listener closed and neutral
+Extender keyboard admitted. EMOS/mainboard VDP unchanged. No active reset hold,
+capture, serial collector or automated input remains.
+
+The Author repaired the three missing onward control connections through
+220 Ω series resistors. The [reverse pinwalk](DEVKIT-PINWALK-R01.md) passes
+all eight observed paths; three data paths remain unprobed, while receiver
+validation checks the complete eight-bit payload for these bounded cases.
+P4-PC still requires 220 Ω series resistors on all eleven signals. Modern
+ExExt and reverse payload are not qualified by this historical comparison.
 
 ### Original parallel comparison contract
+
+### Authorized faster-profile sweep — 2026-10-10
+
+DH08 [x] — Reuse the existing complete22-record sender, unchanged, with the
+same source-faithful40MHz receiver. Seven profiles (24,16,10,6,3,1,0NOPs),
+three records each, plus the fixture's original final0NOP record. Verify exact
+retained executable/assembly/canary hashes; no rebuild or firmware modification.
+Stage/read back its existing self-restoring startup through the Legacy listener.
+Preserve the preceding single-record result; no new firmware backup.
+
+DH09 [x] — Capture the unchanged eight Agon-side probes at1MHz for60seconds.
+Require observed CLOCK waiting activity with READY/VALID high before every USB
+arm. Record each receiver byte-count/pattern/sequence/CRC verdict and elapsedµs;
+stop arming at the first missing/failed verdict. Retain full capture and five
+clean seconds after the final verdict. The1MHz capture demonstrates handshake
+activity, not full payload decoding. No automatic replay or slower-profile retry.
+
+DH10 [x] — Verify the final control-release/quiet tail, hold powered Agon in
+reset across exact normal P4 restoration, independently verify all four segments,
+release after HTTP initialization, verify original startup and neutral keyboard.
+The unchanged full-sweep sender prints completion but writes no SD result;
+do not reuse the preceding one-record SD result as proof of this sweep.
+Durable host receiver logs own integrity. Report per-profile medians/ranges
+and relative improvements; receiver timing includes admission/logging overhead
+and is not sustained application/file-transfer throughput. Keep modern ExExt,
+reverse payload and unmodified P4-PC outside this result.
+
+#### Repaired-harness speed sweep result
+
+All 22 historical forward records passed: 1,024 bytes each, sequence 1,
+complete pattern validation, stored/calculated CRC 6474. No retry was needed.
+The unchanged sender and retained 40 MHz receiver exercised seven delay
+profiles three times each, followed by the original extra zero-NOP record.
+
+Rows are ranked slowest first. Rate is 1,024 payload bytes divided by the
+receiver elapsed time; improvement is `(baseline median / profile median - 1)`.
+Timing includes receiver admission/logging overhead and excludes host spacing.
+These are per-record rates, **not sustained file-transfer throughput**.
+
+| Delay NOPs | Median µs | Range µs | Payload MiB/s | Rate improvement vs 24 NOPs |
+| ---: | ---: | ---: | ---: | ---: |
+| 24 | 5,191 | 5,190–5,197 | 0.188 | 0% |
+| 16 | 3,857 | 3,857–3,859 | 0.253 | 35% |
+| 10 | 2,858 | 2,858–2,860 | 0.342 | 82% |
+| 6 | 2,192 | 2,191–2,192 | 0.446 | 137% |
+| 3 | 1,693 | 1,693–1,694 | 0.577 | 207% |
+| 1 | 1,360 | 1,359–1,361 | 0.718 | 282% |
+| 0 | 1,193 | 1,193–1,195 | 0.819 | 335% |
+
+The final extra zero-NOP record also passed at 1,195 µs. Total validated
+payload was 22 KiB. Before every USB arm, the host observed CLOCK waiting
+activity with READY/VALID high. All eight unchanged Agon-side probes were
+captured for 60 seconds at 1 MHz (60 million samples); the archive was checked
+against the retained raw SHA-256. This capture establishes handshake activity,
+not complete high-speed payload decoding or P4-pad electrical margins.
+
+The unchanged full-sweep sender writes no SD completion result. Receiver USB
+logs provide durable integrity evidence; the earlier single-record SD result
+is not evidence of completion for this sweep. Exact components, tools, logs,
+capture and receipts are retained in the ignored speed-sweep-r01 evidence silo.
+Modern ExExt, reverse payload and P4-PC qualification remain outside this test.
+
+Recovery passed: final five waveform seconds show READY/VALID high and CLOCK
+low. Pi held Agon reset across exact normal P4 restoration and independent
+four-segment verification, releasing it after P4 HTTP initialization. Through
+the foreground listener, the host verified the original 38-byte startup and
+unchanged full-sweep executable. The host closed the listener and verified
+neutral admitted keyboard with no held/pending events. No EMOS/mainboard VDP
+change, new firmware backup or production promotion occurred.
+
+
+### Authorized repaired-harness payload repeat — 2026-10-10
+
+DH05 [x] — Reuse the retained 40 MHz historical DevKit receiver and unchanged
+single-record sender (1,024 bytes, sequence1, CRC6474, profile0/24 NOPs).
+Verify retained hashes, normal recovery segments and admitted keyboard. Through
+the current Legacy foreground listener, verify/stage the sender and reviewed
+startup; inspect existing sibling recovery files before replacement. The
+sender restores and readback-verifies original startup before any GPIO drive.
+No EMOS/mainboard VDP change or new firmware backup. Preserve prior results.
+
+DH06 [x] — Install and independently verify the existing receiver. Capture
+all eight unchanged probe channels at 1 MHz for60seconds; waveform evidence
+establishes sender waiting activity, not high-rate payload bit correctness.
+Require delivered samples before one Agon reset. Observe CLOCK transitions
+with READY/VALID high before sending one USB arm command, replacing the old
+unobserved17-second delay. Require receiver byte-count/sequence/pattern/CRC
+PASS and five clean seconds. Stop on failure; no sweep, retry or automatic
+replay. Analyzer contacts remain Agon-side, before series resistors.
+
+DH07 [x] — Restore and independently verify the exact normal September30
+DevKit firmware. Hold Agon reset across restoration if sender ownership is
+uncertain; only release after P4 initialized. Retrieve durable sender result
+and verify original startup through the listener; then close the listener and
+verify neutral admitted keyboard. Report receiver integrity, sender completion
+and recovery separately. This is one slow-profile forward historical check,
+not modern ExExt or reverse-payload qualification.
+
+#### Repaired-harness payload result
+
+The historical forward transfer passes on the repaired DevKit harness. The
+unchanged sender and source-faithful40MHz receiver transferred exactly1,024bytes,
+sequence1, with stored and calculated CRC both6474. Receiver pattern validation
+passed, READY returned high, and five clean USB seconds showed no failure/reboot.
+Receiver-reported elapsed time was5,198µs for this single24NOP slow-profile case;
+this is integrity evidence, not a speed sweep or modern transport benchmark.
+
+The host observed15,042CLOCK transitions in a20ms source window while READY
+and VALID remained high before its one USB arm request. This directly verifies
+the sender entered its waiting loop; no fixed17second readiness assumption was
+used. The source-side capture has60,000,000samples at1MHz for60seconds. It
+establishes activity/handshake timing only; it is not a complete high-speed data
+decode or P4-pad signal-integrity measurement. No retry/sweep or EMOS/VDP update.
+Exact installed receiver, sender, host tools, USB verdict and waveform are retained
+in the ignored payload-after-repair-r01 evidence directory.
+
+Normal recovery completed: final five waveform seconds show READY/VALID high
+and CLOCK low. Pi held Agon reset while restoring and independently verifying
+all four exact September30 P4 segments, waited for P4 HTTP initialization, then
+released reset. Original38-byte startup was read back through the foreground
+listener. The durable Agon record reports bytes=1024, delay_nops=24,
+sender_rc=0 and state=released. Listener closed; fresh neutral admitted keyboard
+verified, held0/pending0, locale1. No active flash, serial, capture, reset hold,
+listener or automated input remains. No new firmware backup, EMOS/mainboard
+VDP change, retry or broader qualification. Production selection unchanged.
 
 Author has connected the original DevKit and explicitly confirms the complete
 parallel harness has remained in place. Preserve that assembly. Compare one
@@ -289,3 +422,160 @@ READY=1 before the single reset/arm. No target analyzer or automatic retry.
 Restore exact September 30 P4 afterward, confirm Agon sender completion and
 normal startup through the listener, then hand back for parallel-test discussion.
 No game test, speed sweep, reverse test or modern ExExt enablement is authorized.
+
+### Control-bias repeat — admission blocked, recovery pending
+
+After the Author reported “output on extender,” explicit `EMOS LEGACY` allowed
+the foreground listener to start. The existing startup backup was preserved and
+readback verified under `/agents/extender/backups/startup/prx06one-old.txt` before
+explicit transaction cleanup. The 11,012-byte single-record sender and 52-byte
+temporary startup both passed whole-file readback. The sender's original assembly
+and canary remained unchanged; no ordinary application was modified.
+
+The historical DevKit receiver's three flash segments independently verified;
+its boot confirmed 40 MHz. Before any Agon reset, USB status reported
+`state ready=0 valid=0 clock=0 state=released`. Only READY has its input enabled
+at this stage; the other two readings are not physical evidence. The collector
+stopped at its mandatory released-READY precondition, with no reset or USB arm.
+No record, CRC verdict or throughput result exists for this attempt. The cause
+of the low reading remains unresolved; an Author report of fitted resistors is
+not a voltage or continuity measurement.
+
+The exact September 30 normal P4 was restored and all four segments independently
+verified. HTTP is online, but keyboard admission did not return after P4 reboot.
+EMOS and mainboard VDP were not flashed. The test startup was never executed, so
+its self-restoration did not occur. Do not reset with that trigger present beside
+the normal UART-serving P4. The prepared offline recovery checks the card identity
+and exact temporary contents, preserves that unused startup under
+`/agents/extender/backups/startup/prx06one-unrun.txt`, writes the original 38 bytes,
+and verifies readback. Actual offline restoration and subsequent keyboard proof
+remain pending Author card mounting/return. No process remains active.
+
+### Offline startup recovery completed; bench hold
+
+The Author mounted the card and withdrew the bench for shutdown, reporting the
+pull-up appears one pin off. Do not treat that tentative observation as verified
+wiring or request live measurements while the bench is off. The prepared offline
+recovery verified mount/card identity and the exact 52-byte unused test startup,
+archived it under `/agents/extender/backups/startup/prx06one-unrun.txt`, restored
+the original 38-byte startup and verified whole-file readback after syncing.
+Startup SHA-256 is
+`7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5`.
+The card was left mounted. No firmware change, Agon reset or test occurred during
+this recovery. Normal P4 restoration is already independently verified; keyboard
+recovery remains untested until the Author returns the bench and confirms the
+card in the Agon. The comparison still has no attempted payload or CRC verdict.
+
+### READY pull-up meter check — Author correction
+
+Author confirms blue READY_N was correctly placed and measures 10 kΩ from the
+pin to the rail. Withdraw the earlier tentative one-pin-offset hypothesis.
+This agrees with the harness contract: READY_N takes a 10 kΩ pull-up to Agon
+3.3 V, not a pull-down. Record the measurement as Author-observed resistance/path
+verification; it does not establish powered READY voltage or whether an endpoint
+holds the line low. No further hardware access or measurement requested while
+the bench is shut down. Reconcile the P4 input reading with actual powered line
+voltage and both endpoint pin configurations when the bench next returns.
+
+### Files-only review completed while Author uses Jukebox
+
+The [READY software review](READY-SOFTWARE-REVIEW-R01.md) traces exact installed
+EMOS source/compiled startup, original receiver source/compiled GPIO calls, SDK
+GPIO input/open-drain behavior, unchanged sender assembly and host sequencing.
+No firmware cause for the low READY reading was established. Agon PD4 initializes
+as input; P4 GPIO20 input is enabled and its open-drain output released.
+The runner's caught failures incorrectly return shell status zero, while retained
+JSON correctly records non-invocation. Its new pre-reset gate and unobserved
+17-second delay differ from the old passing procedure. These are recorded limits,
+not permission to force READY high or retry blindly. No hardware/service access,
+flash, reset, input injection, SD operation or firmware edit during review.
+Author reports Nurples/Aginvadors still play in browser and Rally retains its
+known control issue; these demonstrate ordinary UART operation, not parallel.
+
+## Idle READY voltage checkpoint
+
+Author clarifies that Jukebox is running on a separate Console8 and releases the
+bench. Stage the retained 40 MHz historical DevKit receiver for a powered READY
+voltage reading only. Verify its installation and query USB status without
+arming reception. Keep Agon EMOS, mainboard VDP and SD startup unchanged; do not
+reset Agon or run a parallel payload. Verify the retained exact normal DevKit
+recovery files before installation. Pause with the receiver idle for the Author
+to measure the blue READY signal relative to common ground. No DMA or transfer
+conclusion follows from this checkpoint.
+
+Idle receiver installed and independently verified at 40 MHz; USB status reports
+READY=0 with output released. Receiver was not armed and Agon was not reset.
+No parallel data sent. USB collector closed. Standalone receiver remains
+installed awaiting the Author's blue READY-to-common-ground voltage reading;
+normal Extender keyboard/network services are temporarily unavailable. Exact
+normal-firmware restore helper and hash-verified files are retained locally.
+
+Author reports **3.27 V** for the requested powered blue READY_N-to-ground
+measurement. The measured point is high, conflicting with the receiver's
+preceding GPIO20 input reading of zero. The exact probe endpoint (Agon versus
+DevKit end) is not yet confirmed. The reviewed receiver still selects GPIO20
+input/open-drain output and reads that input; static review found no mapping
+or release-polarity typo. Do not infer end-to-end continuity, failed hardware
+or a DMA fault from this observation. No new flash, reset, arm or transfer.
+
+Author confirms the **3.27 V reading was at the DevKit end**, as instructed.
+The signal at that measured header point is therefore high. Rechecking the
+pinned SDK and compiled receiver confirms `gpio_get_level(20)` reads input
+register bit 20 and initialization requests input plus released open-drain
+output. This static evidence does not establish the live IO_MUX configuration
+or actual chip-pad voltage. Next proposed bounded diagnostic: read live IO_MUX,
+GPIO input/output/enable and output-selection registers for GPIO20, alongside
+the SDK configuration dump. It must leave READY released and must not arm
+PARLIO, drive a test level, reset Agon or transfer data. This would be a separate
+instrumented receiver build, not the unchanged historical baseline. No such
+build or installation has occurred; await agreement before changing firmware.
+
+## Approved live GPIO readback — RG01
+
+RG01 [x] — Author approves the bounded GPIO20 readback probe. Build the
+[probe source](fixtures/ready-gpio-r01/main.c) against the retained receiver's
+SDK/configuration, independently verify installation, and capture live input,
+IO_MUX, output latch, output enable and routing registers plus the SDK dump.
+Preserve READY initialization; leave its open-drain output released. The probe
+has no arm command or PARLIO initialization. No Agon reset, SD mutation, other
+pin setup or transfer. Compare with the Author's DevKit-end 3.27 V observation
+and stop to discuss the result before another electrical or transfer test.
+
+Live register check complete; see [bounded results](READY-REGISTER-RESULTS-R01.md).
+Raw input bit20 remains zero; no missing input-enable, pin hold or disabled
+GPIO/IOMUX clock found. Cause remains unresolved. Pause for discussion before
+changing GPIO mode or starting any transfer.
+
+## Approved input-only comparison — RG02
+
+RG02 [x] — Author approves GPIO20 input-only with sleep selection disabled.
+Retain r02 source/images/receipts, then build/install/verify r03. At startup
+record three stages: original released open-drain configuration; input-only;
+input-only with sleep selection disabled. Read live state at each stage to
+separate the two changes. No drive-low, internal bias, other GPIO setup,
+PARLIO, Agon reset or SD mutation. Leave the probe input-only and stop for
+discussion after retaining the results. Exact normal recovery remains prepared.
+
+RG02 completed: both configuration changes verified live, but GPIO20 remained
+low at all stages. See [r03 results](READY-REGISTER-RESULTS-R01.md). Stop for
+discussion; no pull-up experiment, transfer or restoration performed.
+
+## Approved weak internal pull-up comparison — RG03
+
+RG03 [x] — Author approves enabling GPIO20's weak internal pull-up while
+remaining input-only and sleep selection disabled. Retain r03 source/images
+and receipts. Build/install/verify r04, record three samples each before,
+during and after the weak pull-up, and restore the no-internal-pull baseline
+at completion. Only GPIO20 configuration may change. Keep external bias,
+Agon firmware/startup and wiring untouched. No drive-low command, PARLIO,
+Agon reset or transfer. Retain results and stop for discussion.
+
+RG03 completed: GPIO20 reads 0/0/0 without its pull-up, 1/1/1 with it,
+then 1/0/0 after removal. See [r04 results](READY-REGISTER-RESULTS-R01.md).
+Input can detect high. External connection/pin identity needs reconciliation;
+internal bias is not a validated handshake fix. Pause before physical work.
+
+Author moved analyzer probes to DevKit using the prior P4-PC arrangement and
+requested the existing pinwalk. [DevKit pinwalk contract](DEVKIT-PINWALK-R01.md)
+owns staging, input ownership, acquisition and restoration; no new wire
+algorithm or firmware flash is required for the pinwalk itself.

@@ -1,3 +1,331 @@
+# Current checkpoint — modern paired transfer fails at 255 bytes
+
+Author approved modern pair after historical22recordpass. Installed/verified
+fullHDMI port-008-data-r01-b2026-10-10-03-07-07Z + EMOS
+agon-emos-v0.1.24-b2026-10-10-01-48-39Z. FullROMSHA69d7b11a...
+P4appSHA c6ee1508...;all4segmentsverified. Initialadmissionstalled,
+one100msAgonrecoveryresetrestoredinput. Original38bytestartuprestored.
+OneCLIparcheck:1byteechoPASS,255bytebothstatus0/guardsPASSbutmismatchoffset2,
+4096NOTRUN. Samepriorfailure;noDMA/directionattribution. Noautomaticreplay.
+Originalstartupreadback,listenerclosed,keyboardready/neutralheld0pending0.
+Modernmatchedpairremains; do not restoreprehandshaker11aloneagainstthisEMOS.
+Noactivebenchprocess. CardinAgon. All3installed-currentrecordsupdated.
+Evidence agents/port008-live-qualification/pc-modern-r01;results
+ docs/tasks/PORT-008/DEVKIT-CONTROL-R01.md MP01–MP03. No commit/push.
+Awaitdiscussionbeforefurtherpayloadorremedy;production/mainboardVDPunchanged.
+
+# Current checkpoint — P4-PC full forward sweep passes; normal recovered
+
+All22historical1KiB records pass pattern/sequence/CRC includingfastestzeroNOP.
+PCmedian1194us vsDevKit1193us (~0.818MiB/s per-record,not sustainedthroughput).
+CLI sender admissionextended16x; bytekernels/canary/sweepunchanged; autoexec
+untouched. ActualwaitingCLOCK observedBEFOREreceiverflash. 60s1MHz60million
+captureafterseriesresistors retained/raw+archivehashverified; final5sreleased.
+Reversewalkfoundall8patterns/all11padreadbacks, but D7shortextralows remain
+unresolved electricalobservation. No modernExExt/reversepayload qualification.
+Exactcompatible normalr11P4PC restored/all4segmentsverified; freshadmitted
+keyboard,original38bytestartup/newCLIexeSDreadback,listenerclosed verified.
+Ordinaryremote100msresetalsoindependentlyverified earlier. Wrongdata-r02
+restorationrequirednewerhandshakeand causedpriorinputfailure; neverreusewith
+September30EMOS. All3installed-currentrecords refreshed toverifiedr11receipt.
+CardinAgon,noactivehold/capture/serial/listener/automatedinput. No commit/push.
+Results docs/tasks/PORT-008/DEVKIT-CONTROL-R01.md; local evidence
+agents/port008-live-qualification/pc-cli-r02/. User task complete, awaitdiscussion.
+
+# Current checkpoint — P4-PC reverse walk complete, input still unadmitted
+
+All11P4 padreadbacks pass,8probed deliberate pulsepatterns found afterresistors.
+D7 has27shortextra low pulses near risingedges; not clean electricalpass.
+60s100kHz6millioncapture verified/archived. All11P4 outputsreleasedverified,
+normalapp restarted,Pi resethold released. No flash/SDchange. Keyboardreadyfalse
+locale0 after65s; no activehold/collector/capture. Need actualAgonreset/admission
+before CLI sender. CardinAgon,originalstartupverifiedonOryxunchanged.
+Evidence agents/port008-live-qualification/pc-cli-r01/reverse-pinwalk-r01.
+
+# Current checkpoint — CLI sender deployed, awaiting card return
+
+Card mounted Oryx AGON; prxcli.bin deployed /extender/install, fullreadback SHA
+6393f955ff62edec629efc5f27984e601d25dfd433b18020a17e402d1f031013,9261bytes.
+Original38byte autoexec7b500d81... unchanged; writes synced, not dismounted.
+Author confirms sniffers now P4-PC side AFTER220ohm series resistors. No flash,
+reset, transfer or CLI invocation this tranche. Wait card in Agon confirmation.
+Normal P4-PC image restored verified previously; keyboard admission not yet
+recovered; Pi-reset reach unresolved. Next physical reset with card inserted,
+then verify admission before CLI LOAD/RUN and historical receiver installation.
+
+# Current checkpoint — CLI sender compiled, awaiting Author card/probes
+
+No hardware action this tranche. New CLI-only prxcli.bin compiled (9261 bytes,
+SHA6393f955ff62edec629efc5f27984e601d25dfd433b18020a17e402d1f031013).
+No startup/SD writes; admission budget extended16-fold, kernels/completionwait,
+canary/sweep mechanically unchanged. Host cli.py prepared, not executed.
+Author moving analyzer to P4-PC and bringing SD to Oryx. Do not reset/flash or
+access card until Author confirms physical work/card location. Normal P4-PC
+full image86f112f5... verified restored, but keyboard admission failed; Author
+still saw timeout screen. Pi-reset reach not verified; no active reset hold.
+Source/task: docs/tasks/PORT-008/DEVKIT-CONTROL-R01.md and fixtures/prx06-cli-r01.
+No commit/push this tranche. No transfer/receiver arm was issued in prior repeat.
+
+# Current checkpoint — repaired DevKit speed sweep passes; recovered
+
+All 22 historical forward 1 KiB records pass full receiver validation, including
+zero-NOP profile. Seven profile medians 5191/3857/2858/2192/1693/1360/1193 us;
+fastest per-record payload rate 0.819 MiB/s, not sustained file throughput.
+Unchanged existing sender; retained historical 40 MHz receiver. Full 60 s,
+1 MHz, eight-channel capture and verified archive retained. No SD completion
+record exists for this unchanged sweep; USB receiver logs own integrity.
+Exact normal September30 DevKit P4 restored, all four segments independently
+verified. Original startup and full sender read back through listener; listener
+closed and neutral admitted keyboard verified. EMOS/mainboard VDP unchanged.
+Card in Agon. No active reset hold, capture, collector, listener or automated input.
+P4-PC still needs 220-ohm series resistors on all eleven signals. No modern
+ExExt/reverse payload/P4-PC qualification or production promotion is claimed.
+Evidence: agents/port008-live-qualification/devkit-hardware-r01/speed-sweep-r01/.
+Task: docs/tasks/PORT-008/DEVKIT-HARDWARE-R01.md. No commit/push this tranche.
+
+# Current checkpoint — repaired DevKit parallel payload passes; recovered
+
+One historical forward1KiB canary at profile0/24NOP passes receiver bytecount,
+sequence1, full pattern and CRC6474. Receiver elapsed5198us is one slow-profile
+integrity sample, not a performance sweep. Agon durable result sender_rc=0,
+state=released retrieved. Host observed CLOCK waiting activity before oneUSBarm;
+full60s1MHz60million-sample source capture retained/archived/hashverified.
+Probe contacts remain Agon-side before220-ohm series resistors.
+Exact normalSeptember30DevKit P4 restored/all4segments independently verified;
+Pi held Agon reset across restore until P4HTTPinitialized, then released.
+Original38byte startup readback verified; listener closed; admittedneutral
+keyboard held0/pending0/locale1. EMOS/mainboardVDP unchanged. Card in Agon.
+No active reset hold, flash, serial, capture, listener, automatedinput or transfer.
+P4-PC still needs220-ohm series resistors on all11signals. No modernExExt,
+reversepayload, fasterprofile or P4-PC qualification. Next possible step:
+bounded historical speed sweep; not started. Production selection unchanged.
+Evidence agents/port008-live-qualification/devkit-hardware-r01/payload-after-repair-r01/.
+See docs/tasks/PORT-008/DEVKIT-HARDWARE-R01.md. No commit/push this tranche.
+
+# Current checkpoint — repaired DevKit reverse pinwalk passes
+
+Author identified three control conductors stopped at Agon-side landings, with
+no onward connection to DevKit. Author completed them through 220-ohm series
+resistors; existing control pulls retained. Analyzer remains before resistors
+on Agon side. Unchanged reverse helper repeated once: all8observed paths pass,
+including READY9pulses, VALID11pulses, CLOCK10commanded plus enable/release
+edges. All11P4low/high readbacks pass. Data0/1/3 remain unprobed.
+Full60s100kHz6million samples; quiettail49.49984s. All14P4outputs independently
+released before normal app restart while Agon held; reset released afterHTTP;
+fresh neutral keyboard admission recovered. No flash/SD/EMOS/mainboardVDP
+changes, no payload/DMA verdict, no active reset/serial/capture/input process.
+Exact normalSeptember30firmware and originalstartup retained. Card in Agon.
+P4-PC still needs220-ohm series resistors on all11signals; no repair claimed.
+Next: bounded existing parallel payload comparison. Evidence:
+agents/port008-live-qualification/devkit-hardware-r01/reverse-pinwalk-r02/.
+See docs/tasks/PORT-008/DEVKIT-PINWALK-R01.md. No commit/push this tranche.
+
+# Current checkpoint — Reverse walk isolates missing control paths; recovered
+
+Author-approved reverse DevKit walk complete; both boards stayed powered and
+Pi held Agon in reset. P4 USB ROM pulsed eleven known GPIOs once. Every P4
+driven low/high readback passed. Five probed data paths show expected counts;
+READY(GPIO20), CLOCK(GPIO14), VALID(GPIO13) show ZERO pulses at their probes.
+Forward walk had reached all three probes from Agon. Control electrical paths/
+header assignment unresolved; not evidence of PARLIO/DMA failure. No adjacent
+GPIO sweep or wire move. See [results](docs/tasks/PORT-008/DEVKIT-PINWALK-R01.md).
+
+Full60s/100kHz6million-sample capture retained. All14 P4 transport outputs
+verified disabled before unchanged normal application restart; Agon kept reset
+until P4 HTTP initialized, then reset released. Fresh input ready/neutral,
+held0/pending0/locale1 verified. No flash/SD/EMOS/mainboardVDP changes. Card in
+Agon; original38byte startup unchanged. No active reset hold, serial, capture
+or automated input. Evidence/exact executed tool source under
+agents/port008-live-qualification/devkit-hardware-r01/reverse-pinwalk-r01/.
+
+# Previous checkpoint — DevKit pinwalk complete; normal startup/input recovered
+
+Author mounted card on Lenovo. Original38-byte /autoexec.txt restored offline,
+synced and readback verified against retained backup; SHA256
+7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5.
+Startup contains only `SET KEYBOARD 1` and `EMOS KEYINPUT extender`. Pinwalk marker
+confirmed consumed; temporary startup retained under /agents/extender/backups/
+startup/devkit-pinwalk-r01. Author returned card to Agon and reset; reported
+keyboard input extender. Read-only HTTP confirms fresh boot, ready/neutral,
+held0/pending0/locale1. Card now IN AGON. No reset/flash this verification.
+Exact normalSeptember30 DevKit P4 is already restored/all4segments verified;
+EMOS/mainboardVDP unchanged. Recovery complete; no active capture/serial/bench
+process. Five probed data signals and three controls match ordinal pinwalk;
+READY/VALID probe contacts high versus P4 GPIO20/13 low remains unresolved.
+No payload/DMA verdict or automatic replay. See
+[pinwalk results](docs/tasks/PORT-008/DEVKIT-PINWALK-R01.md).
+Receipts agents/port008-live-qualification/devkit-hardware-r01/devkit-pinwalk-r01/{offline-restoration.local.json,recovery-final.local.json}.
+
+# Previous checkpoint — DevKit pinwalk captured; offline startup recovery needed
+
+Author confirmed card in powered Agon without resetting. Delivered analyzer
+samples verified, then one reset ran the retained one-shot fixture. Full60s /
+6million samples saved: five data lines and READY/CLOCK/VALID match expected
+ordinals; CLOCK has its expected final release edge. Quiet tail44.34494s. Not
+all eight data lines observed; not a payload or DMA test. Probe READY/VALID
+finish high while P4 input-enabled/released GPIO20/13 read low before/after.
+See [pinwalk results](docs/tasks/PORT-008/DEVKIT-PINWALK-R01.md).
+
+ROM hold was explicitly ended after quiet tail. Exact September30 normalDevKit
+P4 restored/all4segments independently verified; no EMOS/mainboardVDP changes.
+One later recovery reset failed to produce keyboard admission within60seconds;
+no retry. Preparation mistake: retained fixture returns1 when marker absent,
+so temporary startup cannot reliably reach its trailing KEYINPUT command.
+Author confirms autoexec line3 RUN error, reported as SD-access error. This
+matches marker-absent return1; no new physical SD fault established.
+Original38byte startup remains backed up, but root still has temporarystartup.
+Ask Author to mount card on Lenovo for exact offline restoration. No reset,
+flash, replay or further bench operation until reply. No capture/serial process
+remains. Evidence/helpers: agents/port008-live-qualification/devkit-hardware-r01/devkit-pinwalk-r01/;
+normalflash receipt ready-register-r01/normal-restoration/receipt.local.json.
+
+# Previous checkpoint — Original DevKit pinwalk staged; awaiting card return
+
+Author moved analyzer probes to the DevKit and confirmed the Agon card is on
+Lenovo. Reused the exact retained HW-002 one-shot binary without rebuilding or
+changing GPIO assembly. Verified staging and original startup backup; card left
+mounted. P4 USB ROM is held with all thirteen transport endpoints independently
+verified as inputs; installed r04 flash unchanged. Normal keyboard services are
+not running while ROM is held. No Agon reset or walk has occurred.
+
+See [bounded pinwalk plan](docs/tasks/PORT-008/DEVKIT-PINWALK-R01.md).
+Ignored evidence/helpers: agents/port008-live-qualification/devkit-hardware-r01/devkit-pinwalk-r01/.
+Input-hold session38991 remains active until explicit resume marker. The capture
+helper requires confirmed card return and delivered samples before one reset;
+no automatic replay. Probe map observes five data lines and three controls,
+not all eight data lines. Await Author card-return confirmation, then capture.
+
+# Current checkpoint — GPIO20 responds to its internal pull-up
+
+## PORT-008 — Weak internal pull-up produces high input
+
+r04 independently installed/verified. GPIO20 input-only, sleep off: internal
+pull-up off reads0/0/0, on reads1/1/1, removed reads1/0/0. Internal pull-up
+removed at end; output stays disabled. Input works; suspected physical
+contact/continuity/pin identity discrepancy with earlier DevKit-end3.27V,
+not proven specific wiring fault. Reference still says EXT2-13=GPIO20.
+No transfer/Agonreset/SDchange/otherGPIOsetup. Collector closed; probe remains
+installed and idle. Do not call internal pull-up a repair. Discuss next physical
+check; exact normal recovery helper remains prepared.
+See docs/tasks/PORT-008/READY-REGISTER-RESULTS-R01.md.
+
+Local evidence: agents/port008-live-qualification/devkit-hardware-r01/ready-register-r01/internal-pull-up-result.local.json.
+
+# Current checkpoint — input-only comparison made no improvement
+
+## PORT-008 — Input-only/sleep-disabled comparison complete
+
+Author-approved r03 installed and independently verified. Three samples at each
+stage: historical released setup=0, input-only=0, input-only/sleep-disabled=0.
+Live registers confirm output disabled and sleep selection cleared in final
+stage. Neither change remedies discrepancy with earlier DevKit-end 3.27 V.
+Current probe leaves GPIO20 input-only, sleep selection off, no internal pulls.
+No Agon reset, SD mutation, transfer or other pin setup. Collector closed.
+Normal firmware not restored; exact recovery remains prepared. Await discussion.
+See docs/tasks/PORT-008/READY-REGISTER-RESULTS-R01.md.
+
+Local evidence: agents/port008-live-qualification/devkit-hardware-r01/ready-register-r01/input-only-result.local.json.
+
+# Current checkpoint — live GPIO20 readback complete
+
+## PORT-008 — GPIO20 readback complete
+
+Independent probe installation/readback passed. Raw GPIO20 input stays zero
+with input enabled, GPIO selected, released open-drain output, no individual
+pad hold and enabled GPIO/IOMUX clocks. Author's preceding DevKit-end meter
+reading was 3.27 V. SDK sleep selection is normal startup configuration; no
+cause or DMA defect established. See docs/tasks/PORT-008/READY-REGISTER-RESULTS-R01.md.
+Probe r02 remains installed idle, collectors closed. No Agon reset/SD mutation/
+EMOS change/parallel arm or data. Await discussion before a configuration test.
+
+Local evidence: agents/port008-live-qualification/devkit-hardware-r01/ready-register-r01.
+Normal firmware restore helper in that directory; no reset authorized by this checkpoint.
+
+# Current checkpoint — DevKit-end READY voltage confirmed
+
+Author confirms the **3.27 V reading was at the DevKit end**, as instructed.
+The signal at that measured header point is therefore high. Rechecking the
+pinned SDK and compiled receiver confirms `gpio_get_level(20)` reads input
+register bit 20 and initialization requests input plus released open-drain
+output. This static evidence does not establish the live IO_MUX configuration
+or actual chip-pad voltage. Next proposed bounded diagnostic: read live IO_MUX,
+GPIO input/output/enable and output-selection registers for GPIO20, alongside
+the SDK configuration dump. It must leave READY released and must not arm
+PARLIO, drive a test level, reset Agon or transfer data. This would be a separate
+instrumented receiver build, not the unchanged historical baseline. No such
+build or installation has occurred; await agreement before changing firmware.
+
+Historical receiver remains installed/unarmed. No hardware changes this turn.
+
+# Current checkpoint — READY measured high; endpoint clarification pending
+
+Author reports **3.27 V** for the requested powered blue READY_N-to-ground
+measurement. The measured point is high, conflicting with the receiver's
+preceding GPIO20 input reading of zero. The exact probe endpoint (Agon versus
+DevKit end) is not yet confirmed. The reviewed receiver still selects GPIO20
+input/open-drain output and reads that input; static review found no mapping
+or release-polarity typo. Do not infer end-to-end continuity, failed hardware
+or a DMA fault from this observation. No new flash, reset, arm or transfer.
+
+Historical receiver remains installed and unarmed; normal Extender services
+remain unavailable. Pause for probe endpoint clarification.
+
+# Active checkpoint — DevKit idle voltage measurement
+
+Idle receiver installed and independently verified at 40 MHz; USB status reports
+READY=0 with output released. Receiver was not armed and Agon was not reset.
+No parallel data sent. USB collector closed. Standalone receiver remains
+installed awaiting the Author's blue READY-to-common-ground voltage reading;
+normal Extender keyboard/network services are temporarily unavailable. Exact
+normal-firmware restore helper and hash-verified files are retained locally.
+
+Local evidence: agents/port008-live-qualification/devkit-hardware-r01/ready-voltage-r01.
+Do not reset, arm, transfer or restore before Author supplies meter reading.
+
+# Current checkpoint — files-only READY review; Jukebox in use
+
+Author reports normal browser games/input work and is using Jukebox. No bench
+access, flash, reset, serial/network device check, SD mutation or input injection.
+Normal38-byte startup restored; exact September30 P4 independently restored,
+EMOS unchanged. Author confirms correct blueREADY10k pin-to-rail meter check.
+Software review found no causal pin configuration error, including compiled code.
+Runner falsely exits0 on caught failure; JSON correctly says notinvoked. New
+pre-reset gate differs from original successful procedure; fixed17second delay
+also lacks actual sender-readiness proof. No payload or DMA conclusion exists.
+Review docs/tasks/PORT-008/READY-SOFTWARE-REVIEW-R01.md; local disassembly/evidence
+control-bias-r01/ready-software-review. No firmware changes or deployed remedy.
+Await discussion and explicit bench return; do not interrupt Jukebox.
+
+# Current hold — normal startup restored; bench shut down
+
+Author mounted Agon SD on Lenovo and is shutting down bench. Original38-byte
+/autoexec.txt restored offline with UUID/content checks, fsync and readback;
+SHA7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5.
+Unused test startup archived /agents/extender/backups/startup/prx06one-unrun.txt.
+Card LEFT MOUNTED Lenovo. No Agon reset, flash, test or live-device check.
+Exact September30 normal P4 already independently restored; EMOS unchanged.
+Input recovery not tested after that restoration; do not claim ready input.
+Author meter-check correction: blue READY_N correctly placed,10k from pin
+to rail. Withdraw one-pin-offset suspicion. Powered READY voltage unmeasured.
+Released READY0 prevented any reset/arm/payload in prior attempt. Do not diagnose DMA or data failure.
+Hold all bench operations until Author returns powered bench and confirms card.
+Evidence control-bias-r01/{offline-restoration.local.json,handback.local.json}.
+
+# Current hold — normal DevKit firmware restored; startup recovery pending
+
+2026-10-10 08:44Z control-bias-r01: Author reports all3control10k pulls fitted.
+Normal Legacy listener staged and readback verified single-record sender/startup.
+Historical receiver independently flash-verified; released READY still reads0.
+Collector correctly stopped BEFORE any Agon reset or USB arm; no payload verdict.
+Exact September30 P4 restored/all4segments verified; EMOS/mainboardVDP unchanged.
+P4 HTTP works but input not admitted after P4 reboot. DO NOT RESET AGON:
+/autoexec.txt still has52-byte test trigger; sender has never run/restored it.
+Author must mount card on Lenovo; prepared control-bias-r01/restore-card.py
+restores original38bytes after exact mount/UUID/content checks. No card operation
+until Author confirms mounting. Then await card return before recovery reset.
+No analyzer on DevKit, no missing-wire or DMA diagnosis, no ongoing bench process.
+Local evidence control-bias-r01/{run-result.json,normal-restoration,recovery-pending.local.json}.
+
 # Active checkpoint — bounded DevKit parallel test resumes
 
 Author confirms three10k control pulls installed and authorizes resume. Scope
