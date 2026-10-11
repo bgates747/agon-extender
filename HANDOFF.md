@@ -2,8 +2,9 @@
 
 The Author reports a major regression. The ordinary parallel adapter passes
 bounded functional checks but fails ordinary-use performance expectations and
-reliable reset admission. The pre-goal UART pair is restored and the bench released; experimental
-source and evidence are preserved. Production selection remains unchanged.
+reliable reset admission. The pre-goal UART pair is restored; experimental source and evidence are
+preserved. The newer Author/fsim review reservation controls bench access.
+Matched-stream timing preparation is complete offline. Production is unchanged.
 
 ## Start here
 
@@ -51,3 +52,21 @@ source and evidence are preserved. Production selection remains unchanged.
 
 Only owned documentation/source checkpoints are committed. Other agents'
 HOST-001, external game and consumer changes remain untouched.
+
+
+## Next bounded task — matched stream timing
+
+1. Author approved [matched UART/parallel timing](docs/tasks/PORT-008/STREAM-TIMING-R01.md).
+   ST01–ST03 complete: exact-ROM-bound MOSlet and timing EMOS compile, mandatory
+   link/owner and CPU-model checks pass, complete buffer validator tested.
+2. Timing EMOS 2026-10-11 19:00:57Z uses 131048 bytes (24 free), 80 more than
+   ordinary profile. The ordinary control is byte-identical to preceding
+   stream-r11 except build identity. No new EDP instrumentation is needed;
+   retained P4 stream-r14 is the paired candidate, not uninstalled r15.
+3. Retained build/provenance/checks: ignored agents/stream-timing-r01/;
+   final MOSlet fixture-r08. Reproducible source/procedure:
+   tests/performance/stream_timing/README.md. Nothing has been deployed.
+4. Obtain Author release of the newer fsim review reservation before ST04.
+   Do not reset, flash, probe or assume idle CLI from older receipts. The mainboard
+   custom fsim VDP must remain unchanged. Complete comparison and exact UART
+   restoration, then stop for discussion before any optimization.

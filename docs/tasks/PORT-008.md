@@ -16,10 +16,12 @@ verified UART pair and defer further candidate installation.
 The [current results](PORT-008/EXEXT-STREAM-R01-RESULTS.md) separate those limits
 from passed checks. Legacy/ExCom and rollback remain preserved; production
 selection has not changed.
-The next proposed investigation is the [matched UART/parallel stream timing
-contract](PORT-008/STREAM-TIMING-R01.md), drafted for Author review. It measures
-identical payloads at submission, physical drain and EDP completion boundaries;
-implementation and bench execution remain pending approval.
+The Author approved the [matched UART/parallel stream timing
+contract](PORT-008/STREAM-TIMING-R01.md). Its fixture, timing-only EMOS build and
+offline checks are complete. Physical comparison awaits release of the current
+Author/fsim bench reservation; no hardware timings or new installation yet.
+It separates identical-payload submission, physical drain, parallel receipt and
+ordered EDP processing/reply boundaries.
 Older bench restrictions and failure statements below are dated evidence;
 current bench ownership and identity remain in the ignored local record.
 

@@ -80,7 +80,7 @@ time as a coarse cross-check, with its resolution stated.
    bytes if legal command padding allows; otherwise record the closest valid
    command-complete lengths before freezing the fixture. Never end inside a
    command or upload body.
-3. Perform one unmeasured warm-up and five retained samples per length per
+3. Perform one retained warm-up excluded from comparison and five retained samples per length per
    route. Alternate route order between groups to expose order effects. Reset
    scene state and drain traffic outside each measurement.
 4. Validate final state through an existing bounded query or retained capture
@@ -91,14 +91,14 @@ time as a coarse cross-check, with its resolution stated.
 
 ## Subtasks and gates
 
-ST01 [ ] — Review and freeze exact measurement points. Read official VDU
+ST01 [x] — Review and freeze exact measurement points. Read official VDU
 definitions and the existing PRT/fence implementation. Inspect both EMOS output
 routes and the final parallel clock/cleanup boundaries. Record the selected
 paired source commits, timer settings, compatible fence, actual payloads and
 minimal patch inventory. Stop if a required boundary cannot be measured without
 changing transport behavior materially; return that decision to the Author.
 
-ST02 [ ] — Build the minimal fixture and instrumentation. Keep the fixture,
+ST02 [x] — Build the minimal fixture and instrumentation. Keep the fixture,
 result formatting and diagnostics in a MOSlet/application where possible.
 EMOS contains only unavoidable private drain/timestamp hooks and bounded RAM
 storage. EDP changes only if no existing compatible fence suffices. No printing,
@@ -107,7 +107,7 @@ If per-block phase attribution is cheap, retain separate payload-loop and
 handover totals using boundary reads; do not enlarge this into a profiling
 framework. Explain every resident diagnostic hook and its removal condition.
 
-ST03 [ ] — Verify offline before deployment. Compile both component builds and
+ST03 [x] — Verify offline before deployment. Compile both component builds and
 fixture; verify ROM fit, ownership, exact byte ordering and flush/fault cleanup.
 Reuse emulator checks for EMOS/fixture correctness where supported, without
 claiming emulated GPIO timing. Test timer saturation and the distinction between
@@ -160,7 +160,7 @@ optimization. Passing timing acquisition is not acceptance of ExExt performance.
 
 ## Current disposition
 
-Execution approved by the Author; implementation begins with ST01. Hardware
+Execution approved by the Author; ST01–ST03 offline preparation is complete. Hardware
 execution awaits release of the newer fsim/Author bench reservation recorded
 in HARDWARE.local.md. No hardware operations while that reservation stands.
 The paused goal and existing regression rollback remain in force. No new
@@ -200,3 +200,54 @@ architectural decision or firmware acceptance is implied.
    interval using existing EDP output. Its logging is outside capture; bind
    exact retained bytes before accepting correctness. Reject missing/truncated
    evidence. No newly invented network diagnostics are required.
+
+
+## Compiled checkpoint — ST01–ST03, 2026-10-11
+
+The matched-stream MOSlet and private EMOS timing composition compile and pass
+bounded offline checks. **No physical measurements or installations occurred.**
+ST04 is blocked only on release of the current Author/fsim bench reservation;
+ST05–ST06 remain unexecuted. The existing UART rollback pair remains installed.
+
+| Artifact / check | Result and scope |
+|---|---|
+| Timing EMOS | `agon-emos-v0.1.24-b2026-10-11-19-00-57Z`, source `d7f25d8`; 131048 bytes, 24 ROM bytes free; mandatory build/link checks pass |
+| Ordinary control | `agon-emos-v0.1.24-b2026-10-11-19-11-39Z`, source `5922583`; 130968 bytes, 104 free; complete image differs from preceding stream-r11 only in build identity |
+| Instrumentation cost | 80 resident ROM bytes; shared native assembly body assembles probes out of ordinary builds; no EDP change |
+| MOSlet | `port-008-stream-timing-r01-b2026-10-11-19-23-40Z`; linked at &B0000, within its 32 KiB application allocation |
+| Actual linked EMOS checks | Both parallel directions, byte/edge order, guards, registers/stack/IFF; existing counted-output and VBlank checks; 9216 UART status/ownership/error cases pass |
+| Evidence validator | Five host tests pass, including corruption, truncation, missing/extra/duplicate samples, warm-up exclusion, saturation and endpoint-order controls |
+| Physical comparison | Not run; no speedup, dominant bottleneck, hardware byte-integrity or gameplay claim |
+
+1. Timing EMOS image SHA256:
+   `74c3b1f438c06d8107f151e26e32187f0b50f7d3c831dae5db3f38e43f52e3c4`.
+   Exact ELF SHA256:
+   `82e8949dc11d3ec02ab67ac7f75c44a9868c7e3d23325bb1bc71189c0d76db5c`.
+2. MOSlet SHA256:
+   `4571393391bf964e48a712cba5c403e8b97683e58aa7953ed75f175f03dbc5d8`.
+   Its builder binds private symbols to that exact ELF and adds a full-ROM
+   fingerprint refusal. These are temporary diagnostic bindings, not a public
+   MOS ABI or supported application GPIO access.
+3. [Fixture source, build and bench instructions](../../../tests/performance/stream_timing/README.md)
+   own the reproducible procedure. Exact binaries, manifests, linked checks and
+   normal-build isolation evidence are retained in the ignored local
+   `agents/stream-timing-r01/` silo. No emulator profile/module/deployment changed;
+   CPU-model checks prove modeled instruction/I/O correctness, not Fab behavior
+   or physical clocks.
+4. Parallel M02 reads the counter after the final rising edge and loop-exit
+   bookkeeping. UART M02 observes TEMT in software. Both include observation
+   delay and possible interrupt preemption; neither is an exact analyzer edge.
+   M03−M02 measures only the final block tail/receipt, not earlier handovers.
+5. EDP executes ordinary per-byte buffer updates during sending; receiver
+   backpressure remains included. This is the real application path rather
+   than isolated electrical bandwidth. Full 8192-byte poisoned/updated target
+   contents must match after every sample before accepting any comparison.
+6. The fixture uses a separate 120-second coarse timeout for verbose USB buffer
+   dumps outside timing. Ordinary reply waits remain four seconds; a measured
+   interval reaching PRT saturation is rejected. Neither timeout authorizes
+   resetting an uncertain running application. Actual suite runtime is unknown
+   until a comparable physical run is retained.
+7. Remove timing-only firmware hooks/profile from later production selection
+   after the transport investigation; keep the shared ordinary native body,
+   correctness tests and fixture source reusable. No production bundle/tag or
+   broader ExExt goal continuation is authorized by this checkpoint.

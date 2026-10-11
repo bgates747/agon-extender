@@ -43,7 +43,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — P4-PC supply correction passes independent transfers and real 1/255/4096-byte echo. The [ordinary ExExt goal](docs/tasks/PORT-008/EXEXT-STREAM-R01.md) is paused after a major performance regression; the verified UART pair is restored. Next: [matched stream timing contract](docs/tasks/PORT-008/STREAM-TIMING-R01.md), awaiting Author review. No production promotion.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — P4-PC supply correction passes independent transfers and real 1/255/4096-byte echo. The [ordinary ExExt goal](docs/tasks/PORT-008/EXEXT-STREAM-R01.md) is paused after a major performance regression; the verified UART pair is restored. The approved [matched stream timing contract](docs/tasks/PORT-008/STREAM-TIMING-R01.md) has compiled EMOS/MOSlet builds and passing offline checks; physical comparison awaits release of the Author/fsim bench reservation. No production promotion.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 
