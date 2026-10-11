@@ -9,22 +9,29 @@ path. Compare P4 CPU palette expansion and supported PPA/display operations. The
 unproven: existing direct RGB888 rendering removed an expensive conversion
 stage, and indexed storage could reintroduce it.
 
-**State: R07-01 complete; paused for Author review.** Author approved one
-unattended tranche on 2026-10-11: pin revisions and map the current pipeline,
-then report and stop. The [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
+**State: R07-01 complete; R07-03 capability research and compile-only example
+authorized, in progress.** On 2026-10-11 the Author requested detailed exploration
+of indexed HDMI/PPA expansion, sample code and target compilation. The
+[pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
 and [source baseline](RESEARCH-007/SOURCE-BASELINE.json) record that work.
-R07-02–07 remain unstarted. No implementation, benchmark,
-new mode, deployment or bench action is authorized. Fsim retains the bench;
+R07-02 and R07-04–07 remain unstarted. This is an isolated experimental example,
+not product integration. No benchmark, new mode, deployment or bench action is
+authorized. Fsim retains the bench;
 PORT-008's separate matched-pair hardware comparison is not part of this task.
 
 ## Current tranche boundary — 2026-10-11
 
-R07-01 alone is authorized. Read official contracts, then the selected current
-source and retained build manifests. Inventory storage formats, row tables,
-assets, saved sprite backgrounds, palette state, composition and output owners.
-Record exact references and a bounded source-linked report; make no architecture
-decision or performance claim. Do not execute benchmarks, modify code or touch
-devices. Commit/push documentation and stop before R07-02.
+R07-01 is closed. The Author subsequently authorized R07-03's focused capability
+research and an isolated compile-only example. Commit/push existing dirt first,
+freeze this boundary, then pin relevant hardware and SDK sources. Establish
+direct DSI indexed support versus memory-to-memory PPA expansion, silicon/SDK
+constraints and possible small-strip output. Prefer upstream operations/code;
+do not silently equate compile success with physical correctness or throughput.
+Keep the current SDK, product renderer and firmware selection unchanged. Store
+sample source in the task silo and generated build/tool evidence under ignored
+agents storage. No flashing, serial/device access, SD/startup changes, bench
+reservation or SDK replacement. Report evidence and unresolved hardware gates,
+commit/push owned work and stop before product integration or hardware tests.
 
 ## Clarification — direct indexed HDMI versus PPA expansion
 
@@ -160,6 +167,21 @@ DMA-accessible memory, synchronization and output-controller capabilities.
 State clearly whether expansion can share an existing scale/composition pass,
 requires another pass, or is unsupported. Unsupported PPA expansion is a valid
 finding; do not silently substitute a different interpretation of L8.
+
+The 2026-10-11 authorization includes these bounded implementation checks:
+
+1. **R07-03A [ ]** Pin primary hardware/SDK evidence and identify the precise
+   public-driver gap, supported operations and silicon constraints.
+2. **R07-03B [ ]** Write an isolated target example using verified palette
+   expansion operations, reusing upstream definitions/helpers where possible.
+   Explain any necessary low-level access beside the code. The example must
+   not initialize DSI/HDMI, keyboard, network, SD or product services.
+3. **R07-03C [ ]** Cross-compile/link for ESP32-P4 with retained tool identities.
+   Record exact configuration, source and artifact hashes, compile failures
+   that reveal genuine API constraints, and limits of compile-only validation.
+4. **R07-03D [ ]** Report direct-scanout and strip-conversion conclusions with
+   sources. Leave physical correctness, deadline/performance and renderer
+   integration unverified; stop without device access.
 
 ### R07-04 [ ] Compare CPU and output-stage alternatives
 
