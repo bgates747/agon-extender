@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: Apache-2.0
- * RESEARCH-007, ppa-clut-example-r01. Compile-only experimental test article.
+ * RESEARCH-007, ppa-clut-example-r02. Compile-only experimental test article.
  *
  * Operation/verification idioms adapted from Espressif's Apache-2.0 CLUT tests
  * in commit76b4cf1336168aad6d1db4b8d1d2743137db4092. See ../README.md.
@@ -143,6 +143,8 @@ void app_main(void)
     ESP_ERROR_CHECK(ppa_register_client(&config, &client));
     exercise_destination(client, indices, alpha, MALLOC_CAP_INTERNAL, "SRAM");
     exercise_destination(client, indices, alpha, MALLOC_CAP_SPIRAM, "PSRAM");
+    /* Inspect physical PSRAM input contents rather than stale CPU cache lines. */
+    ESP_ERROR_CHECK(esp_cache_msync(indices, INDEX_BYTES, ESP_CACHE_MSYNC_FLAG_DIR_M2C));
     for (unsigned y = 0; y < SOURCE_HEIGHT; ++y) {
         for (unsigned x = 0; x < WIDTH; ++x) {
             ESP_ERROR_CHECK(indices[y * WIDTH + x] == ((x + 17 * y) & 255) ? ESP_OK : ESP_FAIL);

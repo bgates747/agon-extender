@@ -6,6 +6,9 @@ SRAM and PSRAM destinations, two palettes without rewriting indices, nonzero
 source-row offset, missing/disabled-table rejection and an output guard. **No
 hardware run has been authorized or performed.** It does not generate HDMI.
 
+Current fixture identity: `ppa-clut-example-r02`. The source-only r01 was revised
+before its first build so the final input-integrity check invalidates CPU cache.
+
 ## Origin and SDK boundary
 
 1. Espressif added public BLEND CLUT support in
