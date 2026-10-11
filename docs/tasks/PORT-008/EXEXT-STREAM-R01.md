@@ -434,3 +434,18 @@ and DMA-owned nodes. Keep the SDK checkout unchanged. Record the derivative
 in the build manifest; then repeat existing focused fixtures and games. This
 is within EX04 split/bulk correctness and EX06 failure recovery; no new task,
 wire timing, renderer change or optimistic byte-count substitution.
+
+
+### EX05 poll snapshot ordering correction
+
+Stream-r08 installs/verifies independently and T07 completes120valid records,
+no abort or packet fault, confirming the formerly missing tail boundary works
+in this bounded physical case. Fenced whole-update completion median67ms and
+9.96updates/s remain slow. P4 currently handles POLL before its retained parser
+consumes freshly retired forward bytes, so it can acknowledge an empty return
+queue before generating the query reply. Within EX05, defer that complete
+POLL envelope while queued forward bytes remain, matching STOP's existing
+backpressure shape. An upload waiting for more bytes can acknowledge when the
+ring is empty through the non-reentrant I/O-only hook. Test actual queue owner
+negative/positive ordering, rebuild/verify normal full-HDMI firmware, compare
+T01/T03 and retain game timing scopes. No wire format, renderer or EMOS change.

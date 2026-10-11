@@ -38,7 +38,10 @@ int main() {
  for(unsigned n:{1u,2u,3u,17u,255u,256u,1024u,4096u}) {
   std::vector<uint8_t> p(n);for(unsigned i=0;i<n;++i)p[i]=uint8_t(i*73u+(i>>8));
   block(c,s,p,false);assert(!command(c,s,PARALLEL_STREAM_STOP,r));
-  std::vector<uint8_t> got(n);assert(s.read(got.data(),n)==n && got==p);assert(s.read()==-1);++cases;
+  assert(!command(c,s,PARALLEL_STREAM_POLL,r)); // no prematurely empty snapshot
+
+  std::vector<uint8_t> got(n);assert(s.read(got.data(),n)==n && got==p);assert(s.read()==-1);
+  assert(command(c,s,PARALLEL_STREAM_POLL,r) && !r[10] && !r[11]);++cases;
  }
  // A reverse block can contain partial/multiple packets; ordering is retained
  // across wrap and only a matched receipt retires bytes.
