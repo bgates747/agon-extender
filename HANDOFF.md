@@ -1,5 +1,7 @@
 # Current checkpoint — P4-PC fails without probes; ordinary state restored
 
+Offline follow-up: retained CPU-high control has D7 high for all1,024 samples; both modern board boot logs identify v1.3 silicon. Proposed DI05-B5 P4-PC browser/no-HDMI control is recorded, NOT built/run. The authorized hour elapsed; await Author continued authorization. No hardware operation after verified handback.
+
 Author reattached P4-PC, sniffers removed. Exact earlier filtered data-r12
 installed/all4segments independentlyverified. One1024-byte reverse has512errors,
 allmissingbit7; lower7bits/bytepositions exact, status0/guardsintact, P4sourceexact.
