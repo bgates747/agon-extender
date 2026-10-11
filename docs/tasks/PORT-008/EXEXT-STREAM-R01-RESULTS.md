@@ -72,3 +72,25 @@ T03 pass has its own complete saved record.
    probe, successful per-byte instrumentation or EMOS diagnostic ROM growth.
    These facts distinguish callback rejection, TX backend failure and timeout
    before choosing a remedy; do not infer new electrical corruption.
+
+
+## Finite RX descriptor isolation — stream-r07
+
+1. The Legacy five-second cached-input control saves six exact callbacks and
+   cached-map changes, matching the ExExt input control. The ExCom control does
+   not launch: after its reset, screen sampling remains stale and the expected
+   preparation command is absent. It is not an ExCom pass.
+2. All four stream-r07 P4 segments independently verify. Its first T07 invocation
+   fails forward RX: requested591bytes, completion1, received576bytes,
+   callback-fault0. No T07 result, T08 or T09 run is claimed. Paired reset
+   recovers; original startup/config are restored and readback checked.
+3. Pinned PARLIO RX accounts one descriptor per DONE callback. Its body/tail
+   descriptors can complete before one interrupt is served. A source-derived
+   negative reproduces591→576; the bounded derivative passes16 actual-callback
+   controls, including split/coalesced completions, short/stale events, cache
+   visibility and unchanged infinite RX. This supports an accounting cause,
+   not a conclusion of electrical corruption or a physical remedy pass.
+4. [FWBUG-016](../../firmware-bugs.md) records the isolated driver change. The
+   full-HDMI candidate must now compile, independently verify after installation
+   and repeat T07 before expanding to T08/T09/games. Existing warm-reset
+   limitations remain open; paired recovery is a separate operation.

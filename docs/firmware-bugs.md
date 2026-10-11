@@ -113,3 +113,15 @@ build and reproducible conditions are reconciled; retain the original finding ID
 | Extender evidence | Full-HDMI stream-r05 physical mode transition panics in `shared_intr_isr`, reading DW-GDMA status0x50081030. Source order independently exposes that interval; unrelated memory corruption has not yet been excluded by physical repeat controls. |
 | Disposition | Bounded isolated SDK derivative and source-derived lifetime regression under [PORT-008 EX06](tasks/PORT-008/EXEXT-STREAM-R01.md). Original SDK remains read-only. No renderer/transport-data change or production acceptance. |
 | Removal condition | Pinned SDK update supplying equivalent IRQ-before-group/clock teardown, followed by mode-transition regression. |
+
+
+## FWBUG-016 — finite PARLIO RX counts interrupts instead of completed descriptors
+
+| Field | Record |
+|---|---|
+| Component | ESP-IDF5.5.5 `b774170ff46c393eeb5e495ea37936038d3f4f4f`, `components/esp_driver_parlio/src/parlio_rx.c::parlio_rx_default_desc_done_callback` |
+| Trigger | Two finite RX descriptors complete before the GDMA DONE interrupt is serviced. DONE is a status bit; upstream advances one descriptor per callback, then EOF reports the incomplete software byte count. |
+| Mainboard | Not applicable to the mainboard ESP32 VGA driver. The eZ80 sender participates in the physical reproduction, but no wire corruption is established. |
+| Extender evidence | Independently verified full-HDMI stream-r07 fails T07: requested591, done1, received576, callback-fault0. The missing15 bytes equal its tail descriptor. The source-derived negative reproduces this accounting failure; physical confirmation of the proposed cause/remedy is pending. |
+| Remedy / owner | [PORT-008 EX04/EX06](tasks/PORT-008/EXEXT-STREAM-R01.md): an explicit ExExt build derives the pinned RX unit, draining actual CPU-owned completed nodes through the original cache/callback logic, with bounded traversal and no invented count. Original SDK remains untouched. Sixteen source-derived descriptor/cache/coalescing/short/stale/infinite controls pass under ASan/UBSan. |
+| Removal condition | A selected SDK implements equivalent finite descriptor accounting, followed by the same negative/positive controls and physical stream regression. |

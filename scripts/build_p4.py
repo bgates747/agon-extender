@@ -688,6 +688,7 @@ def main() -> None:
                f"-DAGON_DEPENDENCIES_LOCK={lock}",
                f"-DAGON_VDP_ROOT={VDP}",
                f"-DAGON_ROLLING_SCANOUT={'ON' if args.rolling_scanout else 'OFF'}",
+               f"-DAGON_EXEXT_STREAM={'ON' if args.exext_stream else 'OFF'}",
                f"-DAGON_HDMI_TIMING={args.hdmi_timing}",
                f"-DSDKCONFIG={sdkconfig}",
                f"-DAGON_DSP_LIFETIME_FIX={'ON' if profile.get('dsp_lifetime_fix') else 'OFF'}",
@@ -745,6 +746,8 @@ def main() -> None:
     if args.rolling_scanout:
         artifact_paths.extend([build/"dsi-strip/esp_lcd_panel_dpi.c",
                                build/"dsi-strip/dw_gdma.c"])
+    if args.exext_stream:
+        artifact_paths.append(build/"exext-parlio/parlio_rx.c")
     if args.usb_fsls_only:
         artifact_paths.extend([VDP / "native/usb_fsls_only.cmake",
                                build / "agon-extender-usb/hcd_dwc.c"])

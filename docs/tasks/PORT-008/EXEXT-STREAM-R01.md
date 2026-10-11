@@ -413,3 +413,24 @@ the separate limits; paired recovery is not a warm-reset pass. Extend existing
 USB failure reporting with failed-leaf direction/length/callback facts, rebuild
 the normal candidate, then isolate the failed transfer. Keep native success
 paths, ownership, deadlines and production selection unchanged.
+
+### EX04 pinned PARLIO RX descriptor correction boundary
+
+Stream-r07 repeats T07 once after independent installation verification. Its
+first failed leaf is forward RX, requested591bytes, done1, received576bytes,
+callback-fault0: exactly the aligned body without its15-byte tail descriptor.
+Pinned IDF5.5.5 `parlio_rx_default_desc_done_callback` handles one node per
+GDMA DONE interrupt, although multiple node completions can coalesce before
+the ISR. Normal EOF then reports that incomplete software total and merges
+the unvisited tail. Do not accept the short count or infer lost wire bytes.
+
+Derive only this hash-pinned SDK source for the explicit ExExt composition.
+For finite RX, drain completed CPU-owned descriptors in order, bounded by the
+mounted node count and transaction length; retain the existing node callback,
+cache synchronization, tail merge and EOF checks. Preserve infinite RX behavior.
+Execute source-derived negative/positive controls for591=576+15 and coalesced
+4096-byte transfers, noncoalesced progress, short EOF, stale/duplicate interrupt
+and DMA-owned nodes. Keep the SDK checkout unchanged. Record the derivative
+in the build manifest; then repeat existing focused fixtures and games. This
+is within EX04 split/bulk correctness and EX06 failure recovery; no new task,
+wire timing, renderer change or optimistic byte-count substitution.
