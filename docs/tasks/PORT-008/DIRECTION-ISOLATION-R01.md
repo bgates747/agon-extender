@@ -466,3 +466,40 @@ backup. All three installed-current records identify this fresh P4-PC restoratio
 Evidence retains installation/restoration receipts, P4 source report, full CSV,
 host comparison, final state and file hashes. No active collector/flash/transfer
 or reset hold remains; no promotion or completed repair is claimed.
+
+### Offline follow-up and next comparison boundary
+
+Review of the retained CPU-driven-high control confirms that the Agon received
+bit7 high in all1,024 bytes during that leased transfer. This is stronger than
+an idle pad snapshot: the pad/wire path can maintain a driven high while the
+Agon samples. The other bits were not correct in that unfiltered diagnostic
+control, so it is not a payload pass or proof of dynamic electrical integrity.
+The no-probe P4-PC transfer instead receives bit7 low throughout when PARLIO
+drives it. A permanent ground short is less likely; conditional loading, pad
+behavior and peripheral routing remain possible.
+
+Both retained modern board boot logs identify chip revision v1.3. Different
+silicon revision is therefore not an explanation for these particular controls.
+The bounded maintained-source review found no second GPIO46 owner. Absence of
+a source reference does not prove absence of peripheral or electrical conflict.
+The ignored offline-followup record retains the input hashes and recount.
+
+DI05-B5 [ ] — Proposed control, not yet authorized beyond the elapsed hour:
+the host builds a P4-PC browser-only comparison from the same filtered native
+TX, coordinator, independent endpoint and console sources. Keep the P4-PC pin
+map, USB composition, SDK, EMOS, harness, startup and Agon MOSlet unchanged.
+Use the maintained output selector, with an explicitly bounded private build
+identity if its existing guard requires extension. The P4 must initialize no
+HDMI/DSI output; its monitor will show no picture during this control. Retain
+the framebuffer/output-composition differences rather than calling this a
+single-variable hardware test.
+
+The host independently verifies installation, admits ordinary input, reads
+back startup/fixture and invokes one fresh1,024-byte reverse transfer from the
+CLI. It compares every Agon byte and guards. After either outcome, the host
+restores the exact preceding full-HDMI image and verifies ordinary readiness.
+A browser-only pass would narrow the fault to the differing output composition;
+it would not fix or qualify the full-HDMI target. A failure would leave the
+physical GPIO46/harness path unresolved. No wiring change or further payload
+remedy follows automatically. No new build, flash or transfer was performed in
+this offline review; the Author's one-hour limit is the next execution gate.
