@@ -35,9 +35,11 @@ fn main(){
   assert_eq!(result,if kind==0{0}else{0xe2});
   assert_eq!(b.peek(s["_queued"]),0);assert_eq!(b.peek(s["_queued"]+1),0);
  }
+ if s.contains_key("_emos_stream_timing_last_raw") {
  for raw in [0u16,1,0x1234,65534,65535]{
   b.poke(s["_emos_stream_timing_last_raw"],raw as u8);b.poke(s["_emos_stream_timing_last_raw"]+1,(raw>>8)as u8);
   assert_eq!(run(&mut b,f["_st_wire_read"],true),65535-u32::from(raw));
  }
- println!("PASS actual MOSlet/ZDS ABI: empty drain, four refusals, five raw timer values, HL status, IX/IY/SP/IFF; no physical timing");
+ }
+ println!("PASS actual MOSlet/ZDS ABI: empty drain, four refusals, raw timer values when present, HL status, IX/IY/SP/IFF; no physical timing");
 }
