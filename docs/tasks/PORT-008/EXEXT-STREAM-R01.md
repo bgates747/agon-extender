@@ -602,3 +602,18 @@ phase assertion. Build/freeze normal full-HDMI firmware; after the current
 finite Apple invocation ends and startup is restored, independently verify it
 and compare the same frozen Nurples workload. No protocol/renderer/EMOS change,
 new diagnostics, task restructuring or claimed speedup before physical evidence.
+
+
+### Regression disposition — frozen 2026-10-11 17:50 UTC
+
+The Author reports a major regression. The measured ExExt mode is unsuitable
+for ordinary use: Nurples is14.55updates/s versus the earlier ExCom60; fixed
+Lode Runner CPU work takes34.233s versus Legacy6.383s. Preserve all evidence
+and restore the exact preceding verified UART pair, not a newly built candidate:
+P4 `port-008-data-r20-b2026-10-11-09-07-32Z` and EMOS
+`agon-emos-v0.1.24-b2026-10-10-01-48-39Z`. Independently verify all four P4
+segments, complete EMOS ROM, original startup, admitted neutral input and a
+finite UART control. Keep the mainboard consumer VDP unchanged. EX-C15 remains
+compiled and uninstalled; its physical trial is deferred. The eight-hour goal
+is incomplete and production remains unchanged. No further ExExt candidate
+installation is authorized by this rollback disposition.
