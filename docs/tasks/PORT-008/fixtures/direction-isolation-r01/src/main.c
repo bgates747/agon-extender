@@ -37,6 +37,9 @@ int main(int argc,char **argv){
  fprintf(f,"%u,%u,%u,%u,%u,%u,%u,%u\n",n,reverse,status,guards,mismatches,first,actual,expected);
  fputs(reverse?"# P4 source generated independently; compare all Agon bytes\n":
                "# Forward integrity owned by P4 retained comparison, not this status\n",f);
+ /* Diagnostic only: retain full received bytes after transport returns.
+    No logging or SD operations run inside the native byte loop. */
+ if(reverse){fputs("# received=",f);for(unsigned i=0;i<n;++i)fprintf(f,"%02x",data[i]);fputc(10,f);}
  {unsigned error=ferror(f);if(fclose(f)||error)return 15;}
  printf("Direction isolation %s: status=%u guards=%u mismatches=%u\r\n",argv[1],status,guards,mismatches);
  return status || !guards || mismatches?15:0;

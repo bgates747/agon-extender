@@ -1,21 +1,27 @@
-# Current checkpoint — reverse parallel corruption isolated
+# Current checkpoint — reverse remedy run; not fixed
 
-The committed/pushed direction-isolation contract has executed through DI04.
-Modern forward Agon → P4: all 1,024 retained bytes match exactly.
-Independent reverse P4 → Agon: 955/1,024 bytes wrong, first offset 2,
-actual 0x7b versus expected 0xfb. P4 source correct before/after transmission;
-no echo contamination. Both native statuses 0, guards intact. No replay.
-One transfer each; other sizes, P4 DMA/pad versus wire/Agon sampling unresolved.
-No remedy attempted; DI05 requires Author discussion.
+The authorized one-hour PORT-008 investigation narrowed but did not fix reverse
+parallel corruption. CLOCK input glitch filtering yields exact lower seven bits
+for all 1,024 bytes, leaving 480 bit7 errors. Lane swaps preserve the fault on
+physical GPIO46; constant CPU high works. No matching pull-resistor silicon
+erratum found in retained legacy vendor docs; old 74HC125 handled shared-bus
+isolation/ownership. This is evidence, not an electrical root-cause verdict.
 
-Exact preceding matched full-HDMI P4 data-r01 restored, all four segments
-verified. Existing modern EMOS unchanged. Pi reset hold released; input ready,
-neutral, held/pending zero. Startup original 38 bytes verified, listener closed.
-Card remains in Agon. No active hardware process. Production unchanged.
-All three installed-current records point to fresh restoration receipt.
-Evidence: agents/port008-live-qualification/direction-isolation-r01/.
-Task: docs/tasks/PORT-008/DIRECTION-ISOLATION-R01.md.
-Pre-work commits c07ac854 and 0a25f10a pushed. Results/source remain local for review.
+All temporary native P4 experiments removed from maintained source; 209 native
+host lifecycle cases pass. Full-byte receive dump remains in the diagnostic
+MOSlet after transport return, deployed separately as /emos/paridump.bin.
+Results and exact per-candidate identities: docs/tasks/PORT-008/DIRECTION-ISOLATION-R01.md.
+Ignored evidence: agents/port008-live-qualification/reverse-remedy-r01 through
+reverse-remedy-r10; consolidated summary and fresh recovery receipt under
+reverse-remedy-handback-r01. DI05-B/C remain open; no successful-candidate
+forward/reverse or 1/255/4096-byte requalification and no promotion.
+
+Exact preceding full-HDMI data-r01 P4 restored, all4segments verified; EMOS
+v0.1.24-b2026-10-10-01-48-39Z/mainboardVDP unchanged. Original38bytestartup
+readback verified, listener closed, keyboard ready/neutral held0/pending0,
+reset hold released. Card in Agon; no ongoing bench process. Three ignored
+installed-current records refreshed. Unrelated HOST-001 relocation and EMOS
+application_peer work belong to other sessions and were not staged.
 
 # Current checkpoint — modern paired transfer fails at 255 bytes
 

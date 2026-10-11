@@ -3,12 +3,13 @@
 ## Executive summary
 
 The modern 1,024-byte forward path passes exact P4 retained-byte comparison.
-Independent reverse transmission produces 955 incorrect Agon bytes, first at
-offset 2, despite correct P4 source before/after transmission. This establishes
-a reverse-path defect without echo contamination; its electrical/DMA/sampling
-location remains open. Exact preceding matched HDMI firmware and ordinary input are restored. Author
-approved this bounded plan on2026-10-11: freeze/push, execute the first two
-checks, recover ordinary input and pause for discussion.
+Reverse remains defective after the authorized one-hour investigation. The
+strongest candidate, a P4 CLOCK input glitch filter, preserves all seven lower
+bits across 1,024 bytes but still corrupts bit 7 in 480 bytes. A lane permutation
+keeps the fault on physical GPIO46, while a CPU-driven constant high works.
+This narrows the investigation without establishing an electrical or silicon
+root cause. The exact preceding matched HDMI image and ordinary input are
+restored; production remains unchanged. DI05-B/C remain incomplete.
 
 DI01 [x] — Reuse the existing private retained-data endpoint and snapshot hook.
 EMOS sends a position-dependent1,024-byte pattern through its existing gateway
@@ -146,7 +147,7 @@ the contract and prior findings were committed/pushed before execution.
 
 ## One-hour continuation contract
 
-DI05-A [ ] — Freeze isolated findings and inspect actual TX clock/pad/DMA and
+DI05-A [x] — Freeze isolated findings and inspect actual TX clock/pad/DMA and
 EMOS byte-read contracts. Distinguish a byte alignment error from sampled bit
 corruption before choosing a remedy. Pinned IDF source performs C2M cache sync
 inside transmit; adding a redundant flush without evidence is not a remedy.
@@ -157,3 +158,107 @@ capture. Use CLI invocation, fresh result paths and unchanged startup.
 
 DI05-C [ ] — Rerun both directions, 1/255/4096-byte roundtrips and ordinary
 startup/input readiness. Record limits and leave a verified usable pair.
+
+### DI05-A — Control trace and first focused candidate
+
+The unchanged falling-edge TX control repeated reverse transmission with full
+Agon receive bytes retained. This run had 957 incorrect bytes, first offset 2,
+0x7b instead of 0xfb. A 15-second eight-channel digital acquisition at 24 MHz
+retained exactly 360 million samples. The active interval contains 1,024 falling
+and 1,024 rising CLOCK edges; the observed D7 wire is mostly low with brief
+spikes, and the lower-seven-bit sequence skips source bytes at several offsets.
+The defect therefore appears on observed P4-side wire signals before EMOS
+sampling. This digital trace does not prove voltage margins or exclude glitches
+shorter than the 41.67 ns sampling period. Unprobed data bits remain unobserved.
+
+Pinned IDF 5.5.5 transmit already performs C2M cache synchronization. Its
+`test_use_external_non_free_running_clock` uses rising-edge TX and a unit clock
+divider. The first candidate changes only native TX shift edge to rising, with
+EMOS, wiring, RX, handover, source pattern, SDK and full HDMI held constant.
+This is a diagnostic comparison, not a claim that the edge change is a fix.
+The [Espressif v1.3 TRM](https://documentation.espressif.com/esp32-p4-chip-revision-v1.3_technical_reference_manual_en.pdf),
+sections 56.5.2–56.5.3, also describes non-free-running slave clock and reset
+restrictions; pinned driver source remains the implementation baseline.
+The full-byte dump is appended to the fixture CSV after native return, never
+logged during the byte loop. Local control evidence is `reverse-remedy-r01`;
+the first candidate is retained separately in `reverse-remedy-r02`.
+
+
+### DI05-B — Bounded remedy experiments; no complete fix
+
+Each row is a separate reverse 1,024-byte run on the unchanged EMOS build and
+wiring, using the independently generated P4 pattern. The ranking below is
+incorrect-byte count, lowest first. All native statuses were 0 and Agon guards
+remained intact. These are correctness results, not throughput measurements.
+
+| Change / local experiment | P4 data build | Incorrect bytes / 1,024 | Lower-seven-bit incorrect bytes | Conclusion |
+|---|---|---:|---:|---|
+| Fixed CLOCK input glitch filter / r10 | r12 | 480 | 0 | Byte ordering/lower bits now exact in this run; bit7 remains wrong |
+| Rising shift edge / r02 | r04 | 883 | 745 | Not a correction |
+| Constant CPU-driven GPIO46 high / r06 | r08 | 955 | 892 | Deliberately nonmatching payload; proves pad/wire can hold high |
+| Unchanged falling-edge control / r01 | r03 | 957 | 888 | Reproduces reverse fault |
+| GPIO and first DMA bytes readback / r03 | r05 | 958 | 888 | Matrix/pad configuration and CPU-visible source look correct |
+| CPU output-enable override / r04 | r06 | 958 | 888 | Not a correction |
+| Sixteen-bit packing, lane8 drives GPIO46 / r05 | r07 | 958 | 888 | Failure survives a different peripheral data lane |
+| Swap lanes0/7, compensate source encoding / r07 | r09 | 958 | 888 | Failure stays on physical GPIO46 rather than logical data7 |
+| Explicit GPIO initialization before matrix / r08 | r10 | 958 | 888 | Not a correction |
+| Preload GPIO46 output latch high / r09 | r11 | 958 | 888 | Not a correction |
+
+The filtered run has 32 high-bit bytes versus 512 expected. All 480 incorrect
+bytes differ only in bit7. The CLOCK filter rejects pulses shorter than two
+IO-MUX sampling cycles; this one positive change warrants a controlled repeat,
+not adoption as a complete remedy. Earlier digital traces show 1,024 commanded
+rising/falling edges, source-byte skips and brief D7 spikes. Their 24 MHz sample
+rate cannot exclude shorter glitches or determine voltage/edge margins.
+Constant-high behavior and lane swaps narrow the physical-pad/output path;
+they do not prove a broken GPIO, bad harness or silicon erratum.
+
+Temporary P4 changes were frozen separately in each exact build/source archive,
+then removed from maintained source. Restored native source passes all 209
+actual-source host lifecycle/cleanup cases with ASan/UBSan. The only maintained
+fixture addition is a complete receive-byte hex dump written after transport
+return; deployed separately as paridump.bin, leaving pariso.bin available.
+It is not an application-side GPIO or routing bypass.
+
+Exact final candidate: port-008-data-r12-b2026-10-11-06-59-57Z, app SHA256
+9d4dc94f0a95af58ec7826cad16d8681f952fa52cb3edc04b3cf57ca539cbeaa.
+Every candidate has independently verified flash segments and a 15-second,
+24 MHz, 360-million-sample digital capture. Local reverse-remedy-r01 through
+reverse-remedy-r10 retain CSV/full receive bytes, USB logs, source/build
+manifests, raw capture hashes and installation/recovery receipts. The handback
+folder retains a machine-readable consolidated summary. No undocumented retry
+or data reconstruction was used to turn these failures into passes.
+
+### Legacy resistor / buffer investigation
+
+Author recalled a PARLIO erratum requiring external bias and the former
+74-series buffer. Reviewed the retained official ESP32-P4 Series SoC Errata
+v1.3 under agon-extender-legacy/docs/espressif (PDF SHA256
+6fc2ce35aecbb692fa4c5f4ce2830a12d85a9fa2fa12bf5fbcb6793d0a76b543),
+the revision-v1.3 datasheet, and legacy circuit/decision records at commit
+042c2f15b00b2b18971f842200228bdaff05596a. No matching PARLIO/GPIO pull-resistor erratum was identified in this
+bounded search. This does not establish that no such issue exists elsewhere.
+
+Legacy design/carrier-breakout-design.md explicitly requires a 10 kΩ CLOCK
+pull-down and 10 kΩ READY_N / VALID_N pull-ups. Its SN74HC125N circuit isolates
+the two shared UART/data paths and switches forward versus reverse-UART
+ownership, with pulled-up default-disabled output enables. Legacy DECISIONS.md
+D-006/D-007 explain this bus-ownership purpose; they do not cite a PARLIO
+silicon erratum. Do not reinstate that circuit or change bias based solely on
+memory. Current documented pulls are already fitted; neither their presence
+nor the earlier forward pass qualifies dynamic reverse signal integrity.
+
+### DI05-C — Handback and remaining boundary
+
+No complete correction was found within the authorized hour. Independent
+forward/reverse requalification and 1/255/4096-byte roundtrips were not run
+against a successful candidate because none existed. DI05-B/C remain open.
+The exact preceding full-HDMI port-008-data-r01-b2026-10-10-03-07-07Z was
+restored; all four flash segments independently verified. EMOS and mainboard
+VDP were unchanged. Original 38-byte startup and deployed diagnostic readback
+verified; listener closed, reset hold released, keyboard ready/neutral with
+held0/pending0. Card remains in Agon. No ongoing capture, flash or transfer.
+Three installed-current records identify the fresh handback receipt. Production
+selection unchanged. Subsequent work should isolate filtered CLOCK and GPIO46
+behavior, preferably with a controlled alternate pad/physical signal comparison;
+no wiring change or further bench experiment is authorized by this suggestion.
