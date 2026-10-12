@@ -69,7 +69,7 @@ and handoff, commit/push owned work, report what is prepared and what still need
 physical execution. Do not claim hardware correctness, measurements, installed
 readiness or production promotion. The Author's existing no-flash boundary holds.
 
-### R07-B05 [ ] Physical execution — blocked on bench handover
+### R07-B05 [ ] Physical execution — authorized 2026-10-11
 
 Only after Author releases the bench: sign it out, identify the current installed
 pair, hold Agon reset using the admitted executor, install/verify the standalone
@@ -84,3 +84,11 @@ R07-B01–B04 completed: [preparation results](PREPARATION-RESULTS.md),
 [build/hash evidence](BENCHMARK-EVIDENCE.json) and
 [executable recipe](benchmark/README.md). Native build and offline tests pass;
 no physical execution or deployment. R07-B05 remains bench-gated.
+
+## Hardware authorization — 2026-10-11
+
+The Author releases the bench and directs commit, push and execution. Execute
+R07-B05 with the already built benchmark, retain the exact ordinary installed
+P4 restoration payload, preserve EMOS/mainboard VDP/SD/startup/wiring, and restore
+ordinary readiness afterward. Stop before deeper debugging if hardware checks
+fail; the Author will raise the thinking level if necessary.
