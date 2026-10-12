@@ -32,6 +32,9 @@ inline esp_err_t handle(httpd_req_t *request) {
   strip_probe_read(&strips); strip_async_read(&copy);
   strip_fault_stats fault{}; strip_fault_read(&fault);
 #endif
+  // Existing scanout counters are cumulative uint32 microseconds, reset on
+  // carrier configuration/priming. HTTP only reads them; no hot-path work added.
+  // Refill wall time includes copy/compose/cache/queueing, so scopes overlap.
   char body[1024];
   const int length=snprintf(body,sizeof(body),
       "{\"available\":true,\"mode\":%u,\"width\":%u,\"height\":%u,"
@@ -47,7 +50,9 @@ inline esp_err_t handle(httpd_req_t *request) {
       ",\"rolling\":{\"frames\":%u,\"faults\":%u,\"late\":%u,"
       "\"over_budget\":%u,\"underruns\":%u,\"refill_max_us\":%u,\"free_internal\":%u,"
       "\"invalid_blocks\":%u,\"sequence_errors\":%u,\"cache_errors\":%u,\"overlap\":%u,"
-      "\"first_fault\":%u,\"first_error\":%u,\"queued\":%u,\"queue_wait_max_us\":%u}"
+      "\"first_fault\":%u,\"first_error\":%u,\"queued\":%u,\"queue_wait_max_us\":%u,"
+      "\"blocks\":%u,\"refills\":%u,\"refill_total_us\":%u,\"copy_total_us\":%u,"
+      "\"copy_max_us\":%u,\"compose_total_us\":%u,\"compose_max_us\":%u}"
 #endif
       "}",
       value.mode,value.width,value.height,value.colors,value.refresh_hz,
@@ -70,7 +75,10 @@ inline esp_err_t handle(httpd_req_t *request) {
       unsigned(heap_caps_get_free_size(MALLOC_CAP_INTERNAL)),
       unsigned(strips.invalid),unsigned(strips.sequence_errors),unsigned(strips.cache_errors),
       unsigned(copy.overlap),unsigned(fault.first_fault),unsigned(fault.first_error),
-      unsigned(fault.queued),unsigned(fault.queue_wait_max_us)
+      unsigned(fault.queued),unsigned(fault.queue_wait_max_us),
+      unsigned(strips.blocks),unsigned(strips.refills),unsigned(strips.total_us),
+      unsigned(strips.copy_us),unsigned(copy.copy_max_us),unsigned(copy.compose_total_us),
+      unsigned(copy.compose_max_us)
 #endif
       );
   if (length<0 || length>=int(sizeof(body)))
