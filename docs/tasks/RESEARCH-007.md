@@ -9,16 +9,19 @@ path. Compare P4 CPU palette expansion and supported PPA/display operations. The
 unproven: existing direct RGB888 rendering removed an expensive conversion
 stage, and indexed storage could reintroduce it.
 
-**State: R07-01 and R07-03 complete; paused before integration or bench work.**
+**State: R07-01 and R07-03 complete; executable comparison preparation active.**
 On 2026-10-11 the Author requested detailed exploration
 of indexed HDMI/PPA expansion, sample code and target compilation. The
 [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
 and [source baseline](RESEARCH-007/SOURCE-BASELINE.json) record R07-01;
 the [capability report](RESEARCH-007/CAPABILITY-REPORT.md) and
 [isolated example](RESEARCH-007/clut-example/README.md) record R07-03.
-R07-02 and R07-04–07 remain unstarted. This is an isolated experimental example,
-not product integration. No benchmark, new mode, deployment or bench action is
-authorized. Fsim retains the bench;
+The Author subsequently requires a full runnable benchmark of CPU versus PPA
+expansion. Its [bounded contract](RESEARCH-007/BENCHMARK-CONTRACT.md) authorizes
+offline implementation, target builds and packaging, with no bench access.
+R07-02 and R07-04–07 remain unstarted. This is isolated experimental work,
+not product integration. No new mode, deployment or bench action is authorized.
+The machine-local reservation identifies the current bench owner;
 PORT-008's separate matched-pair hardware comparison is not part of this task.
 
 ## Current tranche boundary — 2026-10-11
