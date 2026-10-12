@@ -38,6 +38,15 @@ struct SceneMailbox {
   int latch() {return leased=published;}
 };
 
+struct Scene;
+#if defined(AGON_EXTENDER_OVERLAY_BGR) && AGON_EXTENDER_OVERLAY_BGR
+// The optional P4 physical-BGR painter changes composition only; immutable
+// arenas, publication and scanout leases keep their existing owners.
+inline bool supportsDirectBgr(const Scene &scene) noexcept;
+inline void composeDirectBgr(const Scene &scene, uint8_t *strip,
+                             unsigned firstY, unsigned rows);
+#endif
+
 struct Scene {
   static constexpr unsigned maximumSprites=258;
   Sprite sprites[maximumSprites];
@@ -77,6 +86,12 @@ struct Scene {
     used=offset+bytes;return true;
   }
   void compose(uint8_t *strip,unsigned firstY,unsigned rows) {
+#if defined(AGON_EXTENDER_OVERLAY_BGR) && AGON_EXTENDER_OVERLAY_BGR
+    if (supportsDirectBgr(*this)) {
+      composeDirectBgr(*this, strip, firstY, rows);
+      return;
+    }
+#endif
     if(!count)return;
     alignas(8)uint8_t signal[STRIP_WIDTH];
     VGAPalettedController painter;
@@ -100,3 +115,7 @@ struct Scene {
   }
 };
 } // namespace agon_scanout
+
+#if defined(AGON_EXTENDER_OVERLAY_BGR) && AGON_EXTENDER_OVERLAY_BGR
+#include "scene_bgr.hpp"
+#endif

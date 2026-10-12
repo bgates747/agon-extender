@@ -68,11 +68,13 @@ def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, ro
                 fail("rolling C DMA driver geometry disagrees with application timing")
 
 
-def selected_definition(argv: list[str], name: str, enabled: bool) -> bool:
+def selected_definition(argv: list[str], name: str, enabled: bool, *, value_aware: bool = False) -> bool:
     """Match #ifdef features exactly, including bare/zero/repeated definitions.
 
     A literal =0 still enables a #ifdef path. Reject it rather than mislabelling
     a measured binary as a control. Support the compiler's split -D spelling.
+    A specifically value-aware #if feature may also use one explicit =0 for
+    its disabled control; repeated/bare/undefined forms remain rejected.
     """
     definitions = []
     for index, arg in enumerate(argv):
@@ -83,6 +85,8 @@ def selected_definition(argv: list[str], name: str, enabled: bool) -> bool:
         if arg in ("-U" + name, "-U") and (
                 arg != "-U" or index + 1 < len(argv) and argv[index + 1] == name):
             return False
+    if value_aware and not enabled and definitions == [name + "=0"]:
+        return True
     return definitions == ([name + "=1"] if enabled else [])
 
 
@@ -102,6 +106,7 @@ def main() -> None:
     parser.add_argument("--scroll-fast", action="store_true")
     parser.add_argument("--bitmap-fast", action="store_true")
     parser.add_argument("--bitmap-lut", action="store_true")
+    parser.add_argument("--overlay-bgr", action="store_true")
     parser.add_argument("--hdmi-link-watch", action="store_true")
     parser.add_argument("--ppa-scale-320", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true")
@@ -116,7 +121,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -179,12 +184,13 @@ def main() -> None:
             pie_arch = "-march=rv32imafc_zicsr_zifencei_xesppie"
             if (pie_arch in argv) != args.scroll_fast:
                 fail("scroll PIE ISA selection differs from actual compile action")
-        for definition, benchmark_selected in (("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
+        for definition, benchmark_selected in (("AGON_EXTENDER_OVERLAY_BGR",args.overlay_bgr),("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
                                      ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
                                      ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
                                      ("AGON_EXTENDER_BENCH_OFF",args.render_benchmark_output in ("off","convert-off")),
                                      ("AGON_EXTENDER_BENCH_CONVERT_OFF",args.render_benchmark_output=="convert-off")):
-            if not selected_definition(argv, definition, benchmark_selected):
+            if not selected_definition(argv, definition, benchmark_selected,
+                                       value_aware=definition == "AGON_EXTENDER_OVERLAY_BGR"):
                 fail("render benchmark selection differs from compile action")
         if ("-DAGON_EXTENDER_HDMI=1" in argv) != (args.display_output == "hdmi"):
             fail("HDMI application selection disagrees with compiled definitions")
@@ -334,6 +340,7 @@ def main() -> None:
         "render_benchmark_output": args.render_benchmark_output,
         "bitmap_fast": args.bitmap_fast,
         "bitmap_lut": args.bitmap_lut,
+        "overlay_bgr": args.overlay_bgr,
         "indexed_frame_snapshot": args.indexed_frame_snapshot,
         "scroll_fast": args.scroll_fast,
         "display_inputs": display_record,

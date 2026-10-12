@@ -228,3 +228,17 @@ Compare aggregate row-wait/composition time per attempt, not per-call means;
 instrument removal can overstate a small output-preparation benefit. The queued
 render sidecar remains identical. An output-only win needs a later probes-off
 confirmation before a production performance claim.
+
+While the negotiated mainboard-only lease is active, sprite implementation
+preparation occurs in an isolated project-owned worktree; the frozen static
+comparison checkout and completed build identities stay unchanged. This is
+preparation for NP04/NP05, not permission to skip NP03's physical comparison.
+
+NP05's default-off `--overlay-bgr` experiment composes the existing immutable
+hardware-sprite scene directly into physical BGR strips. It preserves binary
+alpha, XOR behavior, overlay order, span quantization, scene leases and stock
+clipping behavior. Scenes crossing both horizontal edges retain the unchanged
+stock painter because that inherited case has a separate bounds defect. No
+new DMA client, lock, buffer lifecycle or stock bug fix is introduced. Exact
+stock/candidate pixel comparisons and build selection pass offline; scanout
+composition timing and physical correctness still need matched runs.

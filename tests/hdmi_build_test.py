@@ -288,5 +288,66 @@ class HdmiBuildTest(unittest.TestCase):
             build_p4.select_display_profile(*args,indexed_ppa=True,bitmap_fast=True,bitmap_lut=True)
 
 
+    def test_direct_bgr_overlay_is_explicit_and_accepts_both_storage_backends(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        flag="AGON_EXTENDER_OVERLAY_BGR=1"
+        for choices in ({}, {"indexed_ppa":True},
+                        {"indexed_ppa":True,"indexed_frame_snapshot":True},
+                        {"bitmap_fast":True,"bitmap_lut":True},
+                        {"scroll_fast":True}, {"hdmi_link_watch":True},
+                        {"ppa_scale_320":True}, {"parallel_boot_candidate":True},
+                        {"parallel_boot_candidate":True,"exext_stream":True},
+                        {"parallel_boot_candidate":True,"parallel_data_check":True}):
+            control=build_p4.select_display_profile(*args,**choices)
+            candidate=build_p4.select_display_profile(*args,overlay_bgr=True,**choices)
+            self.assertNotIn(flag,control["definitions"])
+            self.assertIn(flag,candidate["definitions"])
+            self.assertEqual(control["sources"],candidate["sources"])
+            self.assertEqual(candidate["definitions"],
+                             [*control["definitions"][:len(self.document["profiles"]["p4-console"]["definitions"])],
+                              flag,*control["definitions"][len(self.document["profiles"]["p4-console"]["definitions"]):]])
+        for timing in ("848x480","512x384","684x384"):
+            self.assertIn(flag,build_p4.select_display_profile(
+                self.document,"p4-console","p4-pc","hdmi","normal",True,timing,True,
+                overlay_bgr=True)["definitions"])
+        for output,rolling in (("hdmi",False),("browser",True)):
+            with self.assertRaisesRegex(SystemExit,"BGR overlay"):
+                build_p4.select_display_profile(self.document,"p4-console","p4-pc",
+                    output,"normal",True,"848x480" if output=="hdmi" else "1280x720",rolling,overlay_bgr=True)
+
+    def test_direct_bgr_definition_applies_to_the_whole_generated_component(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        for storage in ({},{"indexed_ppa":True,"indexed_frame_snapshot":True}):
+            for selected in (False,True):
+                profile=build_p4.select_display_profile(*args,overlay_bgr=selected,**storage)
+                with tempfile.TemporaryDirectory() as tmp:
+                    generated=Path(tmp)
+                    build_p4.render_component(profile,self.document["common"],generated,{})
+                    cmake=(generated/"CMakeLists.txt").read_text()
+                    definition_block=cmake.split("target_compile_definitions(${COMPONENT_LIB} PRIVATE",1)[1].split(")",1)[0]
+                    self.assertEqual("AGON_EXTENDER_OVERLAY_BGR=1" in definition_block,selected)
+                    self.assertEqual(cmake.count("AGON_EXTENDER_OVERLAY_BGR=1"),int(selected))
+                    self.assertIn("rolling/scene.cpp",cmake)
+                    self.assertIn("hdmi_output.cpp",cmake)
+
+    def test_direct_bgr_numeric_compile_binding_is_value_aware_and_unambiguous(self):
+        name="AGON_EXTENDER_OVERLAY_BGR"
+        check=lambda argv,on: validate_p4_build.selected_definition(
+            argv,name,on,value_aware=True)
+        self.assertTrue(check([],False))
+        self.assertTrue(check(["-D"+name+"=0"],False))
+        self.assertTrue(check(["-D",name+"=0"],False))
+        self.assertTrue(check(["-D"+name+"=1"],True))
+        for argv in (["-D"+name], ["-D"+name+"=2"],
+                     ["-D"+name+"=0"]*2, ["-D"+name+"=1"]*2,
+                     ["-D"+name+"=1","-U"+name],
+                     ["-D"+name+"=1","-U",name],
+                     ["-D"+name+"=0","-D"+name+"=1"]):
+            self.assertFalse(check(argv,True))
+            self.assertFalse(check(argv,False))
+        self.assertFalse(check(["-D"+name+"=0"],True))
+        self.assertFalse(check(["-D"+name+"=1"],False))
+
+
 if __name__ == "__main__":
     unittest.main()
