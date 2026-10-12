@@ -260,3 +260,13 @@ opportunity, not uncontrolled host/P4 fairness. An indefinitely fed stream that
 never completes sprite drawing can retain its prior image. Physical paced
 Nurples output and input remain the acceptance gates; no rendering budget or
 upstream queue-order change is introduced.
+
+Hardware overlay measurement uses the existing asynchronous strip compositor's
+cumulative microseconds, now exposed read-only with refill counts in display
+status. No new timer is added to scanout. Capture matched short intervals inside
+the active workload; distinguish per-strip mean and frame-equivalent wall from
+per-application-update execution. Independently sampled counters can straddle
+one strip; maxima are lifetime bounds. Reject resets/faults or unexplained count
+regression. Legacy `RowCompose` is output-task framebuffer preparation, never
+the asynchronous hardware-sprite overlay scope. Do not sum overlapping copy,
+compose and whole-refill wall costs as exclusive processor utilization.
