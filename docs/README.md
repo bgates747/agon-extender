@@ -8,6 +8,12 @@ current behavior. Dated evidence supports claims but is not a second manual.
 Production **v0.1.0** is the accepted local combination. The [current approved local installation](../production/README.md) selects exact
 firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 
+## Before operational work
+
+Agents must use the [operation-protocol index](procedures/README.md) to select
+and read the controlling procedure before acting. It covers test launch, reset,
+flash, rollback, transfer and monitoring, including correction/stop boundaries.
+
 ## Use an existing installation
 
 | Need | Current guide |

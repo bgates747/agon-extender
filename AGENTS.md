@@ -35,6 +35,21 @@ records rather than adding private paths to this file.
    promotion, current documentation and the agreed version tag as specified
    below; it does not start unrelated downstream work. Preserve frozen evidence.
 
+## Read the controlling operation protocol before acting
+
+Before any operational tool call, classify the requested operation using
+`docs/procedures/README.md`, then read its controlling procedure. Read every
+applicable procedure for a composite request (for example, rollback plus reset).
+Do this again when the Author changes the operation or corrects the plan; a
+remembered task recipe is not a substitute. Existing authorization persists,
+but the current stop boundary governs execution.
+
+Follow the index's execution and correction rules. In particular, tests start
+through an explicit CLI invocation, never through autoexec or a reset. Check
+what startup will execute before resetting. An EMOS-only rollback does not
+authorize changing P4 firmware. If a tool/recipe violates these rules, adapt it
+before use; do not run it and repair the consequences afterward.
+
 ## Local hardware and deployment environment
 
 For MOS startup failure and bare-metal recovery, use the maintained

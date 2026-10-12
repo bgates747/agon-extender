@@ -41,6 +41,23 @@ Machine-specific SSH identity and desktop helper path remain in HARDWARE.local.m
 The P4 is not connected as a reset controller and no P4/VDP firmware operation
 is part of this pulse. See DEMO-001 evidence for the accepted demonstration.
 
+## Required pre-reset check
+
+1. Read the [operation-protocol index](procedures/README.md) and current local
+   bench record. Confirm the authorized target (Agon, P4, or both), the current
+   application and whether any other owner has the bench.
+2. Establish what `/autoexec.txt` will execute before pulsing Agon reset. Reset
+   is not a test launcher. If startup contains test `RUN`/`EXEC`, restore ordinary
+   startup through admitted access first. If that is impossible, stop and explain
+   the conflict; do not reset into a known unwanted test or assume Escape will
+   reliably interrupt it.
+3. A paired input recovery means the host resets P4, waits for the required P4
+   initialization, then resets Agon. It does not authorize reflashing either
+   processor. Use the current local recipe and evidence, not a guessed delay.
+4. After the authorized pulse, verify only what the Author permits. “Start then
+   stop” or “no monitoring” forbids a subsequent status poll or automatic retry.
+   A failed readiness check is evidence to inspect, not permission to pulse again.
+
 ## Host reset command
 
 From the Extender checkout, after confirming reset authorization and the current
