@@ -6,8 +6,10 @@ This standalone P4 firmware directly compares the exact old CPU RGB222 expansion
 with PPA indexed expansion, verifies every output pixel, saves all timing samples
 to dedicated NVS, and emits a machine-readable result. The host tool validates
 the complete result and writes raw serial, JSON, CSV and a side-by-side report.
-Target compilation and offline checks are preparation; physical correctness and
-speed remain unmeasured until the bench is released and the image is installed.
+The first bounded physical run now passes all768 measured samples and firmware
+correctness checks; see [physical results](../PHYSICAL-RESULTS.md). Ordinary P4
+firmware was restored and the bench released. The recipe below is reusable
+evidence, not authorization to repeat deployment.
 
 The [frozen contract](../BENCHMARK-CONTRACT.md) owns scope. This is a conversion
 benchmark, not new product firmware: it supplies no HDMI, keyboard, networking,

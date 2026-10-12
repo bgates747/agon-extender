@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r178
-updated_at: 2026-10-12T00:21:10Z
+registry_revision: r179
+updated_at: 2026-10-12T00:33:15Z
 
 artifacts:
   - artifact_id: ppa-clut-benchmark
@@ -15,7 +15,8 @@ artifacts:
     notes:
       - RESEARCH-007 R07-B01-B04 authorizes offline preparation, target compilation and packaging only; bench execution remains gated.
       - Four methods and six strip/image cases; unchanged maintained CPU kernel and the previously pinned CLUT backport.
-      - No ordinary P4 services, product integration or physical performance claim; dedicated scratch NVS occupies unused reserved flash.
+      - No ordinary P4 services or product integration; dedicated scratch NVS occupies unused reserved flash.
+      - Author-authorized R07-B05 physical conversion run passes all768 samples and pixel checks; PPA faster than old CPU expansion in unloaded conversion only. Ordinary P4 restored; production unchanged.
 
   - artifact_id: ppa-clut-example
     kind: experimental_firmware

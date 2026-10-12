@@ -1,3 +1,20 @@
+# Current review — physical indexed-expansion comparison complete
+
+[RESEARCH-007 physical results](docs/tasks/RESEARCH-007/PHYSICAL-RESULTS.md)
+close R07-B01–B05. All768 timing samples and firmware pixel/source/guard checks
+pass in one14.439231s fresh run. PPA total p95 conversion takes72–85% less time
+than the old CPU RGB222 path, or53–59% less including byte-lane reorder. At512×384:
+old24.783ms, linearPPA3.779ms, reorder+PPA10.251ms. This is unloaded conversion,
+not current directRGB888/HDMI/gameplay qualification or product integration.
+
+Exact ordinary data-r20 P4 restored; all4segments independently verify, Agon
+reset released, fresh admittedCLI input and5s neutralready keyboard/idleSD pass.
+EMOS/mainboardVDP/SD/startup/wiring unchanged; no active fixture/collector/hold.
+Bench released in HARDWARE.local.md. Local journal:
+`agents/research007/benchmark-r01/bench`. No further bench or integration work
+started; stop for review. The earlier preparation/checkpoints below are retained
+history, not the latest installed state.
+
 # Current review — complete conversion benchmark prepared, uninstalled
 
 [RESEARCH-007](docs/tasks/RESEARCH-007.md) R07-B01–B04 complete after the Author

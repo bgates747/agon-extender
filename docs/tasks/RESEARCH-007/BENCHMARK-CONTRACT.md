@@ -69,7 +69,7 @@ and handoff, commit/push owned work, report what is prepared and what still need
 physical execution. Do not claim hardware correctness, measurements, installed
 readiness or production promotion. The Author's existing no-flash boundary holds.
 
-### R07-B05 [ ] Physical execution — authorized 2026-10-11
+### R07-B05 [x] Physical execution — completed 2026-10-11
 
 Only after Author releases the bench: sign it out, identify the current installed
 pair, hold Agon reset using the admitted executor, install/verify the standalone
@@ -92,3 +92,12 @@ R07-B05 with the already built benchmark, retain the exact ordinary installed
 P4 restoration payload, preserve EMOS/mainboard VDP/SD/startup/wiring, and restore
 ordinary readiness afterward. Stop before deeper debugging if hardware checks
 fail; the Author will raise the thinking level if necessary.
+
+## Physical outcome — 2026-10-11
+
+All768 measured records and firmware pixel/source/guard checks pass in one
+fresh14.439231s run. [Physical results](PHYSICAL-RESULTS.md) and
+[evidence](PHYSICAL-EVIDENCE.json) record timings and exact ordinary P4
+restoration with admitted CLI input/neutral readiness. Bench released; no product
+integration or additional campaign. The earlier preparation-only boundary is
+historical; the Author explicitly authorized this completed R07-B05 execution.

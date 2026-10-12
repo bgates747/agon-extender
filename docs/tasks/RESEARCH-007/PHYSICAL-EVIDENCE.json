@@ -1,0 +1,810 @@
+{
+  "schema_version": 1,
+  "run_id": "RESEARCH-007-2026-10-12-00-28-57Z",
+  "build_id": "ppa-clut-benchmark-r01-b2026-10-12-00-21-22Z",
+  "sequence": 1,
+  "kind": "fresh",
+  "duration_us": 14439231,
+  "measured_rows": 768,
+  "correctness": "All firmware output pixels, guards and input checks passed before successful durable NVS commit and complete result emission.",
+  "summary": [
+    {
+      "case": 0,
+      "method": "cpu_signal",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 998.0,
+          "p95": 998,
+          "worst": 998
+        },
+        "publish_us": {
+          "median": 10.0,
+          "p95": 11,
+          "worst": 11
+        },
+        "total_us": {
+          "median": 1008.5,
+          "p95": 1009,
+          "worst": 1009
+        },
+        "elapsed_cycles": {
+          "median": 363304.5,
+          "p95": 363371,
+          "worst": 363382
+        }
+      }
+    },
+    {
+      "case": 0,
+      "method": "cpu_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 939.5,
+          "p95": 940,
+          "worst": 940
+        },
+        "publish_us": {
+          "median": 10.0,
+          "p95": 11,
+          "worst": 11
+        },
+        "total_us": {
+          "median": 950.0,
+          "p95": 951,
+          "worst": 951
+        },
+        "elapsed_cycles": {
+          "median": 342436.0,
+          "p95": 342519,
+          "worst": 342567
+        }
+      }
+    },
+    {
+      "case": 0,
+      "method": "ppa_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 276.0,
+          "p95": 277,
+          "worst": 277
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 277.0,
+          "p95": 278,
+          "worst": 278
+        },
+        "elapsed_cycles": {
+          "median": 100216.0,
+          "p95": 100301,
+          "worst": 100345
+        }
+      }
+    },
+    {
+      "case": 0,
+      "method": "reorder_ppa",
+      "statistics": {
+        "prepare_us": {
+          "median": 186.0,
+          "p95": 187,
+          "worst": 187
+        },
+        "operation_us": {
+          "median": 283.0,
+          "p95": 287,
+          "worst": 287
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 470.0,
+          "p95": 473,
+          "worst": 475
+        },
+        "elapsed_cycles": {
+          "median": 169368.0,
+          "p95": 170744,
+          "worst": 171112
+        }
+      }
+    },
+    {
+      "case": 1,
+      "method": "cpu_signal",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 1605.0,
+          "p95": 1611,
+          "worst": 1611
+        },
+        "publish_us": {
+          "median": 11.0,
+          "p95": 11,
+          "worst": 11
+        },
+        "total_us": {
+          "median": 1616.0,
+          "p95": 1623,
+          "worst": 1623
+        },
+        "elapsed_cycles": {
+          "median": 582089.5,
+          "p95": 584412,
+          "worst": 584415
+        }
+      }
+    },
+    {
+      "case": 1,
+      "method": "cpu_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 1514.0,
+          "p95": 1520,
+          "worst": 1520
+        },
+        "publish_us": {
+          "median": 11.0,
+          "p95": 11,
+          "worst": 12
+        },
+        "total_us": {
+          "median": 1525.0,
+          "p95": 1532,
+          "worst": 1532
+        },
+        "elapsed_cycles": {
+          "median": 549293.5,
+          "p95": 551659,
+          "worst": 551685
+        }
+      }
+    },
+    {
+      "case": 1,
+      "method": "ppa_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 393.0,
+          "p95": 394,
+          "worst": 394
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 395.0,
+          "p95": 395,
+          "worst": 395
+        },
+        "elapsed_cycles": {
+          "median": 142399.0,
+          "p95": 142539,
+          "worst": 142563
+        }
+      }
+    },
+    {
+      "case": 1,
+      "method": "reorder_ppa",
+      "statistics": {
+        "prepare_us": {
+          "median": 313.0,
+          "p95": 314,
+          "worst": 314
+        },
+        "operation_us": {
+          "median": 408.0,
+          "p95": 408,
+          "worst": 408
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 721.0,
+          "p95": 722,
+          "worst": 722
+        },
+        "elapsed_cycles": {
+          "median": 259996.0,
+          "p95": 260233,
+          "worst": 260275
+        }
+      }
+    },
+    {
+      "case": 2,
+      "method": "cpu_signal",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 998.0,
+          "p95": 1004,
+          "worst": 1004
+        },
+        "publish_us": {
+          "median": 100.0,
+          "p95": 101,
+          "worst": 101
+        },
+        "total_us": {
+          "median": 1099.0,
+          "p95": 1104,
+          "worst": 1104
+        },
+        "elapsed_cycles": {
+          "median": 395795.5,
+          "p95": 397755,
+          "worst": 397759
+        }
+      }
+    },
+    {
+      "case": 2,
+      "method": "cpu_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 940.0,
+          "p95": 946,
+          "worst": 947
+        },
+        "publish_us": {
+          "median": 100.0,
+          "p95": 102,
+          "worst": 102
+        },
+        "total_us": {
+          "median": 1041.5,
+          "p95": 1047,
+          "worst": 1047
+        },
+        "elapsed_cycles": {
+          "median": 375108.0,
+          "p95": 377071,
+          "worst": 377074
+        }
+      }
+    },
+    {
+      "case": 2,
+      "method": "ppa_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 280.0,
+          "p95": 281,
+          "worst": 281
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 282.0,
+          "p95": 283,
+          "worst": 283
+        },
+        "elapsed_cycles": {
+          "median": 101720.0,
+          "p95": 101871,
+          "worst": 101943
+        }
+      }
+    },
+    {
+      "case": 2,
+      "method": "reorder_ppa",
+      "statistics": {
+        "prepare_us": {
+          "median": 187.0,
+          "p95": 187,
+          "worst": 187
+        },
+        "operation_us": {
+          "median": 287.0,
+          "p95": 288,
+          "worst": 288
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 474.0,
+          "p95": 475,
+          "worst": 475
+        },
+        "elapsed_cycles": {
+          "median": 171057.0,
+          "p95": 171309,
+          "worst": 171329
+        }
+      }
+    },
+    {
+      "case": 3,
+      "method": "cpu_signal",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 1596.0,
+          "p95": 1602,
+          "worst": 1602
+        },
+        "publish_us": {
+          "median": 158.0,
+          "p95": 159,
+          "worst": 159
+        },
+        "total_us": {
+          "median": 1755.0,
+          "p95": 1761,
+          "worst": 1761
+        },
+        "elapsed_cycles": {
+          "median": 631995.5,
+          "p95": 634105,
+          "worst": 634272
+        }
+      }
+    },
+    {
+      "case": 3,
+      "method": "cpu_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 1503.0,
+          "p95": 1504,
+          "worst": 1504
+        },
+        "publish_us": {
+          "median": 157.0,
+          "p95": 158,
+          "worst": 158
+        },
+        "total_us": {
+          "median": 1662.0,
+          "p95": 1662,
+          "worst": 1662
+        },
+        "elapsed_cycles": {
+          "median": 598418.0,
+          "p95": 598720,
+          "worst": 598720
+        }
+      }
+    },
+    {
+      "case": 3,
+      "method": "ppa_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 412.0,
+          "p95": 420,
+          "worst": 420
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 414.0,
+          "p95": 422,
+          "worst": 422
+        },
+        "elapsed_cycles": {
+          "median": 149163.0,
+          "p95": 152033,
+          "worst": 152039
+        }
+      }
+    },
+    {
+      "case": 3,
+      "method": "reorder_ppa",
+      "statistics": {
+        "prepare_us": {
+          "median": 304.5,
+          "p95": 305,
+          "worst": 306
+        },
+        "operation_us": {
+          "median": 423.0,
+          "p95": 427,
+          "worst": 431
+        },
+        "publish_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "total_us": {
+          "median": 729.0,
+          "p95": 733,
+          "worst": 737
+        },
+        "elapsed_cycles": {
+          "median": 262645.0,
+          "p95": 263891,
+          "worst": 265547
+        }
+      }
+    },
+    {
+      "case": 4,
+      "method": "cpu_signal",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 3
+        },
+        "operation_us": {
+          "median": 9532.0,
+          "p95": 9535,
+          "worst": 9536
+        },
+        "publish_us": {
+          "median": 358.0,
+          "p95": 361,
+          "worst": 362
+        },
+        "total_us": {
+          "median": 9890.0,
+          "p95": 9897,
+          "worst": 9898
+        },
+        "elapsed_cycles": {
+          "median": 3560728.0,
+          "p95": 3563227,
+          "worst": 3563465
+        }
+      }
+    },
+    {
+      "case": 4,
+      "method": "cpu_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 9100.0,
+          "p95": 9102,
+          "worst": 9102
+        },
+        "publish_us": {
+          "median": 360.0,
+          "p95": 363,
+          "worst": 363
+        },
+        "total_us": {
+          "median": 9462.0,
+          "p95": 9464,
+          "worst": 9464
+        },
+        "elapsed_cycles": {
+          "median": 3406496.0,
+          "p95": 3407325,
+          "worst": 3407555
+        }
+      }
+    },
+    {
+      "case": 4,
+      "method": "ppa_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 1766.5,
+          "p95": 1781,
+          "worst": 1781
+        },
+        "publish_us": {
+          "median": 3.0,
+          "p95": 3,
+          "worst": 4
+        },
+        "total_us": {
+          "median": 1770.5,
+          "p95": 1784,
+          "worst": 1785
+        },
+        "elapsed_cycles": {
+          "median": 637563.0,
+          "p95": 642644,
+          "worst": 642695
+        }
+      }
+    },
+    {
+      "case": 4,
+      "method": "reorder_ppa",
+      "statistics": {
+        "prepare_us": {
+          "median": 2442.0,
+          "p95": 2449,
+          "worst": 2449
+        },
+        "operation_us": {
+          "median": 1985.0,
+          "p95": 2002,
+          "worst": 2013
+        },
+        "publish_us": {
+          "median": 3.0,
+          "p95": 3,
+          "worst": 3
+        },
+        "total_us": {
+          "median": 4430.0,
+          "p95": 4444,
+          "worst": 4455
+        },
+        "elapsed_cycles": {
+          "median": 1595715.0,
+          "p95": 1600839,
+          "worst": 1604491
+        }
+      }
+    },
+    {
+      "case": 5,
+      "method": "cpu_signal",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 3
+        },
+        "operation_us": {
+          "median": 24371.0,
+          "p95": 24378,
+          "worst": 24379
+        },
+        "publish_us": {
+          "median": 404.0,
+          "p95": 407,
+          "worst": 408
+        },
+        "total_us": {
+          "median": 24775.0,
+          "p95": 24783,
+          "worst": 24783
+        },
+        "elapsed_cycles": {
+          "median": 8919457.0,
+          "p95": 8922363,
+          "worst": 8922387
+        }
+      }
+    },
+    {
+      "case": 5,
+      "method": "cpu_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 23291.0,
+          "p95": 23294,
+          "worst": 23295
+        },
+        "publish_us": {
+          "median": 405.0,
+          "p95": 411,
+          "worst": 412
+        },
+        "total_us": {
+          "median": 23696.0,
+          "p95": 23702,
+          "worst": 23704
+        },
+        "elapsed_cycles": {
+          "median": 8530803.0,
+          "p95": 8532848,
+          "worst": 8533601
+        }
+      }
+    },
+    {
+      "case": 5,
+      "method": "ppa_linear",
+      "statistics": {
+        "prepare_us": {
+          "median": 1.0,
+          "p95": 1,
+          "worst": 1
+        },
+        "operation_us": {
+          "median": 3766.5,
+          "p95": 3775,
+          "worst": 3781
+        },
+        "publish_us": {
+          "median": 3.0,
+          "p95": 3,
+          "worst": 4
+        },
+        "total_us": {
+          "median": 3770.5,
+          "p95": 3779,
+          "worst": 3785
+        },
+        "elapsed_cycles": {
+          "median": 1357550.0,
+          "p95": 1360799,
+          "worst": 1362991
+        }
+      }
+    },
+    {
+      "case": 5,
+      "method": "reorder_ppa",
+      "statistics": {
+        "prepare_us": {
+          "median": 6236.0,
+          "p95": 6242,
+          "worst": 6242
+        },
+        "operation_us": {
+          "median": 3992.0,
+          "p95": 4012,
+          "worst": 4013
+        },
+        "publish_us": {
+          "median": 3.0,
+          "p95": 3,
+          "worst": 3
+        },
+        "total_us": {
+          "median": 10230.5,
+          "p95": 10251,
+          "worst": 10251
+        },
+        "elapsed_cycles": {
+          "median": 3683746.0,
+          "p95": 3690623,
+          "worst": 3691035
+        }
+      }
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "agents/research007/benchmark-r01/bench/RESEARCH-007-2026-10-12-00-28-57Z/RESULTS.md",
+      "bytes": 2527,
+      "sha256": "b522a05a232c8aec83635cafd1dd849c8b60b29a617569041d27b55953e3bb66"
+    },
+    {
+      "path": "agents/research007/benchmark-r01/bench/RESEARCH-007-2026-10-12-00-28-57Z/serial.log",
+      "bytes": 34853,
+      "sha256": "60f7a4cc9735a8bb571ecf4e30d4602be4c2fd162d3103ca1e1b5241695ad9ea"
+    },
+    {
+      "path": "agents/research007/benchmark-r01/bench/RESEARCH-007-2026-10-12-00-28-57Z/samples.csv",
+      "bytes": 22895,
+      "sha256": "5ee173953d93af7135e9df61e4c722d883f5f9388ef0f730b4d863762ded6a64"
+    },
+    {
+      "path": "agents/research007/benchmark-r01/bench/RESEARCH-007-2026-10-12-00-28-57Z/results.json",
+      "bytes": 168021,
+      "sha256": "5b47c647002dfbf99b2275f31ef9e70cb013b2ef2a8b141c76a994c478d0508d"
+    },
+    {
+      "path": "agents/research007/benchmark-r01/bench/receipt.json",
+      "bytes": 893,
+      "sha256": "b9ae8959ca388be115b1eb94b2b242c75e5b5e2cbde8a357d42ee3632d3bf4a9"
+    },
+    {
+      "path": "agents/research007/benchmark-r01/bench/benchmark-install/receipt.json",
+      "bytes": 231,
+      "sha256": "24d38e89c1239ec8488ff19a05f78fed701210ab8b227104b91ce658af2b0dc6"
+    },
+    {
+      "path": "agents/research007/benchmark-r01/bench/ordinary-restore/receipt.json",
+      "bytes": 259,
+      "sha256": "42c62ceaf47364af3bea367595c40f992943dae14f4e99bc706aa82a47244ec5"
+    }
+  ],
+  "restored_build": "port-008-data-r20-b2026-10-11-09-07-32Z",
+  "restoration": {
+    "verified_segments": {
+      "0x2000": "bootloader/bootloader.bin",
+      "0x20000": "agon_extender.bin",
+      "0x8000": "partition_table/partition-table.bin",
+      "0xf000": "ota_data_initial.bin"
+    },
+    "keyboard_ready": true,
+    "neutral": true,
+    "held": 0,
+    "pending": 0,
+    "sd_online": false,
+    "sd_pending": false,
+    "reset_released": true
+  },
+  "scope": "Standalone memory conversion only; no simultaneous HDMI scanout, gameplay or product integration."
+}

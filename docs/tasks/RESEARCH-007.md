@@ -9,7 +9,7 @@ path. Compare P4 CPU palette expansion and supported PPA/display operations. The
 unproven: existing direct RGB888 rendering removed an expensive conversion
 stage, and indexed storage could reintroduce it.
 
-**State: R07-01 and R07-03 complete; executable comparison preparation complete; physical run gated.**
+**State: R07-01 and R07-03 complete; bounded physical conversion comparison complete.**
 On 2026-10-11 the Author requested detailed exploration
 of indexed HDMI/PPA expansion, sample code and target compilation. The
 [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
@@ -21,9 +21,14 @@ expansion. Its [bounded contract](RESEARCH-007/BENCHMARK-CONTRACT.md) authorized
 offline implementation, target builds and packaging, with no bench access.
 R07-B01–B04 now complete: [preparation results](RESEARCH-007/PREPARATION-RESULTS.md)
 and [executable benchmark/recipe](RESEARCH-007/benchmark/README.md). The actual
-firmware is built, packaged and uninstalled; R07-B05 requires bench handover.
+firmware was built and packaged, then physically exercised under the Author’s
+bench handover. R07-B05 now complete: [physical results](RESEARCH-007/PHYSICAL-RESULTS.md),
+768 validated samples, all pixel/source/guard checks pass, exact ordinary P4
+restored and bench released. PPA takes72–85% less conversion time than the old
+CPU path, or53–59% less including signal-lane reorder, in this unloaded test.
 R07-02 and R07-04–07 remain unstarted. This is isolated experimental work,
-not product integration. No new mode, deployment or bench action is authorized.
+not product integration. The bounded deployment/run/restoration is complete; no
+new mode, further deployment or bench action is authorized.
 The machine-local reservation identifies the current bench owner;
 PORT-008's separate matched-pair hardware comparison is not part of this task.
 
