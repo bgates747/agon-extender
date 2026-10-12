@@ -16,7 +16,7 @@ SCAN binary hashes and verifies archived flash bytes. It creates:
 
 1. `plan.json`: variant/config/fixture hashes, result paths, clock assumptions,
    required resident hashes and firmware segment identities.
-2. `startup-mode20.txt` and `startup-mode136.txt`: keyboard setup and mode only.
+2. `startup-mode20.txt` and `startup-mode136.txt`: keyboard setup, EMOS ExCom routing, then the P4 mode only.
    These are the only generated files eligible to become root autoexec. Preserve
    and restore the actual startup bytes around future hardware use.
 3. Separate `baseline` and `candidate` configurations and explicit CLI suites.
@@ -28,6 +28,8 @@ SCAN binary hashes and verifies archived flash bytes. It creates:
 5. A verified firmware archive containing only the four specified flash segments
    per variant and rollback, with their retained source/build records. This is
    an experimental local package, not a selected production release.
+
+Every test batch uses `EMOS EXCOM --keep-display`: ordinary ExCom entry resets P4 to mode0 and would invalidate the setup mode.
 
 The suite is invoked by `EXEC` at a positively established MOS prompt, using the
 selected variant's `suite20.txt` SD path from the plan. A reset alone never

@@ -10,16 +10,17 @@ Integrated gameplay benefit remains unproven: direct RGB888 rendering removed
 an expensive conversion stage; linear-byte drawing reduces logical pixel
 traffic but reintroduces hardware expansion and private snapshot storage.
 
-**State: offline resumption preparation; fsim owns the bench.**
-R07-I01–I03 remain complete. The [resumption plan](RESEARCH-007/RESUME-R01.md)
-bounds the remaining R07-I04 comparison: a same-source RGB888 control and
-linear-byte/PPA candidate, both without parallel startup/payload selections,
-with the pre-parallel r11 rollback retained. Reuse the frozen finite fixtures;
-invoke only explicit CLI command files, never test autoexec/reset launchers.
-The earlier [candidate-only result](RESEARCH-007/INTEGRATION-CANDIDATE-R01.md)
-remains separate evidence: Nurples60 nominal application updates/s and about
-30.1 HDMI publications/s, no matched speedup or visual pass. No bench operation
-is authorized during this preparation. R07-I04/I05 remain open.
+**State: matched finite comparison collected; indexed candidate fails visual acceptance.**
+The [paired report](RESEARCH-007/RESUME-COMPARISON-2026-10-12.md) records
+complete same-source ordinary-UART RGB888/indexed runs with matching deterministic
+trajectories. Nurples maintains60 application updates/s in both, but background
+publication drops from60.07/s to30.14/s with indexed/PPA. The Author reports
+substantial sprite flicker and recalls an earlier version looked perfect.
+No cause or repair established; no production promotion. The intermittent HDMI
+dropout also occurred in RGB888 controls and remains a separate open issue.
+The [resumption contract](RESEARCH-007/RESUME-R01.md) owns unperformed controls,
+restoration and visual gates; R07-I04/I05 remain open. Earlier candidate-only
+and isolated conversion evidence does not override the integrated regression.
 
 R07-01/03 and R07-B01–B05 are complete. The
 [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
@@ -289,3 +290,16 @@ and acceptance. Broader palette/API work remains outside the integration.
 Recommendation: evaluate custom 256 colours as a separate possibility without
 making it a dependency of stock 16/64-colour storage research. Its API and
 implementation require separate approval after feasibility is established.
+
+
+### Current R07-I04 stop — transient HDMI output loss
+
+Same-source RGB888 r12 records validate, but Author reports repeated brief HDMI
+picture loss during the chart/Nurples. Candidate has not been installed in the
+resumed comparison. [Dropout findings](RESEARCH-007/HDMI-DROPOUT-R01.md) record
+validated timings and the exact older r11 control's single observed dropout.
+The full RGB888 read-only observer now replaces r11 for the same static chart;
+four segments verify, actual CLI/listener/read/EXIT passes, and its120-second
+trace records60.069Hz DMA with no gaps over25ms or HPD changes. Capture is closed.
+Await Author visual observation; no claimed fix or visual pass. The bounded remaining
+steps are in the linked resumption contract, not a new audit or implementation.

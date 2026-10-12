@@ -9,7 +9,7 @@ HDMI background. No full-frame VGA byte-lane reorder belongs in this path.
 Stock-visible colours, drawing, readback, sprite backgrounds and EMOS routing
 remain unchanged. This experimental selection does not replace production.
 
-## Current stop — offline resumption preparation
+## Current state — physical resumption
 
 After the BENCH-010 host serial correction and exact pre-parallel r11 restoration,
 the Author asks to prepare resumed indexed/PPA testing while fsim uses the bench.
@@ -21,9 +21,14 @@ Their evidence remains unchanged. CLI EXEC launch is mandatory; the historical
 autoexec/reset runner must not be called for staging or invocation.
 
 The earlier completed candidate-only run remains [filed](INTEGRATION-CANDIDATE-R01.md).
-R07-I04/I05 remain open; there is no paired speedup or visual acceptance. No
-hardware access, serial open, reset, deployment or SD operation belongs to the
-current preparation. Preserve fsim's reservation and await fresh handover.
+R07-I04/I05 remain open; there is no paired speedup or visual acceptance. Author has now released the bench. RGB888 control installation and actual
+CLI/listener verification pass; the first chart invocation exposed a host mode
+setup error. The resumption plan records its correction. R12 finite records now validate,
+but recurring transient picture loss fails visual stability. Exact older r11
+also produced one observed dropout. A default-off read-only RGB888 observer
+now runs the identical chart; its bounded trace records no long DMA callback
+gap or HPD change, with visual observation outstanding. The indexed candidate
+has not been installed. See [dropout findings](HDMI-DROPOUT-R01.md).
 
 ## Frozen scope — 2026-10-11
 
@@ -160,3 +165,17 @@ one completed candidate-only finite run. Results are retrieved and filed;
 ordinary startup is restored, candidate configurations remain selected. R07-I04
 remains open for matched comparisons and controls, with no further execution
 authorized by this record. See the current candidate result and operation protocol.
+
+The subsequent exact-r11 control also briefly lost and recovered its picture
+while holding the same static chart. Both RGB888 controls fail visual stability.
+The [dropout findings](HDMI-DROPOUT-R01.md) preserve the observation; the resumed
+indexed/PPA candidate remains uninstalled. Do not attribute this common-path
+fault to the indexed renderer or treat60Hz DMA counts as monitor-lock proof.
+
+## Current execution checkpoint — 2026-10-12
+
+The resumed indexed r05 candidate is now installed and the matched four-case
+comparison is collected. [Paired results](RESUME-COMPARISON-2026-10-12.md)
+supersede earlier uninstalled/no-comparison assertions for current state.
+Author-observed flicker and lower publication rate block acceptance; no further
+tests, restoration, firmware change or promotion in the collection-only step.

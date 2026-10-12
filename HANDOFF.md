@@ -1,3 +1,74 @@
+# Current stop — matched data collected; indexed visual regression — 2026-10-12T12:55:10.254530+00:00
+
+All four candidate records recovered through the existing foreground SD session. Exact pending READ resolved first; no new listener/session, firmware, reset, rerun or configuration change. Complete120/120/120/3600 records and tagged closed/nonoverflowed P4 windows validate; trajectories match RGB888. Nurples application60updates/s both, background publication60.07/s RGB888 versus30.14/s indexed (49.8% lower); scrolling/32-sprite fixture60 versus53.33updates/s and74.1% higher p95 fenced cost. Author-observed substantial sprite flicker means candidate fails visual acceptance. No root cause/fix established. RGB888 baseline valid; intermittent common HDMI dropout remains open. Foreground listener remains online in Legacy, candidate r05 installed, temporary63B setup-only startup and r03 candidate configs unchanged; no pending session read, collectors closed. Paired report docs/tasks/RESEARCH-007/RESUME-COMPARISON-2026-10-12.md. No promotion, commit or further tests.
+
+Earlier checkpoints below are historical.
+
+# Current stop — indexed candidate visual regression — 2026-10-12T12:51:13.623951+00:00
+
+Author reports substantial Nurples flicker on indexed/PPA r05, and recalls an earlier version looked perfect. Treat candidate as visual regression, not accepted sprite limitation. No root cause established. Direct single-client chart invocation succeeded; all three chart windows closed and explicit Escape returned listener. Candidate suite completed enough to return listener; T03/T07/T08 downloaded and validated. Host collection interrupted on visual failure while downloading T09; its session journal may retain a pending read. Passive collector closed, no test/reset/flash/restore/retry afterward. Last observed application state foreground listener online in Legacy. Candidate remains installed, temporary63B startup and r03 candidate configs remain. Baseline complete. Do not claim complete paired comparison or visual pass. Resume must resolve the existing SD session journal before another client operation; do not create a new session or restart listener blindly.
+
+Earlier checkpoints below are historical.
+
+# Current stop — comparison paused before indexed invocation
+
+Author authorized four finite RGB888/indexed tests despite unresolved HDMI
+dropout. RGB888 r12 baseline passes all four records,120/120/120/3600updates,
+60updates/s; actual invocation-to-listener100.809s,collection59.128s.
+Raw records/windows/capture retained agents/research007/resume-r01/bench-r03.
+
+Indexed r05-b2026-10-12-10-15-57Z now installed; four segments independently
+verified, NVS preserved, actual CLI/listener/read/EXIT passes. EMOS/fsim mainboard
+VDP unchanged. Observer removed; both measured targets exclude parallel handling.
+Startup setup-only63Bmode20 unchanged; configs now use fresh r03 candidate paths.
+
+Before chart invocation, local launcher retained one Bench SD client while
+run() created another for the same session journal. flock rejected the second
+client. No chart or candidate finite suite command sent. Process exited, so its
+locks closed; last positively observed terminal state foreground listener online
+in Legacy. No collector/flash/reset/test helper running; no recovery/retry.
+This is a host harness error, not evidence of a P4 or EMOS failure. Stop as agreed
+and request medium before correcting launcher/resuming. No further bench query.
+Fresh plan/package-r03 and bench-r03/run.py own this campaign, not old r02
+results. Original38B startup and original fixture configs still saved in bench-r02;
+this tranche's pre-change63B startup/configs also saved in bench-r03.
+No paired performance comparison, gameplay acceptance or production change.
+Earlier checkpoints below are historical.
+
+# Current stop — read-only HDMI observer chart awaiting visual observation
+
+Author confirms external MIPI LCD ribbon is removed. Older exact r11 showed one
+brief off/on, then no further observed blink; no formal rate comparison. Both
+RGB888 controls have a dropout observation; indexed candidate has NEVER been
+installed in this resumed campaign. No root cause or fix established.
+
+Full default-off observer build rgb-001-r12-b2026-10-12-12-00-47Z now installed;
+appSHA0452b9680090f6cba60f1a03fc431b983109bca25c1197aaf19d71ce6e2f2396.
+Compile/link/native validation/frozen-source check pass;15 HDMI selection tests.
+All indexed/parallel startup/payload selections false. Four segments independently
+verify/NVS retained; actual CLI/listener/read/EXIT passes. EMOS pre-parallel
+v0.1.24 and fsim P2 ordinary timing mainboard VDP unchanged. No timing, bridge
+programming, renderer or wiring correction. Observer uses bounded read-only
+I2C samples and callback-gap timestamps, never bridge relock/recovery.
+
+Same frozen mode20 chart explicitly invoked through CLI EXEC. Three windows
+close normally; chart remains on screen waiting for Escape. Setup-only63B
+startup is unchanged; no test launches on reset. Original38B startup/four
+configs remain saved in agents/research007/resume-r01/bench-r02.
+
+120s capture CLOSED:1,031 samples,60.069Hz DMA,maximum gap16,781us,no gaps>25ms,
+HPD0xfc unchanged,no captured errors. Raw MIPI/DDS variation is NOT image-lock
+evidence or a proven cause. Observer image is not a performance comparator.
+No collector/transfer/reset/flash helper remains running. Bench reserved; do
+not silently run indexed comparison. Next: Author observation whether picture
+has blinked since observer chart returned; stop all work once asking.
+Tracked findings docs/tasks/RESEARCH-007/HDMI-DROPOUT-R01.md and bounded B06–B08
+in RESUME-R01.md. Local exact source/build and receipts under
+agents/research007/resume-r01/dropout-r01/link-watch-evidence; build.local.json
+is adjacent. Production unchanged; owned source/docs dirty, no new commit.
+
+Earlier checkpoints below are historical.
+
 # Current preparation — indexed/PPA comparison staged offline; fsim owns bench
 
 Author requested preparation only while fsim tests. Full indexed r05 and same-

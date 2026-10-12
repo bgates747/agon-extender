@@ -69,7 +69,7 @@ def prepare(root, fixture_plan, builds, rollback, output, campaign):
                                       'manifest_sha256': digest((build/'manifest.json').read_bytes())}
         label_root = results+'/'+label
         tag = int.from_bytes(hashlib.sha256((campaign+label).encode()).digest()[:3], 'little') or 1
-        lines = ['EMOS EXCOM']
+        lines = ['EMOS EXCOM --keep-display']
         for case in (3, 7, 8, 9):
             entry = next(e for e in prior['cases'] if e['case']==case)
             assert digest((root/entry['binary']).read_bytes()) == entry['binary_sha256']
@@ -93,19 +93,20 @@ def prepare(root, fixture_plan, builds, rollback, output, campaign):
             hw_tag = int.from_bytes(hashlib.sha256((campaign+label+str(mode)).encode()).digest()[:3], 'little') or 1
             plan = codec.plan(data['sd_path'], sub+'/results.bin', mode, generate.MODES[mode], hw_tag, 54, 55)
             put(f'{label}/hw{mode}/plan.bin', plan, sub+'/plan.bin')
-            put(f'{label}/hardware{mode}.txt', batch(['EMOS EXCOM', 'CD '+sub,
+            put(f'{label}/hardware{mode}.txt', batch(['EMOS EXCOM --keep-display', 'CD '+sub,
                   'LOAD '+fixture['sd_path'], 'RUN .', 'CD /', 'EMOS LEGACY',
                   'EMOS sdserve --fast /']), label_root+f'/hardware{mode}.txt')
-            put(f'{label}/chart{mode}.txt', batch(['EMOS EXCOM', 'LOAD '+chart['sd_path'],
+            put(f'{label}/chart{mode}.txt', batch(['EMOS EXCOM --keep-display', 'LOAD '+chart['sd_path'],
                   'RUN .', 'EMOS LEGACY', 'EMOS sdserve --fast /']), label_root+f'/chart{mode}.txt')
             for e in (fixture, data, chart):
                 if e not in record['resident_files']:
                     record['resident_files'].append(e)
-    # Only these setup files may be installed as root autoexec. Routing and
-    # test commands remain in explicit CLI batches; reset alone starts no test.
+    # Setup selects the P4 route before its mode. Ordinary EXCOM resets P4 to
+    # mode0, so later explicit batches must preserve this mode with --keep-display.
+    # No LOAD/RUN/EXEC belongs in root startup; reset alone starts no test.
     for mode in (20, 136):
-        data = batch(['SET KEYBOARD 1', 'EMOS KEYINPUT extender', f'VDU 22 {mode}'])
-        assert not any(token in data.upper() for token in (b'LOAD ', b'RUN', b'EXEC ', b'EXCOM'))
+        data = batch(['SET KEYBOARD 1', 'EMOS KEYINPUT extender', 'EMOS EXCOM', f'VDU 22 {mode}'])
+        assert not any(token in data.upper() for token in (b'LOAD ', b'RUN', b'EXEC '))
         put(f'startup-mode{mode}.txt', data)
     segments = {0x2000:'bootloader/bootloader.bin', 0x8000:'partition_table/partition-table.bin',
                 0xf000:'ota_data_initial.bin', 0x20000:'agon_extender.bin'}
