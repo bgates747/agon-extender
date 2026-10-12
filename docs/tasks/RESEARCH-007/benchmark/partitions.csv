@@ -1,0 +1,7 @@
+# Keep ordinary nvs at its existing address, but never initialize/write it.
+# bench_nvs occupies 64KiB of the ordinary table's unused reserved tail.
+# No ota/data/user partition is erased by the benchmark's NVS initialization.
+# Name,     Type, SubType, Offset,   Size,     Flags
+nvs,        data, nvs,     0x9000,   0x6000,
+factory,    app,  factory, 0x20000,  0x700000,
+bench_nvs,  data, nvs,     0xE20000, 0x10000,

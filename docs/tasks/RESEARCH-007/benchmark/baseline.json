@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "artifact_id": "ppa-clut-benchmark",
+  "revision": "r01",
+  "source_commit": "77e5b5656efe31f757043c5504b34a4192a466a5",
+  "cpu_kernel": "expandSignalRowToHdmi unchanged; linear control uses its expandTwoBits helper",
+  "files": [
+    {
+      "path": "vdp/video/extender/display/hdmi_geometry.hpp",
+      "sha256": "645fc2c0f27f05fc5f80af875570c0cc8250e08caa4b25a1826881f8e0eca9e1"
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_timing.hpp",
+      "sha256": "e0c495e6a1e863b638a68af346e23e048f196bd01f26cf051af1dd4c395ff18c"
+    },
+    {
+      "path": "vdp/partitions.csv",
+      "sha256": "1c8854e64476f1f10fa5d9848cc7676f47efe363ff30c155dbc97c9320513b6c"
+    }
+  ],
+  "backport_metadata": "../clut-example/backport.json"
+}
