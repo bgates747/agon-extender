@@ -51,6 +51,28 @@ int main() {
   controller.suspendBackgroundPrimitiveExecution();
   assert(controller.drain()==0 && r.refused_drains==1 && r.drains==2);
   controller.resumeBackgroundPrimitiveExecution();
+  // A fenced bitmap39 update has 16 ordinary plots plus one marker plot.
+  // Canvas.waitCompletion(false) drains them through the actual foreground
+  // loop, rather than StockBoundController::drain. Every command must count.
+  primitive.cmd=fabgl::PrimitiveCmd::DrawBitmap;
+  primitive.bitmapDrawingInfo=fabgl::BitmapDrawingInfo(2,2,&bitmap);
+  for(unsigned i=0;i<17;++i)controller.addPrimitive(primitive);
+  fabgl::Canvas canvas(&controller);
+  lock.lock();
+  auto foreground=std::async(std::launch::async,[&]{canvas.waitCompletion(false);});
+  assert(foreground.wait_for(25ms)==std::future_status::timeout);
+  lock.unlock();foreground.get();
+  assert(r.foreground_drains==1 && r.foreground_primitive_calls==17);
+  assert(r.primitive_calls==21 && r.drains==3);
+  assert(r.kinds[unsigned(agon_bench::RenderKind::Bitmap)].calls==18);
+  assert(r.native_wait_us>=30000);
+  // processPrimitives appends one ordinary Refresh. The next worker drains
+  // just that command; foreground calls must never be accounted twice.
+  assert(controller.drain()==1);
+  assert(r.primitive_calls==22 && r.foreground_primitive_calls==17);
+  assert(r.kinds[unsigned(agon_bench::RenderKind::Bitmap)].calls==18);
+  sum=0;for(auto &kind:r.kinds)sum+=kind.us.load();
+  assert(r.rendering_us==sum);
   {
     agon_bench::RenderBatch crossing;
     crossing.operation(agon_bench::RenderKind::Bitmap,1,4,14);

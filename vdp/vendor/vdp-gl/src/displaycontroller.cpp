@@ -43,6 +43,9 @@
 
 #include "fabutils.h"
 #include "images/cursors.h"
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+#include "extender/diagnostics/render_benchmark.hpp"
+#endif
 
 #if defined(AGON_EXTENDER_ROLLING_SCANOUT) && defined(ESP_PLATFORM)
 // P4 task-only queue placement; stock capacity/ordering and all other builds
@@ -676,11 +679,45 @@ void IRAM_ATTR BitmappedDisplayController::processPrimitives()
 {
   AGON_STOCK_FOREGROUND_GUARD;
   suspendBackgroundPrimitiveExecution();
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  // RESEARCH-007: pixel-query fences execute this original foreground flush,
+  // bypassing the worker drain. Account the same individual operations with
+  // the same recursive outer guard as StockBoundController::drain. No loop,
+  // ordering or guard change is compiled into ordinary product builds.
+  agon_bench::RenderBatch render;
+  std::size_t count=0;
+  auto measured=[&](agon_bench::RenderKind kind,auto operation) {
+    if(!render.enabled()){operation();return;}
+    const auto before=esp_timer_get_time();
+    std::int64_t acquired,finished;
+    {
+      AGON_STOCK_NATIVE_GUARD;
+      acquired=esp_timer_get_time();operation();finished=esp_timer_get_time();
+    }
+    render.operation(kind,before,acquired,finished);
+  };
+#endif
   Rect updateRect = Rect(SHRT_MAX, SHRT_MAX, SHRT_MIN, SHRT_MIN);
   Primitive prim;
-  while (xQueueReceive(m_execQueue, &prim, 0) == pdTRUE)
+  while (xQueueReceive(m_execQueue, &prim, 0) == pdTRUE) {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    auto kind=agon_bench::RenderKind::Other;
+    if(prim.cmd==PrimitiveCmd::VScroll || prim.cmd==PrimitiveCmd::HScroll)
+      kind=agon_bench::RenderKind::Scroll;
+    else if(prim.cmd==PrimitiveCmd::DrawBitmap)kind=agon_bench::RenderKind::Bitmap;
+    else if(prim.cmd==PrimitiveCmd::RefreshSprites)kind=agon_bench::RenderKind::RefreshSprites;
+    measured(kind,[&]{execPrimitive(prim,updateRect,false);});
+    ++count;
+#else
     execPrimitive(prim, updateRect, false);
+#endif
+  }
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  measured(agon_bench::RenderKind::FinalSprites,[&]{showSprites(updateRect);});
+  render.finish(count,false,true);
+#else
   showSprites(updateRect);
+#endif
   resumeBackgroundPrimitiveExecution();
   Primitive p(PrimitiveCmd::Refresh, updateRect);
   addPrimitive(p);

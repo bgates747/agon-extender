@@ -179,3 +179,14 @@ Control and candidate will share one frozen source revision and instrumentation.
    [serial capture](../../serial-monitor.md), [SD layout](../../sd-layout.md),
    [installation](../../installing.md) and [reset](../../bench-reset.md) govern
    operations. Private devices/reservation/tools remain in ignored local records.
+
+The first physical control identified a diagnostic coverage defect before any
+speedup claim: stock pixel-query completion calls `processPrimitives()` in the
+parser and bypasses the worker drain. Bitmap case39 completed882updates, but
+worker-only counters saw1,048 of the expected14,994 bitmap commands (including
+one marker per update). Those initial render totals are explicitly invalid for
+whole-workload comparison; fenced PRT results remain separate valid evidence.
+A second measurement schema covers both queued worker and queued foreground
+execution with identical per-operation lock/wall scopes and exposes foreground
+counts. Both variants must be rebuilt and repeated with that schema. It still
+excludes immediate double-buffer rendering and hardware scanout composition.

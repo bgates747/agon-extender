@@ -16,8 +16,10 @@ enum Phase {Drain,RowWait,RowCompose,Expand,Cache,Conversion,PhaseCount};
 struct Counter {std::atomic<std::uint32_t> calls{},us{},max{},drops{};};
 // RESEARCH-007: bounded worker-execution sidecar, not another phase array.
 // Keeping this separate avoids adding tens of KiB to the 512 legacy windows.
-// These counters cover queued single-buffer drawing only. Immediate drawing in
-// double-buffered modes and rolling hardware-sprite composition are excluded.
+// These counters cover queued worker AND foreground processPrimitives drawing.
+// Pixel-query fences use the foreground loop even in single-buffer modes; a
+// worker-only tally therefore misses most fenced rendering. Immediate drawing
+// in double-buffered modes and rolling hardware-sprite composition are excluded.
 constexpr unsigned RenderWindowCapacity=16;
 enum class RenderKind : unsigned { Scroll, Bitmap, RefreshSprites, Other, FinalSprites, Count };
 struct RenderValue {std::uint32_t calls{},us{},max{};};
@@ -28,11 +30,13 @@ struct RenderTally {
 struct RenderCounters {
   Counter kinds[unsigned(RenderKind::Count)];
   std::atomic<std::uint32_t> drains{},empty_drains{},refused_drains{},primitive_calls{},
-      native_wait_us{},rendering_us{},elapsed_max_us{},primitive_max_us{},boundary_drops{};
+      native_wait_us{},rendering_us{},elapsed_max_us{},primitive_max_us{},boundary_drops{},
+      foreground_drains{},foreground_primitive_calls{};
   void reset() {
     for(auto &c:kinds){c.calls=0;c.us=0;c.max=0;c.drops=0;}
     drains=0;empty_drains=0;refused_drains=0;primitive_calls=0;
     native_wait_us=0;rendering_us=0;elapsed_max_us=0;primitive_max_us=0;boundary_drops=0;
+    foreground_drains=0;foreground_primitive_calls=0;
   }
 };
 struct Window {
@@ -87,7 +91,7 @@ class RenderBatch {
       if(duration>tally_.primitive_max_us)tally_.primitive_max_us=duration;
     }
   }
-  void finish(std::size_t primitive_count,bool refused=false) {
+  void finish(std::size_t primitive_count,bool refused=false,bool foreground=false) {
     if(!token_)return;
     tally_.elapsed_us=std::uint32_t(esp_timer_get_time()-start_);
     auto &r=render_windows[token_-1];
@@ -96,6 +100,10 @@ class RenderBatch {
       if(refused)r.refused_drains.fetch_add(1);
       else {r.drains.fetch_add(1);if(!primitive_count)r.empty_drains.fetch_add(1);}
       r.primitive_calls.fetch_add(tally_.primitive_calls);
+      if(foreground) {
+        r.foreground_drains.fetch_add(1);
+        r.foreground_primitive_calls.fetch_add(tally_.primitive_calls);
+      }
       r.native_wait_us.fetch_add(tally_.native_wait_us);r.rendering_us.fetch_add(tally_.rendering_us);
       renderMaximum(r.elapsed_max_us,tally_.elapsed_us);renderMaximum(r.primitive_max_us,tally_.primitive_max_us);
       for(unsigned i=0;i<unsigned(RenderKind::Count);++i) {
@@ -160,7 +168,7 @@ inline void update(std::uint32_t token,int frame) {
 }
 inline std::string json() {
   std::lock_guard<std::mutex> lock(records);
-  char b[400];std::string out="{\"schema\":1,\"output\":\"";
+  char b[512];std::string out="{\"schema\":1,\"output\":\"";
 #if defined(AGON_EXTENDER_BENCH_CONVERT_OFF)
   out+="convert-off";
 #elif defined(AGON_EXTENDER_BENCH_OFF)
@@ -170,7 +178,7 @@ inline std::string json() {
 #else
   out+="normal";
 #endif
-  std::snprintf(b,sizeof(b),"\",\"open\":%u,\"overflow\":%s,\"render_overflow\":%s,\"render_capacity\":%u,\"render_scope\":\"queued single-buffer worker execution wall; excludes native wait, parser, UART, pacing, immediate double-buffer drawing and scanout composition; includes nested guards and preemption\",\"windows\":[",active.load(),overflow?"true":"false",render_overflow.load()?"true":"false",RenderWindowCapacity);out+=b;
+  std::snprintf(b,sizeof(b),"\",\"open\":%u,\"overflow\":%s,\"render_overflow\":%s,\"render_capacity\":%u,\"render_schema\":2,\"render_scope\":\"queued worker and foreground flush execution wall; excludes native wait, parser, UART, pacing, immediate double-buffer drawing and scanout composition; includes nested guards and preemption\",\"windows\":[",active.load(),overflow?"true":"false",render_overflow.load()?"true":"false",RenderWindowCapacity);out+=b;
   for(unsigned i=0;i<used;++i){auto &w=windows[i];if(i)out+=",";
     std::snprintf(b,sizeof(b),"{\"tag\":%u,\"id\":%u,\"flags\":%u,\"start_us\":%lld,\"end_us\":%lld,\"scanouts\":%u,\"updates\":%u,\"marker_valid\":%u,\"marker_invalid\":%u,\"last_frame\":%u,\"marker_transitions\":%u,\"marker_repeats\":%u,\"phases\":[",w.tag,w.id,w.flags,(long long)w.start,(long long)w.end,w.scanouts.load(),w.updates.load(),w.marker_valid.load(),w.marker_invalid.load(),w.last_frame.load(),w.marker_transitions.load(),w.marker_repeats.load());out+=b;
     for(unsigned p=0;p<PhaseCount;++p){auto &c=w.phases[p];if(p)out+=",";
@@ -179,7 +187,7 @@ inline std::string json() {
     if(i>=RenderWindowCapacity)out+="null";
     else {
       auto &r=render_windows[i];
-      std::snprintf(b,sizeof(b),"{\"drains\":%u,\"empty_drains\":%u,\"refused_drains\":%u,\"primitive_calls\":%u,\"native_wait_us\":%u,\"rendering_us\":%u,\"elapsed_max_us\":%u,\"primitive_max_us\":%u,\"boundary_drops\":%u,\"kinds\":{",r.drains.load(),r.empty_drains.load(),r.refused_drains.load(),r.primitive_calls.load(),r.native_wait_us.load(),r.rendering_us.load(),r.elapsed_max_us.load(),r.primitive_max_us.load(),r.boundary_drops.load());out+=b;
+      std::snprintf(b,sizeof(b),"{\"drains\":%u,\"empty_drains\":%u,\"refused_drains\":%u,\"primitive_calls\":%u,\"native_wait_us\":%u,\"rendering_us\":%u,\"elapsed_max_us\":%u,\"primitive_max_us\":%u,\"boundary_drops\":%u,\"foreground_drains\":%u,\"foreground_primitive_calls\":%u,\"kinds\":{",r.drains.load(),r.empty_drains.load(),r.refused_drains.load(),r.primitive_calls.load(),r.native_wait_us.load(),r.rendering_us.load(),r.elapsed_max_us.load(),r.primitive_max_us.load(),r.boundary_drops.load(),r.foreground_drains.load(),r.foreground_primitive_calls.load());out+=b;
       constexpr const char *names[]={"scroll","bitmap","refresh_sprites","other","final_sprites"};
       for(unsigned k=0;k<unsigned(RenderKind::Count);++k) {
         if(k)out+=",";auto &c=r.kinds[k];

@@ -44,11 +44,13 @@ def main():
         completed = subprocess.run([str(binary)], check=True, capture_output=True,
                                    text=True, timeout=15)
     result = json.loads(completed.stdout)
+    assert result['render_schema'] == 2
     assert result["render_capacity"] == 16 and result["render_overflow"]
     assert len(result["windows"]) == 17
     assert all(len(window["phases"]) == 6 for window in result["windows"])
     assert result["windows"][16]["render"] is None
-    print("PASS: actual recursive guard excludes native wait; rendering categories, "
+    print("PASS: actual worker and foreground fence loops count all17 bitmap commands; "
+          "recursive guards exclude native wait without double counting; categories, "
           "empty/refused drains, closed-window drops and sidecar overflow validate")
 
 
