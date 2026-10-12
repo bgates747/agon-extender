@@ -75,6 +75,29 @@ void commands(Canvas &c,StockRuntimeController &r,std::vector<std::vector<RGB888
   Bitmap bitmap8888(2,2,rgba,PixelFormat::RGBA8888);
   c.drawBitmap(16,20,&bitmap8888);
   checkpoint();
+  // Both SET fast paths must agree with the upstream oracle for every alpha
+  // class, all64 colours, clipping and the non-SET/background-colour fallbacks.
+  std::array<std::uint8_t,64*4> rgba2222{};
+  std::array<RGBA8888,64*4> rgba8888{};
+  for(unsigned alpha=0;alpha<4;++alpha)for(unsigned colour=0;colour<64;++colour) {
+    const auto n=alpha*64+colour;
+    rgba2222[n]=(alpha<<6)|colour;
+    rgba8888[n]=RGBA8888((colour&3)*64+17,((colour>>2)&3)*64+29,
+                         ((colour>>4)&3)*64+41,alpha?alpha*64-63:0);
+  }
+  Bitmap alpha2222(16,16,rgba2222.data(),PixelFormat::RGBA2222);
+  Bitmap alpha8888(16,16,rgba8888.data(),PixelFormat::RGBA8888);
+  for(auto mode : {PaintMode::Set,PaintMode::OR,PaintMode::AND,PaintMode::XOR,
+                  PaintMode::ORNOT,PaintMode::ANDNOT,PaintMode::Invert,PaintMode::NoOp}) {
+    for(bool background : {false,true}) {
+      PaintOptions options;options.mode=mode;options.swapFGBG=background;
+      c.setPaintOptions(options);c.setPenColor(85,170,255);
+      c.drawBitmap(-3,1,&alpha2222);c.drawBitmap(54,25,&alpha8888);
+      c.drawBitmap(21,7,&alpha2222);c.drawBitmap(34,9,&alpha8888);
+      checkpoint();
+    }
+  }
+  c.resetPaintOptions();
   c.copyRect(3,3,7,5,24,16);c.copyRect(7,5,2,1,24,16);
   checkpoint();
   c.setClippingRect(Rect(0,0,W-1,H-1));
@@ -207,6 +230,32 @@ int main() {
       spriteStages[variant-1].push_back(read(*r));
     }
     for(unsigned i=0;i<spriteStages[0].size();++i)same(spriteStages[0][i],spriteStages[1][i]);
+    // Clipped software sprites exercise the generic save-all-background rule,
+    // including fully transparent pixels, then Native restore when moved/hidden.
+    // Use overlapping sprites in both source formats to verify reverse erasure.
+    std::array<std::uint8_t,16> saved2222{{0x01,0x42,0x83,0xc4,0xc5,0x06,0x47,0x88,
+                                        0x89,0xca,0x0b,0x4c,0x4d,0x8e,0xcf,0x00}};
+    std::array<std::uint32_t,16> saved8888{{0x00203040,0x01447799,0x40abcdef,0xff010203,
+                                         0xff123456,0x006789ab,0x01445566,0x40112233,
+                                         0x40aabbcc,0xff102030,0x00112233,0x01456789,
+                                         0x01ffffff,0x40000000,0xff4080c0,0x00000000}};
+    Bitmap save2222(4,4,saved2222.data(),PixelFormat::RGBA2222);
+    Bitmap save8888(4,4,saved8888.data(),PixelFormat::RGBA8888);
+    std::vector<std::vector<RGB888>> savedStages[2];variant=0;
+    for(auto *r : {static_cast<StockRuntimeController*>(&native),static_cast<StockRuntimeController*>(&direct)}) {
+      r->bindNativeAliases();
+      Sprite sprites[2];sprites[0].addBitmap(&save2222);sprites[1].addBitmap(&save8888);
+      for(auto &sprite:sprites){sprite.hardware=0;sprite.visible=1;sprite.allowDraw=1;}
+      r->display().setSprites(sprites,2);
+      for(const auto &position : {Point(-2,-1),Point(1,1),Point(W-2,H-2),Point(25,12)}) {
+        sprites[0].moveTo(position.X,position.Y);sprites[1].moveTo(position.X+1,position.Y+1);
+        r->display().refreshSprites();savedStages[variant].push_back(read(*r));
+      }
+      sprites[0].visible=0;sprites[1].visible=0;
+      r->display().refreshSprites();savedStages[variant].push_back(read(*r));
+      r->display().removeSprites();savedStages[variant].push_back(read(*r));++variant;
+    }
+    for(unsigned i=0;i<savedStages[0].size();++i)same(savedStages[0][i],savedStages[1][i]);
     if(doubled) {
       const auto generation=stockVisibleGeneration();
       direct.bindNativeAliases();

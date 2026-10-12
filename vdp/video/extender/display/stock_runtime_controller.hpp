@@ -132,24 +132,62 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
   }
 
   std::size_t drain() override {
-    if (!execution_.beginWorker()) return 0;
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    agon_bench::RenderBatch render;
+#endif
+    if (!execution_.beginWorker()) {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+      render.finish(0,true);
+#endif
+      return 0;
+    }
     struct Leave { StockExecutionGate &gate; ~Leave() { gate.endWorker(); } } leave{execution_};
     std::size_t count = 0;
     // Stock VGABaseController::primitiveExecTask inner drain, with its optional
     // timeout disabled. Only admission/suspension are bound to the P4 gate;
     // execPrimitive and showSprites retain their original bodies. The native
     // guard is inside each operation, never around this complete drain.
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    // RESEARCH-007: separate native-lock wait from queued execution. This
+    // default-off probe adds an outer recursive guard only around the single
+    // existing operation; the inherited inner guard and queue order are intact.
+    // No timing/guard changes occur outside an admitted measured window.
+    auto measured=[&](agon_bench::RenderKind kind,auto operation) {
+      if(!render.enabled()){operation();return;}
+      const auto before=esp_timer_get_time();
+      std::int64_t acquired,finished;
+      {
+        AGON_STOCK_NATIVE_GUARD;
+        acquired=esp_timer_get_time();operation();finished=esp_timer_get_time();
+      }
+      render.operation(kind,before,acquired,finished);
+    };
+#endif
     fabgl::Rect updateRect(SHRT_MAX, SHRT_MAX, SHRT_MIN, SHRT_MIN);
     do {
       fabgl::Primitive prim;
       if (this->getPrimitive(&prim, 0) == false)
         break;
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+      auto kind=agon_bench::RenderKind::Other;
+      if(prim.cmd==fabgl::PrimitiveCmd::VScroll || prim.cmd==fabgl::PrimitiveCmd::HScroll)
+        kind=agon_bench::RenderKind::Scroll;
+      else if(prim.cmd==fabgl::PrimitiveCmd::DrawBitmap)kind=agon_bench::RenderKind::Bitmap;
+      else if(prim.cmd==fabgl::PrimitiveCmd::RefreshSprites)kind=agon_bench::RenderKind::RefreshSprites;
+      measured(kind,[&]{this->execPrimitive(prim,updateRect,false);});
+#else
       this->execPrimitive(prim, updateRect, false);
+#endif
       ++count;
       if (execution_.suspended())
         break;
     } while (true);
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    measured(agon_bench::RenderKind::FinalSprites,[&]{this->showSprites(updateRect);});
+    render.finish(count);
+#else
     this->showSprites(updateRect);
+#endif
     return count;
   }
 

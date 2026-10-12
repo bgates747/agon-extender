@@ -3,6 +3,7 @@
 #pragma once
 #if defined(AGON_EXTENDER_RENDER_BENCHMARK)
 #include <atomic>
+#include <cstddef>
 #include <cstdint>
 #include <cstdio>
 #include <mutex>
@@ -13,6 +14,27 @@
 namespace agon_bench {
 enum Phase {Drain,RowWait,RowCompose,Expand,Cache,Conversion,PhaseCount};
 struct Counter {std::atomic<std::uint32_t> calls{},us{},max{},drops{};};
+// RESEARCH-007: bounded worker-execution sidecar, not another phase array.
+// Keeping this separate avoids adding tens of KiB to the 512 legacy windows.
+// These counters cover queued single-buffer drawing only. Immediate drawing in
+// double-buffered modes and rolling hardware-sprite composition are excluded.
+constexpr unsigned RenderWindowCapacity=16;
+enum class RenderKind : unsigned { Scroll, Bitmap, RefreshSprites, Other, FinalSprites, Count };
+struct RenderValue {std::uint32_t calls{},us{},max{};};
+struct RenderTally {
+  RenderValue kinds[unsigned(RenderKind::Count)];
+  std::uint32_t native_wait_us{},rendering_us{},elapsed_us{},primitive_calls{},primitive_max_us{};
+};
+struct RenderCounters {
+  Counter kinds[unsigned(RenderKind::Count)];
+  std::atomic<std::uint32_t> drains{},empty_drains{},refused_drains{},primitive_calls{},
+      native_wait_us{},rendering_us{},elapsed_max_us{},primitive_max_us{},boundary_drops{};
+  void reset() {
+    for(auto &c:kinds){c.calls=0;c.us=0;c.max=0;c.drops=0;}
+    drains=0;empty_drains=0;refused_drains=0;primitive_calls=0;
+    native_wait_us=0;rendering_us=0;elapsed_max_us=0;primitive_max_us=0;boundary_drops=0;
+  }
+};
 struct Window {
   Counter phases[PhaseCount];
   std::atomic<std::uint32_t> scanouts{},updates{},marker_valid{},marker_invalid{},last_frame{},marker_transitions{},marker_repeats{};
@@ -24,6 +46,67 @@ inline std::atomic<std::uint32_t> active{},outstanding{};
 inline unsigned used{};
 inline bool overflow{};
 inline std::mutex records;
+inline RenderCounters render_windows[RenderWindowCapacity];
+inline std::atomic<bool> render_overflow{};
+inline void renderMaximum(std::atomic<std::uint32_t> &target,std::uint32_t value) {
+  auto old=target.load(std::memory_order_relaxed);
+  while(old<value&&!target.compare_exchange_weak(old,value,std::memory_order_relaxed)){}
+}
+// One local tally per drain: no per-primitive atomics or dynamic allocation.
+// The diagnostic outer recursive guard surrounds the same single operation as
+// its stock inner guard; it never locks an entire queue drain. Wait and execution
+// are measured separately. Execution is elapsed wall time including nested
+// helper guards/preemption, not exclusive CPU cycles. The final showSprites
+// cost is included even for empty drains; normalize by workload updates, not
+// drain calls, because scheduling can change batching.
+class RenderBatch {
+  std::uint32_t token_{};
+  std::int64_t start_{};
+  RenderTally tally_{};
+ public:
+  RenderBatch() {
+    token_=active.load(std::memory_order_acquire);
+    if(token_) {
+      outstanding.fetch_add(1);
+      if(active.load()!=token_ || !(windows[token_-1].flags&1)) {
+        outstanding.fetch_sub(1);token_=0;
+      } else if(token_>RenderWindowCapacity) {
+        render_overflow.store(true);outstanding.fetch_sub(1);token_=0;
+      }
+    }
+    if(token_)start_=esp_timer_get_time();
+  }
+  bool enabled() const {return token_!=0;}
+  void operation(RenderKind kind,std::int64_t before,std::int64_t acquired,std::int64_t finished) {
+    auto &c=tally_.kinds[unsigned(kind)];
+    const auto duration=std::uint32_t(finished-acquired);
+    ++c.calls;c.us+=duration;if(duration>c.max)c.max=duration;
+    tally_.native_wait_us+=std::uint32_t(acquired-before);tally_.rendering_us+=duration;
+    if(kind!=RenderKind::FinalSprites) {
+      ++tally_.primitive_calls;
+      if(duration>tally_.primitive_max_us)tally_.primitive_max_us=duration;
+    }
+  }
+  void finish(std::size_t primitive_count,bool refused=false) {
+    if(!token_)return;
+    tally_.elapsed_us=std::uint32_t(esp_timer_get_time()-start_);
+    auto &r=render_windows[token_-1];
+    if(active.load(std::memory_order_acquire)!=token_)r.boundary_drops.fetch_add(1);
+    else {
+      if(refused)r.refused_drains.fetch_add(1);
+      else {r.drains.fetch_add(1);if(!primitive_count)r.empty_drains.fetch_add(1);}
+      r.primitive_calls.fetch_add(tally_.primitive_calls);
+      r.native_wait_us.fetch_add(tally_.native_wait_us);r.rendering_us.fetch_add(tally_.rendering_us);
+      renderMaximum(r.elapsed_max_us,tally_.elapsed_us);renderMaximum(r.primitive_max_us,tally_.primitive_max_us);
+      for(unsigned i=0;i<unsigned(RenderKind::Count);++i) {
+        r.kinds[i].calls.fetch_add(tally_.kinds[i].calls);r.kinds[i].us.fetch_add(tally_.kinds[i].us);
+        renderMaximum(r.kinds[i].max,tally_.kinds[i].max);
+      }
+    }
+    outstanding.fetch_sub(1);token_=0;
+  }
+  ~RenderBatch(){if(token_)finish(tally_.primitive_calls);}
+};
 struct Scope {
   std::uint32_t token{}; std::int64_t start{}; Phase phase;
   explicit Scope(Phase p):phase(p) {
@@ -52,10 +135,11 @@ inline void marker(std::uint8_t const *p,std::size_t n) {
   if(p[5]==0) {
     active.store(0,std::memory_order_release);
     while(outstanding.load())vTaskDelay(1);
-    used=0;overflow=false;
+    used=0;overflow=false;render_overflow=false;
   } else if(p[5]==1) {
     if(active.load()||used==512){overflow=true;return;}
     auto &w=windows[used];
+    if(used<RenderWindowCapacity)render_windows[used].reset();
     for(auto &c:w.phases){c.calls.store(0);c.us.store(0);c.max.store(0);c.drops.store(0);}
     w.scanouts.store(0);w.updates.store(0);w.marker_valid.store(0);w.marker_invalid.store(0);w.last_frame.store(UINT32_MAX);w.marker_transitions.store(0);w.marker_repeats.store(0);
     w.id=p[6]|p[7]<<8;w.flags=p[8];w.tag=p[9]|p[10]<<8|p[11]<<16;
@@ -86,12 +170,24 @@ inline std::string json() {
 #else
   out+="normal";
 #endif
-  std::snprintf(b,sizeof(b),"\",\"open\":%u,\"overflow\":%s,\"windows\":[",active.load(),overflow?"true":"false");out+=b;
+  std::snprintf(b,sizeof(b),"\",\"open\":%u,\"overflow\":%s,\"render_overflow\":%s,\"render_capacity\":%u,\"render_scope\":\"queued single-buffer worker execution wall; excludes native wait, parser, UART, pacing, immediate double-buffer drawing and scanout composition; includes nested guards and preemption\",\"windows\":[",active.load(),overflow?"true":"false",render_overflow.load()?"true":"false",RenderWindowCapacity);out+=b;
   for(unsigned i=0;i<used;++i){auto &w=windows[i];if(i)out+=",";
     std::snprintf(b,sizeof(b),"{\"tag\":%u,\"id\":%u,\"flags\":%u,\"start_us\":%lld,\"end_us\":%lld,\"scanouts\":%u,\"updates\":%u,\"marker_valid\":%u,\"marker_invalid\":%u,\"last_frame\":%u,\"marker_transitions\":%u,\"marker_repeats\":%u,\"phases\":[",w.tag,w.id,w.flags,(long long)w.start,(long long)w.end,w.scanouts.load(),w.updates.load(),w.marker_valid.load(),w.marker_invalid.load(),w.last_frame.load(),w.marker_transitions.load(),w.marker_repeats.load());out+=b;
     for(unsigned p=0;p<PhaseCount;++p){auto &c=w.phases[p];if(p)out+=",";
       std::snprintf(b,sizeof(b),"{\"calls\":%u,\"us\":%u,\"max_us\":%u,\"boundary_drops\":%u}",c.calls.load(),c.us.load(),c.max.load(),c.drops.load());out+=b;}
-    out+="]}";
+    out+="],\"render\":";
+    if(i>=RenderWindowCapacity)out+="null";
+    else {
+      auto &r=render_windows[i];
+      std::snprintf(b,sizeof(b),"{\"drains\":%u,\"empty_drains\":%u,\"refused_drains\":%u,\"primitive_calls\":%u,\"native_wait_us\":%u,\"rendering_us\":%u,\"elapsed_max_us\":%u,\"primitive_max_us\":%u,\"boundary_drops\":%u,\"kinds\":{",r.drains.load(),r.empty_drains.load(),r.refused_drains.load(),r.primitive_calls.load(),r.native_wait_us.load(),r.rendering_us.load(),r.elapsed_max_us.load(),r.primitive_max_us.load(),r.boundary_drops.load());out+=b;
+      constexpr const char *names[]={"scroll","bitmap","refresh_sprites","other","final_sprites"};
+      for(unsigned k=0;k<unsigned(RenderKind::Count);++k) {
+        if(k)out+=",";auto &c=r.kinds[k];
+        std::snprintf(b,sizeof(b),"\"%s\":{\"calls\":%u,\"us\":%u,\"max_us\":%u}",names[k],c.calls.load(),c.us.load(),c.max.load());out+=b;
+      }
+      out+="}}";
+    }
+    out+="}";
   }
   return out+"]}";
 }

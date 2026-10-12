@@ -17,6 +17,7 @@ def main():
     parser.add_argument('--indexed', action='store_true')
     parser.add_argument('--hdmi848', action='store_true')
     parser.add_argument('--hdmi684', action='store_true')
+    parser.add_argument('--bitmap-fast', action='store_true')
     args = parser.parse_args()
     if args.indexed and (args.hdmi848 or args.hdmi684):
         parser.error("Indexed test uses private logical rows, not borrowed panels")
@@ -44,6 +45,7 @@ def main():
             "-ffunction-sections", "-fdata-sections", "-Wl,--gc-sections",
             "-DFABGL_EMULATED", "-DAGON_EXTENDER_STOCK_RUNTIME",
             "-DAGON_EXTENDER_HDMI", "-DAGON_EXTENDER_DIRECT_RGB888",
+            *(["-DAGON_EXTENDER_BITMAP_FAST=1"] if args.bitmap_fast else []),
             *(["-DAGON_EXTENDER_INDEXED_PPA=1"] if args.indexed else []),
             *(["-DAGON_EXTENDER_HDMI_848X480=1"] if args.hdmi848 else []),
             *(["-DAGON_EXTENDER_HDMI_684X384=1"] if args.hdmi684 else []), *["-I" + str(path) for path in includes],

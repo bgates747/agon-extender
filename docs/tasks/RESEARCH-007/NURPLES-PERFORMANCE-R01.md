@@ -10,6 +10,12 @@ The indexed/PPA experiment is an option, not the required winner. Keep current
 RGB888 as the control; do not claim success merely by repairing indexed's30Hz
 regression to the baseline's60Hz. Bench exclusively belongs to Extender.
 
+The Author permits a negotiated mainboard-only handoff to the6502 agent if
+it requests ground-truth testing by mailbox. Handoff occurs only between runs,
+with acknowledged CLI/listener state and all collectors closed. Record any
+mainboard firmware/startup changes and refresh affected baselines after return;
+never share the mainboard concurrently with a rendering measurement.
+
 Time boundary: start2026-10-12T13:16:20Z; stop no later than21:16:20Z (eight hours).
 The active goal owns this limit. Finish evidence/restoration within that period.
 Proceed unattended within this scope; pause for any required Author answer.
@@ -55,14 +61,14 @@ Proceed unattended within this scope; pause for any required Author answer.
 
 ## Ordered subtasks
 
-### NP01 [ ] Freeze evidence, contract and bench ownership
+### NP01 [x] Freeze evidence, contract and bench ownership
 
 Commit/push existing owned changes in logical groups, then this contract and
 queue/handoff. Confirm no competing bench reservation and retain the existing
 listener session, startup/config backups and exact rollback segments. Read the
 operation protocols before corresponding hardware actions. Deadline is fixed.
 
-### NP02 [ ] Attribute the regression without sprites
+### NP02 [x] Attribute the regression without sprites
 
 Review current indexed and RGB888 paths; separate prior-buffer wait, source row
 snapshot/locking, PPA expansion, cache and actual publication. Reuse static colour
@@ -123,6 +129,36 @@ required. Commit/push owned work in logical groups as it stabilizes. Report actu
 achieved gain, what did not work, installed identity, terminal state and remaining
 Author visual gate. Do not mark the goal achieved if the performance objective
 remains unfulfilled; record a time-limit stop honestly.
+
+## Execution notes
+
+NP01 frozen in73a423de; prior evidence/source commits0ed5f161,bcdc70ce pushed.
+Three bounded code/measurement reviews run in parallel; root alone owns bench.
+Initial attribution: indexed source snapshots plus prior-buffer waits dominate
+its32ms broad scope; PPA expansion about4ms. Static chart is not inherently30Hz.
+Current RGB888 control remains the performance baseline. The first optimization
+removes per-pixel indirect calls in normal SET bitmap plotting, behind an explicit
+comparison option. Render-execution counters will be identical in both builds.
+DMA/PPA in-place scroll has no established overlap-safe contract; it is not the
+first remedy.
+
+NP02 source review and actual-controller host tests separate lock wait from
+queued drawing execution. The new `render` sidecar retains the six existing
+phase counters and uses 16 bounded windows (1,856 bytes). It includes stock
+primitive execution and final software-sprite drawing, excludes immediate
+double-buffer execution and rolling hardware-sprite composition, and reports
+window-crossing/overflow explicitly. Execution is wall time with preemption and
+nested guards, not exclusive CPU time. Normalize total drawing time by measured
+fixture updates; report repeated-window median/p95 separately from individual
+eZ80 fenced-frame latency. The existing six phases still cover output work.
+
+NP03 begins with two independent, default-off options: `--bitmap-fast` removes
+normal SET bitmap indirect pixel calls, and `--scroll-fast` uses a bounded P4
+PIE row-copy kernel adapted from pinned ESP-DL. The latter retains libc for row
+edges/small spans/ISRs, preserves stock row order, and performs an actual-P4
+alignment/canary self-test before measured execution. No format, transport,
+GPIO, DMA ownership or interrupt-priority changes belong to these options.
+Control and candidate will share one frozen source revision and instrumentation.
 
 ## Research and evidence inputs
 

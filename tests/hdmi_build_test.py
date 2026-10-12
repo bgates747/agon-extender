@@ -21,6 +21,17 @@ class HdmiBuildTest(unittest.TestCase):
     def setUpClass(cls):
         cls.document = json.loads((ROOT / "vdp/build/p4-profiles.json").read_text())
 
+    def test_ifdef_selection_rejects_ambiguous_compiler_definitions(self):
+        name = "AGON_EXTENDER_BITMAP_FAST"
+        self.assertTrue(validate_p4_build.selected_definition([], name, False))
+        self.assertTrue(validate_p4_build.selected_definition(["-D" + name + "=1"], name, True))
+        self.assertTrue(validate_p4_build.selected_definition(["-D", name + "=1"], name, True))
+        for argv in (["-D" + name], ["-D" + name + "=0"],
+                     ["-D" + name + "=1"] * 2,
+                     ["-D" + name + "=1", "-U" + name]):
+            self.assertFalse(validate_p4_build.selected_definition(argv, name, True))
+            self.assertFalse(validate_p4_build.selected_definition(argv, name, False))
+
     def test_link_observer_cannot_enter_ordinary_or_parallel_builds(self):
         args = (self.document, "p4-console", "p4-pc", "hdmi", "normal", True, "auto", True)
         self.assertNotIn("AGON_EXTENDER_HDMI_LINK_WATCH=1",
@@ -229,6 +240,28 @@ class HdmiBuildTest(unittest.TestCase):
                 self.assertEqual(record["files"][0]["sha256"], hashlib.sha256(data).hexdigest())
                 source.write_bytes(b"// changed while building\n")
                 self.assertNotEqual(build_p4.source_input_record(), record)
+
+    def test_bitmap_fast_path_requires_explicit_direct_rgb888(self):
+        selected = build_p4.select_display_profile(self.document, "p4-console",
+            "p4-pc", "hdmi", "normal", True, "auto", True, bitmap_fast=True)
+        self.assertIn("AGON_EXTENDER_BITMAP_FAST=1", selected["definitions"])
+        control = build_p4.select_display_profile(self.document, "p4-console",
+            "p4-pc", "hdmi", "normal", True, "auto", True)
+        self.assertNotIn("AGON_EXTENDER_BITMAP_FAST=1", control["definitions"])
+        with self.assertRaisesRegex(SystemExit, "bitmap fast"):
+            build_p4.select_display_profile(self.document, "p4-console", "p4-pc",
+                "hdmi", "normal", True, "auto", True, indexed_ppa=True, bitmap_fast=True)
+
+    def test_scroll_fast_selects_p4_kernel_only_in_explicit_rgb888_experiment(self):
+        args = (self.document, "p4-console", "p4-pc", "hdmi", "normal", True, "auto", True)
+        source = "video/extender/display/scroll_copy_pie.S"
+        control = build_p4.select_display_profile(*args)
+        selected = build_p4.select_display_profile(*args, scroll_fast=True)
+        self.assertNotIn(source, control["sources"])
+        self.assertIn(source, selected["sources"])
+        self.assertIn("AGON_EXTENDER_SCROLL_FAST=1", selected["definitions"])
+        with self.assertRaisesRegex(SystemExit, "scroll fast"):
+            build_p4.select_display_profile(*args, indexed_ppa=True, scroll_fast=True)
 
 
 if __name__ == "__main__":

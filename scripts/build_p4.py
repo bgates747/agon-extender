@@ -118,7 +118,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -129,6 +129,17 @@ def select_display_profile(document: dict, name: str, board: str,
     profile = deepcopy(document["profiles"][name])
     # RESEARCH-007 dropout observer is a bounded diagnostic, not a product
     # default or a renderer comparison. Keep parallel/indexed paths excluded.
+    # Nurples performance experiment: keep the original painter as an exact
+    # same-source control; optimize only explicit direct-RGB888 SET bitmap draws.
+    if bitmap_fast:
+        if not direct_rgb888 or indexed_ppa or display_output != "hdmi" or render_benchmark_output != "normal":
+            raise SystemExit("bitmap fast path requires direct RGB888 normal HDMI without indexed storage")
+        profile["definitions"].append("AGON_EXTENDER_BITMAP_FAST=1")
+    if scroll_fast:
+        if not direct_rgb888 or indexed_ppa or display_output != "hdmi" or render_benchmark_output != "normal":
+            raise SystemExit("scroll fast path requires direct RGB888 normal HDMI without indexed storage")
+        profile["definitions"].append("AGON_EXTENDER_SCROLL_FAST=1")
+        profile["sources"].append("video/extender/display/scroll_copy_pie.S")
     if hdmi_link_watch:
         if (display_output != "hdmi" or not rolling_scanout or
                 render_benchmark_output != "normal" or indexed_ppa or
@@ -506,6 +517,13 @@ def render_component(profile: dict, common: dict, generated: Path,
     text += ")\ntarget_compile_definitions(${COMPONENT_LIB} PRIVATE\n"
     text += "".join(f"  {item}\n" for item in definitions)
     text += ")\n"
+    if "AGON_EXTENDER_SCROLL_FAST=1" in definitions:
+        # P4 PIE is an explicit ISA boundary, confined to the row-copy caller
+        # and assembly. Do not change the remaining renderer/control objects.
+        text += "set_source_files_properties(\n"
+        for name in (RGB888_SOURCE, "video/extender/display/scroll_copy_pie.S"):
+            text += "  " + cmake_quote(str(checked_path(name))) + "\n"
+        text += '  PROPERTIES COMPILE_OPTIONS "-march=rv32imafc_zicsr_zifencei_xesppie")\n'
     (generated / "CMakeLists.txt").write_text(text)
     dependencies = dict(common["dependencies"])
     dependencies.update(profile["dependencies"])
@@ -532,6 +550,8 @@ def main() -> None:
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720",
                         help="fixed HDMI timing or auto carrier selection; experimental custom 60.069Hz")
     parser.add_argument("--indexed-ppa", action="store_true", help="RESEARCH-007 linear-byte/PPA HDMI experiment; committed inputs only")
+    parser.add_argument("--scroll-fast", action="store_true", help="Nurples performance: bounded P4 PIE vertical-row copy; original memcpy is control")
+    parser.add_argument("--bitmap-fast", action="store_true", help="Nurples performance: direct SET bitmap painter; original path is control")
     parser.add_argument("--hdmi-link-watch", action="store_true", help="RESEARCH-007 read-only bridge and frame-gap observer; no performance qualification")
     parser.add_argument("--ppa-scale-320", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true",help="SPRITE-001 experimental DMA2D strip output")
@@ -590,7 +610,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -748,6 +768,10 @@ def main() -> None:
         validation.append("--parallel-probe-candidate")
     if args.indexed_ppa:
         validation.append("--indexed-ppa")
+    if args.scroll_fast:
+        validation.append("--scroll-fast")
+    if args.bitmap_fast:
+        validation.append("--bitmap-fast")
     if args.hdmi_link_watch:
         validation.append("--hdmi-link-watch")
     if args.ppa_scale_320:
@@ -807,6 +831,8 @@ def main() -> None:
         "reset_url_configured": bool(args.reset_url),
         "indexed_ppa": args.indexed_ppa,
         "hdmi_link_watch": args.hdmi_link_watch,
+        "bitmap_fast": args.bitmap_fast,
+        "scroll_fast": args.scroll_fast,
         "parallel_boot_candidate": args.parallel_boot_candidate,
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,

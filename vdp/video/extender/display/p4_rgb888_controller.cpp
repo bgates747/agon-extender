@@ -53,6 +53,10 @@
 #include "fabutils.h"
 #include "extender/display/p4_rgb888_controller.hpp"
 #include "extender/display/hdmi_geometry.hpp"
+#include "extender/display/scroll_copy.hpp"
+#if defined(ESP_PLATFORM) && defined(AGON_EXTENDER_SCROLL_FAST) && defined(AGON_EXTENDER_RENDER_BENCHMARK)
+#include "extender/display/scroll_copy_selftest.hpp"
+#endif
 #if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 #include "devdrivers/swgenerator.h"
 #endif
@@ -302,7 +306,10 @@ void P4Color64Controller::rawCopyRow(int x1, int x2, int srcY, int dstY)
   // disjoint spans even with a centered viewport and the larger HDMI stride.
   auto src = (uint8_t*)m_viewPort[srcY] + x1 * agon::extender::display::kP4ColorBytes;
   auto dst = (uint8_t*)m_viewPort[dstY] + x1 * agon::extender::display::kP4ColorBytes;
-  memcpy(dst, src, (x2 - x1 + 1) * agon::extender::display::kP4ColorBytes);
+  // Default-off P4 PIE experiment: retain stock row ordering and exact partial
+  // viewport bounds; no DMA/PPA client or framebuffer/layout change is added.
+  agon::extender::display::copyScrollRow(dst, src,
+      (x2 - x1 + 1) * agon::extender::display::kP4ColorBytes);
 }
 
 
@@ -489,6 +496,19 @@ void P4Color64Controller::rawDrawBitmap_Mask(int destX, int destY, Bitmap const 
 void P4Color64Controller::rawDrawBitmap_RGBA2222(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
 {
   auto paintMode = paintState().paintOptions.mode;
+#ifdef AGON_EXTENDER_BITMAP_FAST
+  // The stock VGA64 setter selects a std::function for every bitmap, then
+  // dispatches through it for every visible pixel. P4 SET rendering can retain
+  // the exact generic alpha/save-background traversal with an inlined setter.
+  // Other paint modes and the background-colour override keep the stock path.
+  if (paintMode == PaintMode::Set && !paintState().paintOptions.swapFGBG) {
+    genericRawDrawBitmap_RGBA2222(destX, destY, bitmap, (uint8_t*)saveBackground, X1, Y1, XCount, YCount,
+                                  [&] (int y) { return (uint8_t*)m_viewPort[y]; },
+                                  [&] (uint8_t *row, int x) { return uint8_t(VGA_PIXELINROW(row, x)); },
+                                  [&] (uint8_t *row, int x, uint8_t src) { VGA_PIXELINROW(row, x) = m_HVSync | (src & 0x3f); });
+    return;
+  }
+#endif
   auto setRowPixel = setRowPixelLambda(paintMode);
 
   if (paintState().paintOptions.swapFGBG) {
@@ -513,6 +533,27 @@ void P4Color64Controller::rawDrawBitmap_RGBA2222(int destX, int destY, Bitmap co
 void P4Color64Controller::rawDrawBitmap_RGBA8888(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
 {
   auto paintMode = paintState().paintOptions.mode;
+#ifdef AGON_EXTENDER_BITMAP_FAST
+  // As above, preserve the stock binary-alpha and one-byte Native background
+  // contracts. RGB888 storage can write the three quantized channels directly,
+  // avoiding a temporary RGB222 colour and the indirect per-pixel setter.
+  if (paintMode == PaintMode::Set && !paintState().paintOptions.swapFGBG) {
+    genericRawDrawBitmap_RGBA8888(destX, destY, bitmap, (uint8_t*)saveBackground, X1, Y1, XCount, YCount,
+                                  [&] (int y) { return (uint8_t*)m_viewPort[y]; },
+                                  [&] (uint8_t *row, int x) { return uint8_t(VGA_PIXELINROW(row, x)); },
+                                  [&] (uint8_t *row, int x, RGBA8888 const &src) {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+                                    row[x] = m_HVSync | (src.R >> 6) | ((src.G >> 6) << 2) | ((src.B >> 6) << 4);
+#else
+                                    auto dst = row + x * 3;
+                                    dst[0] = (src.B >> 6) * 85;
+                                    dst[1] = (src.G >> 6) * 85;
+                                    dst[2] = (src.R >> 6) * 85;
+#endif
+                                  });
+    return;
+  }
+#endif
   auto setRowPixel = setRowPixelLambda(paintMode);
 
   if (paintState().paintOptions.swapFGBG) {
@@ -607,6 +648,13 @@ void P4Color64Controller::rawDrawBitmapWithMatrix_RGBA8888(int destX, int destY,
 
 
 void P4Color64Controller::setResolution(VGATimings const &t,int w,int h,bool doubled) {
+#if defined(ESP_PLATFORM) && defined(AGON_EXTENDER_SCROLL_FAST) && defined(AGON_EXTENDER_RENDER_BENCHMARK)
+  // Candidate-only ISA qualification runs once in the already pinned parser
+  // task after PSRAM/scheduler startup, before any measured rendering window.
+  // Host canaries cannot establish correctness of the actual PIE instructions.
+  static const bool copyQualified = agon::extender::display::scrollCopySelfTest();
+  if (!copyQualified) std::abort();
+#endif
   VGAPalettedController::setResolution(t,w,h,doubled);
   if(!isViewPortAllocated())return;
   for(int y=0;y<m_viewPortHeight;++y) {
