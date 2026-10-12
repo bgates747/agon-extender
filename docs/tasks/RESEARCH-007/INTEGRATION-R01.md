@@ -9,6 +9,17 @@ HDMI background. No full-frame VGA byte-lane reorder belongs in this path.
 Stock-visible colours, drawing, readback, sprite backgrounds and EMOS routing
 remain unchanged. This experimental selection does not replace production.
 
+## Current execution boundary — deployment only
+
+The Author subsequently authorizes flashing the prepared full candidate and
+staging/verifying the fixtures, then stopping. Do not invoke games or benchmarks,
+activate test startup/configurations, or mark R07-I04 complete. Leave ordinary
+startup and original fixture configurations unchanged. The fsim handover leaves
+a custom mainboard P1-count image installed; preserve it. Paired comparison and
+visual acceptance remain later work. [BENCH-010](../BENCH-010.md) separately owns
+the new fsim reset/admission and USB-observer findings; recording it does not
+authorize that investigation during deployment.
+
 ## Frozen scope — 2026-10-11
 
 1. Reuse common stock rasterizers and the project-owned 64-colour controller;
@@ -139,5 +150,7 @@ whole-image PPA expansion; two independent unit cases pass. All finite SCAN
 configuration/startup/binary and five resident control/data hashes pass offline.
 See [results](INTEGRATION-RESULTS.md) for identities and the remaining test gate.
 
-The bench has a newer fsim reservation. R07-I04 awaits fresh handover; no device,
-serial, network, reset, SD or flash operation was performed for this integration.
+The subsequent deployment-only checkpoint flashed/verified r04 and staged/read
+back the prepared package, without invoking tests. Ordinary startup and active
+fixture configurations remain unchanged. R07-I04/I05 await test authorization;
+see the current results checkpoint.

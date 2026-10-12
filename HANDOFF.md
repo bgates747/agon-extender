@@ -1,3 +1,21 @@
+# Current stop — indexed/PPA candidate flashed; fixtures deployed, not run
+
+Author requested deployment only, then stop. Full P4 candidate
+indexed-hdmi-r04-b2026-10-12-01-53-19Z is flashed; all four segments independently
+verify. Four frozen SCAN binaries and five resident control/data files match
+local bytes. Ten package files are staged below `/agents/extender/results/r07-i01`,
+not activated. Ordinary 38-byte startup and existing run.cfg files are unchanged.
+Listener exited; Legacy CLI with ready/neutral input, no pending SD transaction.
+No game/benchmark invocation. EMOS and fsim P1-count mainboard VDP preserved.
+
+[Integration results](docs/tasks/RESEARCH-007/INTEGRATION-RESULTS.md) record the
+checkpoint; R07-I04/I05 remain open. Future baseline/candidate runs need fresh
+authorization and actual paired identities; no integrated speedup is established.
+[BENCH-010](docs/tasks/BENCH-010.md) captures fsim's admission/reset and USB loss
+report for near-term investigation. No investigation executed. Production unchanged.
+
+The checkpoints below retain earlier states and do not supersede this stop.
+
 # Current review — linear-byte/PPA full firmware verified offline, uninstalled
 
 [Integration results](docs/tasks/RESEARCH-007/INTEGRATION-RESULTS.md) close

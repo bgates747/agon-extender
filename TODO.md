@@ -9,6 +9,10 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[REMOTE-004 — Browser clipboard paste](docs/tasks/REMOTE-004.md)** — Browser paste and restored Reset Agon accepted after Author testing. Source, local tests and bounded P4 deployment evidence retained; broader validation and production promotion remain within the HDMI release boundary. Broader clipboard investigation remains deferred.
 
+## Near-term bench reliability investigation
+
+- [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Fsim reports failed Agon-only re-admission, paired-reset recovery, then programming USB disconnects and lost UART counts. Preserve the validated application result; isolate reset/input and USB/observer failures separately. Proposed only; investigate after the current deployment stop and fresh authorization.
+
 ## Active board-build preparation
 
 - [ ] **[SPRITE-001 — Nurples hardware-sprite trial](docs/tasks/SPRITE-001.md)** — Author reports beautiful output from the full684 memory remedy; the thin tear disappears when paused, and mainboard hardware sprites show no tear. Rollback reproduces ordinary Nurples's upper-playfield visibility defect. HDMI-002 now selects a480-line carrier on mode0 exit; Author confirms full upper text. ExCom SD admission, tearing and broader qualification remain open.
@@ -48,7 +52,7 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[HDMI-001 — Fixed 720p HDMI presentation for existing Agon modes](docs/tasks/HDMI-001.md)** — r03 startup, EMOS prompt modes0/3/8/20 and Author gameplay checks pass for Nurples and 320×240 Aginvadors/Rally. Excess sprite flicker remains open; passive timing records about19.2 complete updates/s versus60 DMA frames/s without an identified controlled game scene. Full mode coverage, fidelity/performance and promotion remain pending.
 - [ ] **[BENCH-009 — Deterministic rendering load suite](docs/tasks/BENCH-009.md)** — Long r04 campaign paused. Supplemental five-mode static controls complete. Permanent resident selection and card collection pass; the separate bounded RGB888 report is complete. No full-campaign resumption selected.
 
-- [ ] **[RESEARCH-007 — Indexed framebuffer and palette-expansion feasibility](docs/tasks/RESEARCH-007.md)** — R07-I01–I03 complete: linear-byte/PPA full firmware compiles/links, host/build checks and candidate/rollback packages pass. R07-I04 hardware comparison awaits bench handover; finite fixtures prepared, no integrated gameplay result yet. Earlier768-sample conversion benchmark remains valid within its unloaded scope; wider hardware-fit audit parked.
+- [ ] **[RESEARCH-007 — Indexed framebuffer and palette-expansion feasibility](docs/tasks/RESEARCH-007.md)** — R07-I01–I03 complete: linear-byte/PPA full firmware compiles/links, host/build checks and candidate/rollback packages pass. Candidate r04 flashed/verified and finite/resident fixtures staged/read back; stopped at ordinary CLI without running tests. R07-I04 hardware comparison and gameplay review remain open. Earlier768-sample conversion benchmark remains valid within its unloaded scope; wider hardware-fit audit parked.
 
 - [ ] **[PPA-001 — Identify PPA rendering acceleration opportunities](docs/tasks/PPA-001.md)** — Deferred, not started; Author requests task recording only. Assess current clears, rectangular fills, bitmap/sprite compositing and transforms against IDF5.5.5 PPA capabilities, then rank source-linked opportunities and proposed comparisons. No implementation or bench work selected.
 

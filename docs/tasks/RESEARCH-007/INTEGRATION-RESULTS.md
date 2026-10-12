@@ -1,4 +1,4 @@
-# Linear-byte/PPA integration — offline results
+# Linear-byte/PPA integration — preparation and deployment results
 
 ## Outcome
 
@@ -6,8 +6,8 @@ R07-I01–I03 are complete. The full P4-PC candidate uses linear one-byte physic
 RGB222 drawing and PPA CLUT expansion into independent RGB888 HDMI backgrounds.
 The target compiles/links and actual component bindings pass validation. Host
 correctness and measurement-unit checks pass. Candidate and rollback packages
-are verified. **Nothing from this integration has been flashed or hardware
-tested:** fsim holds the newer bench reservation. R07-I04/I05 remain open.
+are verified. **Candidate installation and fixture staging are complete; tests were not run.**
+R07-I04/I05 remain open. No integrated performance or visual pass is claimed.
 
 The [contract](INTEGRATION-R01.md) is authoritative for the remaining work.
 The earlier [conversion benchmark](PHYSICAL-RESULTS.md) compares unloaded
@@ -108,8 +108,31 @@ agent results directory. Independently check mode0 upper text/outro and actual
 Nurples input/flicker before acceptance. Flash/verify the four listed segments
 while Agon is held reset; never flash a merged factory span over ordinary NVS.
 Fresh handover, current device identity, admitted input and SD readiness remain
-deployment gates. Do not interrupt fsim's reservation or its manual campaign.
+deployment gates. Read the latest bench handover; the deployment-only checkpoint below supersedes the earlier reservation gate.
 
 Generated/local evidence is indexed under ignored
 `agents/research007/integration-r01/INDEX.md`. Production selection is unchanged;
 no acceptance, new production version or release tag is implied.
+
+## Deployment-only checkpoint — 2026-10-11
+
+On fresh Author authorization and fsim handover, the Pi flashed candidate r04
+and independently verified all four segments, preserving NVS. Fresh EMOS
+keyboard admission returned. The foreground fast listener read back all four
+frozen SCAN executables and the five resident control/data files against local
+hashes/bytes. Ten prepared baseline/candidate configuration and startup files
+were uploaded and fully read back under `/agents/extender/results/r07-i01`.
+They remain data only: root startup and the four active run.cfg files are
+unchanged. No fixture, benchmark or game was invoked.
+
+The Pi exited the listener and verified ready, neutral input with no pending
+SD request; Agon remains at the Legacy CLI. Mainboard fsim P1-count VDP, EMOS
+and wiring were preserved. Candidate and ordinary data-r20 rollback identities
+remain those above. Production selection is unchanged.
+
+The optional WebDAV HEAD preflight returned HTTP503; this did not prevent
+foreground-listener deployment. Its cause is not established here. Retained
+local receipts include four-segment verification, boot log, all SD readbacks
+and final service status under the integration bench evidence directory.
+[BENCH-010](../BENCH-010.md) records the separate fsim reset/USB observations.
+Matched comparisons and Author gameplay review remain unperformed.
