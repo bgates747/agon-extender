@@ -35,7 +35,12 @@ def summarize(telemetry,mode,height,tag,variant='normal',render_storage='native'
         # on normal hardware-frame opportunities; report their wall cost too.
         for name,value in phases.items():
             value['mean_call_us']=value['us']/value['calls'] if value['calls'] else None
-        normalized={name:(phases[name]['mean_call_us'] or 0)*height/1000 for name in PHASES[1:4]}
+        # Legacy CPU expansion is measured per row; indexed PPA expansion is
+        # measured once per image. Multiplying the latter by height would turn
+        # a3ms transaction into an invented1152ms cost at384 lines.
+        normalized={name:(phases[name]['mean_call_us'] or 0)*
+                    (1 if name=='rgb888_expand' and render_storage=='linear-rgb222' else height)/1000
+                    for name in PHASES[1:4]}
         rows.append(dict(id=w['id'],duration_seconds=duration,accepted_submissions=w['updates'],submissions_per_second=w['updates']/duration,scanout_hz=w['scanouts']/duration,conversion_attempts_per_second=phases['conversion_attempt']['calls']/duration,phases=phases,normalized_frame_ms=normalized,cache_submit_mean_ms=phases['cache_submit']['mean_call_us']/1000 if phases['cache_submit']['calls'] else None,conversion_attempt_mean_ms=phases['conversion_attempt']['mean_call_us']/1000))
     ms={p:statistics.median(r['normalized_frame_ms'][p] for r in rows) for p in PHASES[1:4]}
     attempt_ms=statistics.median(r['conversion_attempt_mean_ms'] for r in rows)
@@ -45,7 +50,12 @@ def summarize(telemetry,mode,height,tag,variant='normal',render_storage='native'
         scope+='RGB-001 draws directly into the HDMI allocation. No full-image row copy or expansion occurs. Preparation includes native exclusion, overlay maintenance and marker sampling; cache submission remains separately measured. '
     elif render_storage=='rgb888':
         scope+='RGB-001 stores RGB888 logical rows. Row-read/compose includes the presentation memcpy and any overlay-row composition; whole-image RGB888 expansion is absent. '
-    return dict(mode=mode,variant=variant,render_storage=render_storage,windows=rows,median_normalized_frame_ms=ms,equivalent_phase_frames_per_second={p:1000/v if v else None for p,v in ms.items()},median_cache_submit_ms=statistics.median(caches) if caches else None,median_conversion_attempt_ms=attempt_ms,equivalent_conversion_attempt_frames_per_second=1000/attempt_ms,median_conversion_attempts_per_second=statistics.median(r['conversion_attempts_per_second'] for r in rows),median_submissions_per_second=statistics.median(r['submissions_per_second'] for r in rows),median_scanout_hz=statistics.median(r['scanout_hz'] for r in rows),scope=scope+'RGB888 expansion excludes row preparation/cache/wait; row costs are normalized from mean row wall times, not per-frame distributions. Conversion-attempt scope includes its leading buffer wait and excludes cache submission/trailing reuse wait. Equivalent frames/s is1000 divided by milliseconds for that phase alone, not observed displayed FPS. Phase probes remain enabled; no physical displayed-FPS claim.')
+    if render_storage=='linear-rgb222':
+        scope+='Linear physical RGB222 rows are copied into a private snapshot. Expansion is one whole-image public PPA BLEND transaction, including driver cache handling and the following SRM pass at320. It is not isolated CLUT kernel time or CPU occupancy. '
+        expansion_note='Row lock/compose costs are normalized from mean row wall times; whole-image expansion is not multiplied by height. '
+    else:
+        expansion_note='RGB888 expansion excludes row preparation/cache/wait; row costs are normalized from mean row wall times, not per-frame distributions. '
+    return dict(mode=mode,variant=variant,render_storage=render_storage,expansion_unit='whole-image' if render_storage=='linear-rgb222' else 'row',windows=rows,median_normalized_frame_ms=ms,equivalent_phase_frames_per_second={p:1000/v if v else None for p,v in ms.items()},median_cache_submit_ms=statistics.median(caches) if caches else None,median_conversion_attempt_ms=attempt_ms,equivalent_conversion_attempt_frames_per_second=1000/attempt_ms,median_conversion_attempts_per_second=statistics.median(r['conversion_attempts_per_second'] for r in rows),median_submissions_per_second=statistics.median(r['submissions_per_second'] for r in rows),median_scanout_hz=statistics.median(r['scanout_hz'] for r in rows),scope=scope+expansion_note+'Conversion-attempt scope includes its leading buffer wait and excludes cache submission/trailing reuse wait. Equivalent frames/s is1000 divided by milliseconds for that phase alone, not observed displayed FPS. Phase probes remain enabled; no physical displayed-FPS claim.')
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
