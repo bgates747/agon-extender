@@ -128,7 +128,9 @@ passes actual-source/component validation. r03 additionally labels linear
 storage correctly in read-only status, retains separate preparation/expansion/
 cache phase boundaries and rejects a single-HDMI-buffer allocation. Expansion
 wall time includes driver cache handling and the320 SRM pass when selected;
-it is neither isolated CLUT kernel time nor CPU occupancy.
+it is neither isolated CLUT kernel time nor CPU occupancy. r04 completes the
+existing diagnostic enum/counter bindings; its actual HDMI target syntax check
+passes before the final full build. r03 was stopped before link, not deployed.
 
 The bench has a newer fsim reservation. Finish compilation and concrete offline
 test preparation before deployment; do not interrupt the reserved manual tests.

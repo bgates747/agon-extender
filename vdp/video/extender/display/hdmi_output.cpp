@@ -542,6 +542,7 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bool> &stopping) {
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
   agon_bench::Scope conversion(agon_bench::Conversion);
+  const auto conversion_token=conversion.token;
 #endif
   if(!ready_ || stopping.load(std::memory_order_acquire) || !waitForSubmittedBuffer(stopping))return false;
   const int w=controller.display().getViewPortWidth(),h=controller.display().getViewPortHeight();
@@ -581,7 +582,7 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
   // Hardware expansion wall time includes the public driver's cache handling
   // and, at320, the following SRM pass. This is not CPU execution time.
-  agon_bench::Scope expansion(agon_bench::RgbExpand);
+  agon_bench::Scope expansion(agon_bench::Expand);
 #endif
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   if(scaled) {
@@ -606,7 +607,7 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
   report_conversion_max_us_=std::max(report_conversion_max_us_,std::uint64_t(prepared-started));
   report_cache_us_+=esp_timer_get_time()-prepared;
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
-  cache.finish();
+  agon_bench::update(conversion_token,-1);cache.finish();
 #endif
   report(esp_timer_get_time());return true;
 }
