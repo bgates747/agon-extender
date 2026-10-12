@@ -18,14 +18,17 @@ def prepare(idf,project):
         if sha(src)!=entry['base_sha256']:raise ValueError('PPA CLUT base mismatch: '+entry['path'])
         dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)
     subprocess.run(['patch','--batch','--fuzz=0','-p1','-d',str(derived),'-i',str(INPUTS/'clut-backport.patch')],check=True,stdout=subprocess.DEVNULL)
+    # HAL is a project-local component too. A transitive BEFORE include on the
+    # PPA target does not precede another consumer's direct HAL dependency
+    # (esp-dl exposed this in the full build). Override the component that owns
+    # the headers so all consumers see one consistent API, without editing IDF.
+    for name in ('esp_driver_ppa','hal'):
+        shutil.copytree(idf/'components'/name,project/'components'/name,
+                        ignore=shutil.ignore_patterns('test_apps'))
     component=project/'components/esp_driver_ppa'
-    shutil.copytree(idf/'components/esp_driver_ppa',component,ignore=shutil.ignore_patterns('test_apps'))
     for entry in metadata['files']:
         src=derived/entry['path']
         if sha(src)!=entry['derived_sha256']:raise ValueError('PPA CLUT derived mismatch: '+entry['path'])
-        relative=entry['path'].removeprefix('components/')
-        dst=component/relative.removeprefix('esp_driver_ppa/') if relative.startswith('esp_driver_ppa/') else component/'overlay/hal'/Path(relative).name
+        dst=project/entry['path']
         dst.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dst)
-    with (component/'CMakeLists.txt').open('a') as f:
-        f.write('\ntarget_include_directories(${COMPONENT_LIB} BEFORE PUBLIC "${CMAKE_CURRENT_LIST_DIR}/overlay")\n')
     return component

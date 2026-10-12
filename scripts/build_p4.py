@@ -640,9 +640,7 @@ def main() -> None:
     render_component(profile, document["common"], generated, asset_overrides)
     if args.indexed_ppa:
         from p4_ppa_clut import prepare
-        component=prepare(IDF,project)
-        with (generated/"CMakeLists.txt").open("a") as f:
-            f.write('\ntarget_include_directories(${COMPONENT_LIB} BEFORE PRIVATE "'+str(component/'overlay')+'")\n')
+        prepare(IDF,project)
     payload_artifacts = []
     if profile.get("mos_recovery_payload"):
         payload_header = generated / "generated/mos_recovery_payload.hpp"

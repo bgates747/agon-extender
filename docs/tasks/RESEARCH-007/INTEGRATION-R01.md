@@ -118,3 +118,12 @@ tests pass. The full version-record validator is blocked by a pre-existing
 light2-harness-r02 connectivity hash mismatch (expected560ab589…, actual
 c68e4d4f…); this tranche does not edit that unrelated electrical record. Target
 compile/link, actual component binding, concurrent scanout and bench tests remain.
+
+The first full build exposed an esp-dl dependency on stock HAL headers preceding
+the PPA include overlay. The reusable generator now overrides both owning
+components locally, replacing only the six pinned files, and validation checks
+all compile actions for unwanted SDK HAL paths. Candidate r02 supersedes the
+unlinked r01 build. The selected SDK remains unchanged.
+
+The bench has a newer fsim reservation. Finish compilation and concrete offline
+test preparation before deployment; do not interrupt the reserved manual tests.

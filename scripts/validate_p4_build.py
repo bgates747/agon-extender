@@ -184,17 +184,21 @@ def main() -> None:
         metadata=json.loads((INPUTS/"backport.json").read_text())
         component=output/"project/components/esp_driver_ppa"
         for entry in metadata["files"]:
-            relative=entry["path"].removeprefix("components/")
-            actual=component/relative.removeprefix("esp_driver_ppa/") if relative.startswith("esp_driver_ppa/") else component/"overlay/hal"/Path(relative).name
+            actual=output/"project"/entry["path"]
             if not actual.is_file() or sha(actual)!=entry["derived_sha256"]:
                 fail("actual CLUT override differs: "+entry["path"])
         for name in ("ppa_core.c","ppa_blend.c"):
             if (component/"src"/name).resolve() not in by_source:
                 fail("CLUT override not actually compiled: "+name)
-        for command in selected_commands:
+        # Every HAL consumer must select the project-local component. Checking
+        # just agon_vdp missed esp-dl's earlier selection of stock ppa_types.h.
+        for command in commands:
             argv=command.get("arguments") or shlex.split(command["command"])
-            overlay=str(component/"overlay")
-            if overlay not in " ".join(argv):fail("CLUT consumer overlay missing")
+            includes=[arg[2:] for arg in argv if arg.startswith("-I")]
+            if any("/components/hal/" in path and
+                   not path.startswith(str(output/"project/components/hal")+"/")
+                   for path in includes):
+                fail("CLUT consumer still selects SDK HAL: "+command["file"])
 
     ninja = ninja_path.read_text().replace("$\n  ", "")
     check_hdmi_linkage(commands, ninja, args.display_output,args.rolling_scanout,output/"build",args.hdmi_timing)
