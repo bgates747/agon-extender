@@ -31,6 +31,22 @@ std::uint32_t &stockPaletteRevision();  // accessed only under the native mutex
 // an output pass spanning that change must discard its incomplete image.
 std::uint32_t stockVisibleGeneration() noexcept;
 void stockVisibleBufferSwapped() noexcept; // caller holds stockNativeMutex()
+#if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
+#if !defined(AGON_EXTENDER_INDEXED_PPA) || !AGON_EXTENDER_INDEXED_PPA || \
+    !defined(AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT) || !AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
+#error "SW-visible snapshot requires indexed PPA and a complete indexed-frame snapshot"
+#endif
+// Default-off P4 output binding. One active display/output task. Callback MUST
+// only issue a nonblocking task notification; never capture, take another lock,
+// call a controller/service, or wait. It runs with native exclusion held, so an
+// awakened output task waits normally until the original complete primitive and
+// any outer recursive render probe release native. No native guard is changed.
+using StockSoftwareSnapshotWake = void (*)(void *) noexcept;
+bool stockBindSoftwareSnapshotWake(void *owner, StockSoftwareSnapshotWake, void *context);
+void stockCancelSoftwareSnapshotWake(void *owner); // before deleting task/context
+void stockRequestSoftwareSnapshotWake() noexcept; // caller holds native
+void stockSoftwareSpritesShown() noexcept;        // caller holds native
+#endif
 #if defined(AGON_EXTENDER_OWNER_TRACE)
 class StockNativeGuard {
  std::recursive_mutex &mutex_;

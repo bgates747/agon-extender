@@ -36,6 +36,45 @@ void stockVisibleBufferSwapped() noexcept {
   visible_generation.fetch_add(1, std::memory_order_release);
 }
 
+#if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
+namespace {
+// Native exclusion serializes request/show with bind/cancel. No additional lock
+// or callback pointer survives that exclusion. Cancel waits for an already-issued
+// notification to return, clears pending state, then lets teardown join/delete
+// the old task. Bind of a new mode occurs only after old task teardown joins.
+void *software_snapshot_owner{};
+StockSoftwareSnapshotWake software_snapshot_wake{};
+void *software_snapshot_context{};
+bool software_snapshot_pending{};
+}
+bool stockBindSoftwareSnapshotWake(void *owner, StockSoftwareSnapshotWake wake, void *context) {
+  if (!owner || !wake || !context) return false;
+  AGON_STOCK_NATIVE_GUARD;
+  if (software_snapshot_owner) return false;
+  software_snapshot_pending = false;
+  software_snapshot_context = context;
+  software_snapshot_wake = wake;
+  software_snapshot_owner = owner;
+  return true;
+}
+void stockCancelSoftwareSnapshotWake(void *owner) {
+  AGON_STOCK_NATIVE_GUARD;
+  if (software_snapshot_owner != owner) return;
+  software_snapshot_pending = false;
+  software_snapshot_owner = nullptr;
+  software_snapshot_wake = nullptr;
+  software_snapshot_context = nullptr;
+}
+void stockRequestSoftwareSnapshotWake() noexcept {
+  if (software_snapshot_owner) software_snapshot_pending = true;
+}
+void stockSoftwareSpritesShown() noexcept {
+  if (!software_snapshot_pending || !software_snapshot_wake) return;
+  software_snapshot_pending = false;
+  software_snapshot_wake(software_snapshot_context);
+}
+#endif
+
 void StockExecutionGate::suspend() {
   std::unique_lock lock(state_);
   depth_.fetch_add(1, std::memory_order_release);

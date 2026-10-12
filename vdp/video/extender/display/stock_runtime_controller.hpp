@@ -78,6 +78,14 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
                                       std::atomic<bool> &stopping) override {
 #ifdef AGON_EXTENDER_INDEXED_PPA
     if constexpr (std::is_same_v<Depth, fabgl::P4Color64Controller>) {
+#if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
+      // Refuse before touching private snapshot bytes. Prior HDMI frame keeps
+      // scanning; caller releases native before PPA or any panel-buffer wait.
+      if (!this->softwareSpritesVisibleForSnapshot()) {
+        stockRequestSoftwareSnapshotWake();
+        return false;
+      }
+#endif
       const int width = this->getViewPortWidth();
       const int height = this->getViewPortHeight();
       // Retain row descriptors: stock full-width scrolling may rotate them,

@@ -207,6 +207,16 @@ void StockP4Service::activate() {
 #if defined(AGON_EXTENDER_HDMI) && defined(AGON_EXTENDER_DIRECT_RGB888)
   hdmiOutput().allowDirectSwaps();
 #endif
+#if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
+  // Preparation may overlap an old active mode. Bind only at committed
+  // activation, after old detach has cancelled and joined its task. Context is
+  // the fixed output task handle; this callback ONLY notifies and never waits,
+  // captures, dereferences a controller/service, or takes another mutex.
+  ESP_ERROR_CHECK(stockBindSoftwareSnapshotWake(this, [](void *task) noexcept {
+        xTaskNotifyGive(static_cast<TaskHandle_t>(task));
+      }, output_task_.load(std::memory_order_acquire))
+      ? ESP_OK : ESP_ERR_INVALID_STATE);
+#endif
   active_.store(true, std::memory_order_release);
 #if defined(AGON_EXTENDER_HDMI) && !defined(AGON_EXTENDER_BENCH_OFF)
   // Singleton callback ownership survives mode preparation; detach joins it
@@ -225,6 +235,11 @@ bool StockP4Service::attach(StockRuntimeController &controller) {
 void StockP4Service::detach() {
   if (!controller_) return;
   active_.store(false, std::memory_order_release);
+#if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
+  // Cancel under native exclusion before joining/deleting the notified task.
+  // No suspension/join/panel wait occurs while cancellation owns that mutex.
+  stockCancelSoftwareSnapshotWake(this);
+#endif
 #if defined(AGON_EXTENDER_HDMI)
   hdmiOutput().unbindFrameCallback(this);
 #endif

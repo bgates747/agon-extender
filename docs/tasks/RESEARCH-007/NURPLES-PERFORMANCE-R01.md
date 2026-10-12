@@ -242,3 +242,21 @@ stock painter because that inherited case has a separate bounds defect. No
 new DMA client, lock, buffer lifecycle or stock bug fix is introduced. Exact
 stock/candidate pixel comparisons and build selection pass offline; scanout
 composition timing and physical correctness still need matched runs.
+
+NP04's proposed `--sw-visible-snapshot` requires indexed PPA and a whole-frame
+snapshot. While native exclusion is held, the P4 output task declines capture
+when active software sprites are in stock's erased state, before changing the
+private snapshot. The original completed `showSprites` issues only a coalesced
+nonblocking task wake; the output task then acquires native exclusion and
+rechecks. The hook cannot capture, wait, acquire foreground exclusion or access
+a live controller. Bind at service activation after the old mode has detached;
+cancel under native exclusion before joining/deleting the old output task.
+
+Actual-controller concurrency tests cover worker and foreground drains, unchanged
+sentinel bytes on refusal, final sprite pixels, outer recursive guards, a full
+producer queue and callback cancellation. Their streaming checkpoint is a
+deterministic host-only schedule: it establishes an offered visible capture
+opportunity, not uncontrolled host/P4 fairness. An indefinitely fed stream that
+never completes sprite drawing can retain its prior image. Physical paced
+Nurples output and input remain the acceptance gates; no rendering budget or
+upstream queue-order change is introduced.

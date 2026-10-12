@@ -84,6 +84,24 @@ class HdmiBuildTest(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit,"snapshot requires"):
             build_p4.select_display_profile(*args,indexed_frame_snapshot=True)
 
+    def test_sw_visible_snapshot_is_explicit_and_requires_complete_indexed_snapshot(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        original=deepcopy(self.document)
+        flag="AGON_EXTENDER_SW_VISIBLE_SNAPSHOT=1"
+        for choice in ({},{"indexed_ppa":True},{"indexed_ppa":True,"indexed_frame_snapshot":True}):
+            self.assertNotIn(flag,build_p4.select_display_profile(*args,**choice)["definitions"])
+        selected=build_p4.select_display_profile(*args,indexed_ppa=True,indexed_frame_snapshot=True,sw_visible_snapshot=True)
+        self.assertIn(flag,selected["definitions"])
+        self.assertEqual(self.document,original)
+        for choice in ({},{"indexed_ppa":True},{"indexed_frame_snapshot":True}):
+            with self.assertRaisesRegex(SystemExit,"SW-visible snapshot requires"):
+                build_p4.select_display_profile(*args,sw_visible_snapshot=True,**choice)
+        self.assertTrue(validate_p4_build.selected_definition(["-D"+flag],"AGON_EXTENDER_SW_VISIBLE_SNAPSHOT",True))
+        self.assertFalse(validate_p4_build.selected_definition([],"AGON_EXTENDER_SW_VISIBLE_SNAPSHOT",True))
+        self.assertFalse(validate_p4_build.selected_definition(["-D"+flag],"AGON_EXTENDER_SW_VISIBLE_SNAPSHOT",False))
+        self.assertTrue(validate_p4_build.selected_definition(["-DAGON_EXTENDER_SW_VISIBLE_SNAPSHOT=0"],"AGON_EXTENDER_SW_VISIBLE_SNAPSHOT",False,value_aware=True))
+        self.assertFalse(validate_p4_build.selected_definition(["-DAGON_EXTENDER_SW_VISIBLE_SNAPSHOT=0"],"AGON_EXTENDER_SW_VISIBLE_SNAPSHOT",True,value_aware=True))
+
     def test_unsupported_board_or_profile_rejected_before_output_creation(self):
         for board, profile in (("p4-devkit", "p4-console"),
                                ("p4-pc", "p4-mos-recovery")):

@@ -118,7 +118,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False, sw_visible_snapshot: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -127,6 +127,10 @@ def select_display_profile(document: dict, name: str, board: str,
     if hdmi_timing not in HDMI_GEOMETRIES or (hdmi_timing != "1280x720" and display_output != "hdmi"):
         raise SystemExit("custom HDMI timing requires HDMI output")
     profile = deepcopy(document["profiles"][name])
+    if sw_visible_snapshot:
+        if not indexed_ppa or not indexed_frame_snapshot:
+            raise SystemExit("SW-visible snapshot requires indexed PPA and indexed frame snapshot")
+        profile["definitions"].append("AGON_EXTENDER_SW_VISIBLE_SNAPSHOT=1")
     # Physical scanout strips are BGR in both RGB888 and indexed/PPA builds.
     # Select only this compositor; keep scene staging and lease owners intact.
     if overlay_bgr:
@@ -565,6 +569,7 @@ def main() -> None:
                         help="fixed HDMI timing or auto carrier selection; experimental custom 60.069Hz")
     parser.add_argument("--indexed-ppa", action="store_true", help="RESEARCH-007 linear-byte/PPA HDMI experiment; committed inputs only")
     parser.add_argument("--indexed-frame-snapshot", action="store_true", help="Nurples performance: one guarded indexed frame snapshot; per-row snapshot is control")
+    parser.add_argument("--sw-visible-snapshot", action="store_true", help="Nurples performance: defer hidden software sprites and wake output on original show completion; requires indexed PPA and frame snapshot")
     parser.add_argument("--scroll-fast", action="store_true", help="Nurples performance: bounded P4 PIE vertical-row copy; original memcpy is control")
     parser.add_argument("--bitmap-fast", action="store_true", help="Nurples performance: direct SET bitmap painter; original path is control")
     parser.add_argument("--bitmap-lut", action="store_true", help="Nurples performance: internal RGB222/BGR lookup and bounded Native expansion")
@@ -627,7 +632,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -787,6 +792,8 @@ def main() -> None:
         validation.append("--indexed-ppa")
     if args.indexed_frame_snapshot:
         validation.append("--indexed-frame-snapshot")
+    if args.sw_visible_snapshot:
+        validation.append("--sw-visible-snapshot")
     if args.scroll_fast:
         validation.append("--scroll-fast")
     if args.bitmap_fast:
@@ -854,6 +861,7 @@ def main() -> None:
         "reset_url_configured": bool(args.reset_url),
         "indexed_ppa": args.indexed_ppa,
         "indexed_frame_snapshot": args.indexed_frame_snapshot,
+        "sw_visible_snapshot": args.sw_visible_snapshot,
         "hdmi_link_watch": args.hdmi_link_watch,
         "bitmap_fast": args.bitmap_fast,
         "bitmap_lut": args.bitmap_lut,

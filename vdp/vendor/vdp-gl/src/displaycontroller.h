@@ -1187,6 +1187,21 @@ protected:
   Sprite * getSprite(int index);
 
   inline int spritesCount() { return m_spritesCount; }
+#if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
+  // P4 output binding only: caller owns stockNativeMutex() through this check
+  // AND the complete frame/overlay copy. Original hide/show ordering is intact.
+  // Generic drawing marks sprites hidden even when no software sprite exists.
+  bool softwareSpritesVisibleForSnapshot() {
+    if (m_doubleBuffered || !m_spritesHidden) return true;
+    for (int i = 0; i < m_spritesCount; ++i) {
+      auto sprite = getSprite(i);
+      if (!sprite->hardware && sprite->visible && sprite->allowDraw && sprite->getFrame())
+        return false;
+    }
+    return true;
+  }
+#endif
+
 
   void hideSprites(Rect & updateRect);
 

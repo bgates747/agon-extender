@@ -841,6 +841,11 @@ void IRAM_ATTR BitmappedDisplayController::showSprites(Rect & updateRect)
     }
 
     paintState().paintOptions = options;
+#if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
+    // Output notification only: do not capture, acquire foreground, or wait
+    // here. The output task rechecks readiness after acquiring native itself.
+    agon::extender::display::stockSoftwareSpritesShown();
+#endif
   }
 }
 
