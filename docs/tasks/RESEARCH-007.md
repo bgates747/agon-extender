@@ -10,14 +10,16 @@ Integrated gameplay benefit remains unproven: direct RGB888 rendering removed
 an expensive conversion stage; linear-byte drawing reduces logical pixel
 traffic but reintroduces hardware expansion and private snapshot storage.
 
-**State: candidate-only finite run collected; matched comparison remains open.**
-R07-I01–I03 are complete. The [integration contract](RESEARCH-007/INTEGRATION-R01.md)
-and [results](RESEARCH-007/INTEGRATION-RESULTS.md) identify the full firmware,
-target/host checks, exact rollback and staged finite fixtures. Author-authorized deployment verified all four P4 segments and the frozen SD
-fixtures. One recovered candidate-only run is now [filed](RESEARCH-007/INTEGRATION-CANDIDATE-R01.md):
-Nurples60 nominal application updates/s, about30.1 HDMI publications/s. Ordinary
-startup is restored; candidate fixture configurations remain selected. No paired
-speedup or visual acceptance is established. R07-I04/I05 remain open.
+**State: offline resumption preparation; fsim owns the bench.**
+R07-I01–I03 remain complete. The [resumption plan](RESEARCH-007/RESUME-R01.md)
+bounds the remaining R07-I04 comparison: a same-source RGB888 control and
+linear-byte/PPA candidate, both without parallel startup/payload selections,
+with the pre-parallel r11 rollback retained. Reuse the frozen finite fixtures;
+invoke only explicit CLI command files, never test autoexec/reset launchers.
+The earlier [candidate-only result](RESEARCH-007/INTEGRATION-CANDIDATE-R01.md)
+remains separate evidence: Nurples60 nominal application updates/s and about
+30.1 HDMI publications/s, no matched speedup or visual pass. No bench operation
+is authorized during this preparation. R07-I04/I05 remain open.
 
 R07-01/03 and R07-B01–B05 are complete. The
 [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
@@ -47,8 +49,9 @@ remain frozen evidence for their own scopes.
 
 The earlier R07-03 compile-only boundary is complete and superseded for this
 explicit integration experiment. Its pinned research and sample remain frozen.
-The SDK checkout and approved production selection remain unchanged. Resume
-R07-I04 only after a fresh bench handover; do not interrupt another reservation.
+The SDK checkout and approved production selection remain unchanged. Physical
+R07-I04 execution requires fresh bench handover; offline resumption preparation
+is allowed while fsim owns the bench. Do not interrupt another reservation.
 
 ## Clarification — direct indexed HDMI versus PPA expansion
 

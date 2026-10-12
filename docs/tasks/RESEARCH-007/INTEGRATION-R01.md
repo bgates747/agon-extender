@@ -9,17 +9,21 @@ HDMI background. No full-frame VGA byte-lane reorder belongs in this path.
 Stock-visible colours, drawing, readback, sprite backgrounds and EMOS routing
 remain unchanged. This experimental selection does not replace production.
 
-## Current stop — candidate collected, ordinary startup restored
+## Current stop — offline resumption preparation
 
-The Author confirmed the recovered Nurples run finished and authorized retrieval.
-All four candidate records were retrieved and decoded; see the
-[candidate-only results](INTEGRATION-CANDIDATE-R01.md). No matched baseline was
-acquired. R07-I04/I05 remain open. Root autoexec is the verified original38-byte
-startup; candidate run.cfg files remain selected and originals are retained.
-No reset, reflash or replay followed collection. Future tests must use the
-[CLI test-execution protocol](../../procedures/test-execution.md), not the old
-autoexec/reset launcher. BENCH-010 investigation and the requested EMOS-only
-rollback remain pending; neither is implicitly resumed by this filing.
+After the BENCH-010 host serial correction and exact pre-parallel r11 restoration,
+the Author asks to prepare resumed indexed/PPA testing while fsim uses the bench.
+The [resumption plan](RESUME-R01.md) controls remaining R07-I04 preparation and
+future execution. Both newly prepared variants exclude parallel boot/probe/data/
+ExExt selections and share source/dependencies; installed pre-parallel EMOS stays
+fixed. Original r04 and data-r20 comparison recipes are superseded for live use.
+Their evidence remains unchanged. CLI EXEC launch is mandatory; the historical
+autoexec/reset runner must not be called for staging or invocation.
+
+The earlier completed candidate-only run remains [filed](INTEGRATION-CANDIDATE-R01.md).
+R07-I04/I05 remain open; there is no paired speedup or visual acceptance. No
+hardware access, serial open, reset, deployment or SD operation belongs to the
+current preparation. Preserve fsim's reservation and await fresh handover.
 
 ## Frozen scope — 2026-10-11
 

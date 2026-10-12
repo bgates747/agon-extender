@@ -1,3 +1,21 @@
+# Current preparation — indexed/PPA comparison staged offline; fsim owns bench
+
+Author requested preparation only while fsim tests. Full indexed r05 and same-
+source RGB888 r12 compile/link/validate from26660db5 with all parallel startup/
+payload selections excluded. Verified exact accepted pre-parallel r11 rollback
+and fresh CLI-only finite/control package. No renderer code or EMOS change.
+Tracked next-step contract docs/tasks/RESEARCH-007/RESUME-R01.md and completed
+preparation report RESUME-PREPARATION-R01.md; local index
+agents/research007/resume-r01/INDEX.md. Six comparator guards plus existing
+controller/build/UART/analysis checks pass. All future tests use explicit EXEC;
+never the old integration/qualification autoexec/reset launchers.
+
+No bench operation or installation in this preparation. Fsim's current mainboard
+VDP state may change during its tests; obtain fresh handback and identities before
+physical comparison. EDP/EMOS restore checkpoint below is the prior handback, not
+a claim of newly observed bench status. Source snapshots/experimental builds are
+preserved; no speedup/visual acceptance or production promotion claimed.
+
 # Current stop — newest verified pre-parallel pair restored
 
 Author requested the most modern working builds before parallel startup handling.
