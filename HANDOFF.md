@@ -1,3 +1,28 @@
+# Current stop — protocols installed; candidate results filed
+
+The Author requires operation-specific protocol dispatch before tools. Read
+[the operation index](docs/procedures/README.md), now required early in AGENTS.md.
+Ordinary tests start through explicit CLI EXEC, never autoexec/reset. Corrections
+invalidate dependent plans; explicit stop prohibits further tool calls.
+
+The Author confirmed the recovered candidate suite finished and authorized
+retrieval. [Four candidate-only results](docs/tasks/RESEARCH-007/INTEGRATION-CANDIDATE-R01.md)
+are complete: Nurples60 nominal application updates/s, about30.1 P4 background
+publications/s and60Hz DMA scanout. No matched baseline or visual acceptance.
+Original38-byte startup is restored/readback verified without reset. Candidate
+run.cfg files remain selected; originals retained. Listener exited, Legacy CLI,
+keyboard ready/neutral, no pending SD request. P4 indexed r04, current EMOS and
+fsim mainboard P1-count VDP unchanged during collection.
+
+Requested EMOS-only rollback remains pending, not performed. Identified retained
+working image: agon-emos-v0.1.24-b2026-10-07-23-11-33Z; imageSHA256
+44d217b555f68a7d030bc0a89a2fa1d27f0fb537576f2925e90ef055b0a44d02.
+Do not pair-roll back P4: Author requires the current P4 stay installed. No more
+autoexec test launches. BENCH-010 investigation also pending. Do not resume
+paused hardware work without current Author direction. Production unchanged.
+
+Earlier checkpoints below are retained history and do not supersede this state.
+
 # Current stop — indexed/PPA candidate flashed; fixtures deployed, not run
 
 Author requested deployment only, then stop. Full P4 candidate

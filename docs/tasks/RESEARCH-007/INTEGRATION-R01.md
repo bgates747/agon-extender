@@ -9,16 +9,17 @@ HDMI background. No full-frame VGA byte-lane reorder belongs in this path.
 Stock-visible colours, drawing, readback, sprite backgrounds and EMOS routing
 remain unchanged. This experimental selection does not replace production.
 
-## Current execution boundary — deployment only
+## Current stop — candidate collected, ordinary startup restored
 
-The Author subsequently authorizes flashing the prepared full candidate and
-staging/verifying the fixtures, then stopping. Do not invoke games or benchmarks,
-activate test startup/configurations, or mark R07-I04 complete. Leave ordinary
-startup and original fixture configurations unchanged. The fsim handover leaves
-a custom mainboard P1-count image installed; preserve it. Paired comparison and
-visual acceptance remain later work. [BENCH-010](../BENCH-010.md) separately owns
-the new fsim reset/admission and USB-observer findings; recording it does not
-authorize that investigation during deployment.
+The Author confirmed the recovered Nurples run finished and authorized retrieval.
+All four candidate records were retrieved and decoded; see the
+[candidate-only results](INTEGRATION-CANDIDATE-R01.md). No matched baseline was
+acquired. R07-I04/I05 remain open. Root autoexec is the verified original38-byte
+startup; candidate run.cfg files remain selected and originals are retained.
+No reset, reflash or replay followed collection. Future tests must use the
+[CLI test-execution protocol](../../procedures/test-execution.md), not the old
+autoexec/reset launcher. BENCH-010 investigation and the requested EMOS-only
+rollback remain pending; neither is implicitly resumed by this filing.
 
 ## Frozen scope — 2026-10-11
 
@@ -150,7 +151,8 @@ whole-image PPA expansion; two independent unit cases pass. All finite SCAN
 configuration/startup/binary and five resident control/data hashes pass offline.
 See [results](INTEGRATION-RESULTS.md) for identities and the remaining test gate.
 
-The subsequent deployment-only checkpoint flashed/verified r04 and staged/read
-back the prepared package, without invoking tests. Ordinary startup and active
-fixture configurations remain unchanged. R07-I04/I05 await test authorization;
-see the current results checkpoint.
+The deployment checkpoint was followed by an Author-directed paired reset and
+one completed candidate-only finite run. Results are retrieved and filed;
+ordinary startup is restored, candidate configurations remain selected. R07-I04
+remains open for matched comparisons and controls, with no further execution
+authorized by this record. See the current candidate result and operation protocol.

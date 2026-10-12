@@ -6,8 +6,10 @@ R07-I01–I03 are complete. The full P4-PC candidate uses linear one-byte physic
 RGB222 drawing and PPA CLUT expansion into independent RGB888 HDMI backgrounds.
 The target compiles/links and actual component bindings pass validation. Host
 correctness and measurement-unit checks pass. Candidate and rollback packages
-are verified. **Candidate installation and fixture staging are complete; tests were not run.**
-R07-I04/I05 remain open. No integrated performance or visual pass is claimed.
+are verified. **One candidate-only finite suite is complete and retrieved.**
+The [candidate result](INTEGRATION-CANDIDATE-R01.md) records60 nominal Nurples
+application updates/s, about30.1 HDMI background publications/s and60Hz DMA
+scanout. R07-I04/I05 remain open: no matched speedup or visual pass is claimed.
 
 The [contract](INTEGRATION-R01.md) is authoritative for the remaining work.
 The earlier [conversion benchmark](PHYSICAL-RESULTS.md) compares unloaded

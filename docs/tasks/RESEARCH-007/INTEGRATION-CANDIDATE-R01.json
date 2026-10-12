@@ -1,0 +1,475 @@
+{
+  "scope": "candidate-only; no matched speedup or visual pass",
+  "P4_build_id": "indexed-hdmi-r04-b2026-10-12-01-53-19Z",
+  "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+  "window_tag": 1837734,
+  "configurations": {
+    "candidate-t03.cfg": "37dc235d6ad58e02d87c468ec6de36d627f138e44fd2121ddc56d71a48effeff",
+    "candidate-t07.cfg": "953919887efc56046955635dd0874c21b701b56ad284f300a8619beac49117b4",
+    "candidate-t08.cfg": "d37c9eafeacb3662b3ace1a71e9ba83276a2df26b184c2b64c561caa6890ac85",
+    "candidate-t09.cfg": "33b579ef0e68778ed7986a6abe7eb3d4209e1dce040ec48efc10b2d690eb358d"
+  },
+  "raw_files": {
+    "/agents/extender/results/r07-i01/candidate-t03.bin": {
+      "bytes": 3008,
+      "sha256": "ee54af333e53bd7810f986d1e6530621d6013a7868765cb7ac00d1dff12180db"
+    },
+    "/agents/extender/results/r07-i01/candidate-t07.bin": {
+      "bytes": 3008,
+      "sha256": "8e2e29d32abbf61a6b6c45d2d86d5aa521f75363711dae3a1c62e24408951743"
+    },
+    "/agents/extender/results/r07-i01/candidate-t08.bin": {
+      "bytes": 3008,
+      "sha256": "9329e26bd390963b9090896623c309aaeff293dba4dc4b36a382937722c54c99"
+    },
+    "/agents/extender/results/r07-i01/candidate-t09.bin": {
+      "bytes": 86528,
+      "sha256": "479814c6289e621dae2ad8ac881fe7781619ab3011146dedb4f531d5451de521"
+    }
+  },
+  "summary": [
+    {
+      "case": 3,
+      "count": 120,
+      "expected": 120,
+      "warmup": 60,
+      "controls": 4,
+      "window_tag": 1837734,
+      "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "abort": false,
+      "window_start": 1432,
+      "window_end": 1672,
+      "calibration_prt": 35190,
+      "calibration_mos": 60,
+      "drain": 169,
+      "evidence_complete": true,
+      "scope": "whole-update pixel-query completion (includes reply overhead)",
+      "active": {
+        "median_counts": 161.0,
+        "p95_counts": 170,
+        "max_counts": 172,
+        "median_budget_percent": 13.416666666666666,
+        "p95_budget_percent": 14.166666666666666,
+        "median_ms": 2.236111111111111,
+        "over_budget_percent": 0.0
+      },
+      "complete": {
+        "median_counts": 1059.0,
+        "p95_counts": 1170,
+        "max_counts": 1204,
+        "median_budget_percent": 88.25,
+        "p95_budget_percent": 97.5,
+        "median_ms": 14.708333333333334,
+        "over_budget_percent": 0.8333333333333334
+      },
+      "total": {
+        "median_counts": 1199.0,
+        "p95_counts": 1199,
+        "max_counts": 1204,
+        "median_budget_percent": 99.91666666666667,
+        "p95_budget_percent": 99.91666666666667,
+        "median_ms": 16.65277777777778,
+        "over_budget_percent": 0.8333333333333334
+      },
+      "wait": {
+        "median_counts": 140.0,
+        "p95_counts": 717,
+        "max_counts": 719,
+        "median_budget_percent": 11.666666666666666,
+        "p95_budget_percent": 59.75,
+        "median_ms": 1.9444444444444444,
+        "over_budget_percent": 0.0
+      },
+      "median_active_headroom_percent": 86.58333333333333,
+      "fault_rows": 0,
+      "late_rows": 0,
+      "longest_over_budget_streak": 1,
+      "window_raw_mos_ticks": 240,
+      "nominal_updates_per_second": 60.0,
+      "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+      "unmeasured_tail_estimate_ms": 2.861111111111203,
+      "p4_window": {
+        "tag": 1837734,
+        "id": 3,
+        "flags": 1,
+        "start_us": 15269473,
+        "end_us": 17273590,
+        "scanouts": 121,
+        "updates": 107,
+        "marker_valid": 0,
+        "marker_invalid": 107,
+        "last_frame": 4294967295,
+        "marker_transitions": 0,
+        "marker_repeats": 0,
+        "phases": [
+          {
+            "calls": 121,
+            "us": 64825,
+            "max_us": 7340,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 41719,
+            "us": 172731,
+            "max_us": 1464,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 41718,
+            "us": 503276,
+            "max_us": 326,
+            "boundary_drops": 1
+          },
+          {
+            "calls": 108,
+            "us": 447165,
+            "max_us": 4472,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 108,
+            "us": 6869,
+            "max_us": 286,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 107,
+            "us": 1850050,
+            "max_us": 32931,
+            "boundary_drops": 1
+          }
+        ]
+      }
+    },
+    {
+      "case": 7,
+      "count": 120,
+      "expected": 120,
+      "warmup": 60,
+      "controls": 4,
+      "window_tag": 1837734,
+      "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "abort": false,
+      "window_start": 2212,
+      "window_end": 2472,
+      "calibration_prt": 35687,
+      "calibration_mos": 60,
+      "drain": 31,
+      "evidence_complete": true,
+      "scope": "whole-update pixel-query completion (includes reply overhead)",
+      "active": {
+        "median_counts": 407.0,
+        "p95_counts": 409,
+        "max_counts": 411,
+        "median_budget_percent": 33.916666666666664,
+        "p95_budget_percent": 34.083333333333336,
+        "median_ms": 5.652777777777778,
+        "over_budget_percent": 0.0
+      },
+      "complete": {
+        "median_counts": 1308.5,
+        "p95_counts": 1746,
+        "max_counts": 2234,
+        "median_budget_percent": 109.04166666666667,
+        "p95_budget_percent": 145.5,
+        "median_ms": 18.17361111111111,
+        "over_budget_percent": 55.0
+      },
+      "total": {
+        "median_counts": 1309.0,
+        "p95_counts": 1747,
+        "max_counts": 2235,
+        "median_budget_percent": 109.08333333333333,
+        "p95_budget_percent": 145.58333333333334,
+        "median_ms": 18.180555555555557,
+        "over_budget_percent": 55.0
+      },
+      "wait": {
+        "median_counts": 1.0,
+        "p95_counts": 1,
+        "max_counts": 1,
+        "median_budget_percent": 0.08333333333333333,
+        "p95_budget_percent": 0.08333333333333333,
+        "median_ms": 0.013888888888888888,
+        "over_budget_percent": 0.0
+      },
+      "median_active_headroom_percent": 66.08333333333334,
+      "fault_rows": 0,
+      "late_rows": 118,
+      "longest_over_budget_streak": 3,
+      "window_raw_mos_ticks": 260,
+      "nominal_updates_per_second": 55.38461538461539,
+      "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+      "unmeasured_tail_estimate_ms": 1.4305555555553795,
+      "p4_window": {
+        "tag": 1837734,
+        "id": 7,
+        "flags": 1,
+        "start_us": 21829132,
+        "end_us": 23999044,
+        "scanouts": 131,
+        "updates": 70,
+        "marker_valid": 0,
+        "marker_invalid": 70,
+        "last_frame": 4294967295,
+        "marker_transitions": 0,
+        "marker_repeats": 0,
+        "phases": [
+          {
+            "calls": 131,
+            "us": 473004,
+            "max_us": 13923,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 27264,
+            "us": 256275,
+            "max_us": 2074,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 27264,
+            "us": 329133,
+            "max_us": 343,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 71,
+            "us": 282410,
+            "max_us": 4205,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 71,
+            "us": 3268,
+            "max_us": 192,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 70,
+            "us": 2076460,
+            "max_us": 34805,
+            "boundary_drops": 1
+          }
+        ]
+      }
+    },
+    {
+      "case": 8,
+      "count": 120,
+      "expected": 120,
+      "warmup": 60,
+      "controls": 4,
+      "window_tag": 1837734,
+      "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "abort": false,
+      "window_start": 2980,
+      "window_end": 3220,
+      "calibration_prt": 35916,
+      "calibration_mos": 60,
+      "drain": 34,
+      "evidence_complete": true,
+      "scope": "whole-update pixel-query completion (includes reply overhead)",
+      "active": {
+        "median_counts": 233.0,
+        "p95_counts": 234,
+        "max_counts": 234,
+        "median_budget_percent": 19.416666666666668,
+        "p95_budget_percent": 19.5,
+        "median_ms": 3.236111111111111,
+        "over_budget_percent": 0.0
+      },
+      "complete": {
+        "median_counts": 534.0,
+        "p95_counts": 1140,
+        "max_counts": 1156,
+        "median_budget_percent": 44.5,
+        "p95_budget_percent": 95.0,
+        "median_ms": 7.416666666666667,
+        "over_budget_percent": 0.0
+      },
+      "total": {
+        "median_counts": 1199.0,
+        "p95_counts": 1199,
+        "max_counts": 1200,
+        "median_budget_percent": 99.91666666666667,
+        "p95_budget_percent": 99.91666666666667,
+        "median_ms": 16.65277777777778,
+        "over_budget_percent": 0.0
+      },
+      "wait": {
+        "median_counts": 658.0,
+        "p95_counts": 724,
+        "max_counts": 749,
+        "median_budget_percent": 54.833333333333336,
+        "p95_budget_percent": 60.333333333333336,
+        "median_ms": 9.13888888888889,
+        "over_budget_percent": 0.0
+      },
+      "median_active_headroom_percent": 80.58333333333333,
+      "fault_rows": 0,
+      "late_rows": 0,
+      "longest_over_budget_streak": 0,
+      "window_raw_mos_ticks": 240,
+      "nominal_updates_per_second": 60.0,
+      "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+      "unmeasured_tail_estimate_ms": 3.2083333333332575,
+      "p4_window": {
+        "tag": 1837734,
+        "id": 8,
+        "flags": 1,
+        "start_us": 28299401,
+        "end_us": 30301086,
+        "scanouts": 120,
+        "updates": 108,
+        "marker_valid": 0,
+        "marker_invalid": 108,
+        "last_frame": 4294967295,
+        "marker_transitions": 0,
+        "marker_repeats": 0,
+        "phases": [
+          {
+            "calls": 120,
+            "us": 14188,
+            "max_us": 2585,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 41472,
+            "us": 201678,
+            "max_us": 1360,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 41472,
+            "us": 477624,
+            "max_us": 335,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 108,
+            "us": 423020,
+            "max_us": 4160,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 108,
+            "us": 3980,
+            "max_us": 92,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 108,
+            "us": 1890401,
+            "max_us": 32497,
+            "boundary_drops": 1
+          }
+        ]
+      }
+    },
+    {
+      "case": 9,
+      "count": 3600,
+      "expected": 3600,
+      "warmup": 120,
+      "controls": 5,
+      "window_tag": 1837734,
+      "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "abort": false,
+      "window_start": 5134,
+      "window_end": 12334,
+      "calibration_prt": 36027,
+      "calibration_mos": 60,
+      "drain": 61,
+      "evidence_complete": true,
+      "scope": "unfenced game submission/pacing",
+      "active": {
+        "median_counts": 536.0,
+        "p95_counts": 667,
+        "max_counts": 885,
+        "median_budget_percent": 44.666666666666664,
+        "p95_budget_percent": 55.583333333333336,
+        "median_ms": 7.444444444444445,
+        "over_budget_percent": 0.0
+      },
+      "total": {
+        "median_counts": 1191.0,
+        "p95_counts": 1193,
+        "max_counts": 1201,
+        "median_budget_percent": 99.25,
+        "p95_budget_percent": 99.41666666666667,
+        "median_ms": 16.541666666666668,
+        "over_budget_percent": 0.05555555555555555
+      },
+      "wait": {
+        "median_counts": 654.5,
+        "p95_counts": 844,
+        "max_counts": 891,
+        "median_budget_percent": 54.541666666666664,
+        "p95_budget_percent": 70.33333333333333,
+        "median_ms": 9.090277777777779,
+        "over_budget_percent": 0.0
+      },
+      "median_active_headroom_percent": 55.333333333333336,
+      "fault_rows": 0,
+      "late_rows": 0,
+      "longest_over_budget_streak": 1,
+      "window_raw_mos_ticks": 7200,
+      "nominal_updates_per_second": 60.0,
+      "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+      "unmeasured_tail_estimate_ms": 442.3194444444434,
+      "p4_window": {
+        "tag": 1837734,
+        "id": 9,
+        "flags": 1,
+        "start_us": 46468337,
+        "end_us": 106527111,
+        "scanouts": 3607,
+        "updates": 1807,
+        "marker_valid": 0,
+        "marker_invalid": 1807,
+        "last_frame": 4294967295,
+        "marker_transitions": 0,
+        "marker_repeats": 0,
+        "phases": [
+          {
+            "calls": 3607,
+            "us": 24761897,
+            "max_us": 18805,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 694272,
+            "us": 7781556,
+            "max_us": 3110,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 694272,
+            "us": 8397519,
+            "max_us": 514,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 1808,
+            "us": 7299234,
+            "max_us": 5493,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 1808,
+            "us": 82266,
+            "max_us": 205,
+            "boundary_drops": 0
+          },
+          {
+            "calls": 1807,
+            "us": 58034965,
+            "max_us": 37165,
+            "boundary_drops": 1
+          }
+        ]
+      }
+    }
+  ]
+}

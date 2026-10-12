@@ -10,12 +10,14 @@ Integrated gameplay benefit remains unproven: direct RGB888 rendering removed
 an expensive conversion stage; linear-byte drawing reduces logical pixel
 traffic but reintroduces hardware expansion and private snapshot storage.
 
-**State: linear-byte/PPA candidate flashed and fixtures staged; tests not run.**
+**State: candidate-only finite run collected; matched comparison remains open.**
 R07-I01–I03 are complete. The [integration contract](RESEARCH-007/INTEGRATION-R01.md)
 and [results](RESEARCH-007/INTEGRATION-RESULTS.md) identify the full firmware,
 target/host checks, exact rollback and staged finite fixtures. Author-authorized deployment verified all four P4 segments and the frozen SD
-fixtures. The scripts remain inactive, startup/configurations are unchanged,
-and no integration test has run. R07-I04/I05 remain open.
+fixtures. One recovered candidate-only run is now [filed](RESEARCH-007/INTEGRATION-CANDIDATE-R01.md):
+Nurples60 nominal application updates/s, about30.1 HDMI publications/s. Ordinary
+startup is restored; candidate fixture configurations remain selected. No paired
+speedup or visual acceptance is established. R07-I04/I05 remain open.
 
 R07-01/03 and R07-B01–B05 are complete. The
 [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
