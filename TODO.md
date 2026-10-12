@@ -27,6 +27,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
+- [ ] **[AUDIT-011 — Hardware fitness of upstream code reuse](docs/tasks/AUDIT-011.md)** — Proposed codebase audit: distinguish stock-visible behavior from hardware-specific implementations that fit mainboard but impose avoidable P4 costs. Start with VGA pixel ordering and indexed/PPA implications. Task prepared only; execution and renderer integration paused for Author discussion.
+
 - [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — RP01–RP04 are accepted. The canonical paired installed-system suite passed both cases and all 17 required checks; manual Nurples ExCom mode switching/gameplay passed at 25–29 fps. RP05 is next. Nurples causality remains deferred until the complete audit/repair sequence ends, and LCD returns afterward as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.

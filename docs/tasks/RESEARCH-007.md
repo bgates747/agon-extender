@@ -34,6 +34,15 @@ PORT-008's separate matched-pair hardware comparison is not part of this task.
 
 ## Current tranche boundary — 2026-10-11
 
+Latest Author direction: product integration was authorized, then paused before
+implementation for discussion of stock VGA byte-lane ordering versus linear PPA
+input. No integration changes or flashing occurred. The Author requested
+[AUDIT-011](AUDIT-011.md) to investigate hardware fitness of upstream reuse
+across the codebase; that task is prepared only, not started. Preserve stock
+application behavior without assuming stock hardware layouts suit the P4.
+Resolve the layout discussion before resuming integration; the earlier bounded
+capability and benchmark contracts below remain evidence of their own scopes.
+
 R07-01 is closed. The Author subsequently authorized R07-03's focused capability
 research and an isolated compile-only example. Commit/push existing dirt first,
 freeze this boundary, then pin relevant hardware and SDK sources. Establish
