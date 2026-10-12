@@ -1,3 +1,24 @@
+# Current review — linear-byte/PPA full firmware verified offline, uninstalled
+
+[Integration results](docs/tasks/RESEARCH-007/INTEGRATION-RESULTS.md) close
+R07-I01–I03. Full candidate indexed-hdmi-r04-b2026-10-12-01-53-19Z compiles/links,
+actual source/CLUT bindings and candidate/rollback packages pass. Both controller
+golden runs,14 selection checks and2 collector-unit cases pass. Linear physical
+RGB222 drawing avoids full-frame VGA lane reorder; HDMI still scans RGB888.
+Existing rolling overlays, automatic carriers and320 SRM remain selected.
+
+R07-I04/I05 await bench handover: fsim has the newer reservation and reserves
+initial campaign execution to the Author. No integration device/network/serial/
+reset/SD/flash operation occurred. Exact retained data-r20 is the rollback,
+not a freshly observed installed-state assertion during another bench owner.
+Finite paired SCAN T03/T07/T08/T09 and resident controls are prepared under
+`agents/research007/integration-r01/INDEX.md`. Read that index and the current
+machine-local bench record before resuming. Preserve EMOS/mainboardVDP/games/
+wiring and original startup/configurations. No integrated speedup or visual
+pass yet; production unchanged. Wider AUDIT-011 remains parked.
+
+The checkpoints below retain earlier evidence and do not supersede this state.
+
 # Current review — physical indexed-expansion comparison complete
 
 [RESEARCH-007 physical results](docs/tasks/RESEARCH-007/PHYSICAL-RESULTS.md)

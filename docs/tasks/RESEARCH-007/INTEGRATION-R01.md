@@ -66,7 +66,7 @@ renderer operations, and document every hardware-specific departure beside
 code. Record fixed-CLUT ownership, cache, snapshot and DMA lifetimes. No claim of
 whole-renderer improvement follows the standalone benchmark alone.
 
-### R07-I03 [ ] Verify offline correctness and complete target build
+### R07-I03 [x] Verify offline correctness and complete target build
 
 Reuse controller golden tests with the new storage selection, checking clipping,
 scrolling, bitmap formats/alpha, painting and saved backgrounds. Verify build
@@ -132,5 +132,12 @@ it is neither isolated CLUT kernel time nor CPU occupancy. r04 completes the
 existing diagnostic enum/counter bindings; its actual HDMI target syntax check
 passes before the final full build. r03 was stopped before link, not deployed.
 
-The bench has a newer fsim reservation. Finish compilation and concrete offline
-test preparation before deployment; do not interrupt the reserved manual tests.
+Final r04 compiles/links and passes actual-source/component validation. Candidate
+and exact rollback four-segment archives pass independent hash/readback checks.
+The maintained static collector now distinguishes per-row CPU expansion from
+whole-image PPA expansion; two independent unit cases pass. All finite SCAN
+configuration/startup/binary and five resident control/data hashes pass offline.
+See [results](INTEGRATION-RESULTS.md) for identities and the remaining test gate.
+
+The bench has a newer fsim reservation. R07-I04 awaits fresh handover; no device,
+serial, network, reset, SD or flash operation was performed for this integration.

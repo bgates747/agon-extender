@@ -5,30 +5,31 @@
 Investigate whether one-byte indexed storage could reduce Extender's drawing,
 scrolling, sprite-background and output costs while preserving stock VDP
 behaviour. The primary target is faster output through P4-PC’s existing HDMI
-path. Compare P4 CPU palette expansion and supported PPA/display operations. The proposed benefit is
-unproven: existing direct RGB888 rendering removed an expensive conversion
-stage, and indexed storage could reintroduce it.
+path. Compare P4 CPU palette expansion and supported PPA/display operations.
+Integrated gameplay benefit remains unproven: direct RGB888 rendering removed
+an expensive conversion stage; linear-byte drawing reduces logical pixel
+traffic but reintroduces hardware expansion and private snapshot storage.
 
-**State: R07-01 and R07-03 complete; bounded physical conversion comparison complete.**
-On 2026-10-11 the Author requested detailed exploration
-of indexed HDMI/PPA expansion, sample code and target compilation. The
+**State: linear-byte/PPA integration implemented and verified offline; hardware pending.**
+R07-I01–I03 are complete. The [integration contract](RESEARCH-007/INTEGRATION-R01.md)
+and [results](RESEARCH-007/INTEGRATION-RESULTS.md) identify the full firmware,
+target/host checks, exact rollback and staged finite fixtures. A newer fsim bench
+reservation prevents deployment; no integration hardware test has run.
+
+R07-01/03 and R07-B01–B05 are complete. The
 [pipeline inventory](RESEARCH-007/PIPELINE-INVENTORY.md)
 and [source baseline](RESEARCH-007/SOURCE-BASELINE.json) record R07-01;
 the [capability report](RESEARCH-007/CAPABILITY-REPORT.md) and
 [isolated example](RESEARCH-007/clut-example/README.md) record R07-03.
-The Author subsequently requires a full runnable benchmark of CPU versus PPA
-expansion. Its [bounded contract](RESEARCH-007/BENCHMARK-CONTRACT.md) authorized
-offline implementation, target builds and packaging, with no bench access.
-R07-B01–B04 now complete: [preparation results](RESEARCH-007/PREPARATION-RESULTS.md)
-and [executable benchmark/recipe](RESEARCH-007/benchmark/README.md). The actual
-firmware was built and packaged, then physically exercised under the Author’s
-bench handover. R07-B05 now complete: [physical results](RESEARCH-007/PHYSICAL-RESULTS.md),
+The earlier [bounded benchmark](RESEARCH-007/BENCHMARK-CONTRACT.md),
+[preparation results](RESEARCH-007/PREPARATION-RESULTS.md) and
+[executable recipe](RESEARCH-007/benchmark/README.md) retain conversion evidence.
+The [physical results](RESEARCH-007/PHYSICAL-RESULTS.md) record
 768 validated samples, all pixel/source/guard checks pass, exact ordinary P4
 restored and bench released. PPA takes72–85% less conversion time than the old
 CPU path, or53–59% less including signal-lane reorder, in this unloaded test.
-R07-02 and R07-04–07 remain unstarted. This is isolated experimental work,
-not product integration. The bounded deployment/run/restoration is complete; no
-new mode, further deployment or bench action is authorized.
+That isolated benchmark does not qualify the integrated renderer. Broader
+R07-02/04–07 remain unclosed; current execution is bounded by R07-I01–I05.
 The machine-local reservation identifies the current bench owner;
 PORT-008's separate matched-pair hardware comparison is not part of this task.
 
@@ -41,17 +42,10 @@ supersedes the earlier integration pause. [AUDIT-011](AUDIT-011.md) remains a
 separate proposed audit, not started. Existing capability/benchmark contracts
 remain frozen evidence for their own scopes.
 
-R07-01 is closed. The Author subsequently authorized R07-03's focused capability
-research and an isolated compile-only example. Commit/push existing dirt first,
-freeze this boundary, then pin relevant hardware and SDK sources. Establish
-direct DSI indexed support versus memory-to-memory PPA expansion, silicon/SDK
-constraints and possible small-strip output. Prefer upstream operations/code;
-do not silently equate compile success with physical correctness or throughput.
-Keep the current SDK, product renderer and firmware selection unchanged. Store
-sample source in the task silo and generated build/tool evidence under ignored
-agents storage. No flashing, serial/device access, SD/startup changes, bench
-reservation or SDK replacement. Report evidence and unresolved hardware gates,
-commit/push owned work and stop before product integration or hardware tests.
+The earlier R07-03 compile-only boundary is complete and superseded for this
+explicit integration experiment. Its pinned research and sample remain frozen.
+The SDK checkout and approved production selection remain unchanged. Resume
+R07-I04 only after a fresh bench handover; do not interrupt another reservation.
 
 ## Clarification — direct indexed HDMI versus PPA expansion
 
@@ -151,6 +145,10 @@ require output recomposition, transfer, cache maintenance or synchronized
 scanout publication before calling palette animation cheap end to end.
 
 ## Investigation subtasks
+
+This broader research checklist remains the scope map. The accepted, narrower
+stock64 experiment follows R07-I01–I05 in the integration contract; it does not
+authorize programmable256 colours or automatically close every research item.
 
 ### R07-01 [x] Pin contracts and inventory the current pipeline
 
@@ -272,12 +270,13 @@ architecture process; this investigation itself changes no architecture.
 
 ## Decision register
 
-### R07-D01 [ ] Storage architecture — unresolved
+### R07-D01 [x] Storage architecture — bounded experiment accepted
 
-Recommendation: make no storage change until R07-01–07 establish compatibility
-and the cost of expansion. Alternatives are retaining current storage,
-indexed stock-colour paths with output-stage expansion, or mixed indexed/
-true-colour storage. The Author decides after the report.
+Author accepts linear one-byte physicalRGB222 drawing with fixed-CLUT PPA
+expansion for selected stock64 geometries. Preserve packed-depth fallback,
+stock-visible semantics and the exact directRGB888 rollback. ADR-0027 records
+this experimental decision; production selection requires hardware validation
+and acceptance. Broader palette/API work remains outside the integration.
 
 ### R07-D02 [ ] Custom palette scope — unresolved
 
