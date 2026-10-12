@@ -190,3 +190,41 @@ A second measurement schema covers both queued worker and queued foreground
 execution with identical per-operation lock/wall scopes and exposes foreground
 counts. Both variants must be rebuilt and repeated with that schema. It still
 excludes immediate double-buffer rendering and hardware scanout composition.
+
+The corrected first RGB888 pair accounts for every measured bitmap command:
+case39 reduces queued rendering from2,587 to1,531µs/update (40.8%); case41
+from11,561 to7,390µs/update (36.1%). Partial-scroll T03 changes from4,046 to
+3,866µs/update (4.4%). These are first-window estimates, not repeated-window
+qualification or an accepted Nurples gain. Both variants retain60Hz T03 output;
+the candidate's actual-P4 PIE self-test passes all1,024 alignment/canary cases.
+
+NP03 therefore also tests a bounded indexed-output remedy. The P4 output task
+may capture all indexed rows and the matching hardware-overlay scene under one
+native guard instead of384 separate guards. An explicit default-off
+`--indexed-frame-snapshot` option preserves the old indexed path as control.
+For this first candidate, prior-output-buffer waiting, target selection,
+blocking PPA expansion, cache handoff and scene commit order remain unchanged.
+Row descriptors remain authoritative; no assumption of a contiguous source
+framebuffer is introduced. PPA and output waits remain outside native exclusion.
+
+Compare this indexed candidate against same-revision RGB888 and indexed
+controls. Keep extra full-frame snapshot/PPA cost separate from queued drawing
+gains: moving cost into output preparation is not a total pipeline speedup.
+Start again with static bitmap cases and T03. A coherent primitive-boundary
+snapshot does not establish software-sprite visibility at capture time; examine
+completed-drain ownership before graduating to software-sprite acceptance.
+
+The parallel RGB888 alternative keeps three-byte physical rows and uses an
+explicit `--bitmap-fast --bitmap-lut` selection: a256-byte internal-SRAM colour
+lookup replaces repeated RGB222 channel arithmetic, and bounded four-pixel
+Native expansion preserves the one-byte saved-background ABI. Alpha, paint
+fallbacks, clipping, alias order, output ownership and palette semantics remain
+unchanged. This does not optimize the scrolling copy itself. Sanitized exhaustive
+span/alignment/alias checks and actual-controller oracle tests bound correctness;
+physical repeated windows determine whether either candidate is worth keeping.
+
+The whole-frame snapshot removes diagnostic scopes as well as lock handoffs.
+Compare aggregate row-wait/composition time per attempt, not per-call means;
+instrument removal can overstate a small output-preparation benefit. The queued
+render sidecar remains identical. An output-only win needs a later probes-off
+confirmation before a production performance claim.

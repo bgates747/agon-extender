@@ -54,6 +54,12 @@
 #include "extender/display/p4_rgb888_controller.hpp"
 #include "extender/display/hdmi_geometry.hpp"
 #include "extender/display/scroll_copy.hpp"
+#if defined(AGON_EXTENDER_BITMAP_LUT) && AGON_EXTENDER_BITMAP_LUT
+#if !defined(AGON_EXTENDER_BITMAP_FAST) || !AGON_EXTENDER_BITMAP_FAST || defined(AGON_EXTENDER_INDEXED_PPA) || !defined(AGON_EXTENDER_DIRECT_RGB888)
+#error "BITMAP_LUT requires BITMAP_FAST with direct RGB888 storage"
+#endif
+#include "extender/display/rgb222_bgr_lut.hpp"
+#endif
 #if defined(ESP_PLATFORM) && defined(AGON_EXTENDER_SCROLL_FAST) && defined(AGON_EXTENDER_RENDER_BENCHMARK)
 #include "extender/display/scroll_copy_selftest.hpp"
 #endif
@@ -472,10 +478,21 @@ void P4Color64Controller::readScreen(Rect const & rect, RGB888 * destBuf)
 
 void P4Color64Controller::rawDrawBitmap_Native(int destX, int destY, Bitmap const * bitmap, int X1, int Y1, int XCount, int YCount)
 {
+#if defined(AGON_EXTENDER_BITMAP_LUT) && AGON_EXTENDER_BITMAP_LUT
+  // Preserve the generic clipped row/source offsets and one-byte Native ABI.
+  // Native ignores paint mode/alpha as stock does; only BGR expansion changes.
+  for (int y = Y1, end = Y1 + YCount; y < end; ++y, ++destY) {
+    if (XCount > 0)
+      agon::extender::display::storeNativeRgb222BgrSpan(
+          (uint8_t*)m_viewPort[destY] + destX * 3,
+          (uint8_t*)bitmap->data + y * bitmap->width + X1, XCount);
+  }
+#else
   genericRawDrawBitmap_Native(destX, destY, (uint8_t*) bitmap->data, bitmap->width, X1, Y1, XCount, YCount,
                               [&] (int y) { return (uint8_t*) m_viewPort[y]; },   // rawGetRow
                               [&] (uint8_t * row, int x, uint8_t src) { VGA_PIXELINROW(row, x) = src; }  // rawSetPixelInRow
                              );
+#endif
 }
 
 
@@ -505,7 +522,13 @@ void P4Color64Controller::rawDrawBitmap_RGBA2222(int destX, int destY, Bitmap co
     genericRawDrawBitmap_RGBA2222(destX, destY, bitmap, (uint8_t*)saveBackground, X1, Y1, XCount, YCount,
                                   [&] (int y) { return (uint8_t*)m_viewPort[y]; },
                                   [&] (uint8_t *row, int x) { return uint8_t(VGA_PIXELINROW(row, x)); },
-                                  [&] (uint8_t *row, int x, uint8_t src) { VGA_PIXELINROW(row, x) = m_HVSync | (src & 0x3f); });
+                                  [&] (uint8_t *row, int x, uint8_t src) {
+#if defined(AGON_EXTENDER_BITMAP_LUT) && AGON_EXTENDER_BITMAP_LUT
+                                    agon::extender::display::storeRgb222Bgr(row + x * 3, src);
+#else
+                                    VGA_PIXELINROW(row, x) = m_HVSync | (src & 0x3f);
+#endif
+                                  });
     return;
   }
 #endif

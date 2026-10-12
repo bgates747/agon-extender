@@ -24,6 +24,12 @@ class StockRuntimeController {
   virtual void prepareRow(int y, std::uint8_t *signal) = 0;
   virtual bool linearStorage() const noexcept { return false; }
   virtual void prepareLinearRow(int, std::uint8_t *, bool) {}
+#ifdef AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
+  // The HDMI output caller holds native exclusion for this complete copy AND
+  // the matching immutable overlay scene. No lock or DMA wait occurs here.
+  virtual bool copyLinearFrameUnderNativeGuard(std::uint8_t *, bool,
+                                              std::atomic<bool> &) { return false; }
+#endif
   virtual bool rgb888Storage() const noexcept { return false; }
   virtual bool panelStorage() const noexcept { return false; }
   // Called with native exclusion held through cache submission.
@@ -67,6 +73,25 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
     }
 #endif
   }
+#ifdef AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
+  bool copyLinearFrameUnderNativeGuard(std::uint8_t *destination, bool decorate,
+                                      std::atomic<bool> &stopping) override {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+    if constexpr (std::is_same_v<Depth, fabgl::P4Color64Controller>) {
+      const int width = this->getViewPortWidth();
+      const int height = this->getViewPortHeight();
+      // Retain row descriptors: stock full-width scrolling may rotate them,
+      // and the allocator does not promise one contiguous visible plane.
+      for (int y = 0; y < height; ++y) {
+        if (stopping.load(std::memory_order_acquire)) return false;
+        this->copyLinearRow(y, destination + std::size_t(y) * width, decorate);
+      }
+      return true;
+    }
+#endif
+    return false;
+  }
+#endif
   bool rgb888Storage() const noexcept override {
 #ifdef AGON_EXTENDER_DIRECT_RGB888
     return !linearStorage() && std::is_same_v<Depth, fabgl::P4Rgb888Controller>;

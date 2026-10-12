@@ -591,12 +591,36 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
   const bool clear=buffer_width_[target]!=w || buffer_height_[target]!=h;
   if(clear)std::memset(destination,0,bufferBytes());
   const auto generation=stockVisibleGeneration();
+#ifdef AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
+  {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    agon_bench::Scope wait(agon_bench::RowWait);
+#endif
+    // RESEARCH-007 bounded candidate: capture the complete indexed background
+    // and its matching hardware scene at one native primitive boundary. This
+    // removes repeated row lock handoffs; it does not claim a completed SW
+    // sprite batch. The private snapshot outlives this exclusion, while PPA,
+    // panel ownership waits, cache handoff and frame cadence remain unchanged.
+    AGON_STOCK_NATIVE_GUARD;
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    wait.finish();
+    {
+      // One full-frame scope replaces per-row scopes. Compare aggregate time
+      // per attempt, not mean microseconds/call with the row-scope control.
+      agon_bench::Scope compose(agon_bench::RowCompose);
+#endif
+      if(!controller.copyLinearFrameUnderNativeGuard(indexed_.source(),scaled,stopping))return false;
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    }
+#endif
+#else
   for(int y=0;y<h;++y) {
     if(stopping.load(std::memory_order_acquire))return false;
     controller.prepareLinearRow(y,indexed_.source()+y*w,scaled);
   }
   {
     AGON_STOCK_NATIVE_GUARD;
+#endif
     if(controller.display().isDoubleBuffered() && generation!=stockVisibleGeneration()) {
       ++report_swap_drops_;report(esp_timer_get_time());return false;
     }

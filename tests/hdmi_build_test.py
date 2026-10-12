@@ -72,6 +72,18 @@ class HdmiBuildTest(unittest.TestCase):
         self.assertEqual(record["ppa_scale_320"]["carrier"],[848,480])
         self.assertNotEqual(record["presentation_copy_bytes"],0)
 
+    def test_frame_snapshot_requires_indexed_storage_and_is_off_by_default(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        ordinary=build_p4.select_display_profile(*args)
+        indexed=build_p4.select_display_profile(*args,indexed_ppa=True)
+        snapshot=build_p4.select_display_profile(*args,indexed_ppa=True,indexed_frame_snapshot=True)
+        flag="AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT=1"
+        self.assertNotIn(flag,ordinary["definitions"])
+        self.assertNotIn(flag,indexed["definitions"])
+        self.assertIn(flag,snapshot["definitions"])
+        with self.assertRaisesRegex(SystemExit,"snapshot requires"):
+            build_p4.select_display_profile(*args,indexed_frame_snapshot=True)
+
     def test_unsupported_board_or_profile_rejected_before_output_creation(self):
         for board, profile in (("p4-devkit", "p4-console"),
                                ("p4-pc", "p4-mos-recovery")):
@@ -262,6 +274,18 @@ class HdmiBuildTest(unittest.TestCase):
         self.assertIn("AGON_EXTENDER_SCROLL_FAST=1", selected["definitions"])
         with self.assertRaisesRegex(SystemExit, "scroll fast"):
             build_p4.select_display_profile(*args, indexed_ppa=True, scroll_fast=True)
+
+    def test_bitmap_lut_requires_explicit_fast_rgb888_painter(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        control=build_p4.select_display_profile(*args,bitmap_fast=True)
+        candidate=build_p4.select_display_profile(*args,bitmap_fast=True,bitmap_lut=True)
+        flag="AGON_EXTENDER_BITMAP_LUT=1"
+        self.assertNotIn(flag,control["definitions"])
+        self.assertIn(flag,candidate["definitions"])
+        with self.assertRaisesRegex(SystemExit,"LUT requires"):
+            build_p4.select_display_profile(*args,bitmap_lut=True)
+        with self.assertRaises(SystemExit):
+            build_p4.select_display_profile(*args,indexed_ppa=True,bitmap_fast=True,bitmap_lut=True)
 
 
 if __name__ == "__main__":
