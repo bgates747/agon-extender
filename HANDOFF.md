@@ -1,3 +1,22 @@
+# Current stop — EMOS-only rollback complete
+
+Author requested rollback then stop. Restored verified
+`agon-emos-v0.1.24-b2026-10-07-23-11-33Z`; imageSHA256
+`44d217b555f68a7d030bc0a89a2fa1d27f0fb537576f2925e90ef055b0a44d02`.
+Independent128KiB ROM readback matches image plus erased padding; fullROM SHA256
+`6f83bc21558ea7dcb665b60c18aa3a5c3030367f901e3e32ccbbf99eaf7f4019`.
+FLASH automatic reboot restored fresh neutral keyboard admission. Listener exited.
+Original38-byte startup unchanged/readback verified. No test auto-start.
+P4 indexed r04 and fsim mainboard P1-count VDP remain unchanged. No P4 flash/reset
+or test replay occurred. Paired/cold boot with this combination is untested.
+Local evidence: agents/bench010/emos-rollback-r01. Bench released; stop here.
+
+Operation protocols remain mandatory before further work. BENCH-010 diagnosis
+and matched renderer comparisons remain pending. Author observed sprite flicker
+in the candidate run; timing completion is not visual acceptance. Production unchanged.
+
+Earlier checkpoints below are history and do not supersede this stop.
+
 # Current stop — protocols installed; candidate results filed
 
 The Author requires operation-specific protocol dispatch before tools. Read

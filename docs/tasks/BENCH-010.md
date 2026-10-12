@@ -87,3 +87,23 @@ incomplete result. Coordinate any consumer campaign rerun with fsim, leaving its
 fixtures and execution code in that repository. Report remaining uncertainty,
 update current recovery guidance if warranted, and stop for Author review.
 Production promotion requires tested acceptance and an agreed release version.
+
+## EMOS-only rollback checkpoint — 2026-10-11
+
+On explicit Author direction, the Pi restored the physically verified EMOS
+`agon-emos-v0.1.24-b2026-10-07-23-11-33Z`, imageSHA256
+`44d217b555f68a7d030bc0a89a2fa1d27f0fb537576f2925e90ef055b0a44d02`.
+The retained on-card image matched local bytes before FLASH. One FLASH command
+was submitted; its automatic reboot produced fresh admitted neutral input.
+Independent full128KiB ROM readback matches the selected image plus erased
+padding, SHA256`6f83bc21558ea7dcb665b60c18aa3a5c3030367f901e3e32ccbbf99eaf7f4019`.
+Ordinary38-byte startup remained unchanged and was readback verified. Listener
+exited. P4 indexed r04 and mainboard fsim VDP were not reset/reflashed/replaced.
+No post-rollback tests or paired/cold-reset qualification occurred.
+
+This establishes the requested component rollback and immediate input handback,
+not the cause of the earlier readiness failure. B10-01–05 remain incomplete.
+Author requires ExExt handling to remain irrelevant to Legacy/ExCom startup,
+and explicitly rejected substituting a paired P4 rollback to hide coupling.
+Local receipts remain in the ignored machine-local bench evidence. Production
+selection and release tags are unchanged.
