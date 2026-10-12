@@ -974,3 +974,15 @@ remains retained evidence. This scoped experiment is recorded in
 and performance acceptance remain separate. Double-buffer overlay changes are
 presented with explicit application swaps; autonomous overlay timing remains
 outside this variant's qualified scope.
+
+### Bounded linear-byte/PPA experiment
+
+An explicitly selected RESEARCH-007 P4-PC HDMI candidate may draw64-colour
+images into linear one-byte physical RGB222 storage, avoiding the original VGA
+byte-lane permutation. A core1 output task snapshots rows and expands them with
+a fixed PPA CLUT into independently buffered RGB888 HDMI backgrounds. Drawing
+exclusion does not span PPA execution. Existing rolling scanout owns immutable
+hardware overlays; packed-depth modes retain their existing controller paths.
+Stock VDU/bitmap/palette contracts and EMOS routing remain unchanged. This is an
+authorized experiment with integrated validation pending, not a production
+selection or proven performance gain. See [ADR-0027](decisions/ADR-0027-linear-byte-ppa-experiment.md).
