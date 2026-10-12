@@ -1,0 +1,145 @@
+# Nurples rendering gain — eight-hour work contract
+
+## Executive summary
+
+Author-authorized on2026-10-12: recover visual correctness and demonstrate at
+least25% less rendering time against the **current RGB888 renderer**, aiming
+for50%. Start with static ordinary bitmap plotting and partial vertical scrolling,
+then add software and hardware sprites and deterministic repaired Nurples.
+The indexed/PPA experiment is an option, not the required winner. Keep current
+RGB888 as the control; do not claim success merely by repairing indexed's30Hz
+regression to the baseline's60Hz. Bench exclusively belongs to Extender.
+
+Time boundary: start2026-10-12T13:16:20Z; stop no later than21:16:20Z (eight hours).
+The active goal owns this limit. Finish evidence/restoration within that period.
+Proceed unattended within this scope; pause for any required Author answer.
+
+## Fixed boundaries and success metric
+
+1. Preserve EMOS, mainboard VDP, ordinary UART ExCom behavior, input, stock-visible
+   drawing/palette/bitmap/sprite semantics and wiring. No ExExt/parallel work.
+   No upstream bug fixes or unrelated architecture audit. Upstream references
+   remain read-only. P4-specific memory/output implementation may change.
+2. Mode20 is512×384×64 on the684×384 widescreen HDMI carrier. Distinguish centred
+   4:3 content from full-width logical widescreen content; neither output geometry
+   nor a wider workload may silently change between control and candidate.
+   Investigate the matching full-width geometry only after512×384 correctness.
+3. Primary gain =100×(baseline rendering cost − candidate rendering cost)/baseline
+   rendering cost for identical workload, completed rendering scope and units.
+   Report median,p95,maximum, late streaks and60Hz budget percentages. Require
+   median andp95 gains to satisfy any claimed threshold; retain exceptions.
+   Separate eZ80 active submission, UART/reply fences, P4 execution/preparation,
+   snapshot, PPA, output-buffer waiting, cache handoff and DMA cadence. Never sum
+   nested/concurrent wall scopes as CPU usage. Paced60updates/s is not a speedup.
+4. Existing frozen tests and same-state trajectory checks are preferred. Add only
+   necessary measurement separation or uncovered static/hardware cases; do not
+   expand into a new general benchmarking framework. Identical instrumentation
+   must be present in compared builds, with counters outside hot paths where
+   practical. If changed hooks invalidate old scopes, redo both controls.
+5. No visible sprite/background flicker accepted. Stable frame/strip ownership,
+   bounds and scanout progress must hold; timing-only results cannot establish
+   visual correctness or human input latency. Preserve Author's observed indexed
+   flicker and earlier good visual reference. Do not silently suppress sprites.
+6. Full baseline/candidate manifest, source snapshot, compile flags, binaries,
+   fixture/config hashes, windows and raw files remain immutable per run.
+   Generated build stamps/runs identify each attempt; no production/version tag
+   or promotion without the normal tested Author acceptance/version gate.
+7. All tests launch by explicit CLI EXEC at acknowledged prompt/listener EXIT.
+   Startup contains setup only and selects mode before fixture. No test autorun,
+   speculative restart or uncertain replay. On a failed attempt preserve evidence,
+   diagnose actual state, recover deliberately and use a new run ID.
+8. The Author's broad goal authorizes bounded compile/deploy/measure/fix iterations;
+   it supersedes the prior light-thinking stop-after-first-failure experiment.
+   It does not authorize proceeding after an explicit stop or unanswered question.
+   Do not tie resets to runtime estimates. Preserve user files and saved startup.
+
+## Ordered subtasks
+
+### NP01 [ ] Freeze evidence, contract and bench ownership
+
+Commit/push existing owned changes in logical groups, then this contract and
+queue/handoff. Confirm no competing bench reservation and retain the existing
+listener session, startup/config backups and exact rollback segments. Read the
+operation protocols before corresponding hardware actions. Deadline is fixed.
+
+### NP02 [ ] Attribute the regression without sprites
+
+Review current indexed and RGB888 paths; separate prior-buffer wait, source row
+snapshot/locking, PPA expansion, cache and actual publication. Reuse static colour
+chart/bitmap and T03 partial-scroll fixtures. Prove the timing scopes before
+changing scheduling. Add bounded diagnostic counters only when existing windows
+cannot answer the question. Compile and verify them before flashing.
+
+### NP03 [ ] Improve static bitmap and partial-scroll rendering
+
+Implement the smallest hardware-appropriate remedy: remove redundant work/waits,
+use contiguous/row-pointer or efficient block operations where semantics permit,
+and retain complete output ownership. Compare same-stream static plotting and
+partial scrolling with the current RGB888 control, repeated short windows where
+needed. Require independent pixel/guard/controller checks and stable output.
+Do not add sprites to hide failure to achieve an elementary gain.
+
+### NP04 [ ] Add software sprites progressively
+
+Reuse T08 static/32-sprite and T07 scrolling/32-sprite controls; use existing lower
+counts to locate saturation if necessary. Preserve saved-background and clipping
+semantics. Demonstrate median/p95 render cost and compare to RGB888 with identical
+hooks. Run the repaired deterministic Nurples trajectory3,600 measured updates
+(plus120 warm-up), with matching actor/projectile/map/RNG state. Keep draw cost,
+output publications and application pacing separate.
+
+### NP05 [ ] Add hardware sprites and deterministic hardware Nurples
+
+Reuse existing resident case54 and the hardware-sprite Nurples branch/assets.
+Start small, graduate to the corresponding busy scene. Measure scanout-overlay
+cost separately from background rendering; compare identical sprite populations
+and formats against a same-source RGB888 control. Require bounds/rolling counters,
+no sprite drop/hidden rows, and retain screenshot/Author observations when available.
+Check ordinary input/quit and mode0 outro without broadening into mode work.
+
+### NP06 [ ] Decide512×384 and widescreen outcome
+
+Tabulate worst-casep95 first, including static/scroll, software and hardware
+sprites and deterministic Nurples. A25% gain is useful; aim50%. Treat claims as
+conditional when output ownership/flicker remains unresolved. Do not claim a
+50% gain by comparing the repaired candidate only with the rejected indexed r05.
+Confirm matching full-width logical widescreen workload before claiming it.
+
+### NP07 [ ] Other modes — only after the50% sprite gate
+
+Only after at least50% reduction at512×384 and its widescreen counterpart,
+including sprites, investigate320×240 and its widescreen equivalent, then other
+already implemented native modes in remaining time. Reuse proven carriers; no
+monitor-timing hunt or unsupported-mode expansion. Otherwise leave this item
+unexecuted and stop by the eight-hour boundary.
+
+### NP08 [ ] Close out, preserve and return usable bench
+
+Retain comparable raw evidence, explicit percentages and limitations in a bounded
+results document. Restore saved startup/configs and read back; leave the best
+correctly working authorized image with actual CLI/input verification. Revert a
+failed candidate to the exact current RGB888 control; no routine full-ROM backup
+required. Commit/push owned work in logical groups as it stabilizes. Report actual
+achieved gain, what did not work, installed identity, terminal state and remaining
+Author visual gate. Do not mark the goal achieved if the performance objective
+remains unfulfilled; record a time-limit stop honestly.
+
+## Research and evidence inputs
+
+1. [Current paired comparison](RESUME-COMPARISON-2026-10-12.md): baseline RGB888
+   Nurples60.07background publications/s versus indexed30.14/s; both60 application
+   updates/s. Indexed PPA expansion about4ms, broad conversion/preparation scope
+   about32ms including prior-buffer waiting and source snapshot. That scope is
+   not equivalent to RGB888 panel staging and does not identify the bottleneck.
+2. [Pipeline inventory](PIPELINE-INVENTORY.md), [official contracts/source baseline](SOURCE-BASELINE.json)
+   and [capability report](CAPABILITY-REPORT.md) bound framebuffer formats,
+   bitmap opacity, saved backgrounds, palette ownership and PPA limitations.
+3. [Existing integration contract](INTEGRATION-R01.md) and [resumption plan](RESUME-R01.md)
+   retain exact frozen fixture identities, raw timing contracts and rollback.
+4. [SCAN-001](../SCAN-001.md), [SPRITE-001](../SPRITE-001.md) and
+   [HDMI-002](../HDMI-002.md) retain partial-scroll, rolling overlays, known good
+   geometry and prior visible behavior. The broader audits remain parked.
+5. [Test protocol](../../procedures/test-execution.md), [active bench constraints](../../qualification/bench-constraints.md),
+   [serial capture](../../serial-monitor.md), [SD layout](../../sd-layout.md),
+   [installation](../../installing.md) and [reset](../../bench-reset.md) govern
+   operations. Private devices/reservation/tools remain in ignored local records.

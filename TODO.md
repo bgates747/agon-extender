@@ -5,6 +5,10 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
+## Active eight-hour Nurples rendering goal
+
+- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Author-authorized sequential static bitmap/partial-scroll, software sprites, hardware sprites and deterministic Nurples optimization. Target25% lower rendering time against current RGB888, aim50%; other modes gated on50% at512×384 plus widescreen including sprites. Eight-hour deadline in contract; bench exclusive. Existing indexed candidate fails visual/performance acceptance.
+
 ## Browser paste — accepted development, release closeout pending
 
 - [ ] **[REMOTE-004 — Browser clipboard paste](docs/tasks/REMOTE-004.md)** — Browser paste and restored Reset Agon accepted after Author testing. Source, local tests and bounded P4 deployment evidence retained; broader validation and production promotion remain within the HDMI release boundary. Broader clipboard investigation remains deferred.
@@ -51,8 +55,6 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[HDMI-001 — Fixed 720p HDMI presentation for existing Agon modes](docs/tasks/HDMI-001.md)** — r03 startup, EMOS prompt modes0/3/8/20 and Author gameplay checks pass for Nurples and 320×240 Aginvadors/Rally. Excess sprite flicker remains open; passive timing records about19.2 complete updates/s versus60 DMA frames/s without an identified controlled game scene. Full mode coverage, fidelity/performance and promotion remain pending.
 - [ ] **[BENCH-009 — Deterministic rendering load suite](docs/tasks/BENCH-009.md)** — Long r04 campaign paused. Supplemental five-mode static controls complete. Permanent resident selection and card collection pass; the separate bounded RGB888 report is complete. No full-campaign resumption selected.
-
-- [ ] **[RESEARCH-007 — Indexed framebuffer and palette-expansion feasibility](docs/tasks/RESEARCH-007.md)** — R07-I01–I03 complete; [resumption preparation](docs/tasks/RESEARCH-007/RESUME-R01.md) stages same-source ordinary-UART RGB888/PPA variants without parallel startup, frozen fixtures and explicit CLI batches. Bench remains with fsim. R07-I04 matched comparison/controls and R07-I05 gameplay review remain open; prior candidate-only run proves no speedup or visual pass.
 
 - [ ] **[PPA-001 — Identify PPA rendering acceleration opportunities](docs/tasks/PPA-001.md)** — Deferred, not started; Author requests task recording only. Assess current clears, rectangular fills, bitmap/sprite compositing and transforms against IDF5.5.5 PPA capabilities, then rank source-linked opportunities and proposed comparisons. No implementation or bench work selected.
 

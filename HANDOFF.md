@@ -1,3 +1,9 @@
+# Active goal — Nurples rendering optimization
+
+Author authorizes eight-hour Nurples optimization goal from13:16:20Z to21:16:20Z; static bitmap/partial scroll before SW/HWsprites,>=25%render-cost gain vs CURRENT RGB888,aim50%; othermodesonlyafter50%512x384+wideinclsprites. Bench exclusive. Existing evidence/observer committed in0ed5f161,bcdc70ce; contract docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md. Initially candidate r05 installed, listeneronlineLegacy,temporary63Bsetup-onlystartup/r03cfgs; session pendingreadresolved, collectorsclosed. Original38Bstartup/fourconfigs savedbench-r02. No hardwareactionyet.
+
+Earlier checkpoints below are historical.
+
 # Current stop — matched data collected; indexed visual regression — 2026-10-12T12:55:10.254530+00:00
 
 All four candidate records recovered through the existing foreground SD session. Exact pending READ resolved first; no new listener/session, firmware, reset, rerun or configuration change. Complete120/120/120/3600 records and tagged closed/nonoverflowed P4 windows validate; trajectories match RGB888. Nurples application60updates/s both, background publication60.07/s RGB888 versus30.14/s indexed (49.8% lower); scrolling/32-sprite fixture60 versus53.33updates/s and74.1% higher p95 fenced cost. Author-observed substantial sprite flicker means candidate fails visual acceptance. No root cause/fix established. RGB888 baseline valid; intermittent common HDMI dropout remains open. Foreground listener remains online in Legacy, candidate r05 installed, temporary63B setup-only startup and r03 candidate configs unchanged; no pending session read, collectors closed. Paired report docs/tasks/RESEARCH-007/RESUME-COMPARISON-2026-10-12.md. No promotion, commit or further tests.
