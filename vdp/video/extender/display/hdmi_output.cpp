@@ -57,6 +57,14 @@ void HdmiOutput::cleanup() {
   buffer_height_[0] = buffer_height_[1] = 0;
   scanouts_.store(0, std::memory_order_relaxed);
   interrupt_core_.store(UINT32_MAX, std::memory_order_relaxed);
+#ifdef AGON_EXTENDER_HDMI_LINK_WATCH
+  // Panel deletion above has joined its DMA callback before these resets.
+  link_last_frame_us_ = link_frame_gap_max_us_ = 0;
+  link_long_gaps_ = link_last_long_gap_us_ = 0;
+  link_sample_at_ = 0;
+  link_samples_ = link_hpd_changes_ = 0;
+  link_observer_failed_ = false;
+#endif
 }
 
 bool HdmiOutput::start() {
@@ -112,6 +120,11 @@ bool HdmiOutput::start() {
     io_config.lcd_cmd_bits = 8;
     io_config.lcd_param_bits = 8;
     io_config.flags.disable_control_phase = true;
+#ifdef AGON_EXTENDER_HDMI_LINK_WATCH
+    // Pinned IDF's zero timeout means infinite. Diagnostic reads must not
+    // strand the renderer if the bridge disappears. Normal builds are unchanged.
+    io_config.transaction_timeout_ms = 20;
+#endif
     error = esp_lcd_new_panel_io_i2c(i2c_, &io_config, &io_[i]);
     if (error != ESP_OK) return failed(error, "LT8912B register bank");
   }
@@ -213,6 +226,9 @@ bool HdmiOutput::start() {
   ownership_.reset();
   portEXIT_CRITICAL(&callback_mux_);
   ready_ = true;
+#ifdef AGON_EXTENDER_HDMI_LINK_WATCH
+  ++link_epoch_;
+#endif
   output_size_.store(unsigned(width()) << 16 | unsigned(height()),std::memory_order_release);
 #ifdef AGON_EXTENDER_DIRECT_RGB888
   if(!startDirectSubmitter()) return failed(ESP_ERR_NO_MEM,"Direct framebuffer submission task");
@@ -285,6 +301,21 @@ bool IRAM_ATTR HdmiOutput::frameComplete(esp_lcd_panel_handle_t,
   auto &output = *static_cast<HdmiOutput *>(context);
   output.interrupt_core_.store(xPortGetCoreID(), std::memory_order_release);
   output.scanouts_.fetch_add(1, std::memory_order_relaxed);
+#ifdef AGON_EXTENDER_HDMI_LINK_WATCH
+  // Unsigned subtraction handles the 32-bit microsecond wrap. These are DMA
+  // callback intervals, not HDMI receiver lock or optical frame measurements.
+  const auto stamp = static_cast<std::uint32_t>(esp_timer_get_time());
+  const auto previous = output.link_last_frame_us_.exchange(stamp, std::memory_order_relaxed);
+  if (previous) {
+    const auto gap = stamp - previous;
+    if (gap > output.link_frame_gap_max_us_.load(std::memory_order_relaxed))
+      output.link_frame_gap_max_us_.store(gap, std::memory_order_relaxed);
+    if (gap > 25000) {
+      output.link_long_gaps_.fetch_add(1, std::memory_order_relaxed);
+      output.link_last_long_gap_us_.store(stamp, std::memory_order_relaxed);
+    }
+  }
+#endif
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
   agon_bench::scanout();
 #endif
@@ -721,7 +752,42 @@ void HdmiOutput::directSubmitEntry(void *context) {
 }
 #endif
 
+#ifdef AGON_EXTENDER_HDMI_LINK_WATCH
+void HdmiOutput::observeLink(std::int64_t now) {
+  if (!ready_ || link_observer_failed_ || now - link_sample_at_ < 100000) return;
+  link_sample_at_ = now;
+  std::uint8_t raw[9]{};
+  constexpr unsigned registers[]{0xc1, 0x9c, 0x9d, 0x9e, 0x9f, 0x0c, 0x0d, 0x0e, 0x0f};
+  // Reuse only reads already present in the pinned Olimex driver: HPD and
+  // MIPI input checks on main bank; raw DDS samples on the CEC/DSI bank.
+  // DDS bytes are NOT interpreted using the driver's example-only threshold.
+  // The normal output task owns these handles; mode teardown joins that task.
+  for (unsigned i = 0; i < 9; ++i) {
+    const auto error = esp_lcd_panel_io_rx_param(io_[i < 5 ? 0 : 1], registers[i], raw + i, 1);
+    if (error != ESP_OK) {
+      link_observer_failed_ = true;
+      ESP_LOGE("ext-hdmi-link", "epoch=%u read stopped: bank=%u reg=%02x error=%s; no recovery attempted",
+               link_epoch_, i < 5 ? 0 : 1, registers[i], esp_err_to_name(error));
+      return;
+    }
+  }
+  const auto hpd = std::uint8_t(raw[0] & 0x80);
+  if (link_samples_ && hpd != link_previous_hpd_) ++link_hpd_changes_;
+  link_previous_hpd_ = hpd;
+  ++link_samples_;
+  ESP_LOGI("ext-hdmi-link", "epoch=%u sample=%u at_us=%llu read_us=%u frames=%u gap_max_us=%u gaps_over25ms=%u last_gap_us32=%u hpd_raw=%02x hpd_changes=%u mipi_raw=%02x%02x%02x%02x dds_raw=%02x%02x%02x%02x",
+           link_epoch_, link_samples_, static_cast<unsigned long long>(now),
+           unsigned(esp_timer_get_time() - now), unsigned(scanouts_.load()),
+           unsigned(link_frame_gap_max_us_.load()), unsigned(link_long_gaps_.load()),
+           unsigned(link_last_long_gap_us_.load()), raw[0], link_hpd_changes_,
+           raw[1], raw[2], raw[3], raw[4], raw[5], raw[6], raw[7], raw[8]);
+}
+#endif
+
 void HdmiOutput::report(std::int64_t now) {
+#ifdef AGON_EXTENDER_HDMI_LINK_WATCH
+  observeLink(now);
+#endif
   const auto elapsed = now - report_started_;
   if (elapsed < 10000000 || !report_updates_) return;
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT

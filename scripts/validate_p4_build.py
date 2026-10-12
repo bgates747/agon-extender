@@ -80,6 +80,7 @@ def main() -> None:
     parser.add_argument("--parallel-probe-candidate", action="store_true")
     parser.add_argument("--parallel-boot-candidate", action="store_true")
     parser.add_argument("--indexed-ppa", action="store_true")
+    parser.add_argument("--hdmi-link-watch", action="store_true")
     parser.add_argument("--ppa-scale-320", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true")
     parser.add_argument("--abort-on-alloc-failure", action="store_true")
@@ -93,7 +94,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -152,7 +153,7 @@ def main() -> None:
                             *definition_groups["rejected"]]
     for command in selected_commands:
         argv = command.get("arguments") or shlex.split(command["command"])
-        for definition, benchmark_selected in (("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
+        for definition, benchmark_selected in (("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
                                      ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
                                      ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
                                      ("AGON_EXTENDER_BENCH_OFF",args.render_benchmark_output in ("off","convert-off")),

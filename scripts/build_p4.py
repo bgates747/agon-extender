@@ -118,7 +118,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -127,6 +127,15 @@ def select_display_profile(document: dict, name: str, board: str,
     if hdmi_timing not in HDMI_GEOMETRIES or (hdmi_timing != "1280x720" and display_output != "hdmi"):
         raise SystemExit("custom HDMI timing requires HDMI output")
     profile = deepcopy(document["profiles"][name])
+    # RESEARCH-007 dropout observer is a bounded diagnostic, not a product
+    # default or a renderer comparison. Keep parallel/indexed paths excluded.
+    if hdmi_link_watch:
+        if (display_output != "hdmi" or not rolling_scanout or
+                render_benchmark_output != "normal" or indexed_ppa or
+                parallel_boot_candidate or parallel_probe_candidate or
+                parallel_data_check or exext_stream):
+            raise SystemExit("HDMI link observer requires RGB888 normal rolling output without parallel handling")
+        profile["definitions"].append("AGON_EXTENDER_HDMI_LINK_WATCH=1")
     if display_output == "hdmi":
         if HDMI_SOURCE in profile["sources"] or HDMI_SOURCE in profile["forbidden_sources"]:
             raise SystemExit("HDMI adapter must be selected at the output boundary")
@@ -523,6 +532,7 @@ def main() -> None:
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720",
                         help="fixed HDMI timing or auto carrier selection; experimental custom 60.069Hz")
     parser.add_argument("--indexed-ppa", action="store_true", help="RESEARCH-007 linear-byte/PPA HDMI experiment; committed inputs only")
+    parser.add_argument("--hdmi-link-watch", action="store_true", help="RESEARCH-007 read-only bridge and frame-gap observer; no performance qualification")
     parser.add_argument("--ppa-scale-320", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true",help="SPRITE-001 experimental DMA2D strip output")
     parser.add_argument("--abort-on-alloc-failure", action="store_true",
@@ -580,7 +590,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -738,6 +748,8 @@ def main() -> None:
         validation.append("--parallel-probe-candidate")
     if args.indexed_ppa:
         validation.append("--indexed-ppa")
+    if args.hdmi_link_watch:
+        validation.append("--hdmi-link-watch")
     if args.ppa_scale_320:
         validation.append("--ppa-scale-320")
     if args.rolling_scanout:
@@ -794,6 +806,7 @@ def main() -> None:
         "source_snapshot_verified": source_record is not None,
         "reset_url_configured": bool(args.reset_url),
         "indexed_ppa": args.indexed_ppa,
+        "hdmi_link_watch": args.hdmi_link_watch,
         "parallel_boot_candidate": args.parallel_boot_candidate,
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,

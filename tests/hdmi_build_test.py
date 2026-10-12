@@ -21,6 +21,19 @@ class HdmiBuildTest(unittest.TestCase):
     def setUpClass(cls):
         cls.document = json.loads((ROOT / "vdp/build/p4-profiles.json").read_text())
 
+    def test_link_observer_cannot_enter_ordinary_or_parallel_builds(self):
+        args = (self.document, "p4-console", "p4-pc", "hdmi", "normal", True, "auto", True)
+        self.assertNotIn("AGON_EXTENDER_HDMI_LINK_WATCH=1",
+                         build_p4.select_display_profile(*args)["definitions"])
+        self.assertIn("AGON_EXTENDER_HDMI_LINK_WATCH=1",
+                      build_p4.select_display_profile(*args, hdmi_link_watch=True)["definitions"])
+        for choice in (dict(indexed_ppa=True), dict(parallel_boot_candidate=True)):
+            with self.assertRaises(SystemExit):
+                build_p4.select_display_profile(*args, hdmi_link_watch=True, **choice)
+        with self.assertRaises(SystemExit):
+            build_p4.select_display_profile(self.document, "p4-console", "p4-pc",
+                                           "browser", hdmi_link_watch=True)
+
     def test_indexed_ppa_is_explicit_and_requires_full_output_lifetime(self):
         args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
         old=build_p4.select_display_profile(*args)

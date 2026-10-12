@@ -56,6 +56,16 @@ class HdmiOutput {
   bool scanoutFailed() const;
   void cleanup();
   void report(std::int64_t now);
+#ifdef AGON_EXTENDER_HDMI_LINK_WATCH
+  // RESEARCH-007: read-only task-context observer, never a bridge relock.
+  void observeLink(std::int64_t now);
+  std::atomic<std::uint32_t> link_last_frame_us_{}, link_frame_gap_max_us_{};
+  std::atomic<std::uint32_t> link_long_gaps_{}, link_last_long_gap_us_{};
+  std::int64_t link_sample_at_{};
+  unsigned link_epoch_{}, link_samples_{}, link_hpd_changes_{};
+  std::uint8_t link_previous_hpd_{};
+  bool link_observer_failed_{};
+#endif
   int width() const { return timing_.width; }
   int height() const { return timing_.height; }
   std::size_t stride() const { return std::size_t(width()) * kHdmiBytesPerPixel; }
