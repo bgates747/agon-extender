@@ -56,7 +56,14 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
   void prepareLinearRow(int y, std::uint8_t *destination, bool decorate) override {
 #ifdef AGON_EXTENDER_INDEXED_PPA
     if constexpr (std::is_same_v<Depth, fabgl::P4Color64Controller>) {
-      AGON_STOCK_NATIVE_GUARD;this->copyLinearRow(y,destination,decorate);
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+      agon_bench::Scope wait(agon_bench::RowWait);
+#endif
+      AGON_STOCK_NATIVE_GUARD;
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+      wait.finish();agon_bench::Scope compose(agon_bench::RowCompose);
+#endif
+      this->copyLinearRow(y,destination,decorate);
     }
 #endif
   }

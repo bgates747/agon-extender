@@ -182,6 +182,11 @@ bool HdmiOutput::start() {
   }
   if (error != ESP_OK) return failed(error, "RGB888 panel buffers");
   buffer_count_ = dpi.num_fbs;
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  // Indexed publication always writes a background distinct from scanout.
+  // Do not advertise a working output after the ordinary one-buffer fallback.
+  if(buffer_count_!=2)return failed(ESP_ERR_NO_MEM,"Indexed HDMI requires two buffers");
+#endif
   void *buffer0{}, *buffer1{};
   error = buffer_count_ == 2
       ? esp_lcd_dpi_panel_get_frame_buffer(panel_, 2,
@@ -339,15 +344,15 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 #if defined(AGON_EXTENDER_BENCH_HOLD) || (defined(AGON_EXTENDER_BENCH_OFF) && !defined(AGON_EXTENDER_BENCH_CONVERT_OFF))
   return ready_ && !stopping.load();
 #endif
-#ifdef AGON_EXTENDER_RENDER_BENCHMARK
-  agon_bench::Scope conversion(agon_bench::Conversion);const auto conversion_token=conversion.token;int frame_id=-1;
-#endif
   if (xPortGetCoreID() != 1) {
     ESP_LOGE(kTag, "HDMI publication must run on core 1");
     return false;
   }
 #ifdef AGON_EXTENDER_INDEXED_PPA
   if(controller.linearStorage())return publishLinear(controller,stopping);
+#endif
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  agon_bench::Scope conversion(agon_bench::Conversion);const auto conversion_token=conversion.token;int frame_id=-1;
 #endif
 #ifdef AGON_EXTENDER_DIRECT_RGB888
   if(controller.panelStorage()) {
@@ -535,6 +540,9 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 
 #ifdef AGON_EXTENDER_INDEXED_PPA
 bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bool> &stopping) {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  agon_bench::Scope conversion(agon_bench::Conversion);
+#endif
   if(!ready_ || stopping.load(std::memory_order_acquire) || !waitForSubmittedBuffer(stopping))return false;
   const int w=controller.display().getViewPortWidth(),h=controller.display().getViewPortHeight();
   bool scaled=false;
@@ -569,14 +577,24 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
   }
   // Only private snapshot/scene bytes survive into this public-driver wait.
   // PPA cannot run from the strip ISR and never holds drawing exclusion here.
+  {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  // Hardware expansion wall time includes the public driver's cache handling
+  // and, at320, the following SRM pass. This is not CPU execution time.
+  agon_bench::Scope expansion(agon_bench::RgbExpand);
+#endif
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   if(scaled) {
     if(!indexed_.expand(scaler_.source(),320*240*3,320,240,w,h) || !scaler_.scale(destination,bufferBytes()))return false;
   } else
 #endif
   if(!indexed_.expand(destination,bufferBytes(),width(),height(),w,h,geometry.destination_x,geometry.destination_y))return false;
+  }
   if(stopping.load(std::memory_order_acquire))return false;
   const auto prepared=esp_timer_get_time();
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  conversion.finish();agon_bench::Scope cache(agon_bench::Cache);
+#endif
   if(esp_lcd_panel_draw_bitmap(panel_,0,0,width(),height(),destination)!=ESP_OK)return false;
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
   if(rolling())agon_scanout_commit();
@@ -587,6 +605,9 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
   report_conversion_us_+=prepared-started;
   report_conversion_max_us_=std::max(report_conversion_max_us_,std::uint64_t(prepared-started));
   report_cache_us_+=esp_timer_get_time()-prepared;
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+  cache.finish();
+#endif
   report(esp_timer_get_time());return true;
 }
 #endif

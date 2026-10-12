@@ -123,7 +123,12 @@ The first full build exposed an esp-dl dependency on stock HAL headers preceding
 the PPA include overlay. The reusable generator now overrides both owning
 components locally, replacing only the six pinned files, and validation checks
 all compile actions for unwanted SDK HAL paths. Candidate r02 supersedes the
-unlinked r01 build. The selected SDK remains unchanged.
+unlinked r01 build. The selected SDK remains unchanged. r02 compiles, links and
+passes actual-source/component validation. r03 additionally labels linear
+storage correctly in read-only status, retains separate preparation/expansion/
+cache phase boundaries and rejects a single-HDMI-buffer allocation. Expansion
+wall time includes driver cache handling and the320 SRM pass when selected;
+it is neither isolated CLUT kernel time nor CPU occupancy.
 
 The bench has a newer fsim reservation. Finish compilation and concrete offline
 test preparation before deployment; do not interrupt the reserved manual tests.

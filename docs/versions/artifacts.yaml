@@ -1,14 +1,14 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r181
-updated_at: 2026-10-12T01:39:18Z
+registry_revision: r182
+updated_at: 2026-10-12T01:47:25Z
 
 artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r02
+    latest_identity: indexed-hdmi-r03
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
@@ -17,6 +17,7 @@ artifacts:
       - Preserves stock64 visible semantics and packed-depth fallback; no programmable256-colour application API.
       - Integration validation pending; keep exact directRGB888 rollback available.
       - r02 generates the owning HAL component as well as the PPA driver so all consumers select the same CLUT API; r01 full build exposed an esp-dl header-order conflict.
+      - r03 identifies linear storage in read-only status, retains meaningful phase boundaries and refuses unsafe single-HDMI-buffer allocation.
 
   - artifact_id: ppa-clut-benchmark
     kind: experimental_firmware

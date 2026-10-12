@@ -56,8 +56,13 @@ inline esp_err_t handle(httpd_req_t *request) {
       ,int(outputSize >> 16),int(outputSize & 65535)
 #endif
 #ifdef AGON_EXTENDER_DIRECT_RGB888
+#ifdef AGON_EXTENDER_INDEXED_PPA
+      ,display::rgb888ExperimentGeometry(value.colors,value.width,value.height)?"linear-rgb222":"native"
+      ,display::rgb888ExperimentGeometry(value.colors,value.width,value.height)?"psram-linear":"native"
+#else
       ,display::rgb888ExperimentGeometry(value.colors,value.width,value.height)?"rgb888":"native"
       ,display::rgb888ExperimentGeometry(value.colors,value.width,value.height)?"panel-direct":"native"
+#endif
 #endif
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
       ,unsigned(strips.frames),unsigned(copy.faults),unsigned(copy.late),
