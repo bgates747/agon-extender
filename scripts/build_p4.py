@@ -39,7 +39,7 @@ HDMI_GEOMETRIES = {"auto": (848, 480), "1280x720": (1280, 720), "848x480": (848,
 EXPERIMENTAL_HDMI_ID = re.compile(r"hdmi-001-r[0-9]{2}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 EXPERIMENTAL_BENCH_ID = re.compile(r"bench-009-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py",
-                "scripts/p4_board.py")
+                "scripts/p4_board.py", "scripts/p4_ppa_clut.py")
 
 
 def check_parallel_qualification_identity(build_id: str, selected: bool,
@@ -118,7 +118,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -177,6 +177,12 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["sources"].append("video/extender/display/hdmi_ppa_scaler.cpp")
         profile["definitions"].append("AGON_EXTENDER_HDMI_PPA_320=1")
         profile.setdefault("requires", []).extend(["esp_driver_ppa", "esp_mm"])
+    if indexed_ppa:
+        if not direct_rgb888 or not rolling_scanout or hdmi_timing!="auto" or render_benchmark_output!="normal":
+            raise SystemExit("indexed PPA requires explicit automatic rolling P4-PC normal selection")
+        profile["sources"].append("video/extender/display/hdmi_ppa_indexed.cpp")
+        profile["definitions"].append("AGON_EXTENDER_INDEXED_PPA=1")
+        profile.setdefault("requires", []).extend(["esp_driver_ppa", "esp_mm"])
     if parallel_boot_candidate:
         # PORT-008 DEVKIT-HARDWARE-R01: setup/recovery must satisfy current
         # EMOS release admission using the original board's generated pins.
@@ -202,7 +208,7 @@ def select_display_profile(document: dict, name: str, board: str,
     return profile
 
 
-def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False) -> dict:
+def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, indexed_ppa: bool = False) -> dict:
     """Retain the selected adapter and exact vendored bridge source closure."""
     record = {"schema_version": 1, "display_output": display_output,
               "configuration": None, "adapter": None, "bridge": None}
@@ -276,6 +282,11 @@ def display_input_record(display_output: str, render_benchmark_output: str | Non
         record["ppa_scale_320"] = {"source": [320, 240], "destination": [640, 480],
                                    "carrier": [848, 480], "filter": "bilinear",
                                    "storage": "decorated snapshot; independent DMA-owned HDMI pair"}
+    if indexed_ppa:
+        record.update(render_storage="linear-physical-rgb222",logical_stride_bytes="logical width",
+                      presentation_copy_bytes="logical width * height",
+                      expansion="PPA BLEND fixed physicalRGB222 CLUT into independent RGB888 backgrounds",
+                      ppa_clut_backport=json.loads((VDP/"compat/ppa_clut/backport.json").read_text()))
     return record
 
 
@@ -511,6 +522,7 @@ def main() -> None:
                         help="presentation sink; HDMI requires p4-pc / p4-console")
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720",
                         help="fixed HDMI timing or auto carrier selection; experimental custom 60.069Hz")
+    parser.add_argument("--indexed-ppa", action="store_true", help="RESEARCH-007 linear-byte/PPA HDMI experiment; committed inputs only")
     parser.add_argument("--ppa-scale-320", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true",help="SPRITE-001 experimental DMA2D strip output")
     parser.add_argument("--abort-on-alloc-failure", action="store_true",
@@ -552,9 +564,14 @@ def main() -> None:
     if not parallel_qualification:
         check_build_identity(args.build_id, source_dirty, args.allow_dirty_experimental,
                              args.profile, args.board, args.display_output, args.render_benchmark_output, args.direct_rgb888)
-    if args.direct_rgb888 and not (args.allow_dirty_experimental or (parallel_qualification and (args.parallel_data_check or args.exext_stream))):
+    if args.direct_rgb888 and not (args.indexed_ppa or args.allow_dirty_experimental or (parallel_qualification and (args.parallel_data_check or args.exext_stream))):
         parser.error("direct RGB888 requires an explicitly frozen experimental build")
-    if args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification:
+    if args.indexed_ppa:
+        if source_dirty or args.allow_dirty_experimental or args.allow_dirty_parallel_qualification or args.exext_stream or args.parallel_probe_candidate or args.parallel_data_check:
+            parser.error("indexed PPA requires clean committed inputs and excludes parallel tests")
+        if not re.fullmatch(r"indexed-hdmi-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z",args.build_id):
+            parser.error("indexed PPA requires an indexed-hdmi revision/build identity")
+    if not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification:
         parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():
@@ -563,7 +580,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -586,9 +603,9 @@ def main() -> None:
         raise SystemExit("wrong ESP-IDF checkout identity")
     tools, python_env = args.tools_path.resolve(), args.python_env.resolve()
     compiler = checked_tools(tools, python_env)
-    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320)
+    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.indexed_ppa)
     output.mkdir(parents=True)
-    source_record = freeze_source_inputs(output) if (args.allow_dirty_experimental or args.parallel_boot_candidate) else None
+    source_record = freeze_source_inputs(output) if (args.allow_dirty_experimental or args.parallel_boot_candidate or args.indexed_ppa) else None
     (output / "display.json").write_text(json.dumps(display_record, indent=2) + "\n")
     project = output / "project"
     project.mkdir()
@@ -621,6 +638,11 @@ def main() -> None:
         page.write_text(source)
         asset_overrides[relative] = page
     render_component(profile, document["common"], generated, asset_overrides)
+    if args.indexed_ppa:
+        from p4_ppa_clut import prepare
+        component=prepare(IDF,project)
+        with (generated/"CMakeLists.txt").open("a") as f:
+            f.write('\ntarget_include_directories(${COMPONENT_LIB} BEFORE PRIVATE "'+str(component/'overlay')+'")\n')
     payload_artifacts = []
     if profile.get("mos_recovery_payload"):
         payload_header = generated / "generated/mos_recovery_payload.hpp"
@@ -716,6 +738,8 @@ def main() -> None:
         validation.append("--parallel-boot-candidate")
     if args.parallel_probe_candidate:
         validation.append("--parallel-probe-candidate")
+    if args.indexed_ppa:
+        validation.append("--indexed-ppa")
     if args.ppa_scale_320:
         validation.append("--ppa-scale-320")
     if args.rolling_scanout:
@@ -771,6 +795,7 @@ def main() -> None:
         "allow_dirty_parallel_qualification": parallel_qualification,
         "source_snapshot_verified": source_record is not None,
         "reset_url_configured": bool(args.reset_url),
+        "indexed_ppa": args.indexed_ppa,
         "parallel_boot_candidate": args.parallel_boot_candidate,
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,

@@ -33,6 +33,9 @@ HdmiOutput &hdmiOutput() { static HdmiOutput output; return output; }
 
 void HdmiOutput::cleanup() {
   ready_ = false;
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  indexed_.reset();
+#endif
   output_size_.store(0, std::memory_order_release);
   if (panel_) { esp_lcd_panel_del(panel_); panel_ = nullptr; }
 #ifdef AGON_EXTENDER_HDMI_PPA_320
@@ -82,6 +85,9 @@ bool HdmiOutput::start() {
   };
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   if(!scaler_.initialize())return failed(ESP_ERR_NO_MEM,"PPA snapshot/client allocation");
+#endif
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  if(!indexed_.initialize())return failed(ESP_ERR_NO_MEM,"PPA indexed snapshot/client allocation");
 #endif
   esp_ldo_channel_config_t power{};
   power.chan_id = 3;
@@ -340,6 +346,9 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
     ESP_LOGE(kTag, "HDMI publication must run on core 1");
     return false;
   }
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  if(controller.linearStorage())return publishLinear(controller,stopping);
+#endif
 #ifdef AGON_EXTENDER_DIRECT_RGB888
   if(controller.panelStorage()) {
     if(!ready_ || stopping.load(std::memory_order_acquire)) return false;
@@ -523,6 +532,64 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
   report(esp_timer_get_time());
   return true;
 }
+
+#ifdef AGON_EXTENDER_INDEXED_PPA
+bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bool> &stopping) {
+  if(!ready_ || stopping.load(std::memory_order_acquire) || !waitForSubmittedBuffer(stopping))return false;
+  const int w=controller.display().getViewPortWidth(),h=controller.display().getViewPortHeight();
+  bool scaled=false;
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  scaled=w==320 && h==240 && width()==848 && height()==480;
+#endif
+  auto geometry=centeredHdmiGeometry(scaled?w*2:w,scaled?h*2:h,width(),height());
+  if(!geometry.valid() || geometry.source_x || geometry.source_y || buffer_count_!=2)return false;
+  portENTER_CRITICAL(&callback_mux_);
+  const unsigned target=ownership_.writable(true);
+  portEXIT_CRITICAL(&callback_mux_);
+  auto destination=buffers_[target];
+  const auto started=esp_timer_get_time();
+  const bool clear=buffer_width_[target]!=w || buffer_height_[target]!=h;
+  if(clear)std::memset(destination,0,bufferBytes());
+  const auto generation=stockVisibleGeneration();
+  for(int y=0;y<h;++y) {
+    if(stopping.load(std::memory_order_acquire))return false;
+    controller.prepareLinearRow(y,indexed_.source()+y*w,scaled);
+  }
+  {
+    AGON_STOCK_NATIVE_GUARD;
+    if(controller.display().isDoubleBuffered() && generation!=stockVisibleGeneration()) {
+      ++report_swap_drops_;report(esp_timer_get_time());return false;
+    }
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+    // Native hardware overlays are separate from the background and copied
+    // under exclusion; scaled320 overlays were decorated before SRM instead.
+    if(rolling() && !agon_scanout_stage(scaled?nullptr:
+        static_cast<fabgl::P4Color64Controller *>(&controller.paletted()),target,geometry.width,geometry.height))return false;
+#endif
+  }
+  // Only private snapshot/scene bytes survive into this public-driver wait.
+  // PPA cannot run from the strip ISR and never holds drawing exclusion here.
+#ifdef AGON_EXTENDER_HDMI_PPA_320
+  if(scaled) {
+    if(!indexed_.expand(scaler_.source(),320*240*3,320,240,w,h) || !scaler_.scale(destination,bufferBytes()))return false;
+  } else
+#endif
+  if(!indexed_.expand(destination,bufferBytes(),width(),height(),w,h,geometry.destination_x,geometry.destination_y))return false;
+  if(stopping.load(std::memory_order_acquire))return false;
+  const auto prepared=esp_timer_get_time();
+  if(esp_lcd_panel_draw_bitmap(panel_,0,0,width(),height(),destination)!=ESP_OK)return false;
+#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+  if(rolling())agon_scanout_commit();
+#endif
+  portENTER_CRITICAL(&callback_mux_);ownership_.submitted(target);portEXIT_CRITICAL(&callback_mux_);
+  buffer_width_[target]=w;buffer_height_[target]=h;
+  ++report_updates_;++report_submissions_;
+  report_conversion_us_+=prepared-started;
+  report_conversion_max_us_=std::max(report_conversion_max_us_,std::uint64_t(prepared-started));
+  report_cache_us_+=esp_timer_get_time()-prepared;
+  report(esp_timer_get_time());return true;
+}
+#endif
 
 #ifdef AGON_EXTENDER_DIRECT_RGB888
 bool HdmiOutput::startDirectSubmitter() {

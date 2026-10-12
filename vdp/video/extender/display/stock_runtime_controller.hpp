@@ -22,6 +22,8 @@ class StockRuntimeController {
   virtual void bindNativeAliases() noexcept = 0;
   virtual std::size_t drain() = 0;
   virtual void prepareRow(int y, std::uint8_t *signal) = 0;
+  virtual bool linearStorage() const noexcept { return false; }
+  virtual void prepareLinearRow(int, std::uint8_t *, bool) {}
   virtual bool rgb888Storage() const noexcept { return false; }
   virtual bool panelStorage() const noexcept { return false; }
   // Called with native exclusion held through cache submission.
@@ -44,9 +46,23 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
   ~StockBoundController() override { end(); }
   fabgl::VGABaseController &display() noexcept override { return *this; }
   fabgl::VGAPalettedController &paletted() noexcept override { return *this; }
+  bool linearStorage() const noexcept override {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+    return std::is_same_v<Depth, fabgl::P4Color64Controller>;
+#else
+    return false;
+#endif
+  }
+  void prepareLinearRow(int y, std::uint8_t *destination, bool decorate) override {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+    if constexpr (std::is_same_v<Depth, fabgl::P4Color64Controller>) {
+      AGON_STOCK_NATIVE_GUARD;this->copyLinearRow(y,destination,decorate);
+    }
+#endif
+  }
   bool rgb888Storage() const noexcept override {
 #ifdef AGON_EXTENDER_DIRECT_RGB888
-    return std::is_same_v<Depth, fabgl::P4Rgb888Controller>;
+    return !linearStorage() && std::is_same_v<Depth, fabgl::P4Rgb888Controller>;
 #else
     return false;
 #endif

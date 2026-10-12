@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "base_idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+  "upstream_clut_commit": "76b4cf1336168aad6d1db4b8d1d2743137db4092",
+  "inspected_newer_idf_commit": "86f72d0982d3ef38b62cb7cc87ae03c9da96a83b",
+  "upstream_commit_patch_sha256": "a29deb5aa9dd596df0c642338800d468239c47a78b0de9689554cef6e858607c",
+  "adaptations": [
+    "Newer esp_hal_ppa paths mapped to selected hal layout.",
+    "Newer CLUT FourCC values mapped to existing COLOR_TYPE_ID values.",
+    "CLUT readiness flags use a new small flags structure because5.5.5 has no allow_pd field.",
+    "Context offsets/indentation adapted; no new DMA engine, cache or scheduler code."
+  ],
+  "files": [
+    {
+      "path": "components/esp_driver_ppa/include/driver/ppa.h",
+      "base_sha256": "5d6e7df0f48cdc881313f7c818a044f04f10da194ffeb58f9dabae685a108275",
+      "derived_sha256": "070029f248634a3c96ed98553e55dcfbcc05dd09fd4b0b999320693205367adf"
+    },
+    {
+      "path": "components/esp_driver_ppa/src/ppa_core.c",
+      "base_sha256": "319b8958393fa319cd928084574347d1ac9bf9ed2120d2297b00a82d09efa20d",
+      "derived_sha256": "1975d6c0140319b773c2ae4eeb44e238fb68017ef50bbd0437ba91418d7379f2"
+    },
+    {
+      "path": "components/esp_driver_ppa/src/ppa_blend.c",
+      "base_sha256": "9675f652dc95df529e3d55ecbbb935bf753079ddc512081200156c33c43d3c49",
+      "derived_sha256": "c9ac76d90a52ffda251f8486b1134fed1a0abf9206879681577c2e13f07201ac"
+    },
+    {
+      "path": "components/esp_driver_ppa/src/ppa_priv.h",
+      "base_sha256": "7c097b04163ddcd2f5d4a1d18f15c2bc6a45cc5fb78104e1a3b2a7ff5a9c9480",
+      "derived_sha256": "eb8e1d8bef12d5aa5da02d2a72a8c571a2101e243b78d77722df46b5945ff92b"
+    },
+    {
+      "path": "components/hal/include/hal/ppa_types.h",
+      "base_sha256": "c77b4e916f3e4352d0020d35e42eee539ec9eb6a986f092d41545a1e1fd14056",
+      "derived_sha256": "e0cb2debd981c81ccac4f4a7897917526010fd0541c4bbb6022154a7a193ae44"
+    },
+    {
+      "path": "components/hal/esp32p4/include/hal/ppa_ll.h",
+      "base_sha256": "12eb7f9a696d3b46586cfa236e317b965d90e91a612d4f9be8d0b0c015588118",
+      "derived_sha256": "e83cedab9ea58162ad71ed3aa2891de13978300e41218ba2263416da3d509323"
+    }
+  ]
+}

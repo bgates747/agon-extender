@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_INDEXED_PPA
+#include "extender/display/hdmi_ppa_indexed.hpp"
+#endif
 // HDMI sink. Fixed builds retain panel storage across logical changes; AUTO
 // recreates it only at a joined carrier boundary. No browser snapshot is
 // created here. RGB-001 may borrow its pixel planes through an explicit DMA-
@@ -41,6 +44,10 @@ class HdmiOutput {
   void allowDirectSwaps() { direct_cancelled_.store(false,std::memory_order_release); }
 #endif
  private:
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  HdmiPpaIndexed indexed_;
+  bool publishLinear(StockRuntimeController &, std::atomic<bool> &);
+#endif
   static bool frameComplete(esp_lcd_panel_handle_t,
                             esp_lcd_dpi_panel_event_data_t *, void *);
   bool waitForSubmittedBuffer(std::atomic<bool> &stopping);

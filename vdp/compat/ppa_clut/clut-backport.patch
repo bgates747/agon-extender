@@ -1,0 +1,440 @@
+--- a/components/esp_driver_ppa/include/driver/ppa.h
++++ b/components/esp_driver_ppa/include/driver/ppa.h
+@@ -258,6 +258,7 @@
+  * @return
+  *      - ESP_OK: Perform a blend operation successfully
+  *      - ESP_ERR_INVALID_ARG: Perform a blend operation failed because of invalid argument
++ *      - ESP_ERR_INVALID_STATE: Perform a blend operation failed because an input picture uses an indexed color mode, but the corresponding CLUT has not been set by `ppa_set_color_lookup_table`
+  *      - ESP_FAIL: Perform a blend operation failed because the client's pending transactions has reached its maximum capacity
+  */
+ esp_err_t ppa_do_blend(ppa_client_handle_t ppa_client, const ppa_blend_oper_config_t *config);
+@@ -311,6 +312,31 @@
+  */
+ esp_err_t ppa_set_rgb2gray_formula(uint8_t r_weight, uint8_t g_weight, uint8_t b_weight);
+ 
++/**
++ * @brief Set the content of a PPA Color Look-Up Table (CLUT)
++ *
++ * A CLUT holds up to 256 ARGB8888 colors. When a picture is in an indexed color mode, every pixel in that picture is an
++ * index into the CLUT that sits on the path the picture travels, instead of a color value itself, and the PPA expands
++ * each index into the color stored at that entry. For example, on the blending engine input paths,
++ * `PPA_BLEND_COLOR_MODE_L8` addresses entries [0, 255] and `PPA_BLEND_COLOR_MODE_L4` addresses entries [0, 15].
++ *
++ * The table entries are written starting from index 0, so `num_entries` only needs to cover the largest index that the
++ * pictures actually use. Every call replaces the whole table, the entries beyond `num_entries` are cleared to zero.
++ *
++ * @note A CLUT content is shared by all the clients that use the corresponding engine. Do not call this function while
++ *     any transaction that relies on the CLUT content is still pending, otherwise the result of that transaction is undefined.
++ *
++ * @param[in] clut_id Selects which CLUT to write, see `ppa_clut_id_t`
++ * @param[in] entries Array of the ARGB8888 colors to be written into the CLUT, or NULL to disable the CLUT
++ * @param[in] num_entries Number of entries in the `entries` array, range: [1, 256], or 0 to disable the CLUT
++ *
++ * @return
++ *      - ESP_OK: Set the CLUT content successfully
++ *      - ESP_ERR_INVALID_ARG: Set the CLUT content failed because of invalid argument
++ *      - ESP_ERR_INVALID_STATE: Set the CLUT content failed because the PPA peripheral not initialized
++ */
++esp_err_t ppa_set_color_lookup_table(ppa_clut_id_t clut_id, const color_pixel_argb8888_data_t *entries, uint32_t num_entries);
++
+ #ifdef __cplusplus
+ }
+ #endif
+--- a/components/esp_driver_ppa/src/ppa_core.c
++++ b/components/esp_driver_ppa/src/ppa_core.c
+@@ -228,6 +228,11 @@
+         s_platform.blend_engine_ref_count--;
+         if (s_platform.blend_engine_ref_count == 0) {
+             assert(STAILQ_EMPTY(&blending_engine->base.trans_stailq));
++            if (s_platform.flags.bg_clut_ready || s_platform.flags.fg_clut_ready) {
++                ppa_ll_disable_clut_mem(s_platform.hal.dev);
++                s_platform.flags.bg_clut_ready = 0;
++                s_platform.flags.fg_clut_ready = 0;
++            }
+             // Now, time to free
+             s_platform.blending = NULL;
+             free(blending_engine->dma_tx_bg_desc);
+@@ -535,6 +540,54 @@
+     return ESP_OK;
+ }
+ 
++static void _ppa_write_clut(ppa_clut_id_t clut_id, const color_pixel_argb8888_data_t *entries, uint32_t num_entries)
++{
++    for (uint32_t i = 0; i < PPA_LL_CLUT_MAX_ENTRY_NUM; i++) {
++        // Resetting the CLUT memory does not clear the SRAM, so the entries that the caller does not provide are
++        // cleared one by one, which keeps the whole table content defined by this call alone
++        uint32_t val = (i < num_entries) ? entries[i].val : 0;
++        ppa_ll_wr_clut_data_by_mem(s_platform.hal.dev, clut_id, i, val);
++    }
++}
++
++esp_err_t ppa_set_color_lookup_table(ppa_clut_id_t clut_id, const color_pixel_argb8888_data_t *entries, uint32_t num_entries)
++{
++    ESP_RETURN_ON_FALSE(clut_id < PPA_CLUT_ID_MAX, ESP_ERR_INVALID_ARG, TAG, "invalid clut_id");
++    // An empty table means the CLUT is no longer needed and can be released
++    bool disable = (entries == NULL && num_entries == 0);
++    if (!disable) {
++        ESP_RETURN_ON_FALSE(entries, ESP_ERR_INVALID_ARG, TAG, "invalid entries");
++        ESP_RETURN_ON_FALSE(num_entries > 0 && num_entries <= PPA_LL_CLUT_MAX_ENTRY_NUM, ESP_ERR_INVALID_ARG, TAG, "invalid num_entries");
++    }
++    ESP_RETURN_ON_FALSE(s_platform.hal.dev, ESP_ERR_INVALID_STATE, TAG, "no PPA client registered yet");
++
++    _lock_acquire(&s_platform.mutex);
++    if (disable) {
++        if (clut_id == PPA_CLUT_BLEND_BG) {
++            s_platform.flags.bg_clut_ready = 0;
++        } else {
++            s_platform.flags.fg_clut_ready = 0;
++        }
++        if (!s_platform.flags.bg_clut_ready && !s_platform.flags.fg_clut_ready) {
++            // The clock gate and the power switch are shared by both CLUT memories, so they can only be turned off once neither is in use
++            ppa_ll_disable_clut_mem(s_platform.hal.dev);
++        }
++    } else {
++        // The CLUT memory is kept clock gated and powered off until a CLUT is actually in use
++        ppa_ll_enable_clut_mem(s_platform.hal.dev);
++        // Memory mode allows random access to the entries, whereas FIFO mode can only append from where the previous write left off
++        ppa_ll_configure_clut_access_mode(s_platform.hal.dev, false);
++        _ppa_write_clut(clut_id, entries, num_entries);
++        if (clut_id == PPA_CLUT_BLEND_BG) {
++            s_platform.flags.bg_clut_ready = 1;
++        } else {
++            s_platform.flags.fg_clut_ready = 1;
++        }
++    }
++    _lock_release(&s_platform.mutex);
++    return ESP_OK;
++}
++
+ bool ppa_check_buffer_alignment(ppa_client_handle_t ppa_client, const void *pic_blk_config, bool is_input, uint32_t block_width)
+ {
+     // 1. check with cache line size alignment (output buffer only)
+--- a/components/esp_driver_ppa/src/ppa_blend.c
++++ b/components/esp_driver_ppa/src/ppa_blend.c
+@@ -191,6 +191,10 @@
+     // in_buffer could be anywhere (ram, flash, psram), out_buffer ptr cannot in flash region
+     ESP_RETURN_ON_FALSE(esp_ptr_internal(config->out.buffer) || esp_ptr_external_ram(config->out.buffer), ESP_ERR_INVALID_ARG, TAG, "invalid out.buffer addr");
+     ESP_RETURN_ON_FALSE(ppa_ll_blend_is_color_mode_supported(config->in_bg.blend_cm) && ppa_ll_blend_is_color_mode_supported(config->in_fg.blend_cm) && ppa_ll_blend_is_color_mode_supported(config->out.blend_cm), ESP_ERR_INVALID_ARG, TAG, "unsupported color mode");
++    ESP_RETURN_ON_FALSE(!PPA_IS_CM_CLUT(config->in_bg.blend_cm) || ppa_client->engine->platform->flags.bg_clut_ready,
++                        ESP_ERR_INVALID_STATE, TAG, "in_bg CLUT not set, call ppa_set_color_lookup_table first");
++    ESP_RETURN_ON_FALSE(!PPA_IS_CM_CLUT(config->in_fg.blend_cm) || ppa_client->engine->platform->flags.fg_clut_ready,
++                        ESP_ERR_INVALID_STATE, TAG, "in_fg CLUT not set, call ppa_set_color_lookup_table first");
+     // For YUV420 input/output: in desc, ha/hb/va/vb/x/y must be even number
+     // For YUV422 input/output: in desc, ha/hb/x must be even number
+     if (config->in_bg.blend_cm == PPA_BLEND_COLOR_MODE_YUV420) {
+@@ -201,13 +205,11 @@
+     } else if (PPA_IS_CM_YUV422(config->in_bg.blend_cm)) {
+         ESP_RETURN_ON_FALSE(config->in_bg.pic_w % 2 == 0 && config->in_bg.block_w % 2 == 0 && config->in_bg.block_offset_x % 2 == 0,
+                             ESP_ERR_INVALID_ARG, TAG, "YUV422 input does not support odd w/offset_x");
+-    }
+-    // TODO: Support CLUT to support L4/L8 color mode
+-    // else if (config->in_bg.blend_cm == PPA_BLEND_COLOR_MODE_L4) {
+-    //     ESP_RETURN_ON_FALSE(config->in_bg.block_w % 2 == 0 && config->in_bg.block_offset_x % 2 == 0,
+-    //                         ESP_ERR_INVALID_ARG, TAG, "in_bg.block_w and in_bg.block_offset_x must be even");
+-    // }
+-    if (config->in_fg.blend_cm == PPA_BLEND_COLOR_MODE_A4) { // || config->in_fg.blend_cm == PPA_BLEND_COLOR_MODE_L4
++    } else if (config->in_bg.blend_cm == PPA_BLEND_COLOR_MODE_L4) {
++        ESP_RETURN_ON_FALSE(config->in_bg.block_w % 2 == 0 && config->in_bg.block_offset_x % 2 == 0,
++                            ESP_ERR_INVALID_ARG, TAG, "in_bg.block_w and in_bg.block_offset_x must be even");
++    }
++    if (config->in_fg.blend_cm == PPA_BLEND_COLOR_MODE_A4 || config->in_fg.blend_cm == PPA_BLEND_COLOR_MODE_L4) {
+         ESP_RETURN_ON_FALSE(config->in_fg.block_w % 2 == 0 && config->in_fg.block_offset_x % 2 == 0,
+                             ESP_ERR_INVALID_ARG, TAG, "in_fg.block_w and in_fg.block_offset_x must be even");
+     }
+--- a/components/esp_driver_ppa/src/ppa_priv.h
++++ b/components/esp_driver_ppa/src/ppa_priv.h
+@@ -39,6 +39,9 @@
+             (color_type_id == COLOR_TYPE_ID(COLOR_SPACE_YUV, COLOR_PIXEL_UYVY422) || color_type_id == COLOR_TYPE_ID(COLOR_SPACE_YUV, COLOR_PIXEL_VYUY422) || \
+              color_type_id == COLOR_TYPE_ID(COLOR_SPACE_YUV, COLOR_PIXEL_YUYV422) || color_type_id == COLOR_TYPE_ID(COLOR_SPACE_YUV, COLOR_PIXEL_YVYU422))
+ 
++#define PPA_IS_CM_CLUT(color_type_id) \
++            (color_type_id == COLOR_TYPE_ID(COLOR_SPACE_CLUT, COLOR_PIXEL_L8) || color_type_id == COLOR_TYPE_ID(COLOR_SPACE_CLUT, COLOR_PIXEL_L4))
++
+ #define PPA_ALIGN_UP(num, align)    (((num) + ((align) - 1)) & ~((align) - 1))
+ #define PPA_ALIGN_DOWN(num, align)  ((num) & ~((align) - 1))
+ 
+@@ -240,6 +243,10 @@
+     uint32_t blend_engine_ref_count;            // Reference count used to protect PPA blending engine acquire and release
+     size_t buf_alignment_size;                  // Alignment requirement for the outgoing buffer addr and size to satisfy cache line size
+     uint32_t dma_desc_mem_size;                 // Alignment requirement for the 2D-DMA descriptor to satisfy cache line size
++    struct {
++        uint32_t bg_clut_ready: 1;              // Background CLUT powered and populated
++        uint32_t fg_clut_ready: 1;              // Foreground CLUT powered and populated
++    } flags;
+ };
+ 
+ #ifdef __cplusplus
+--- a/components/hal/include/hal/ppa_types.h
++++ b/components/hal/include/hal/ppa_types.h
+@@ -20,6 +20,17 @@
+     PPA_ENGINE_TYPE_SRM,            /*!< PPA Scaling-Rotating-Mirroring (SRM) engine, used to perform scale, rotate, mirror */
+     PPA_ENGINE_TYPE_BLEND,          /*!< PPA Blending engine, used to perform blend or fill */
+ } ppa_engine_type_t;
++
++/**
++ * @brief Enumeration of the Color Look-Up Tables (CLUT) in the PPA module
++ *
++ * Each CLUT is attached to one specific data path of one specific PPA engine, and they are configured independently.
++ */
++typedef enum {
++    PPA_CLUT_BLEND_BG,          /*!< The CLUT on the background input path of the blending engine */
++    PPA_CLUT_BLEND_FG,          /*!< The CLUT on the foreground input path of the blending engine */
++    PPA_CLUT_ID_MAX,            /*!< Number of the CLUTs in the PPA module, not a valid CLUT ID */
++} ppa_clut_id_t;
+ 
+ /**
+  * @brief Enumeration of PPA Scaling-Rotating-Mirroring available rotation angle (in the counterclockwise direction)
+@@ -64,9 +75,8 @@
+     PPA_BLEND_COLOR_MODE_YUV422_YUYV = COLOR_TYPE_ID(COLOR_SPACE_YUV, COLOR_PIXEL_YUYV422),  /*!< PPA blend color mode: YUV422, only available on blend background input */
+     PPA_BLEND_COLOR_MODE_YUV422_YVYU = COLOR_TYPE_ID(COLOR_SPACE_YUV, COLOR_PIXEL_YVYU422),  /*!< PPA blend color mode: YUV422, only available on blend background input */
+     PPA_BLEND_COLOR_MODE_GRAY8 = COLOR_TYPE_ID(COLOR_SPACE_GRAY, COLOR_PIXEL_GRAY8),         /*!< PPA blend color mode: GRAY8, only available on blend background input or on output */
+-    // TODO: Support CLUT to support L4/L8 color mode
+-    // PPA_BLEND_COLOR_MODE_L8 = COLOR_TYPE_ID(COLOR_SPACE_CLUT, COLOR_PIXEL_L8),               /*!< PPA blend color mode: L8, only available on blend input */
+-    // PPA_BLEND_COLOR_MODE_L4 = COLOR_TYPE_ID(COLOR_SPACE_CLUT, COLOR_PIXEL_L4),               /*!< PPA blend color mode: L4, only available on blend input */
++    PPA_BLEND_COLOR_MODE_L8 = COLOR_TYPE_ID(COLOR_SPACE_CLUT, COLOR_PIXEL_L8),               /*!< PPA blend color mode: L8, only available on blend input */
++    PPA_BLEND_COLOR_MODE_L4 = COLOR_TYPE_ID(COLOR_SPACE_CLUT, COLOR_PIXEL_L4),               /*!< PPA blend color mode: L4, only available on blend input */
+ } ppa_blend_color_mode_t;
+ 
+ /**
+--- a/components/hal/esp32p4/include/hal/ppa_ll.h
++++ b/components/hal/esp32p4/include/hal/ppa_ll.h
+@@ -24,6 +24,9 @@
+ 
+ #define PPA_LL_BLEND0_CLUT_MEM_ADDR_OFFSET  0x400
+ #define PPA_LL_BLEND1_CLUT_MEM_ADDR_OFFSET  0x800
++
++/// Number of 32-bit ARGB8888 entries in each of CLUT memories
++#define PPA_LL_CLUT_MAX_ENTRY_NUM         256
+ 
+ #define PPA_LL_SRM_SCALING_INT_MAX   (PPA_SR_SCAL_X_INT_V + 1)
+ #define PPA_LL_SRM_SCALING_FRAG_MAX  (PPA_SR_SCAL_X_FRAG_V + 1)
+@@ -706,8 +709,8 @@
+     case PPA_BLEND_COLOR_MODE_RGB565:
+     case PPA_BLEND_COLOR_MODE_A8:
+     case PPA_BLEND_COLOR_MODE_A4:
+-    // case PPA_BLEND_COLOR_MODE_L8:
+-    // case PPA_BLEND_COLOR_MODE_L4:
++    case PPA_BLEND_COLOR_MODE_L8:
++    case PPA_BLEND_COLOR_MODE_L4:
+ #if HAL_CONFIG(CHIP_SUPPORT_MIN_REV) >= 300
+     case PPA_BLEND_COLOR_MODE_YUV420:
+     case PPA_BLEND_COLOR_MODE_YUV422_UYVY:
+@@ -742,12 +745,12 @@
+     case PPA_BLEND_COLOR_MODE_RGB565:
+         val = 2;
+         break;
+-    // case PPA_BLEND_COLOR_MODE_L8:
+-    //     val = 4;
+-    //     break;
+-    // case PPA_BLEND_COLOR_MODE_L4:
+-    //     val = 5;
+-    //     break;
++    case PPA_BLEND_COLOR_MODE_L8:
++        val = 4;
++        break;
++    case PPA_BLEND_COLOR_MODE_L4:
++        val = 5;
++        break;
+ #if HAL_CONFIG(CHIP_SUPPORT_MIN_REV) >= 300
+     case PPA_BLEND_COLOR_MODE_YUV420:
+         val = 8;
+@@ -796,12 +799,12 @@
+     case PPA_BLEND_COLOR_MODE_RGB565:
+         val = 2;
+         break;
+-    // case PPA_BLEND_COLOR_MODE_L8:
+-    //     val = 4;
+-    //     break;
+-    // case PPA_BLEND_COLOR_MODE_L4:
+-    //     val = 5;
+-    //     break;
++    case PPA_BLEND_COLOR_MODE_L8:
++        val = 4;
++        break;
++    case PPA_BLEND_COLOR_MODE_L4:
++        val = 5;
++        break;
+     case PPA_BLEND_COLOR_MODE_A8:
+         val = 6;
+         break;
+@@ -1224,99 +1227,100 @@
+ }
+ 
+ /**
+- * @brief Force clock and power on for PPA blending BLEND CLUT mem
+- *
+- * @param dev Peripheral instance address
+- */
+-static inline void ppa_ll_blend_enable_clut_mem(ppa_dev_t *dev)
++ * @brief Force clock and power on for PPA CLUT mem
++ *
++ * @param dev Peripheral instance address
++ */
++static inline void ppa_ll_enable_clut_mem(ppa_dev_t *dev)
+ {
+     dev->clut_conf.blend_clut_mem_clk_ena = 1;
+     dev->clut_conf.blend_clut_mem_force_pu = 1; // force clut mem remain power when memory domain PD
+ }
+ 
+ /**
+- * @brief Force clock and power off for PPA blending BLEND CLUT mem
+- *
+- * @param dev Peripheral instance address
+- */
+-static inline void ppa_ll_blend_disable_clut_mem(ppa_dev_t *dev)
++ * @brief Force clock and power off for PPA CLUT mem
++ *
++ * @param dev Peripheral instance address
++ */
++static inline void ppa_ll_disable_clut_mem(ppa_dev_t *dev)
+ {
+     dev->clut_conf.blend_clut_mem_clk_ena = 0;
+     dev->clut_conf.blend_clut_mem_force_pu = 0;
+ }
+ 
+ /**
+- * @brief Reset PPA blending BLEND0 CLUT mem and read address
+- *
+- * @param dev Peripheral instance address
+- */
+-static inline void ppa_ll_blend_reset_rx_bg_clut_mem(ppa_dev_t *dev)
+-{
+-    dev->clut_conf.blend0_clut_mem_rst = 1;
+-    dev->clut_conf.blend0_clut_mem_rst = 0;
+-    dev->clut_conf.blend0_clut_mem_rdaddr_rst = 1;
+-    dev->clut_conf.blend0_clut_mem_rdaddr_rst = 0;
+-}
+-
+-/**
+- * @brief Reset PPA blending BLEND1 CLUT mem and read address
+- *
+- * @param dev Peripheral instance address
+- */
+-static inline void ppa_ll_blend_reset_rx_fg_clut_mem(ppa_dev_t *dev)
+-{
+-    dev->clut_conf.blend1_clut_mem_rst = 1;
+-    dev->clut_conf.blend1_clut_mem_rst = 0;
+-    dev->clut_conf.blend1_clut_mem_rdaddr_rst = 1;
+-    dev->clut_conf.blend1_clut_mem_rdaddr_rst = 0;
+-}
+-
+-/**
+- * @brief Write PPA blending BLEND0 CLUT mem entry through FIFO mode
+- *
+- * @param dev Peripheral instance address
+- * @param data The data to be written into BLEND0 CLUT entry in ARGB8888 format
+- */
+-static inline void ppa_ll_blend_wr_rx_bg_clut_data_by_fifo(ppa_dev_t *dev, uint32_t data)
+-{
+-    dev->blend0_clut_data.rdwr_word_blend0_clut = data;
+-}
+-
+-/**
+- * @brief Write PPA blending BLEND1 CLUT mem entry through FIFO mode
+- *
+- * @param dev Peripheral instance address
+- * @param data The data to be written into BLEND1 CLUT entry in ARGB8888 format
+- */
+-static inline void ppa_ll_blend_wr_rx_fg_clut_data_by_fifo(ppa_dev_t *dev, uint32_t data)
+-{
+-    dev->blend1_clut_data.rdwr_word_blend1_clut = data;
+-}
+-
+-/**
+- * @brief Write PPA blending BLEND0 CLUT mem entry through memory mode
+- *
+- * @param dev Peripheral instance address
++ * @brief Reset a PPA CLUT FIFO mode write counter and read address
++ *
++ * @note Only the write counter and the read address are reset, the entries stored in the CLUT keep their content. They
++ *       decide which entry the next write or read goes to while the CLUT is accessed in FIFO mode.
++ *
++ * @param dev Peripheral instance address
++ * @param clut_id Selects which CLUT to reset, see `ppa_clut_id_t`
++ */
++static inline void ppa_ll_reset_clut_fifo_ptr(ppa_dev_t *dev, ppa_clut_id_t clut_id)
++{
++    switch (clut_id) {
++    case PPA_CLUT_BLEND_BG:
++        dev->clut_conf.blend0_clut_mem_rst = 1;
++        dev->clut_conf.blend0_clut_mem_rst = 0;
++        dev->clut_conf.blend0_clut_mem_rdaddr_rst = 1;
++        dev->clut_conf.blend0_clut_mem_rdaddr_rst = 0;
++        break;
++    case PPA_CLUT_BLEND_FG:
++        dev->clut_conf.blend1_clut_mem_rst = 1;
++        dev->clut_conf.blend1_clut_mem_rst = 0;
++        dev->clut_conf.blend1_clut_mem_rdaddr_rst = 1;
++        dev->clut_conf.blend1_clut_mem_rdaddr_rst = 0;
++        break;
++    default:
++        abort();
++    }
++}
++
++/**
++ * @brief Write a PPA CLUT mem entry through FIFO mode
++ *
++ * @param dev Peripheral instance address
++ * @param clut_id Selects which CLUT to write, see `ppa_clut_id_t`
++ * @param data The data to be written into the CLUT entry in ARGB8888 format
++ */
++static inline void ppa_ll_wr_clut_data_by_fifo(ppa_dev_t *dev, ppa_clut_id_t clut_id, uint32_t data)
++{
++    switch (clut_id) {
++    case PPA_CLUT_BLEND_BG:
++        dev->blend0_clut_data.rdwr_word_blend0_clut = data;
++        break;
++    case PPA_CLUT_BLEND_FG:
++        dev->blend1_clut_data.rdwr_word_blend1_clut = data;
++        break;
++    default:
++        abort();
++    }
++}
++
++/**
++ * @brief Write a PPA CLUT mem entry through memory mode
++ *
++ * @param dev Peripheral instance address
++ * @param clut_id Selects which CLUT to write, see `ppa_clut_id_t`
+  * @param idx Entry index to the CLUT mem
+- * @param data The data to be written into BLEND0 CLUT entry in ARGB8888 format
+- */
+-static inline void ppa_ll_blend_wr_rx_bg_clut_data_by_mem(ppa_dev_t *dev, uint32_t idx, uint32_t data)
+-{
+-    volatile uint32_t *blend0_clut_mem = (uint32_t *)((uint32_t)dev + PPA_LL_BLEND0_CLUT_MEM_ADDR_OFFSET);
+-    blend0_clut_mem[idx] = data;
+-}
+-
+-/**
+- * @brief Write PPA blending BLEND1 CLUT mem entry through memory mode
+- *
+- * @param dev Peripheral instance address
+- * @param idx Entry index to the CLUT mem
+- * @param data The data to be written into BLEND1 CLUT entry in ARGB8888 format
+- */
+-static inline void ppa_ll_blend_wr_rx_fg_clut_data_by_mem(ppa_dev_t *dev, uint32_t idx, uint32_t data)
+-{
+-    volatile uint32_t *blend1_clut_mem = (uint32_t *)((uint32_t)dev + PPA_LL_BLEND1_CLUT_MEM_ADDR_OFFSET);
+-    blend1_clut_mem[idx] = data;
++ * @param data The data to be written into the CLUT entry in ARGB8888 format
++ */
++static inline void ppa_ll_wr_clut_data_by_mem(ppa_dev_t *dev, ppa_clut_id_t clut_id, uint32_t idx, uint32_t data)
++{
++    uint32_t offset = 0;
++    switch (clut_id) {
++    case PPA_CLUT_BLEND_BG:
++        offset = PPA_LL_BLEND0_CLUT_MEM_ADDR_OFFSET;
++        break;
++    case PPA_CLUT_BLEND_FG:
++        offset = PPA_LL_BLEND1_CLUT_MEM_ADDR_OFFSET;
++        break;
++    default:
++        abort();
++    }
++    volatile uint32_t *clut_mem = (uint32_t *)((uint32_t)dev + offset);
++    clut_mem[idx] = data;
+ }
+ 
+ #ifdef __cplusplus

@@ -33,6 +33,17 @@ class Rgb888PixelRef {
   std::uint8_t *p_;
 };
 
+// VGA lane permutation belongs to the original I2S engine, not P4 memory.
+// Select the physical policy at build time; shared rasterizers keep RGB222
+// paint and Native-background semantics in both implementations.
+#ifdef AGON_EXTENDER_INDEXED_PPA
+inline constexpr int kP4ColorBytes = 1;
+inline std::uint8_t &p4ColorPixel(std::uint8_t *row, int x) noexcept { return row[x]; }
+#else
+inline constexpr int kP4ColorBytes = 3;
+inline Rgb888PixelRef p4ColorPixel(std::uint8_t *row, int x) noexcept { return Rgb888PixelRef(row+x*3); }
+#endif
+
 inline void fillRgb888(std::uint8_t *p, int count, std::uint8_t colour) noexcept {
   if(count <= 0)return;
   Rgb888PixelRef{p} = colour;
@@ -44,5 +55,12 @@ inline void fillRgb888(std::uint8_t *p, int count, std::uint8_t colour) noexcept
     std::memcpy(p+written*3,p,n*3);
     written += n;
   }
+}
+inline void fillP4Color(std::uint8_t *p, int count, std::uint8_t colour) noexcept {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  if(count>0)std::memset(p,colour,count);
+#else
+  fillRgb888(p,count,colour);
+#endif
 }
 } // namespace agon::extender::display

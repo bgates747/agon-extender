@@ -24,7 +24,7 @@ extern "C" void agon_scanout_reset() {
   mailbox=agon_scanout::SceneMailbox{};
   if(scenes) for(unsigned i=0;i<3;++i) scenes[i].reset(0,0,0);
 }
-bool agon_scanout_stage(fabgl::P4Rgb888Controller *controller,unsigned index,int width,int height) {
+bool agon_scanout_stage(fabgl::P4Color64Controller *controller,unsigned index,int width,int height) {
   if(!scenes) {
     void *storage=heap_caps_malloc(3*sizeof(agon_scanout::Scene),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
     if(!storage)return false;

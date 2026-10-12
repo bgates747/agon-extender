@@ -1,3 +1,7 @@
+// RESEARCH-007 linear-byte / RGB-001 direct-RGB888 alternatives.
+// Linear mode deliberately omits VGA x^2 lane ordering and uses one-byte
+// spans; stock generic rasterizers, Native saves and visible colour semantics
+// remain shared. Hardware layouts are selected explicitly, not by compilation.
 // RGB-001 experiment. Adapted from retained FabGL VGA64Controller (GPLv3).
 // Common Canvas rasterizers and one-byte Native asset/background contracts remain
 // unchanged; this file replaces physical pixel access, fills and scroll copies.
@@ -69,7 +73,7 @@
 #undef VGA_PIXEL
 #undef VGA_PIXELINROW
 #undef VGA_INVERT_PIXEL
-#define VGA_PIXELINROW(row,x) agon::extender::display::Rgb888PixelRef((uint8_t*)(row)+(x)*3)
+#define VGA_PIXELINROW(row,x) agon::extender::display::p4ColorPixel((uint8_t*)(row),(x))
 #define VGA_PIXEL(x,y) VGA_PIXELINROW(m_viewPort[y],x)
 #define VGA_INVERT_PIXEL(x,y) (VGA_PIXEL(x,y) ^= 63)
 
@@ -82,21 +86,21 @@ namespace fabgl {
 
 
 /*************************************************************************************/
-/* P4Rgb888Controller definitions */
+/* P4Color64Controller definitions */
 
 
-P4Rgb888Controller * P4Rgb888Controller::s_instance = nullptr;
+P4Color64Controller * P4Color64Controller::s_instance = nullptr;
 
 
 
-P4Rgb888Controller::P4Rgb888Controller()
-  : VGAPalettedController(VGA64_LinesCount, VGA64_COLUMNSQUANTUM, NativePixelFormat::SBGR2222, 1, 3, nullptr)
+P4Color64Controller::P4Color64Controller()
+  : VGAPalettedController(VGA64_LinesCount, VGA64_COLUMNSQUANTUM, NativePixelFormat::SBGR2222, 1, agon::extender::display::kP4ColorBytes, nullptr)
 {
   s_instance = this;
 }
 
 
-void P4Rgb888Controller::setupDefaultPalette()
+void P4Color64Controller::setupDefaultPalette()
 {
   for (int colorIndex = 0; colorIndex < 16; ++colorIndex) {
     RGB888 rgb888((Color)colorIndex);
@@ -105,12 +109,12 @@ void P4Rgb888Controller::setupDefaultPalette()
 }
 
 
-void P4Rgb888Controller::setPaletteItem(int index, RGB888 const & color)
+void P4Color64Controller::setPaletteItem(int index, RGB888 const & color)
 {
 }
 
 
-std::function<uint8_t(RGB888 const &)> P4Rgb888Controller::getPixelLambda(PaintMode mode)
+std::function<uint8_t(RGB888 const &)> P4Color64Controller::getPixelLambda(PaintMode mode)
 {
   switch (mode) {
     case PaintMode::XOR:
@@ -121,7 +125,7 @@ std::function<uint8_t(RGB888 const &)> P4Rgb888Controller::getPixelLambda(PaintM
 }
 
 
-std::function<void(int X, int Y, uint8_t colorIndex)> P4Rgb888Controller::setPixelLambda(PaintMode mode)
+std::function<void(int X, int Y, uint8_t colorIndex)> P4Color64Controller::setPixelLambda(PaintMode mode)
 {
   switch (mode) {
     case PaintMode::Set:
@@ -144,7 +148,7 @@ std::function<void(int X, int Y, uint8_t colorIndex)> P4Rgb888Controller::setPix
 }
 
 
-std::function<void(uint8_t * row, int x, uint8_t colorIndex)> P4Rgb888Controller::setRowPixelLambda(PaintMode mode)
+std::function<void(uint8_t * row, int x, uint8_t colorIndex)> P4Color64Controller::setRowPixelLambda(PaintMode mode)
 {
   switch (mode) {
     case PaintMode::Set:
@@ -167,7 +171,7 @@ std::function<void(uint8_t * row, int x, uint8_t colorIndex)> P4Rgb888Controller
 }
 
 
-std::function<void(int Y, int X1, int X2, uint8_t colorIndex)> P4Rgb888Controller::fillRowLambda(PaintMode mode)
+std::function<void(int Y, int X1, int X2, uint8_t colorIndex)> P4Color64Controller::fillRowLambda(PaintMode mode)
 {
   switch (mode) {
     case PaintMode::Set:
@@ -190,7 +194,7 @@ std::function<void(int Y, int X1, int X2, uint8_t colorIndex)> P4Rgb888Controlle
 }
 
 
-void P4Rgb888Controller::setPixelAt(PixelDesc const & pixelDesc, Rect & updateRect)
+void P4Color64Controller::setPixelAt(PixelDesc const & pixelDesc, Rect & updateRect)
 {
   auto paintMode = paintState().paintOptions.mode;
   genericSetPixelAt(pixelDesc, updateRect, getPixelLambda(paintMode), setPixelLambda(paintMode));
@@ -199,7 +203,7 @@ void P4Rgb888Controller::setPixelAt(PixelDesc const & pixelDesc, Rect & updateRe
 
 // coordinates are absolute values (not relative to origin)
 // line clipped on current absolute clipping rectangle
-void P4Rgb888Controller::absDrawLine(int X1, int Y1, int X2, int Y2, RGB888 color)
+void P4Color64Controller::absDrawLine(int X1, int Y1, int X2, int Y2, RGB888 color)
 {
   auto paintMode = paintState().paintOptions.NOT ? PaintMode::NOT : paintState().paintOptions.mode;
   genericAbsDrawLine(X1, Y1, X2, Y2, color,
@@ -210,7 +214,7 @@ void P4Rgb888Controller::absDrawLine(int X1, int Y1, int X2, int Y2, RGB888 colo
 }
 
 
-void P4Rgb888Controller::absFillRowScan(FillRowParams const & params, Rect & updateRect)
+void P4Color64Controller::absFillRowScan(FillRowParams const & params, Rect & updateRect)
 {
   genericFillRowScan(params, updateRect,
                      getPixelLambda(PaintMode::Set),
@@ -220,7 +224,7 @@ void P4Rgb888Controller::absFillRowScan(FillRowParams const & params, Rect & upd
 }
 
 
-void P4Rgb888Controller::absFloodFill(FillRowParams const & params, Rect & updateRect)
+void P4Color64Controller::absFloodFill(FillRowParams const & params, Rect & updateRect)
 {
   genericFloodFill(params, updateRect,
                    getPixelLambda(PaintMode::Set),
@@ -231,7 +235,7 @@ void P4Rgb888Controller::absFloodFill(FillRowParams const & params, Rect & updat
 
 
 // parameters not checked
-void P4Rgb888Controller::fillRow(int y, int x1, int x2, RGB888 color)
+void P4Color64Controller::fillRow(int y, int x1, int x2, RGB888 color)
 {
   // This version, passing an RGB888 color, is only used by shape drawing methods,
   // so we will pick fill method based on paint mode
@@ -244,14 +248,14 @@ void P4Rgb888Controller::fillRow(int y, int x1, int x2, RGB888 color)
 
 
 // parameters not checked
-void P4Rgb888Controller::rawFillRow(int y, int x1, int x2, uint8_t pattern)
+void P4Color64Controller::rawFillRow(int y, int x1, int x2, uint8_t pattern)
 {
-  agon::extender::display::fillRgb888((uint8_t*)m_viewPort[y] + x1 * 3, x2 - x1 + 1, pattern);
+  agon::extender::display::fillP4Color((uint8_t*)m_viewPort[y] + x1 * agon::extender::display::kP4ColorBytes, x2 - x1 + 1, pattern);
 }
 
 
 // parameters not checked
-void P4Rgb888Controller::rawORRow(int y, int x1, int x2, uint8_t pattern)
+void P4Color64Controller::rawORRow(int y, int x1, int x2, uint8_t pattern)
 {
   auto row = m_viewPort[y];
   // naive implementation - just do whole row iteratively
@@ -262,7 +266,7 @@ void P4Rgb888Controller::rawORRow(int y, int x1, int x2, uint8_t pattern)
 
 
 // parameters not checked
-void P4Rgb888Controller::rawANDRow(int y, int x1, int x2, uint8_t pattern)
+void P4Color64Controller::rawANDRow(int y, int x1, int x2, uint8_t pattern)
 {
   auto row = m_viewPort[y];
   // naive implementation - just do whole row iteratively
@@ -273,7 +277,7 @@ void P4Rgb888Controller::rawANDRow(int y, int x1, int x2, uint8_t pattern)
 
 
 // parameters not checked
-void P4Rgb888Controller::rawXORRow(int y, int x1, int x2, uint8_t pattern)
+void P4Color64Controller::rawXORRow(int y, int x1, int x2, uint8_t pattern)
 {
   auto row = m_viewPort[y];
   // naive implementation - just do whole row iteratively
@@ -284,68 +288,68 @@ void P4Rgb888Controller::rawXORRow(int y, int x1, int x2, uint8_t pattern)
 
 
 // parameters not checked
-void P4Rgb888Controller::rawInvertRow(int y, int x1, int x2)
+void P4Color64Controller::rawInvertRow(int y, int x1, int x2)
 {
   auto row = m_viewPort[y];
   for (int x=x1; x<=x2; ++x) VGA_PIXELINROW(row,x) ^= 63;
 }
 
 
-void P4Rgb888Controller::rawCopyRow(int x1, int x2, int srcY, int dstY)
+void P4Color64Controller::rawCopyRow(int x1, int x2, int srcY, int dstY)
 {
   // RGB-001 r02 / SCAN-001: the stock copy-scroll helper orders rows so a
   // destination never destroys an unread source. Distinct panel rows have
   // disjoint spans even with a centered viewport and the larger HDMI stride.
-  auto src = (uint8_t*)m_viewPort[srcY] + x1 * 3;
-  auto dst = (uint8_t*)m_viewPort[dstY] + x1 * 3;
-  memcpy(dst, src, (x2 - x1 + 1) * 3);
+  auto src = (uint8_t*)m_viewPort[srcY] + x1 * agon::extender::display::kP4ColorBytes;
+  auto dst = (uint8_t*)m_viewPort[dstY] + x1 * agon::extender::display::kP4ColorBytes;
+  memcpy(dst, src, (x2 - x1 + 1) * agon::extender::display::kP4ColorBytes);
 }
 
 
-void P4Rgb888Controller::swapRows(int yA, int yB, int x1, int x2)
+void P4Color64Controller::swapRows(int yA, int yB, int x1, int x2)
 {
-  auto a=(uint8_t*)m_viewPort[yA] + x1*3;
-  auto b=(uint8_t*)m_viewPort[yB] + x1*3;
-  for(int i=0;i<(x2-x1+1)*3;++i) tswap(a[i],b[i]);
+  auto a=(uint8_t*)m_viewPort[yA] + x1* agon::extender::display::kP4ColorBytes;
+  auto b=(uint8_t*)m_viewPort[yB] + x1* agon::extender::display::kP4ColorBytes;
+  for(int i=0;i<(x2-x1+1)* agon::extender::display::kP4ColorBytes;++i) tswap(a[i],b[i]);
 }
 
 
-void P4Rgb888Controller::drawEllipse(Size const & size, Rect & updateRect)
+void P4Color64Controller::drawEllipse(Size const & size, Rect & updateRect)
 {
   auto mode = paintState().paintOptions.mode;
   genericDrawEllipse(size, updateRect, getPixelLambda(mode), setPixelLambda(mode));
 }
 
 
-void P4Rgb888Controller::absDrawEllipseSheared(EllipseShearedParams const & params, Rect & updateRect)
+void P4Color64Controller::absDrawEllipseSheared(EllipseShearedParams const & params, Rect & updateRect)
 {
   auto mode = paintState().paintOptions.mode;
   genericDrawEllipseSheared(params, updateRect, getPixelLambda(mode), setPixelLambda(mode));
 }
 
 
-void P4Rgb888Controller::drawArc(Rect const & rect, Rect & updateRect)
+void P4Color64Controller::drawArc(Rect const & rect, Rect & updateRect)
 {
   auto mode = paintState().paintOptions.mode;
   genericDrawArc(rect, updateRect, getPixelLambda(mode), setPixelLambda(mode));
 }
 
 
-void P4Rgb888Controller::fillSegment(Rect const & rect, Rect & updateRect)
+void P4Color64Controller::fillSegment(Rect const & rect, Rect & updateRect)
 {
   auto mode = paintState().paintOptions.mode;
   genericFillSegment(rect, updateRect, getPixelLambda(mode), fillRowLambda(mode));
 }
 
 
-void P4Rgb888Controller::fillSector(Rect const & rect, Rect & updateRect)
+void P4Color64Controller::fillSector(Rect const & rect, Rect & updateRect)
 {
   auto mode = paintState().paintOptions.mode;
   genericFillSector(rect, updateRect, getPixelLambda(mode), fillRowLambda(mode));
 }
 
 
-void P4Rgb888Controller::clear(Rect & updateRect)
+void P4Color64Controller::clear(Rect & updateRect)
 {
   hideSprites(updateRect);
   const auto pattern=preparePixel(getActualBrushColor());
@@ -355,9 +359,10 @@ void P4Rgb888Controller::clear(Rect & updateRect)
 
 // scroll < 0 -> scroll UP
 // scroll > 0 -> scroll DOWN
-void P4Rgb888Controller::VScroll(int scroll, Rect & updateRect)
+void P4Color64Controller::VScroll(int scroll, Rect & updateRect)
 {
-  if (panelStorage()) {
+  if (panelStorage() || (agon::extender::display::kP4ColorBytes == 1 &&
+      (paintState().scrollingRegion.X1 != 0 || paintState().scrollingRegion.X2 != m_viewPortWidth-1))) {
     // Fixed DMA row addresses cannot follow pointer rotation. Reuse stock's
     // copy/fill algorithm unchanged: copy only the scrolling field rather than
     // exchanging both sidebars and then the entire physical row (r01). This
@@ -379,7 +384,7 @@ void P4Rgb888Controller::VScroll(int scroll, Rect & updateRect)
 // Scrolling by other values requires up to three steps (scopose scrolling by 1, 2, 3 or 4): for example scrolling by 5 is scomposed to 4 and 1, scrolling
 // by 6 is 4 + 2, etc.
 // Horizontal scrolling region start and size (X2-X1+1) must be aligned to 32 bits, otherwise the unoptimized (very slow) version is used.
-void P4Rgb888Controller::HScroll(int scroll, Rect & updateRect)
+void P4Color64Controller::HScroll(int scroll, Rect & updateRect)
 {
   hideSprites(updateRect);
   const auto &r=paintState().scrollingRegion;
@@ -388,19 +393,19 @@ void P4Rgb888Controller::HScroll(int scroll, Rect & updateRect)
   const auto pattern=preparePixel(getActualBrushColor());
   if(!amount)return;
   for(int y=r.Y1;y<=r.Y2;++y) {
-    auto row=(uint8_t*)m_viewPort[y] + r.X1*3;
+    auto row=(uint8_t*)m_viewPort[y] + r.X1* agon::extender::display::kP4ColorBytes;
     if(scroll<0) {
-      memmove(row,row+amount*3,(width-amount)*3);
+      memmove(row,row+amount* agon::extender::display::kP4ColorBytes,(width-amount)* agon::extender::display::kP4ColorBytes);
       rawFillRow(y,r.X2-amount+1,r.X2,pattern);
     } else {
-      memmove(row+amount*3,row,(width-amount)*3);
+      memmove(row+amount* agon::extender::display::kP4ColorBytes,row,(width-amount)* agon::extender::display::kP4ColorBytes);
       rawFillRow(y,r.X1,r.X1+amount-1,pattern);
     }
   }
 }
 
 
-void P4Rgb888Controller::drawGlyph(Glyph const & glyph, GlyphOptions glyphOptions, RGB888 penColor, RGB888 brushColor, Rect & updateRect)
+void P4Color64Controller::drawGlyph(Glyph const & glyph, GlyphOptions glyphOptions, RGB888 penColor, RGB888 brushColor, Rect & updateRect)
 {
   auto mode = paintState().paintOptions.mode;
   auto getPixel = getPixelLambda(mode);
@@ -413,7 +418,7 @@ void P4Rgb888Controller::drawGlyph(Glyph const & glyph, GlyphOptions glyphOption
 }
 
 
-void P4Rgb888Controller::invertRect(Rect const & rect, Rect & updateRect)
+void P4Color64Controller::invertRect(Rect const & rect, Rect & updateRect)
 {
   genericInvertRect(rect, updateRect,
                     [&] (int Y, int X1, int X2) { rawInvertRow(Y, X1, X2); }
@@ -421,7 +426,7 @@ void P4Rgb888Controller::invertRect(Rect const & rect, Rect & updateRect)
 }
 
 
-void P4Rgb888Controller::swapFGBG(Rect const & rect, Rect & updateRect)
+void P4Color64Controller::swapFGBG(Rect const & rect, Rect & updateRect)
 {
   genericSwapFGBG(rect, updateRect,
                   [&] (RGB888 const & color)                  { return preparePixel(color); },
@@ -434,7 +439,7 @@ void P4Rgb888Controller::swapFGBG(Rect const & rect, Rect & updateRect)
 
 // Slow operation!
 // supports overlapping of source and dest rectangles
-void P4Rgb888Controller::copyRect(Rect const & source, Rect & updateRect)
+void P4Color64Controller::copyRect(Rect const & source, Rect & updateRect)
 {
   genericCopyRect(source, updateRect,
                   [&] (int y)                                 { return (uint8_t*) m_viewPort[y]; },
@@ -445,7 +450,7 @@ void P4Rgb888Controller::copyRect(Rect const & source, Rect & updateRect)
 
 
 // no bounds check is done!
-void P4Rgb888Controller::readScreen(Rect const & rect, RGB888 * destBuf)
+void P4Color64Controller::readScreen(Rect const & rect, RGB888 * destBuf)
 {
   prepareForDrawing();
   for (int y = rect.Y1; y <= rect.Y2; ++y) {
@@ -458,7 +463,7 @@ void P4Rgb888Controller::readScreen(Rect const & rect, RGB888 * destBuf)
 }
 
 
-void P4Rgb888Controller::rawDrawBitmap_Native(int destX, int destY, Bitmap const * bitmap, int X1, int Y1, int XCount, int YCount)
+void P4Color64Controller::rawDrawBitmap_Native(int destX, int destY, Bitmap const * bitmap, int X1, int Y1, int XCount, int YCount)
 {
   genericRawDrawBitmap_Native(destX, destY, (uint8_t*) bitmap->data, bitmap->width, X1, Y1, XCount, YCount,
                               [&] (int y) { return (uint8_t*) m_viewPort[y]; },   // rawGetRow
@@ -467,7 +472,7 @@ void P4Rgb888Controller::rawDrawBitmap_Native(int destX, int destY, Bitmap const
 }
 
 
-void P4Rgb888Controller::rawDrawBitmap_Mask(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
+void P4Color64Controller::rawDrawBitmap_Mask(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
 {
   auto paintMode = paintState().paintOptions.mode;
   auto setRowPixel = setRowPixelLambda(paintMode);
@@ -481,7 +486,7 @@ void P4Rgb888Controller::rawDrawBitmap_Mask(int destX, int destY, Bitmap const *
 }
 
 
-void P4Rgb888Controller::rawDrawBitmap_RGBA2222(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
+void P4Color64Controller::rawDrawBitmap_RGBA2222(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
 {
   auto paintMode = paintState().paintOptions.mode;
   auto setRowPixel = setRowPixelLambda(paintMode);
@@ -505,7 +510,7 @@ void P4Rgb888Controller::rawDrawBitmap_RGBA2222(int destX, int destY, Bitmap con
 }
 
 
-void P4Rgb888Controller::rawDrawBitmap_RGBA8888(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
+void P4Color64Controller::rawDrawBitmap_RGBA8888(int destX, int destY, Bitmap const * bitmap, void * saveBackground, int X1, int Y1, int XCount, int YCount)
 {
   auto paintMode = paintState().paintOptions.mode;
   auto setRowPixel = setRowPixelLambda(paintMode);
@@ -529,7 +534,7 @@ void P4Rgb888Controller::rawDrawBitmap_RGBA8888(int destX, int destY, Bitmap con
 }
 
 
-void P4Rgb888Controller::rawCopyToBitmap(int srcX, int srcY, int width, void * saveBuffer, int X1, int Y1, int XCount, int YCount)
+void P4Color64Controller::rawCopyToBitmap(int srcX, int srcY, int width, void * saveBuffer, int X1, int Y1, int XCount, int YCount)
 {
   genericRawCopyToBitmap(srcX, srcY, width, (uint8_t*)saveBuffer, X1, Y1, XCount, YCount,
                         [&] (int y)                { return (uint8_t*) m_viewPort[y]; },  // rawGetRow
@@ -538,7 +543,7 @@ void P4Rgb888Controller::rawCopyToBitmap(int srcX, int srcY, int width, void * s
 }
 
 
-void P4Rgb888Controller::rawDrawBitmapWithMatrix_Mask(int destX, int destY, Rect & drawingRect, Bitmap const * bitmap, const float * invMatrix)
+void P4Color64Controller::rawDrawBitmapWithMatrix_Mask(int destX, int destY, Rect & drawingRect, Bitmap const * bitmap, const float * invMatrix)
 {
   auto paintMode = paintState().paintOptions.mode;
   auto setRowPixel = setRowPixelLambda(paintMode);
@@ -552,7 +557,7 @@ void P4Rgb888Controller::rawDrawBitmapWithMatrix_Mask(int destX, int destY, Rect
 }
 
 
-void P4Rgb888Controller::rawDrawBitmapWithMatrix_RGBA2222(int destX, int destY, Rect & drawingRect, Bitmap const * bitmap, const float * invMatrix)
+void P4Color64Controller::rawDrawBitmapWithMatrix_RGBA2222(int destX, int destY, Rect & drawingRect, Bitmap const * bitmap, const float * invMatrix)
 {
   auto paintMode = paintState().paintOptions.mode;
   auto setRowPixel = setRowPixelLambda(paintMode);
@@ -576,7 +581,7 @@ void P4Rgb888Controller::rawDrawBitmapWithMatrix_RGBA2222(int destX, int destY, 
 }
 
 
-void P4Rgb888Controller::rawDrawBitmapWithMatrix_RGBA8888(int destX, int destY, Rect & drawingRect, Bitmap const * bitmap, const float * invMatrix)
+void P4Color64Controller::rawDrawBitmapWithMatrix_RGBA8888(int destX, int destY, Rect & drawingRect, Bitmap const * bitmap, const float * invMatrix)
 {
   auto paintMode = paintState().paintOptions.mode;
   auto setRowPixel = setRowPixelLambda(paintMode);
@@ -601,16 +606,16 @@ void P4Rgb888Controller::rawDrawBitmapWithMatrix_RGBA8888(int destX, int destY, 
 
 
 
-void P4Rgb888Controller::setResolution(VGATimings const &t,int w,int h,bool doubled) {
+void P4Color64Controller::setResolution(VGATimings const &t,int w,int h,bool doubled) {
   VGAPalettedController::setResolution(t,w,h,doubled);
   if(!isViewPortAllocated())return;
   for(int y=0;y<m_viewPortHeight;++y) {
-    memset((void*)m_viewPort[y],0,m_viewPortWidth*3);
-    if(doubled)memset((void*)m_viewPortVisible[y],0,m_viewPortWidth*3);
+    memset((void*)m_viewPort[y],0,m_viewPortWidth* agon::extender::display::kP4ColorBytes);
+    if(doubled)memset((void*)m_viewPortVisible[y],0,m_viewPortWidth* agon::extender::display::kP4ColorBytes);
   }
 }
 
-bool P4Rgb888Controller::allocateViewPort() {
+bool P4Color64Controller::allocateViewPort() {
   if(!panelStorage()) return VGAPalettedController::allocateViewPort();
   if(m_viewPortWidth>848 || m_viewPortWidth>m_panel.width || m_viewPortHeight>m_panel.height ||
      m_panel.stride<std::size_t(m_panel.width)*3 ||
@@ -648,7 +653,7 @@ bool P4Rgb888Controller::allocateViewPort() {
   return true;
 }
 
-void P4Rgb888Controller::freeViewPort() {
+void P4Color64Controller::freeViewPort() {
   // m_viewPortMemoryPool is null for borrowed pixels; the base frees descriptors
   // and allocation state, never the LCD owner's pixel memory.
   VGAPalettedController::freeViewPort();
@@ -656,13 +661,13 @@ void P4Rgb888Controller::freeViewPort() {
   m_overlaysActive[0]=m_overlaysActive[1]=false;
 }
 
-unsigned P4Rgb888Controller::panelIndex(volatile uint8_t **rows) const {
+unsigned P4Color64Controller::panelIndex(volatile uint8_t **rows) const {
   const auto address=reinterpret_cast<uintptr_t>(rows[0]);
   const auto second=reinterpret_cast<uintptr_t>(m_panel.buffers[1]);
   return second && address>=second && address<second+m_panel.stride*m_panel.height ? 1u:0u;
 }
 
-void P4Rgb888Controller::restorePanelOverlays(unsigned index) {
+void P4Color64Controller::restorePanelOverlays(unsigned index) {
   if(!m_overlaysActive[index])return;
   auto rows=panelIndex(m_viewPort)==index?m_viewPort:m_viewPortVisible;
   for(int y=0;y<m_viewPortHeight;++y) if(m_overlayRows[index][y]) {
@@ -673,11 +678,11 @@ void P4Rgb888Controller::restorePanelOverlays(unsigned index) {
   m_overlaysActive[index]=false;
 }
 
-void P4Rgb888Controller::prepareForDrawing() {
+void P4Color64Controller::prepareForDrawing() {
   if(panelStorage() && m_viewPort) restorePanelOverlays(panelIndex(m_viewPort));
 }
 
-void P4Rgb888Controller::composePanelOverlays(unsigned index) {
+void P4Color64Controller::composePanelOverlays(unsigned index) {
   auto rows=panelIndex(m_viewPort)==index?m_viewPort:m_viewPortVisible;
   restorePanelOverlays(index);
   alignas(8)uint8_t signal[848];
@@ -695,7 +700,7 @@ void P4Rgb888Controller::composePanelOverlays(unsigned index) {
   }
 }
 
-void P4Rgb888Controller::swapBuffers() {
+void P4Color64Controller::swapBuffers() {
   if(!panelStorage()) {VGAPalettedController::swapBuffers();return;}
   AGON_STOCK_NATIVE_GUARD;
   if(!isDoubleBuffered()) return;
@@ -713,7 +718,7 @@ void P4Rgb888Controller::swapBuffers() {
   restorePanelOverlays(panelIndex(m_viewPort));
 }
 
-unsigned P4Rgb888Controller::preparePanelFrame(int &marker) {
+unsigned P4Color64Controller::preparePanelFrame(int &marker) {
   const unsigned index=panelIndex(m_viewPortVisible);
   // Double-buffer overlays are completed on the back before each explicit
   // swap; never draw into its scanned front during an ordinary presentation.
@@ -730,7 +735,7 @@ unsigned P4Rgb888Controller::preparePanelFrame(int &marker) {
   return index;
 }
 
-bool P4Rgb888Controller::overlayIntersectsRow(int y) {
+bool P4Color64Controller::overlayIntersectsRow(int y) {
   auto intersects=[y](Sprite *s) {
     if(!s||!s->visible)return false;
     auto frame=s->getFrame();
@@ -744,13 +749,25 @@ bool P4Rgb888Controller::overlayIntersectsRow(int y) {
   return false;
 }
 
-void P4Rgb888Controller::encodeSignalRow(int y,uint8_t *signal) {
+void P4Color64Controller::encodeSignalRow(int y,uint8_t *signal) {
   auto row=(uint8_t*)m_viewPortVisible[y];
   for(int x=0;x<m_viewPortWidth;++x) signal[x^2]=m_HVSync | uint8_t(VGA_PIXELINROW(row,x));
   decorateScanLinePixels(signal,y);
 }
 
-void P4Rgb888Controller::copyRgb888Row(int y,uint8_t *destination,uint8_t *signal) {
+void P4Color64Controller::copyLinearRow(int y,uint8_t *destination,bool decorate) {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  // Background snapshots are memcpy, with no VGA lane permutation. Only a
+  // scaled320 overlay needs the retained signal decorator before SRM; native
+  // rolling overlays are independently snapshotted and painted at scanout.
+  if(decorate && overlayIntersectsRow(y)) {
+    alignas(8)uint8_t signal[848];encodeSignalRow(y,signal);
+    for(int x=0;x<m_viewPortWidth;++x)destination[x]=signal[x^2];
+  } else memcpy(destination,(const void*)m_viewPortVisible[y],m_viewPortWidth);
+#endif
+}
+
+void P4Color64Controller::copyRgb888Row(int y,uint8_t *destination,uint8_t *signal) {
   // Keep overlays out of the persistent logical background. Only rows with a
   // visible overlay need the stock RGB222 decorator; ordinary rows are memcpy.
   // All pixel/overlay access occurs under the runtime adapter's native guard.

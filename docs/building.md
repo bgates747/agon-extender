@@ -606,3 +606,22 @@ The composition replaces the obsolete indefinite forward epoch implementation;
 it does not relax the ROM guard. See the [stream contract](protocols/exext-stream.md)
 and [current implementation work](tasks/PORT-008/EXEXT-STREAM-R01.md). A passing
 build does not qualify wiring, game performance or production selection.
+
+## Experimental linear-byte/PPA HDMI selection
+
+RESEARCH-007 adds `--indexed-ppa` to the existing explicit P4-PC automatic
+rolling/direct-controller build composition. It selects linear one-byte
+physicalRGB222 drawing and fixed-CLUT PPA expansion, rather than directRGB888
+logical pixels. It requires committed clean inputs and an `indexed-hdmi-rNN-b…Z`
+identity. Generated PPA driver/HAL overrides are hash-pinned under
+`vdp/compat/ppa_clut`; the base ESP-IDF checkout is unchanged. The inherited
+`--direct-rgb888` option selects the shared P4-owned controller, while
+`--indexed-ppa` overrides its physical pixel policy. This naming compatibility
+does not mean the new candidate stores three-byte logical pixels.
+
+Keep `--hdmi-timing auto --rolling-scanout --render-benchmark-output normal`
+and `--ppa-scale-320` for existing carrier/scaled-mode coverage. Select the
+existing boot-release and USB host options required by the installed EMOS/board
+pair using machine-local records. Do not enable parallel diagnostic/ExExt
+variants for this experiment. Integrated hardware checks and human acceptance
+remain pending; selected production is unchanged.

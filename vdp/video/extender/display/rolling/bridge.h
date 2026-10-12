@@ -14,9 +14,9 @@ unsigned agon_scanout_width(void);
 unsigned agon_scanout_height(void);
 #ifdef __cplusplus
 }
-namespace fabgl {class P4Rgb888Controller;}
+namespace fabgl {class P4Color64Controller;}
 // Caller owns native exclusion when passing a live controller. Stage copies
 // pixels; commit occurs only after the source background cache flush.
-bool agon_scanout_stage(fabgl::P4Rgb888Controller *,unsigned,int,int);
+bool agon_scanout_stage(fabgl::P4Color64Controller *,unsigned,int,int);
 void agon_scanout_commit();
 #endif

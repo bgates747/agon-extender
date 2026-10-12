@@ -1,4 +1,5 @@
-// RGB-001 experimental CPU backend, derived from retained FabGL VGA64Controller.
+// P4-owned 64-colour backend, derived from retained FabGL VGA64Controller.
+// RESEARCH-007 selects linear RGB222 byte storage; RGB-001 retains BGR888.
 // GPLv3; see the original copyright/license below. Physical rows are packed BGR888,
 // while VDU colours, Native assets and saved sprite backgrounds retain RGB222 semantics.
 // No physical VGA ISR is used. Only the explicit RGB-001 build selects this class.
@@ -27,7 +28,7 @@
 /**
  * @file
  *
- * @brief This file contains fabgl::P4Rgb888Controller definition.
+ * @brief This file contains fabgl::P4Color64Controller definition.
  */
 
 
@@ -72,16 +73,16 @@ namespace fabgl {
 *
 * This example initializes VGA Controller with 64 colors (all visible at the same time) at 640x350:
 *
-*     fabgl::P4Rgb888Controller displayController;
+*     fabgl::P4Color64Controller displayController;
 *     // the default assigns GPIO22 and GPIO21 to Red, GPIO19 and GPIO18 to Green, GPIO5 and GPIO4 to Blue, GPIO23 to HSync and GPIO15 to VSync
 *     displayController.begin();
 *     displayController.setResolution(VGA_640x350_70Hz);
 */
-class P4Rgb888Controller : public VGAPalettedController {
+class P4Color64Controller : public VGAPalettedController {
 
 public:
 
-  P4Rgb888Controller();
+  P4Color64Controller();
   using VGAPalettedController::setResolution;
   void setResolution(VGATimings const &, int = -1, int = -1, bool = false) override;
   void bindPanelStorage(agon::extender::display::Rgb888PanelStorage const &storage) { m_panel = storage; }
@@ -89,6 +90,7 @@ public:
   unsigned preparePanelFrame(int &marker);
   void copyRgb888Row(int y, uint8_t *destination, uint8_t *signal);
   void encodeSignalRow(int y, uint8_t *signal);
+  void copyLinearRow(int y, uint8_t *destination, bool decorate);
   bool overlayIntersectsRow(int y);
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
   // Snapshot access is task-only under native exclusion. Keep this accommodation
@@ -100,16 +102,16 @@ public:
 #endif
 
   // unwanted methods
-  P4Rgb888Controller(P4Rgb888Controller const&) = delete;
-  void operator=(P4Rgb888Controller const&)  = delete;
+  P4Color64Controller(P4Color64Controller const&) = delete;
+  void operator=(P4Color64Controller const&)  = delete;
 
 
   /**
-   * @brief Returns the singleton instance of P4Rgb888Controller class
+   * @brief Returns the singleton instance of P4Color64Controller class
    *
-   * @return A pointer to P4Rgb888Controller singleton object
+   * @return A pointer to P4Color64Controller singleton object
    */
-  static P4Rgb888Controller * instance() { return s_instance; }
+  static P4Color64Controller * instance() { return s_instance; }
 
   void readScreen(Rect const & rect, RGB888 * destBuf);
 
@@ -244,13 +246,16 @@ private:
 
 
 
-  static P4Rgb888Controller *    s_instance;
+  static P4Color64Controller *    s_instance;
 
   volatile uint16_t           m_packedPaletteIndexPair_to_signals[1];
 
 };
 
 
+
+// Compatibility name for the retained direct-RGB888 selection and host tests.
+using P4Rgb888Controller = P4Color64Controller;
 
 } // end of namespace
 

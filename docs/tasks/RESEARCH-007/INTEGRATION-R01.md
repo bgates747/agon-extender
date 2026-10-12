@@ -53,13 +53,13 @@ use stock VGA signal order locally; background storage and PPA input stay linear
 
 ## Subtasks
 
-### R07-I01 [ ] Freeze layout/lifetime contract and source dependency map
+### R07-I01 [x] Freeze layout/lifetime contract and source dependency map
 
 Record the affected pixel-access, row allocation, copy/scroll, Native bitmap,
 readback and output consumers. Commit/push this contract before implementation.
 Record the accepted experimental layout decision in an ADR and architecture.
 
-### R07-I02 [ ] Implement linear controller and PPA output integration
+### R07-I02 [x] Implement linear controller and PPA output integration
 
 Add explicit build selection, preserve old selection, reuse proven driver and
 renderer operations, and document every hardware-specific departure beside
@@ -89,3 +89,32 @@ ready for Author playtest if bounded checks pass. On regression restore exact
 ordinary P4 and explain evidence. Update current build/use limits, task and log;
 commit/push owned results. Production promotion remains separately gated by
 Author acceptance, agreed version and required release checks.
+
+## Implemented dependency seam (validation pending)
+
+| Consumer | Linear-byte accommodation | Unchanged contract |
+|---|---|---|
+| P4-owned64-colour controller pixel lambdas | Compile-time1-byte/3-byte pixel policy; linear x addressing | Stock common rasterizers and paint operations |
+| Allocator/initial clear | Logical width bytes per row, independent of HDMI stride | Native row tables, single/double image ownership |
+| Raw fill/copy/HScroll | Byte-sized memset/memcpy/memmove spans | Clipping and scroll direction |
+| Partial VScroll | Existing field-only copy remedy with1-byte spans | Incoming row/background restore order |
+| Native bitmap/software-sprite save | Shared generic byte get/set operations | One-byte Native saves and opacity semantics |
+| Readback/capture | Physical byte decoded using existing RGB222 semantics | Visible colours, public bitmap formats |
+| Output snapshot | Private linear row copies, generation check across double swap | No live row reaches DMA |
+| PPA BLEND | Fixed256-entry table repeats physical64 colours | Logical palette remapping does not recolour existing pixels |
+| Rolling hardware overlays | Existing deep-copied immutable scene | Same sprite order, XOR and cursor composition |
+| Scaled320 | Decorated byte snapshot, BLEND expansion, existing SRM | Logical buffering and bilinear2x presentation |
+| Mode0/packed depths | Existing controller/output path | Copper/packed palette and outro visibility |
+
+P4Color64Controller is the common implementation; the P4Rgb888Controller alias
+retains existing test/caller compatibility. The explicit indexed build selects
+linear storage; ordinary selection still uses three-byte storage. Historical
+filenames remain so this change does not manufacture a second copied renderer.
+
+## Offline checkpoint
+
+Indexed and retainedRGB888 controller golden runs pass;14 HDMI build-selection
+tests pass. The full version-record validator is blocked by a pre-existing
+light2-harness-r02 connectivity hash mismatch (expected560ab589…, actual
+c68e4d4f…); this tranche does not edit that unrelated electrical record. Target
+compile/link, actual component binding, concurrent scanout and bench tests remain.

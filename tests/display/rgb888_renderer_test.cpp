@@ -124,7 +124,12 @@ int main() {
     Rgb888PixelRef(bytes.data())=Rgb888PixelRef(bytes.data()+3);
     assert((std::uint8_t(Rgb888PixelRef(bytes.data()))&63)==colour);
   }
-  for(unsigned binding=0;binding<3;++binding) for(bool doubled : {false,true}) {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  constexpr unsigned bindings=1;
+#else
+  constexpr unsigned bindings=3;
+#endif
+  for(unsigned binding=0;binding<bindings;++binding) for(bool doubled : {false,true}) {
     Native native;Direct direct;
     Panel panel;if(binding)direct.bindPanelStorage(panel.binding(binding-1));
     std::vector<std::vector<RGB888>> stages[2];int variant=0;
@@ -153,7 +158,20 @@ int main() {
     for(int y=0;y<H;++y) {
       native.bindNativeAliases();native.prepareRow(y,a);expandSignalRowToHdmi(a,nativeRgb,0,W);
       if(binding)assert(!memcmp(nativeRgb,(const void*)direct.visibleRow(y),sizeof(nativeRgb)));
-      direct.bindNativeAliases();direct.prepareRgb888Row(y,directRgb,b);
+      direct.bindNativeAliases();
+#ifdef AGON_EXTENDER_INDEXED_PPA
+      assert(direct.linearStorage());assert(!direct.rgb888Storage());
+      direct.prepareLinearRow(y,b,true);
+      for(int x=0;x<W;++x) {
+        directRgb[x*3]=((b[x]>>4)&3)*85;directRgb[x*3+1]=((b[x]>>2)&3)*85;directRgb[x*3+2]=(b[x]&3)*85;
+      }
+      direct.prepareLinearRow(y,b,false);
+      // Exact native bytes are now left-to-right, not merely equivalent RGB.
+      std::vector<RGB888> background(W*H);direct.readScreen(Rect(0,0,W-1,H-1),background.data());
+      if(!doubled)for(int x=0;x<W;++x)assert((b[x]&63)==((background[y*W+x].R>>6)|((background[y*W+x].G>>6)<<2)|((background[y*W+x].B>>6)<<4)));
+#else
+      direct.prepareRgb888Row(y,directRgb,b);
+#endif
       assert(!memcmp(nativeRgb,directRgb,sizeof(nativeRgb)));
     }
     // Overlay composition must leave persistent background/readback unchanged.

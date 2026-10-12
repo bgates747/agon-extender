@@ -11,7 +11,8 @@ std::unique_ptr<StockRuntimeController> makeStockRuntimeController(int colours, 
   // geometries. Ordinary startup/indexed modes retain their existing controller.
   if(rgb888ExperimentGeometry(colours, width, height)) {
     auto *controller=new (std::nothrow) StockBoundController<fabgl::P4Rgb888Controller>();
-#if !defined(FABGL_EMULATED)
+#if !defined(FABGL_EMULATED) && !defined(AGON_EXTENDER_INDEXED_PPA)
+    // Linear logical rows are private; only RGB888 can borrow panel pixels.
     if(controller
 #ifdef AGON_EXTENDER_HDMI_PPA_320
        // The scaled mode owns logical front/back pixels independently from

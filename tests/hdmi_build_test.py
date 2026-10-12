@@ -21,6 +21,20 @@ class HdmiBuildTest(unittest.TestCase):
     def setUpClass(cls):
         cls.document = json.loads((ROOT / "vdp/build/p4-profiles.json").read_text())
 
+    def test_indexed_ppa_is_explicit_and_requires_full_output_lifetime(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        old=build_p4.select_display_profile(*args)
+        indexed=build_p4.select_display_profile(*args,indexed_ppa=True)
+        self.assertNotIn("AGON_EXTENDER_INDEXED_PPA=1",old["definitions"])
+        self.assertIn("AGON_EXTENDER_INDEXED_PPA=1",indexed["definitions"])
+        self.assertIn("video/extender/display/hdmi_ppa_indexed.cpp",indexed["sources"])
+        record=build_p4.display_input_record("hdmi","normal",True,"auto",True,indexed_ppa=True)
+        self.assertEqual(record["render_storage"],"linear-physical-rgb222")
+        self.assertEqual(record["logical_stride_bytes"],"logical width")
+        for output,timing,rolling,direct in (("browser","auto",True,True),("hdmi","848x480",True,True),("hdmi","auto",False,True),("hdmi","auto",True,False)):
+            with self.assertRaises(SystemExit):
+                build_p4.select_display_profile(self.document,"p4-console","p4-pc",output,"normal",direct,timing,rolling,indexed_ppa=True)
+
     def test_ppa_selection_is_explicit_and_preserves_ordinary_profiles(self):
         args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
         ordinary=build_p4.select_display_profile(*args)

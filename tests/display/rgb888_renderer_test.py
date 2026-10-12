@@ -14,9 +14,12 @@ ROW = ROOT / "docs/tasks/PORT-003/stock-backend-r1"
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('--indexed', action='store_true')
     parser.add_argument('--hdmi848', action='store_true')
     parser.add_argument('--hdmi684', action='store_true')
     args = parser.parse_args()
+    if args.indexed and (args.hdmi848 or args.hdmi684):
+        parser.error("Indexed test uses private logical rows, not borrowed panels")
     if args.hdmi848 and args.hdmi684:
         parser.error('Select only one output geometry')
     sources = [GL / "dispdrivers" / (name + "controller.cpp")
@@ -41,6 +44,7 @@ def main():
             "-ffunction-sections", "-fdata-sections", "-Wl,--gc-sections",
             "-DFABGL_EMULATED", "-DAGON_EXTENDER_STOCK_RUNTIME",
             "-DAGON_EXTENDER_HDMI", "-DAGON_EXTENDER_DIRECT_RGB888",
+            *(["-DAGON_EXTENDER_INDEXED_PPA=1"] if args.indexed else []),
             *(["-DAGON_EXTENDER_HDMI_848X480=1"] if args.hdmi848 else []),
             *(["-DAGON_EXTENDER_HDMI_684X384=1"] if args.hdmi684 else []), *["-I" + str(path) for path in includes],
             "-include", str(RUNTIME / "compat/host_preinclude.hpp"),
