@@ -43,26 +43,26 @@ reset, SD/startup change or product integration in this tranche.
 
 ## Bounded work
 
-### R07-B01 [ ] Freeze baseline, executable contract and identities
+### R07-B01 [x] Freeze baseline, executable contract and identities
 
 Commit/push existing owned dirt, this contract and task/TODO updates. Pin the old
 CPU conversion source and selected CLUT backport. Register a separate experimental
 benchmark lineage; leave the r05 compile-only article and evidence immutable.
 
-### R07-B02 [ ] Implement the complete benchmark and offline host tools
+### R07-B02 [x] Implement the complete benchmark and offline host tools
 
 Write all four paths, six cases, finite timing/correctness execution, durable NVS
 results and serial records. Prepare capture/analysis and explicit deployment
 instructions. Preserve stock colour mapping; no renderer or public API changes.
 
-### R07-B03 [ ] Compile and validate the deployment payload
+### R07-B03 [x] Compile and validate the deployment payload
 
 Cross-compile/link actual benchmark/API calls; verify header dependencies, image
 silicon range, flash segments/factory bytes, source/tool hashes and exact config.
 Test host parsing and numerical analysis with labelled synthetic serial data,
 including missing/error records. Do not mistake synthetic data for P4 results.
 
-### R07-B04 [ ] Package, report and stop before bench access
+### R07-B04 [x] Package, report and stop before bench access
 
 Retain the generated package and one local evidence index. Update task, dated log
 and handoff, commit/push owned work, report what is prepared and what still needs
@@ -77,3 +77,10 @@ P4 image, capture the finite run and validate every case. Restore the selected
 ordinary P4 image and normal keyboard readiness before handback. Report measured
 conversion results separately from absent HDMI/gameplay measurements. This step
 is not executed or authorized by the current preparation tranche.
+
+## Preparation outcome — 2026-10-11
+
+R07-B01–B04 completed: [preparation results](PREPARATION-RESULTS.md),
+[build/hash evidence](BENCHMARK-EVIDENCE.json) and
+[executable recipe](benchmark/README.md). Native build and offline tests pass;
+no physical execution or deployment. R07-B05 remains bench-gated.

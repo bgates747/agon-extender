@@ -1,3 +1,25 @@
+# Current review — complete conversion benchmark prepared, uninstalled
+
+[RESEARCH-007](docs/tasks/RESEARCH-007.md) R07-B01–B04 complete after the Author
+required an executable performance comparison rather than another compile-only
+sample. [Preparation results](docs/tasks/RESEARCH-007/PREPARATION-RESULTS.md)
+and [recipe](docs/tasks/RESEARCH-007/benchmark/README.md) identify the complete
+self-running P4 image, exact old CPU/PPA comparisons, six workloads, 768 samples,
+independent pixel/guard/input checks, dedicated durable NVS and host results tool.
+Build `ppa-clut-benchmark-r01-b2026-10-12-00-21-22Z` compiles/links without warnings;
+actual API/header/kernel bindings and deployment bytes/hashes pass. Five offline
+checks and a labelled synthetic collector run pass. No physical measurements.
+The ignored local index is `agents/research007/benchmark-r01/INDEX.md`.
+
+R07-B05 requires bench handover: hold Agon reset, verify P4 identity, write and
+verify listed segments only, capture/validate all samples, restore the exact
+ordinary installed P4 and readiness before handback. Do not flash the merged
+factory span over ordinary NVS. No hardware, SD/startup, product integration,
+SDK selection or production changes were made. Consult `HARDWARE.local.md` for
+current bench ownership; it changed from fsim to agon-6502 during preparation.
+Original r05 example/evidence and the separate paused ExExt checkpoint stay
+unchanged. Stop before hardware access or product integration.
+
 # Current review — indexed PPA capability and compile-only example complete
 
 [RESEARCH-007](docs/tasks/RESEARCH-007.md) R07-01 and R07-03 complete;
@@ -10,7 +32,7 @@ SDK5.5.5 and renderer stay unchanged. Independent physical-memory checks are
 prepared, not run. No ISR submission or fused L8 scaling through public APIs;
 two input streams and shared palette ownership constrain later integration.
 No device, SD, startup, emulator, performance or production change. R07-02 and
-R07-04–07 remain unstarted; stop for review. Fsim retains bench. The completed
+R07-04–07 remain unstarted; stop for review. Bench owner is recorded in HARDWARE.local.md. The completed
 [inventory](docs/tasks/RESEARCH-007/PIPELINE-INVENTORY.md) and separate ExExt
 checkpoint below are unchanged.
 

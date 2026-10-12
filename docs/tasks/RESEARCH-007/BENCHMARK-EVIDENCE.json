@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "build_id": "ppa-clut-benchmark-r01-b2026-10-12-00-21-22Z",
+  "source_commit": "4d12c5eb38bb55b1a7b484516b891349ae1bc6dc",
+  "status": "experimental-prepared-not-installed",
+  "build_duration_s": 113.765,
+  "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+  "compiler_sha256": "a58c7ac425b8b06ba0a4cb6f774553bcccf2ed2c496e738e50ea6c490227b784",
+  "upstream_clut_commit": "76b4cf1336168aad6d1db4b8d1d2743137db4092",
+  "source_inputs": [
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/CMakeLists.txt",
+      "sha256": "9cb2b0fc39bcdbdb5e4fda29ffc0460f918c47d470b4efe83b9ce9c80bc53c11"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/README.md",
+      "sha256": "d5a4abed8c3b332bbba2a252a72d89fddd5358219f7ce880ee05f1680fce66f0"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/baseline.json",
+      "sha256": "e6e0c46d87ed69ac88da2e560076dbfefdc400b448bd1bdf2f63436aa4715a89"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/build.py",
+      "sha256": "4ba9bc0af8bd12eb793242e1ffea0493e18d0b4d24c201df275d1513742354f1"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/main/CMakeLists.txt",
+      "sha256": "6d607a2b91d73278f6e9a5bad1e8954db1fbdeab28e90c2aa65bdcd7ac9ec0f3"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/main/cpu.cpp",
+      "sha256": "ff4bf3b441dc8eb21a3fb0ae8983d240968fd4f16abe0ec3bfb98a18717c2145"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/main/cpu.h",
+      "sha256": "b663b3d4f7dc46001872487230331ef8b57483efafa0e4cdca4c71816023d582"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/main/main.c",
+      "sha256": "e3dcc1bf39bd2ed861efee27338322e32343a99f335327f00e0a1e18734f7a84"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/partitions.csv",
+      "sha256": "8cbaad55c6b6575fd1bf2c18a06d925d805f73677c3071f9fd2c88123ddad7ad"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/results.py",
+      "sha256": "23919805e2ba891c56cfdcf508c24a8c6de7fdd16c1202ea89038e1fc1a9e529"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/sdkconfig.defaults",
+      "sha256": "137215c8f3ba9528b893e04b307dd4432aadc6b4cc0d442cd477b3536a2daffa"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/benchmark/test_offline.py",
+      "sha256": "6358c7dda515042fabf83f87203239e999e1828519555f04caa95c38ff9fa793"
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_geometry.hpp",
+      "sha256": "645fc2c0f27f05fc5f80af875570c0cc8250e08caa4b25a1826881f8e0eca9e1"
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_timing.hpp",
+      "sha256": "e0c495e6a1e863b638a68af346e23e048f196bd01f26cf051af1dd4c395ff18c"
+    },
+    {
+      "path": "vdp/partitions.csv",
+      "sha256": "1c8854e64476f1f10fa5d9848cc7676f47efe363ff30c155dbc97c9320513b6c"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/clut-example/backport.json",
+      "sha256": "3a0772f88023b360953fba4005d486de7b4ad4df71b0da44f93ddbc423dab4e5"
+    },
+    {
+      "path": "docs/tasks/RESEARCH-007/clut-example/clut-backport.patch",
+      "sha256": "c41572a6268ce54a4233a376c1984fc638a3a45b38572b2576c6b0cdd0ad6703"
+    },
+    {
+      "path": "scripts/build_p4.py",
+      "sha256": "5684dc2155cda5e10d1065f086a878cbcb9738accda42c2445565304f14e3c89"
+    },
+    {
+      "path": "scripts/p4_board.py",
+      "sha256": "a0a8ca498aba955da55aa53f95965780f328ea6c98e743c8b9d69ba7e9af300f"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "sdkconfig",
+      "bytes": 52592,
+      "sha256": "58e64f075b5082147c778cafad0bcfea303fd4820b256ea40cfe3e4f7ad5e578"
+    },
+    {
+      "path": "source.tar.gz",
+      "bytes": 41296,
+      "sha256": "eeeb19c654361afef9ced23ce86afdd94d4a94021f4b83cc9f33bbd6a1181c46"
+    },
+    {
+      "path": "ppa-clut-benchmark.factory.bin",
+      "bytes": 366272,
+      "sha256": "08e6e41d8e041fe79fabf2fc2d0b0d3a6eee58eb6b1e7833ae827b675c6df32a"
+    },
+    {
+      "path": "build/compile_commands.json",
+      "bytes": 3829612,
+      "sha256": "21a33b52d8464aa51f2eb09cac6e7fd6aef3eff8b03778012857897f44af8d5d"
+    },
+    {
+      "path": "build/ppa_clut_benchmark.elf",
+      "bytes": 5510992,
+      "sha256": "02555d55167fa1492ecf724006aaa93017aabbc193cbf3a7bd5ff746d142039d"
+    },
+    {
+      "path": "build/ppa_clut_benchmark.map",
+      "bytes": 2419549,
+      "sha256": "ca8261bb2591fa026bf567b6fc328addfec2daad07ad8c2d896f7b034f5ce6c1"
+    },
+    {
+      "path": "build/ppa_clut_benchmark.bin",
+      "bytes": 235200,
+      "sha256": "40fb9f3783c9a8b82f5edd3d0b5e091c0820f0c1f756b529969d57f2706237fc"
+    },
+    {
+      "path": "build/bootloader/bootloader.bin",
+      "bytes": 23088,
+      "sha256": "ae45e34c6cb9f412ae58b0c4de60e6ac835c26d3a44f54492b66093fa1516bfc"
+    },
+    {
+      "path": "build/partition_table/partition-table.bin",
+      "bytes": 3072,
+      "sha256": "9c01c1ee1f7a23f6122196fec238e719925f29a693faf954779d3ab41d1ad570"
+    },
+    {
+      "path": "build/flasher_args.json",
+      "bytes": 935,
+      "sha256": "bda87a692913e9dca3379e7429d6bc5243bfc02ffec6d4d722f6582360351931"
+    }
+  ],
+  "image_headers": [
+    {
+      "file": "ppa_clut_benchmark.bin",
+      "chip_id": 18,
+      "min_revision": 1,
+      "max_revision": 199
+    },
+    {
+      "file": "bootloader/bootloader.bin",
+      "chip_id": 18,
+      "min_revision": 1,
+      "max_revision": 199
+    }
+  ],
+  "flash_segments": [
+    {
+      "offset": "0x2000",
+      "path": "build/bootloader/bootloader.bin",
+      "bytes": 23088,
+      "sha256": "ae45e34c6cb9f412ae58b0c4de60e6ac835c26d3a44f54492b66093fa1516bfc"
+    },
+    {
+      "offset": "0x8000",
+      "path": "build/partition_table/partition-table.bin",
+      "bytes": 3072,
+      "sha256": "9c01c1ee1f7a23f6122196fec238e719925f29a693faf954779d3ab41d1ad570"
+    },
+    {
+      "offset": "0x20000",
+      "path": "build/ppa_clut_benchmark.bin",
+      "bytes": 235200,
+      "sha256": "40fb9f3783c9a8b82f5edd3d0b5e091c0820f0c1f756b529969d57f2706237fc"
+    }
+  ],
+  "verification": {
+    "schema_version": 1,
+    "build_id": "ppa-clut-benchmark-r01-b2026-10-12-00-21-22Z",
+    "linked_symbols": [
+      "40007e2e T app_main",
+      "400081e4 T cpu_linear",
+      "4000825c T cpu_reorder",
+      "40008134 T cpu_signal",
+      "4000f15a T nvs_commit",
+      "4000f1ae T nvs_set_blob",
+      "4000a5ba T ppa_do_blend",
+      "40009126 T ppa_set_color_lookup_table"
+    ],
+    "compiled_header_bindings": {
+      "esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj": [
+        "components/esp_driver_ppa/overlay/hal/ppa_types.h"
+      ],
+      "esp-idf/esp_driver_ppa/CMakeFiles/__idf_esp_driver_ppa.dir/src/ppa_blend.c.obj": [
+        "components/esp_driver_ppa/overlay/hal/ppa_types.h",
+        "components/esp_driver_ppa/overlay/hal/ppa_ll.h"
+      ],
+      "esp-idf/main/CMakeFiles/__idf_main.dir/cpu.cpp.obj": [
+        "main/extender/display/hdmi_geometry.hpp",
+        "main/extender/display/hdmi_timing.hpp"
+      ]
+    },
+    "compiled_source_count": 554,
+    "sdk_tracked_tree_clean": true,
+    "unchanged_cpu_header_hashes": true,
+    "all_manifest_artifact_hashes_verified": true,
+    "build_warnings": 0,
+    "hardware_execution": false
+  },
+  "offline_checks": {
+    "tests_passed": 5,
+    "independent_host_cpu_check": true,
+    "synthetic_protocol_samples": 768,
+    "physical_measurements": false
+  },
+  "retained_evidence_directory": "agents/research007/benchmark-r01/build-r01",
+  "offline_evidence_directory": "agents/research007/benchmark-r01/offline-checks-r01",
+  "archive": {
+    "path": "agents/research007/benchmark-r01/build-r01/flash-package.tar.gz",
+    "bytes": 365853,
+    "sha256": "0860d94d04cc772896de039cc1089d1441d9219b942dfb46207926a53a8f7a52"
+  },
+  "flash_policy": "Write listed segments only; merged factory image contains FF-filled gaps over ordinary NVS and must not be flashed as one span on this bench."
+}
