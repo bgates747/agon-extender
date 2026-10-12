@@ -1,3 +1,102 @@
+# Current stop — newest verified pre-parallel pair restored
+
+Author requested the most modern working builds before parallel startup handling.
+EDP r11 `rgb-001-r11-b2026-10-08-01-22-20Z`, application SHA256
+`5f1b42a161ec9df13701db3038e06019a27b2880cf608cdcf8eea109670ca13a`,
+restored with four independently verified segments and NVS preserved. Retained
+r11 source has no parallel boot/release/UART-parking path; it adds320 PPA scaling
+to r10's native HDMI carriers. Source snapshot is the authority, not newer HEAD.
+
+Installed EMOS `agon-emos-v0.1.24-b2026-10-07-23-11-33Z` already matches the
+pre-parallel cf10f0b Pingo callback source hashes and earlier full-ROM receipt;
+no redundant EMOS FLASH. Custom P2-count mainboard VDP retained unchanged.
+Corrected host reader retained. Original38-byte startup read back identically
+before and after; no tests launched from startup. Actual keyboard/listener/read/
+EXIT passed after restoration, returning to LegacyCLI with neutral admitted input
+and offline idle SD service. No gameplay acceptance or production promotion.
+Local receipts: agents/bench010/nonparallel-restore-r01; installed-current records
+updated. This restores an exact historical working baseline, not newer PPA-indexed
+or browser features first integrated alongside subsequent parallel development.
+
+Earlier checkpoints below are historical.
+
+# Current stop — BENCH-010 serial-open host correction qualified
+
+Author authorized repair and released bench. Added scripts/passive_serial.py,
+joined DTR/RTS clearing, and scripts/serial_monitor.py. Ordinary pyserial cleared
+DTR then RTS, pulsing Olimex common reset despite passive intent. Three corrected
+open/close trials pass, with actual listener/startup-read/EXIT while open and after
+close; one deliberate100ms Agon reset recovers on first attempt and passes another
+actual exchange. Eight functional exchanges total. USB trace: five modem-control
+requests, all equal states. Firmware/startup/wiring unchanged. Original38B startup
+hash7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5.
+
+Current installed custom P2-count remains SHA3cbc3efc01e2fad673c9433868627f3a14b2cdaeb9f8a1ca429327b2e357a2a6,
+EDP rgb-001-r10 and matching EMOS v0.1.24 remain unchanged. No firmware flash,
+new game/benchmark/fixture or SD write. Final handback verifies admitted neutral
+input, LegacyCLI, listener offline/no job, collectors closed. Bench released.
+Evidence agents/bench010/serial-repair-r01; tracked findings
+ docs/tasks/BENCH-010/SERIAL-REPAIR-R01.md; operation docs/serial-monitor.md.
+Five Extender capture tools and performance reader adopt helper; reset output
+now distinguishes fresh admission from actual MOS execution.
+
+Fsim received implementation/results via mailbox message
+2026-10-12_05-19-44_linux-extender_bench010-joined-control-repair-results;
+five reports acknowledged only after findings were sent. Its copied collector
+has NOT been changed here; owner must adopt maintained opener before reopening.
+Short induced-reset recovery mechanism and broader USB/paired-reset coverage
+remain unproved. No speculative firmware patch, release promotion or acceptance
+claim. Changes are uncommitted pending Author review.
+
+Earlier checkpoints below are history, not current bench instructions.
+
+# Current stop — installed Pingo2 input review; no bench access
+
+Author requested review against the actually installed custom Pingo2, not stock.
+Fsim's later hash report supersedes the stock-VDP checkpoint below: P2 count/resource
+app SHA256 3cbc3efc01e2fad673c9433868627f3a14b2cdaeb9f8a1ca429327b2e357a2a6,
+with retained EDP rgb-001-r10 and matching EMOS v0.1.24 dated 2026-10-07.
+Exact source/artifact authorities and findings: docs/tasks/BENCH-010/CODE-REVIEW-R01.md.
+
+Offline replay reproduces the 2-emitted/50-discarded session when a keyboard-layout
+boundary is injected; this does not prove why the layout stream arrived. The
+keyboard status boot field is an input epoch, not necessarily a P4 restart.
+Olimex Rev B USB auto-reset reaches both eZ80 RESET and mainboard ESP32 EN.
+Earlier statements below claiming an isolated VDP USB reset were incorrect.
+
+Newest fsim messages and direct Author confirmation isolate serial opening:
+immediate Agon reset, keyboard unavailable, second reset restores keyboard.
+Actual before/after status files still report ready=true with unchanged epoch;
+that is not proof of working input. Pyserial opens before separate DTR/RTS
+updates, providing a plausible shared-reset transient; electrical levels/pulse
+and failed first-startup admission remain unproved. No P2 idle keyboard-protocol
+clash found in the reviewed paths. The WDT warning alone is not reset proof.
+Fsim reports collector closed and recovered bench untouched; no live check here.
+
+No hardware access, serial open, polling, reset, flash, firmware edits, test launch
+or peer acknowledgement in this offline review. Do not disturb the bench. Latest fsim messages remain unacknowledged pending
+findings/report coordination, per Author direction.
+Production selection unchanged. Next bounded physical check needs fresh handover;
+read operation protocols and local bench record first. This review is uncommitted.
+
+Earlier checkpoints below are history, not current firmware/bench assertions.
+
+# Current stop — true pre-parallel EDP restored; listener verification failed
+
+## Corrected pre-parallel rollback — 2026-10-12
+
+Author rejected data-r20 because it retained parallel-boot integration and directed removal of parallel-enabled bench firmware, with matching EMOS. Restored exact accepted HDMI rgb-001-r10-b2026-10-07-22-56-28Z (source3303bab2185cd2cc86066d0859f515f97431f0be); all four retained segments were hash-checked and independently flash-verified. This is the earlier combination in HDMI-002/R10-PHYSICAL-RESULTS.md, before parallel-boot integration. Matching EMOS is agon-emos-v0.1.24-b2026-10-07-23-11-33Z, already installed and independently full-ROM verified at the previous rollback; no newer EMOS was substituted and no redundant FLASH performed. Stock mainboard VDP v2.16.0 unchanged. Parallel development source is preserved, not deleted.
+
+EDP boot identity confirmed r10 and ordinary UART; post-release keyboard admission returned ready=true/locale1. Attempted SAVE ROM then explicit foreground listener for actual CLI/ROM requalification. Keyboard submissions completed, but listener never became online; later HTTP requests timed out. No fresh ROM download or listener EXIT is claimed. No reset/replay after failure. Startup was not edited; no tests launched. Immediate ready status is not a successful operation qualification. Evidence agents/bench010/pre-parallel-r01. Production selection unchanged.
+
+# Current stop — stock mainboard VDP restored
+
+## EDP rollback and stock mainboard VDP restoration — 2026-10-12
+
+Author directed EDP-only rollback to retained port-008-data-r20-b2026-10-11-09-07-32Z. All four segments independently verified; NVS preserved. Post-release keyboard admission timed out (ready=false); Author reports still broken. No listener/test invoked. EMOS remains restored v0.1.24, not reflashed.
+
+Author then directed restoration of official stock mainboard VDP v2.16.0. Retained official release asset firmware.bin SHA256 b807beef35823b13a0a056f11b7464cd1b1c6356dce0e4098b78ebe059ded35f was checked against the retained release digest, written only at app0 offset0x10000 and independently verified. Bootloader, partitions, EMOS and EDP unchanged. Flash helper reset mainboard VDP; no Agon reset or test invocation. Post-restoration keyboard/CLI behavior is not yet qualified. The custom fsim mainboard VDP is a possible interaction, not an established cause. Evidence: ignored agents/bench010/{edp-rollback-r01,stock-vdp-r01}.
+
 # Current stop — EMOS-only rollback complete
 
 Author requested rollback then stop. Restored verified

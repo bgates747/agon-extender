@@ -4,7 +4,12 @@ The existing 2N2222 actuator provides ordinary mainboard reset independently
 of the P4. The Pi's physical pin11 / BCM GPIO17 drives the base through 10 kohm;
 physical pin9 / ground joins emitter and mainboard ground. The collector goes
 to Agon Light2 ZDI1 pin2, RST/EN. ZDI1 pins3 and5 are ground. Pin1 is +3.3V and
-is not used. The connector name does not mean the ZDI debug protocol is used.
+is not used. The connector name does not mean the ZDI debug protocol is used. The Rev B
+schematic connects this RST/EN net to both eZ80 RESET and mainboard ESP32 EN.
+The mainboard CH340 DTR/RTS auto-program circuit also drives it. Consequently,
+esptool's mainboard hard-reset can restart both processors; it is not an
+isolated VDP reset. Serial-open control-line behavior must not be assumed
+harmless without qualification. Use the maintained [joined-control serial opener](serial-monitor.md); ordinary pyserial DTR-first deassertion was found to pulse this reset circuit. See [the installed-source review](tasks/BENCH-010/CODE-REVIEW-R01.md).
 The optional 100 kohm resistor joins base to emitter. Do not join power rails.
 
 The previously verified transistor lead order is E, B, C with flat face toward
@@ -69,8 +74,11 @@ bench state:
 
 For an automated reset that must establish usable Extender input, add
 `--verify-url http://P4_ADDRESS`. The wrapper reads the current boot epoch
-before pulsing, then requires a different epoch with admitted, neutral Extender
-keyboard input before printing `AGON RESET VERIFIED`; timeout exits nonzero.
+before pulsing, then requires a different input epoch with admitted, neutral
+Extender input before printing `AGON RESET VERIFIED`; timeout exits nonzero.
+This verifies the P4 admission state, not actual MOS command execution. A
+separate harmless CLI/service exchange is required when qualifying functional
+recovery; an unchanged ready=true snapshot alone can conceal lost input.
 Without that option it reports `PULSE-ONLY COMPLETE` and makes no boot-success
 claim; its message identifies the caller as the owner of subsequent
 verification. Automated boot and qualification workflows must use the verified

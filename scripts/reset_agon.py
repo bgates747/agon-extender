@@ -54,8 +54,8 @@ echo '100 ms reset pulse sent and GPIO released.'
     if not a.verify_url:
         print('PULSE-ONLY COMPLETE — the caller owns subsequent boot/application verification.')
         return
-    print('Attempting to verify a fresh EMOS boot and working Extender keyboard input.', flush=True)
+    print('Attempting to verify fresh Extender input admission; command execution needs a separate check.', flush=True)
     after = wait_boot(a.verify_url, before['boot'], a.verify_timeout)
-    print(f"AGON RESET VERIFIED — fresh boot {after['boot']} has working Extender input.")
+    print(f"AGON RESET VERIFIED — fresh boot {after['boot']} reports admitted neutral input; CLI execution is not verified.")
 
 if __name__=='__main__':main()

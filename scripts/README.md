@@ -14,6 +14,7 @@ currently installed firmware or a ready-to-run qualification procedure.
 | [screen_text.py](screen_text.py) | Pixel-derived P4 text readback, not MOS RAM or Legacy display; [screen-text guide](../docs/screen-text.md) |
 | [reset_agon.py](reset_agon.py), [reset_bridge.py](reset_bridge.py) | One Pi-actuated reset and optional browser bridge; [reset guide](../docs/bench-reset.md) owns configuration and effects |
 | [prepare_mos_recovery.py](prepare_mos_recovery.py), [mos_recovery_console.py](mos_recovery_console.py) | Manifest-bound recovery payload and maintained programmer console; [ROM recovery](../docs/mos-recovery.md), not ordinary reset |
+| [serial_monitor.py](serial_monitor.py), [passive_serial.py](passive_serial.py) | Bounded capture and reusable joined-DTR/RTS opener; [serial capture guide](../docs/serial-monitor.md) explains the Agon USB reset hazard and tested scope |
 | [agentcoms.py](agentcoms.py) | Durable agent mailbox; machine-local `agentcoms.md` supplies participants/endpoints. Messages do not expand Author authorization |
 
 Use the local project's Python environment on Linux. The operation guide covers

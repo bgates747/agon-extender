@@ -11,7 +11,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Fsim reports failed Agon-only re-admission, paired-reset recovery, then programming USB disconnects and lost UART counts. Preserve the validated application result; isolate reset/input and USB/observer failures separately. Proposed only; investigate after the current deployment stop and fresh authorization.
+- [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired and bounded hardware checks pass without firmware changes. Author review/fsim helper adoption and broader USB loss/paired-reset investigation remain; see R02 results.
 
 ## Active board-build preparation
 

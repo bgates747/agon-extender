@@ -23,6 +23,7 @@ flash, rollback, transfer and monitoring, including correction/stop boundaries.
 | Mainboard SD: foreground checked/fast, candidate automatic WebDAV and application transfers | [Mainboard SD](mainboard-sd.md) |
 | Physical/browser/agent input, ownership and platform limits | [Keyboard input](remote-keyboard.md) |
 | Read visible ExCom text without taking video ownership | [Screen text](screen-text.md) |
+| Mainboard USB diagnostic capture without separate reset-line transitions | [Serial capture](serial-monitor.md) |
 | Normal Agon reset and browser reset button | [Bench reset](bench-reset.md) |
 | Recover an Agon that cannot boot MOS | [MOS recovery](mos-recovery.md) |
 | Where files belong on SD | [SD layout](sd-layout.md) |

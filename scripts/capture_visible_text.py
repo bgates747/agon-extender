@@ -95,12 +95,8 @@ def main():
     now = datetime.now(timezone.utc)
     folder = args.output_parent / ("PORT-014-" + now.strftime("%Y-%m-%d-%H-%M-%SZ"))
     folder.mkdir(parents=True, exist_ok=False)
-    import serial
-    port = serial.Serial(port=None, baudrate=115200, timeout=1)
-    port.dtr = False
-    port.rts = False
-    port.port = str(args.port)
-    port.open()
+    from passive_serial import open_passive_serial
+    port = open_passive_serial(args.port, timeout=1)
     collected = bytearray()
     first_pass_at = None
     capture_error = None
