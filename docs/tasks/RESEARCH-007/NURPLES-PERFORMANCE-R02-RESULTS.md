@@ -225,3 +225,37 @@ or enabling this flag in the final candidate. Small differences are observations
 not proof of a statistically reliable regression. The separate bitmap-fast
 pilot uses cache-once on both prebuilt members only to isolate its bitmap flag;
 that does not select cache-once for the final matched cohort.
+
+
+## Narrow indexed bitmap pilot — retained for final comparison
+
+One fresh control/candidate window per workload uses identical clean source
+`5444b8f345fc79439a382411c780dda7bd427397`, SDK and frozen fixtures. Both images
+select indexed whole-frame/SW-visible snapshots and cache-once; the existing
+inline bitmap SET painter is their sole option difference. Cache-once remains
+unselected for the final cohort. All six records, exact bitmap call coverage,
+installed manifests and repaired Nurples trajectory validate. Lowest observed
+gain first; positive reduction means less queued drawing wall time.
+
+| Workload | Inline painter off, µs/update | Inline painter on, µs/update | Observed reduction |
+|---|---:|---:|---:|
+|Repaired software Nurples|1937.03|1805.68|6.78%|
+|Partial vertical scroll with bitmap row|1731.20|1596.88|7.76%|
+|64 bitmap plots + marker|7280.97|3253.15|55.32%|
+
+Nurples's bitmap component falls310.34→239.38µs/update; its final software-sprite
+component falls120.48→87.60µs/update. Scrolling remains the largest component at
+1196.05µs/update. Its background publication stays58.88→58.90/s and application
+pacing stays60updates/s. The finite64-plot PRT completionp95 improves1906→1576
+counts, still including submission, UART/query/reply and native/output waiting.
+One60Hz budget is1200 nominalPRTcounts.
+
+These single-window observations justify retaining the inline painter for the
+final repeated matched-source comparison. They do not qualify a repeatedp95,
+individual-render tail, visual/input pass or overall50% Nurples improvement.
+The next combined builds include bounded exact samples at existing completion
+queries and a separately selected proven-PIE indexed snapshot row copy. Compare
+that copy with and without its selector before choosing it. Preserve original
+RGB888 and previous RGB fast as separate same-source references. Unrelated
+output-phase drops remain visible without invalidating otherwise exact queued
+render samples; output and drawing still require separate conclusions.
