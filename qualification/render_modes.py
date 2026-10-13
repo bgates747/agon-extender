@@ -195,7 +195,7 @@ class Adapter:
                 if (fences.get('count')!=job['frames']+2 or fences.get('pending_requests')!=0 or
                     fences.get('errors')!=0 or not fences.get('samples_complete')):
                     raise RuntimeError('Finite render fence samples incomplete or not N+2')
-            faults=('faults','late','underruns','invalid_blocks','sequence_errors','cache_errors','overlap')
+            faults=('faults','late','over_budget','underruns','invalid_blocks','sequence_errors','cache_errors','overlap')
             before_rolling=initial_display.get('rolling',{});after_rolling=display.get('rolling',{})
             output_errors={k:after_rolling.get(k,0)-before_rolling.get(k,0) for k in faults}
             if any(v!=0 for v in output_errors.values()):
