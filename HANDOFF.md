@@ -7,11 +7,16 @@ Nurples. Target25%, aim50% against current RGB888 with repeated comparable data.
 No parallel/ExExt, EMOS, mainboard VDP or wiring changes. Preserve first-window
 partial results below; their cleanup completed and is not this window's cleanup.
 
-Four frozen pair-r04 builds from isolated a167e43e are complete; reviewed bench-r05
-will measure fresh RGB888 controls, then indexed-visible and direct-BGR overlay.
-Initial bench Legacy CLI, listener offline after positive EXIT; original38B startup
-and original SCANconfigs restored. Root reserves bench and stages readback-verified
-63B setup-only mode20 startup before candidate flashing. All tests explicit CLI.
+Four frozen pair-r04 builds from isolated a167e43e are complete. Reviewed bench-r05
+now validates36 elementary/software records across three windows per variant.
+Indexed queued rendering mean reductions: bitmaps32–36%, partial scroll57%,
+static32 software sprites36%, scrolling32sprites53%, repaired Nurples52.52%.
+Output snapshot/expansion and native wait remain separate; finite completion
+tails regress, and physical visual/input acceptance is unproven. Hardware-sprite
+RGB888 controls are underway before the direct-BGR overlay candidate. Separate
+default-off cache and packed-bitmap candidates have isolated source/build records.
+Original38B startup/configs remain preserved; temporary63B setup-onlymode20
+startup is active. Root owns the only bench client. All tests explicit CLI.
 Machine-local state/authority/receipts remain in HARDWARE.local.md and agents/.
 Oryx available for headless work. No production promotion or visual pass claimed.
 
