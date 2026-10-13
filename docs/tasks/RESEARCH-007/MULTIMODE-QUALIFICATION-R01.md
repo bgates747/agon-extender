@@ -98,6 +98,12 @@ records do not substitute for Author visual/gameplay acceptance.
    no subsequent automated clear/reset/game launch may erase it. Save final
    data before the banner. Distinguish host summary success from unperformed
    Author visual/input acceptance.
+5. Prepare an explicit deferred-collection path for operator-assisted SD-card
+   results when the Author is available. Retain P4 windows and identities during
+   execution; keep raw-data receipts pending until copied results validate.
+   Withhold the success cue while awaiting collection. Preserve a separately
+   authorized serial fallback. The current per-job downloader does not yet
+   supply this workflow; see the [offline processing findings](CARD-RESULTS-R01.md).
 
 Implementation: `qualification/prepare_render_modes.py` prepares the immutable
 local package; `qualification/render_modes.py` owns admitted installation,
@@ -244,6 +250,16 @@ When the Author is available, physical card collection is an authorized option
 for large result sets. Ask directly in chat at a verified safe handback; retain
 the files and integrity receipts, safely unmount the selected card, and keep
 test execution separate from collection authorization.
+
+## Offline result processing — 2026-10-13
+
+[Processing r01](CARD-RESULTS-R01.md) revalidates sixteen predecessor smokes and
+thirty selected mode-20 records against the copied card and frozen host
+metadata. The newest corrected-pair comparison remains unmeasured. The control
+file audit finds 562 matches, 80 missing indexed smoke files and zero mismatches;
+maintained `/extender` fixtures were outside the collection scope. Offline work
+is complete for this tranche. Stop for Author confirmation of SD-card access;
+do not resume staging or probe a mount/bench automatically.
 
 ## Decision register
 
