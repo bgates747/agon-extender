@@ -157,6 +157,22 @@ closes cleanup only; NP03–NP07 and the overall performance objective are incom
 
 ## Execution notes
 
+The renewed NP02/NP04 measurement work may add a benchmark-only ordered fence
+sidecar to obtain actual per-update queued-render tails from the existing pixel
+queries. The P4 parser arms a scoped request around its unchanged completion
+query; the foreground primitive drain samples only after committing rendering
+counters and before resuming the already suspended worker. No new UART bytes,
+reply fields, application fences, locks or worker joins are introduced. A shared
+4,096-entry uint32 PSRAM pool (16KiB) and bounded window descriptors retain raw
+samples; exhaustion, counter overflow or boundary mismatch invalidates the tail
+claim rather than truncating silently. Allocation occurs outside measured work.
+Keep aggregate schema2 and the six phase counters unchanged. Seed and final-tail
+fences remain separate from measured updates; unfenced Nurples cannot acquire
+individual-update tails from these existing streams. Host checks must cover
+scope, reset, overflow and ordering; fresh identical-instrumentation paired
+builds/runs are mandatory before reporting the new tails. This refines existing
+measurement subtasks, not the workload or hardware scope.
+
 NP01 frozen in73a423de; prior evidence/source commits0ed5f161,bcdc70ce pushed.
 Three bounded code/measurement reviews run in parallel; root alone owns bench.
 Initial attribution: indexed source snapshots plus prior-buffer waits dominate
