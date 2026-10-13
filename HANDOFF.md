@@ -1,26 +1,32 @@
 # Active work — renewed Nurples optimization window
 
-Author renewed eight hours2026-10-13T00:37:17Z–08:37:17Z. Continue the existing
-[NP03–NP08 contract](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md), with
-static bitmap/partial scrolling before software/hardware sprites. Target25%,
-aim50%; no parallel/ExExt, EMOS, mainboard VDP or wiring changes.
+Author renewed eight hours2026-10-13T00:37:17Z–08:37:17Z. Continue existing
+[NP03–NP08 contract](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md); target25%,
+aim50%, static/partial scrolling before sprites. No parallel/ExExt, EMOS,
+mainboard VDP or wiring changes. Production remains unchanged.
 
-Three comparable original-RGB/indexed cohorts validate elementary/SW/HW means.
-Indexed repaired Nurples queued rendering falls52.52% with software sprites and
-41.58% with hardware sprites; native waiting/output copy regress. These are
-window-mean gains, not individual-frame tails or visual acceptance. The Author's
-recent good-picture observation was the RGB888 control. Narrow cache-once pilot
-found no useful gain; leave that flag off in final candidates. Existing inline
-indexed bitmap pilot is active. Default-off proven-PIE snapshot copy and bounded
-per-fence render samples are prepared in isolated trees for independent review.
-Final comparisons must include original RGB and previous RGB fast from the same
-new source, SDK and measurement hooks. Full-width widescreen remains untested.
+Repeated original-RGB/indexed cohorts validate52.52% software and41.58% hardware
+Nurples queued-render window-mean reductions, with output/native-wait drawbacks.
+Single-pair inline bitmap pilot improves64-plot rendering55.32% and Nurples6.78%
+further. Cache-once and snapshot PIE pilots found no useful gain; both remain
+off in the next candidate. Exact finite render samples now pass physically at
+existing UART completion queries; unfenced Nurples remains aggregate-only.
+
+Bounded indexed partial-scroll PIE reuse passed sanitized actual-controller,
+sprite/alias/bounds checks, actual target-object compilation and independent
+review. Clean pushed sourcee26c24f7 is building four matched variants, original
+RGB, previous RGB fast, indexedbase, indexed; indexed differs only scroll-fast.
+Fresh bench-r09 and separate scroll pilot are prepared. Actual installation,
+repeated comparisons, visual/input acceptance and full-width widescreen remain
+pending. Earlier good-picture Author observation described the RGB888 control.
+[Renewed results](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R02-RESULTS.md) retain
+raw-scope limits and negative pilots rather than claim full pipeline gains.
 
 Temporary63B setup-only ExCom/mode20 startup is active; original38B startup/four
-configs remain preserved. Tests use explicit CLI only. Root owns the only bench
-client. Current exact install/session/process/receipts are in HARDWARE.local.md
-and ignored agents/. Preserve time for restoration and real CLI/input handback
-before08:37:17Z. No production promotion, new version or visual pass claimed.
+configs preserved. Tests use explicit CLI only. Root owns the only bench client.
+Exact active process/install/session/receipts remain in HARDWARE.local.md and
+ignored agents/. Reserve restoration, full readback and real CLI/input handback
+before08:37:17Z; no production promotion or new release tag authorized by counters.
 
 Earlier checkpoints below are historical.
 
