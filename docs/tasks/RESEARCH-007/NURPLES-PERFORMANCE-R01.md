@@ -292,3 +292,21 @@ Compare aggregate row-wait/composition time per attempt, not per-call means;
 instrument removal can overstate a small output-preparation benefit. The queued
 render sidecar remains identical. An output-only win needs a later probes-off
 confirmation before a production performance claim.
+
+
+The renewed-window refinement retains the same existing workloads and subtasks.
+A bounded default-off snapshot-copy pilot reuses the proven P4 PIE kernel for
+native512×384 single-buffer indexed rows, preserving authoritative descriptors,
+native exclusion, cancellation and output ownership. Cache-once is unselected
+following its narrow negative pilot. Compare the final candidate with both the
+original RGB888 reference and the previously measured RGB fast selection from
+one clean source and SDK; historical cross-revision results are not qualification.
+
+Finite fixtures already issue completion queries. A bounded diagnostic sidecar
+may record cumulative committed queued-render time at those existing fences,
+without adding commands, replies, worker joins or per-primitive synchronization.
+Qualify individual-update deltas only with complete identity/count/coverage,
+closed/quiescent ownership, no actual RenderBatch drop/overflow, and no sample
+errors. Retain unrelated asynchronous output phase drops separately; they do not
+invalidate the distinct queued-render counter. Unfenced Nurples retains aggregate
+rendering scope and cannot acquire per-frame completion claims by inference.

@@ -1,24 +1,26 @@
 # Active work — renewed Nurples optimization window
 
-Author explicitly renewed eight hours2026-10-13T00:37:17Z–08:37:17Z. Continue the
-existing [NP03–NP08 contract](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md),
-static bitmap/partial scrolling before software/hardware sprites and repaired
-Nurples. Target25%, aim50% against current RGB888 with repeated comparable data.
-No parallel/ExExt, EMOS, mainboard VDP or wiring changes. Preserve first-window
-partial results below; their cleanup completed and is not this window's cleanup.
+Author renewed eight hours2026-10-13T00:37:17Z–08:37:17Z. Continue the existing
+[NP03–NP08 contract](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md), with
+static bitmap/partial scrolling before software/hardware sprites. Target25%,
+aim50%; no parallel/ExExt, EMOS, mainboard VDP or wiring changes.
 
-Four frozen pair-r04 builds from isolated a167e43e are complete. Reviewed bench-r05
-now validates36 elementary/software records across three windows per variant.
-Indexed queued rendering mean reductions: bitmaps32–36%, partial scroll57%,
-static32 software sprites36%, scrolling32sprites53%, repaired Nurples52.52%.
-Output snapshot/expansion and native wait remain separate; finite completion
-tails regress, and physical visual/input acceptance is unproven. Hardware-sprite
-RGB888 controls are underway before the direct-BGR overlay candidate. Separate
-default-off cache and packed-bitmap candidates have isolated source/build records.
-Original38B startup/configs remain preserved; temporary63B setup-onlymode20
-startup is active. Root owns the only bench client. All tests explicit CLI.
-Machine-local state/authority/receipts remain in HARDWARE.local.md and agents/.
-Oryx available for headless work. No production promotion or visual pass claimed.
+Three comparable original-RGB/indexed cohorts validate elementary/SW/HW means.
+Indexed repaired Nurples queued rendering falls52.52% with software sprites and
+41.58% with hardware sprites; native waiting/output copy regress. These are
+window-mean gains, not individual-frame tails or visual acceptance. The Author's
+recent good-picture observation was the RGB888 control. Narrow cache-once pilot
+found no useful gain; leave that flag off in final candidates. Existing inline
+indexed bitmap pilot is active. Default-off proven-PIE snapshot copy and bounded
+per-fence render samples are prepared in isolated trees for independent review.
+Final comparisons must include original RGB and previous RGB fast from the same
+new source, SDK and measurement hooks. Full-width widescreen remains untested.
+
+Temporary63B setup-only ExCom/mode20 startup is active; original38B startup/four
+configs remain preserved. Tests use explicit CLI only. Root owns the only bench
+client. Current exact install/session/process/receipts are in HARDWARE.local.md
+and ignored agents/. Preserve time for restoration and real CLI/input handback
+before08:37:17Z. No production promotion, new version or visual pass claimed.
 
 Earlier checkpoints below are historical.
 
