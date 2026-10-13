@@ -11,6 +11,7 @@
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "fenced_render_samples.hpp"
 namespace agon_bench {
 enum Phase {Drain,RowWait,RowCompose,Expand,Cache,Conversion,PhaseCount};
 struct Counter {std::atomic<std::uint32_t> calls{},us{},max{},drops{};};
@@ -121,6 +122,72 @@ class RenderBatch {
   }
   ~RenderBatch(){if(token_)finish(tally_.primitive_calls);}
 };
+class RenderFenceRequest;
+inline std::atomic<TaskHandle_t> render_fence_owner{};
+inline RenderFenceRequest *render_fence_request{};
+// A single parser task owns a scoped pixel-query request. Other foreground
+// flushes cannot dereference it: first compare task ownership, then access the
+// pointer only on that same task. Destruction clears ownership before releasing
+// outstanding; B009 reset cannot recycle a descriptor or pool under a request.
+// No new mutex, worker join, reply byte or per-primitive atomic is introduced.
+class RenderFenceRequest {
+  std::uint32_t token_{};
+  std::uint32_t generation_{};
+  bool captured_{};
+  unsigned blocked_{};
+  RenderFenceRequest *parent_{};
+ public:
+  explicit RenderFenceRequest(bool single_buffered) {
+    if(!single_buffered)return;
+    generation_=fence_samples.generation.load(std::memory_order_acquire);
+    token_=active.load(std::memory_order_acquire);
+    if(!token_||token_>FenceWindowCapacity){token_=0;return;}
+    outstanding.fetch_add(1);
+    if(fence_samples.generation.load(std::memory_order_acquire)!=generation_||
+       active.load()!=token_||!fence_samples.windows[token_-1].enabled.load()) {
+      outstanding.fetch_sub(1);token_=0;return;
+    }
+    auto &w=fence_samples.windows[token_-1];w.pending.fetch_add(1);
+    TaskHandle_t empty{};
+    const auto task=xTaskGetCurrentTaskHandle();
+    if(!task||!render_fence_owner.compare_exchange_strong(empty,task)) {
+      w.errors.fetch_or(FenceRequestInvariant);
+      if(task&&empty==task&&render_fence_request) {
+        parent_=render_fence_request;++parent_->blocked_;
+      }
+      w.pending.fetch_sub(1);outstanding.fetch_sub(1);token_=0;return;
+    }
+    render_fence_request=this;
+  }
+  RenderFenceRequest(RenderFenceRequest const &)=delete;
+  RenderFenceRequest &operator=(RenderFenceRequest const &)=delete;
+  void capture(bool single_buffered) {
+    if(blocked_)return; // A nested failed request must not consume its parent.
+    auto &w=fence_samples.windows[token_-1];
+    if(captured_){w.errors.fetch_or(FenceRequestInvariant);return;}
+    captured_=true;
+    if(fence_samples.generation.load(std::memory_order_acquire)!=generation_||
+       active.load(std::memory_order_acquire)!=token_) {w.errors.fetch_or(FenceBoundary);return;}
+    if(!single_buffered) {w.errors.fetch_or(FenceIneligible);return;}
+    if(esp_timer_get_time()-windows[token_-1].start>UINT32_MAX)w.errors.fetch_or(FenceCounterOverflow);
+    fence_samples.sample(token_-1,render_windows[token_-1].rendering_us.load());
+  }
+  ~RenderFenceRequest() {
+    if(parent_){--parent_->blocked_;return;}
+    if(!token_)return;
+    auto &w=fence_samples.windows[token_-1];
+    if(!captured_)w.errors.fetch_or(active.load()==token_?FenceMissingBoundary:FenceBoundary);
+    render_fence_request=nullptr;
+    render_fence_owner.store(nullptr,std::memory_order_release);
+    w.pending.fetch_sub(1,std::memory_order_release);
+    outstanding.fetch_sub(1);
+  }
+};
+inline void renderFenceAtQuiescentFlush(bool single_buffered) {
+  const auto task=xTaskGetCurrentTaskHandle();
+  if(!task||render_fence_owner.load(std::memory_order_acquire)!=task)return;
+  if(render_fence_request)render_fence_request->capture(single_buffered);
+}
 struct Scope {
   std::uint32_t token{}; std::int64_t start{}; Phase phase;
   explicit Scope(Phase p):phase(p) {
@@ -175,6 +242,7 @@ inline void marker(std::uint8_t const *p,std::size_t n) {
     active.store(0,std::memory_order_release);
     while(outstanding.load())vTaskDelay(1);
     used=0;overflow=false;render_overflow=false;indexed_pre_c2m_overflow=false;
+    fence_samples.reset();
   } else if(p[5]==1) {
     if(active.load()||used==512){overflow=true;return;}
     auto &w=windows[used];
@@ -185,7 +253,14 @@ inline void marker(std::uint8_t const *p,std::size_t n) {
     for(auto &c:w.phases){c.calls.store(0);c.us.store(0);c.max.store(0);c.drops.store(0);}
     w.scanouts.store(0);w.updates.store(0);w.marker_valid.store(0);w.marker_invalid.store(0);w.last_frame.store(UINT32_MAX);w.marker_transitions.store(0);w.marker_repeats.store(0);
     w.id=p[6]|p[7]<<8;w.flags=p[8];w.tag=p[9]|p[10]<<8|p[11]<<16;
-    w.end=0;w.start=esp_timer_get_time();
+    w.end=0;
+    if(used<FenceWindowCapacity) {
+      // Allocation is outside active/measured work. Unfenced game case9 keeps
+      // its original aggregate-only scope, not an invented per-update fence.
+      const bool supported=w.id==3||w.id==7||w.id==8||w.id==39||w.id==41||w.id==54;
+      fence_samples.open(used,(w.flags&1)&&supported);
+    }
+    w.start=esp_timer_get_time();
     active.store(++used,std::memory_order_release);
   } else if(p[5]==2) {
     auto t=active.exchange(0,std::memory_order_acq_rel);
@@ -234,6 +309,17 @@ inline std::string json() {
     else {
       auto &c=indexed_pre_c2m[i];
       std::snprintf(b,sizeof(b),"{\"calls\":%u,\"us\":%u,\"max_us\":%u,\"boundary_drops\":%u}",c.calls.load(),c.us.load(),c.max.load(),c.drops.load());out+=b;
+    }
+    out+=",\"render_fences\":";
+    if(i>=FenceWindowCapacity)out+="null";
+    else {
+      // Acquire quiescence before reading final render drops: reading it
+      // afterward could miss a batch which drops then retires in between.
+      // Legacy output phases have independent counters. A PPA/cache/row scope
+      // crossing window close makes that phase partial, not this render total.
+      const bool quiescent=outstanding.load(std::memory_order_acquire)==0;
+      const bool boundary_valid=!render_overflow.load()&&render_windows[i].boundary_drops.load()==0;
+      fence_samples.appendJson(out,i,w.end!=0,boundary_valid,quiescent);
     }
     out+="}";
   }
