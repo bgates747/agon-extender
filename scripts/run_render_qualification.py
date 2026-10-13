@@ -149,9 +149,10 @@ def run(plan, output, invoke=execute):
 def banner(success):
     """MOS VDU command file, no mode switch, load/run, reset or boot hook."""
     message = "ALL TESTS COMPLETE SUCCESS" if success else "TESTS COMPLETE WITH ERRORS"
-    # Stock physical colours: green=2, red=1, white=7. Full coloured screen
-    # and repeated white text remain legible even in the 40-column mode.
-    lines = ["VDU 23 27 7 0", "VDU 23 0 149 0 255 255 0", "VDU 4 26",
+    # Explicit VDU19 logical mappings avoid assuming the palette left by a
+    # game. Physical RRGGBB colours: red48, green12, white63, in every mode.
+    lines = ["VDU 23 27 7 0", "VDU 23 1 0", "VDU 23 0 149 0 255 255 0", "VDU 4 26",
+             "VDU 20", "VDU 19 1 48 0 0 0", "VDU 19 2 12 0 0 0", "VDU 19 7 63 0 0 0",
              "VDU 17 " + str(128 + (2 if success else 1)), "VDU 12", "VDU 17 7"]
     for y in (3, 5, 7, 9, 11):
         lines.append("VDU 31 2 " + str(y))

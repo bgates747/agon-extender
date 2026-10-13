@@ -112,6 +112,7 @@ class Adapter:
             return
         # The reviewed installer itself validates clean source, manifests,
         # non-NVS segments, independent readback and actual CLI/read/EXIT.
+        self.b.fast_exit();self.b.key_command('VDU 12');self.b.fast_start()
         self.close()
         runid='mq-'+dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d-%H%M%S')+'-'+label
         subprocess.run([sys.executable,str(installer),label,'--run-id',runid],cwd=ROOT,check=True)
@@ -226,15 +227,24 @@ class Adapter:
         if self.b.fast_read('/autoexec.txt')!=original:raise RuntimeError('Final startup restoration failed')
         self.b.state['current_sha256']=sha(original);self.b.save()
         target=self.p['remote']+('/success.txt' if success else '/errors.txt')
-        self.b.fast_exit();self.b.key_command('EMOS EXCOM --keep-display')
-        self.b.key_command('EXEC '+target)
-        time.sleep(2)
+        # Draw the cue into both banks. The pixel-based text reader may inspect
+        # the current drawing bank, while HDMI presents the other bank.
+        # One CLI batch supplies positive listener handback after both draws;
+        # no guessed delay is used as proof of command completion.
+        batch=self.p['remote']+'/final-notice.txt'
+        raw=('EMOS EXCOM --keep-display\r\nVDU 23 1 0\r\nVDU 20\r\nVDU 19 1 48 0 0 0\r\n'
+             'VDU 19 2 12 0 0 0\r\nVDU 19 7 63 0 0 0\r\nEXEC '+target+'\r\nEXEC '+target+
+             '\r\nEMOS LEGACY --keep-display\r\nEMOS sdserve --fast /\r\n').encode()
+        self.m.new_file(self.b,batch,raw)
+        self.b.fast_exit();self.b.key_command('EXEC '+batch)
+        self.m.wait_listener(self.b.config,60)
         with (evidence/'screen-text.txt').open('x') as f:
             subprocess.run([sys.executable,str(ROOT/'scripts/screen_text.py'),'--url',self.b.config['p4']],stdout=f,check=True)
         expected='ALL TESTS COMPLETE SUCCESS' if success else 'TESTS COMPLETE WITH ERRORS'
         if expected not in (evidence/'screen-text.txt').read_text():raise RuntimeError('Final banner text not verified')
+        self.b.fast_exit();self.m.neutral(self.b.config)
         dump(evidence/'notification.json',dict(success=success,message=expected,original_startup_restored=True,
-                                             screen_text_verified=True,finished_utc=utc()))
+                                             screen_text_verified=True,actual_CLI_handback=True,finished_utc=utc()))
 
 
 def main():
