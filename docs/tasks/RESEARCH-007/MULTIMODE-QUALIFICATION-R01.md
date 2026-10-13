@@ -8,9 +8,11 @@ The runner and 40 per-mode fixture derivatives compile and pass offline checks.
 The predecessor package retains sixteen data-valid short RGB888 receipts.
 The correction tracked in [HDMI-003](../HDMI-003.md) restores stock mode-3 row
 aspect; the Author confirms that its indexed diagnostic box looks square.
-Preparation resumes with the independently verified corrected renderer pair
-and fresh result paths. The full campaign is not ready to invoke, and its
-original stop-before-invocation boundary remains in force.
+Preparation is paused at the Author's explicit stop. The corrected pair remains
+identified, but its fresh short admissions are unstarted. Existing card results
+have been copied and checksum-verified through an operator-assisted Oryx card
+collection. The full campaign is not ready to invoke, and its original
+stop-before-invocation boundary remains in force.
 
 ## Bounded work contract
 
@@ -210,6 +212,38 @@ found all 367 required directory paths present, with none missing. Continue only
 payload deployment, preserving that informative handback failure and avoiding
 directory-batch replay. The Author's standing Agon-first/P4-then-Agon recovery
 order now governs subsequent monitored failures.
+
+## Author stop and physical card collection — 2026-10-13
+
+The Author stopped staging to avoid holding the shared bench and moved the
+mainboard SD card to Oryx. All host preparation workers are stopped; the root
+agent releases its bench reservation. Resume only after Author authorization
+and a fresh bench/card ownership and state check.
+
+Collected `autoexec.txt` and the complete `agents/extender/results` tree:
+2,878 files, 42,374,958 bytes. Source SHA-256 checksums independently verify
+every copied file. The host checksum/copy/extract/verification phase took
+4.404 seconds; operator travel and card handling are excluded. The card files
+were unchanged, and the selected card was unmounted after collection.
+Exact host/mount identity, archive hash and receipts remain in ignored local
+evidence under `agents/research007/card-collection/`.
+
+The copy contains sixteen predecessor smoke results, no corrected-pair smoke
+results and no full-campaign results. The earlier approximately 100-minute
+figure estimates future serial result retrieval; it is not time spent
+collecting an already-completed full campaign. Do not infer a speedup ratio
+between that estimate and this different retained dataset.
+
+The interrupted mixed-package staging checkpoint retains 235 verified entries;
+an earlier fresh-package checkpoint retains 383. A pending read-only STAT
+request remains preserved in its original SD journal. Do not replay it against
+a changed card or listener incarnation. No test, firmware change, reset,
+transaction cleanup or renewed SD deployment occurred during card collection.
+
+When the Author is available, physical card collection is an authorized option
+for large result sets. Ask directly in chat at a verified safe handback; retain
+the files and integrity receipts, safely unmount the selected card, and keep
+test execution separate from collection authorization.
 
 ## Decision register
 
