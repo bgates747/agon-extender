@@ -31,6 +31,7 @@ RGB888 control and indexed candidates, using the reviewed bench-r05 cohort.
 Repeat elementary bitmap/partial-scroll controls before sprite/Nurples graduation.
 Reserve time for fresh ordinary startup/configuration restoration and verified
 handback; original first-window evidence and cleanup remain preserved.
+[Renewed-window results](NURPLES-PERFORMANCE-R02-RESULTS.md) record the fresh cohort.
 [Partial results](NURPLES-PERFORMANCE-R01-RESULTS.md) separate measured bitmap gains,
 the small scrolling gain, unexecuted sprite candidates and closeout state.
 
