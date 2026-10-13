@@ -201,3 +201,27 @@ renderer explicitly selected by the renewal contract. A previous RGB fast
 candidate has separate elementary evidence and remained installed at first-window
 closeout. None of the gains above proves a win against that prior optimization;
 the final fresh cohort should include it as a separate same-source comparator.
+
+## Narrow cache-once pilot — not selected
+
+One fresh window per variant/workload uses identical clean source
+`e00f556903759ce89c1c44901d75c1c15b210d8d`, SDK and frozen workloads. Only the
+guarded output helper cache-once selection changes. All six records validate;
+no repeated-window or individual-frame threshold claim follows from this pilot.
+Worst observed rendering change first; positive reduction means lower cost.
+
+| Workload | Cache-off queued rendering, µs/update | Cache-once queued rendering, µs/update | Observed reduction | Helper pre-C2M off / once, µs/update |
+|---|---:|---:|---:|---:|
+|Partial scroll|1614.08|1735.89|−7.55%|17.38 /0.00|
+|64 bitmap plots + marker|7124.29|7278.26|−2.16%|30.63 /0.00|
+|Repaired software Nurples|1935.18|1959.74|−1.27%|36.31 /19.33|
+
+The actual helper clean is tens of microseconds, not the roughly4ms broad
+blocking expansion. Nurples still performs required helper cleans after target
+eligibility is revoked, so cache-once does not imply zero calls there. Required
+PPA-driver/input/post-DMA/panel/rolling cache maintenance remains unchanged.
+The pilot supplies no useful rendering gain and does not justify further repeats
+or enabling this flag in the final candidate. Small differences are observations,
+not proof of a statistically reliable regression. The separate bitmap-fast
+pilot uses cache-once on both prebuilt members only to isolate its bitmap flag;
+that does not select cache-once for the final matched cohort.
