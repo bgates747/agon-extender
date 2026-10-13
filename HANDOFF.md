@@ -1,6 +1,29 @@
-# Active goal — Nurples rendering optimization
+# Current stop — Nurples goal timebox elapsed during interruption
 
-Author authorizes eight-hour Nurples optimization goal from13:16:20Z to21:16:20Z; static bitmap/partial scroll before SW/HWsprites,>=25%render-cost gain vs CURRENT RGB888,aim50%; othermodesonlyafter50%512x384+wideinclsprites. Bench exclusive. Existing evidence/observer committed in0ed5f161,bcdc70ce; contract docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md. Initially candidate r05 installed, listeneronlineLegacy,temporary63Bsetup-onlystartup/r03cfgs; session pendingreadresolved, collectorsclosed. Original38Bstartup/fourconfigs savedbench-r02. No hardwareactionyet.
+The eight-hour optimization window ended2026-10-12T21:16:20Z. Root resumed
+2026-10-13T00:16Z after a model/service interruption. No new optimization run
+is authorized by the elapsed timebox. See [partial results](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01-RESULTS.md)
+and [NP01–NP08 contract](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md).
+
+Measured current-RGB888 bitmap rendering improves36–41%; partial viewport scroll
+only4.1%. Control has one window, candidate three; repeated-control p95 and
+Nurples sprite/visual gains remain unproven. Canonical source anchor5684bb04;
+separate pushed branch `codex/nurples-perf-sprites-r01` at a167e43e retains
+default-off SW-visible indexed snapshots/direct-BGR hardware overlays and
+existing rolling-cost HTTP fields. All four pair-r04 whole builds complete and
+hash-verify; no new candidate was physically installed. Prepared bench-r05 is
+offline-only. No production promotion/version change.
+
+Bench closeout pending:6502 mainboard-only cleanup grant until00:45Z, restore
+exact incoming fsimP2, verify63B startup and actual CLI/listener exchange, then
+positive handback. Root does not touch hardware until that handback. P4 last
+verified NP02 RGBfast build14:17:24Z, EMOS unchanged; see ignored local bench
+record for exact hashes, journal authority and current state. Root must then
+restore its saved38B ordinary startup/fourSCANconfigs and verify. Do not infer
+free bench from expired historical lease; no new tests or automatic resets.
+
+Oryx is available for headless emulator work per Author, who remains AFK.
+No Oryx change or graphical review was performed in this closeout.
 
 Earlier checkpoints below are historical.
 

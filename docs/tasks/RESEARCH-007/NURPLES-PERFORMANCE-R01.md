@@ -20,6 +20,13 @@ Time boundary: start2026-10-12T13:16:20Z; stop no later than21:16:20Z (eight hou
 The active goal owns this limit. Finish evidence/restoration within that period.
 Proceed unattended within this scope; pause for any required Author answer.
 
+**Timebox ended; objective unachieved.** A model/service interruption prevented
+completion before the deadline. Root resumed on2026-10-13 after the timebox;
+only evidence preservation and temporary bench restoration continue. No new
+optimization or test cohort starts without renewed Author authorization.
+[Partial results](NURPLES-PERFORMANCE-R01-RESULTS.md) separate measured bitmap gains,
+the small scrolling gain, unexecuted sprite candidates and closeout state.
+
 ## Fixed boundaries and success metric
 
 1. Preserve EMOS, mainboard VDP, ordinary UART ExCom behavior, input, stock-visible

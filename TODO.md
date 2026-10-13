@@ -5,9 +5,9 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
-## Active eight-hour Nurples rendering goal
+## Nurples rendering goal — timebox ended
 
-- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Author-authorized sequential static bitmap/partial-scroll, software sprites, hardware sprites and deterministic Nurples optimization. Target25% lower rendering time against current RGB888, aim50%; other modes gated on50% at512×384 plus widescreen including sprites. Eight-hour deadline in contract; bench exclusive. Existing indexed candidate fails visual/performance acceptance.
+- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Timebox ended during model/service interruption; objective unachieved. Partial bitmap gain36–41%, scrolling4%; sprite candidates compiled but physically untested. Preserve closeout and [partial results](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01-RESULTS.md); renewed Author authorization required for more optimization. Target25%, aim50%; other modes remain gated.
 
 ## Browser paste — accepted development, release closeout pending
 
