@@ -14,8 +14,18 @@ using namespace agon::extender::display;
 using namespace fabgl;
 constexpr int W=64,H=32;
 template<class Depth> struct TestController : StockBoundController<Depth> {
+  ~TestController() override {
+    this->end();
+    // Host-only lifetime cleanup: retained FabGL allocates this cursor in its
+    // controller constructor but never deletes it at teardown. Leave upstream
+    // firmware behavior unchanged while making leak-enabled goldens useful.
+    delete this->mouseCursor();
+  }
   void swap() { this->swapBuffers(); }
   volatile uint8_t *visibleRow(int y) { return this->m_viewPortVisible[y]; }
+  void drawSaved(int x,int y,Bitmap const *bitmap,void *saved) {
+    this->absDrawBitmap(x,y,bitmap,saved,false);
+  }
 };
 using Native=TestController<VGA64Controller>;
 using Direct=TestController<P4Rgb888Controller>;
@@ -136,7 +146,73 @@ void same(const std::vector<RGB888>&a,const std::vector<RGB888>&b) {
   }
 }
 
+#ifdef AGON_EXTENDER_INDEXED_PPA
+// An indexed source may alias its destination or its saved-background span.
+// The contract is the original generic forward traversal, not a snapshot or
+// memmove: saving background precedes reading that pixel's alpha/colour. The
+// stock VGA controller's x^2 lanes cannot serve as a physical byte-alias oracle,
+// so this adversarial test checks that explicit byte contract separately from
+// the native-controller visual goldens and software-sprite restore tests below.
+void indexedAliasGoldens() {
+  Direct direct;direct.paletted().begin();
+  direct.paletted().setResolution("\"64x32\" 1 64 68 72 80 32 34 36 40 -HSync -VSync",W,H,false);
+  assert(direct.display().isViewPortAllocated());
+  direct.display().enableBackgroundPrimitiveExecution(false);direct.bindNativeAliases();
+  Canvas c(&direct.paletted());
+  constexpr int width=9;
+  unsigned cases=0;
+  for(auto format : {PixelFormat::RGBA2222,PixelFormat::RGBA8888})
+    for(int source : {0,4,8,12,16})
+      for(int destination : {-4,0,1,3,6,10,16,28})
+        for(const auto &clip : {Rect(0,0,W-1,0),Rect(2,0,31,0),Rect(5,0,5,0)})
+          for(int saveMode=0;saveMode<5;++saveMode) {
+            std::array<uint8_t,W> expected;
+            for(int x=0;x<W;++x)expected[x]=(((x+cases)%4)<<6)|((x*13+cases)&63);
+            if(format==PixelFormat::RGBA8888) {
+              constexpr uint8_t alpha[]={0,1,64,255};
+              for(int x=0;x<width;++x)expected[source+x*4+3]=alpha[x%4];
+            }
+            auto *row=const_cast<uint8_t*>(direct.display().getScanline(0));
+            std::memcpy(row,expected.data(),W);
+            std::array<uint8_t,width+8> actualSaved,expectedSaved;
+            actualSaved.fill(0xa5);expectedSaved=actualSaved;
+            uint8_t *save=nullptr,*referenceSave=nullptr;
+            if(saveMode==1){save=actualSaved.data()+4;referenceSave=expectedSaved.data()+4;}
+            if(saveMode>=2) {
+              const int offset=saveMode==2?0:saveMode==3?32:48;
+              save=row+offset;referenceSave=expected.data()+offset;
+            }
+            const auto sync=direct.createBlankRawPixel();
+            for(int x=0;x<width;++x) {
+              const int target=destination+x;
+              if(target<clip.X1 || target>clip.X2)continue;
+              if(referenceSave)referenceSave[x]=expected[target];
+              if(format==PixelFormat::RGBA2222) {
+                const auto pixel=expected[source+x];
+                if(pixel&0xc0)expected[target]=sync|(pixel&63);
+              } else {
+                const int offset=source+x*4;
+                if(expected[offset+3]) {
+                  const auto r=expected[offset],g=expected[offset+1],b=expected[offset+2];
+                  expected[target]=sync|(r>>6)|((g>>6)<<2)|((b>>6)<<4);
+                }
+              }
+            }
+            c.setClippingRect(clip);
+            Bitmap bitmap(width,1,row+source,format);
+            direct.drawSaved(destination,0,&bitmap,save);
+            assert(!std::memcmp(row,expected.data(),W));
+            assert(actualSaved==expectedSaved);++cases;
+          }
+  direct.end();
+  std::printf("PASS: %u indexed source/destination/background alias cases\n",cases);
+}
+#endif
+
 int main() {
+#ifdef AGON_EXTENDER_INDEXED_PPA
+  indexedAliasGoldens();
+#endif
   // Exercise physical BGR order, all64 colours, proxy-to-proxy assignment and
   // fill bounds independently of the golden controller.
   for(unsigned colour=0;colour<64;++colour) {

@@ -290,7 +290,7 @@ class HdmiBuildTest(unittest.TestCase):
                 source.write_bytes(b"// changed while building\n")
                 self.assertNotEqual(build_p4.source_input_record(), record)
 
-    def test_bitmap_fast_path_requires_explicit_direct_rgb888(self):
+    def test_bitmap_fast_path_requires_explicit_p4_colour_storage(self):
         selected = build_p4.select_display_profile(self.document, "p4-console",
             "p4-pc", "hdmi", "normal", True, "auto", True, bitmap_fast=True)
         self.assertIn("AGON_EXTENDER_BITMAP_FAST=1", selected["definitions"])
@@ -299,7 +299,24 @@ class HdmiBuildTest(unittest.TestCase):
         self.assertNotIn("AGON_EXTENDER_BITMAP_FAST=1", control["definitions"])
         with self.assertRaisesRegex(SystemExit, "bitmap fast"):
             build_p4.select_display_profile(self.document, "p4-console", "p4-pc",
-                "hdmi", "normal", True, "auto", True, indexed_ppa=True, bitmap_fast=True)
+                "hdmi", "normal", False, "auto", True, bitmap_fast=True)
+
+    def test_bitmap_fast_reuses_indexed_setter_without_bgr_lut(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        for choices in ({"indexed_ppa":True},
+                        {"indexed_ppa":True,"indexed_frame_snapshot":True},
+                        {"indexed_ppa":True,"indexed_frame_snapshot":True,"sw_visible_snapshot":True},
+                        {"indexed_ppa":True,"indexed_frame_snapshot":True,"indexed_output_cache_once":True}):
+            control=build_p4.select_display_profile(*args,**choices)
+            candidate=build_p4.select_display_profile(*args,bitmap_fast=True,**choices)
+            self.assertEqual(control["sources"],candidate["sources"])
+            self.assertNotIn("AGON_EXTENDER_BITMAP_FAST=1",control["definitions"])
+            self.assertIn("AGON_EXTENDER_BITMAP_FAST=1",candidate["definitions"])
+            self.assertNotIn("AGON_EXTENDER_BITMAP_LUT=1",candidate["definitions"])
+            self.assertEqual(set(candidate["definitions"])-set(control["definitions"]),
+                             {"AGON_EXTENDER_BITMAP_FAST=1"})
+        with self.assertRaisesRegex(SystemExit,"LUT requires"):
+            build_p4.select_display_profile(*args,indexed_ppa=True,bitmap_fast=True,bitmap_lut=True)
 
     def test_scroll_fast_selects_p4_kernel_only_in_explicit_rgb888_experiment(self):
         args = (self.document, "p4-console", "p4-pc", "hdmi", "normal", True, "auto", True)

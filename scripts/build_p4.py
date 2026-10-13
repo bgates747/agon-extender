@@ -152,14 +152,16 @@ def select_display_profile(document: dict, name: str, board: str,
     # RESEARCH-007 dropout observer is a bounded diagnostic, not a product
     # default or a renderer comparison. Keep parallel/indexed paths excluded.
     # Nurples performance experiment: keep the original painter as an exact
-    # same-source control; optimize only explicit direct-RGB888 SET bitmap draws.
+    # same-source control; optimize only explicit P4 SET bitmap draws. The
+    # existing inline setter supports both RGB888 and indexed byte storage;
+    # the BGR expansion LUT below is still RGB888-only.
     if bitmap_fast:
-        if not direct_rgb888 or indexed_ppa or display_output != "hdmi" or render_benchmark_output != "normal":
-            raise SystemExit("bitmap fast path requires direct RGB888 normal HDMI without indexed storage")
+        if not direct_rgb888 or display_output != "hdmi" or render_benchmark_output != "normal":
+            raise SystemExit("bitmap fast path requires explicit P4 colour storage and normal HDMI")
         profile["definitions"].append("AGON_EXTENDER_BITMAP_FAST=1")
     if bitmap_lut:
-        if not bitmap_fast:
-            raise SystemExit("bitmap LUT requires the explicit RGB888 bitmap fast path")
+        if not bitmap_fast or indexed_ppa:
+            raise SystemExit("bitmap LUT requires the explicit RGB888 bitmap fast path without indexed storage")
         profile["definitions"].append("AGON_EXTENDER_BITMAP_LUT=1")
     if scroll_fast:
         if not direct_rgb888 or indexed_ppa or display_output != "hdmi" or render_benchmark_output != "normal":

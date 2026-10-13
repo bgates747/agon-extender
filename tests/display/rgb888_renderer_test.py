@@ -19,9 +19,13 @@ def main():
     parser.add_argument('--hdmi684', action='store_true')
     parser.add_argument('--bitmap-fast', action='store_true')
     parser.add_argument('--bitmap-lut', action='store_true')
+    parser.add_argument('--sanitize', action='store_true',
+                        help='Run the actual controller goldens with address/undefined sanitizers')
     args = parser.parse_args()
     if args.bitmap_lut and not args.bitmap_fast:
         parser.error('Bitmap LUT requires the fast painter')
+    if args.bitmap_lut and args.indexed:
+        parser.error('Bitmap LUT expands BGR triples and cannot use indexed storage')
     if args.indexed and (args.hdmi848 or args.hdmi684):
         parser.error("Indexed test uses private logical rows, not borrowed panels")
     if args.hdmi848 and args.hdmi684:
@@ -45,6 +49,7 @@ def main():
         binary = Path(directory) / "check"
         subprocess.run([
             "g++", "-std=c++17", "-O1", "-g", "-pthread",
+            *(["-fsanitize=address,undefined", "-fno-omit-frame-pointer"] if args.sanitize else []),
             "-ffunction-sections", "-fdata-sections", "-Wl,--gc-sections",
             "-DFABGL_EMULATED", "-DAGON_EXTENDER_STOCK_RUNTIME",
             "-DAGON_EXTENDER_HDMI", "-DAGON_EXTENDER_DIRECT_RGB888",
