@@ -33,6 +33,9 @@ HdmiOutput &hdmiOutput() { static HdmiOutput output; return output; }
 
 void HdmiOutput::cleanup() {
   ready_ = false;
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  indexed_output_cache_.invalidate();
+#endif
 #ifdef AGON_EXTENDER_INDEXED_PPA
   indexed_.reset();
 #endif
@@ -382,6 +385,10 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 #ifdef AGON_EXTENDER_INDEXED_PPA
   if(controller.linearStorage())return publishLinear(controller,stopping);
 #endif
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  // A CPU row-expansion path must not leave a DMA-only eligibility claim behind.
+  indexed_output_cache_.invalidate();
+#endif
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
   agon_bench::Scope conversion(agon_bench::Conversion);const auto conversion_token=conversion.token;int frame_id=-1;
 #endif
@@ -589,6 +596,11 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
   auto destination=buffers_[target];
   const auto started=esp_timer_get_time();
   const bool clear=buffer_width_[target]!=w || buffer_height_[target]!=h;
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  const auto cache_attempt=indexed_output_cache_.begin(target,
+      !scaled && IndexedOutputCacheState::nativeMode20(w,h,width(),height(),
+          controller.display().isDoubleBuffered()),clear);
+#endif
   if(clear)std::memset(destination,0,bufferBytes());
   const auto generation=stockVisibleGeneration();
 #ifdef AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
@@ -644,7 +656,11 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
     if(!indexed_.expand(scaler_.source(),320*240*3,320,240,w,h) || !scaler_.scale(destination,bufferBytes()))return false;
   } else
 #endif
-  if(!indexed_.expand(destination,bufferBytes(),width(),height(),w,h,geometry.destination_x,geometry.destination_y))return false;
+  if(!indexed_.expand(destination,bufferBytes(),width(),height(),w,h,geometry.destination_x,geometry.destination_y
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+      ,cache_attempt.preserve_cpu_writes
+#endif
+      ))return false;
   }
   if(stopping.load(std::memory_order_acquire))return false;
   const auto prepared=esp_timer_get_time();
@@ -657,6 +673,9 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
 #endif
   portENTER_CRITICAL(&callback_mux_);ownership_.submitted(target);portEXIT_CRITICAL(&callback_mux_);
   buffer_width_[target]=w;buffer_height_[target]=h;
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  indexed_output_cache_.submitted(cache_attempt);
+#endif
   ++report_updates_;++report_submissions_;
   report_conversion_us_+=prepared-started;
   report_conversion_max_us_=std::max(report_conversion_max_us_,std::uint64_t(prepared-started));
@@ -685,6 +704,9 @@ Rgb888PanelStorage HdmiOutput::panelStorage() {
   // stale size and leave the borrowed image in its letterbox margins.
   buffer_width_[0]=buffer_width_[1]=0;
   buffer_height_[0]=buffer_height_[1]=0;
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  indexed_output_cache_.invalidate();
+#endif
   portENTER_CRITICAL(&callback_mux_);
   const auto front=ownership_.writable(false);
   portEXIT_CRITICAL(&callback_mux_);

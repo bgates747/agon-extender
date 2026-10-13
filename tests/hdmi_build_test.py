@@ -102,6 +102,25 @@ class HdmiBuildTest(unittest.TestCase):
         self.assertTrue(validate_p4_build.selected_definition(["-DAGON_EXTENDER_SW_VISIBLE_SNAPSHOT=0"],"AGON_EXTENDER_SW_VISIBLE_SNAPSHOT",False,value_aware=True))
         self.assertFalse(validate_p4_build.selected_definition(["-DAGON_EXTENDER_SW_VISIBLE_SNAPSHOT=0"],"AGON_EXTENDER_SW_VISIBLE_SNAPSHOT",True,value_aware=True))
 
+    def test_indexed_output_cache_pilot_is_explicit_and_bounded(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        base=dict(indexed_ppa=True,indexed_frame_snapshot=True)
+        flag="AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE=1"
+        ordinary=build_p4.select_display_profile(*args,**base)
+        candidate=build_p4.select_display_profile(*args,**base,indexed_output_cache_once=True)
+        self.assertNotIn(flag,ordinary["definitions"])
+        self.assertEqual(candidate["sources"],ordinary["sources"])
+        self.assertEqual(set(candidate["definitions"])-set(ordinary["definitions"]),{flag})
+        for choice in ({},{"indexed_ppa":True},{"indexed_frame_snapshot":True}):
+            with self.assertRaisesRegex(SystemExit,"cache pilot requires"):
+                build_p4.select_display_profile(*args,**choice,indexed_output_cache_once=True)
+        for option in ("parallel_boot_candidate","parallel_probe_candidate","parallel_data_check","exext_stream"):
+            with self.assertRaisesRegex(SystemExit,"cache pilot excludes parallel"):
+                build_p4.select_display_profile(*args,**base,indexed_output_cache_once=True,**{option:True})
+        self.assertTrue(validate_p4_build.selected_definition(["-D"+flag],"AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE",True,value_aware=True))
+        self.assertTrue(validate_p4_build.selected_definition(["-DAGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE=0"],"AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE",False,value_aware=True))
+        self.assertFalse(validate_p4_build.selected_definition(["-D"+flag],"AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE",False,value_aware=True))
+
     def test_unsupported_board_or_profile_rejected_before_output_creation(self):
         for board, profile in (("p4-devkit", "p4-console"),
                                ("p4-pc", "p4-mos-recovery")):

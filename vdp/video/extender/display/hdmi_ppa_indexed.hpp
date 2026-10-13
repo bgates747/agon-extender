@@ -9,7 +9,7 @@ class HdmiPpaIndexed {
   void reset();
   std::uint8_t *source() { return source_; }
   bool expand(std::uint8_t *output,std::size_t bytes,int outputWidth,int outputHeight,
-              int width,int height,int left=0,int top=0);
+              int width,int height,int left=0,int top=0,bool preserveCpuWrites=true);
  private:
   void *client_{};
   std::uint8_t *source_{},*transparent_{};

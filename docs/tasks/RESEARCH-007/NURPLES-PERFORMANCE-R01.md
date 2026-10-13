@@ -270,3 +270,12 @@ one strip; maxima are lifetime bounds. Reject resets/faults or unexplained count
 regression. Legacy `RowCompose` is output-task framebuffer preparation, never
 the asynchronous hardware-sprite overlay scope. Do not sum overlapping copy,
 compose and whole-refill wall costs as exclusive processor utilization.
+
+The separate [pre-writeback pilot](CACHE-PILOT-R01.md) prepares a default-off
+native Mode20 indexed candidate from frozen `a167e43e`. It preserves first-use
+and CPU-clear writeback, invalidates eligibility on committed mode/path changes
+and failed attempts, and removes only the helper's redundant pre-C2M on a known
+DMA-written output plane. Driver caches, post-invalidation, 320×240 and prior
+buffer retirement remain unchanged. A small additive benchmark sidecar measures
+the omitted operation independently; a clean cache range is not a pixel-copy
+claim. Offline preparation does not establish a hardware or rendering gain.

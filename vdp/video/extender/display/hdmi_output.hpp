@@ -8,6 +8,13 @@
 #pragma once
 #include <atomic>
 #include <cstdint>
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+#if !defined(AGON_EXTENDER_INDEXED_PPA) || !AGON_EXTENDER_INDEXED_PPA || \
+    !defined(AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT) || !AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
+#error "Indexed output cache pilot requires indexed PPA and complete frame snapshot"
+#endif
+#include "extender/display/indexed_output_cache.hpp"
+#endif
 #include "esp_lcd_panel_ops.h"
 #include "esp_lcd_mipi_dsi.h"
 #include "esp_lcd_panel_io.h"
@@ -39,6 +46,10 @@ class HdmiOutput {
   // A stale service cannot unbind the replacement service's callback.
   void unbindFrameCallback(void *expected_context);
   bool publish(StockRuntimeController &controller, std::atomic<bool> &stopping);
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  // Joined mode boundary only: old output is gone; replacement remains inactive.
+  void resetIndexedOutputCache() { indexed_output_cache_.invalidate(); }
+#endif
 #ifdef AGON_EXTENDER_DIRECT_RGB888
   Rgb888PanelStorage panelStorage();
   void allowDirectSwaps() { direct_cancelled_.store(false,std::memory_order_release); }
@@ -47,6 +58,9 @@ class HdmiOutput {
 #ifdef AGON_EXTENDER_INDEXED_PPA
   HdmiPpaIndexed indexed_;
   bool publishLinear(StockRuntimeController &, std::atomic<bool> &);
+#endif
+#if defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  IndexedOutputCacheState indexed_output_cache_;
 #endif
   static bool frameComplete(esp_lcd_panel_handle_t,
                             esp_lcd_dpi_panel_event_data_t *, void *);

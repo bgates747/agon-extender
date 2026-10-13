@@ -52,6 +52,12 @@ inline bool overflow{};
 inline std::mutex records;
 inline RenderCounters render_windows[RenderWindowCapacity];
 inline std::atomic<bool> render_overflow{};
+// Cache pilot sidecar: preserve the six legacy phases and their array indices.
+// Only actual helper pre-C2M calls are timed; driver input/output maintenance,
+// DMA wait and final draw_bitmap cache handoff remain in their existing scopes.
+inline Counter indexed_pre_c2m[RenderWindowCapacity];
+static_assert(sizeof(indexed_pre_c2m)==256,"Keep the cache pilot counters bounded");
+inline std::atomic<bool> indexed_pre_c2m_overflow{};
 inline void renderMaximum(std::atomic<std::uint32_t> &target,std::uint32_t value) {
   auto old=target.load(std::memory_order_relaxed);
   while(old<value&&!target.compare_exchange_weak(old,value,std::memory_order_relaxed)){}
@@ -137,17 +143,45 @@ struct Scope {
   }
   ~Scope(){finish();}
 };
+struct IndexedPreC2MScope {
+  std::uint32_t token{};std::int64_t start{};
+  IndexedPreC2MScope() {
+    token=active.load(std::memory_order_acquire);
+    if(token) {
+      outstanding.fetch_add(1);
+      if(active.load()!=token || !(windows[token-1].flags&1)) {
+        outstanding.fetch_sub(1);token=0;
+      } else if(token>RenderWindowCapacity) {
+        indexed_pre_c2m_overflow.store(true);outstanding.fetch_sub(1);token=0;
+      }
+    }
+    if(token)start=esp_timer_get_time();
+  }
+  ~IndexedPreC2MScope() {
+    if(!token)return;
+    auto &c=indexed_pre_c2m[token-1];
+    if(active.load(std::memory_order_acquire)!=token)c.drops.fetch_add(1);
+    else {
+      auto us=std::uint32_t(esp_timer_get_time()-start);
+      c.us.fetch_add(us);c.calls.fetch_add(1);renderMaximum(c.max,us);
+    }
+    outstanding.fetch_sub(1);
+  }
+};
 inline void marker(std::uint8_t const *p,std::size_t n) {
   if(n!=12||p[0]!='B'||p[1]!='0'||p[2]!='0'||p[3]!='9'||p[4]!=1)return;
   std::lock_guard<std::mutex> lock(records);
   if(p[5]==0) {
     active.store(0,std::memory_order_release);
     while(outstanding.load())vTaskDelay(1);
-    used=0;overflow=false;render_overflow=false;
+    used=0;overflow=false;render_overflow=false;indexed_pre_c2m_overflow=false;
   } else if(p[5]==1) {
     if(active.load()||used==512){overflow=true;return;}
     auto &w=windows[used];
     if(used<RenderWindowCapacity)render_windows[used].reset();
+    if(used<RenderWindowCapacity) {
+      auto &c=indexed_pre_c2m[used];c.calls=0;c.us=0;c.max=0;c.drops=0;
+    }
     for(auto &c:w.phases){c.calls.store(0);c.us.store(0);c.max.store(0);c.drops.store(0);}
     w.scanouts.store(0);w.updates.store(0);w.marker_valid.store(0);w.marker_invalid.store(0);w.last_frame.store(UINT32_MAX);w.marker_transitions.store(0);w.marker_repeats.store(0);
     w.id=p[6]|p[7]<<8;w.flags=p[8];w.tag=p[9]|p[10]<<8|p[11]<<16;
@@ -195,9 +229,18 @@ inline std::string json() {
       }
       out+="}}";
     }
+    out+=",\"indexed_pre_c2m\":";
+    if(i>=RenderWindowCapacity)out+="null";
+    else {
+      auto &c=indexed_pre_c2m[i];
+      std::snprintf(b,sizeof(b),"{\"calls\":%u,\"us\":%u,\"max_us\":%u,\"boundary_drops\":%u}",c.calls.load(),c.us.load(),c.max.load(),c.drops.load());out+=b;
+    }
     out+="}";
   }
-  return out+"]}";
+  out+="]";
+  out+=",\"indexed_pre_c2m_overflow\":";
+  out+=indexed_pre_c2m_overflow.load()?"true":"false";
+  return out+"}";
 }
 }
 #endif

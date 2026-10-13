@@ -7,6 +7,9 @@
 #include "esp_heap_caps.h"
 #include "esp_log.h"
 #include <cstring>
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+#include "extender/diagnostics/render_benchmark.hpp"
+#endif
 
 namespace agon::extender::display {
 namespace { constexpr std::size_t maximumPixels=848*480, alignment=64; }
@@ -36,12 +39,21 @@ void HdmiPpaIndexed::reset() {
   client_=nullptr;heap_caps_free(source_);heap_caps_free(transparent_);
   source_=transparent_=nullptr;
 }
-bool HdmiPpaIndexed::expand(std::uint8_t *output,std::size_t bytes,int ow,int oh,int w,int h,int left,int top) {
+bool HdmiPpaIndexed::expand(std::uint8_t *output,std::size_t bytes,int ow,int oh,int w,int h,int left,int top,bool preserveCpuWrites) {
   if(!client_ || w<=0 || h<=0 || std::size_t(w)*h>maximumPixels || left<0 || top<0 ||
      left+w>ow || top+h>oh || bytes!=std::size_t(ow)*oh*3 || bytes%alignment)return false;
-  // Preserve CPU-cleared borders before driver invalidation; publish private
-  // snapshot input. BLEND requires a second input: an all-transparent A8 mask.
-  if(esp_cache_msync(output,bytes,ESP_CACHE_MSYNC_FLAG_DIR_C2M)!=ESP_OK)return false;
+  // Pinned IDF ppa_blend.c invalidates whole output rows BEFORE DMA, including
+  // untouched borders, but does not first write back CPU changes. Preserve every
+  // CPU clear; only the explicit native Mode20 pilot may reuse a successfully
+  // submitted, DMA-written plane without another CPU writeback. Default remains
+  // unconditional, including the separate 320x240 scaling source. This skips a
+  // cache operation, not an RGB pixel copy; its physical cost must be measured.
+  if(preserveCpuWrites) {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    agon_bench::IndexedPreC2MScope cache;
+#endif
+    if(esp_cache_msync(output,bytes,ESP_CACHE_MSYNC_FLAG_DIR_C2M)!=ESP_OK)return false;
+  }
   ppa_blend_oper_config_t op{};
   op.in_bg.buffer=source_;op.in_bg.pic_w=op.in_bg.block_w=w;
   op.in_bg.pic_h=op.in_bg.block_h=h;op.in_bg.blend_cm=PPA_BLEND_COLOR_MODE_L8;

@@ -207,6 +207,11 @@ void StockP4Service::activate() {
 #if defined(AGON_EXTENDER_HDMI) && defined(AGON_EXTENDER_DIRECT_RGB888)
   hdmiOutput().allowDirectSwaps();
 #endif
+#if defined(AGON_EXTENDER_HDMI) && defined(AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE) && AGON_EXTENDER_INDEXED_OUTPUT_CACHE_ONCE
+  // The old mode has detached/joined; the new output task is not active yet.
+  // Same-size mode changes also revoke the previous plane cache eligibility.
+  hdmiOutput().resetIndexedOutputCache();
+#endif
 #if defined(AGON_EXTENDER_SW_VISIBLE_SNAPSHOT) && AGON_EXTENDER_SW_VISIBLE_SNAPSHOT
   // Preparation may overlap an old active mode. Bind only at committed
   // activation, after old detach has cancelled and joined its task. Context is
