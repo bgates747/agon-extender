@@ -20,10 +20,17 @@ Time boundary: start2026-10-12T13:16:20Z; stop no later than21:16:20Z (eight hou
 The active goal owns this limit. Finish evidence/restoration within that period.
 Proceed unattended within this scope; pause for any required Author answer.
 
-**Timebox ended; objective unachieved.** A model/service interruption prevented
-completion before the deadline. Root resumed on2026-10-13 after the timebox;
-only evidence preservation and temporary bench restoration continue. No new
-optimization or test cohort starts without renewed Author authorization.
+**First window ended; objective unachieved.** A model/service interruption prevented
+completion before the original deadline. Evidence and ordinary bench restoration
+were completed separately; the first window remains a partial result.
+
+**Renewed window authorized2026-10-13T00:37:17Z:** the Author explicitly approved
+a new eight-hour window, ending2026-10-13T08:37:17Z. Continue the existing NP03–NP08
+scope without adding subtasks. Install the already frozen same-source pair-r04
+RGB888 control and indexed candidates, using the reviewed bench-r05 cohort.
+Repeat elementary bitmap/partial-scroll controls before sprite/Nurples graduation.
+Reserve time for fresh ordinary startup/configuration restoration and verified
+handback; original first-window evidence and cleanup remain preserved.
 [Partial results](NURPLES-PERFORMANCE-R01-RESULTS.md) separate measured bitmap gains,
 the small scrolling gain, unexecuted sprite candidates and closeout state.
 
@@ -126,7 +133,10 @@ already implemented native modes in remaining time. Reuse proven carriers; no
 monitor-timing hunt or unsupported-mode expansion. Otherwise leave this item
 unexecuted and stop by the eight-hour boundary.
 
-### NP08 [x] Close out, preserve and return usable bench
+### NP08 [ ] Close out, preserve and return usable bench
+
+First-window closeout completed2026-10-13T00:31Z; repeat this closeout for the
+renewed window rather than treating the prior cleanup as current completion.
 
 Retain comparable raw evidence, explicit percentages and limitations in a bounded
 results document. Restore saved startup/configs and read back; leave the best

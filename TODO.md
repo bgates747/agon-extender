@@ -5,9 +5,9 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
-## Nurples rendering goal — timebox ended
+## Nurples rendering goal — renewed eight-hour window
 
-- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Timebox ended during model/service interruption; objective unachieved. Partial bitmap gain36–41%, scrolling4%; sprite candidates compiled but physically untested. Preserve closeout and [partial results](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01-RESULTS.md); renewed Author authorization required for more optimization. Target25%, aim50%; other modes remain gated.
+- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Author renewed eight-hour window2026-10-13T00:37:17Z–08:37:17Z. Continue existing NP03–NP08 with same-source repeated RGB888/indexed controls before sprites. Preserve first-window closeout and [partial results](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01-RESULTS.md): bitmap36–41%, scrolling4%, sprite candidates physically untested. Target25%, aim50%; other modes remain gated.
 
 ## Browser paste — accepted development, release closeout pending
 

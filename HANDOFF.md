@@ -1,3 +1,22 @@
+# Active work — renewed Nurples optimization window
+
+Author explicitly renewed eight hours2026-10-13T00:37:17Z–08:37:17Z. Continue the
+existing [NP03–NP08 contract](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md),
+static bitmap/partial scrolling before software/hardware sprites and repaired
+Nurples. Target25%, aim50% against current RGB888 with repeated comparable data.
+No parallel/ExExt, EMOS, mainboard VDP or wiring changes. Preserve first-window
+partial results below; their cleanup completed and is not this window's cleanup.
+
+Four frozen pair-r04 builds from isolated a167e43e are complete; reviewed bench-r05
+will measure fresh RGB888 controls, then indexed-visible and direct-BGR overlay.
+Initial bench Legacy CLI, listener offline after positive EXIT; original38B startup
+and original SCANconfigs restored. Root reserves bench and stages readback-verified
+63B setup-only mode20 startup before candidate flashing. All tests explicit CLI.
+Machine-local state/authority/receipts remain in HARDWARE.local.md and agents/.
+Oryx available for headless work. No production promotion or visual pass claimed.
+
+Earlier checkpoints below are historical.
+
 # Current stop — Nurples goal timebox elapsed during interruption
 
 The eight-hour optimization window ended2026-10-12T21:16:20Z. Root resumed
