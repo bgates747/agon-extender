@@ -1,10 +1,22 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r184
-updated_at: 2026-10-12T10:32:10Z
+registry_revision: r185
+updated_at: 2026-10-13T07:06:00Z
 
 artifacts:
+  - artifact_id: render-qualification
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: render-qualification-r01
+    status: experimental
+    variants: []
+    description: Focused eight-workload rendering fixture derivatives for stock modes 0, 3, 8, 20 and 136.
+    notes:
+      - RESEARCH-007 focused multi-mode contract owns forty compiled fixtures, a paired 240-run host master and separate smoke qualification.
+      - Reuses SCAN PRT and render-fence instrumentation; physical preparation is not a qualification or production promotion.
+      - Nurples outside mode 20 is a geometry/bank stress derivative, not unchanged production gameplay; immediate double-buffer drawing is outside queued-render counters.
+
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision

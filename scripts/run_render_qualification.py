@@ -8,6 +8,7 @@ process exit alone is not a test pass. No shell, retry, reset or implicit resume
 import argparse
 import datetime as dt
 import hashlib
+import fcntl
 import json
 from pathlib import Path
 import subprocess
@@ -42,6 +43,10 @@ def validate_plan(plan):
     actual = [(j["renderer"], j["mode"], j["case"], j["repeat"]) for j in plan["jobs"]]
     if len(actual) != len(set(actual)) or set(actual) != expected:
         raise ValueError("Require exactly 240 unique mode/case/repeat/renderer jobs")
+    positions = {key: n for n, key in enumerate(actual)}
+    if any(positions['rgb888', m, c, n] > positions['indexed', m, c, n]
+           for m in MODES for c in CASES for n in range(1, 4)):
+        raise ValueError('Each RGB888 control must precede its indexed counterpart')
     ids = [j["id"] for j in plan["jobs"]]
     if len(ids) != len(set(ids)) or any(not s or any(c not in "abcdefghijklmnopqrstuvwxyz0123456789-" for c in s) for s in ids):
         raise ValueError("Unsafe or duplicate job ID")
@@ -67,12 +72,21 @@ def run(plan, output, invoke=execute):
     validate_plan(plan)
     output.mkdir(parents=True, exist_ok=False)
     output = output.resolve()
+    lock = None
+    if plan.get('bench_lock'):
+        lock = open(plan['bench_lock'], 'a')
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BaseException:
+            lock.close()
+            raise RuntimeError('Another qualification master owns the bench')
     save(output / "plan.json", plan)
     summary = {"started_utc": utc(), "state": "running", "planned": len(plan["jobs"]),
                "passed": 0, "failed": 0, "jobs": []}
     start = time.monotonic()
     save(output / "summary.json", summary)
     completed = False
+    controls = {}
     try:
         for job in plan["jobs"]:
             # A fresh destination and absent receipt prevent stale-pass reuse.
@@ -92,6 +106,17 @@ def run(plan, output, invoke=execute):
             if result.get("bench_idle") is not True:
                 raise RuntimeError("No confirmed CLI/listener handback; no further input")
             valid = result.get("validated") is True and rc == 0
+            pair = (job['mode'], job['case'], job['repeat'])
+            if job['renderer'] == 'rgb888':
+                controls[pair] = result
+            else:
+                control = controls[pair]
+                trajectory = result.get('trajectory_sha256')
+                matched = bool(trajectory) and trajectory == control.get('trajectory_sha256')
+                row['matched_control_trajectory'] = matched
+                if not matched or control.get('validated') is not True:
+                    valid = False
+                    row['comparison_error'] = 'Control failed or deterministic trajectories differ'
             if not valid and result.get("safe_to_continue") is not True:
                 raise RuntimeError("Failure has no confirmed recovery boundary")
             row.update(state="passed" if valid else "failed", ended_utc=utc(),
@@ -116,6 +141,8 @@ def run(plan, output, invoke=execute):
         summary.update(ended_utc=utc(), duration_seconds=time.monotonic() - start,
                        all_jobs_finished=completed)
         save(output / "summary.json", summary)
+        if lock:
+            lock.close()
     return 0 if summary["state"] == "success" else 1
 
 
@@ -124,12 +151,16 @@ def banner(success):
     message = "ALL TESTS COMPLETE SUCCESS" if success else "TESTS COMPLETE WITH ERRORS"
     # Stock physical colours: green=2, red=1, white=7. Full coloured screen
     # and repeated white text remain legible even in the 40-column mode.
-    lines = ["VDU 17 " + str(128 + (2 if success else 1)), "VDU 12", "VDU 17 7"]
+    lines = ["VDU 23 27 7 0", "VDU 23 0 149 0 255 255 0", "VDU 4 26",
+             "VDU 17 " + str(128 + (2 if success else 1)), "VDU 12", "VDU 17 7"]
     for y in (3, 5, 7, 9, 11):
         lines.append("VDU 31 2 " + str(y))
         data = message.encode("ascii")
         for offset in range(0, len(data), 16):
             lines.append("VDU " + " ".join(str(b) for b in data[offset:offset + 16]))
+    # In mode136 make the completed screen visible; in single buffering this
+    # only waits for the next vertical sync. No mode selection is introduced.
+    lines.append('VDU 23 0 195')
     return ("\r\n".join(lines) + "\r\n").encode("ascii")
 
 

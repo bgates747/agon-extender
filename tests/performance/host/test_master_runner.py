@@ -40,7 +40,7 @@ class MasterRunnerTests(unittest.TestCase):
                 job = plan["jobs"][index]
                 receipt = {k: job[k] for k in ("id", "renderer", "mode", "case", "repeat")}
                 receipt.update(validated=index != failure, bench_idle=not unsafe,
-                               safe_to_continue=not unsafe)
+                               safe_to_continue=not unsafe,trajectory_sha256='a'*64)
                 Path(argv[1]).write_text(json.dumps(receipt))
                 return 1 if index == failure else 0
 
@@ -59,7 +59,8 @@ class MasterRunnerTests(unittest.TestCase):
                 self.assertEqual(len(called), 241)
                 self.assertEqual(called[-1], ["green" if failure is None else "red"])
                 self.assertTrue(summary["all_jobs_finished"])
-                self.assertEqual(summary["passed"], 240 if failure is None else 239)
+                # A failed RGB control also disqualifies its paired candidate.
+                self.assertEqual(summary["passed"], 240 if failure is None else 238)
                 with self.assertRaises(FileExistsError):
                     m.run(plan, out, invoke)
 
@@ -87,7 +88,7 @@ class MasterRunnerTests(unittest.TestCase):
         for success, color, text in ((True, 130, "ALL TESTS COMPLETE SUCCESS"),
                                      (False, 129, "TESTS COMPLETE WITH ERRORS")):
             data = m.banner(success).decode("ascii")
-            self.assertTrue(data.startswith(f"VDU 17 {color}\r\nVDU 12\r\n"))
+            self.assertIn(f"VDU 17 {color}\r\nVDU 12\r\n",data)
             self.assertNotIn("VDU 22", data)
             self.assertTrue(all(line.startswith("VDU ") for line in data.splitlines()))
             values = []

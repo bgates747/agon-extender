@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Nurples rendering goal — renewed eight-hour window
 
-- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Author renewed eight-hour window2026-10-13T00:37:17Z–08:37:17Z. Continue existing NP03–NP08 with same-source repeated RGB888/indexed controls before sprites. Preserve first-window closeout and [partial results](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01-RESULTS.md): bitmap36–41%, scrolling4%, sprite candidates physically untested. Target25%, aim50%; other modes remain gated.
+- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Repeated original-RGB comparisons show52.52% less software and41.58% less hardware Nurples queued rendering; most-modern optimized RGB888 comparison remains pending. Prepare the Author-approved [focused multi-mode master](docs/tasks/RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md): modes0/3/8/20/136,240 full runs, separate short hardware smokes and persistent green/red completion cues. Preserve earlier evidence and ordinary startup; no promotion or unrelated video-mode development.
 
 ## Browser paste — accepted development, release closeout pending
 

@@ -4,8 +4,9 @@ The Author selects stock modes 0, 3, 8, 20 and 136 for the next qualification
 round. One host master runner owns sequential execution, durable collection
 and the final persistent Extender display cue. Existing mode-20 evidence is
 retained; the current frozen fixtures are not qualified for other geometries.
-The runner framework passes offline tests, but the full physical campaign is
-not yet staged or ready to invoke.
+The runner and 40 per-mode fixture derivatives compile and pass offline checks.
+Physical staging and short per-fixture smoke qualification are underway; the
+full campaign is not yet ready to invoke.
 
 ## Bounded work contract
 
@@ -50,6 +51,30 @@ not yet staged or ready to invoke.
 5. Reuse finite completion fences and aggregate Nurples windows. Record eZ80
    work/pacing, queued rendering and asynchronous HDMI costs separately.
 
+Implementation: `tests/performance/scan/multimode.py` builds six bounded
+synthetic workloads and two repaired-Nurples derivatives for each mode. All
+40 binaries compile. The original repaired Nurples fixture reproduces byte for
+byte with the selected native assembler before relying on its retained source.
+The synthetic streams repeat a declared 128-update sequence; every bitmap and
+sprite position passes exhaustive bounds checks over all 256 table indices.
+Partial scrolling remains 256 pixels wide, with a one-scanline tile viewport;
+its height follows the selected mode. Double-buffer synthetic scrolling updates
+both rows elapsed since the current bank's previous visit.
+
+Nurples remains a production gameplay target in mode 20. Other modes use
+explicit test derivatives with centered 256-pixel playfields and mode-dependent
+vertical bounds; original bezel/UI artwork can be clipped. Mode136 initializes
+both banks and alternates the retained incremental scene algorithm. It is a
+bank-stress derivative, not a claim that production Nurples is a correct
+double-buffered game. Compare deterministic state within each mode/variant;
+do not equate those derivatives with unchanged gameplay or cross-mode work.
+
+The current P4 queued-render counters exclude immediate double-buffer drawing.
+Mode136 therefore retains eZ80 active/pacing/completion measurements and output
+phase evidence, but its queued-render reduction must be reported as unmeasured,
+never inferred from zero counters. Hardware smoke admission and valid timing
+records do not substitute for Author visual/gameplay acceptance.
+
 ### MQ03 [ ] Prepare admitted mode and firmware transition adapters
 
 1. Pin actual candidate/control manifests, all adapter and fixture hashes,
@@ -66,6 +91,15 @@ not yet staged or ready to invoke.
    no subsequent automated clear/reset/game launch may erase it. Save final
    data before the banner. Distinguish host summary success from unperformed
    Author visual/input acceptance.
+
+Implementation: `qualification/prepare_render_modes.py` prepares the immutable
+local package; `qualification/render_modes.py` owns admitted installation,
+setup-only mode changes, explicit invocation, collection and restoration.
+The local plan selects the same-source optimized RGB888 control and winning
+indexed candidate with unsuccessful optional experiments disabled. Actual
+identities, host/board details, source and archive hashes remain in the ignored
+bench records. The 240 full jobs and 80 separate short smoke jobs have fresh
+paths; a smoke can never satisfy or overwrite a full measurement.
 
 ### MQ04 [ ] Stage, execute and report
 
@@ -90,6 +124,9 @@ Run with the project virtual environment:
 .venv/bin/python scripts/run_render_qualification.py --plan LOCAL_PLAN --check
 .venv/bin/python scripts/run_render_qualification.py --plan LOCAL_PLAN --output FRESH_RUN_DIR
 .venv/bin/python -m unittest discover -s tests/performance/host -p test_master_runner.py -v
+.venv/bin/python -m unittest discover -s tests/performance/scan -p test_multimode.py -v
+.venv/bin/python -m unittest discover -s tests/performance/host -p test_render_mode_adapters.py -v
+.venv/bin/python scripts/analyze_render_qualification.py RUN_DIR --output FRESH_ANALYSIS_DIR
 ```
 
 The local plan schema has `schema: 1`, explicit `ready: true`, `cwd`,
