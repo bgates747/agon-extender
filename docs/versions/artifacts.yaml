@@ -1,10 +1,21 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r186
-updated_at: 2026-10-13T17:51:31Z
+registry_revision: r187
+updated_at: 2026-10-13T18:15:56Z
 
 artifacts:
+  - artifact_id: hdmi-aspect
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: hdmi-aspect-r01
+    status: experimental
+    variants: [mode3]
+    description: Labeled 640x240 logical geometry review for stock 640x480 physical presentation.
+    notes:
+      - HDMI-003 uses ordinary MOS VDU commands, no fixture mode change or application launch.
+      - A 96x48 logical white box should present as 96x96 output pixels; explicit Author visual review remains required.
+
   - artifact_id: render-qualification
     kind: test_fixture
     identity_scheme: revision

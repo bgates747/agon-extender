@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Current corrective work — HDMI aspect
 
-- [ ] **[HDMI-003 — Diagnose and correct low-resolution HDMI aspect](docs/tasks/HDMI-003.md)** — Author-authorized investigation and correction of vertical squashing reported during multimode smokes. Verify the cause before changing P4 output; preserve matched renderer/fixture evidence and keep the full campaign stopped.
+- [ ] **[HDMI-003 — Diagnose and correct low-resolution HDMI aspect](docs/tasks/HDMI-003.md)** — Stock 640×240 row repetition restored in a host-tested matched renderer pair. Bounded hardware checks and Author visual confirmation govern handback; keep the full campaign stopped.
 
 ## Nurples rendering goal — renewed eight-hour window
 

@@ -3,16 +3,18 @@
 ## Executive summary
 
 The Author reports vertical squashing during the five-mode rendering smokes.
-Retained mode-3 evidence shows a 640×240 logical image in a 684×384 HDMI carrier;
-the selected P4 scanout code centers logical pixels without vertical expansion.
-This is a plausible explanation, not yet a conclusively reproduced visual
-root cause. Establish the expected stock presentation and distinguish fixture
-geometry, P4 output mapping and monitor interpretation before repairing the
-responsible layer. The Author authorized this task and requested a commit/push
-checkpoint before execution on 2026-10-13.
+Retained mode-3 evidence shows a 640×240 logical image in a 684×384 HDMI carrier.
+Source research confirms that stock VDP repeats each logical row twice, while
+the selected P4 scanout expanded it once. The candidate restores that row
+repetition and selects the existing 848×480 carrier for centered 640×480
+presentation. Author visual confirmation remains required to establish that
+this correction resolves the reported appearance on the attached monitor.
+The Author authorized this task and requested a commit/push checkpoint before
+execution on 2026-10-13; checkpoint `b6c7ea04` was pushed before implementation.
 
-**State:** source diagnosis and host-tested correction complete; matched builds
-and hardware/Author visual verification pending.
+**State:** source diagnosis, host checks and bounded mode-0/3 hardware checks
+pass for both matched builds. The indexed geometry pattern is displayed for
+Author visual review. The visible correction remains unaccepted.
 The [multimode campaign](RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md) stays stopped.
 Sixteen RGB888 short receipts in modes 0/3 establish data validity only; the
 240-measurement campaign has never started.
@@ -137,7 +139,8 @@ Sixteen RGB888 short receipts in modes 0/3 establish data validity only; the
 5. This records authorized corrective scope and the implementation derived
    from stock source; it does not assert that the Author selected the C++
    algorithm or has accepted its visible hardware result. Host checks pass;
-   H03-03 still requires matched builds and explicit Author visual review.
+   H03-03 still requires completed hardware checks and explicit Author visual
+   review.
 
 ## Source diagnosis and host validation — 2026-10-13
 
@@ -184,3 +187,55 @@ Sixteen RGB888 short receipts in modes 0/3 establish data validity only; the
    [bench constraints](../qualification/bench-constraints.md) govern execution.
 4. No hardware reproduction, corrected firmware, visual acceptance or
    performance improvement is claimed at task creation.
+
+## Matched candidate and bounded hardware results — 2026-10-13
+
+Both candidates use clean source `c788b668d64f61431b8de34b72262556d9e4e7b0`,
+derived from the frozen comparison source. Native validation and independent
+source/archive, artifact, SDK configuration, option parity, compile-definition
+and linked-instrumentation checks pass. These are experimental candidates;
+production remains unchanged.
+
+| Check | Optimized RGB888 | Indexed/PPA baseline |
+|---|---|---|
+| Build identity | `rgb-001-r13-b2026-10-13-17-52-17Z` | `indexed-hdmi-r07-b2026-10-13-18-01-06Z` |
+| Four non-NVS flash segments independently verified | Pass | Pass |
+| Actual CLI/listener/read/EXIT after installation | Pass | Pass |
+| Mode-0 control: 640×480 logical, 848×480 carrier | Pass | Pass |
+| Mode-3: 640×240 logical, 848×480 carrier | Pass | Pass |
+| Reported output-error deltas during geometry drawing | All zero | All zero |
+| Geometry title and exact firmware text readback | Pass | Pass |
+| Ordinary startup restored/read back; Legacy CLI, neutral input | Pass | Pass |
+| Author visual acceptance | Pending | Pending |
+
+Application SHA-256 values are
+`76d8c70254a32ce18af922663bee504a7c32e1a7709dc5e176b3d0e37715fc1f`
+and `1f0896bb4b455f6fde34b7dadddf3e4fc6d7cfc0f8bae3d1eda1ac9b33ed70d8`,
+respectively. Exact manifests, install receipts and review receipts are retained
+in ignored local evidence under `agents/hdmi003`; the machine-local bench record
+owns current installed identity and service state.
+
+The maintained [geometry fixture](../../tests/fixtures/hdmi-aspect/README.md)
+draws a 96×48 logical white box, expected to occupy 96×96 output pixels, plus
+single-row colored lines and the full logical border. Startup selected each
+mode separately; explicit CLI EXEC drew the pattern without changing modes or
+launching a benchmark. Its identity is `hdmi-aspect-r01-b2026-10-13-17-56-58Z`.
+Both payloads were independently read back before invocation. The final indexed
+picture is retained for Author inspection; the foreground listener has exited.
+
+Hardware checks cover modes 0 and 3 and the ordinary native drawing path.
+They do not establish monitor interpretation, visual acceptance, a fresh
+320×240 control, both-bank hardware publication or wider mode qualification.
+Host checks preserve the existing 320×240 geometry and ownership behavior.
+H03-01/H03-03 stay open pending decisive visual evidence and the remaining
+explicit gates. No performance gain, complete smoke admission or full-suite
+readiness is claimed; the 240-measurement campaign remains stopped.
+
+## Validation constraint inherited from the checkpoint
+
+The changed artifact registry passes its focused syntax/lifecycle validator.
+The whole version-record validator still fails an existing
+`hardware/designs/light2-harness-r02/connectivity.yaml` hash mismatch. Those
+hardware files are unchanged from checkpoint `b6c7ea04`; this task neither
+changes wiring nor repairs unrelated frozen hardware records. Do not describe
+the whole repository validator as passing.
