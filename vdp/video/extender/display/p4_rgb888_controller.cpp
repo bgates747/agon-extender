@@ -519,6 +519,20 @@ void P4Color64Controller::rawDrawBitmap_RGBA2222(int destX, int destY, Bitmap co
   // the exact generic alpha/save-background traversal with an inlined setter.
   // Other paint modes and the background-colour override keep the stock path.
   if (paintMode == PaintMode::Set && !paintState().paintOptions.swapFGBG) {
+#if defined(AGON_EXTENDER_BITMAP_LUT) && AGON_EXTENDER_BITMAP_LUT
+    if (!saveBackground) {
+      // Ordinary bitmap plotting has no saved-background side effects. Pack
+      // opaque groups into aligned BGR words, retaining exact clipping/alpha
+      // and sequential source-alias semantics. Software saves keep the generic
+      // traversal below, including saving backgrounds of transparent pixels.
+      for (int y = Y1, end = Y1 + YCount; y < end; ++y, ++destY)
+        if (XCount > 0)
+          agon::extender::display::storeRgba2222BgrSpan(
+              (uint8_t*)m_viewPort[destY] + destX * 3,
+              (uint8_t*)bitmap->data + y * bitmap->width + X1, XCount);
+      return;
+    }
+#endif
     genericRawDrawBitmap_RGBA2222(destX, destY, bitmap, (uint8_t*)saveBackground, X1, Y1, XCount, YCount,
                                   [&] (int y) { return (uint8_t*)m_viewPort[y]; },
                                   [&] (uint8_t *row, int x) { return uint8_t(VGA_PIXELINROW(row, x)); },

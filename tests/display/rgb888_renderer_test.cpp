@@ -98,6 +98,18 @@ void commands(Canvas &c,StockRuntimeController &r,std::vector<std::vector<RGB888
     }
   }
   c.resetPaintOptions();
+  // Ordinary no-save bitmap plotting exercises the packed RGBA2222 groups
+  // independently of software-sprite saving. Odd source widths and clipping
+  // produce every destination alignment, one-row viewports and short tails.
+  std::array<std::uint8_t,19*5> packedPixels{};
+  for(unsigned y=0;y<5;++y)for(unsigned x=0;x<19;++x)
+    packedPixels[y*19+x]=((y==4 ? x%4 : 1+(x+y)%3)<<6)|((x*17+y*11)&63);
+  Bitmap packedBitmap(19,5,packedPixels.data(),PixelFormat::RGBA2222);
+  for(int x : {-3,0,1,2,3,W-3}) {
+    c.setClippingRect(Rect(2,13,60,13));c.drawBitmap(x,11,&packedBitmap);
+    c.setClippingRect(Rect(0,0,W-1,H-1));c.drawBitmap(x,20,&packedBitmap);
+    checkpoint();
+  }
   c.copyRect(3,3,7,5,24,16);c.copyRect(7,5,2,1,24,16);
   checkpoint();
   c.setClippingRect(Rect(0,0,W-1,H-1));
