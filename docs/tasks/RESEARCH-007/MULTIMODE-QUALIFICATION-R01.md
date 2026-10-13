@@ -5,9 +5,12 @@ round. One host master runner owns sequential execution, durable collection
 and the final persistent Extender display cue. Existing mode-20 evidence is
 retained; the current frozen fixtures are not qualified for other geometries.
 The runner and 40 per-mode fixture derivatives compile and pass offline checks.
-Staging is complete for the current package; sixteen short RGB888 receipts are
-data-valid. The Author reported vertical squashing and execution is stopped
-for [HDMI-003](../HDMI-003.md). The full campaign is not ready to invoke.
+The predecessor package retains sixteen data-valid short RGB888 receipts.
+The correction tracked in [HDMI-003](../HDMI-003.md) restores stock mode-3 row
+aspect; the Author confirms that its indexed diagnostic box looks square.
+Preparation resumes with the independently verified corrected renderer pair
+and fresh result paths. The full campaign is not ready to invoke, and its
+original stop-before-invocation boundary remains in force.
 
 ## Bounded work contract
 
@@ -190,8 +193,23 @@ The agent restored the original keyboard-only startup with full readback and
 actual listener EXIT, without resetting or launching a fixture. Temporary
 mode setup is being corrected to finish in Legacy. Sixteen short RGB888 receipts and its mode-0 green/red SELF-TEST readbacks
 subsequently passed. The Author then reported vertical squashing; execution
-is stopped pending HDMI-003. The 80-smoke admission and completion
+was stopped pending HDMI-003. The 80-smoke admission and completion
 banner checks are unfinished; no ready plan or full campaign is claimed.
+
+The Author subsequently confirms the corrected indexed mode-3 diagnostic box
+looks square. Both renderer variants pass bounded mode-0/3 hardware checks and
+full source/artifact verification at clean source `c788b668`. Fresh preparation
+uses the same frozen r02 fixture bytes with new campaign result paths and exact
+corrected renderer manifests. Repeat all 80 short admissions and labeled banner
+checks for the new pair; predecessor receipts cannot satisfy the new gate.
+
+The fresh setup-only directory batch created every required directory but did
+not return the listener. The Author recovered with one Agon reset. Fresh input,
+actual CLI/listener and unchanged ordinary startup readback passed; inspection
+found all 367 required directory paths present, with none missing. Continue only
+payload deployment, preserving that informative handback failure and avoiding
+directory-batch replay. The Author's standing Agon-first/P4-then-Agon recovery
+order now governs subsequent monitored failures.
 
 ## Decision register
 
@@ -199,12 +217,11 @@ banner checks are unfinished; no ready plan or full campaign is claimed.
 
 The Author authorized a separate diagnosis and correction task on 2026-10-13.
 [HDMI-003](../HDMI-003.md) owns the evidence, presentation decision and repair;
-its H03-D01 register replaces this open decision. The unscaled source mapping
-and 640×240-in-684×384 metadata are confirmed findings, but matching them to
-the Author's visible report remains part of diagnosis. Benchmark preparation
-stays stopped until the corrective task provides an appropriately verified
-comparison pair. No specific output-scaling algorithm is accepted by this
-transfer.
+its H03-D01 register replaces this open decision. Stock row repetition is
+restored in a verified comparison pair, and the Author confirms the indexed
+mode-3 box looks square. Benchmark preparation resumes through fresh short
+admission checks. This transfer and visual observation do not accept a
+production bundle or authorize the full campaign to start.
 
 ## References
 

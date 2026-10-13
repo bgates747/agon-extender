@@ -93,8 +93,9 @@ row. Other geometries retain their existing presentation policy; this does
 not apply VGA DoubleScan flags globally to HDMI output.
 
 [HDMI-003](../tasks/HDMI-003.md) owns diagnosis and qualification. The initial
-correction passes host pixel/geometry checks; matched native builds and Author
-visual verification remain pending. This corrective design is not production
+correction passes host pixel/geometry checks and both matched native builds'
+bounded mode-0/3 hardware checks. The Author confirms that the indexed mode-3
+diagnostic box looks square. Wider qualification remains pending. This corrective design is not production
 acceptance or evidence of a performance improvement.
 
 ## Implementation boundary

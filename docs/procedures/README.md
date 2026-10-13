@@ -43,7 +43,10 @@ Historical scripts and task recipes cannot override these protocols.
 5. Finish exactly at the requested boundary. Starting a test is not permission
    to monitor it, collect it, recover it or rerun it. A timeout does not authorize
    reset/replay. Other work may continue only within its separate authorization
-   and without accessing or disturbing a run marked unmonitored.
+   and without accessing or disturbing a run marked unmonitored. The Author's
+   [standing recovery order](../bench-reset.md#standing-recovery-order--author-instruction-2026-10-13)
+   supplies reset authorization during monitored work; it does not authorize
+   replay or override an explicit stop/no-monitoring boundary.
 6. Keep evidence receipts and current handoff accurate. Distinguish requested,
    staged, invoked, observed running, completed, verified and accepted. If an
    instruction prevents verification, record that limit rather than implying

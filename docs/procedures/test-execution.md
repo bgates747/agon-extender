@@ -54,7 +54,10 @@ collection and restoration; each is a separate execution boundary.
 
 1. Confirm completion through the task's admitted evidence channel before
    transferring results or injecting commands. A missing result is not proof
-   the application has stopped. No automatic reset/replay on uncertain state.
+   the application has stopped. Apply the Author's standing
+   [recovery order](../bench-reset.md#standing-recovery-order--author-instruction-2026-10-13)
+   during authorized monitored work before requesting operator recovery;
+   never automatically replay the uncertain operation.
 2. Retrieve and validate durable results against their build, run/configuration,
    workload and completeness contracts. Separate application timing, rendering
    and presentation; preserve informative failures.

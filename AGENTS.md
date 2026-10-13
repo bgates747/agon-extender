@@ -271,6 +271,15 @@ do not clear that new cue afterward. If a running application prevents clearing
 safely, report that condition rather than resetting or discarding its state.
 This standing Author instruction supplements the voice requirement.
 
+## Author recovery and questions — 2026-10-13
+
+Ask questions directly in chat; do not use question-dialogue tools. During
+authorized monitored bench work, attempt one Agon reset first. If recovery
+fails, reset P4, wait for initialization, then reset Agon. Ask the Author for
+hardware reset only when both attempts fail. Follow the startup checks,
+verification, journal preservation and explicit stop/no-monitoring boundaries
+in `docs/bench-reset.md`; do not replay uncertain tests or transfers.
+
 ## Cross-machine agent mailbox
 
 At the start of active work and before the final response, check:

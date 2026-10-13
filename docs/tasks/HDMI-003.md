@@ -7,15 +7,15 @@ Retained mode-3 evidence shows a 640×240 logical image in a 684×384 HDMI carri
 Source research confirms that stock VDP repeats each logical row twice, while
 the selected P4 scanout expanded it once. The candidate restores that row
 repetition and selects the existing 848×480 carrier for centered 640×480
-presentation. Author visual confirmation remains required to establish that
-this correction resolves the reported appearance on the attached monitor.
+presentation. The Author confirms that the displayed white box looks square
+on the attached monitor; this verifies the corrected mode-3 object aspect.
 The Author authorized this task and requested a commit/push checkpoint before
 execution on 2026-10-13; checkpoint `b6c7ea04` was pushed before implementation.
 
 **State:** source diagnosis, host checks and bounded mode-0/3 hardware checks
-pass for both matched builds. The indexed geometry pattern is displayed for
-Author visual review. The visible correction remains unaccepted.
-The [multimode campaign](RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md) stays stopped.
+pass for both matched builds. The Author confirms the indexed white box looks
+square. Remaining control/bank checks and comparison-pin refresh precede
+handback to [multimode preparation](RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md).
 Sixteen RGB888 short receipts in modes 0/3 establish data validity only; the
 240-measurement campaign has never started.
 
@@ -206,7 +206,7 @@ production remains unchanged.
 | Reported output-error deltas during geometry drawing | All zero | All zero |
 | Geometry title and exact firmware text readback | Pass | Pass |
 | Ordinary startup restored/read back; Legacy CLI, neutral input | Pass | Pass |
-| Author visual acceptance | Pending | Pending |
+| Author white-box aspect observation | Not separately observed | Square confirmed |
 
 Application SHA-256 values are
 `76d8c70254a32ce18af922663bee504a7c32e1a7709dc5e176b3d0e37715fc1f`
@@ -227,9 +227,19 @@ Hardware checks cover modes 0 and 3 and the ordinary native drawing path.
 They do not establish monitor interpretation, visual acceptance, a fresh
 320×240 control, both-bank hardware publication or wider mode qualification.
 Host checks preserve the existing 320×240 geometry and ownership behavior.
-H03-01/H03-03 stay open pending decisive visual evidence and the remaining
-explicit gates. No performance gain, complete smoke admission or full-suite
+H03-01/H03-03 stay open for the remaining explicit gates. No performance gain, complete smoke admission or full-suite
 readiness is claimed; the 240-measurement campaign remains stopped.
+
+## Author visual confirmation — 2026-10-13
+
+The Author reports: "yes the white box looks square." This confirms the aspect
+of the indexed mode-3 diagnostic box after the row-repetition correction.
+The Author did not separately confirm outer-border visibility or the RGB888
+picture; do not widen this observation into either claim. Host coverage and
+both variants' bounded hardware checks remain as recorded above. Resume
+comparison preparation with the corrected pair and fresh result paths, keeping
+the full campaign stopped at its original readiness boundary. This bounded
+visual confirmation is not acceptance of a complete production firmware bundle.
 
 ## Validation constraint inherited from the checkpoint
 
