@@ -259,3 +259,34 @@ that copy with and without its selector before choosing it. Preserve original
 RGB888 and previous RGB fast as separate same-source references. Unrelated
 output-phase drops remain visible without invalidating otherwise exact queued
 render samples; output and drawing still require separate conclusions.
+
+
+## Narrow snapshot PIE pilot — not selected
+
+One pair on clean matched source
+`832fb5bce0e7c2375aab80cddde5adc7891fee56` changes only indexed snapshot PIE;
+inline bitmaps/direct-BGR/SW-visible snapshots are selected and cache-once is off
+in both. All six records validate. The candidate boot retains the actual P4
+1,280-case alignment/byte/canary PASS. The new finite render samples have exact
+expected counts, zero errors and closed/quiescent ownership. Unfenced Nurples
+remains aggregate-only. Worst observed mean change first; positive means less time.
+
+| Workload | Scalar / PIE queued mean, µs/update | Observed mean reduction | Scalar / PIE exact renderp95, µs/update | Scalar / PIE snapshot, µs/update |
+|---|---:|---:|---:|---:|
+|Partial scroll|1582.51 /1693.64|−7.02%|1669 /2528|3873.30 /3794.65|
+|64 bitmap plots + marker|3248.07 /3259.71|−0.36%|3595 /3582|4057.91 /4071.77|
+|Repaired software Nurples|1804.42 /1782.61|1.21%|unavailable /unavailable|4310.65 /4292.64|
+
+Static snapshot cost per attempt is3503.41→3491.89µs, effectively unchanged;
+Nurples publications stay58.87→58.86/s. Removing the large ordinary helper stack
+frame and using the proven vector kernel did not supply a useful snapshot gain.
+This single pair does not prove a repeatable regression or a memory-bandwidth
+root cause. Leave snapshot PIE off in the next candidate. Keep the default-off
+prototype and evidence rather than change ownership or cache policy speculatively.
+
+The next bounded matched-source pilot uses the same existing kernel explicitly
+for256-byte indexed partial-scroll spans. Host/controller/sprite/bounds tests,
+twelve P4 object checks and independent review pass on sourcee26c24f7; complete
+builds and actual target execution remain pending. It preserves stock scroll
+traversal, filling, sprite erasure, row descriptors and horizontal scrolling.
+No new task, video mode, transport or upstream correction is introduced.
