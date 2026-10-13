@@ -8,8 +8,10 @@ cost falls32–36% for ordinary bitmaps and57% for partial scrolling. Indexed
 snapshot/output work increases some completion delays, so this is not yet a
 gameplay or full-frame latency win. Three repeated software-sprite pairs now show
 52.52% less queued rendering work in deterministic repaired Nurples and52.74%
-less with32 sprites over the scrolling background. Hardware-sprite comparison
-is next; visual acceptance and production promotion remain unestablished. The [first-window partial result](NURPLES-PERFORMANCE-R01-RESULTS.md)
+less with32 sprites over the scrolling background. Three hardware-sprite pairs
+show41.58% less queued drawing in repaired Nurples, but greater snapshot/native
+waiting and rolling-copy cost. Visual acceptance and production promotion remain
+unestablished. The [first-window partial result](NURPLES-PERFORMANCE-R01-RESULTS.md)
 remains unchanged.
 
 ## Fresh RGB888 controls
@@ -143,3 +145,52 @@ strict render-tail and visual validation; the whole50% sprite/full-width gate is
 not satisfied. Hardware overlays, full-width logical widescreen, visible flicker
 and human input response remain separate gates. No other mode or production
 promotion follows from these data.
+
+## Hardware sprites and repaired hardware Nurples
+
+Three RGB888/direct-BGR indexed pairs retain the same source/SDK and fixture
+identities as the preceding cohorts. The candidate application SHA256 is
+`a2f0967c999d8ebd449e86fe5c80a5adcbfd90f2785c02b204611d63477754f1`.
+Case54 refreshes16 hardware sprites over a static background and performs one
+marker bitmap per update; its queued cost therefore excludes the actual sprite
+overlay. Hardware Nurples retains3600 measured updates,3600 scrolls,69172 bitmap
+plots and the same deterministic trajectory as software Nurples.
+
+| Workload | RGB888 median window mean, µs/update | Indexed median window mean, µs/update | Median reduction | Repeated-windowp95 reduction | RGB888 / indexed rendering share of60Hz budget |
+|---|---:|---:|---:|---:|---:|
+|Static16 hardware sprites; marker and refresh only|43.29|79.03|−82.56%|−80.24%|0.26% /0.47%|
+|Repaired hardware Nurples;3600 updates|3822.55|2233.31|41.58%|41.53%|22.94% /13.40%|
+
+The tiny static queued cost worsens in absolute terms by36µs/update. Asynchronous
+sprite composition is measured separately using two matching active display
+samples five seconds apart. The Nurples bracket covers an early five-second
+slice, not all later busy scenes. Ranking below puts the worse whole-refill
+regression first; positive reduction means lower cost.
+
+| Active rolling scope | RGB888 median, µs | Indexed median, µs | Reduction |
+|---|---:|---:|---:|
+|Nurples whole refill, per32-line strip|293.93|408.46|−38.97%|
+|Static16 whole refill, per32-line strip|387.99|410.68|−5.85%|
+|Nurples overlay composition, per384-line frame equivalent|310.14|185.78|40.10%|
+|Static16 overlay composition, per384-line frame equivalent|1628.63|700.66|56.98%|
+
+The direct-BGR painter reduces composition, but the rolling copy becomes more
+expensive: Nurples252.16→368.64µs/strip, static238.88→336.54µs/strip. Whole-refill,
+copy and composition are overlapping wall scopes and must not be summed. All
+six active brackets retain approximately60 carrier frames/s and zero rolling
+fault/late/underrun/cache/overlap/sequence counters. Those counters do not prove
+physical flicker-free output or distinct visible frames.
+
+Hardware Nurples native-mutex wait rises346.71→4476.56µs/update. Its indexed
+snapshot averages3918.24µs/update; blocking expansion is about4226.57µs/update.
+Broad conversion has one boundary drop per candidate, and expansion has one in
+two of the three candidates, so those broad scopes remain descriptive and do
+not qualify a complete output-cost comparison. Primary queued-render windows
+are closed, nonoverflowed and have zero boundary drops. Median background
+publication rates are60.07/s RGB888 and59.89/s indexed.
+
+These data meet25% for hardware Nurples's repeated rendering means, not50%,
+and do not satisfy individual-frame tails, visual/input or full-width gates.
+The Author's earlier “looks very good” observation described the RGB888 control;
+it is not acceptance of this indexed candidate. The next bounded pilots isolate
+cache-once and the existing inline bitmap painter before a larger cohort.
