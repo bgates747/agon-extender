@@ -489,7 +489,13 @@ void VDUStreamProcessor::sendScreenChar(char c) {
 // VDU 23, 0, &84: Send a pixel value back to MOS
 //
 void VDUStreamProcessor::sendScreenPixel(uint16_t x, uint16_t y) {
+    {
+#ifdef AGON_EXTENDER_RENDER_BENCHMARK
+    // Observe the existing completion flush only; UART request/reply unchanged.
+    agon_bench::RenderFenceRequest renderFence(!isDoubleBuffered());
+#endif
 	waitPlotCompletion();
+    }
 	RGB888 pixel = context->getPixel(x, y);
 	uint8_t pixelIndex = getPaletteIndex(pixel);
 	setVDPVariable(VDPVAR_LAST_COLOUR_RED, pixel.R);

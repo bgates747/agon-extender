@@ -715,6 +715,9 @@ void IRAM_ATTR BitmappedDisplayController::processPrimitives()
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
   measured(agon_bench::RenderKind::FinalSprites,[&]{showSprites(updateRect);});
   render.finish(count,false,true);
+  // RESEARCH-007: worker is already suspended/joined and final show is now
+  // committed. Sampling after resume would race a batch-local worker tally.
+  agon_bench::renderFenceAtQuiescentFlush(!isDoubleBuffered());
 #else
   showSprites(updateRect);
 #endif
