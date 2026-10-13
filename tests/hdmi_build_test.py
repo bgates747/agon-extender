@@ -318,7 +318,7 @@ class HdmiBuildTest(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit,"LUT requires"):
             build_p4.select_display_profile(*args,indexed_ppa=True,bitmap_fast=True,bitmap_lut=True)
 
-    def test_scroll_fast_selects_p4_kernel_only_in_explicit_rgb888_experiment(self):
+    def test_scroll_fast_selects_p4_kernel_only_in_explicit_colour_experiment(self):
         args = (self.document, "p4-console", "p4-pc", "hdmi", "normal", True, "auto", True)
         source = "video/extender/display/scroll_copy_pie.S"
         control = build_p4.select_display_profile(*args)
@@ -326,8 +326,17 @@ class HdmiBuildTest(unittest.TestCase):
         self.assertNotIn(source, control["sources"])
         self.assertIn(source, selected["sources"])
         self.assertIn("AGON_EXTENDER_SCROLL_FAST=1", selected["definitions"])
-        with self.assertRaisesRegex(SystemExit, "scroll fast"):
-            build_p4.select_display_profile(*args, indexed_ppa=True, scroll_fast=True)
+        indexed = build_p4.select_display_profile(*args, indexed_ppa=True, scroll_fast=True)
+        self.assertEqual(indexed["sources"].count(source), 1)
+        self.assertIn("AGON_EXTENDER_SCROLL_FAST=1", indexed["definitions"])
+        self.assertNotIn("AGON_EXTENDER_INDEXED_SNAPSHOT_PIE=1", indexed["definitions"])
+        for timing, rolling in (("848x480", True), ("auto", False)):
+            with self.assertRaisesRegex(SystemExit, "indexed scroll fast"):
+                build_p4.select_display_profile(self.document, "p4-console", "p4-pc",
+                    "hdmi", "normal", True, timing, rolling, indexed_ppa=True, scroll_fast=True)
+        for choice in ("parallel_boot_candidate","parallel_probe_candidate","parallel_data_check","exext_stream"):
+            with self.assertRaisesRegex(SystemExit,"indexed scroll fast path excludes parallel"):
+                build_p4.select_display_profile(*args,indexed_ppa=True,scroll_fast=True,**{choice:True})
 
     def test_indexed_snapshot_pie_is_separate_default_off_and_bounded(self):
         args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
@@ -341,10 +350,12 @@ class HdmiBuildTest(unittest.TestCase):
         self.assertEqual(set(selected["definitions"])-set(control["definitions"]),{flag})
         self.assertNotIn("AGON_EXTENDER_SCROLL_FAST=1",selected["definitions"])
         self.assertEqual(set(selected["sources"])-set(control["sources"]),{source})
-        # Existing scroll pilot excludes indexed storage. Do not silently
-        # enable it through kernel availability or broaden that composition.
-        with self.assertRaisesRegex(SystemExit,"scroll fast path requires"):
-            build_p4.select_display_profile(*args,**base,indexed_snapshot_pie=True,scroll_fast=True)
+        # Both explicit callers reuse one kernel, independently. The snapshot
+        # selector alone above must never implicitly enable renderer scrolling.
+        combined=build_p4.select_display_profile(*args,**base,indexed_snapshot_pie=True,scroll_fast=True)
+        self.assertEqual(combined["sources"].count(source),1)
+        self.assertEqual(set(combined["definitions"])-set(selected["definitions"]),
+                         {"AGON_EXTENDER_SCROLL_FAST=1"})
         for choice in ({},{"indexed_ppa":True},{"indexed_frame_snapshot":True}):
             with self.assertRaisesRegex(SystemExit,"snapshot PIE requires"):
                 build_p4.select_display_profile(*args,**choice,indexed_snapshot_pie=True)

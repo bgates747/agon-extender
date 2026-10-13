@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--hdmi684', action='store_true')
     parser.add_argument('--bitmap-fast', action='store_true')
     parser.add_argument('--bitmap-lut', action='store_true')
+    parser.add_argument('--scroll-fast', action='store_true')
     parser.add_argument('--sanitize', action='store_true',
                         help='Run the actual controller goldens with address/undefined sanitizers')
     args = parser.parse_args()
@@ -55,6 +56,7 @@ def main():
             "-DAGON_EXTENDER_HDMI", "-DAGON_EXTENDER_DIRECT_RGB888",
             *(["-DAGON_EXTENDER_BITMAP_FAST=1"] if args.bitmap_fast else []),
             *(["-DAGON_EXTENDER_BITMAP_LUT=1"] if args.bitmap_lut else []),
+            *(["-DAGON_EXTENDER_SCROLL_FAST=1"] if args.scroll_fast else []),
             *(["-DAGON_EXTENDER_INDEXED_PPA=1"] if args.indexed else []),
             *(["-DAGON_EXTENDER_HDMI_848X480=1"] if args.hdmi848 else []),
             *(["-DAGON_EXTENDER_HDMI_684X384=1"] if args.hdmi684 else []), *["-I" + str(path) for path in includes],

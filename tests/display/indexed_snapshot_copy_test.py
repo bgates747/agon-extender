@@ -5,6 +5,7 @@ Host checks qualify row/source bounds and selection, never P4 speed or ISA.
 Use scroll_copy_test.py for the independently bounded vector-read model.
 """
 from pathlib import Path
+import argparse
 import subprocess
 import tempfile
 
@@ -16,6 +17,9 @@ ROW=ROOT/'docs/tasks/PORT-003/stock-backend-r1'
 
 
 def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--scroll-fast',action='store_true')
+    args=parser.parse_args()
     sources=[GL/'dispdrivers'/(name+'controller.cpp') for name in
              ('vgabase','vgapaletted','vga2','vga4','vga8','vga16','vga64')]
     sources += [GL/(name+'.cpp') for name in ('canvas','displaycontroller','codepages','fabfonts')]
@@ -32,6 +36,7 @@ def main():
            '-DFABGL_EMULATED','-DAGON_EXTENDER_STOCK_RUNTIME','-DAGON_EXTENDER_DIRECT_RGB888',
            '-DAGON_EXTENDER_INDEXED_PPA=1','-DAGON_EXTENDER_INDEXED_FRAME_SNAPSHOT=1',
            '-DAGON_EXTENDER_SW_VISIBLE_SNAPSHOT=1',
+           *(['-DAGON_EXTENDER_SCROLL_FAST=1'] if args.scroll_fast else []),
            *['-I'+str(path) for path in includes],'-include',str(RUNTIME/'compat/host_preinclude.hpp')]
     with tempfile.TemporaryDirectory(prefix='indexed-snapshot-copy-') as temporary:
         work=Path(temporary)

@@ -173,10 +173,18 @@ def select_display_profile(document: dict, name: str, board: str,
             raise SystemExit("bitmap LUT requires the explicit RGB888 bitmap fast path without indexed storage")
         profile["definitions"].append("AGON_EXTENDER_BITMAP_LUT=1")
     if scroll_fast:
-        if not direct_rgb888 or indexed_ppa or display_output != "hdmi" or render_benchmark_output != "normal":
-            raise SystemExit("scroll fast path requires direct RGB888 normal HDMI without indexed storage")
+        if not direct_rgb888 or display_output != "hdmi" or render_benchmark_output != "normal":
+            raise SystemExit("scroll fast path requires explicit P4 colour storage and normal HDMI")
+        if indexed_ppa and (hdmi_timing != "auto" or not rolling_scanout):
+            raise SystemExit("indexed scroll fast path requires automatic rolling HDMI")
+        if indexed_ppa and (parallel_boot_candidate or parallel_probe_candidate or parallel_data_check or exext_stream):
+            raise SystemExit("indexed scroll fast path excludes parallel handling")
         profile["definitions"].append("AGON_EXTENDER_SCROLL_FAST=1")
-        profile["sources"].append("video/extender/display/scroll_copy_pie.S")
+        # The separately selected snapshot pilot reuses this exact kernel.
+        # Availability must not enable either caller, or compile it twice.
+        source = "video/extender/display/scroll_copy_pie.S"
+        if source not in profile["sources"]:
+            profile["sources"].append(source)
     if hdmi_link_watch:
         if (display_output != "hdmi" or not rolling_scanout or
                 render_benchmark_output != "normal" or indexed_ppa or

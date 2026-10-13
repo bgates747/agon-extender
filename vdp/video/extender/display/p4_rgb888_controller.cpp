@@ -310,8 +310,10 @@ void P4Color64Controller::rawInvertRow(int y, int x1, int x2)
 void P4Color64Controller::rawCopyRow(int x1, int x2, int srcY, int dstY)
 {
   // RGB-001 r02 / SCAN-001: the stock copy-scroll helper orders rows so a
-  // destination never destroys an unread source. Distinct panel rows have
-  // disjoint spans even with a centered viewport and the larger HDMI stride.
+  // destination never destroys an unread source. Distinct panel/indexed rows
+  // have disjoint spans, including rotated descriptors and centred viewports.
+  // kP4ColorBytes selects three BGR bytes or one indexed byte; the proven copy
+  // kernel changes neither stock sprite erasure nor exposed-row filling.
   auto src = (uint8_t*)m_viewPort[srcY] + x1 * agon::extender::display::kP4ColorBytes;
   auto dst = (uint8_t*)m_viewPort[dstY] + x1 * agon::extender::display::kP4ColorBytes;
   // Default-off P4 PIE experiment: retain stock row ordering and exact partial

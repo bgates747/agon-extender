@@ -32,9 +32,9 @@ Base: `5444b8f345fc79439a382411c780dda7bd427397`. Preparation branch:
    output submission, task notification and mode/lifecycle ownership are unchanged.
 4. Kernel availability is separate from call-site selection. The snapshot flag
    enables only `copyIndexedSnapshotRow`; renderer `copyScrollRow` still requires
-   its own `SCROLL_FAST` selector. The builder retains the existing prohibition
-   on combining that scrolling experiment with indexed storage. It does not
-   silently broaden either experiment.
+   its own `SCROLL_FAST` selector. The separately selected
+   [indexed scrolling pilot](INDEXED-SCROLL-PIE-R01.md) permits both explicit
+   selections to share one compiled kernel. Neither selector enables its peer.
 
 ## Kernel, bounds and execution context
 
@@ -53,9 +53,10 @@ Base: `5444b8f345fc79439a382411c780dda7bd427397`. Preparation branch:
    are added. The builder confines the PIE ISA to the existing controller object
    and assembly, keeping the remaining renderer/control objects unchanged.
 4. Benchmark builds execute the existing one-shot heap/canary target self-test
-   through the selected snapshot wrapper before measured rendering. Its 1,280
-   cases include every source/destination alignment and the exact 512-byte row
-   length. Failure aborts before a benchmark; host tests do not qualify the ISA.
+   through the selected snapshot wrapper before measured rendering. Its 1,536
+   cases include every source/destination alignment and the exact 256-byte
+   scrolling span and 512-byte row. Failure aborts before a benchmark; host tests
+   do not qualify the ISA.
 
 ## Offline evidence and remaining gate
 

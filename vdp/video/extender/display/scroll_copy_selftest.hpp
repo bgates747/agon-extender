@@ -40,7 +40,7 @@ inline bool scrollCopySelfTest(void (*copyRow)(void *, const void *, std::size_t
   auto pattern=[](std::size_t i){return std::uint8_t(i*73+i/17+11);};
   for(std::size_t i=0;i<capacity;++i)source[i]=pattern(i);
   unsigned cases=0;
-  constexpr std::size_t lengths[]={96,255,512,768,1024};
+  constexpr std::size_t lengths[]={96,255,256,512,768,1024};
   for(const auto bytes : lengths)
     for(unsigned srcOffset=0;srcOffset<16;++srcOffset)
       for(unsigned dstOffset=0;dstOffset<16;++dstOffset) {
