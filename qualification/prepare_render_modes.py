@@ -19,7 +19,7 @@ def dump(p,d):p.write_text(json.dumps(d,indent=2)+'\n')
 
 
 def prepare(config,fixtures,campaign):
-    c=json.loads(config.read_text());local=Path(c['local']);out=local/'package'
+    c=json.loads(config.read_text());local=Path(c['local']);out=Path(c.get('package',local/'package'))
     out.mkdir(parents=True,exist_ok=False)
     fm=json.loads((fixtures/'manifest.json').read_text())
     remote='/agents/extender/results/'+campaign
@@ -54,14 +54,18 @@ def prepare(config,fixtures,campaign):
                     tag=int.from_bytes(hashlib.sha256((campaign+'/'+ident).encode()).digest()[:3],'little') or 1
                     data=multimode.old.config(case,frames,warmup,result,fence_off=game,extra_flags=4,window_tag=tag)
                     add(ident+'/run.cfg',folder+'/run.cfg',data)
-                    lines=['EMOS EXCOM --keep-display','CD '+folder,
-                           'LOAD '+geometry['sd_dir']+'/fixture.bin','RUN','CD /',
-                           'EMOS LEGACY','EMOS sdserve --fast /']
+                    binary=geometry.get('sd_binary',geometry['sd_dir']+'/fixture.bin')
+                    # One explicit host EXEC owns directory setup and launch.
+                    # Keyboard delivery of a separate CD cannot establish
+                    # completion of that command before the next command.
+                    lines=['EMOS EXCOM --keep-display','CD '+folder,'LOAD '+binary,
+                           'RUN','CD /','EMOS LEGACY','EMOS sdserve --fast /']
                     add(ident+'/run.txt',folder+'/run.txt',('\r\n'.join(lines)+'\r\n').encode())
                     job=dict(id=ident,renderer=renderer,mode=mode,case=name,case_number=case,
                              repeat=repeat,frames=frames,warmup=warmup,tag=tag,result=result,
                              game=game,smoke=smoke,config_local=ident+'/run.cfg',
                              config_remote=folder+'/run.cfg',command_remote=folder+'/run.txt',
+                             diagnostic_id=geometry['diagnostic_id'],
                              limits=geometry['limits'])
                     p['jobs'].append(job)
                     if not smoke:

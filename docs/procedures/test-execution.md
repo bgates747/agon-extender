@@ -19,6 +19,10 @@ collection and restoration; each is a separate execution boundary.
    requirement to select fixture modes in autoexec remains: setup the mode
    there, then launch separately after boot. Testing boot autorun itself requires
    a distinct explicit Author request; it is not an ordinary test-launch method.
+   Startup must finish with EMOS in Legacy. A task-specific startup that
+   temporarily routes mode selection to P4 through ExCom must explicitly
+   return to Legacy before startup completes. The later explicit test launch
+   owns any ExCom selection required for that test.
 4. Prepare a separate MOS command file for a sequential suite. The agent or
    Author invokes it with `EXEC /path/to/suite.txt` at a verified prompt. A
    single test may use explicit `LOAD`/`RUN` commands. The command file must not

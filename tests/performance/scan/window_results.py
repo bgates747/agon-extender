@@ -5,7 +5,7 @@ from pathlib import Path
 from records import decode,summary
 PHASES=('drain','row_wait','row_compose','expand','cache','conversion')
 
-def analyse(raw,window=None):
+def analyse(raw,window=None,*,diagnostic_id=None):
     d=decode(raw);s=summary(d)
     ticks=(d['window_end']-d['window_start'])&0xffffff
     s['nominal_updates_per_second']=d['count']*120/ticks if ticks else None
@@ -27,7 +27,8 @@ def analyse(raw,window=None):
         # Groups can be disjoint; do not treat their whole-run endpoints as a group duration.
         s['actor_groups'].append(group)
     if window is not None:
-        if window['tag']!=d['window_tag'] or window['id']!=d['case'] or not d['controls']&4:
+        expected_id=d['case'] if diagnostic_id is None else diagnostic_id
+        if window['tag']!=d['window_tag'] or window['id']!=expected_id or not d['controls']&4:
             raise ValueError('window/result identity mismatch')
         span=window['end_us']-window['start_us']
         if span<=0:raise ValueError('open/invalid window')

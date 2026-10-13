@@ -49,5 +49,15 @@ class MultimodeTests(unittest.TestCase):
             self.assertIn('    xor a\n    call sc_marker\n    call sc_prepare',text)
             self.assertNotIn('call vdu_set_screen_mode',text)
 
+    def test_diagnostic_ids_match_selected_sampler_admission(self):
+        for mode in m.MODES:
+            for case in m.NAMES:
+                diagnostic=9 if mode==136 else m.DIAGNOSTIC_IDS[case]
+                text=m.runner(mode,case)
+                self.assertIn(f'"B009",1,0,{diagnostic},0,1,0,0,0',text)
+                if mode!=136 and case not in (6,8):
+                    self.assertIn(diagnostic,(3,7,8,39,41,54))
+                else:self.assertEqual(diagnostic,9)
+
 
 if __name__=='__main__':unittest.main()

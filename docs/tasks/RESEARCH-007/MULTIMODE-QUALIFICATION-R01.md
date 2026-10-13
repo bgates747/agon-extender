@@ -5,8 +5,9 @@ round. One host master runner owns sequential execution, durable collection
 and the final persistent Extender display cue. Existing mode-20 evidence is
 retained; the current frozen fixtures are not qualified for other geometries.
 The runner and 40 per-mode fixture derivatives compile and pass offline checks.
-Physical staging and short per-fixture smoke qualification are underway; the
-full campaign is not yet ready to invoke.
+Staging is complete for the current package; sixteen short RGB888 receipts are
+data-valid. The Author reported vertical squashing and execution is stopped
+for [HDMI-003](../HDMI-003.md). The full campaign is not ready to invoke.
 
 ## Bounded work contract
 
@@ -81,7 +82,8 @@ records do not substitute for Author visual/gameplay acceptance.
    per-mode expected status and fresh result paths in an ignored local plan.
 2. EMOS owns routing; the host uses the admitted CLI/listener. Select each
    fixture mode only through setup-only `/autoexec.txt` and the controlled
-   reset protocol. No test launch belongs in autoexec. Explicit CLI commands
+   reset protocol. Mode setup must finish in Legacy: after EMOS temporarily
+   routes mode selection to P4, explicitly return to Legacy before boot ends. No test launch belongs in autoexec. Explicit CLI commands
    launch each staged suite after verified readiness.
 3. Preserve ordinary startup and configurations, verify every restoration,
    and retain exact firmware install receipts. No EMOS/mainboard VDP, wiring,
@@ -144,6 +146,65 @@ The local plan schema has `schema: 1`, explicit `ready: true`, `cwd`,
 those five identity fields and supply `validated`, `bench_idle`, and, for a
 recovered failure, `safe_to_continue`. The plan is trusted local configuration,
 not a sandbox or permission mechanism.
+
+## Preparation findings — 2026-10-13
+
+1. The first short mode-0 bitmap smoke returned safely and saved valid raw
+   records, but failed the required fence-sidecar check. The selected P4 source
+   at `e26c24f743b9b94efa05eac46f2f237689ac3b5b`, in
+   `vdp/video/extender/diagnostics/render_benchmark.hpp`, admits fence samples
+   only for diagnostic IDs 3, 7, 8, 39, 41 and 54. New workload IDs 1–8 must
+   not be assumed to share that diagnostic contract. Preserve this informative
+   failure; no full campaign was launched.
+2. Revised fixtures keep result workload IDs 1–8 and explicitly map the B009
+   carrier to the retained finite diagnostic IDs; games retain aggregate-only
+   ID 9. Mode 136 also uses aggregate-only ID 9 because immediate double-buffer
+   drawing remains outside the queued sampler. The host validates the mapped
+   diagnostic ID and original result identity independently, with the same tag.
+3. The official buffered-command documentation at reference commit
+   `f9806bd3cbff6ed5d1c08bef1d51fed11764b86b`,
+   `docs/vdp/Buffered-Commands-API.md`, confirms that writes to buffer 65535
+   discard their payload; CLEAR 65535 instead clears all buffers and is not
+   permitted as a substitute. The diagnostic admission detail comes from the
+   selected project-owned P4 source, not the stock API documentation.
+4. Revised binaries and shared launchers use fresh SD filenames. Each final job launcher selects its directory inside one explicit MOS batch;
+   separate host CD/EXEC commands were superseded after uncertain handback. Existing fixture assets/configurations, renderer firmware and
+   frozen package identities remain retained. The first failed SD result is
+   archived under a distinct filename before a fresh smoke attempt.
+5. Partial staging continuation used retained whole-file-readback receipts
+   plus current on-card sizes under exclusive bench ownership. The activation
+   interrupted during the previous session received an independent full
+   readback. Every new upload still receives a complete readback; neither
+   outstanding requests nor the directory-creation batch are replayed blindly.
+
+## Current preparation boundary — 2026-10-13
+
+The original 743-file deployment and subsequent 80-file repaired binary/launcher
+additions are fully verified. The optimized RGB888 control remains installed.
+The first repaired smoke was explicitly invoked but produced neither a new P4
+window nor foreground listener handback within its observation window. The
+host stopped without reset, replay or further keyboard commands. Read-only
+inspection cannot establish the actual foreground application or CLI state;
+idle metadata access also returned unavailable. The Author subsequently restored the bench and manually selected Legacy.
+The agent restored the original keyboard-only startup with full readback and
+actual listener EXIT, without resetting or launching a fixture. Temporary
+mode setup is being corrected to finish in Legacy. Sixteen short RGB888 receipts and its mode-0 green/red SELF-TEST readbacks
+subsequently passed. The Author then reported vertical squashing; execution
+is stopped pending HDMI-003. The 80-smoke admission and completion
+banner checks are unfinished; no ready plan or full campaign is claimed.
+
+## Decision register
+
+### MQD01 — Mode-3 HDMI output aspect — transferred
+
+The Author authorized a separate diagnosis and correction task on 2026-10-13.
+[HDMI-003](../HDMI-003.md) owns the evidence, presentation decision and repair;
+its H03-D01 register replaces this open decision. The unscaled source mapping
+and 640×240-in-684×384 metadata are confirmed findings, but matching them to
+the Author's visible report remains part of diagnosis. Benchmark preparation
+stays stopped until the corrective task provides an appropriately verified
+comparison pair. No specific output-scaling algorithm is accepted by this
+transfer.
 
 ## References
 

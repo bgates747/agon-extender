@@ -29,6 +29,11 @@ def dump(path,value):
     path.parent.mkdir(parents=True,exist_ok=True)
     tmp=path.with_suffix(path.suffix+'.new');tmp.write_text(json.dumps(value,indent=2)+'\n');tmp.replace(path)
 def utc(): return dt.datetime.now(dt.timezone.utc).isoformat()
+def mode_startup(mode):
+    # P4 mode selection belongs in startup, but startup must finish in Legacy.
+    # EMOS temporarily routes VDU22 to P4, then closes that display lease.
+    return ('SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nEMOS LEGACY\r\n'
+            'EMOS EXCOM\r\nVDU 22 '+str(mode)+'\r\nEMOS LEGACY --keep-display\r\n').encode()
 def directory_closure(files):
     paths=set()
     for entry in files:
@@ -43,7 +48,7 @@ def module(path,name):
 class Adapter:
     def __init__(self,path):
         self.path=path.resolve();self.c=json.loads(self.path.read_text())
-        self.local=Path(self.c['local']);self.package=self.local/'package'
+        self.local=Path(self.c['local']);self.package=Path(self.c.get('package',self.local/'package'))
         self.p=json.loads((self.package/'plan.json').read_text())
         self.m=module(Path(self.c['session_module']),'render_mode_session')
         self.b=self.m.bench(Path(self.c['session_config']))
@@ -128,7 +133,7 @@ class Adapter:
         self.checked()
         display=self.m.get(self.b.config,'/display/status')
         startup=self.b.fast_read('/autoexec.txt')
-        desired=('SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nEMOS EXCOM\r\nVDU 22 '+str(mode)+'\r\n').encode()
+        desired=mode_startup(mode)
         if display.get('available') and display['mode']==mode and startup==desired:
             self.state['selected_mode']=mode;self.save();return
         if any(s.strip().upper().startswith(('LOAD ','RUN','EXEC ')) for s in startup.decode().splitlines()):
@@ -151,6 +156,8 @@ class Adapter:
 
     def run(self,job_id,receipt,evidence):
         if not self.state.get('staged'):raise RuntimeError('Campaign not staged')
+        if self.state.get('plan_sha256')!=sha((self.package/'plan.json').read_bytes()):
+            raise RuntimeError('Staging receipt belongs to a different package')
         job=next(j for j in self.p['jobs'] if j['id']==job_id)
         if receipt.exists():raise RuntimeError('Receipt already exists; no replay')
         self.select_renderer(job['renderer']);self.mode(job['mode'],evidence);self.checked()
@@ -184,13 +191,14 @@ class Adapter:
             calibration=d['calibration_prt']/d['calibration_mos'] if d['calibration_mos'] else 0
             if not 510<=calibration<=690:
                 raise RuntimeError('PRT/raw-MOS calibration outside the declared 72k/120Hz tolerance')
-            hits=[w for w in windows['windows'] if w['id']==job['case_number'] and w['tag']==job['tag']]
+            diagnostic_id=job.get('diagnostic_id',job['case_number'])
+            hits=[w for w in windows['windows'] if w['id']==diagnostic_id and w['tag']==job['tag']]
             if windows['open'] or windows['overflow'] or windows.get('render_overflow') or len(hits)!=1:
                 raise RuntimeError('Missing/overflow/open diagnostic sidecar')
             window=hits[0]
             if window['end_us']<=window['start_us'] or window['render']['boundary_drops']:
                 raise RuntimeError('Unclosed or dropped render window')
-            if not job['game']:
+            if not job['game'] and job['mode']!=136:
                 fences=window.get('render_fences',{})
                 if (fences.get('count')!=job['frames']+2 or fences.get('pending_requests')!=0 or
                     fences.get('errors')!=0 or not fences.get('samples_complete')):
@@ -200,7 +208,7 @@ class Adapter:
             output_errors={k:after_rolling.get(k,0)-before_rolling.get(k,0) for k in faults}
             if any(v!=0 for v in output_errors.values()):
                 raise RuntimeError('HDMI rolling output errors: '+str(output_errors))
-            s=analyse(raw,window)
+            s=analyse(raw,window,diagnostic_id=diagnostic_id)
             s['queued_render']=window['render']
             if not job['game'] and job['mode']!=136:
                 cumulative=window['render_fences']['cumulative_render_us']

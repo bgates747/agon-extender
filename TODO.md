@@ -5,6 +5,10 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
+## Current corrective work — HDMI aspect
+
+- [ ] **[HDMI-003 — Diagnose and correct low-resolution HDMI aspect](docs/tasks/HDMI-003.md)** — Author-authorized investigation and correction of vertical squashing reported during multimode smokes. Verify the cause before changing P4 output; preserve matched renderer/fixture evidence and keep the full campaign stopped.
+
 ## Nurples rendering goal — renewed eight-hour window
 
 - [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Repeated original-RGB comparisons show52.52% less software and41.58% less hardware Nurples queued rendering; most-modern optimized RGB888 comparison remains pending. Prepare the Author-approved [focused multi-mode master](docs/tasks/RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md): modes0/3/8/20/136,240 full runs, separate short hardware smokes and persistent green/red completion cues. Preserve earlier evidence and ordinary startup; no promotion or unrelated video-mode development.

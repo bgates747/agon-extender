@@ -20,6 +20,9 @@ MODES = {0: (640,480,16,False), 3: (640,240,64,False),
          8: (320,240,64,False), 20: (512,384,64,False), 136: (320,240,64,True)}
 NAMES = {1:'bitmap-light',2:'bitmap-heavy',3:'partial-scroll',4:'software-static',
          5:'software-scroll',6:'nurples-software',7:'hardware-static',8:'nurples-hardware'}
+# The selected diagnostic P4 builds admit only these retained B009 IDs.
+# Keep result-file workload IDs independent; games remain aggregate-only ID9.
+DIAGNOSTIC_IDS = {1:39,2:41,3:3,4:7,5:8,6:9,7:54,8:9}
 spec = importlib.util.spec_from_file_location('scan_builder', HERE/'build.py')
 old = importlib.util.module_from_spec(spec); spec.loader.exec_module(old)
 
@@ -99,13 +102,17 @@ def frame(mode,case,u):
     return out
 
 
-def runner(mode):
+def runner(mode,case=None):
     text=(HERE/'runner.inc').read_text()
     text=old.patch(text,'    cp 20\n',f'    cp {mode}\n')
     text=text.replace('SCAN: mode 20/VDP reply/clock required.',f'MQ: mode {mode}/VDP reply/clock required.')
     # Each new job resets only diagnostic counters, after all prior evidence
     # was collected. Use the existing official discarded-buffer carrier.
     text=old.patch(text,'    call sc_prepare\n','    xor a\n    call sc_marker\n    call sc_prepare\n')
+    if case is not None:
+        diagnostic=9 if mode==136 else DIAGNOSTIC_IDS[case]
+        text=old.patch(text,'"B009",1,0,sc_case,0,1,0,0,0',
+                       f'"B009",1,0,{diagnostic},0,1,0,0,0')
     return text
 
 
@@ -115,7 +122,7 @@ def build(args):
     previous=json.loads((source/'manifest.json').read_text())
     if previous['source_head']!='0c741d5e2021927adfa440f45b8e04b950114889':
         raise ValueError('Require the retained repaired Nurples fixture input')
-    build_id='render-qualification-r01-b'+dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ')
+    build_id='render-qualification-r02-b'+dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ')
     card=out/'sdcard'; root=card/'extender/render-qualification-r01'
     root.mkdir(parents=True)
     assets=source/'sdcard/test/nurples/scan-r02'
@@ -184,11 +191,12 @@ def build(args):
                 # portable. No production palette/colour semantics change.
                 text=text.replace('17,63,17,128','17,7,17,128')
                 (folder/'synthetic.asm').write_text(text);main='synthetic.asm'
-            (folder/'runner.inc').write_text(runner(mode))
-            binary=assemble(folder,main);shutil.copyfile(binary,target/'fixture.bin')
+            (folder/'runner.inc').write_text(runner(mode,case))
+            binary=assemble(folder,main);shutil.copyfile(binary,target/'fixture-r02.bin')
             if binary.stat().st_size>=65536: raise ValueError('Fixture overlaps staged frame RAM')
-            entries.append(dict(mode=mode,case=case,name=NAMES[case],geometry=list(MODES[mode]),
+            entries.append(dict(mode=mode,case=case,diagnostic_id=9 if mode==136 else DIAGNOSTIC_IDS[case],name=NAMES[case],geometry=list(MODES[mode]),
                                 sd_dir=remote,binary_sha256=sha(binary),build_id=build_id,
+                                sd_binary=remote+'/fixture-r02.bin',
                                 game=case in (6,8),hardware=case in (7,8),
                                 page_policy='alternate initialized banks' if mode==136 else 'single bank',
                                 limits='Nurples geometry derivative; original artwork may be clipped; mode136 is bank stress, not production gameplay' if case in (6,8) else 'geometry-bounded synthetic workload'))
