@@ -91,6 +91,11 @@ public:
   void copyRgb888Row(int y, uint8_t *destination, uint8_t *signal);
   void encodeSignalRow(int y, uint8_t *signal);
   void copyLinearRow(int y, uint8_t *destination, bool decorate);
+#if defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE
+  // Native-guarded Mode20 frame snapshot only. Separate from the decorated
+  // helper so its 848-byte temporary does not burden ordinary indexed rows.
+  void copyLinearSnapshotRowPie(int y, uint8_t *destination);
+#endif
   bool overlayIntersectsRow(int y);
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
   // Snapshot access is task-only under native exclusion. Keep this accommodation
@@ -258,7 +263,6 @@ private:
 using P4Rgb888Controller = P4Color64Controller;
 
 } // end of namespace
-
 
 
 

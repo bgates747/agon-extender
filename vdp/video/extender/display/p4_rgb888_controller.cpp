@@ -60,7 +60,9 @@
 #endif
 #include "extender/display/rgb222_bgr_lut.hpp"
 #endif
-#if defined(ESP_PLATFORM) && defined(AGON_EXTENDER_SCROLL_FAST) && defined(AGON_EXTENDER_RENDER_BENCHMARK)
+#if defined(ESP_PLATFORM) && defined(AGON_EXTENDER_RENDER_BENCHMARK) && \
+    ((defined(AGON_EXTENDER_SCROLL_FAST) && AGON_EXTENDER_SCROLL_FAST) || \
+     (defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE))
 #include "extender/display/scroll_copy_selftest.hpp"
 #endif
 #if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
@@ -671,11 +673,18 @@ void P4Color64Controller::rawDrawBitmapWithMatrix_RGBA8888(int destX, int destY,
 
 
 void P4Color64Controller::setResolution(VGATimings const &t,int w,int h,bool doubled) {
-#if defined(ESP_PLATFORM) && defined(AGON_EXTENDER_SCROLL_FAST) && defined(AGON_EXTENDER_RENDER_BENCHMARK)
+#if defined(ESP_PLATFORM) && defined(AGON_EXTENDER_RENDER_BENCHMARK) && \
+    ((defined(AGON_EXTENDER_SCROLL_FAST) && AGON_EXTENDER_SCROLL_FAST) || \
+     (defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE))
   // Candidate-only ISA qualification runs once in the already pinned parser
   // task after PSRAM/scheduler startup, before any measured rendering window.
   // Host canaries cannot establish correctness of the actual PIE instructions.
+#if defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE
+  static const bool copyQualified = agon::extender::display::scrollCopySelfTest(
+      agon::extender::display::copyIndexedSnapshotRow);
+#else
   static const bool copyQualified = agon::extender::display::scrollCopySelfTest();
+#endif
   if (!copyQualified) std::abort();
 #endif
   VGAPalettedController::setResolution(t,w,h,doubled);
@@ -837,6 +846,18 @@ void P4Color64Controller::copyLinearRow(int y,uint8_t *destination,bool decorate
   } else memcpy(destination,(const void*)m_viewPortVisible[y],m_viewPortWidth);
 #endif
 }
+
+#if defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE
+void P4Color64Controller::copyLinearSnapshotRowPie(int y, uint8_t *destination) {
+  // The complete-frame caller already holds native exclusion, validates the
+  // native single-buffer geometry and checks cancellation before each row.
+  // Visible descriptors may be permuted or belong to separate pools. Copy
+  // exactly this row's width; bounded head/tail handling keeps PIE read-ahead
+  // inside that span. No cache operation or output ownership changes here.
+  agon::extender::display::copyIndexedSnapshotRow(
+      destination, (const void *)m_viewPortVisible[y], m_viewPortWidth);
+}
+#endif
 
 void P4Color64Controller::copyRgb888Row(int y,uint8_t *destination,uint8_t *signal) {
   // Keep overlays out of the persistent logical background. Only rows with a

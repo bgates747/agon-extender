@@ -329,6 +329,46 @@ class HdmiBuildTest(unittest.TestCase):
         with self.assertRaisesRegex(SystemExit, "scroll fast"):
             build_p4.select_display_profile(*args, indexed_ppa=True, scroll_fast=True)
 
+    def test_indexed_snapshot_pie_is_separate_default_off_and_bounded(self):
+        args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
+        base=dict(indexed_ppa=True,indexed_frame_snapshot=True)
+        flag="AGON_EXTENDER_INDEXED_SNAPSHOT_PIE=1"
+        source="video/extender/display/scroll_copy_pie.S"
+        control=build_p4.select_display_profile(*args,**base)
+        selected=build_p4.select_display_profile(*args,**base,indexed_snapshot_pie=True)
+        self.assertNotIn(flag,control["definitions"])
+        self.assertNotIn(source,control["sources"])
+        self.assertEqual(set(selected["definitions"])-set(control["definitions"]),{flag})
+        self.assertNotIn("AGON_EXTENDER_SCROLL_FAST=1",selected["definitions"])
+        self.assertEqual(set(selected["sources"])-set(control["sources"]),{source})
+        # Existing scroll pilot excludes indexed storage. Do not silently
+        # enable it through kernel availability or broaden that composition.
+        with self.assertRaisesRegex(SystemExit,"scroll fast path requires"):
+            build_p4.select_display_profile(*args,**base,indexed_snapshot_pie=True,scroll_fast=True)
+        for choice in ({},{"indexed_ppa":True},{"indexed_frame_snapshot":True}):
+            with self.assertRaisesRegex(SystemExit,"snapshot PIE requires"):
+                build_p4.select_display_profile(*args,**choice,indexed_snapshot_pie=True)
+        for choice in ("parallel_boot_candidate","parallel_probe_candidate","parallel_data_check","exext_stream"):
+            with self.assertRaisesRegex(SystemExit,"snapshot PIE excludes parallel"):
+                build_p4.select_display_profile(*args,**base,indexed_snapshot_pie=True,**{choice:True})
+        for enabled in (False,True):
+            profile=selected if enabled else control
+            with tempfile.TemporaryDirectory() as tmp:
+                build_p4.render_component(profile,self.document["common"],Path(tmp),{})
+                cmake=(Path(tmp)/"CMakeLists.txt").read_text()
+                self.assertEqual("-march=rv32imafc_zicsr_zifencei_xesppie" in cmake,enabled)
+                if enabled:
+                    tuned=cmake.split("set_source_files_properties(",1)[1].split("PROPERTIES",1)[0]
+                    self.assertIn("p4_rgb888_controller.cpp",tuned)
+                    self.assertIn("scroll_copy_pie.S",tuned)
+                    self.assertNotIn("stock_runtime_controller.cpp",tuned)
+        check=lambda argv,on: validate_p4_build.selected_definition(
+            argv,"AGON_EXTENDER_INDEXED_SNAPSHOT_PIE",on,value_aware=True)
+        self.assertTrue(check([],False))
+        self.assertTrue(check(["-DAGON_EXTENDER_INDEXED_SNAPSHOT_PIE=0"],False))
+        self.assertTrue(check(["-D"+flag],True))
+        self.assertFalse(check(["-D"+flag],False))
+
     def test_bitmap_lut_requires_explicit_fast_rgb888_painter(self):
         args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
         control=build_p4.select_display_profile(*args,bitmap_fast=True)

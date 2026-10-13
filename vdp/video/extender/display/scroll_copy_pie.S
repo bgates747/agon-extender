@@ -41,10 +41,12 @@
  * IN THE SOFTWARE.
  */
 
-#if defined(AGON_EXTENDER_SCROLL_FAST) && AGON_EXTENDER_SCROLL_FAST && defined(ESP_PLATFORM)
+// Selector plumbing only: both callers reuse the exact same proven kernel.
+#if ((defined(AGON_EXTENDER_SCROLL_FAST) && AGON_EXTENDER_SCROLL_FAST) || \
+     (defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE)) && defined(ESP_PLATFORM)
 #include "sdkconfig.h"
 #if !CONFIG_IDF_TARGET_ESP32P4 || !defined(__riscv_xesppie) || __riscv_xlen != 32 || CONFIG_ESP_REV_MIN_FULL < 100
-#error "SCROLL_FAST assembly requires reviewed ESP32-P4 v1.x-or-newer RV32+XEspPIE"
+#error "P4 row-copy assembly requires reviewed ESP32-P4 v1.x-or-newer RV32+XEspPIE"
 #endif
     .section .iram1.agon_extender_scroll_copy_pie,"ax",@progbits
     .balign 4

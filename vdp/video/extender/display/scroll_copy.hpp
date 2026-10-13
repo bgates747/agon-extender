@@ -8,18 +8,19 @@
 #include <cstdint>
 #include <cstring>
 
-#if defined(AGON_EXTENDER_SCROLL_FAST) && AGON_EXTENDER_SCROLL_FAST && defined(ESP_PLATFORM)
+#if ((defined(AGON_EXTENDER_SCROLL_FAST) && AGON_EXTENDER_SCROLL_FAST) || \
+     (defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE)) && defined(ESP_PLATFORM)
 #include "sdkconfig.h"
 #include "soc/soc_caps.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/portmacro.h"
 #if !CONFIG_IDF_TARGET_ESP32P4 || !SOC_CPU_HAS_PIE || !defined(__riscv_xesppie) || __riscv_xlen != 32
-#error "SCROLL_FAST requires ESP32-P4 RV32 with the XEspPIE ISA"
+#error "P4 row-copy PIE requires ESP32-P4 RV32 with the XEspPIE ISA"
 #endif
 // This experiment is bounded to the product's current v1.x-or-newer silicon
 // range. Earlier engineering revisions require their own review/qualification.
 #if CONFIG_ESP_REV_MIN_FULL < 100
-#error "SCROLL_FAST has not been reviewed for P4 revisions below v1.0"
+#error "P4 row-copy PIE has not been reviewed for P4 revisions below v1.0"
 #endif
 #define AGON_EXTENDER_SCROLL_COPY_PIE 1
 extern "C" void agon_extender_scroll_copy_pie(std::uint8_t *destination,
@@ -69,7 +70,9 @@ inline void copyScrollRowBounded(void *destination, const void *source,
   std::memcpy(dst + plan.head + plan.body, src + plan.head + plan.body, plan.tail);
 }
 
-inline void copyScrollRow(void *destination, const void *source, std::size_t bytes)
+// Availability is independent of either caller's selector. In particular,
+// INDEXED_SNAPSHOT_PIE must not silently enable the renderer's SCROLL_FAST.
+inline void copyRowUsingAvailablePie(void *destination, const void *source, std::size_t bytes)
 {
 #ifdef AGON_EXTENDER_SCROLL_COPY_PIE
   // IDF 5.5.5 saves q0/q1/q2 and SAR_BYTES for FreeRTOS tasks, but deliberately
@@ -83,6 +86,24 @@ inline void copyScrollRow(void *destination, const void *source, std::size_t byt
   }
 #endif
   if (bytes) std::memcpy(destination, source, bytes);
+}
+
+inline void copyScrollRow(void *destination, const void *source, std::size_t bytes)
+{
+#if defined(AGON_EXTENDER_SCROLL_FAST) && AGON_EXTENDER_SCROLL_FAST
+  copyRowUsingAvailablePie(destination, source, bytes);
+#else
+  if (bytes) std::memcpy(destination, source, bytes);
+#endif
+}
+
+inline void copyIndexedSnapshotRow(void *destination, const void *source, std::size_t bytes)
+{
+#if defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE
+  copyRowUsingAvailablePie(destination, source, bytes);
+#else
+  if (bytes) std::memcpy(destination, source, bytes);
+#endif
 }
 
 } // namespace agon::extender::display

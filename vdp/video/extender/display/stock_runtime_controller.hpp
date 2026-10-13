@@ -9,6 +9,12 @@
 #include <type_traits>
 #include "extender/display/stock_scanline.hpp"
 #include "extender/display/stock_native_access.hpp"
+#if defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE
+#if !defined(AGON_EXTENDER_INDEXED_PPA) || !AGON_EXTENDER_INDEXED_PPA || !defined(AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT) || !AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
+#error "INDEXED_SNAPSHOT_PIE requires indexed PPA and complete frame snapshot"
+#endif
+#include "extender/display/indexed_snapshot_copy.hpp"
+#endif
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
 #include "extender/diagnostics/video_timing.hpp"
 #endif
@@ -88,10 +94,18 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
 #endif
       const int width = this->getViewPortWidth();
       const int height = this->getViewPortHeight();
+#if defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE
+      const bool pie = indexedSnapshotPieGeometry(width, height, decorate,
+                                                   this->isDoubleBuffered());
+#endif
       // Retain row descriptors: stock full-width scrolling may rotate them,
       // and the allocator does not promise one contiguous visible plane.
       for (int y = 0; y < height; ++y) {
         if (stopping.load(std::memory_order_acquire)) return false;
+#if defined(AGON_EXTENDER_INDEXED_SNAPSHOT_PIE) && AGON_EXTENDER_INDEXED_SNAPSHOT_PIE
+        if (pie) this->copyLinearSnapshotRowPie(y, destination + std::size_t(y) * width);
+        else
+#endif
         this->copyLinearRow(y, destination + std::size_t(y) * width, decorate);
       }
       return true;

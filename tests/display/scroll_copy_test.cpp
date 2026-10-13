@@ -56,7 +56,7 @@ void allAlignments()
   for (std::size_t n=0; n<source.size(); ++n) source[n]=(n*73+n/17)&255;
   std::vector<std::size_t> lengths;
   for (std::size_t n=0; n<=192; ++n) lengths.push_back(n);
-  for (auto n : {255,256,257,383,384,385,767,768,769,1024,1536,2052}) lengths.push_back(n);
+  for (auto n : {255,256,257,383,384,385,511,512,513,767,768,769,1024,1536,2052}) lengths.push_back(n);
   for (unsigned srcOffset=0; srcOffset<16; ++srcOffset)
     for (unsigned dstOffset=0; dstOffset<16; ++dstOffset)
       for (const auto n : lengths) {
@@ -70,6 +70,9 @@ void allAlignments()
         // experimental option is defined, the public entry retains libc.
         destination.fill(0xa5);
         copyScrollRow(dst,src,n);
+        assert(destination==expected);
+        destination.fill(0xa5);
+        copyIndexedSnapshotRow(dst,src,n);
         assert(destination==expected);
       }
 }
@@ -146,5 +149,6 @@ int main()
 {
   allAlignments();pageEdges();partialViewport();
   assert(scrollCopySelfTest());
+  assert(scrollCopySelfTest(copyIndexedSnapshotRow));
   std::puts("PASS: bounded vector-copy model and libc fallback; all16×16 alignments, guard pages,2052-byte stride and exact partial-viewport up/down scrolling");
 }

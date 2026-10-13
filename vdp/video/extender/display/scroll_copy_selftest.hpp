@@ -1,7 +1,9 @@
 // RESEARCH-007 candidate-only qualification hook. Call once from FreeRTOS task
 // context after PSRAM initialization, before measured workloads, only when
-// SCROLL_FAST and RENDER_BENCHMARK are selected. No endpoint or pipeline owner.
-// The P4 call executes the actual PIE kernel through copyScrollRow(); host use
+// SCROLL_FAST or INDEXED_SNAPSHOT_PIE, plus RENDER_BENCHMARK are selected.
+// No endpoint or pipeline owner. The caller passes its selected wrapper so
+// the snapshot pilot does not qualify only the scalar scroll fallback.
+// The P4 call executes the actual PIE kernel through that wrapper; host use
 // exercises only the portable qualification harness and libc fallback.
 #pragma once
 #include <cstdio>
@@ -13,7 +15,7 @@
 
 namespace agon::extender::display {
 
-inline bool scrollCopySelfTest()
+inline bool scrollCopySelfTest(void (*copyRow)(void *, const void *, std::size_t) = copyScrollRow)
 {
   constexpr std::size_t capacity=1024+64;
 #ifdef ESP_PLATFORM
@@ -38,14 +40,14 @@ inline bool scrollCopySelfTest()
   auto pattern=[](std::size_t i){return std::uint8_t(i*73+i/17+11);};
   for(std::size_t i=0;i<capacity;++i)source[i]=pattern(i);
   unsigned cases=0;
-  constexpr std::size_t lengths[]={96,255,768,1024};
+  constexpr std::size_t lengths[]={96,255,512,768,1024};
   for(const auto bytes : lengths)
     for(unsigned srcOffset=0;srcOffset<16;++srcOffset)
       for(unsigned dstOffset=0;dstOffset<16;++dstOffset) {
         std::memset(destination,0xa5,capacity);
         const auto sourceStart=std::size_t(16+srcOffset);
         const auto destinationStart=std::size_t(16+dstOffset);
-        copyScrollRow(destination+destinationStart,source+sourceStart,bytes);
+        copyRow(destination+destinationStart,source+sourceStart,bytes);
         for(std::size_t i=0;i<capacity;++i) {
           const auto expected=(i>=destinationStart && i<destinationStart+bytes)
               ? pattern(sourceStart+i-destinationStart) : std::uint8_t(0xa5);
