@@ -11,7 +11,9 @@ aspect; the Author confirms that its indexed diagnostic box looks square.
 Preparation is paused at the Author's explicit stop. The corrected pair remains
 identified, but its fresh short admissions are unstarted. Existing card results
 have been copied and checksum-verified through an operator-assisted Oryx card
-collection. The full campaign is not ready to invoke, and its original
+collection. After the Author confirmed SD access, mounted-card staging and full
+package verification completed; hardware work awaits card return and bench
+availability. The full campaign is not ready to invoke, and its original
 stop-before-invocation boundary remains in force.
 
 ## Bounded work contract
@@ -260,6 +262,27 @@ file audit finds 562 matches, 80 missing indexed smoke files and zero mismatches
 maintained `/extender` fixtures were outside the collection scope. Offline work
 is complete for this tranche. Stop for Author confirmation of SD-card access;
 do not resume staging or probe a mount/bench automatically.
+
+## Mounted-card staging completed — 2026-10-13
+
+The Author mounted two identically labeled cards on Oryx and required correct
+card selection. The host identified the previously collected card by its
+filesystem UUID plus startup, retained smoke and fixture hashes. It verified
+663 existing package files before writing only the 80 missing indexed smoke
+files. Absence/recovery-sibling guards prevented overwriting existing files.
+
+All 743 package files passed full length/SHA-256 verification after filesystem
+sync. Ordinary 38-byte startup is unchanged, and all 320 smoke/full result paths
+remain absent. The selected card was unmounted by its verified UUID; the other
+card was neither written nor unmounted. Exact private identities and receipts
+remain under ignored `agents/research007/multimode-r02/mounted-stage-r01/`.
+
+This completes SD deployment, not hardware admission or full-suite readiness.
+No bench command, firmware change, reset or fixture invocation occurred. Await
+Author confirmation of card return and bench availability before live work;
+preserve/reconcile the old read-only pending journal at the new incarnation.
+All 80 corrected-pair short admissions and the deferred-collection host work
+remain outstanding. The 240-measurement campaign stays unstarted.
 
 ## Decision register
 
