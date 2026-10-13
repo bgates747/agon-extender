@@ -129,7 +129,7 @@ class Adapter:
         display=self.m.get(self.b.config,'/display/status')
         startup=self.b.fast_read('/autoexec.txt')
         desired=('SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nEMOS EXCOM\r\nVDU 22 '+str(mode)+'\r\n').encode()
-        if display['mode']==mode and startup==desired:
+        if display.get('available') and display['mode']==mode and startup==desired:
             self.state['selected_mode']=mode;self.save();return
         if any(s.strip().upper().startswith(('LOAD ','RUN','EXEC ')) for s in startup.decode().splitlines()):
             raise RuntimeError('Startup would launch an application')
@@ -144,7 +144,7 @@ class Adapter:
         self.b.fast_start()
         if self.b.fast_read('/autoexec.txt')!=desired:raise RuntimeError('Post-boot CLI/read proof differs')
         actual=self.m.get(self.b.config,'/display/status');w,h,c,db=self.p['geometries'][str(mode)]
-        if tuple(actual[k] for k in ('mode','width','height','colors','double_buffered'))!=(mode,w,h,c,db):
+        if not actual.get('available') or tuple(actual[k] for k in ('mode','width','height','colors','double_buffered'))!=(mode,w,h,c,db):
             raise RuntimeError('Post-boot display geometry mismatch')
         dump(evidence/'mode-display.json',actual)
         self.state['selected_mode']=mode;self.save()
@@ -174,6 +174,9 @@ class Adapter:
                       execution_seconds=time.monotonic()-started,identity=self.state['identity'])
         try:
             raw=self.b.fast_read(job['result']);(evidence/'records.bin').write_bytes(raw)
+            stable=('mode','width','height','colors','double_buffered','output_width','output_height')
+            if not display.get('available') or any(display.get(k)!=initial_display.get(k) for k in stable):
+                raise RuntimeError('Display geometry/output changed during workload')
             d=decode(raw)
             if d['case']!=job['case_number'] or d['window_tag']!=job['tag'] or d['count']!=job['frames'] or d['abort'] or d['warmup']!=job['warmup'] or d['build_id']!=self.p['fixture_build']:
                 raise RuntimeError('Record identity/count/abort mismatch')

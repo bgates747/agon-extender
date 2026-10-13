@@ -115,6 +115,12 @@ paths; a smoke can never satisfy or overwrite a full measurement.
    per-mode results with units, baseline and percentage reduction; keep
    non-comparable geometry/output results explicitly separate.
 
+The completion screen reports execution and assertion/data-validation status.
+It does not promise a speedup in every mode, qualify production release, or
+replace Author visual/gameplay review. No framebuffer-capture diagnostics are
+inserted into the timed workloads. The final text reader only verifies the
+completion cue after all measurement records have been saved.
+
 ## Framework use
 
 Run with the project virtual environment:

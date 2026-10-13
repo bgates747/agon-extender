@@ -127,8 +127,14 @@ def run(plan, output, invoke=execute):
         completed = True
         summary["state"] = "complete_with_errors" if summary["failed"] else "success"
         save(output / "summary.json", summary)
+        if plan.get('analysis'):
+            argv=[arg.replace('{run}',str(output)) for arg in plan['analysis']]
+            rc=invoke(argv,output/'analysis.log',plan['cwd'])
+            summary['analysis_returncode']=rc
+            if rc:summary['state']='complete_with_errors'
+            save(output/'summary.json',summary)
         # Only the admitted display adapter may put the final cue on Extender.
-        key = "errors" if summary["failed"] else "success"
+        key = "success" if summary['state']=='success' else "errors"
         rc = invoke(plan["notification"][key], output / "notification.log", plan["cwd"])
         summary["notification_returncode"] = rc
         if rc:
