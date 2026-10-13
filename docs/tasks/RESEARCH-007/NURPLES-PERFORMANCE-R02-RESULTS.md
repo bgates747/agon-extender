@@ -174,10 +174,11 @@ regression first; positive reduction means lower cost.
 |Nurples overlay composition, per384-line frame equivalent|310.14|185.78|40.10%|
 |Static16 overlay composition, per384-line frame equivalent|1628.63|700.66|56.98%|
 
-The direct-BGR painter reduces composition, but the rolling copy becomes more
+The combined indexed/snapshot/direct-BGR candidate reduces measured composition,
+but this comparison does not isolate the painter's contribution. Rolling copy becomes more
 expensive: Nurples252.16→368.64µs/strip, static238.88→336.54µs/strip. Whole-refill,
 copy and composition are overlapping wall scopes and must not be summed. All
-six active brackets retain approximately60 carrier frames/s and zero rolling
+twelve active brackets (six per workload) retain approximately60 carrier frames/s and zero rolling
 fault/late/underrun/cache/overlap/sequence counters. Those counters do not prove
 physical flicker-free output or distinct visible frames.
 
