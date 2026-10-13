@@ -2,6 +2,7 @@
 // palettes and Copper remain in the original stock scanline implementation.
 #pragma once
 #include <cstdint>
+#include <cstring>
 #include "extender/display/hdmi_timing.hpp"
 
 namespace agon::extender::display {
@@ -46,6 +47,24 @@ inline void expandSignalRowToHdmi(std::uint8_t const *signal,
     destination[1] = expandTwoBits(colour >> 2);
     destination[2] = expandTwoBits(colour);
     destination += kHdmiBytesPerPixel;
+  }
+}
+
+// Decorated logical rows already contain stock sprites/cursors and Copper.
+// Expand once, then repeat the completed pixels. Cropping is in output-row
+// coordinates; never advance the stock row reader twice for one logical row.
+inline void expandRepeatedSignalRowToHdmi(std::uint8_t const *signal,
+                                         std::uint8_t *image,int stride,
+                                         HdmiGeometry const &geometry,
+                                         int logical_y,int repeat) noexcept {
+  std::uint8_t *expanded=nullptr;
+  for(int n=0;n<repeat;++n) {
+    const int source_y=logical_y*repeat+n;
+    if(source_y<geometry.source_y || source_y>=geometry.source_y+geometry.height)continue;
+    auto *row=image+(geometry.destination_y+source_y-geometry.source_y)*stride+
+        geometry.destination_x*kHdmiBytesPerPixel;
+    if(expanded)std::memcpy(row,expanded,geometry.width*kHdmiBytesPerPixel);
+    else {expandSignalRowToHdmi(signal,row,geometry.source_x,geometry.width);expanded=row;}
   }
 }
 } // namespace agon::extender::display

@@ -3,8 +3,8 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-10-04
-- Amended: 2026-10-07
-- Related tasks: HDMI-001, HDMI-002
+- Amended: 2026-10-13
+- Related tasks: HDMI-001, HDMI-002, HDMI-003
 
 ## Executive summary
 
@@ -17,7 +17,8 @@ adapter's intended geometry; implementation and qualification remain pending.
 ## Decision and rationale
 
 P4 VDP retains each Agon mode's logical drawing dimensions and native storage.
-Except for the explicitly selected 320×240 scaling exception below,
+Except for the explicitly selected 320×240 scaling and 640×240 row-aspect
+exceptions below,
 The P4 output adapter maps one logical
 pixel to one output pixel, without enlargement, reduction or aspect correction
 by resampling. It centers the image and fills all surrounding pixels black.
@@ -79,6 +80,22 @@ and does not reuse the old front before actual DMA acknowledgment. Stock logical
 swap and frame-clock semantics remain unchanged. The scaling experiment's visual,
 performance and lifecycle qualification belongs to HDMI-002, independently of
 the unscaled accepted firmware and production selection.
+
+## Corrective 640×240 row-aspect exception — 2026-10-13
+
+The Author requests correction of vertical squashing observed during mode-3
+qualification. Stock 640×240 presentation repeats each logical row twice.
+P4 HDMI therefore presents that geometry as centered640×480 in the proven
+848×480 carrier, repeating each completed decorated row exactly twice. Logical
+mode IDs, framebuffer dimensions, pixel/readback coordinates and bank swaps
+stay unchanged. Sprites/cursors are composed before repeating the completed
+row. Other geometries retain their existing presentation policy; this does
+not apply VGA DoubleScan flags globally to HDMI output.
+
+[HDMI-003](../tasks/HDMI-003.md) owns diagnosis and qualification. The initial
+correction passes host pixel/geometry checks; matched native builds and Author
+visual verification remain pending. This corrective design is not production
+acceptance or evidence of a performance improvement.
 
 ## Implementation boundary
 

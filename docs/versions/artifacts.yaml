@@ -1,18 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r185
-updated_at: 2026-10-13T07:06:00Z
+registry_revision: r186
+updated_at: 2026-10-13T17:51:31Z
 
 artifacts:
   - artifact_id: render-qualification
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: render-qualification-r01
+    latest_identity: render-qualification-r02
     status: experimental
     variants: []
     description: Focused eight-workload rendering fixture derivatives for stock modes 0, 3, 8, 20 and 136.
     notes:
+      - r02 separates workload result IDs from admitted P4 diagnostic IDs; mode136 remains aggregate-only. Sixteen RGB888 smokes are data-valid; visual qualification is paused for HDMI-003.
       - RESEARCH-007 focused multi-mode contract owns forty compiled fixtures, a paired 240-run host master and separate smoke qualification.
       - Reuses SCAN PRT and render-fence instrumentation; physical preparation is not a qualification or production promotion.
       - Nurples outside mode 20 is a geometry/bank stress derivative, not unchanged production gameplay; immediate double-buffer drawing is outside queued-render counters.
@@ -20,11 +21,12 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r05
+    latest_identity: indexed-hdmi-r07
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
+      - r07 applies the HDMI-003 native640x240 row-aspect correction on the same matched source as rgb-001-r13. Host-tested candidate; build/hardware/visual qualification pending.
       - RESEARCH-007 R07-I01-I05; explicit committed-source build selection, not production.
       - Preserves stock64 visible semantics and packed-depth fallback; no programmable256-colour application API.
       - Integration validation pending; keep exact directRGB888 rollback available.
@@ -165,11 +167,12 @@ artifacts:
   - artifact_id: rgb-001
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: rgb-001-r12
+    latest_identity: rgb-001-r13
     status: experimental
     variants: [normal, off, convert-off, panel-normal, panel-off, panel-convert-off, panel-copy-normal, rolling-scanout, auto-carrier, wide480]
     description: CPU RGB888 experiment with copied and panel-direct storage variants.
     notes:
+      - r13 applies the HDMI-003 native640x240 row-aspect correction on the same matched source as indexed-hdmi-r07. Host-tested candidate; build/hardware/visual qualification pending.
       - r12 is the same-source ordinary-UART RGB888 control for RESEARCH-007 r05; no parallel startup/payload selection, no renderer algorithm change. Full compile/validation and package checks only; r11 remains the exact accepted rollback. Standing experimental identity approval.
       - r11 adds opt-in HDMI02-P02 PPA 2x320x240 presentation using independent logical and HDMI buffers; no other mode renderer changes. Standing experimental identity approval.
       - r10 adds HDMI02-L swap cancellation and contained-scanout fault recovery at joined mode boundaries, plus the r09 refill queue. Host/build checks and bounded physical mode96/mode20 Nurples and sprite-transition tests pass; Author gameplay/outro accepted; v0.2.0 promotion authorized, pending canonical paired qualification/native packaging; physical fault-recovery qualification remains separate. Standing experimental identity approval applies.

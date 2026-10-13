@@ -16,12 +16,12 @@ int main() {
   for(int pass=0;pass<5;++pass) for(const auto mode: {
       Mode{640,480,848,480,104,0}, Mode{320,240,684,384,182,72},
       Mode{512,384,684,384,86,0}, Mode{640,480,848,480,104,0},
-      Mode{640,240,684,384,22,72}, Mode{512,192,684,384,86,96}}) {
+      Mode{640,240,848,480,104,0}, Mode{512,192,684,384,86,96}}) {
     const auto carrier=selectHdmiTiming(mode.w,mode.h);
     assert(carrier.width==mode.ow && carrier.height==mode.oh);
-    const auto image=centeredHdmiGeometry(mode.w,mode.h,carrier.width,carrier.height);
+    const auto image=centeredHdmiGeometry(mode.w,mode.h*hdmiVerticalRepeat(mode.w,mode.h),carrier.width,carrier.height);
     assert(image.source_x==0 && image.source_y==0);
-    assert(image.width==mode.w && image.height==mode.h);
+    assert(image.width==mode.w && image.height==mode.h*hdmiVerticalRepeat(mode.w,mode.h));
     assert(image.destination_x==mode.x && image.destination_y==mode.y);
     assert(carrier.hTotal()==1104 && carrier.vTotal()==517);
   }

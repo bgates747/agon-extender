@@ -17,13 +17,21 @@ struct HdmiTiming {
 };
 inline constexpr HdmiTiming kHdmi684{684,384,240.0f/7.0f,480,196,112,112,102,8,23,true,true,0};
 inline constexpr HdmiTiming kHdmi848{848,480,240.0f/7.0f,480,32,112,112,6,8,23,true,true,0};
+// HDMI-003: stock 640x240 scans each logical row twice. Preserve its logical
+// coordinates but fit the resulting 640x480 presentation in a proven carrier.
+// This is deliberately not a general translation of VGA DoubleScan: accepted
+// 512x384 presentation and the separate 320x240 PPA policy remain unchanged.
+inline constexpr int hdmiVerticalRepeat(int width,int height) {
+  return width==640 && height==240 ? 2 : 1;
+}
 // HDMI02-R: only proven carriers. Smaller modes remain unscaled; no new
 // 240-line signal is implied. Larger modes retain the documented crop fallback.
 inline constexpr HdmiTiming selectHdmiTiming(int width, int height) {
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   if(width==320 && height==240)return kHdmi848;
 #endif
-  return width > 0 && height > 0 && width <= 684 && height <= 384 ? kHdmi684 : kHdmi848;
+  return width > 0 && height > 0 && width <= 684 &&
+      height*hdmiVerticalRepeat(width,height) <= 384 ? kHdmi684 : kHdmi848;
 }
 #if (defined(AGON_EXTENDER_HDMI_AUTO) + defined(AGON_EXTENDER_HDMI_512X384) + defined(AGON_EXTENDER_HDMI_848X480) + defined(AGON_EXTENDER_HDMI_684X384)) > 1
 #error Select only one experimental HDMI timing

@@ -434,7 +434,8 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   scaled=width==320 && height==240 && this->width()==848 && this->height()==480;
 #endif
-  const auto geometry = centeredHdmiGeometry(scaled?width*2:width, scaled?height*2:height,
+  const int row_repeat=scaled?1:hdmiVerticalRepeat(width,height);
+  const auto geometry = centeredHdmiGeometry(scaled?width*2:width, scaled?height*2:height*row_repeat,
                                              this->width(), this->height());
   if (!geometry.valid() || width > static_cast<int>(kPresentationSnapshotMaximumWidth)) return false;
   // Always use independent HDMI front/back for PPA, including single-buffered
@@ -478,15 +479,14 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
       if(valid&&(a^b)==255&&a<40)frame_id=a;
     }
 #endif
-    if (y < image_geometry.source_y || y >= image_geometry.source_y + image_geometry.height) continue;
+    // Current direct-storage geometries have square pixels; 640x240 uses the
+    // native decorated row reader in both renderer variants. The private
+    // 320x240 PPA source also remains one row per logical row here.
     if (direct) continue;
-    const int destination_y = image_geometry.destination_y + y - image_geometry.source_y;
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
     agon_bench::Scope expand(agon_bench::Expand);
 #endif
-    expandSignalRowToHdmi(signal,
-        image + destination_y * image_stride + image_geometry.destination_x * kHdmiBytesPerPixel,
-        image_geometry.source_x, image_geometry.width);
+    expandRepeatedSignalRowToHdmi(signal,image,image_stride,image_geometry,y,row_repeat);
   }
   auto conversion_finished = esp_timer_get_time();
   if (doubled && visible_generation != stockVisibleGeneration()) {

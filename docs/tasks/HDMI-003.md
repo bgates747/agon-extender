@@ -11,7 +11,8 @@ geometry, P4 output mapping and monitor interpretation before repairing the
 responsible layer. The Author authorized this task and requested a commit/push
 checkpoint before execution on 2026-10-13.
 
-**State:** authorized; initial evidence retained; diagnosis and correction pending.
+**State:** source diagnosis and host-tested correction complete; matched builds
+and hardware/Author visual verification pending.
 The [multimode campaign](RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md) stays stopped.
 Sixteen RGB888 short receipts in modes 0/3 establish data validity only; the
 240-measurement campaign has never started.
@@ -83,7 +84,7 @@ Sixteen RGB888 short receipts in modes 0/3 establish data validity only; the
 5. Record what is source-proven, captured or Author-observed. Obtain the
    decisive visual/measurement evidence before declaring a root cause.
 
-### H03-02 [ ] Correct the responsible layer
+### H03-02 [x] Correct the responsible layer (host-tested candidate)
 
 1. Implement the smallest supported correction after H03-01 identifies the
    cause. Use fresh experimental source/build identities and preserve rollback.
@@ -115,22 +116,62 @@ Sixteen RGB888 short receipts in modes 0/3 establish data validity only; the
 
 ## Decision register
 
-### H03-D01 — Presentation correction — diagnosis pending
+### H03-D01 — Preserve stock 640×240 row aspect — accepted corrective scope
 
-1. Authorized objective: correct the Author-reported vertical squashing.
-2. Candidate remedy: if stock mode-3 presentation requires repeated rows,
-   P4 HDMI should perform equivalent output mapping in both renderer variants
-   using an existing proven carrier, without changing logical VDU coordinates.
-3. Alternatives depend on diagnosis: repair a fixture adaptation defect or
-   incorrect HDMI metadata if either is responsible; retain centered unscaled
-   behavior for unaffected modes. Do not select a global scaling policy by
-   assumption.
-4. Prerequisites: H03-01 evidence, exact source ownership and relevant current
-   ADR contracts. Downstream effects may include new matched firmware pins,
-   bounded visual qualification and invalidation of affected smoke admission.
-5. The Author authorized investigation and correction, but no specific
-   row-expansion algorithm or global architecture change has been accepted.
-   Bring any remaining material policy choice to the Author one at a time.
+1. The Author's 2026-10-13 instruction authorizes correction of the reported
+   squashing. Official stock dispatch selects `VGA_640x240_60Hz`; its pinned
+   vdp-gl modeline specifies DoubleScan and the DMA descriptor loop references
+   the same logical row twice. P4 instead expanded it once.
+2. The scoped implementation repeats each completed decorated 640×240 native
+   row twice into centered 640×480 output on the existing 848×480 carrier.
+   This is the minimal mapping that matches the verified stock presentation;
+   it changes neither logical coordinates nor VDU mode/bank semantics. All
+   modes sharing that geometry receive the same presentation policy.
+3. Other geometries keep their current policy. The separate 320×240 PPA
+   exception remains intact. VGA DoubleScan is not translated globally into
+   HDMI repetition, especially for the accepted 512×384 presentation.
+4. Both selected renderer builds use the native decorated-row compositor for
+   640×240; their direct/indexed eligibility predicate excludes this geometry.
+   The same row-mapping code therefore corrects sprites/cursors and background
+   pixels in both variants without separate renderer algorithms.
+5. This records authorized corrective scope and the implementation derived
+   from stock source; it does not assert that the Author selected the C++
+   algorithm or has accepted its visible hardware result. Host checks pass;
+   H03-03 still requires matched builds and explicit Author visual review.
+
+## Source diagnosis and host validation — 2026-10-13
+
+1. Official references remain clean: VDP v2.16.0 at
+   `c7ac293d2aa81ddfa693390549bcd909069c8fc3`; MOS v3.0.2 at
+   `8336409351ee5314e02801a7b72a4f1bb5282519`. The official latest-release
+   endpoints still select those releases. Documentation remains at
+   `f9806bd3cbff6ed5d1c08bef1d51fed11764b86b`.
+2. Official VDP's installed vdp-gl dependency is clean at
+   `ac2dd5986daf496c43ae8e7fe41836274aec54a0`. Its
+   `src/fabglconf.h` defines the 640×240 DoubleScan modeline;
+   `src/dispdrivers/vgabasecontroller.cpp` parses scanCount=2 and appends
+   `setDMABufferView` for the same logical row inside that repeat loop.
+   Its modeline header matches the selected project vendor header bytewise.
+3. The complete P4 native path in `hdmi_output.cpp` prepares decorated logical
+   rows once and originally expanded each to one output row. Auto carrier
+   selection used logical height 240 and chose 684×384. The LT8912B bridge was
+   told the complete carrier dimensions and 16:9 aspect, not the logical image
+   dimensions. The diagnosed source mismatch is missing mode-3 row repetition;
+   receiver interpretation and the visible correction still need review.
+4. A separate clean project-owned source commit `c788b668` derives from the
+   frozen `e26c24f7` comparison source. The predecessor remains untouched.
+   The identical correction is applied to maintained `vdp/` source. Exact
+   build/tool/device inputs remain in ignored local records.
+5. The production helpers are tested with a destination-pixel oracle for both
+   build configurations: all RGB222 values/lane ordering, black margins,
+   640×480 placement, repeated rows, odd-height partial-row crops, horizontal
+   crops and memory guards. Existing geometry/ownership checks also pass.
+   No emulator or hardware is used by these host tests.
+6. The correction expands a native row once and copies its completed pixels
+   for repetition. Stock Copper and sprite/cursor composition run once per
+   logical row. Output conversion/copy work remains distinct from logical
+   rendering measurements.
+
 
 ## Dependencies and current limits
 

@@ -261,7 +261,11 @@ presentation: a decorated private320×240 snapshot becomes640×480 at(104,0) in
 The P4 rejects a snapshot spanning a logical swap, finishes scaling before
 publication and waits for actual DMA release before reusing HDMI buffers.
 This exception preserves application dimensions/swap commands, and its loaded
-qualification remains owned by HDMI-002; other modes retain unscaled output.
+qualification remains owned by HDMI-002. The authorized HDMI-003 correction
+adds a separate 640×240 exception: P4 repeats each decorated logical row twice
+and centers640×480 in the proven848×480 carrier, preserving logical dimensions,
+coordinates and bank semantics. Host checks pass; native/visual qualification
+remains pending. Remaining geometries retain unscaled output.
 
 
 The separate FabGL `VGATextController` is retained in the complete vendored
