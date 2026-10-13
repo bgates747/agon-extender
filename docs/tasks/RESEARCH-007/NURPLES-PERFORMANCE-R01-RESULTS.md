@@ -109,6 +109,27 @@ The interruption also prevented the6502 agent's original mainboard-only lease
 restoration. Root issued a new **cleanup-only** grant: collect already-completed
 results if admitted, restore the exact incoming fsim P2 mainboard image, verify
 startup and real CLI/listener exchange, and hand back positively. P4, EMOS and
-wiring are excluded from that peer grant. Root must then restore its saved
-ordinary startup and four fixture configurations. Until recorded below, this
-restoration is pending; stale lease expiry is not proof of an available bench.
+wiring were excluded from that peer grant. The peer independently verified the
+restored image, stopped on stale input after USB reset, then used exactly one
+explicitly authorized ordinary Agon reset. Fresh input and actual CLI/listener/
+read/EXIT/restart passed before positive handback at2026-10-13T00:28:14Z.
+
+Root completed ordinary restoration at00:31:16Z. All five saved files received
+full independent readbacks; temporary campaign bytes were retained under the
+documented agent-evidence directory. No root reset, flash or test launch occurred.
+
+| Restored item | Identity / verified terminal state |
+|---|---|
+| Mainboard VDP | Incoming fsim P2 application SHA256 `06dcfc3e0d7ddb8bc54eedf45a941330876ac07a74141e105c3dfeba6ba94a18` |
+| Ordinary startup | Original38bytes; SHA256 `7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5`; keyboard setup only, no test/display autorun |
+| Four fixture configurations | Exact saved T03/T07/T08/T09 bytes restored/read back; frozen executables/assets unchanged |
+| Agon | Idle Legacy CLI after acknowledged listener EXIT; Extender input ready/neutral; no pending SD request |
+| P4 | Measured RGB888 fast build14:17:24Z retained, with its earlier independent four-segment installation verification; new pair-r04 candidates never installed |
+| EMOS, wiring | Unchanged |
+| Active jobs / bench | No fixture, capture or transfer client running; bench released |
+
+The current HDMI logical mode remains20 on the684×384 carrier. Restored ordinary
+startup does not force ExCom or that mode on the next reset. Any future fixture
+campaign must deliberately prepare its setup-only mode and start tests separately.
+No further optimization is running. Production selection remains unchanged;
+intermittent HDMI dropout and sprite-candidate visual/performance gates remain open.

@@ -126,7 +126,7 @@ already implemented native modes in remaining time. Reuse proven carriers; no
 monitor-timing hunt or unsupported-mode expansion. Otherwise leave this item
 unexecuted and stop by the eight-hour boundary.
 
-### NP08 [ ] Close out, preserve and return usable bench
+### NP08 [x] Close out, preserve and return usable bench
 
 Retain comparable raw evidence, explicit percentages and limitations in a bounded
 results document. Restore saved startup/configs and read back; leave the best
@@ -136,6 +136,13 @@ required. Commit/push owned work in logical groups as it stabilizes. Report actu
 achieved gain, what did not work, installed identity, terminal state and remaining
 Author visual gate. Do not mark the goal achieved if the performance objective
 remains unfulfilled; record a time-limit stop honestly.
+
+Partial closeout completed2026-10-13T00:31Z after the interruption: exact incoming
+mainboard VDP restored and verified; original38B ordinary startup and four fixture
+configurations restored with full readbacks; actual CLI/input verified, listener
+exited, collectors closed. P4 remains the measured RGB888 fast candidate, with
+EMOS/wiring unchanged. Source, builds and results are preserved/pushed. This
+closes cleanup only; NP03–NP07 and the overall performance objective are incomplete.
 
 ## Execution notes
 

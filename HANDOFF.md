@@ -14,13 +14,16 @@ existing rolling-cost HTTP fields. All four pair-r04 whole builds complete and
 hash-verify; no new candidate was physically installed. Prepared bench-r05 is
 offline-only. No production promotion/version change.
 
-Bench closeout pending:6502 mainboard-only cleanup grant until00:45Z, restore
-exact incoming fsimP2, verify63B startup and actual CLI/listener exchange, then
-positive handback. Root does not touch hardware until that handback. P4 last
-verified NP02 RGBfast build14:17:24Z, EMOS unchanged; see ignored local bench
-record for exact hashes, journal authority and current state. Root must then
-restore its saved38B ordinary startup/fourSCANconfigs and verify. Do not infer
-free bench from expired historical lease; no new tests or automatic resets.
+Bench closeout COMPLETE2026-10-13T00:31Z. Peer restored/independently verified
+exact incoming fsimP2, then one authorized ordinary Agon reset established fresh
+input and actual CLI/listener/read/EXIT; positive handback00:28Z. Root restored
+original38B keyboard-only startup and four saved SCANconfigs, all full readbacks
+PASS. Agon idle Legacy CLI, listeneroffline/no pending, admittedneutralExtender
+input; no fixture/capture/client running. Bench RELEASED. P4 retains measured
+NP02 RGBfast build14:17:24Z, EMOS/wiring unchanged. Exact hashes/receipts and
+authority remain in ignored local bench record. No root flash/reset/test launch.
+Current HDMI mode20 persists; ordinary startup does not forceExCom/modeonreset.
+Further optimization requires renewed Author authorization.
 
 Oryx is available for headless emulator work per Author, who remains AFK.
 No Oryx change or graphical review was performed in this closeout.
