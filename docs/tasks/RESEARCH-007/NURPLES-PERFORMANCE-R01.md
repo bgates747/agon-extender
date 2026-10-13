@@ -157,6 +157,20 @@ closes cleanup only; NP03–NP07 and the overall performance objective are incom
 
 ## Execution notes
 
+The renewed NP03/NP05 investigation isolates three already bounded costs before
+any wider-mode work. First, compare the prepared same-source indexed cache-off
+and cache-once images using one elementary/partial-scroll/Nurples pilot each;
+keep all PPA-driver, post-DMA and scanout cache operations. Next, compare the
+prepared cache-once control with the existing inline bitmap painter enabled.
+Run narrow pilots before spending time on repeated cohorts; reject a losing
+candidate without manufacturing a full suite. Separately prototype a default-off
+Mode20 indexed snapshot copy using the existing proven PIE row-copy kernel,
+authoritative row descriptors and the existing native guard. Preserve stopping,
+source bounds, matching sprite-scene capture and all DMA/cache ownership. Do not
+reuse the rolling DMA2D helper concurrently or redesign scanout scheduling.
+Host/controller/canary checks and actual P4 compilation precede any deployment;
+fresh identical-source controls are required for each claimed comparison.
+
 The renewed NP02/NP04 measurement work may add a benchmark-only ordered fence
 sidecar to obtain actual per-update queued-render tails from the existing pixel
 queries. The P4 parser arms a scoped request around its unchanged completion
