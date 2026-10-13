@@ -195,3 +195,9 @@ and do not satisfy individual-frame tails, visual/input or full-width gates.
 The Author's earlier “looks very good” observation described the RGB888 control;
 it is not acceptance of this indexed candidate. The next bounded pilots isolate
 cache-once and the existing inline bitmap painter before a larger cohort.
+
+The RGB888 reference in this report is the original all-experimental-flags-off
+renderer explicitly selected by the renewal contract. A previous RGB fast
+candidate has separate elementary evidence and remained installed at first-window
+closeout. None of the gains above proves a win against that prior optimization;
+the final fresh cohort should include it as a separate same-source comparator.

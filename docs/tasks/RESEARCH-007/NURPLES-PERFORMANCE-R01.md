@@ -171,6 +171,15 @@ reuse the rolling DMA2D helper concurrently or redesign scanout scheduling.
 Host/controller/canary checks and actual P4 compilation precede any deployment;
 fresh identical-source controls are required for each claimed comparison.
 
+The final matched cohort should retain both the frozen original RGB888 reference
+and the previous measured RGB fast selection (inline bitmap painter plus PIE
+scroll), alongside the winning indexed candidate. The original goal-start and
+renewal reference remains unchanged; the previously measured fast image was left
+installed at first-window closeout but lacks sprite/visual qualification. Do not
+describe a win against original RGB as a win against that existing optimization.
+Rebuild the comparators with identical source, SDK and fence instrumentation;
+historical cross-source costs may motivate the check but cannot qualify it.
+
 The renewed NP02/NP04 measurement work may add a benchmark-only ordered fence
 sidecar to obtain actual per-update queued-render tails from the existing pixel
 queries. The P4 parser arms a scoped request around its unchanged completion
