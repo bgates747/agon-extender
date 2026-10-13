@@ -310,3 +310,17 @@ closed/quiescent ownership, no actual RenderBatch drop/overflow, and no sample
 errors. Retain unrelated asynchronous output phase drops separately; they do not
 invalidate the distinct queued-render counter. Unfenced Nurples retains aggregate
 rendering scope and cannot acquire per-frame completion claims by inference.
+
+
+Within the existing NP03 partial-scroll work, separately qualify the proven row
+copy kernel for indexed storage. Source review found the prior RGB-only builder
+restriction was an experimental boundary: the existing controller already scales
+row offsets and lengths by its physical bytes per pixel, and Nurples copies
+disjoint256-byte indexed spans in the unchanged stock up/down traversal. Permit
+only explicit `--scroll-fast` selection after indexed alignment, clipping,
+fragmented/rotated rows, filling and sprite-background checks. Snapshot and scroll
+selectors must remain independent and compile their shared assembly once. Keep
+full-width pointer rotation, horizontal memmove, caches, locking and ownership
+unchanged. Add the exact256-byte length to the existing target canary self-test.
+Do not modify a frozen comparator or infer performance from compilation; use a
+new clean matched-source comparison if this small reuse passes offline review.
