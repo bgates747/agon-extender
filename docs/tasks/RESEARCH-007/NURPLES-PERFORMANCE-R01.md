@@ -1,5 +1,10 @@
 # Nurples rendering gain — eight-hour work contract
 
+Author-approved next qualification scope and sequential master runner:
+[modes 0, 3, 8, 20 and 136](MULTIMODE-QUALIFICATION-R01.md). The current frozen
+mode-20 fixtures require deliberate geometry/buffering adaptation before that
+240-run campaign can be declared ready. This does not rewrite retained evidence.
+
 ## Executive summary
 
 Author-authorized on2026-10-12: recover visual correctness and demonstrate at
