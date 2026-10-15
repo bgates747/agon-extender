@@ -205,7 +205,7 @@ headings no longer compete with the approved current sequence.
 
 ## Pattern-based rendering qualification
 
-- [ ] **[SCROLL-001 — Pattern-based scrolling qualification](docs/tasks/SCROLL-001.md)** — Eight single-buffered 240p4:3 scroll/wrap cases; review stock optimizers and prove actual VDP execution timing before implementation.
+- [ ] **[SCROLL-001 — Pattern-based scrolling qualification](docs/tasks/SCROLL-001.md)** — Eight parameterized240p4:3cases build offline; prepare matched timing firmware, validate controls/wrap and stage before full-suite invocation.
 
 ## Eventual controller input
 

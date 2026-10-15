@@ -9,11 +9,13 @@ from datetime import datetime,timezone
 import argparse,hashlib,io,json,shutil,subprocess,tarfile
 ROOT=Path(__file__).resolve().parents[3]
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True)
-p.add_argument('--stock',type=Path,default=Path.home()/'Agon/agon-vdp');a=p.parse_args()
+p.add_argument('--stock',type=Path,default=Path.home()/'Agon/agon-vdp')
+p.add_argument('--scrolling',action='store_true',help='SCROLL-001 classified execution timing')
+a=p.parse_args()
 out=a.output.resolve();out.mkdir(parents=True,exist_ok=False);src=out/'source';src.mkdir()
 stock=a.stock.resolve();gl=stock/'.pio/libdeps/esp32dev/vdp-gl'
 def git(where,*args):return subprocess.check_output(['git','-C',str(where),*args])
-identity={'status':'draft','source_identity':'game-timing-probe-r01'}
+identity={'status':'draft','source_identity':'scroll-mainboard-timing-r01' if a.scrolling else 'game-timing-probe-r01'}
 provenance=dict(commit=git(ROOT,'rev-parse','HEAD').decode().strip(),dirty=bool(git(ROOT,'status','--porcelain')))
 if identity['status']!='draft' and provenance['dirty']:
     raise SystemExit('Candidate mainboard builds require clean committed inputs')
@@ -38,7 +40,17 @@ for name,scopes in {
     path=src/'local-libs/vdp-gl/src'/name;s=path.read_text()
     for signature,metric in scopes:
         assert s.count(signature)==1
-        s=s.replace(signature,signature+'\n  AGON_GRAPHICS_SCOPE('+metric+');')
+        extra='\n  AGON_GRAPHICS_SCOPE('+metric+');'
+        if metric=='Primitive' and a.scrolling:
+            extra+='''
+  // SCROLL-001: same normal execPrimitive classification as P4. The outer
+  // Primitive counter includes this nested counter's instrumentation overhead.
+  agon_graphics_timing::Scope qual_classified_scope(
+      prim.cmd == PrimitiveCmd::VScroll || prim.cmd == PrimitiveCmd::HScroll
+          ? agon_graphics_timing::Scroll
+          : prim.cmd == PrimitiveCmd::DrawBitmap ? agon_graphics_timing::Bitmap
+                                                : agon_graphics_timing::MetricCount);'''
+        s=s.replace(signature,signature+extra)
     path.write_text(prefix+s)
 # Explicit fence extension: retain all stock opcode values and normal worker policy.
 path=src/'local-libs/vdp-gl/src/displaycontroller.h';s=path.read_text()
@@ -54,6 +66,7 @@ path.write_text(prefix+s)
 ini=(src/'platformio.ini').read_text();begin=ini.index('lib_deps =');end=ini.index('build_unflags',begin)
 ini=ini[:begin]+'lib_deps =\nlib_extra_dirs = local-libs\n'+ini[end:]
 ini=ini.replace('build_flags =','build_flags =\n    -D AGON_GRAPHICS_TIMING=1\n    -I video',1)
+if a.scrolling:ini=ini.replace('build_flags =','build_flags =\n    -D AGON_SCROLL_TIMING=1',1)
 (src/'platformio.ini').write_text(ini)
 build_id=identity['source_identity']+datetime.now(timezone.utc).strftime('-b%Y-%m-%d-%H-%M-%SZ')
 (out/'build-id.txt').write_text(build_id+'\n')

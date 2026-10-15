@@ -2,7 +2,7 @@
 from pathlib import Path
 from PIL import Image
 from palette import default_palette, quantize
-import json,struct,subprocess,hashlib
+import json,struct,subprocess,hashlib,os,shutil
 root=Path(__file__).resolve().parent
 repo=root.parents[2]
 assets=repo/'agents/visual-review/display-pattern'
@@ -59,7 +59,8 @@ text='\r\n'.join(lines).encode()
 inc=f'ENTRY_COUNT: equ {len(entries)}\nentries:\n'+'\n'.join(entries+paths)+'\nmenu_vdu:\n db 22,0,23,1,1,12\n'
 inc+=''.join(' db '+','.join(str(b) for b in text[i:i+32])+'\n' for i in range(0,len(text),32))+'menu_end:\n'
 (root/'generated.inc').write_text(inc)
-asm='/Agon/mystuff/agon-fsim/utilities/flight-model/agon-cockpit/build-benchmark/ez80asm'
+asm=os.environ.get('EZ80ASM') or shutil.which('ez80asm')
+if not asm:raise SystemExit('Set EZ80ASM or put ez80asm on PATH')
 subprocess.run([asm,'preview.asm','preview.bin'],cwd=root,check=True)
 (out/'preview.bin').write_bytes((root/'preview.bin').read_bytes())
 (root/'preview.bin').unlink()

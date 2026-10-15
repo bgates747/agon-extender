@@ -16,6 +16,16 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_scroll_timing_is_explicit_and_preserves_normal_worker(self):
+        from build_p4 import select_display_profile
+        ordinary=select_display_profile(self.document,'p4-console','p4-pc','browser')
+        self.assertNotIn('AGON_GRAPHICS_TIMING=1',ordinary['definitions'])
+        measured=select_display_profile(self.document,'p4-console','p4-pc','browser',graphics_timing=True)
+        self.assertIn('AGON_GRAPHICS_TIMING=1',measured['definitions'])
+        for kwargs in (dict(render_benchmark_output='hold'),dict(parallel_boot_candidate=True)):
+            with self.assertRaises(SystemExit):
+                select_display_profile(self.document,'p4-console','p4-pc','hdmi',graphics_timing=True,**kwargs)
+
     def test_ordinary_exext_is_explicit_and_excludes_diagnostics(self):
         from build_p4 import check_parallel_qualification_identity as check, select_display_profile
         identity='port-008-stream-r01-b2026-10-11-10-50-00Z'

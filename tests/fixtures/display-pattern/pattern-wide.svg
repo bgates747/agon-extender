@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1024 576">
+<title>Extender display-check layout mockup</title>
+<desc>16:9 carrier with centered 4:3 interior. Exact circles and squares; 64 RGB222 source swatches in two rows of 32 square cells. Mockup only, no hardware test.</desc>
+<rect x="0" y="0" width="1024" height="576" fill="#10151d" stroke="none" stroke-width="1"/>
+<rect x="128" y="0" width="768" height="576" fill="#000000" stroke="none" stroke-width="1"/>
+<rect x="1" y="1" width="1022" height="574" fill="none" stroke="#7d8997" stroke-width="1"/>
+<path d="M128 0L128 576" stroke="#ffffff" stroke-width="2"/>
+<path d="M896 0L896 576" stroke="#ffffff" stroke-width="2"/>
+<path d="M128 1L896 1" stroke="#ffffff" stroke-width="2"/>
+<path d="M128 575L896 575" stroke="#ffffff" stroke-width="2"/>
+<text x="64" y="288" text-anchor="middle" fill="#8494a8" font-family="DejaVu Sans, sans-serif" font-size="11" transform="rotate(-90 64 288)" letter-spacing="2">16:9 CARRIER  /  PILLARBOX</text>
+<text x="960" y="288" text-anchor="middle" fill="#8494a8" font-family="DejaVu Sans, sans-serif" font-size="11" transform="rotate(90 960 288)" letter-spacing="2">16:9 CARRIER  /  PILLARBOX</text>
+<text x="512" y="38" text-anchor="middle" fill="#e9edf2" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="bold" letter-spacing="3">EXTENDER DISPLAY CHECK</text>
+<text x="512" y="63" text-anchor="middle" fill="#bbc5d2" font-family="DejaVu Sans, sans-serif" font-size="23" letter-spacing="1">MODE 20  /  512 × 384  /  INDEXED</text>
+<text x="512" y="84" text-anchor="middle" fill="#8494a8" font-family="DejaVu Sans, sans-serif" font-size="18" >STATIC PATTERN · RGB SOURCE</text>
+<path d="M152 103L872 103" stroke="#718092" stroke-width="1"/>
+<text x="512" y="126" text-anchor="middle" fill="#d1d9e3" font-family="DejaVu Sans, sans-serif" font-size="21" letter-spacing="2">CENTERED 4:3 CONTENT</text>
+<path d="M512 137L512 467" stroke="#26313d" stroke-width="1" stroke-dasharray="4 5"/>
+<path d="M144 296L880 296" stroke="#26313d" stroke-width="1" stroke-dasharray="4 5"/>
+<rect x="368" y="152" width="288" height="288" fill="none" stroke="#ffffff" stroke-width="2"/>
+<circle cx="512" cy="296" r="144" fill="none" stroke="#ffffff" stroke-width="2"/>
+<circle cx="512" cy="296" r="96" fill="none" stroke="#aebac9" stroke-width="1"/>
+<circle cx="512" cy="296" r="48" fill="none" stroke="#ffffff" stroke-width="1"/>
+<path d="M368 152L656 440" stroke="#435162" stroke-width="1"/>
+<path d="M656 152L368 440" stroke="#435162" stroke-width="1"/>
+<path d="M493 296L531 296" stroke="#ffffff" stroke-width="2"/>
+<path d="M512 277L512 315" stroke="#ffffff" stroke-width="2"/>
+<circle cx="512" cy="296" r="3" fill="none" stroke="#ffffff" stroke-width="1"/>
+<rect x="176" y="192" width="96" height="96" fill="none" stroke="#ffffff" stroke-width="2"/>
+<circle cx="224" cy="240" r="48" fill="none" stroke="#ffffff" stroke-width="2"/>
+<rect x="200" y="216" width="48" height="48" fill="none" stroke="#aaaaaa" stroke-width="1"/>
+<text x="224" y="315" text-anchor="middle" fill="#d1d9e3" font-family="DejaVu Sans, sans-serif" font-size="18" >SQUARE / CIRCLE</text>
+<rect x="752" y="192" width="96" height="96" fill="none" stroke="#ffffff" stroke-width="2"/>
+<circle cx="800" cy="240" r="48" fill="none" stroke="#ffffff" stroke-width="2"/>
+<rect x="776" y="216" width="48" height="48" fill="none" stroke="#aaaaaa" stroke-width="1"/>
+<text x="800" y="315" text-anchor="middle" fill="#d1d9e3" font-family="DejaVu Sans, sans-serif" font-size="18" >SQUARE / CIRCLE</text>
+<rect x="176" y="344" width="24" height="24" fill="#000000" stroke="#777777" stroke-width="0.5"/>
+<rect x="200" y="344" width="24" height="24" fill="#555555" stroke="#777777" stroke-width="0.5"/>
+<rect x="224" y="344" width="24" height="24" fill="#aaaaaa" stroke="#777777" stroke-width="0.5"/>
+<rect x="248" y="344" width="24" height="24" fill="#ffffff" stroke="#777777" stroke-width="0.5"/>
+<rect x="752" y="344" width="24" height="24" fill="#ff0000" stroke="#777777" stroke-width="0.5"/>
+<rect x="776" y="344" width="24" height="24" fill="#00ff00" stroke="#777777" stroke-width="0.5"/>
+<rect x="800" y="344" width="24" height="24" fill="#0000ff" stroke="#777777" stroke-width="0.5"/>
+<rect x="824" y="344" width="24" height="24" fill="#ffffff" stroke="#777777" stroke-width="0.5"/>
+<text x="224" y="390" text-anchor="middle" fill="#aebac9" font-family="DejaVu Sans, sans-serif" font-size="17" >0 / 85 / 170 / 255</text>
+<text x="800" y="390" text-anchor="middle" fill="#aebac9" font-family="DejaVu Sans, sans-serif" font-size="19" >R / G / B / W</text>
+<text x="512" y="466" text-anchor="middle" fill="#e9edf2" font-family="DejaVu Sans, sans-serif" font-size="21" letter-spacing="1">ROUND CIRCLES · SQUARE BOXES</text>
+<path d="M152 481L872 481" stroke="#718092" stroke-width="1"/>
+<text x="512" y="504" text-anchor="middle" fill="#d1d9e3" font-family="DejaVu Sans, sans-serif" font-size="22" >64 SOURCE COLOURS · RGB222</text>
+<text x="512" y="519" text-anchor="middle" fill="#8494a8" font-family="DejaVu Sans, sans-serif" font-size="18" >NATIVE PALETTE MAPPING</text>
+<rect x="128" y="528" width="24" height="24" fill="#000000" stroke="#404040" stroke-width="0.4"/>
+<text x="140" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >00</text>
+<rect x="152" y="528" width="24" height="24" fill="#000055" stroke="#404040" stroke-width="0.4"/>
+<text x="164" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >01</text>
+<rect x="176" y="528" width="24" height="24" fill="#0000aa" stroke="#404040" stroke-width="0.4"/>
+<text x="188" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >02</text>
+<rect x="200" y="528" width="24" height="24" fill="#0000ff" stroke="#404040" stroke-width="0.4"/>
+<text x="212" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >03</text>
+<rect x="224" y="528" width="24" height="24" fill="#005500" stroke="#404040" stroke-width="0.4"/>
+<text x="236" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >04</text>
+<rect x="248" y="528" width="24" height="24" fill="#005555" stroke="#404040" stroke-width="0.4"/>
+<text x="260" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >05</text>
+<rect x="272" y="528" width="24" height="24" fill="#0055aa" stroke="#404040" stroke-width="0.4"/>
+<text x="284" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >06</text>
+<rect x="296" y="528" width="24" height="24" fill="#0055ff" stroke="#404040" stroke-width="0.4"/>
+<text x="308" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >07</text>
+<rect x="320" y="528" width="24" height="24" fill="#00aa00" stroke="#404040" stroke-width="0.4"/>
+<text x="332" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >08</text>
+<rect x="344" y="528" width="24" height="24" fill="#00aa55" stroke="#404040" stroke-width="0.4"/>
+<text x="356" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >09</text>
+<rect x="368" y="528" width="24" height="24" fill="#00aaaa" stroke="#404040" stroke-width="0.4"/>
+<text x="380" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >10</text>
+<rect x="392" y="528" width="24" height="24" fill="#00aaff" stroke="#404040" stroke-width="0.4"/>
+<text x="404" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >11</text>
+<rect x="416" y="528" width="24" height="24" fill="#00ff00" stroke="#404040" stroke-width="0.4"/>
+<text x="428" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >12</text>
+<rect x="440" y="528" width="24" height="24" fill="#00ff55" stroke="#404040" stroke-width="0.4"/>
+<text x="452" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >13</text>
+<rect x="464" y="528" width="24" height="24" fill="#00ffaa" stroke="#404040" stroke-width="0.4"/>
+<text x="476" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >14</text>
+<rect x="488" y="528" width="24" height="24" fill="#00ffff" stroke="#404040" stroke-width="0.4"/>
+<text x="500" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >15</text>
+<rect x="512" y="528" width="24" height="24" fill="#550000" stroke="#404040" stroke-width="0.4"/>
+<text x="524" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >16</text>
+<rect x="536" y="528" width="24" height="24" fill="#550055" stroke="#404040" stroke-width="0.4"/>
+<text x="548" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >17</text>
+<rect x="560" y="528" width="24" height="24" fill="#5500aa" stroke="#404040" stroke-width="0.4"/>
+<text x="572" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >18</text>
+<rect x="584" y="528" width="24" height="24" fill="#5500ff" stroke="#404040" stroke-width="0.4"/>
+<text x="596" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >19</text>
+<rect x="608" y="528" width="24" height="24" fill="#555500" stroke="#404040" stroke-width="0.4"/>
+<text x="620" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >20</text>
+<rect x="632" y="528" width="24" height="24" fill="#555555" stroke="#404040" stroke-width="0.4"/>
+<text x="644" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >21</text>
+<rect x="656" y="528" width="24" height="24" fill="#5555aa" stroke="#404040" stroke-width="0.4"/>
+<text x="668" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >22</text>
+<rect x="680" y="528" width="24" height="24" fill="#5555ff" stroke="#404040" stroke-width="0.4"/>
+<text x="692" y="543" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >23</text>
+<rect x="704" y="528" width="24" height="24" fill="#55aa00" stroke="#404040" stroke-width="0.4"/>
+<text x="716" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >24</text>
+<rect x="728" y="528" width="24" height="24" fill="#55aa55" stroke="#404040" stroke-width="0.4"/>
+<text x="740" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >25</text>
+<rect x="752" y="528" width="24" height="24" fill="#55aaaa" stroke="#404040" stroke-width="0.4"/>
+<text x="764" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >26</text>
+<rect x="776" y="528" width="24" height="24" fill="#55aaff" stroke="#404040" stroke-width="0.4"/>
+<text x="788" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >27</text>
+<rect x="800" y="528" width="24" height="24" fill="#55ff00" stroke="#404040" stroke-width="0.4"/>
+<text x="812" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >28</text>
+<rect x="824" y="528" width="24" height="24" fill="#55ff55" stroke="#404040" stroke-width="0.4"/>
+<text x="836" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >29</text>
+<rect x="848" y="528" width="24" height="24" fill="#55ffaa" stroke="#404040" stroke-width="0.4"/>
+<text x="860" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >30</text>
+<rect x="872" y="528" width="24" height="24" fill="#55ffff" stroke="#404040" stroke-width="0.4"/>
+<text x="884" y="543" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >31</text>
+<rect x="128" y="552" width="24" height="24" fill="#aa0000" stroke="#404040" stroke-width="0.4"/>
+<text x="140" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >32</text>
+<rect x="152" y="552" width="24" height="24" fill="#aa0055" stroke="#404040" stroke-width="0.4"/>
+<text x="164" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >33</text>
+<rect x="176" y="552" width="24" height="24" fill="#aa00aa" stroke="#404040" stroke-width="0.4"/>
+<text x="188" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >34</text>
+<rect x="200" y="552" width="24" height="24" fill="#aa00ff" stroke="#404040" stroke-width="0.4"/>
+<text x="212" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >35</text>
+<rect x="224" y="552" width="24" height="24" fill="#aa5500" stroke="#404040" stroke-width="0.4"/>
+<text x="236" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >36</text>
+<rect x="248" y="552" width="24" height="24" fill="#aa5555" stroke="#404040" stroke-width="0.4"/>
+<text x="260" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >37</text>
+<rect x="272" y="552" width="24" height="24" fill="#aa55aa" stroke="#404040" stroke-width="0.4"/>
+<text x="284" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >38</text>
+<rect x="296" y="552" width="24" height="24" fill="#aa55ff" stroke="#404040" stroke-width="0.4"/>
+<text x="308" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >39</text>
+<rect x="320" y="552" width="24" height="24" fill="#aaaa00" stroke="#404040" stroke-width="0.4"/>
+<text x="332" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >40</text>
+<rect x="344" y="552" width="24" height="24" fill="#aaaa55" stroke="#404040" stroke-width="0.4"/>
+<text x="356" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >41</text>
+<rect x="368" y="552" width="24" height="24" fill="#aaaaaa" stroke="#404040" stroke-width="0.4"/>
+<text x="380" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >42</text>
+<rect x="392" y="552" width="24" height="24" fill="#aaaaff" stroke="#404040" stroke-width="0.4"/>
+<text x="404" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >43</text>
+<rect x="416" y="552" width="24" height="24" fill="#aaff00" stroke="#404040" stroke-width="0.4"/>
+<text x="428" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >44</text>
+<rect x="440" y="552" width="24" height="24" fill="#aaff55" stroke="#404040" stroke-width="0.4"/>
+<text x="452" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >45</text>
+<rect x="464" y="552" width="24" height="24" fill="#aaffaa" stroke="#404040" stroke-width="0.4"/>
+<text x="476" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >46</text>
+<rect x="488" y="552" width="24" height="24" fill="#aaffff" stroke="#404040" stroke-width="0.4"/>
+<text x="500" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >47</text>
+<rect x="512" y="552" width="24" height="24" fill="#ff0000" stroke="#404040" stroke-width="0.4"/>
+<text x="524" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >48</text>
+<rect x="536" y="552" width="24" height="24" fill="#ff0055" stroke="#404040" stroke-width="0.4"/>
+<text x="548" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >49</text>
+<rect x="560" y="552" width="24" height="24" fill="#ff00aa" stroke="#404040" stroke-width="0.4"/>
+<text x="572" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >50</text>
+<rect x="584" y="552" width="24" height="24" fill="#ff00ff" stroke="#404040" stroke-width="0.4"/>
+<text x="596" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >51</text>
+<rect x="608" y="552" width="24" height="24" fill="#ff5500" stroke="#404040" stroke-width="0.4"/>
+<text x="620" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >52</text>
+<rect x="632" y="552" width="24" height="24" fill="#ff5555" stroke="#404040" stroke-width="0.4"/>
+<text x="644" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >53</text>
+<rect x="656" y="552" width="24" height="24" fill="#ff55aa" stroke="#404040" stroke-width="0.4"/>
+<text x="668" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >54</text>
+<rect x="680" y="552" width="24" height="24" fill="#ff55ff" stroke="#404040" stroke-width="0.4"/>
+<text x="692" y="567" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" >55</text>
+<rect x="704" y="552" width="24" height="24" fill="#ffaa00" stroke="#404040" stroke-width="0.4"/>
+<text x="716" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >56</text>
+<rect x="728" y="552" width="24" height="24" fill="#ffaa55" stroke="#404040" stroke-width="0.4"/>
+<text x="740" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >57</text>
+<rect x="752" y="552" width="24" height="24" fill="#ffaaaa" stroke="#404040" stroke-width="0.4"/>
+<text x="764" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >58</text>
+<rect x="776" y="552" width="24" height="24" fill="#ffaaff" stroke="#404040" stroke-width="0.4"/>
+<text x="788" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >59</text>
+<rect x="800" y="552" width="24" height="24" fill="#ffff00" stroke="#404040" stroke-width="0.4"/>
+<text x="812" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >60</text>
+<rect x="824" y="552" width="24" height="24" fill="#ffff55" stroke="#404040" stroke-width="0.4"/>
+<text x="836" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >61</text>
+<rect x="848" y="552" width="24" height="24" fill="#ffffaa" stroke="#404040" stroke-width="0.4"/>
+<text x="860" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >62</text>
+<rect x="872" y="552" width="24" height="24" fill="#ffffff" stroke="#404040" stroke-width="0.4"/>
+<text x="884" y="567" text-anchor="middle" fill="#000000" font-family="DejaVu Sans, sans-serif" font-size="14" >63</text>
+</svg>

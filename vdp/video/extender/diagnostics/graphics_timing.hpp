@@ -16,7 +16,10 @@
 #include <freertos/FreeRTOS.h>
 #endif
 namespace agon_graphics_timing {
-enum Metric : unsigned { Primitive, SoftwareSprites, ScanlineDecoration, MetricCount };
+// SCROLL-001 adds classified execution counters without changing the original
+// three metrics. These are elapsed operation intervals, including preemption;
+// they are not exclusive CPU time and must not be added to Primitive again.
+enum Metric : unsigned { Primitive, SoftwareSprites, ScanlineDecoration, Scroll, Bitmap, MetricCount };
 struct Count { uint32_t calls{}, us{}, maximum{}, crossing{}; };
 struct Result { Count count[MetricCount]; uint32_t elapsed{}, drain{}, overhead{}; };
 #ifdef USERSPACE
@@ -62,7 +65,7 @@ class Scope {
  public:
   explicit __attribute__((always_inline)) Scope(Metric metric) : metric_(metric) {
     enter();
-    admitted_ = enabled;
+    admitted_ = enabled && metric_ < MetricCount;
     if (admitted_) { generation_ = generation; ++active[metric_]; }
     leave();
     if (admitted_) start_ = now();

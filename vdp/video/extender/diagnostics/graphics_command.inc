@@ -3,8 +3,8 @@
 // No production callback ABI is established by this temporary probe.
 case 0xEF: {
     int op = readByte_t(), token = readWord_t(), flags = readByte_t();
-    if (op < 1 || op > 10 || token < 0 || flags < 0 ||
-        (op == 4 ? (flags < 2 || flags > 8) : op == 8 ? (flags < 1 || flags > 3) : flags > 1)) break;
+    if (op < 1 || op > 11 || token < 0 || flags < 0 ||
+        (op == 4 ? (flags < 2 || flags > 12) : op == 8 ? (flags < 1 || flags > 3) : flags > 1)) break;
     using namespace agon_graphics_timing;
     static uint16_t current_token;
     static bool armed, saved;
@@ -28,6 +28,14 @@ case 0xEF: {
         while (!complete(t) && uint32_t(now()-start)<10000000U) delay(1);
         return complete(t);
     };
+    // SCROLL-001 capability probe, outside timing. Same admitted QTG carrier;
+    // no new callback ABI. Old diagnostic images fail this probe closed.
+    if (op == 11) {
+#ifdef AGON_SCROLL_TIMING
+        reply(0,0x534331,12);
+#endif
+        break;
+    }
     // Reusable game timing: batch records, no success reply in a frame hot loop.
     // Diagnostic barriers deliberately remain normal-worker operations. They
     // perturb pipelining; the package requires pacing-only/empty controls.
@@ -86,9 +94,9 @@ case 0xEF: {
         // eZ80 callback/receive path and manufacture a measurement failure.
         if (flags == 8) reply(8,result.overhead,256);
         else {
-            unsigned i=(flags-2)/2;
+            unsigned i=flags>=9?3+(flags-9)/2:(flags-2)/2;
             const auto &c=result.count[i];
-            if (flags & 1) reply(flags,c.maximum,c.crossing);
+            if (flags>=9?!(flags&1):(flags&1)) reply(flags,c.maximum,c.crossing);
             else reply(flags,c.us,c.calls);
         }
     }
