@@ -199,6 +199,25 @@ and backed up on the development host, then replaced at the same SD location.
 All26files and nine launchers were verified. Startup is unchanged; the card
 remains mounted. No firmware installation or test invocation occurred.
 
+### Diagnostic installation; manual-test handback blocked
+
+The Author returned the card and authorized flashing/reset followed by stopping
+for manual individual tests. Both recorded diagnostic images are now installed
+and independently flash-verified. Full previous flash images were retained.
+P4 NVS was preserved; only the mainboard app0 image was replaced. Its existing
+valid OTA sequence selects app0; partition table, OTA data and NVS are unchanged.
+EMOS was not reflashed. The installed P4 web assets contain both configured
+reset controls.
+
+Actual CLI/input admission remains unavailable after the prescribed Agon reset,
+P4 initialization/reset plus Agon reset, and the authorized installation/final
+Agon reset. No scrolling test was invoked. The host could not access startup,
+so mode8 setup was not written; the previously verified ordinary startup is the
+latest retained authority. Reset GPIO is released and all clients are closed.
+Author physical card/mainboard recovery is required before setup and actual CLI
+verification can complete. Do not announce manual-test readiness or reflash the
+already verified images merely to repeat admission checks.
+
 ### Source audit limits
 
 1. The P4 64-colour alternative uses owned row rotation for full-width vertical
