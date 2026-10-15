@@ -19,13 +19,14 @@ does not prohibit the accepted P4 replacement input path.
 2. **Installation and recovery:** Provide a noninteractive path whenever the
    required P4 firmware, EMOS firmware or input admission is unavailable. Do
    not make the interface under test a prerequisite for its own installation,
-   first admission or recovery. Prepared `/autoexec.txt` can perform setup before
-   an explicit readiness cue requests keystrokes.
-3. **Fixture preparation:** Record the executable, exact startup invocation,
-   files, ordering, terminal state and evidence channel. Select the video mode
-   only in `/autoexec.txt`, before the fixture; use `VDU 22 n`. The fixture
-   itself must not switch modes. A test of a new input candidate must not assume
-   that candidate already provides reliable setup or recovery input.
+   first admission or recovery. Separately authorized normal-startup commissioning
+   may establish input admission; test runners must not modify `/autoexec.txt`.
+3. **Fixture preparation:** Record the executable, explicit CLI invocation,
+   files, ordering, terminal state and evidence channel. Follow the
+   [test appliance lifecycle](../procedures/test-appliances.md): conditional mode
+   switching, at least one second of monitor settling and entry-mode/CLI cleanup.
+   Normal startup remains unchanged. A test of a new input candidate must not
+   assume that candidate already provides reliable setup or recovery input.
 4. **Acceptance boundary:** Working P4 input does not repair the mainboard port
    or qualify every source-switch/fault-recovery case. Retained native-input
    acceptance is in [PORT-015](../tasks/PORT-015.md); further platform and browser

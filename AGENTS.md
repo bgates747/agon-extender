@@ -37,6 +37,16 @@ records rather than adding private paths to this file.
 
 ## Read the controlling operation protocol before acting
 
+Whenever an agent is asked to **design, deploy or run a testing suite**, read
+[`docs/procedures/test-appliances.md`](docs/procedures/test-appliances.md) before
+planning or acting. This also covers suite runners, individual test appliances,
+staging and reuse of historical fixtures. That procedure owns mode lifecycle,
+the minimum one-second monitor-settling delay, Pi Python coordination, normal
+reset/boot behavior and the distinction between preparation and test invocation.
+Test runners, appliances and test-deployment helpers must never modify
+`/autoexec.txt`. When the Author reserves invocation, do not run smoke tests or
+rendering checks under the label of readiness verification.
+
 Before any operational tool call, classify the requested operation using
 `docs/procedures/README.md`, then read its controlling procedure. Read every
 applicable procedure for a composite request (for example, rollback plus reset).
@@ -70,10 +80,13 @@ Before preparing or running any eZ80 bench fixture, also read
 `docs/qualification/bench-constraints.md`. Active constraints there govern
 fixture invocation and evidence even when the owning task predates them.
 
-For test fixtures, select the video mode only in `/autoexec.txt`, before the
-fixture runs. Fixture programs must not switch video modes themselves. Use
-the MOS command `VDU 22 n` (space-separated), where `n` is the mode number;
-the current ordinary boot smoke uses mode 3 (`VDU 22 3`).
+Test appliances check the active mode, switch only when necessary, allow at least
+one whole second for either monitor to settle, and restore their entry mode and
+a visible, responsive CLI. For interactive preselection, provide `VDU 22 n`
+(space-separated) and the test command separately, with the pause between them.
+Pi Python runners inject the same pause. Follow the procedure above for display
+route ownership, double-buffer cleanup and restoration after runner preselection.
+Normal startup is preserved; reset must not launch or resume tests.
 
 ## Emulator attention cues
 

@@ -20,8 +20,13 @@ must be new: the fixture refuses overwrite. The builder requires Pillow and
 host-native AgonDev, plus installed librsvg/Cairo. Use another fresh output for
 each build. Generated outputs stay ignored.
 
-1. Read the current test/startup/bench protocol before deployment. Select mode
-   in autoexec; startup ends in Legacy and never launches the fixture.
+1. Read the [test appliance lifecycle](../../../docs/procedures/test-appliances.md)
+   and current bench/execution protocol before deployment. Do not modify
+   autoexec. For interactive preselection, supply `VDU 22 n`, wait at least one
+   whole second after the switch, then provide the explicit test invocation.
+   This existing executable validates the mode but does not yet implement the
+   accepted conditional switching/restoration lifecycle; migration remains in
+   SCROLL-001. Documentation promotion does not authorize a run.
 2. Prepare matched diagnostic mainboard/P4 images and a fresh CLI handoff.
    The fixture's private QTG capability probe refuses an old/ordinary image.
 3. After readiness is confirmed, the operator selects Legacy or display-preserving

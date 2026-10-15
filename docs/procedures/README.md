@@ -14,7 +14,7 @@ Historical scripts and task recipes cannot override these protocols.
 
 | ID | Requested operation | Controlling document |
 |---|---|---|
-| OP-01 | Stage, start, collect or restore a test | [Test execution](test-execution.md), plus [active bench constraints](../qualification/bench-constraints.md) |
+| OP-01 | Design, deploy, stage, start, collect or restore a test suite or appliance | [Test appliance lifecycle](test-appliances.md), [test execution](test-execution.md), plus [active bench constraints](../qualification/bench-constraints.md) |
 | OP-02 | Reset Agon, reset P4 or recover input by paired resets | [Reset protocol](../bench-reset.md), including its pre-reset startup check |
 | OP-03 | Deploy or flash firmware | [Installation](../installing.md), exact selected component manifest and current machine-local bench record |
 | OP-04 | Roll back one or more components | [Rollback](rollback.md), plus OP-03 and OP-02 for actual flash/reset steps |

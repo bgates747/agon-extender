@@ -6,12 +6,40 @@ approved mode-specific pattern as the moving image. Begin with single-buffered,
 full-width/full-screen optimized paths. Timing must describe VDP execution, not
 merely eZ80 command transmission. This records the Author's evolving design;
 implementation is prepared. The eight-case eZ80 program builds and its independent
-pixel-model checks pass. P4 diagnostic firmware is installed and verified;
-the Author subsequently requested restoration of regular mainboard firmware,
-which now matches official VDP v2.16.0. Actual CLI/input readiness is verified.
-The fixture is verified on the correctly identified Extender card; mode8 startup
-remains pending, and timed mainboard runs require the diagnostic image again.
-No physical test has been invoked for this task.
+pixel-model checks pass. The latest recorded installation has matched P4 and
+mainboard timing diagnostics and a setup-only mode8 startup modification. The
+agent subsequently invoked a bounded mainboard readiness test; the Author
+objected and stopped further actions. Its completion/results remain unreviewed.
+The full600-update tests and Extender readiness run were not invoked.
+Operational work remains stopped for Author-controlled invocation. The accepted
+mode lifecycle below requires fixture migration and separately authorized repair
+of the earlier startup modification; no new readiness claim is made.
+
+## Accepted lifecycle decision and migration boundary — 2026-10-15
+
+The Author reviewed and promoted the [test appliance lifecycle](../procedures/test-appliances.md).
+It supersedes earlier mode-in-autoexec instructions for future work; historical
+sections below preserve what was actually prepared or installed. The promotion
+is documentation authorization, not authorization to repair startup or run tests.
+
+| Decision | State | Accepted contract |
+|---|---|---|
+| S-D01 — Test appliance and Pi runner lifecycle | Accepted | Appliances conditionally select and restore entry modes through EMOS, with visible CLI/double-buffer cleanup. Interactive commands and Pi Python runners allow at least one second after mode changes. Test runners never modify autoexec; reset returns to normal boot and interrupts dispatch. Preparation does not authorize smoke runs. |
+
+The [decision record](../decisions/ADR-2026-10-15-test-appliance-lifecycle.md)
+preserves authority and rationale. Acceptance does not qualify existing software.
+
+1. [ ] Obtain explicit authorization for normal-startup repair and restore the
+   retained original bytes as a separate operation. Do not route that repair
+   through a test runner or treat this documentation promotion as its authority.
+2. [ ] Adapt the scrolling appliance to the accepted entry-mode/settling/cleanup
+   lifecycle, preserving individual and batch reuse and exact timing scope.
+3. [ ] Review Pi runner integration and historical startup-mutating helpers before
+   reuse. Save per-display pre-suite state and stop dispatch after reset; preserve
+   independently invocable cases and explicit resumption boundaries.
+4. [ ] Arrange separately authorized validation, including double-buffer cleanup
+   and observed start visibility. When the Author reserves invocation, leave
+   smoke programs and rendering checks stopped as well as the full suite.
 
 ## Agreed scope
 

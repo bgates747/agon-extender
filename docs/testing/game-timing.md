@@ -142,10 +142,12 @@ runner creates and measures its own controlled consumer.
    disables renderer markers and `1` enables them. Both cases use the identical
    game binary and PRT reads. Missing or invalid configuration refuses capture.
    Normal production Aginvadors contains none of this instrumentation.
-4. The operator must select mode in `/autoexec.txt`, before fixture invocation:
-   8 for Aginvadors,136 for Rally,20 for Nurples. Do not select it in the
-   fixture or an EXEC batch. Place runtime data in the isolated test
-   directory. Do not run these derivatives on unprepared production directories.
+4. Follow the [test appliance lifecycle](../procedures/test-appliances.md):
+   preserve autoexec, preselect through `VDU 22 n` when needed and wait at least
+   one second before invocation. Required modes are8for Aginvadors,136for Rally
+   and20for Nurples. Appliances must implement entry-mode restoration and visible
+   CLI cleanup; review older helpers for compliance before reuse. Place runtime
+   data in the isolated test directory, not an unprepared production directory.
 5. C variants write120 rows after capture. Nurples stores120 raw active/total PRT
    records and MOS timestamps in RAM; save the symbol-delimited range before
    loading the common post-run collector. Symbol addresses belong to the exact

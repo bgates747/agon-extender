@@ -73,10 +73,13 @@ not proof that a workload completed.
    bench record. Confirm the authorized target (Agon, P4, or both), the current
    application and whether any other owner has the bench.
 2. Establish what `/autoexec.txt` will execute before pulsing Agon reset. Reset
-   is not a test launcher. If startup contains test `RUN`/`EXEC`, restore ordinary
-   startup through admitted access first. If that is impossible, stop and explain
-   the conflict; do not reset into a known unwanted test or assume Escape will
-   reliably interrupt it.
+   is not a test launcher. If startup contains test `RUN`/`EXEC`, stop and report
+   the conflict; restoring ordinary startup requires a separately authorized
+   repair. Test runners must not rewrite startup. Do not reset into a known
+   unwanted test or assume Escape will reliably interrupt it. After a reset
+   interrupts a suite, its Pi runner must halt dispatch rather than launch the
+   next test at the newly booted CLI; see the
+   [test appliance lifecycle](procedures/test-appliances.md).
 3. A paired input recovery means the host resets P4, waits for the required P4
    initialization, then resets Agon. It does not authorize reflashing either
    processor. Use the current local recipe and evidence, not a guessed delay.

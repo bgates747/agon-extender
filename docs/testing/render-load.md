@@ -75,16 +75,17 @@ describe the underlying plotting/export APIs.
 `tests/performance/render_load/static_conversion.py` builds the experimental
 static full-palette chart fixture using the same native assembler. Supply fresh
 build output and the assembler explicitly. It produces numbered charts and SVG
-references for20/8/136/21/149; mode selection remains in startup. The eZ80 draws
-once, fences setup, waits five nominal seconds, then opens three ten-second
+references for20/8/136/21/149. Mode selection and cleanup now follow the
+[test appliance lifecycle](../procedures/test-appliances.md), preserving startup.
+The eZ80 draws once, fences setup, waits five nominal seconds, then opens three ten-second
 P4 windows without drawing, swaps, queries or SD work. The chart remains until
 Escape. Double-buffered modes expose their back buffer once before measurement.
 
-`qualification/static_conversion.py` stages one mode through the fast listener,
-verifies executable bytes once, selects startup through EMOS and resets the Agon
-using its admitted configuration. It collects small HTTP phase telemetry and
-stops for visual review. Its default `normal` variant requires the installed
-normal diagnostic image; `--variant convert-off` requires the separately verified
+The retained `qualification/static_conversion.py` helper changes startup and
+resets Agon; it is not an admitted execution path under the current lifecycle
+and must be adapted before reuse. Its historical captures include small HTTP
+phase telemetry and visual-review handback. Its default `normal` variant requires
+the installed normal diagnostic image; `--variant convert-off` requires the separately verified
 no-scanout conversion image. The latter retains RGB888 allocations and matching
 single/double allocation selection but uses a software60Hz clock, creates no
 DSI/DMA scanout, and performs no cache/panel submission. Image installation and
@@ -124,19 +125,17 @@ does not resume the paused r04 workload campaign.
    **fast** EMOS SD listener. Upload packet CRCs remain enabled; the Pi performs
    one whole-file readback/hash per deployed file. No repeated checked-upload
    passes or SD operations occur inside measured frames.
-5. Select video mode only in `/autoexec.txt`, before invoking the fixture. The
-   runner preserves the original startup byte-for-byte, moves prior startup
-   files into its owned result tree, installs a fresh plan/startup and uses the
-   configured reset actuator. It never switches modes inside the application.
+5. Preserve `/autoexec.txt` throughout test deployment and execution. Follow the
+   test appliance lifecycle for conditional mode selection, a minimum one-second
+   settling interval, mode/route restoration and visible CLI cleanup. The retained
+   runner's startup-substitution/reset path requires adaptation before reuse.
 
 ## Visual inspection and timed runs
 
-Supply the ignored local configuration and evidence directory as shell variables
-`RENDER_CONFIG` and `RENDER_EVIDENCE`. After deployment and readiness checks:
-
-```sh
-.venv/bin/python qualification/render_load.py --config "$RENDER_CONFIG" --evidence "$RENDER_EVIDENCE" run --mode 20 --endpoint p4 --manual
-```
+The existing `qualification/render_load.py` runner, including its `--manual`
+form, requires startup/lifecycle adaptation before invocation. Its retained
+interface uses ignored local configuration and an evidence directory; these
+arguments do not waive the current startup, settling or authorization rules.
 
 The manual form schedules no keys. Use the admitted web keyboard while the
 workload is running: Space advances; Escape exits. The current bench's physical
@@ -144,11 +143,8 @@ USB keyboard path remains unavailable. The on-screen label identifies case,
 family, variant, level and paced/throughput style. Templates and marker IDs
 repeat every40 frames; marker IDs are not globally unique presentation numbers.
 
-For an automated run of the same application:
-
-```sh
-.venv/bin/python qualification/render_load.py --config "$RENDER_CONFIG" --evidence "$RENDER_EVIDENCE" run --mode 20 --endpoint p4 --wait 20 --interval 10 --deadline 1100
-```
+Automated execution of the same application must use a reviewed Pi Python
+runner that satisfies the current lifecycle before scheduling any keys.
 
 The Pi injects Space on the declared wall-clock schedule and logs actual send
 and completion times. The eZ80 records actual window bounds and frame counts;

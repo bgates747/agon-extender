@@ -23,6 +23,23 @@ The remaining sections state design obligations unless an implemented subset is
 identified explicitly. Full fault recovery, generalized EDU APIs and compatibility
 coverage must not be inferred from the working console or diagnostic services.
 
+## Test appliance and host-runner ownership
+
+The Pi Python coordinator sequences explicitly authorized unattended tests;
+individual Agon appliances own their workload and conditional mode lifecycle
+through EMOS. Appliances restore their entry mode and a visible CLI, including
+double-buffer cleanup. The Pi coordinator owns restoration of earlier mode/route
+state it changed before invoking an appliance. Actual mode changes require at
+least one second of monitor settling so the Author can see the test start.
+
+Test runners, appliances and deployment helpers preserve `/autoexec.txt`. Reset
+returns Agon to normal boot, and the Pi runner stops dispatch after an interrupted
+run rather than relaunching tests. These accepted design obligations are defined
+in the [test appliance procedure](procedures/test-appliances.md) and
+[decision record](decisions/ADR-2026-10-15-test-appliance-lifecycle.md).
+Existing fixture/runner migration remains in SCROLL-001; this is not a claim of
+implemented lifecycle handling or new firmware qualification.
+
 ## Browser-video default encoding
 
 RLE2 is the accepted default for browser video output. It compresses complete
