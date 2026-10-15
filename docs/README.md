@@ -82,6 +82,7 @@ outside selected production and has no complete product HDMI acceptance.
 |---|---|
 | Current versus historical procedure applicability | [Procedure index](procedures/README.md) |
 | Designing, deploying or running suites: modes, visible starts, Pi runners and normal reset | [Test appliance lifecycle](procedures/test-appliances.md) |
+| Pi scrolling coordinator, stopped plans and adapter qualification boundary | [Scrolling runner](testing/scroll-suite-runner.md), offline implementation; no qualified live adapter yet |
 | Current fixture constraints and accepted input exceptions | [Bench constraints](qualification/bench-constraints.md) |
 | Capture failures and uninstrumented controls | [Capture protocol](qualification/capture-failure-protocol.md) |
 | Offline HDMI candidate ranking | [HDMI candidate tool](testing/hdmi-candidates.md), experimental; no hardware changes or acceptance guarantees |

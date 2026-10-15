@@ -32,8 +32,9 @@ preserves authority and rationale. Acceptance does not qualify existing software
 1. [ ] Obtain explicit authorization for normal-startup repair and restore the
    retained original bytes as a separate operation. Do not route that repair
    through a test runner or treat this documentation promotion as its authority.
-2. [ ] Adapt the scrolling appliance to the accepted entry-mode/settling/cleanup
-   lifecycle, preserving individual and batch reuse and exact timing scope.
+2. [x] Adapt the scrolling appliance offline to the accepted entry-mode/settling/
+   cleanup lifecycle for supported single-buffered entry, preserving individual
+   and batch reuse and timing scope. Double-buffered entry remains gated.
 3. [ ] Review Pi runner integration and historical startup-mutating helpers before
    reuse. Save per-display pre-suite state and stop dispatch after reset; preserve
    independently invocable cases and explicit resumption boundaries.
@@ -41,7 +42,89 @@ preserves authority and rationale. Acceptance does not qualify existing software
    and observed start visibility. When the Author reserves invocation, leave
    smoke programs and rendering checks stopped as well as the full suite.
 
+### Offline implementation outcome
+
+1. Revision `pattern-scroll-r03` builds for eZ80. `mode_lifecycle.hpp` owns
+   independently testable capture/select/settle/restore policy; `main.cpp` supplies
+   fresh EMOS-routed mode queries and bounded MOS-clock waits. Matching modes
+   avoid switches. Escape cancels work, a requested capture gets a drain attempt,
+   and cleanup failure prevents PASS. Individual completion stays on the invoking
+   route; the Pi coordinator owns whole-suite cues on both saved displays.
+2. `scripts/run_scroll_suite.py` implements stopped plan generation, hash checking,
+   Pi locking, conditional CLI mode selection and monotonic pacing, per-operation
+   journals, independent CSV validation and safe restoration. Host simulations
+   cover reset interruption, timeout, mismatched receipts, actual bad counters,
+   failed tests, startup changes, lock contention and visible-CLI gating. It never
+   changes startup or automatically resets/replays. See the
+   [runner guide](../testing/scroll-suite-runner.md) for the adapter contract.
+3. Twenty-one Python host checks pass (seventeen runner checks and four geometry
+   checks), and nine native lifecycle scenarios pass with address/undefined
+   sanitizers. The final r03 executable is compiled and a16-job plan is generated
+   locally with `ready: false` and `adapter.qualified: false`. Offline plan checking
+   invokes no adapter. These are compilation/simulation results, not hardware
+   timing, visual, reset or cleanup acceptance.
+4. AgonDev LLVM15.0.7, sourcec76386c0083e6a6236ff774275227e2389f85538, cannot
+   lower the SJLJ exception context emitted around an RAII cleanup destructor in
+   this fixture. The generated Makefile explicitly disables C++ exceptions/RTTI;
+   ordinary return-scope cleanup remains active. The builder comments explain
+   this observed toolchain limit and removal requires a qualified backend.
+5. Live adapter integration remains pending. The coordinator requires authoritative
+   resident foreground and peer boot observations, deployed input verification,
+   raw result retrieval and dual-display notification receipts. P4 keyboard
+   admission epochs and P4-only display status cannot substitute for those facts.
+   Resident lifecycle capability is a dependency of
+   [QUAL-006](QUAL-006.md); this tranche does not implement that firmware work or
+   declare an unqualified convenience adapter ready.
+6. The Author assigned the bench to another project. No device requests, serial
+   opens, SD changes, startup restoration, firmware deployment or physical tests
+   occurred during this tranche. The earlier deployed r02 package and recorded
+   startup modification remain untouched. Preserve their evidence and stopping
+   boundary until a fresh Author bench/operation authorization.
+
 ## Agreed scope
+
+### Offline lifecycle and runner tranche — Author authorized 2026-10-15
+
+The Author requested a commit/push checkpoint, then implementation of the
+appliance lifecycle followed by the Pi runner while another project owns the
+bench. Checkpoint `f0bb2fed` is published. This tranche permits source changes,
+native compilation and host simulation only. It does not permit device queries,
+SD deployment, startup repair, firmware installation or physical tests.
+
+Bounded implementation précis:
+
+1. Official [VDP system commands](../../../../agon-docs/docs/vdp/System-Commands.md)
+   document `VDU23,0,&86` as a fresh mode-information query.
+   [MOS API](../../../../agon-docs/docs/mos/API.md) defines the
+   mode-completion flag and mode/dimension/colour sysvars. Clear only the mode
+   flag, issue the query through EMOS, and bound the wait; never trust a sysvar
+   cache from another display route. Official VDP v2.16.0
+   [video/vdu_sys.h](../../../../agon-vdp/video/vdu_sys.h) implements the reply. References remain clean at the
+   existing selected MOS/VDP tags and commits below.
+2. [Official screen modes](../../../../agon-docs/docs/vdp/Screen-Modes.md) define double buffering as base mode+128
+   and explains that ordinary CLI text remains off-screen without swaps.
+   `System-Commands.md` exposes a swap, not a persistent visible-CLI drawing
+   selector. A single final swap cannot prove subsequent typing visible.
+   Gate double-buffered entry modes for this single-buffer scrolling appliance
+   until a supported CLI cleanup is implemented/qualified; do not substitute
+   a different return mode or claim the problem solved.
+3. The stock mode table has60/70Hz refresh. The appliance's conservative settling
+   interval is160MOS ticks: nominal1.33s at60Hz or1.14s at70Hz, outside measured
+   work. The MOS clock advances2ticks/vblank; it is not100Hz wall time. A finite
+   instruction budget also bounds stopped-clock waits. Physical calibration and
+   monitor behavior remain unqualified. The Pi runner uses monotonic seconds.
+4. Keep mode-lifecycle policy independently host-testable. Restore captured
+   entry mode after selection failure, workload failure and cancellation, and
+   report cleanup failure separately. Retain existing wrapped-update geometry
+   and counter scope. Avoid mode changes on matching entry/return modes.
+5. The Pi coordinator uses a reviewed, hash-pinned adapter contract for fresh
+   EMOS-owned mode/route, foreground and peer-boot receipts. Keyboard admission
+   epochs are not authoritative processor boot identities. No adapter reset,
+   flash, startup-write or implicit resume operation is supported. A reset,
+   timeout or uncertain receipt stops further dispatch. A live adapter cannot
+   be declared qualified from host simulation alone.
+
+### Rendering workload
 
 1. One eZ80 program contains eight cases: full-screen up/down/left/right and
    partial-region up/down/left/right. Advance one logical pixel per vblank.

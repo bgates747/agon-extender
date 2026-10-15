@@ -119,8 +119,12 @@ def build(args):
     (work/'src').mkdir(parents=True)
     shutil.copy2(HERE/'main.cpp',work/'src/main.cpp')
     shutil.copy2(HERE/'selection.hpp',work/'src/selection.hpp')
+    shutil.copy2(HERE/'mode_lifecycle.hpp',work/'src/mode_lifecycle.hpp')
     shutil.copy2(ROOT/'tests/performance/ez80/entries.asm',work/'src/entries.asm')
-    (work/'Makefile').write_text('NAME=scroll\nLDHAS_ARG_PROCESSING=0\nLDHAS_EXIT_HANDLER=0\ninclude $(shell agondev-config --makefile)\nCXXFLAGS += -std=c++17\n')
+    # AgonDev LLVM15 cannot lower SJLJ exception contexts emitted by RAII.
+    # This finite appliance uses ordinary return cleanup, not C++ exceptions;
+    # remove the explicit exception restriction only with a qualified backend.
+    (work/'Makefile').write_text('NAME=scroll\nLDHAS_ARG_PROCESSING=0\nLDHAS_EXIT_HANDLER=0\ninclude $(shell agondev-config --makefile)\nCXXFLAGS += -std=c++17 -fno-exceptions -fno-rtti\n')
     env = dict(os.environ, PATH=str(tools.resolve())+os.pathsep+os.environ.get('PATH',''))
     subprocess.run(['make','-C',str(work)],env=env,check=True)
     shutil.copy2(work/'bin/scroll.bin',package/'scroll.bin')
@@ -128,16 +132,19 @@ def build(args):
     for selector in ['all']+[name for name,_,_,_ in rows]:
         command=f'CD /extender/scroll-r01\r\nLOAD scroll.bin\r\nRUN &040000 {selector}\r\n'
         (package/('run.txt' if selector=='all' else selector+'.txt')).write_text(command)
-    manifest = dict(fixture='pattern-scroll-r02',
-                    build_id=datetime.now(timezone.utc).strftime('pattern-scroll-r02-b%Y-%m-%d-%H-%M-%SZ'),
+    manifest = dict(fixture='pattern-scroll-r03',
+                    build_id=datetime.now(timezone.utc).strftime('pattern-scroll-r03-b%Y-%m-%d-%H-%M-%SZ'),
                     status='draft',mode=args.mode,
-                    width=args.width,height=args.height,margin=args.margin,steps=args.steps,
+                    width=args.width,height=args.height,margin=args.margin,steps=args.steps,colours=args.colours,
                     instrument=args.instrument,cases=[dict(name=n,direction=d,partial=p,
                     region=vars(r)) for n,d,p,r in rows],palette=palette,
+                    lifecycle=dict(entry_mode_restore=True,settle_mos_ticks=160,
+                                   single_buffer_entry_only=True,completion_route='invoking',
+                                   startup_unchanged=True),
                     git_commit=subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip(),
                     source_dirty=bool(subprocess.check_output(['git','-C',str(ROOT),'status','--porcelain'])),
                     inputs={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()
-                            for p in (HERE/'build.py',HERE/'main.cpp',HERE/'selection.hpp',HERE/'geometry.py',
+                            for p in (HERE/'build.py',HERE/'main.cpp',HERE/'selection.hpp',HERE/'mode_lifecycle.hpp',HERE/'geometry.py',
                                       ROOT/'tests/fixtures/display-pattern/pattern-wide.svg',
                                       HERE.parent/'mode-preview/palette.py',
                                       ROOT/'tests/performance/ez80/entries.asm')},

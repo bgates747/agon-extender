@@ -128,9 +128,11 @@ former test-mode-in-autoexec rule; historical evidence retains its original setu
 
 The older Pi Python rendering runner and the current individual/batch scrolling
 fixture exist, but acceptance of this procedure does not qualify them against
-these requirements. The scrolling fixture does not yet implement the new mode
-lifecycle or integration with the Pi runner. [SCROLL-001](../tasks/SCROLL-001.md)
-records its remaining implementation and migration boundary. Review and adapt
+these requirements. Scrolling revision r03 implements mode lifecycle for
+single-buffered entry modes, and the new Pi coordinator passes host simulation;
+its live adapter, double-buffered entry cleanup and physical validation remain
+pending. [SCROLL-001](../tasks/SCROLL-001.md) records the migration boundary.
+Review and adapt
 historical runners before reuse; do not execute a startup-mutating helper and
 repair its consequences afterward.
 

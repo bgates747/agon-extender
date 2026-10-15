@@ -1,8 +1,10 @@
 # Pattern scrolling fixture
 
 Builds one finite eZ80 program containing eight one-pixel, mainboard-vblank-paced
-individually callable cases: full and partial up/down/left/right. It does not change video modes or
-launch hardware. Mode, width, height, margin, palette, steps and output path
+individually callable cases: full and partial up/down/left/right. Revision r03
+checks the invoking display's current mode, switches only if needed, waits for
+settling and restores the entry mode/CLI. It leaves the display route unchanged.
+The builder never launches hardware. Mode, width, height, margin, palette, steps and output path
 are parameters; the same executable reads `scroll.cfg`. Default320×240 geometry
 uses256×240 vertical and320×176 horizontal partial regions.
 
@@ -24,9 +26,8 @@ each build. Generated outputs stay ignored.
    and current bench/execution protocol before deployment. Do not modify
    autoexec. For interactive preselection, supply `VDU 22 n`, wait at least one
    whole second after the switch, then provide the explicit test invocation.
-   This existing executable validates the mode but does not yet implement the
-   accepted conditional switching/restoration lifecycle; migration remains in
-   SCROLL-001. Documentation promotion does not authorize a run.
+   The appliance restores the mode present after that interactive preselection;
+   it cannot remember the mode that preceded the Author's VDU command.
 2. Prepare matched diagnostic mainboard/P4 images and a fresh CLI handoff.
    The fixture's private QTG capability probe refuses an old/ordinary image.
 3. After readiness is confirmed, the operator selects Legacy or display-preserving
@@ -41,10 +42,11 @@ each build. Generated outputs stay ignored.
    A clipped PLOT restores the one-pixel wrapped strip from the resident image.
    Bitmap loading, SD writes, diagnostic replies and announcements are outside
    the measured case. Never use a pixel read or foreground flush as a fence.
-5. The fixture leaves a conspicuous completion/failure cue on the current output.
-   It asks EMOS for the other route with display retained, repeats the cue there
-   and finishes in Legacy after the selected test or complete batch. Physical
-   notification behavior remains untested.
+5. The fixture restores its entry mode and leaves a conspicuous completion,
+   failure or cancellation cue on the invoking output. The Pi coordinator owns
+   whole-suite cues on both displays and restores its earlier pre-suite route.
+   Escape cancels updates and attempts the normal diagnostic drain. Cleanup
+   failure prevents a PASS result. Physical behavior remains untested.
 
 Manual command form, once installation/startup readiness is established:
 
@@ -80,5 +82,13 @@ or all eight batch cases,
 expected scroll/bitmap counts and no reported measurement-boundary crossings.
 Run `--instrument 0` controls separately with the identical program and geometry.
 
-Status: offline draft. No installed-firmware, physical timing, wrap, visual,
-notification or performance acceptance is claimed.
+The appliance waits160MOS ticks after an actual mode change: nominal1.33s at60Hz
+or1.14s at70Hz, outside measured work. Stopped-clock waits have finite instruction
+budgets. Double-buffered entry modes are gated until a supported visible-CLI
+cleanup exists; one final swap does not make later typing visible.
+
+The [Pi coordinator](../../../docs/testing/scroll-suite-runner.md) provides a
+16-job stopped plan and receipt-driven sequencing. Host simulation and native
+eZ80 compilation pass; its live adapter and the new lifecycle remain physically
+unqualified. The earlier deployed r02 package is unchanged by offline builds.
+No new installed-firmware, timing, visual or performance acceptance is claimed.

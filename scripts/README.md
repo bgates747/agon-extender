@@ -43,6 +43,7 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 | [launch_regression_suite.py](launch_regression_suite.py), [run_regression_suite.py](run_regression_suite.py), [regression_notify.py](regression_notify.py) | Compatibility launchers into the canonical [`qualification/`](../qualification/README.md) authority; these wrappers contain no qualification logic |
 | [flash_firmware_commit.py](flash_firmware_commit.py), [p4_flash_remote.py](p4_flash_remote.py) | Build, flash and independently verify one exact EMOS or P4 commit; EMOS flashing first resets the verified P4 to close all clients, then establishes fresh paired input and stops an existing listener; after P4 installation, reset the Agon and prove fresh EMOS/P4 connectivity unless explicitly suppressed; emit the receipt required by hardware validation |
 | [run_hardware_regression.py](run_hardware_regression.py) | Compatibility launcher for the installed-firmware suite; [qualification policy](../qualification/README.md) owns firmware acceptance |
+| [run_scroll_suite.py](run_scroll_suite.py) | Pi scrolling coordinator, offline plan generation/checking and simulated lifecycle validation; [runner guide](../docs/testing/scroll-suite-runner.md). Live adapter is not yet qualified; generated plans are stopped |
 
 ## Retained development and test helpers
 
