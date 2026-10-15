@@ -194,6 +194,11 @@ The updated eZ80 program builds. Sanitized host checks verify each single-case
 selection, batch order, first-failure stopping and invalid selections/labels.
 Physical readiness gates and the stop-before-full-batch boundary remain unchanged.
 
+The Author remounted the card for this update. The previous package was verified
+and backed up on the development host, then replaced at the same SD location.
+All26files and nine launchers were verified. Startup is unchanged; the card
+remains mounted. No firmware installation or test invocation occurred.
+
 ### Source audit limits
 
 1. The P4 64-colour alternative uses owned row rotation for full-width vertical
