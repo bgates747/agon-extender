@@ -6,10 +6,12 @@ approved mode-specific pattern as the moving image. Begin with single-buffered,
 full-width/full-screen optimized paths. Timing must describe VDP execution, not
 merely eZ80 command transmission. This records the Author's evolving design;
 implementation is prepared. The eight-case eZ80 program builds and its independent
-pixel-model checks pass. Both diagnostic firmware images are installed and
-verified. The fixture is verified on the correctly identified Extender card;
-mode8 startup and actual CLI/input readiness remain pending. No physical test
-has been invoked for this task.
+pixel-model checks pass. P4 diagnostic firmware is installed and verified;
+the Author subsequently requested restoration of regular mainboard firmware,
+which now matches official VDP v2.16.0. Actual CLI/input readiness is verified.
+The fixture is verified on the correctly identified Extender card; mode8 startup
+remains pending, and timed mainboard runs require the diagnostic image again.
+No physical test has been invoked for this task.
 
 ## Agreed scope
 
@@ -234,6 +236,37 @@ were verified afterward; other cards were untouched. Exact device identity and
 before/after receipts remain in ignored local records. No bench calls or tests
 occurred. Correct-card return, mode8 startup and fresh CLI/input verification
 remain prerequisites; the reported card mixup is not a completed hardware retest.
+
+### Author-directed firmware verification and regular mainboard restoration
+
+After returning the correct card, the Author requested EMOS verification, the
+correct P4 flash and restoration of regular mainboard VDP if a different image
+was installed. The entire131072-byte EMOS ROM matches the retained verified
+`agon-emos-v0.1.24-b2026-10-07-23-11-33Z` ROM, SHA256
+`6f83bc21558ea7dcb665b60c18aa3a5c3030367f901e3e32ccbbf99eaf7f4019`.
+EMOS was retained without reflashing.
+
+P4 `indexed-hdmi-r09-b2026-10-15-02-54-12Z` was reinstalled and all four segments
+independently verified. The mutable NVS interval compares unchanged. Its web
+service required the standing Agon-reset then P4-reset/initialization/Agon-reset
+recovery sequence; actual listener/read/EXIT then passed. No flash was replayed.
+
+The active mainboard image matched our scrolling timing diagnostic, rather than
+the ordinary release. At the Author's request, official VDP v2.16.0 was restored
+only at app0, with1077840bytes/SHA256
+`b807beef35823b13a0a056f11b7464cd1b1c6356dce0e4098b78ebe059ded35f`.
+Independent application verification passes; the bootloader, partition table,
+OTA selection and NVS compare unchanged after the write. Previous affected
+flash ranges and exact receipts remain in ignored local records.
+
+The first post-mainboard command crossed an input admission boundary despite an
+initial ready snapshot. Its journal is retained; one normal Agon reset established
+a fresh admitted epoch and actual CLI/listener/read/EXIT passed. Final state is
+Legacy CLI, neutral admitted input, listener offline and no pending SD request.
+Ordinary startup and the fixture manifest match their earlier bytes. No test
+ran. Mode8 setup remains pending. Regular mainboard VDP lacks the private timing
+counters; reinstalling the matched diagnostic requires a subsequent authorized
+operation before timed mainboard comparisons can run.
 
 ### Source audit limits
 
