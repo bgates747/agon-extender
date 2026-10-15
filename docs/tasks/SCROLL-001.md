@@ -165,6 +165,16 @@ physical test has been invoked for this task.
    remain ignored under the active task's machine-local evidence directory.
    No device access, flash, reset, fixture deployment or invocation occurred.
 
+### SD staging — 2026-10-14
+
+The Author subsequently returned the Agon card to the host and authorized copying.
+The fixture, eight patterns, configuration/launcher, readable instructions,
+manifest and both diagnostic firmware installation inputs are staged at
+`/extender/scroll-r01`. All18files were verified; ordinary startup is unchanged
+and the card was left mounted. This supersedes the earlier no-deployment state.
+Firmware installation, bounded controls, input readiness and actual invocation
+remain unperformed. The suite is staged on SD, not ready to start.
+
 ### Source audit limits
 
 1. The P4 64-colour alternative uses owned row rotation for full-width vertical
