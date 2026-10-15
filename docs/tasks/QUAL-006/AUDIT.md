@@ -579,3 +579,17 @@ make the P4 a state/event/resource broker, and give fixtures a small bound resul
 ABI. Then routine tests can behave like modern remote jobs: preflight, stage,
 launch, observe, collect, clean up, and return to idle—without rewriting the
 machine's boot file or rebooting merely to run the next test.
+
+## Offline review addendum — 2026-10-13
+
+The parent task records five bounded contract gaps from a fresh document review.
+The original source baseline and audit findings above remain dated evidence.
+October's multimode host has gained initial listener admission and staged startup
+replacement; neither supplies authoritative EMOS foreground state. No benchmark
+input, firmware, peer state or bench operation changed during this review.
+
+Decision ordering begins with Q06-D06 before Q06-D01 through Q06-D05. An admitted
+UART carrier must not be described as answering before admission, and foreground
+response scheduling must be specified before promising query latency while an
+arbitrary application owns execution. The existing storage ISR-copy/foreground-
+decision split is useful prior art, not proof of that stronger service.

@@ -97,6 +97,7 @@ def main():
             expected='/video'+('?rle2=1&packed=2' if args.expect=='compressed' else '')
             assert urls[-1].endswith(expected),urls
             assert page.locator('header #reset-agon').count()==1
+            assert page.locator('header #reset-p4').count()==1
             assert not errors,errors
             formats=set()
             for frame, pixels, magic in codec_vectors(project):

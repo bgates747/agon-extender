@@ -22,6 +22,7 @@ sys.path[:0]=[str(ROOT/'tests/performance/scan'),str(ROOT/'scripts')]
 from records import decode, summary
 from window_results import analyse
 from run_render_qualification import banner, MODES, CASES
+from sdcard import path_payload
 
 
 def sha(data): return hashlib.sha256(data).hexdigest()
@@ -45,6 +46,51 @@ def module(path,name):
     spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
 
 
+def validate_records(plan,job,raw,windows,initial_display,display):
+    """Pure shared validation for serial and later physical-card collection."""
+    stable=('mode','width','height','colors','double_buffered','output_width','output_height')
+    if not display.get('available') or any(display.get(k)!=initial_display.get(k) for k in stable):
+        raise RuntimeError('Display geometry/output changed during workload')
+    d=decode(raw)
+    if d['case']!=job['case_number'] or d['window_tag']!=job['tag'] or d['count']!=job['frames'] or d['abort'] or d['warmup']!=job['warmup'] or d['build_id']!=plan['fixture_build']:
+        raise RuntimeError('Record identity/count/abort mismatch')
+    if any(r['flags']&11 for r in d['rows']):raise RuntimeError('Timer/fence/game fault in records')
+    calibration=d['calibration_prt']/d['calibration_mos'] if d['calibration_mos'] else 0
+    if not 510<=calibration<=690:
+        raise RuntimeError('PRT/raw-MOS calibration outside the declared 72k/120Hz tolerance')
+    diagnostic_id=job.get('diagnostic_id',job['case_number'])
+    hits=[w for w in windows['windows'] if w['id']==diagnostic_id and w['tag']==job['tag']]
+    if windows['open'] or windows['overflow'] or windows.get('render_overflow') or len(hits)!=1:
+        raise RuntimeError('Missing/overflow/open diagnostic sidecar')
+    window=hits[0]
+    if window['end_us']<=window['start_us'] or window['render']['boundary_drops']:
+        raise RuntimeError('Unclosed or dropped render window')
+    if not job['game'] and job['mode']!=136:
+        fences=window.get('render_fences',{})
+        if (fences.get('count')!=job['frames']+2 or fences.get('pending_requests')!=0 or
+            fences.get('errors')!=0 or not fences.get('samples_complete')):
+            raise RuntimeError('Finite render fence samples incomplete or not N+2')
+    faults=('faults','late','over_budget','underruns','invalid_blocks','sequence_errors','cache_errors','overlap')
+    before_rolling=initial_display.get('rolling',{});after_rolling=display.get('rolling',{})
+    output_errors={k:after_rolling.get(k,0)-before_rolling.get(k,0) for k in faults}
+    if any(v!=0 for v in output_errors.values()):
+        raise RuntimeError('HDMI rolling output errors: '+str(output_errors))
+    s=analyse(raw,window,diagnostic_id=diagnostic_id)
+    s['queued_render']=window['render']
+    if not job['game'] and job['mode']!=136:
+        cumulative=window['render_fences']['cumulative_render_us']
+        if len(cumulative)!=job['frames']+2 or any(b<a for a,b in zip(cumulative,cumulative[1:])):
+            raise RuntimeError('Finite cumulative rendering samples are missing or reversed')
+        samples=[b-a for a,b in zip(cumulative,cumulative[1:-1])]
+        if len(samples)!=job['frames']:raise RuntimeError('Wrong finite update sample count')
+        s['finite_render_samples_us']=dict(median=statistics.median(samples),
+            p95=sorted(samples)[math.ceil(.95*len(samples))-1],maximum=max(samples),
+            count=len(samples),seed_us=cumulative[0],tail_us=cumulative[-1]-cumulative[-2])
+    s['rolling_output_errors']=output_errors
+    s['queued_render_scope']='Not instrumented for immediate double-buffer drawing' if job['mode']==136 else 'Queued execution wall, excludes parser/UART/pacing/output and native wait'
+    return s
+
+
 class Adapter:
     def __init__(self,path):
         self.path=path.resolve();self.c=json.loads(self.path.read_text())
@@ -58,6 +104,68 @@ class Adapter:
     def close(self): self.b.close_host()
     def save(self): dump(self.state_path,self.state)
     def checked(self): self.m.online(self.b.config);self.m.neutral(self.b.config)
+
+    def admit(self,evidence,confirmed_cli=False):
+        """Reuse an idle listener or start one from the operator-confirmed CLI."""
+        self.m.neutral(self.b.config)
+        status=self.m.get(self.b.config,'/sd/status')
+        if status['pending']:raise RuntimeError('SD operation pending; preserve session and stop')
+        if status['online']:
+            self.b.fast_connect()
+        else:
+            if not confirmed_cli:raise RuntimeError('Offline listener requires operator-confirmed CLI')
+            journal=self.b.state.get('fast_journal')
+            if journal:
+                prior=json.loads(Path(journal).read_text())
+                if prior['pending']:raise RuntimeError('Uncertain SD request; preserve journal and stop')
+            # A stopped listener invalidates its session. Preserve that journal;
+            # bind the authority only after a fresh startup read and positive EXIT.
+            self.b.key_command('EMOS LEGACY');time.sleep(1)
+            self.b.key_command('EMOS sdserve --fast /')
+            self.m.wait_listener(self.b.config,15)
+            c=self.m.SDClient(self.b.config['p4'],evidence/'admission-session.json')
+            try:
+                c.connect();startup=c.download('/autoexec.txt')
+                if any(line.strip().upper().startswith(('LOAD ','RUN','EXEC ')) for line in startup.decode().splitlines()):
+                    raise RuntimeError('Startup launches an application; stop admission')
+                c.rpc(11)
+            finally:c.lock.close()
+            if self.m.get(self.b.config,'/sd/status')['online']:
+                raise RuntimeError('Admission EXIT did not return CLI')
+            self.b.state.pop('fast_journal',None)
+            self.b.state['np01_acknowledged_exit']=utc()
+            self.b.state['current_sha256']=sha(startup);self.b.save()
+            self.b.fast_start()
+        self.checked()
+        self.b.fast_read('/autoexec.txt')
+        dump(evidence/'admission.json',dict(validated=True,bench_idle=True,
+             listener_online=True,neutral_input=True,verified_utc=utc()))
+
+    def replace_startup(self,desired,backup,local_backup):
+        """Keep the old startup present until listener transaction activation.
+
+        The inherited MOS RENAME recipe removed autoexec before re-admitting
+        the listener. A lost handback then left reset without input bootstrap.
+        Use the listener's existing staged replacement and retained backup;
+        uncertain activation still stops with its exact journal preserved.
+        """
+        old=self.b.fast_read('/autoexec.txt')
+        if old==desired:return
+        if local_backup.exists() and local_backup.read_bytes()!=old:
+            raise RuntimeError('Prior startup evidence differs')
+        local_backup.write_bytes(old)
+        self.m.new_file(self.b,backup,old)
+        if self.b.fast_read(backup)!=old:raise RuntimeError('Startup archive readback differs')
+        for suffix in ('.p17part','.p17meta','.p17bak'):
+            if not self.m.absent(self.b,'/autoexec.txt'+suffix):
+                raise RuntimeError('Startup recovery sibling exists; preserve and inspect')
+        c=self.b.fast_connect()
+        c.upload('/autoexec.txt',desired,True,fast=True)
+        if self.b.fast_read('/autoexec.txt')!=desired:
+            raise RuntimeError('Activated startup readback differs; backup retained')
+        if self.b.fast_read('/autoexec.txt.p17bak')!=old:
+            raise RuntimeError('Startup transaction backup differs; preserve recovery files')
+        c.rpc(10,b'\x03'+path_payload('/autoexec.txt'))
 
     def stage(self,finish=False):
         self.checked()
@@ -139,7 +247,7 @@ class Adapter:
         if any(s.strip().upper().startswith(('LOAD ','RUN','EXEC ')) for s in startup.decode().splitlines()):
             raise RuntimeError('Startup would launch an application')
         backup=self.p['remote']+'/startup-'+dt.datetime.now(dt.timezone.utc).strftime('%H%M%S')+'.txt'
-        self.m.replace_config(self.b,'/autoexec.txt',desired,backup,evidence/'prior-startup.txt')
+        self.replace_startup(desired,backup,evidence/'prior-startup.txt')
         if self.b.fast_read('/autoexec.txt')!=desired:raise RuntimeError('Mode startup readback differs')
         self.b.state['current_sha256']=sha(desired);self.b.save()
         self.b.fast_exit()
@@ -179,48 +287,19 @@ class Adapter:
         result={k:job[k] for k in ('id','renderer','mode','case','repeat')}
         result.update(bench_idle=True,safe_to_continue=True,validated=False,ended_utc=utc(),
                       execution_seconds=time.monotonic()-started,identity=self.state['identity'])
+        if self.c.get('collection')=='physical-card' and not job.get('smoke'):
+            # The host retains every transient P4 sidecar before the next job.
+            # CLI handback proves execution returned, not raw-data validity.
+            result.update(collection_pending=True,result_remote=job['result'],
+                          sidecar_sha256={name:sha((evidence/name).read_bytes()) for name in
+                              ('invocation.json','windows.json','before-display.json','after-display.json')},
+                          actual_render_storage=display.get('render_storage'),
+                          output_geometry=[display.get('output_width'),display.get('output_height')])
+            dump(receipt,result)
+            return 0
         try:
             raw=self.b.fast_read(job['result']);(evidence/'records.bin').write_bytes(raw)
-            stable=('mode','width','height','colors','double_buffered','output_width','output_height')
-            if not display.get('available') or any(display.get(k)!=initial_display.get(k) for k in stable):
-                raise RuntimeError('Display geometry/output changed during workload')
-            d=decode(raw)
-            if d['case']!=job['case_number'] or d['window_tag']!=job['tag'] or d['count']!=job['frames'] or d['abort'] or d['warmup']!=job['warmup'] or d['build_id']!=self.p['fixture_build']:
-                raise RuntimeError('Record identity/count/abort mismatch')
-            if any(r['flags']&11 for r in d['rows']):raise RuntimeError('Timer/fence/game fault in records')
-            calibration=d['calibration_prt']/d['calibration_mos'] if d['calibration_mos'] else 0
-            if not 510<=calibration<=690:
-                raise RuntimeError('PRT/raw-MOS calibration outside the declared 72k/120Hz tolerance')
-            diagnostic_id=job.get('diagnostic_id',job['case_number'])
-            hits=[w for w in windows['windows'] if w['id']==diagnostic_id and w['tag']==job['tag']]
-            if windows['open'] or windows['overflow'] or windows.get('render_overflow') or len(hits)!=1:
-                raise RuntimeError('Missing/overflow/open diagnostic sidecar')
-            window=hits[0]
-            if window['end_us']<=window['start_us'] or window['render']['boundary_drops']:
-                raise RuntimeError('Unclosed or dropped render window')
-            if not job['game'] and job['mode']!=136:
-                fences=window.get('render_fences',{})
-                if (fences.get('count')!=job['frames']+2 or fences.get('pending_requests')!=0 or
-                    fences.get('errors')!=0 or not fences.get('samples_complete')):
-                    raise RuntimeError('Finite render fence samples incomplete or not N+2')
-            faults=('faults','late','over_budget','underruns','invalid_blocks','sequence_errors','cache_errors','overlap')
-            before_rolling=initial_display.get('rolling',{});after_rolling=display.get('rolling',{})
-            output_errors={k:after_rolling.get(k,0)-before_rolling.get(k,0) for k in faults}
-            if any(v!=0 for v in output_errors.values()):
-                raise RuntimeError('HDMI rolling output errors: '+str(output_errors))
-            s=analyse(raw,window,diagnostic_id=diagnostic_id)
-            s['queued_render']=window['render']
-            if not job['game'] and job['mode']!=136:
-                cumulative=window['render_fences']['cumulative_render_us']
-                if len(cumulative)!=job['frames']+2 or any(b<a for a,b in zip(cumulative,cumulative[1:])):
-                    raise RuntimeError('Finite cumulative rendering samples are missing or reversed')
-                samples=[b-a for a,b in zip(cumulative,cumulative[1:-1])]
-                if len(samples)!=job['frames']:raise RuntimeError('Wrong finite update sample count')
-                s['finite_render_samples_us']=dict(median=statistics.median(samples),
-                    p95=sorted(samples)[math.ceil(.95*len(samples))-1],maximum=max(samples),
-                    count=len(samples),seed_us=cumulative[0],tail_us=cumulative[-1]-cumulative[-2])
-            s['rolling_output_errors']=output_errors
-            s['queued_render_scope']='Not instrumented for immediate double-buffer drawing' if job['mode']==136 else 'Queued execution wall, excludes parser/UART/pacing/output and native wait'
+            s=validate_records(self.p,job,raw,windows,initial_display,display)
             dump(evidence/'summary.json',s)
             result.update(validated=True,raw_sha256=sha(raw),trajectory_sha256=s['trajectory_sha256'],
                           actual_render_storage=display.get('render_storage'),
@@ -230,11 +309,23 @@ class Adapter:
         dump(receipt,result)
         return 0 if result['validated'] else 1
 
+    def park(self,evidence):
+        """Restore ordinary boot and acknowledge EXIT before operator card removal."""
+        self.checked()
+        original=(self.local/'original-autoexec.txt').read_bytes()
+        backup=self.p['remote']+'/collection-startup-'+dt.datetime.now(dt.timezone.utc).strftime('%H%M%S%f')+'.txt'
+        self.replace_startup(original,backup,evidence/'prior-startup.txt')
+        if self.b.fast_read('/autoexec.txt')!=original:raise RuntimeError('Collection startup restoration failed')
+        self.b.state['current_sha256']=sha(original);self.b.save()
+        self.b.fast_exit();self.m.neutral(self.b.config)
+        dump(evidence/'collection-handback.json',dict(verified_utc=utc(),original_startup_restored=True,
+             listener_exited=True,bench_idle=True,raw_validation_pending=True,success_displayed=False))
+
     def notify(self,success,evidence):
         self.checked()
         original=(self.local/'original-autoexec.txt').read_bytes()
         backup=self.p['remote']+'/final-startup.txt'
-        self.m.replace_config(self.b,'/autoexec.txt',original,backup,evidence/'prior-startup.txt')
+        self.replace_startup(original,backup,evidence/'prior-startup.txt')
         if self.b.fast_read('/autoexec.txt')!=original:raise RuntimeError('Final startup restoration failed')
         self.b.state['current_sha256']=sha(original);self.b.save()
         target=self.p['remote']+('/success.txt' if success else '/errors.txt')
@@ -263,11 +354,17 @@ def main():
     sub=p.add_subparsers(dest='action',required=True);q=sub.add_parser('stage');q.add_argument('--finish-stage',action='store_true')
     q=sub.add_parser('run');q.add_argument('--id',required=True);q.add_argument('--receipt',type=Path,required=True);q.add_argument('--evidence',type=Path,required=True)
     q=sub.add_parser('notify');q.add_argument('--status',choices=('success','errors'),required=True);q.add_argument('--evidence',type=Path,required=True)
+    q=sub.add_parser('park');q.add_argument('--evidence',type=Path,required=True)
+    q=sub.add_parser('admit');q.add_argument('--evidence',type=Path,required=True);q.add_argument('--confirmed-cli',action='store_true')
     a=p.parse_args();adapter=Adapter(a.config)
     try:
         if a.action=='stage':adapter.stage(a.finish_stage);return 0
         if a.action=='run':return adapter.run(a.id,a.receipt,a.evidence)
-        a.evidence.mkdir(parents=True,exist_ok=False);adapter.notify(a.status=='success',a.evidence);return 0
+        a.evidence.mkdir(parents=True,exist_ok=False)
+        if a.action=='admit':adapter.admit(a.evidence,a.confirmed_cli)
+        elif a.action=='park':adapter.park(a.evidence)
+        else:adapter.notify(a.status=='success',a.evidence)
+        return 0
     finally:adapter.close()
 
 

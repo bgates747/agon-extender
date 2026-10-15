@@ -512,13 +512,20 @@ document.addEventListener("fullscreenchange", () => {
 })();
 
 // Optional bench actuator. Endpoint is supplied only by the deployment profile.
-{
-  const button=document.querySelector('#reset-agon');
-  const endpoint=document.querySelector('meta[name="agon-reset-url"]')?.content;
+for (const target of ['agon','p4']) {
+  const name=target==='p4'?'P4':'Agon';
+  const button=document.querySelector(`#reset-${target}`);
+  if(!button)continue;
+  const base=document.querySelector('meta[name="agon-reset-url"]')?.content;
+  let endpoint=base;
+  if(target==='p4' && base){
+    const url=new URL(base,location.href);
+    endpoint=url.pathname.endsWith('/reset')?(()=>{url.pathname+='-p4';return url.href;})():undefined;
+  }
   button.disabled=!endpoint;
-  button.title=endpoint?'Reset Agon through the bench Pi':'Reset bridge not configured';
+  button.title=endpoint?`Reset ${name} through the bench Pi`:'Reset bridge not configured';
   button.addEventListener('click',async()=>{
-    if(!confirm('Reset Agon now? This interrupts the running program.'))return;
+    if(!confirm(`Reset ${name} now? This interrupts its current work.`))return;
     window.dispatchEvent(new Event('agon-reset-request'));
     button.disabled=true;
     const bytes=crypto.getRandomValues(new Uint8Array(16));
@@ -531,7 +538,7 @@ document.addEventListener("fullscreenchange", () => {
       const result=await response.json();
       if(!response.ok||result.pulse!=='released')throw Error(result.error||'Reset not confirmed');
     } catch(error) {
-      alert('Reset not confirmed. Check Agon before trying again.');
+      alert(`${name} reset not confirmed. Check ${name} before trying again.`);
     } finally {clearTimeout(timer);button.disabled=false;}
   });
 }

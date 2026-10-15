@@ -73,6 +73,62 @@ class MasterRunnerTests(unittest.TestCase):
     def test_unknown_bench_state_stops_without_notification(self):
         self.exercise(unsafe=True)
 
+    def test_admission_failure_stops_before_first_fixture(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);plan=self.plan(root);plan['admission']=['admit','{evidence}']
+            calls=[]
+            def invoke(argv,log,cwd):
+                calls.append(argv);log.write_text('offline\n');return 1
+            with self.assertRaisesRegex(RuntimeError,'listener admission failed'):
+                m.run(plan,root/'run',invoke)
+            self.assertEqual(len(calls),1)
+            self.assertEqual(json.loads((root/'run/summary.json').read_text())['jobs'],[])
+
+    def test_physical_collection_withholds_passes_analysis_and_success_cue(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            plan=self.plan(root)
+            plan['collection']=dict(method='physical-card',park=['park'])
+            plan['analysis']=['analysis']
+            calls=[]
+            def invoke(argv,log,cwd):
+                calls.append(argv)
+                log.write_text('mock\n')
+                if argv[0]=='fixture':
+                    job=plan['jobs'][len(calls)-1]
+                    receipt={k:job[k] for k in ('id','renderer','mode','case','repeat')}
+                    receipt.update(validated=False,collection_pending=True,
+                                   bench_idle=True,safe_to_continue=True)
+                    Path(argv[1]).write_text(json.dumps(receipt))
+                return 0
+            self.assertEqual(m.run(plan,root/'run',invoke),0)
+            summary=json.loads((root/'run/summary.json').read_text())
+            self.assertEqual(summary['state'],'awaiting_collection')
+            self.assertEqual(summary['passed'],0)
+            self.assertEqual(summary['pending_collection'],240)
+            self.assertEqual(calls[-1],['park'])
+            self.assertNotIn(['green'],calls)
+            self.assertNotIn(['analysis'],calls)
+            with self.assertRaises(ValueError):
+                m.notify_collected(root/'run',invoke)
+
+    def test_collection_cannot_suppress_validation_without_explicit_plan(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);plan=self.plan(root)
+            calls=[]
+            def invoke(argv,log,cwd):
+                calls.append(argv)
+                log.write_text('mock\n')
+                if argv[0]=='fixture':
+                    job=plan['jobs'][len(calls)-1]
+                    receipt={k:job[k] for k in ('id','renderer','mode','case','repeat')}
+                    receipt.update(validated=False,collection_pending=True,
+                                   bench_idle=True,safe_to_continue=True)
+                    Path(argv[1]).write_text(json.dumps(receipt))
+                return 0
+            self.assertEqual(m.run(plan,root/'run',invoke),1)
+            self.assertEqual(calls[-1],['red'])
+
     def test_missing_duplicate_or_unqualified_cases_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             for mutation in (lambda p: p["jobs"].pop(),

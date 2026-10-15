@@ -209,13 +209,68 @@ P4 keyboard counters, rendered pixels, elapsed time and P4-local service state
 are not substitutes for that report. A query grants the P4 no authority to
 launch, cancel, reset, select a mode, commit a route, or mutate EMOS state.
 
-QUAL-006 owns the incomplete protocol design. Its recommended no-rewire carrier
-uses the existing full-duplex r03 UART1 epoch: P4's transmit lane carries a
-private query and EMOS's sole output serializer emits one complete private
-response between complete VDU/service records. RTS/CTS remain flow control, not
-request signalling. The exact framing and whether queries must work before
-explicit Extender UART admission remain open; no new wire or early-boot service
-is selected merely by this architecture requirement.
+Lifecycle queries use the existing full-duplex r03 UART1 epoch after explicit
+EMOS Extender admission: P4's existing transmit lane carries the private query,
+and EMOS's sole output serializer emits one complete private response between
+complete VDU/service records. RTS/CTS remain flow control. Before admission, P4
+reports EMOS lifecycle state unavailable. No extra conductor or pre-admission
+response is required. Missing replies confer no launch, recovery or reset
+permission. QUAL-006 owns remaining protocol and response-scheduling decisions;
+this carrier selection does not establish implemented or qualified behavior.
+
+The dormant, versioned bounded test-control capability belongs in ordinary
+EMOS/P4 candidate firmware so qualification uses the exact proposed release
+bytes. A host-held P4 resource lease and fresh EMOS safe-point authorization
+are required for every job. Firmware inclusion does not activate a service or
+confer unilateral P4 launch authority. QUAL-006 owns its implementation contract;
+this requirement does not claim the capability is implemented or qualified.
+
+EMOS retains lifecycle and admission state resident. A finite SD-loaded test
+supervisor occupies the existing MOSlet slot. Initial supervised fixtures must
+have independently proved code/data/heap/stack bounds that exclude that slot
+and must not load another MOSlet. EMOS rejects unproved or incompatible fixtures
+before launch and preserves its busy/Core, utility-size and nested-load guards.
+This contract does not imply support for arbitrary applications.
+
+Supervised fixtures use a small linked helper to submit typed binary start,
+progress, assertion and completion records through resident EMOS to P4. EMOS
+validates active-job bindings, including peer epochs, foreground generation,
+job identity, fixture hash and result schema. The supervisor supplies the
+launch/return envelope. Return without valid completion is a non-pass outcome;
+large evidence remains separate referenced artifacts. Fixture helpers do not
+own UART transmission or bypass EMOS transport ownership.
+
+P4 exposes one current-state snapshot and an ordered event feed resumable after
+the host's last received sequence. Events bind peer boot/link identities and
+foreground/job generations. After a peer restart or retained-event gap, the
+host obtains a fresh snapshot and explicitly reconciles state; reconnect does
+not automatically relaunch or resubmit uncertain work. QUAL-006 owns concrete
+resource qualification. The selected host transport is asynchronous bounded
+long-poll: one outstanding reader request and one bounded worker, with explicit
+SDK request completion on every exit. Event waits and slow sends must not block
+the shared HTTP task; batches and reconnect use the declared cursor contract.
+
+The accepted qualification suite remains authoritative while cases migrate one
+at a time with equivalent or stronger oracles. Authority changes and retirement
+of replaced maintained paths require a complete old/new comparison on the same
+independently verified firmware pair and explicit Author acceptance. Historical
+evidence remains retained; retirement is evidence-gated rather than dated.
+
+This facility supports routine production bug-report reproduction and bounded
+feature proofs. Diagnostic execution starts disabled and requires an explicit
+operator command in EMOS to enable it for the current EMOS boot; reboot disables
+it again. Host execution still requires a P4 lease and fresh EMOS authorization
+per supported job. Read-only lifecycle status is available after ordinary
+Extender admission without enabling diagnostic execution. Exact firmware,
+diagnostic payload and evidence identities remain part of the product contract.
+
+P4 stores a bounded durable diagnostic terminal journal on its local SD card,
+using the selected board profile on both P4-DevKit and P4-PC. The host exports
+complete evidence and acknowledges terminal records only after required copied
+evidence verifies. P4 retains unacknowledged records; missing/full journal
+storage rejects new diagnostic jobs while ordinary operation and read-only
+status remain available. Journal recovery and resource behavior require
+qualification on each board, including DevKit browser-service contention.
 
 One shared output path reuses stock per-depth packed row expansion, palette
 tables, Copper traversal and sprite/cursor decoration without changing

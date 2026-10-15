@@ -149,3 +149,19 @@ transistor and physical button assert the same reset signal. Pulse duration
 and source differ; neither is a power cycle, and neither resets the Extender P4.
 
 Implementation and bounded test evidence: [REMOTE-003](tasks/REMOTE-003.md).
+
+
+## Separate P4 web reset (development candidate)
+
+The web console's **Reset P4** button requests `/reset-p4` from the same configured
+Pi bridge used by **Reset Agon**. The Pi executes only its locally configured
+exact-device P4 USB reset command; the P4 request does not flash firmware or pulse
+Agon. The bridge preserves origin checks, POST-only execution, target-specific
+request deduplication and one shared operation lock. Without `p4_command`, P4
+requests fail explicitly; they never execute the Agon actuator.
+
+P4 reset clears its current display and transport admission. Use **Reset Agon**
+after P4 initialization when fresh EMOS input admission is required. The buttons
+remain separate; no automatic retry or paired reset occurs. Button visibility
+alone does not establish a configured/working bridge. Implementation and physical
+browser acceptance are tracked in REMOTE-008; selected production is unchanged.

@@ -5,7 +5,8 @@ html, body { margin: 0; min-height: 100%; background: #111; color: #ddd; }
 body { display: grid; place-items: center; padding: 1.5rem; }
 main { width: 100%; max-width: 1000px; }
 header { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 2rem; margin-bottom: 1rem; }
-#reset-agon { margin-left: auto; flex-shrink: 0; }
+#reset-p4 { margin-left: auto; }
+#reset-agon, #reset-p4 { flex-shrink: 0; }
 header h1 { margin: 0; font-size: 1.35rem; }
 .display-status { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin: 0; }
 .display-status div { display: flex; gap: .5rem; }

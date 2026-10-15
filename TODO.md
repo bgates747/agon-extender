@@ -7,11 +7,17 @@ classification does not grant new execution or waive human acceptance.
 
 ## Current corrective work — HDMI aspect
 
+- [ ] **[HDMI-004 — Interactive mode preview](docs/tasks/HDMI-004.md)** — Build and stage the approved labelled pattern with a numeric mode menu; Author visual review pending.
+
 - [ ] **[HDMI-003 — Diagnose and correct low-resolution HDMI aspect](docs/tasks/HDMI-003.md)** — Stock 640×240 row repetition restored in a host-tested matched renderer pair. Bounded hardware checks and Author visual confirmation govern handback; keep the full campaign stopped.
 
-## Nurples rendering goal — renewed eight-hour window
+## Nurples rendering qualification
 
-- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — Repeated original-RGB comparisons show52.52% less software and41.58% less hardware Nurples queued rendering; most-modern optimized RGB888 comparison remains pending. Prepare the Author-approved [focused multi-mode master](docs/tasks/RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md): modes0/3/8/20/136,240 full runs, separate short hardware smokes and persistent green/red completion cues. Preserve earlier evidence and ordinary startup; no promotion or unrelated video-mode development.
+- [ ] **[RESEARCH-007 — Nurples rendering performance](docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md)** — [Full five-mode results](docs/tasks/RESEARCH-007/MULTIMODE-RESULTS-2026-10-13.md): 240/240 runs validate; mode20 indexed software/hardware Nurples queued cost falls52.91%/40.46% against optimized RGB888. Regressions and unmeasured mode136 queue scope are explicit. Final notification and deferred-collection cue correction remain; no production promotion. [Owning master task](docs/tasks/RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md).
+
+## Web console reset
+
+- [ ] **[REMOTE-008 — P4 reset from web console](docs/tasks/REMOTE-008.md)** — Separate P4 reset button and exact-device bench bridge; implementation and Author review pending.
 
 ## Browser paste — accepted development, release closeout pending
 
@@ -66,7 +72,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[SCAN-001 — Segmented HDMI scanout and transparent partial scrolling](docs/tasks/SCAN-001.md)** — S01–S05 complete. S06-R01 copy-scroll remedy built/flashed; 13 bounded cases pass, short Nurples returns to 60 updates/s and scrolling with 32 software sprites reaches 54–55 versus 26 before. Normal startup/configurations restored; Author passes Nurples, with Rally input still an unchanged separate issue. Production qualification/promotion and remaining S06 controls/mechanism gates stay open. Segmented DMA and dependent integration are explicitly deferred by the Author after this pass.
 
-- [ ] **[QUAL-006 — Modern automated hardware-test control plane](docs/tasks/QUAL-006.md)** — Audit complete; Author review and contract decisions remain. Generalize EMOS's existing finite safe-point admission so ordinary qualification can stage, launch, observe and finish correlated jobs without rewriting `/autoexec.txt`, rebooting per case, scraping stale prompt pixels, or guessing listener readiness. Retain boot-script launch only where startup, first admission, reset or recovery is the behavior under test. QUAL-005 remains authoritative until an accepted migration.
+- [ ] **[QUAL-006 — Modern automated hardware-test control plane](docs/tasks/QUAL-006.md)** — Architecture and boot-scoped production diagnostic enablement accepted for qualification, bug reproduction and feature proofs; concrete transport/protocol contract remains before implementation. Generalize EMOS's existing finite safe-point admission so ordinary qualification can stage, launch, observe and finish correlated jobs without rewriting `/autoexec.txt`, rebooting per case, scraping stale prompt pixels, or guessing listener readiness. Retain boot-script launch only where startup, first admission, reset or recovery is the behavior under test. QUAL-005 remains authoritative until an accepted migration.
 
 - [ ] **[DIAG-002 — Report Extender connection and P4 identity at EMOS startup](docs/tasks/DIAG-002.md)** — After AUDIT-010 and the separately reviewed sparse-checkout/workspace reduction, make EMOS report bounded Extender connection state and the installed P4 firmware/build identity at startup. Preserve usable Legacy boot when the P4 is absent and do not merge or automate the independent reset actions.
 
@@ -192,3 +198,15 @@ has been verified. See PLAN-001-N04 in the disposition table. Old experiment
 headings no longer compete with the approved current sequence.
 
 - [ ] **[RELEASE-001 — Native HDMI production v0.2.0](docs/tasks/RELEASE-001.md)** — Version authorized; preserve accepted r10/EMOS bytes, complete native receipt/paired qualification and packaging before selection and annotated release tag.
+
+## Deferred game-renderer experiments
+
+- [ ] **[DBUF-001 — Double-buffered tile scrollers](docs/tasks/DBUF-001.md)** — Retain per-buffer incremental scrolling and hardware-sprite discussion for a future game-engine suite; full redraw excluded, implementation deferred.
+
+## Pattern-based rendering qualification
+
+- [ ] **[SCROLL-001 — Pattern-based scrolling qualification](docs/tasks/SCROLL-001.md)** — Eight single-buffered 240p4:3 scroll/wrap cases; review stock optimizers and prove actual VDP execution timing before implementation.
+
+## Eventual controller input
+
+- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Capture analogue controllers on an external PC and deliver bounded input through Extender; design/ownership review pending, no implementation or bench reservation.

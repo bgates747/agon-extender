@@ -53,6 +53,9 @@ def validate_plan(plan):
     for key in ("success", "errors"):
         if not plan["notification"][key]:
             raise ValueError("Both persistent display notification adapters are required")
+    if plan.get('collection'):
+        if plan['collection'].get('method')!='physical-card' or not plan['collection'].get('park'):
+            raise ValueError('Physical collection requires a reviewed safe-handback adapter')
     for job in plan["jobs"]:
         if job.get("qualified_geometry") is not True or not job.get("command"):
             raise ValueError("Every workload requires per-mode geometry qualification")
@@ -82,12 +85,23 @@ def run(plan, output, invoke=execute):
             raise RuntimeError('Another qualification master owns the bench')
     save(output / "plan.json", plan)
     summary = {"started_utc": utc(), "state": "running", "planned": len(plan["jobs"]),
-               "passed": 0, "failed": 0, "jobs": []}
+               "passed": 0, "failed": 0, "pending_collection": 0, "jobs": []}
     start = time.monotonic()
     save(output / "summary.json", summary)
     completed = False
     controls = {}
     try:
+        if plan.get('admission'):
+            folder=output/'admission'
+            argv=[arg.replace('{evidence}',str(folder)) for arg in plan['admission']]
+            rc=invoke(argv,output/'admission.log',plan['cwd'])
+            receipt=folder/'admission.json'
+            result=json.loads(receipt.read_text()) if receipt.exists() else {}
+            if rc or not all(result.get(k) is True for k in
+                             ('validated','bench_idle','listener_online','neutral_input')):
+                raise RuntimeError('Initial listener admission failed; no fixture invoked; see admission.log')
+            summary['admission_receipt_sha256']=sha(receipt)
+            save(output/'summary.json',summary)
         for job in plan["jobs"]:
             # A fresh destination and absent receipt prevent stale-pass reuse.
             folder = output / job["id"]
@@ -105,6 +119,9 @@ def run(plan, output, invoke=execute):
                 raise RuntimeError("Missing or mismatched completion receipt: " + job["id"])
             if result.get("bench_idle") is not True:
                 raise RuntimeError("No confirmed CLI/listener handback; no further input")
+            pending = (plan.get('collection', {}).get('method') == 'physical-card'
+                       and result.get('collection_pending') is True
+                       and result.get('validated') is False and rc == 0)
             valid = result.get("validated") is True and rc == 0
             pair = (job['mode'], job['case'], job['repeat'])
             if job['renderer'] == 'rgb888':
@@ -113,18 +130,25 @@ def run(plan, output, invoke=execute):
                 control = controls[pair]
                 trajectory = result.get('trajectory_sha256')
                 matched = bool(trajectory) and trajectory == control.get('trajectory_sha256')
-                row['matched_control_trajectory'] = matched
-                if not matched or control.get('validated') is not True:
+                row['matched_control_trajectory'] = None if pending else matched
+                if not pending and (not matched or control.get('validated') is not True):
                     valid = False
                     row['comparison_error'] = 'Control failed or deterministic trajectories differ'
             if not valid and result.get("safe_to_continue") is not True:
                 raise RuntimeError("Failure has no confirmed recovery boundary")
-            row.update(state="passed" if valid else "failed", ended_utc=utc(),
+            row.update(state="awaiting_collection" if pending else "passed" if valid else "failed", ended_utc=utc(),
                        duration_seconds=time.monotonic() - tick, returncode=rc,
                        receipt_sha256=sha(receipt))
-            summary["passed" if valid else "failed"] += 1
+            summary["pending_collection" if pending else "passed" if valid else "failed"] += 1
             save(output / "summary.json", summary)
         completed = True
+        if summary['pending_collection']:
+            summary['state']='awaiting_collection'
+            save(output/'summary.json',summary)
+            rc=invoke(plan['collection']['park'],output/'collection-park.log',plan['cwd'])
+            summary['park_returncode']=rc
+            if rc:raise RuntimeError('Collection handback failed; do not remove card')
+            return 0
         summary["state"] = "complete_with_errors" if summary["failed"] else "success"
         save(output / "summary.json", summary)
         if plan.get('analysis'):
@@ -171,13 +195,48 @@ def banner(success):
     return ("\r\n".join(lines) + "\r\n").encode("ascii")
 
 
+def notify_collected(output, invoke=execute):
+    """Explicit post-collection notification, after card return and bench admission."""
+    plan=json.loads((output/'plan.json').read_text())
+    validate_plan(plan)
+    summary=json.loads((output/'summary.json').read_text())
+    if summary['state'] not in ('validated_awaiting_notification','collected_with_errors_awaiting_notification') or summary['pending_collection']:
+        raise ValueError('Raw results must validate before notification')
+    for row in summary['jobs']:
+        receipt=output/row['id']/'receipt.json'
+        result=json.loads(receipt.read_text())
+        if (sha(receipt)!=row['receipt_sha256'] or result.get('collection_pending') or
+            ('raw_sha256' in result and sha(output/row['id']/'records.bin')!=result['raw_sha256'])):
+            raise ValueError('Collected evidence changed: '+row['id'])
+    # Record before input: an interrupted notification must never replay itself.
+    summary['state']='notifying'
+    save(output/'summary.json',summary)
+    if plan.get('analysis'):
+        argv=[arg.replace('{run}',str(output)) for arg in plan['analysis']]
+        rc=invoke(argv,output/'analysis.log',plan['cwd'])
+        summary['analysis_returncode']=rc
+        if rc:
+            summary['state']='analysis_failed'
+            save(output/'summary.json',summary)
+            return 1
+    key='errors' if summary['failed'] else 'success'
+    rc=invoke(plan['notification'][key],output/'notification.log',plan['cwd'])
+    summary.update(state=('complete_with_errors' if summary['failed'] else 'success') if rc==0 else 'notification_failed',
+                   notification_returncode=rc,notified_utc=utc())
+    save(output/'summary.json',summary)
+    return 0 if rc==0 and not summary['failed'] else 1
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--plan", type=Path)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--write-banners", type=Path)
+    parser.add_argument("--notify-collected", type=Path)
     args = parser.parse_args()
+    if args.notify_collected:
+        return notify_collected(args.notify_collected.resolve())
     if args.write_banners:
         args.write_banners.mkdir(parents=True, exist_ok=False)
         for name, success in (("success.txt", True), ("errors.txt", False)):

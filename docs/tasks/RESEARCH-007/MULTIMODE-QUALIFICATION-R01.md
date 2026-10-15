@@ -8,13 +8,16 @@ The runner and 40 per-mode fixture derivatives compile and pass offline checks.
 The predecessor package retains sixteen data-valid short RGB888 receipts.
 The correction tracked in [HDMI-003](../HDMI-003.md) restores stock mode-3 row
 aspect; the Author confirms that its indexed diagnostic box looks square.
-Preparation is paused at the Author's explicit stop. The corrected pair remains
-identified, but its fresh short admissions are unstarted. Existing card results
-have been copied and checksum-verified through an operator-assisted Oryx card
-collection. After the Author confirmed SD access, mounted-card staging and full
-package verification completed; hardware work awaits card return and bench
-availability. The full campaign is not ready to invoke, and its original
-stop-before-invocation boundary remains in force.
+All eighty corrected-pair short admissions now pass, with matching deterministic
+trajectories within each mode/workload. Both mode132 bank controls and all
+mode0/136 green/red banner controls pass. Physical collection handback and the
+safer staged startup replacement pass hardware checks. The Author invoked the full master. All 240 runs have finished, and copied-card
+raw validation now passes for all runs and all 120 paired trajectories. The
+[full results](MULTIMODE-RESULTS-2026-10-13.md) separate queued rendering from
+application pacing and record regressions. Startup restoration and safe listener
+handback passed. Final hardware notification remains unissued; the missing
+execution-finished/awaiting-collection cue is a host-runner omission to correct.
+No release promotion or broader visual/gameplay acceptance is claimed.
 
 ## Bounded work contract
 
@@ -41,7 +44,7 @@ stop-before-invocation boundary remains in force.
    Interrupted/unsafe campaigns remain incomplete; the host must not inject
    a speculative error screen into a possibly running application.
 
-### MQ02 [ ] Qualify reusable fixtures for the five geometries
+### MQ02 [x] Qualify reusable fixtures for the five geometries
 
 1. Keep the eight agreed workloads: light/heavy bitmap plotting, isolated
    partial vertical scrolling, static-background software sprites,
@@ -83,7 +86,7 @@ phase evidence, but its queued-render reduction must be reported as unmeasured,
 never inferred from zero counters. Hardware smoke admission and valid timing
 records do not substitute for Author visual/gameplay acceptance.
 
-### MQ03 [ ] Prepare admitted mode and firmware transition adapters
+### MQ03 [x] Prepare admitted mode and firmware transition adapters
 
 1. Pin actual candidate/control manifests, all adapter and fixture hashes,
    per-mode expected status and fresh result paths in an ignored local plan.
@@ -104,8 +107,8 @@ records do not substitute for Author visual/gameplay acceptance.
    results when the Author is available. Retain P4 windows and identities during
    execution; keep raw-data receipts pending until copied results validate.
    Withhold the success cue while awaiting collection. Preserve a separately
-   authorized serial fallback. The current per-job downloader does not yet
-   supply this workflow; see the [offline processing findings](CARD-RESULTS-R01.md).
+   authorized serial fallback. The adapter now supplies this explicit optional
+   workflow; short admissions retain immediate serial validation.
 
 Implementation: `qualification/prepare_render_modes.py` prepares the immutable
 local package; `qualification/render_modes.py` owns admitted installation,
@@ -129,6 +132,11 @@ paths; a smoke can never satisfy or overwrite a full measurement.
 4. Restore ordinary files before the persistent final cue. Tabulate matched
    per-mode results with units, baseline and percentage reduction; keep
    non-comparable geometry/output results explicitly separate.
+5. Correct the deferred-collection handback notification: after execution and
+   safe restoration, leave an explicit persistent execution-finished/results-
+   awaiting-collection message and print the same phase to the host terminal.
+   Withholding a success cue must not mean silence. Final success/error follows
+   raw validation. Refresh future runner inputs without rewriting the frozen run.
 
 The completion screen reports execution and assertion/data-validation status.
 It does not promise a speedup in every mode, qualify production release, or
@@ -283,6 +291,175 @@ Author confirmation of card return and bench availability before live work;
 preserve/reconcile the old read-only pending journal at the new incarnation.
 All 80 corrected-pair short admissions and the deferred-collection host work
 remain outstanding. The 240-measurement campaign stays unstarted.
+
+## Card returned; preparation resumed — 2026-10-13
+
+The Author returned the card to Agon and reserved the bench for this agent.
+One commissioned Agon reset established fresh admitted input. A new explicitly
+started foreground listener returned the unchanged ordinary startup and
+acknowledged EXIT. The obsolete pending read-only STAT journal remains intact;
+its request was not replayed into the new listener incarnation. Exact receipts
+and the current reservation remain in ignored local records.
+
+Corrected-pair short admissions and separate bank/banner controls are underway.
+The 240 full measurements remain unstarted. The readiness boundary still
+requires all short admissions, independently installed initial RGB firmware,
+verified mode-0 setup and input/listener readiness, and a frozen ready plan.
+
+The optional `physical-card` adapter path now retains invocation, P4 window and
+before/after display sidecars with hashes, records raw validation as pending,
+and omits per-job raw downloads. The master records `awaiting_collection`,
+restores ordinary startup and acknowledges listener EXIT through its separate
+`park` adapter. It withholds analysis and completion banners at this boundary.
+The operator must receive an explicit safe-removal report before taking the card.
+
+`scripts/collect_render_qualification.py RUN --card-root COPIED_CARD_ROOT`
+validates copied raw files offline against the frozen package and retained
+sidecars, including deterministic RGB/indexed trajectory matching. It preserves
+execution receipts and prepares every validation product before replacing run
+receipts. Missing/corrupt raw results become retained validation failures and disqualify
+their matched comparisons. Altered execution receipts/sidecars stop collection; an
+interrupted/failed collection is retained for explicit investigation, not
+silently resumed. Successful collection records `validated_awaiting_notification`; completed
+collection with data failures records `collected_with_errors_awaiting_notification`.
+
+After the card returns and separately authorized bench admission is established,
+`scripts/run_render_qualification.py --notify-collected RUN` verifies collected
+receipt/raw hashes, performs analysis and invokes the final persistent success
+or error banner according to the validated receipts. This is an explicit operation, never an offline collection side effect.
+A notification interruption is retained and never automatically replayed.
+The serial path remains available only through its explicitly selected plan.
+
+Offline tests cover deferred receipts without raw downloads, withholding passes,
+analysis and success cues, sidecar tampering, raw-data failure and its paired-comparison failure, and complete offline collection. This host work is preparation;
+it does not establish hardware admission or authorize the full campaign.
+
+## Startup handback failure; card inspection needed — 2026-10-13
+
+Forty-eight corrected-pair short admissions passed: all forty RGB jobs and the
+first eight indexed jobs in mode 0. Both renderer mode132 bank controls passed.
+RGB mode0/136 and indexed mode0 labeled green/red banner readbacks also passed.
+No full measurement was invoked.
+
+The first indexed mode3 job failed during preparation, before its invocation
+record or fixture command. The inherited helper had issued MOS RENAME to move
+`/autoexec.txt` into its retained startup backup, then failed to re-enter the
+listener. Actual on-card rename completion remains unconfirmed. A subsequent
+Agon reset did not establish fresh input admission. The standing second attempt
+verified P4 reset and initialized services, then reset Agon; input admission also
+failed. No worker or fixture remains active. Card inspection and restoration of
+the ordinary keyboard-admitting startup now require operator card access.
+
+The maintained adapter now archives the old startup and uses the listener's
+existing staged replacement instead of removing startup through MOS RENAME.
+It independently reads the activated target and transaction backup before
+cleanup. Uncertain activation preserves the journal and backup. Focused host
+tests pass for keeping the listener/old startup through staging and retaining
+recovery evidence on uncertainty; physical validation remains pending.
+
+Retain all forty-eight passing receipts and the informative pre-invocation
+failure. Do not replay the original smoke controller or completed jobs. Resume
+through an explicit continuation that verifies retained receipts, admits only
+unstarted jobs, and preserves the full-suite stop-before-invocation boundary.
+Exact current state, reset evidence and card identity remain in ignored records.
+
+## Mounted-card startup repair — 2026-10-13
+
+The Author mounted both cards on Oryx and powered down the bench. Exact card
+identity, retained startup-backup hash and latest indexed smoke result hash
+identified the Agon card. Inspection confirmed `/autoexec.txt` absent and no
+startup recovery siblings. The saved mode0 startup matched the pre-failure
+readback: MOS RENAME had completed before the listener handback failed.
+
+Restored only the original 38-byte keyboard-admitting startup with guarded
+creation, filesystem sync and complete SHA-256 verification. The selected card
+was unmounted by its verified UUID. The other card remained untouched and
+mounted. Existing backup and result files were preserved. No bench operation,
+reset, flash or fixture invocation occurred; the bench remains powered down.
+
+Resume hardware preparation only after card return and power availability.
+Forty-eight short passes remain retained, thirty-two admissions remain, and the
+full campaign is unstarted. Fresh input/CLI admission and physical verification
+of the safer startup replacement remain necessary before readiness.
+
+## Full-suite readiness; stopped before invocation — 2026-10-13
+
+All eighty corrected-pair short admissions passed, with identical trajectories
+for all forty RGB/indexed mode/workload pairs. Both mode132 bank controls and
+all renderer mode0/136 green/red banner controls passed. The revised staged
+startup replacement passed physical mode transitions and collection restoration.
+The collection handback control restored and verified ordinary startup and
+acknowledged listener EXIT, then reopened the listener for initial setup.
+
+The corrected optimized RGB firmware was independently installed and verified
+again. Initial mode0 setup-only startup ends in Legacy; fresh input admission,
+actual CLI/listener readback and neutral input are verified. All 240 full-result
+paths are absent. The frozen ready plan passes the maintained master's offline
+240-job/input-integrity check. Exact identities and receipts remain in ignored
+local records. Seventeen focused host tests pass.
+
+The agent stops here, with no active preparation worker and no full fixture
+invoked. The initial idle foreground listener remains available to the master.
+The selected collection path defers raw downloads to physical-card collection
+and withholds the final success cue until offline validation and explicitly
+admitted notification. Coarse full execution/setup guidance is 2–3 hours plus
+operator card handling/collection, based on retained predecessor mode20 runs;
+the approximately 97-minute serial retrieval estimate is a separate fallback.
+These estimates establish neither deadlines nor additional authorization.
+
+## Master owns initial listener admission — 2026-10-13
+
+The master now invokes the plan's initial admission adapter before any fixture.
+With the Author-confirmed CLI precondition, the adapter starts the foreground
+listener if offline, verifies startup readback and positive EXIT, preserves the
+old journal, binds a fresh session and reopens the listener. An idle online
+listener is reused through its canonical journal. Pending operations or uncertain
+requests stop admission without resets, discarded journals or fixture launches.
+The master requires a validated admission receipt before advancing to job one.
+
+The prepared plan includes this adapter; the existing SSH launch command is
+unchanged. Twenty-one focused host tests and the refreshed plan integrity check
+pass. This change was verified offline without bench access or campaign launch.
+
+## Full run processed — 2026-10-13
+
+The Author reports execution stopped without a clear completion message and
+mounted the Agon card on Oryx. Host summary confirms all 240 jobs finished in
+8768.544 host seconds (146.14 minutes), followed by successful startup restoration
+and listener EXIT. The actual run includes the improved master's admission step.
+
+Collected all 240 raw result files plus ordinary startup from the exact identified
+card: 241 files, 5,733,158 bytes, all source SHA-256 hashes verified. Copy/hash/
+extract/verify took 1.900 seconds approximately, excluding operator handling.
+The selected card was safely unmounted; other media were untouched.
+
+Offline collection validates all 240 runs and 120 same-repeat trajectory pairs,
+with 237,600 measured updates and zero checked output-error deltas. Performance
+budget overruns remain measured outcomes, not invalid data. The analyzer produced
+40 matched mode/workload comparisons. See the full results report for all tables,
+scopes, exact firmware identities and limitations.
+
+The deferred path correctly withheld final success before raw validation, but
+omitted the separately needed execution-finished/awaiting-collection message.
+Record this as a notification defect, not an incomplete measurement campaign.
+Current state is validated-awaiting-notification. No bench call or final display
+occurred during processing; card return and fresh admission are required before
+any separately authorized hardware notification. Future cue correction remains
+MQ04-5; preserve the completed run's pinned source and evidence.
+
+## Visual follow-up gates
+
+1. Mode20 Nurples: Author says all observed runs looked pretty good. Keep
+   indexed/software as the timing winner only; verify software sprites near
+   the top edge before treating it as the preferred visual/gameplay variant.
+   Retain the Author's prior hardware-sprite flicker improvement as scoped
+   historical evidence. This is not production-bundle acceptance.
+2. 16-colour derivatives: Author reports severe background and sprite flicker.
+   Selected 16-colour modes are 0/136; individual observed run identities were
+   not specified. Diagnose with explicit mode/renderer/run identity and compare
+   background drawing, sprite visibility and bank/pacing separately. Do not
+   translate 240 valid timing records into a visual pass or launch a rerun merely
+   from this recorded observation.
 
 ## Decision register
 

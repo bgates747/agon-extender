@@ -12,6 +12,11 @@ journal. The host runner must wait for declared state transitions rather than
 infer execution from delivered keystrokes, old framebuffer pixels, a file
 listener appearing, or a fixed delay.
 
+The same facility supports routine production bug-report reproduction and bounded
+feature proofs against exact firmware and diagnostic payload identities. It is
+product infrastructure, not a diagnostic-build-only qualification runner.
+Enablement, supported jobs and collected evidence are part of its product contract.
+
 This task preserves `/autoexec.txt` and a cold boot where startup behavior,
 first input admission, recovery, or reset is itself under test. It removes them
 from ordinary fixture launch and result collection. The accepted
@@ -29,8 +34,9 @@ Created: 2026-09-30. Owning queue: `TODO.md`. Audit artifact:
 
 Q06-S01 — **Audit and initial proposal complete; implementation contract not
 frozen.** The audit establishes current failure modes, retained strengths, the
-missing capabilities, and a proposed target architecture. The Author has not
-yet accepted its protocol decisions or implementation order.
+missing capabilities, and a proposed target architecture. The Author accepted
+the architectural decisions and staged migration policy below; concrete transport,
+resource bounds and wire/scheduling details remain before contract freeze.
 
 Q06-S02 — No EMOS, P4, runner, fixture, startup, flash, deployment, bench, or
 production change is authorized merely by filing this task. Existing tests
@@ -45,7 +51,7 @@ Q06-S04 — On 2026-09-30 the Author accepted the architectural requirement that
 resident EMOS keep the authoritative lifecycle state and report it to the P4
 EDP on demand. A P4 query is observation only: it grants the P4 no authority to
 launch, cancel, reset, select a mode, commit a route, or alter EMOS state. The
-wire carrier and earliest boot phase at which queries are available remain open
+existing UART carrier and post-admission availability boundary are accepted
 under Q06-D06.
 
 ## Source and evidence baselines
@@ -125,6 +131,11 @@ job without creating another authorization path. The P4 may offer a job; EMOS
 alone authorizes it at the empty top-level CLI safe point and launches the
 accepted supervisor or application contract.
 
+Q06-07a [ ] Prove the accepted supervisor subset: bind each fixture manifest to
+its code/data/heap/stack bounds and no-nested-MOSlet contract; reject missing or
+incompatible declarations before load. Verify the supervisor slot, application
+return path and existing busy/Core guards before admitting the first fixture.
+
 Q06-08 [ ] Define and implement a fixture ABI for identity, start, progress,
 assertion, completion, failure, and optional cooperative cancellation. Bind
 every record to the peer epochs, foreground generation, job ID, exact fixture
@@ -164,6 +175,59 @@ superseded compatibility paths, update production policy, agree the release
 version, package exact tested bytes, commit, tag, and publish under the normal
 production procedure.
 
+## Offline contract review — 2026-10-13
+
+The existing audit and work items cover the proposed control plane; a second
+implementation task is unnecessary. The immediate deliverable is a bounded
+accepted protocol contract, beginning with Q06-D06. No implementation decision
+was accepted during this review, and no running qualification input was changed.
+
+| Review item | Existing owner | Concrete gap before implementation |
+|---|---|---|
+| R01 — Wire and admission boundary | Q06-D06, Q06-04 | State whether observation begins only after EMOS admits the existing UART epoch. Do not promise pre-admission answers on an inactive link. |
+| R02 — Response timing and execution context | Q06-04/05/06, Q06-G04/05 | Define which EMOS execution contexts can service queries, where a coherent snapshot is copied, which foreground serializer emits it, and how P4 reports unavailable/stale state. Existing storage receive code copies in interrupt context and makes decisions/sends in foreground; that alone does not prove timely answers during arbitrary applications. |
+| R03 — Supervisor memory and launch | Q06-D02, Q06-07/08 | Prove the MOSlet/application memory and return contract before choosing the supervisor. Define load failure and return without a valid fixture terminal record. |
+| R04 — Restart and event loss | Q06-04/06, Q06-D04 | Specify epoch binding, event retention bounds, gap disposition and reconnect reconciliation. A reconnect must not resubmit an uncertain job. |
+| R05 — Scope and migration | Q06-02/10/11/13 | Freeze one observation-only tranche before adding remote launch. Keep current suites authoritative and leave their pinned inputs unchanged during an active run. |
+
+The current multimode host now supports initial listener admission and staged
+startup replacement. Those are bounded runner repairs, not an EMOS lifecycle
+service: host keyboard delivery still does not identify the eZ80 foreground.
+The September audit remains a dated baseline, not a statement that every old
+launch pattern persists unchanged in October. Its historical observations should
+not be rewritten as fresh hardware evidence.
+
+The first proposed tranche is observation only: resident EMOS retains lifecycle
+state, answers bounded read-only queries over the admitted UART epoch, and P4
+reports the response's epoch and freshness. No job launch, cancellation, reset,
+mode selection, event-feed technology or fixture ABI is selected by accepting
+that carrier. Existing UART ownership and whole-record serialization must be
+proved against a refreshed implementation baseline before source changes.
+
+For Q06-D06, recommend existing UART after explicit Extender admission. The
+alternative is a requirement for pre-admission observation, which needs separate
+bootstrap/transport analysis and may require hardware changes. Do not select a
+new conductor without establishing that earlier observation is needed. Rejected
+or unanswered queries grant no authority to recover or reset the Agon.
+
+### Supervisor memory review — 2026-10-13
+
+Official `agon-docs/docs/mos/Executables.md` distinguishes the conventional
+application address 0x040000 from the MOSlet slot at 0x0B0000 (under 32 KiB),
+but a simple MOS header does not declare a program's complete memory footprint.
+The project-owned `agon-emos/src/emos.c::emos_run_utility` explicitly loads
+utilities into that slot and rejects busy/non-Core entry and oversized files.
+Its adjacent admission path explicitly forbids loading another utility into a
+running application. These existing guards must survive a test supervisor.
+
+Separate load addresses alone do not prove that an arbitrary fixture's code,
+data, heap, stack or nested utility calls leave the supervisor slot untouched.
+Q06-D02 therefore needs either a manifest-bound, independently checked
+memory-safe fixture subset with no nested MOSlet load, or a different execution
+split. Do not authorize arbitrary games/applications on the strength of a MOS
+header or current executable size. No generic supervisor launch compatibility
+has been proved by this bounded source/document review.
+
 ## Decision register
 
 Q06-D00 — **Accepted 2026-09-30.** Resident EMOS owns and retains the
@@ -172,45 +236,171 @@ P4 may request a versioned snapshot and EMOS reports its own state; the P4 must
 not synthesize EMOS state from keyboard delivery, pixels, elapsed time, or local
 P4 service state. The request is read-only and conveys no control authority.
 
-Q06-D06 — **Open; present first.** Select the physical/wire carrier for the
-read-only state request. Recommendation: use the existing full-duplex r03 UART1
-epoch. P4 GPIO12 is the sole driver toward Agon PC1/RXD1; Agon PC0/TXD1 is the
-sole driver toward P4 GPIO22. Carry a private request in the P4→EMOS packet
-stream and one whole framed response through EMOS's existing output serializer.
-Do not repurpose RTS/CTS, transmit from an ISR, add a second UART owner, or permit
-both processors to drive one conductor. If state must be queryable before EMOS
-has admitted that UART epoch, define that requirement before deciding whether a
-new wire is necessary.
+Q06-D06 — **Accepted 2026-10-13.** Read-only lifecycle queries use the
+existing full-duplex r03 UART1 transport after explicit EMOS Extender admission.
+P4 sends the private request on its existing transmit direction; EMOS emits one
+whole framed response through its sole output serializer between complete
+VDU/service records. RTS/CTS retain flow control. No second UART owner, ISR
+transmission, additional conductor or pre-admission response is selected.
+Before admission, P4 reports EMOS state unavailable; silence grants no control
+or reset authority. Query scheduling, coherent snapshots, framing and freshness
+remain protocol prerequisites under Q06-04/05/06 and review item R02.
 
-Q06-D01 — **Open; wait for Q06-D06.** Should the bounded test-control capability be
-present in the exact ordinary EMOS/P4 firmware submitted for acceptance, or only
-in diagnostic builds? Recommendation: include the dormant, versioned capability
-in ordinary firmware because qualification must exercise the exact candidate
-bytes. Require a host-held P4 resource lease plus fresh EMOS safe-point
-authorization for every job; do not give the P4 unilateral launch authority.
-Record the network trust and enablement policy before implementation.
+Q06-D01 — **Accepted 2026-10-13.** Include the dormant, versioned bounded
+test-control capability in ordinary EMOS/P4 firmware so qualification exercises
+the exact candidate bytes proposed for release. Every test job requires a
+host-held P4 resource lease and fresh EMOS safe-point authorization; P4 never
+acquires unilateral launch authority. Inclusion is not enablement or deployment.
+Network trust/enablement policy, resource budgets and regression qualification
+remain implementation prerequisites under Q06-04/06/13.
 
-Q06-D02 — **Open; wait for Q06-D01.** Select the EMOS execution split.
-Recommendation: keep lifecycle/admission state resident and launch a finite
-`/emos/testjob.bin` supervisor in the existing MOSlet region. The contract must
-prove that the supervisor can launch or supervise the required application
-without overlapping a loaded program or nested MOSlet. If that memory contract
-cannot be proven, return for a different design rather than deleting the guard.
+Q06-D02 — **Accepted 2026-10-13.** Keep lifecycle and admission state
+resident in EMOS and use a finite SD-loaded `/emos/testjob.bin` supervisor in
+the existing MOSlet slot. Initially support only manifest-bound fixtures whose
+code, data, heap and stack are independently proved not to overlap that slot
+and which never load another MOSlet. Preserve existing busy/Core, size and
+nested-load guards. EMOS rejects unsupported or unproved fixtures before launch;
+a MOS header or executable size alone is insufficient. Broader application
+support requires a separately proved memory/return contract or a different
+execution split. No generic application compatibility is accepted by this choice.
 
-Q06-D03 — **Open; wait for Q06-D02.** Select the result/progress ABI and the
-minimum linked fixture helper. Recommendation: typed binary records over the
-existing EMOS↔P4 private transport, with a tiny source-level helper for fixtures
-and a supervisor-generated launch/return envelope.
+Q06-D03 — **Accepted 2026-10-13.** Fixtures use a small linked
+source-level helper to submit typed binary start, progress, assertion and
+completion records through resident EMOS over the existing private transport
+to P4. EMOS validates each record against the active job grant; every record is
+bound to peer epochs, foreground generation, job identity, exact fixture hash
+and result schema. Fixtures do not acquire a private UART writer or bypass EMOS.
+The supervisor supplies the launch/return envelope and reports load/launch
+failure, invalid records and return without valid completion as non-pass
+outcomes. Large evidence remains separately referenced artifacts. Exact layouts,
+size/rate bounds and backpressure are protocol work under Q06-04/08.
 
-Q06-D04 — **Open; wait for Q06-D03.** Select the host event interface.
-Recommendation: one snapshot endpoint plus a resumable ordered event feed;
-choose SSE, WebSocket, or bounded long-poll only after measuring the P4 HTTP
-server's resource and reconnect behavior.
+Q06-D04 — **Accepted 2026-10-13; selected transport under Q06-D04-T01.**
+Provide one current-state snapshot endpoint plus an ordered event feed that
+resumes after the host's last received event sequence. Bind events to peer
+boot/link identities and foreground/job generations. On peer restart or a
+retention gap, the host obtains a fresh snapshot and explicitly reconciles
+state; reconnect never automatically relaunches or resubmits uncertain work.
+This accepts the interface semantics, not an HTTP transport or retention size.
 
-Q06-D05 — **Open; wait for Q06-D04.** Select migration and retirement dates.
-Recommendation: keep QUAL-005 authoritative, migrate one physical case at a
-time with old/new equivalence evidence, and switch authority only after one
-complete accepted paired run.
+Q06-D04-T01 — **Accepted 2026-10-13; hardware qualification pending.**
+Use asynchronous bounded long-poll with one outstanding reader request, one
+bounded worker and explicit SDK request completion on every success/error exit.
+The shared HTTP handler returns immediately; event waits and slow sends must not
+run on that task. The host receives bounded batches and reconnects using its
+validated cursor. Qualify stack/heap, shared-service latency, exhaustion,
+disconnect cleanup and reconnect gaps on both DevKit and PC before promotion.
+Source inspection establishes implementation feasibility, not measured capacity.
+No resource measurements are authorized on the active benchmark bench.
+
+Q06-D05 — **Accepted 2026-10-13.** Keep QUAL-005 authoritative while
+migrating one physical case at a time. Each migrated case must preserve or
+strengthen its oracles and retain old/new equivalence evidence. Switch authority
+and retire only replaced maintained paths after a complete old/new comparison
+passes against the same independently verified firmware pair and the Author
+accepts the migration. Retirement is evidence-gated, not calendar-driven.
+Historical evidence remains preserved. This does not authorize interrupting,
+modifying or replacing an active qualification campaign.
+
+Q06-D07 — **Accepted 2026-10-13.** Ordinary production firmware starts
+with diagnostic job execution disabled. An explicit operator command in EMOS
+enables it only for the current EMOS boot; reboot restores disabled state.
+Host-controlled execution additionally requires a P4 host lease and a fresh
+EMOS safe-point grant for each supported job. Read-only lifecycle status remains
+available after ordinary Extender admission without enabling diagnostic execution.
+This supports production bug reports and bounded feature proofs, not unattended
+remote activation of diagnostics. Command syntax, disable-during-job behavior,
+network access policy and evidence export details remain contract work.
+
+Q06-D08 — **Accepted 2026-10-13, both supported boards.** P4 retains a
+bounded durable terminal journal on its own SD card; the host exports the full
+evidence bundle. P4 retains uncollected terminal records until the host verifies
+and acknowledges required evidence. Unavailable/full journal storage rejects new
+diagnostic jobs; it does not disable ordinary EMOS/P4 use or read-only status.
+Use board-profile-selected storage for P4-DevKit and P4-PC, not a PC-only path.
+Exact persistence/recovery format, storage lease integration and resource bounds
+require qualification on each board. The Author explicitly reaffirmed DevKit
+coverage and recalled its SD slot; no board is dropped from scope.
+
+## Next contract tranche — offline only
+
+The main architectural choices are accepted. Q06-02 remains incomplete until
+transport implementation proof, network access/enablement details, scheduling and protocol bounds are
+resolved and the accepted implementation contract is frozen. Drafting and source
+review do not grant firmware implementation or deployment authority.
+
+### Board and journal scope
+
+The [P4 SD guide](../p4-sd.md) records bounded DevKit local-card checks and
+separate board power lifecycles. Both maintained board profiles declare SDMMC
+configuration. Those facts support a common storage abstraction, not a claim
+that the new journal is qualified. Q06-06/13 must cover missing/full media,
+interrupted journal writes, restart recovery, acknowledgement/reclamation and
+storage-owner contention on both DevKit and PC. DevKit browser video/input
+resource use must be included; HDMI-only measurements cannot substitute for it.
+
+### HTTP resource review — 2026-10-13
+
+| Source observation | Evidence | Design consequence to verify |
+|---|---|---|
+| Shared HTTP configuration defaults to seven sockets and 4096-byte task stack | `vdp/video/extender/network/http_video_service.hpp::HttpVideoConfig` | Account for event clients together with existing browser and HTTP clients; do not assume a spare unlimited connection pool. |
+| HTTP startup disables LRU socket purging and installs explicit open/close hooks | `http_video_service.cpp::startServer` | Specify event-client admission, disconnect cleanup and bounded lifetime rather than relying on eviction. |
+| Browser keyboard is already a WebSocket route on the shared server | `wired_network_service.cpp::startHttp` | WebSocket support exists, but that alone does not prove sufficient resources or correct event reconnect semantics. |
+| P4 telemetry already copies a latest snapshot under a short critical section | `vdp/video/extender/telemetry/target.hpp` | Review reuse for coherent copy mechanics; application-published telemetry is not automatically authoritative EMOS lifecycle state. |
+
+These are source/configuration observations, not measured installed runtime
+limits. A synchronous event wait or long-lived response on the shared request
+task risks delaying unrelated handlers; the selected implementation must prove
+bounded/asynchronous dispatch and client cleanup. Asynchronous bounded long-poll is selected under Q06-D04-T01; its resource
+and cleanup qualification still requires separately authorized physical work.
+
+### Working protocol draft
+
+[Protocol draft](QUAL-006/PROTOCOL-DRAFT.md) now specifies transport-independent
+snapshot/event fields, authority and freshness, query scheduling, job states,
+duplicate/restart handling, deferred artifacts and offline fault cases. Its
+queue/client/enablement proposals are unaccepted review targets. The transport
+comparison records existing source constraints without selecting a winner or
+claiming measured P4 capacity. The concrete-proposal section adds operator
+command syntax, disable-pending behavior, candidate private framing and fragment
+bounds, a 208-byte bound fixture envelope, queue/client/watchdog targets and
+explicit evidence-export/acknowledgement semantics. Arithmetic/link checks pass;
+wire assignments and capacity remain unaccepted proposals. Host transport and terminal persistence are now selected; concrete wire and
+journal proposals remain subject to parser, memory and recovery proof. Q06-02/Q06-04 remain incomplete; the draft is not
+a frozen implementation contract and changes no running-suite input.
+
+### Feasibility disposition — 2026-10-13
+
+[Offline feasibility review](QUAL-006/PROTOCOL-FEASIBILITY.md) completes the
+parser, supervisor, retained ROM and P4-map pass. Accepted architecture remains
+viable as a staged target, but full implementation fit is unproved. Early QC
+routing must precede SD mailboxes; supervisor context must survive application
+entry/return; the existing IRQ telemetry transmitter cannot be reused under the
+no-ISR-transmission contract. Retained ordinary ROM headroom is only a few KiB,
+with substantially less in distinct experimental compositions. P4 map spans are
+not runtime allocation proof and PC HDMI evidence cannot replace DevKit evidence.
+
+Next prepare a selected observation-only baseline and ROM/RAM cost study through
+owner wrappers, plus parser regression cases and a later supervisor lifecycle
+plan. Do not freeze or deploy the full contract based on arithmetic or old map
+capacity. No implementation/build/bench work occurred in the feasibility review.
+
+### Protocol drafting checklist
+
+1. Define snapshot/event logical fields and unknown/stale reasons independently
+   of SSE, WebSocket or long-poll framing.
+2. Bind the snapshot to both peer identities, link and foreground generations;
+   bind fixture records to the granted job, fixture hash and result schema.
+3. Define query coalescing, coherent state copying and a single EMOS reply owner
+   without ISR transmission or VDU-record interleaving.
+4. Specify fixed event retention, event/client limits, wrap/restart behavior and
+   explicit gap reconciliation. No reconnect-triggered job replay.
+5. Specify job offer/grant/launch/return/cleanup transitions and distinct failures,
+   including unproved fixture memory, missing terminal record and storage errors.
+6. Define the host lease's enablement/trust boundary and ownership conflicts;
+   inclusion in ordinary firmware must not silently activate remote job control.
+7. Build offline state-machine and reconnect fault cases before scheduling a
+   hardware resource comparison or the first observation-only firmware tranche.
 
 ## Validation gates
 

@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-09-30
+- Last amended: 2026-10-13
 - Related tasks: SETUP-004, SETUP-005, QUAL-006
 - Open-decision tracker: SETUP-005, QUAL-006
 
@@ -379,8 +379,74 @@ that processor.
     from keyboard delivery, rendered pixels, elapsed time, or P4-local service
     state. A state request is observation only and grants the P4 no authority to
     launch, cancel, reset, select a mode, commit a route, or mutate EMOS state.
-    QUAL-006 owns the still-open request carrier, earliest available boot phase,
-    framing, freshness, event and qualification decisions.
+    The Author selected the existing full-duplex r03 UART1 carrier on
+    2026-10-13, available after explicit EMOS Extender admission. P4 sends a
+    private query on its existing transmit lane; EMOS's sole output serializer
+    emits one whole framed response between complete VDU/service records.
+    RTS/CTS remain flow control; no additional conductor, second UART owner or
+    ISR transmission is selected. Before admission P4 reports EMOS state
+    unavailable. Silence grants no launch, recovery or reset authority.
+    Remaining protocol decisions belong to QUAL-006.
+
+46. Include the dormant, versioned bounded test-control capability in ordinary
+    EMOS/P4 candidate firmware, as accepted on 2026-10-13, so qualification
+    exercises the exact bytes proposed for release. Every job requires a
+    host-held P4 resource lease and fresh EMOS safe-point authorization.
+    Inclusion does not activate the capability or permit unilateral P4 launch.
+    QUAL-006 owns implementation and qualification.
+
+47. Retain lifecycle/admission state in resident EMOS and use a finite SD-loaded
+    test supervisor in the existing MOSlet slot, as accepted on 2026-10-13.
+    Initial supervised fixtures must have independently proved code, data,
+    heap and stack bounds excluding the supervisor slot, and must not load
+    another MOSlet. EMOS rejects unproved/incompatible fixtures before launch
+    and preserves busy/Core, utility-size and nested-load guards. This does
+    not establish arbitrary application compatibility.
+
+48. Use a small linked fixture helper for typed binary start, progress,
+    assertion and completion records through EMOS to P4, as accepted on
+    2026-10-13. EMOS validates peer epochs, foreground generation, active job
+    identity/grant, exact fixture hash and result schema. The supervisor owns
+    launch/return reporting; returning without valid completion is not a pass.
+    Large evidence remains separately referenced artifacts. Helpers do not
+    own a UART writer or bypass EMOS.
+
+49. Expose one P4 current-state snapshot endpoint and an ordered event feed
+    resumable after the host's last received sequence, as accepted on
+    2026-10-13. Bind events to peer boot/link and foreground/job generations.
+    Peer restart or a retention gap requires a fresh snapshot and explicit
+    reconciliation. Reconnect never automatically relaunches or resubmits
+    uncertain work. Concrete transport/resource qualification belongs to
+    QUAL-006.
+
+50. Keep QUAL-005 authoritative during case-by-case migration, as accepted on
+    2026-10-13. Require equivalent or stronger case oracles and a complete
+    old/new comparison on the same independently verified firmware pair before
+    Author acceptance transfers authority or retires replaced maintained
+    paths. Preserve historical evidence. Retirement is evidence-gated, not
+    calendar-driven, and does not alter an active qualification campaign.
+
+51. Treat the control facility as production support for bug reproduction and
+    bounded feature proofs, as accepted on 2026-10-13. Diagnostic execution
+    starts disabled; an explicit EMOS operator command enables it only for the
+    current EMOS boot, and reboot disables it. Every host job still requires a
+    P4 lease and fresh EMOS safe-point authorization. Read-only status remains
+    available after ordinary Extender admission without enabling execution.
+    Bind diagnostic payloads and evidence to exact firmware identities.
+
+52. Retain bounded durable diagnostic terminal records on P4-local SD, as
+    accepted on 2026-10-13, with board-profile-selected support for both
+    P4-DevKit and P4-PC. The host exports full evidence and acknowledges only
+    after required copied evidence verifies. Missing/full journal storage
+    rejects new diagnostic jobs without disabling ordinary operation or
+    read-only status. Qualify persistence/recovery and resource contention on
+    each board; DevKit remains explicitly in scope.
+
+53. Use asynchronous bounded long-poll for the host event feed, as accepted on
+    2026-10-13. Admit one outstanding reader request and one bounded worker;
+    complete SDK request ownership on every exit. Keep event waits and slow
+    sends off the shared HTTP task. Return bounded batches with cursor-based
+    reconnect. QUAL-006 owns both-board resource and cleanup qualification.
 
 ## Rationale
 
