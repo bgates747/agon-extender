@@ -78,7 +78,7 @@ int main() {
        sv[sysvar_scrMode]!=mode||getsysvar_scrwidth()!=width||getsysvar_scrheight()!=height||
        sv[sysvar_scrColours]!=colours) {puts("Invalid configuration or startup mode");return 1;}
     mos_setkbvector(graphics_callback,0);
-    bool ok=request(11,0)&&metric==0&&value==0x534331&&count==12;
+    bool ok=request(11,65535)&&metric==0&&value==0x534331&&count==12;
     // The capability probe prevents ordinary/unextended firmware producing an
     // apparently valid measurement. No measured work has begun on failure.
     if(!ok){mos_setkbvector(nullptr,0);puts("SCROLL-001 timing firmware required");return 1;}
@@ -91,7 +91,7 @@ int main() {
                                "partial-up","partial-down","partial-left","partial-right"};
     for(unsigned id=0;id<8&&ok;++id) {
         ok=load_pattern(id);
-        if(ok)ok=request(1,id,instrument)&&metric==0;
+        if(ok)ok=request(1,id,instrument)&&metric==0&&value==1&&count==instrument;
         uint24_t start=clock_ticks(),previous=start;unsigned missed=0,done=0;
         for(;done<steps&&ok;++done) {
             ok=pace();auto edge=clock_ticks();auto delta=uint24_t(edge-previous);
@@ -122,13 +122,15 @@ int main() {
     mos_fclose(file);mos_setkbvector(nullptr,0);ok=ok&&saved;
     uint8_t reset[]={26,23,1,1,12};send(reset,sizeof reset);
     puts(ok?"Scrolling suite complete. Results saved.":"Scrolling suite failed. Preserve results.");
-    if(source==1) {
-        // Preserve the new HDMI cue while reporting completion on the mainboard
-        // too. EMOS remains the only route owner; no mode selection occurs.
+    if(source<=1) {
+        // Preserve the first completion cue while repeating it on the other
+        // display. Finish in Legacy. EMOS owns routing; no mode changes occur.
         char legacy[]="EMOS LEGACY --keep-display";
-        if(mos_oscli(legacy,nullptr,0)==0) {
+        char excom[]="EMOS EXCOM --keep-display";
+        if(mos_oscli(source==1?legacy:excom,nullptr,0)==0) {
             send(reset,sizeof reset);
             puts(ok?"Scrolling suite complete. Results saved.":"Scrolling suite failed. Preserve results.");
+            if(source==0)mos_oscli(legacy,nullptr,0);
         }
     }
     return ok?0:1;

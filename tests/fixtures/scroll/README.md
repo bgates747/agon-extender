@@ -32,8 +32,8 @@ each build. Generated outputs stay ignored.
    Bitmap loading, SD writes, diagnostic replies and announcements are outside
    the measured case. Never use a pixel read or foreground flush as a fence.
 5. The fixture leaves a conspicuous completion/failure cue on the current output.
-   After an ExCom run it asks EMOS for Legacy with display retained, and repeats
-   the cue on the mainboard. Physical notification behavior remains untested.
+   It asks EMOS for the other route with display retained, repeats the cue there
+   and finishes in Legacy. Physical notification behavior remains untested.
 
 CSV metrics retain the established QTG measurements1–8. New9/10are scroll
 execution sum/calls and maximum/boundary crossings;11/12are bitmap sum/calls

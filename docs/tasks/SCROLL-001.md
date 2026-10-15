@@ -134,14 +134,36 @@ physical test has been invoked for this task.
    not available from these aggregate counters.
 7. The fixture requires expected scroll/bitmap counts and no reported boundary
    crossings. It refuses existing result files, preserves partial failures,
-   records whole-suite start/end/duration, and displays terminal status. An
-   ExCom run retains the P4 cue then asks EMOS for Legacy to repeat the cue on
-   the mainboard. These physical behaviors still require bounded verification.
-8. Remaining readiness work: select/pin the diagnostic P4 renderer baseline,
-   build both firmware images, independently verify installation/rollback,
+   records whole-suite start/end/duration, and displays terminal status on both
+   routes through EMOS display-preserving switching, finishing in Legacy.
+   These physical behaviors still require bounded verification.
+8. Remaining readiness work: independently verify installation/rollback,
    validate empty and pacing-only controls and a bounded wrap smoke, deploy and
    read back fixtures/configuration, confirm input/CLI and fresh card handoff.
    The Author's stop-before-full-suite-invocation boundary remains active.
+
+### Built preparation artifacts
+
+1. Mainboard image: `scroll-mainboard-timing-r01-b2026-10-15-02-56-21Z`,
+   firmware SHA256
+   `61bdfedea437199565646b07e91589eea67a3a8bd70a7c5b68be933ec2e0fb4a`.
+   Stock VDP/GL commits above, root preparation commit f5f20d54, native ARM64
+   toolchain and pinned PlatformIO6.1.18. Built successfully; not installed.
+2. P4 image: `indexed-hdmi-r09-b2026-10-15-02-54-12Z`, diagnostic source
+   28514129dda88a13b411c2655749506a7e662b0c based on tested c233ac8e.
+   Retains indexed frame snapshot, bitmap fast path, overlay ordering, visible
+   software-sprite snapshot and normal rolling HDMI selections from that
+   baseline. The only source changes are execution diagnostics and explicit
+   native build/validation selection. Native build/action validation passes.
+   This is a separately pinned experimental derivative, not the fsim prototype
+   currently last verified on the bench and not a production selection.
+3. Offline320×240and512×384packages produced identical eZ80 executable bytes
+   before the final notification refinement, confirming that dimensions and
+   geometry are runtime configuration. That512×384package is an offline
+   portability check, not another authorized physical test or selected geometry.
+4. Local receipts, exact binaries, generated patterns and installation planning
+   remain ignored under the active task's machine-local evidence directory.
+   No device access, flash, reset, fixture deployment or invocation occurred.
 
 ### Source audit limits
 
