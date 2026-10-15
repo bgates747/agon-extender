@@ -175,6 +175,25 @@ and the card was left mounted. This supersedes the earlier no-deployment state.
 Firmware installation, bounded controls, input readiness and actual invocation
 remain unperformed. The suite is staged on SD, not ready to start.
 
+### Individually callable tests — Author direction
+
+The Author requires each test to be independently callable, with batch dispatch
+calling those same tests. Fixture revision `pattern-scroll-r02` accepts a named
+case or explicit `all`; omitted/invalid selection executes no test. All paths use
+the same `run_case` function, with identical rendering/timing code. The batch
+stops on its first failed case. Individual launchers and the batch launcher use
+the documented MOS `RUN &040000 <parameters>` interface. No test changes mode.
+
+Result filenames append the observed route (`mb` or `ext`), selection and optional
+run label to the configured base. A single-case run therefore cannot collide
+with an all-case run; repeat labels preserve earlier results. The existing
+refusal to overwrite remains. Completion is announced after the selected test
+or complete batch, with EMOS retaining both display cues and finishing Legacy.
+
+The updated eZ80 program builds. Sanitized host checks verify each single-case
+selection, batch order, first-failure stopping and invalid selections/labels.
+Physical readiness gates and the stop-before-full-batch boundary remain unchanged.
+
 ### Source audit limits
 
 1. The P4 64-colour alternative uses owned row rotation for full-width vertical
