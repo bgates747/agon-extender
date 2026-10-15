@@ -5,9 +5,11 @@ approved mode-specific pattern as the moving image. Begin with single-buffered,
 240-line, 4:3 modes. Full-screen means every pixel moves, preserving stock's
 full-width/full-screen optimized paths. Timing must describe VDP execution, not
 merely eZ80 command transmission. This records the Author's evolving design;
-offline implementation is in progress. The eight-case eZ80 program builds and
-its independent pixel-model checks pass. No firmware has been installed and no
-physical test has been invoked for this task.
+implementation is prepared. The eight-case eZ80 program builds and its independent
+pixel-model checks pass. Both diagnostic firmware images are installed and
+verified. The fixture is verified on the correctly identified Extender card;
+mode8 startup and actual CLI/input readiness remain pending. No physical test
+has been invoked for this task.
 
 ## Agreed scope
 
@@ -217,6 +219,21 @@ latest retained authority. Reset GPIO is released and all clients are closed.
 Author physical card/mainboard recovery is required before setup and actual CLI
 verification can complete. Do not announce manual-test readiness or reflash the
 already verified images merely to repeat admission checks.
+
+### Card identity correction — 2026-10-15
+
+The Author identified that the wrong card had been installed in Agon during the
+input failure. The correct Extender card was then mounted on Oryx. All26files at
+`/extender/scroll-r01` match the staged `pattern-scroll-r02` package, including
+the eight individual launchers and shared batch launcher. The foreground
+listener is present, and ordinary keyboard-only startup remains unchanged.
+
+At the Author's request, Oryx relabelled this card from `AGON` to `AGONEX` without
+unmounting it. Its filesystem identity, both FAT labels and all fixture hashes
+were verified afterward; other cards were untouched. Exact device identity and
+before/after receipts remain in ignored local records. No bench calls or tests
+occurred. Correct-card return, mode8 startup and fresh CLI/input verification
+remain prerequisites; the reported card mixup is not a completed hardware retest.
 
 ### Source audit limits
 
