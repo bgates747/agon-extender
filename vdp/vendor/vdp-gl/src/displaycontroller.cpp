@@ -810,11 +810,11 @@ void IRAM_ATTR BitmappedDisplayController::hideSprites(Rect & updateRect)
 void IRAM_ATTR BitmappedDisplayController::showSprites(Rect & updateRect)
 {
   AGON_STOCK_NATIVE_GUARD;
-  prepareForDrawing();
 #ifdef AGON_GRAPHICS_TIMING
   agon_graphics_timing::FinishSprites qual_fence_after_sprite_scope;
 #endif
   AGON_GRAPHICS_SCOPE(SoftwareSprites);
+  prepareForDrawing();
   if (m_spritesHidden) {
     m_spritesHidden = false;
     auto options = paintState().paintOptions;
@@ -889,8 +889,17 @@ void BitmappedDisplayController::setMouseCursorPos(int X, int Y)
 void IRAM_ATTR BitmappedDisplayController::execPrimitive(Primitive const & prim, Rect & updateRect, bool insideISR)
 {
   AGON_STOCK_NATIVE_GUARD;
-  prepareForDrawing();
   AGON_GRAPHICS_SCOPE(Primitive);
+#ifdef AGON_SCROLL_TIMING
+  // The nested classification is a subset of Primitive. Include the original
+  // operation body; exclude native-lock acquisition and all queue/vblank waits.
+  agon_graphics_timing::Scope qual_classified_scope(
+      prim.cmd == PrimitiveCmd::VScroll || prim.cmd == PrimitiveCmd::HScroll
+          ? agon_graphics_timing::Scroll
+          : prim.cmd == PrimitiveCmd::DrawBitmap ? agon_graphics_timing::Bitmap
+                                                : agon_graphics_timing::MetricCount);
+#endif
+  prepareForDrawing();
   switch (prim.cmd) {
 #ifdef AGON_GRAPHICS_TIMING
     case PrimitiveCmd::GraphicsFence:

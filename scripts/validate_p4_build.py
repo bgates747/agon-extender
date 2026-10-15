@@ -109,6 +109,7 @@ def main() -> None:
     parser.add_argument("--scroll-fast", action="store_true")
     parser.add_argument("--bitmap-fast", action="store_true")
     parser.add_argument("--bitmap-lut", action="store_true")
+    parser.add_argument("--graphics-timing", action="store_true")
     parser.add_argument("--overlay-bgr", action="store_true")
     parser.add_argument("--hdmi-link-watch", action="store_true")
     parser.add_argument("--ppa-scale-320", action="store_true")
@@ -124,7 +125,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
