@@ -207,6 +207,6 @@ headings no longer compete with the approved current sequence.
 
 - [ ] **[SCROLL-001 — Pattern-based scrolling qualification](docs/tasks/SCROLL-001.md)** — Mode lifecycle r03 compiles and Pi coordinator passes offline simulation; live adapter, double-buffered entry cleanup and physical validation remain. Bench reserved by another project; earlier startup modification needs separately authorized repair.
 
-## Eventual controller input
+## Analog controller input — task review
 
-- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Capture analogue controllers on an external PC and deliver bounded input through Extender; design/ownership review pending, no implementation or bench reservation.
+- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Host F310 reader/viewer/recording staged on Oryx; 14 semantic checks and virtual-display/live-enumeration checks pass. Author approves appearance; exercised recording validates six-axis travel and ten buttons, with eight-bit stick lattice observed. Guide and physical reconnect now validate too; rest calibration/held-button unplug remain unreviewed. LAN, P4/EMOS and target viewer remain unreleased.

@@ -21,6 +21,14 @@ Use the local project's Python environment on Linux. The operation guide covers
 Mac clients and local journal paths. A command's `--help` describes syntax, not
 current bench ownership, foreground state or firmware admission.
 
+## Host controller review — no bench or LAN connection
+
+[controller_view.py](controller_view.py) and [controller_input.py](controller_input.py)
+read an F310 on a Linux desktop, display native/eight-bit axis and button state,
+and record/replay timestamped input. See the [viewer guide](../docs/testing/controller-viewer.md).
+Author handling review remains pending; these tools do not send input to P4 or
+EMOS and do not implement a game-controller transport.
+
 ## P4-local storage candidate client
 
 [p4sd.py](p4sd.py) provides sessionless file/directory management of the P4's
