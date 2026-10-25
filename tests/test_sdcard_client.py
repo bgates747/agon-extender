@@ -9,6 +9,7 @@ from pathlib import Path
 import struct
 import tempfile
 import unittest
+from unittest import mock
 import zlib
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -54,6 +55,30 @@ class ClientTests(unittest.TestCase):
             with self.assertRaises(ValueError):c.upload('/'+('a'*112),b'')
             self.assertIsNone(c.state['pending']);c.lock.close()
 
+    def test_fast_discovery_precedes_checksum_free_hello(self):
+        with tempfile.TemporaryDirectory() as temp:
+            c=sd.Client('http://fixture',Path(temp)/'state.json')
+            c.status=lambda:dict(protocol=2,boot=101,online=True)
+            def exchange(request):
+                self.assertEqual(request[2],2);self.assertEqual(request[16:20],b'\0'*4)
+                return 0,struct.pack('<IHH',101,212,127)
+            c.exchange=exchange
+            try:
+                with mock.patch.object(sd.zlib,'crc32',side_effect=AssertionError('CRC on fast HELLO')):
+                    c.connect(require_fast=True)
+                self.assertEqual(json.loads(c.state_path.read_text())['protocol'],2)
+            finally:c.lock.close()
+
+    def test_fast_refuses_old_p4_before_any_request(self):
+        with tempfile.TemporaryDirectory() as temp:
+            c=sd.Client('http://fixture',Path(temp)/'state.json')
+            c.status=lambda:dict(protocol=1,boot=101,online=True)
+            c.exchange=mock.Mock(side_effect=AssertionError('Unexpected request'))
+            try:
+                with self.assertRaisesRegex(sd.RemoteError,'no HELLO sent'):c.connect(require_fast=True)
+                c.exchange.assert_not_called();self.assertIsNone(c.state['pending'])
+            finally:c.lock.close()
+
 class RealEngineUploadTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -72,14 +97,14 @@ class RealEngineUploadTests(unittest.TestCase):
             disk=Path(temp);(disk/'test').mkdir()
             self.lib.fs_root(str(disk).encode())
             self.assertEqual(self.lib.service_init_mode(b'/test',101,listener_fast),1)
-            c=sd.Client('http://fixture',disk/'state.json');ops=[]
+            c=sd.Client('http://fixture',disk/'state.json');c.state['protocol']=2 if listener_fast else 1;ops=[]
             def exchange(request):
                 ops.append(request[12]);out=C.create_string_buffer(240)
                 n=self.lib.service_request(request,len(request),out)
                 return sd.response(out.raw[:n],request)
             c.exchange=exchange;data=bytes(i%256 for i in range(size));output=io.StringIO()
             try:
-                with contextlib.redirect_stdout(output):
+                with contextlib.redirect_stdout(output), (mock.patch.object(sd.zlib,'crc32',side_effect=AssertionError('Fast host computed CRC')) if listener_fast else contextlib.nullcontext()):
                     if listener_fast!=client_fast:
                         with self.assertRaisesRegex(sd.RemoteError,'mode mismatch'):
                             c.upload('/test/game.bin',data,True,fast=client_fast)
@@ -100,17 +125,32 @@ class RealEngineUploadTests(unittest.TestCase):
         for fast in (False,True):self.exercise(fast,not fast)
 
     @contextlib.contextmanager
-    def directory_fixture(self):
+    def directory_fixture(self,fast=False):
         with tempfile.TemporaryDirectory() as temp:
             disk=Path(temp);(disk/'test').mkdir();self.lib.fs_root(str(disk).encode())
-            self.assertEqual(self.lib.service_init_mode(b'/test',101,0),1)
+            self.assertEqual(self.lib.service_init_mode(b'/test',101,fast),1)
             c=sd.Client('http://fixture',disk/'state.json')
+            c.state['protocol']=2 if fast else 1
             def exchange(request):
                 out=C.create_string_buffer(240);n=self.lib.service_request(request,len(request),out)
                 return sd.response(out.raw[:n],request)
             c.exchange=exchange
             try:yield c,disk
             finally:c.lock.close();self.lib.service_stop()
+
+    def test_fast_tree_copy_move_read_and_backup_cleanup_have_no_crc(self):
+        with self.directory_fixture(fast=True) as (c,disk):
+            (disk/'test/source').mkdir();data=bytes(range(256))*2
+            (disk/'test/source/a').write_bytes(data)
+            with contextlib.redirect_stdout(io.StringIO()),mock.patch.object(sd.zlib,'crc32',side_effect=AssertionError('CRC in fast file operation')):
+                c.copy('/test/source','/test/clone',recursive=True,fast=True)
+                c.move('/test/clone','/test/final')
+                self.assertEqual(c.download('/test/final/a'),data)
+                c.upload('/test/final/a',b'new',True,fast=True)
+                self.assertEqual((disk/'test/final/a.p17bak').read_bytes(),data)
+                c.rpc(10,b'\x03'+sd.path_payload('/test/final/a'))
+                self.assertFalse((disk/'test/final/a.p17bak').exists())
+                self.assertEqual(c.download('/test/final/a'),b'new')
     def test_directory_copy_move_delete_and_receipts(self):
         with self.directory_fixture() as (c,disk):
             rows=[];report=lambda *args:rows.append(args)

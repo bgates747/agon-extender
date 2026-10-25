@@ -695,3 +695,51 @@ for the private experimental carrier/API change; it does not accept the feature
 or promote production. Build/installation verification is authorized, with the
 viewer left stopped for Author invocation. Preserve mainboard VDP/startup and
 follow the no-CRC processor-communication policy for deployment.
+
+### Approved named builds complete; deployment transport pending
+
+All three named correction builds now pass their offline checks. They are
+prepared candidates, not installed or physically accepted results.
+
+| Component | Exact build | Bytes | SHA-256 |
+|---|---|---:|---|
+| P4 application | `indexed-hdmi-r12-b2026-10-25-04-32-32Z` | 1,769,984 | `3a362de507a0ed5b65a2e4454b209d4fdbf81bd5debe02465f8fe5f82cbf3e64` |
+| EMOS raw ROM | `agon-emos-v0.1.26-b2026-10-25-04-24-35Z` | 130,786 | `b70043198a9c74625b6b49c80451d93188e5733df2a05650e4be69ea42ef4ebd` |
+| Agon viewer | `controller-viewer-r03-b2026-10-25-04-24-35Z` | 28,795 | `5a1a4e79653f248bf2610f7ad748d7a964eb185620240106a232416e98002182` |
+
+1. P4 native composition/action validation passes, and all21 declared artifact
+   hashes were independently verified. Source0b49540b changes only the two
+   controller files relative to the installed r11 source; HDMI, board and
+   dependency inputs remain pinned. An interrupted earlier compile produced
+   no validated image; its timestamp is not the final P4 build identity.
+2. Named EMOS source11b7a5c1 passes the linked receive-overlap/Escape regression
+   and leaves286 ROM bytes free. Its padded128KiB installation image has SHA-256
+   `cc6d6d589a4c48b6713180f1d7bcb7966c735969c5fef349477c554fd8733a64`.
+   This saves224bytes versus the installed named v0.1.25 ROM. Neither instruction
+   testing nor compilation establishes physical controller delivery.
+3. The SD overlay, finite SAVE/FLASH and SAVE/LOAD maintenance files, exact-file
+   manifest and direct-card staging helper are prepared. No maintenance file
+   invokes the viewer or changes startup. Oryx host-disk staging is separate
+   from deployment onto the Agon SD card.
+4. The existing P4–EMOS SD service still computes CRCs. The standing prohibition
+   therefore prevents using that service without an explicit Author exception.
+   The Extender card is not currently mounted on Oryx; leave other media alone.
+   Resolve either direct access to that card or a one-installation exception
+   before any dependent reset, SD transfer or firmware change.
+5. The failed viewer instance, installed P4r11/EMOSv25, mainboard VDP and startup
+   remain unchanged. No physical test was invoked. Installation verification
+   and fresh source readiness still precede a handback for Author invocation;
+   Oryx-to-P4 cadence/ACK limitations remain open.
+
+The Author subsequently directs correcting fast-copy CRC cost under REMOTE-005
+R05-11. The prepared P4r12 remains immutable evidence; it cannot receive the
+new fast carrier. Use the new matched P4/listener only after naming and
+bootstrap are resolved. Prepared EMOSv26 and viewer-r03 bytes remain unchanged.
+The failed installed viewer is still preserved; no physical test was invoked.
+
+
+Author approves indexed-hdmi-r13 and sdserve-v0.3.0 on2026-10-25, including
+one final legacy CRC-bearing transfer session to bootstrap their installation.
+This is a bounded exception, not general permission for checked traffic.
+Matched installation/readback and source readiness are authorized; viewer
+invocation remains with the Author. Preserve mainboard VDP and startup.

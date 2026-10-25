@@ -291,12 +291,12 @@ esp_err_t admissionProbeHandler(httpd_req_t *request) {
 }
 #endif
 esp_err_t sdStatusHandler(httpd_req_t *request) {
-  bool online,pending;std::uint32_t boot;
-  storage::sdStatus(sdNow(),online,pending,boot);
+  bool online,pending;std::uint32_t boot;unsigned protocol;
+  storage::sdStatus(sdNow(),online,pending,boot,protocol);
   char body[100];
   const int n=snprintf(body,sizeof(body),
-      "{\"protocol\":1,\"online\":%s,\"pending\":%s,\"boot\":%lu}",
-      online?"true":"false",pending?"true":"false",(unsigned long)boot);
+      "{\"protocol\":%u,\"online\":%s,\"pending\":%s,\"boot\":%lu}",
+      protocol,online?"true":"false",pending?"true":"false",(unsigned long)boot);
   httpd_resp_set_type(request,"application/json");
   httpd_resp_set_hdr(request,"Cache-Control","no-store");
   return httpd_resp_send(request,body,n);

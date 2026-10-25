@@ -2,7 +2,7 @@
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
 registry_revision: r191
-updated_at: 2026-10-25T04:24:35Z
+updated_at: 2026-10-25T05:14:10Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -43,12 +43,13 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r12
+    latest_identity: indexed-hdmi-r13
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
-      - r12 is the Author-approved checksum-free controller carrier2 correction; preserves the installed r11 HDMI composition. Build/deployment pending.
+      - r13 is the Author-approved checksum-free fast SD carrier2 addition to the controller-corrected r12 HDMI source; identified build/install pending.
+      - r12 full build/validation passes; retained unchanged as controller-correction evidence, not installed.
       - r11 accepts IPv4-mapped IPv6 HTTP peers while retaining IPv4 UDP binding; Author approved correction identity/deployment, physical validation pending.
       - r10 adds optional controller input to the retained r09 HDMI composition; Author approved experimental identity/deployment, physical validation pending.
       - r07 applies the HDMI-003 native640x240 row-aspect correction on the same matched source as rgb-001-r13. Host-tested candidate; build/hardware/visual qualification pending.
@@ -464,11 +465,12 @@ artifacts:
   - artifact_id: sdserve
     kind: application
     identity_scheme: semantic_version
-    latest_identity: sdserve-v0.2.0
+    latest_identity: sdserve-v0.3.0
     status: draft
     variants: []
     description: Foreground mainboard SD service through the owned EMOS gateway.
     notes:
+      - v0.3.0 is the Author-approved checksum-free fast carrier2 correction. Checked v1 compatibility retained; identified build/install pending.
       - Selected sdserve v0.2.0 MOSlet build passed checked/fast transfer and Author acceptance in RELEASE-001 R01-07; extender-installation-r02 owns combination scope. Historical draft label retained; no general qualification of other layouts/builds. Registry r113 supersedes the earlier pending-deployment note.
   - artifact_id: mainboard-sd-qualification
     kind: test_procedure

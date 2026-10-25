@@ -1,4 +1,4 @@
-"""Cross-check the production C codec against Python's independent CRC codec."""
+"""Cross-check checked-v1 and checksum-free fast-v2 framing."""
 import ctypes
 from pathlib import Path
 import random
@@ -71,6 +71,23 @@ void seal(unsigned char *p) { sd_seal(p); }
         bad = bytearray(frame);bad[4:8] = b'\0'*4
         bad[16:20] = struct.pack('<I', zlib.crc32(bad[:16]+bad[20:]))
         self.assertEqual(self.lib.valid(bytes(bad), len(bad)), 0)
+
+    def test_fast_frames_have_reserved_zero_and_no_payload_checksum(self):
+        for size in range(221):
+            payload=bytes(range(size))
+            h=b'SD\x02\x01'+struct.pack('<IIBBH',0x91827364,9,6,0,size)
+            frame=h+b'\0'*4+payload
+            self.assertEqual(self.lib.valid(frame,len(frame)),1)
+            buf=ctypes.create_string_buffer(h+b'\xff'*4+payload)
+            self.lib.seal(buf);self.assertEqual(buf.raw[:len(frame)],frame)
+            if size:
+                altered=bytearray(frame);altered[-1]^=128
+                self.assertEqual(self.lib.valid(bytes(altered),len(altered)),1)
+            for end in range(20):self.assertEqual(self.lib.valid(frame[:end],end),0)
+        bad=bytearray(frame);bad[16]=1
+        self.assertEqual(self.lib.valid(bytes(bad),len(bad)),0)
+        bad=bytearray(frame);bad[14]^=1
+        self.assertEqual(self.lib.valid(bytes(bad),len(bad)),0)
 
 
 if __name__ == '__main__':

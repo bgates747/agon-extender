@@ -611,3 +611,61 @@ boundary. No endpoint instantiates the spool, and no bench operation occurred.
 
 A07 development proceeds under the [frozen local contract](REMOTE-005/A07-CONTRACT.md).
 Bench remains assigned elsewhere; no deployment is authorized.
+
+## R05-11 — Remove checksum work from fast transfers — 2026-10-25
+
+The Author corrects the retained implementation: fast transfers must avoid
+CRC work, including per-packet processing. This prepares the pending controller
+correction installation; it does not accept new installed bytes.
+
+1. [x] The host client, P4 SD service and eZ80 foreground listener use explicitly
+   distinguishable checksum-free fast records. Preserve the resident EMOS ABI,
+   existing20-byte envelope and operation offsets; reserve former checksum
+   fields as zero. The listener selects the format at launch; P4 discovers it
+   through presence before the host sends HELLO. Checked records remain
+   historical compatibility requiring explicit Author request for operation.
+2. [x] No packet, file, MOVE-descriptor, metadata or recovery CRC calculation
+   executes in fast mode. Preserve framing, identity/replay, exact offsets and
+   counts, filesystem errors, close/sync and explicit recovery. Fast recovery
+   preserves old checked metadata rather than evaluating its checksum.
+3. [x] Exercise the P4 state machine/host codec and maintained eZ80 engine.
+   Verify zero fast CRC calls, checked regression, wrong-mode refusal,
+   interruption/replay, binary sizes and recovery. Compile the target listener.
+4. [ ] Obtain new P4/listener naming agreement before identified builds. Keep
+   prepared P4r12 immutable. EMOSv26 and viewer-r03 need no source change.
+   Bootstrap requires direct card access or an explicit one-installation
+   legacy-service exception. Leave the controller viewer stopped; preserve
+   mainboard VDP and startup.
+
+Research: official `agon-docs/docs/mos/API.md` at the existing pinned reference
+covers FatFS open/close, byte-count/error semantics and fsync. The maintained
+`agon-emos/projects/sdserve/src/service.c` owns file handling; Extender
+`vdp/video/extender/storage/sd_wire.h`, `sd_service.hpp` and `scripts/sdcard.py`
+own the paired carrier and host. Resident `agon-emos/src/emos_sdlink.c` transports
+20..240-byte records without CRC work, so no resident firmware change or raw
+UART bypass is needed. The existing CRC policy decision applies. No stock
+reference edit or physical qualification is implied; production is unchanged.
+
+Offline result:79 checks,78 pass and one pre-existing skipped WebDAV case.
+The47 listener checks instrument actual C function calls and assert zero fast
+CRC calls; checked cases demonstrate that the instrumentation sees CRC work.
+The21 host/codec/P4 checks include fast tree copy, MOVE, download, backup
+cleanup, stale/replayed requests and legacy refusal before HELLO. P4 state
+tests likewise count zero fast CRC calls. Seven existing application-helper
+checks and four WebDAV tests retain checked compatibility (one WebDAV skip).
+Actual P4 network/console target objects compile against the isolated
+controller-corrected HDMI source. The unversioned MOSlet compiles to22,970bytes;
+it is not a deployment candidate. No hardware, startup or resident ROM changed.
+
+Propose `indexed-hdmi-r13` and `sdserve-v0.3.0` for the changed P4/foreground
+components; naming remains pending Author agreement. Prepared EMOSv26 and
+viewer-r03 remain exact. Keep P4r12 as retained controller-correction evidence,
+not the final paired fast-copy installation. Do not silently bootstrap through
+the old CRC-bearing listener or claim the earlier physical fast timing applies.
+
+
+Author approves indexed-hdmi-r13 and sdserve-v0.3.0 on2026-10-25, including
+one final legacy CRC-bearing transfer session to bootstrap their installation.
+This is a bounded exception, not general permission for checked traffic.
+Matched installation/readback and source readiness are authorized; viewer
+invocation remains with the Author. Preserve mainboard VDP and startup.

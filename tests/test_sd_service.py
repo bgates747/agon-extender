@@ -11,7 +11,7 @@ class SdServiceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             exe = Path(temp)/'service'
             subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror',
-                            '-fsanitize=address,undefined','-I'+str(ROOT/'vdp/video'),
+                            '-fsanitize=address,undefined','-finstrument-functions','-fno-inline','-I'+str(ROOT/'vdp/video'),
                             str(ROOT/'tests/sd_service_test.cpp'),'-o',str(exe)],check=True)
             subprocess.run([str(exe)],check=True,timeout=10)
 

@@ -1,9 +1,12 @@
 # Mainboard SD service wire contract
 
-Protocol major 1, maintained for the EMOS-owned gateway, P4 service and
-foreground `sdserve` application/EMOSlet. The [operating guide](../mainboard-sd.md)
-owns current invocation, installation and recorded deployment. The supported
-fast-mode capability is explicit below; it does not change the packet layout.
+Checked protocol major1 and prepared checksum-free fast major2, maintained for
+the EMOS-owned gateway, P4 service and foreground `sdserve` application/EMOSlet.
+The [operating guide](../mainboard-sd.md) owns invocation and installed identities.
+Major2 is not installed or physically qualified. It changes checksum semantics
+while preserving the existing packet offsets and resident gateway ABI.
+The Author's standing policy forbids operational major1 traffic without an
+explicit request; its checked implementation remains compatibility code.
 Record contract revisions before changing wire behavior. Artifact lifecycle and
 qualification apply to exact combinations, not every implementation of major 1.
 
@@ -35,21 +38,27 @@ header 20 bytes, payload 0..220 bytes. No native C structure packing on wire.
 | Offset | Width | Meaning |
 | --- | --- | --- |
 | 0 | 2 | ASCII SD |
-| 2 | 1 | Protocol major, 1 |
+| 2 | 1 | Protocol major: 1 checked; 2 checksum-free fast |
 | 3 | 1 | Kind: 1 request, 2 response, 3 service presence |
 | 4 | 4 | Nonzero session ID chosen by host; presence uses application boot ID |
 | 8 | 4 | Request sequence; starts at 1, strictly increases, no wrap within session |
 | 12 | 1 | Operation |
 | 13 | 1 | Status; zero in requests |
 | 14 | 2 | Payload length |
-| 16 | 4 | CRC32/ISO-HDLC of header bytes 0..15 followed by payload |
+| 16 | 4 | Major1: CRC32/ISO-HDLC of header0..15 plus payload; major2: reserved zero |
 | 20 | variable | Payload |
 
-CRC starts FFFFFFFF, reflected polynomial EDB88320, final XOR FFFFFFFF. Empty
+In major1, CRC starts FFFFFFFF, reflected polynomial EDB88320, final XOR FFFFFFFF. Empty
 payloads remain CRC protected. Validate full length/magic/version/kind before
 queueing or interpreting an operation. CRC is corruption detection, not sender
 authentication. The service is deliberately launched on this development LAN;
 it is not an Internet-facing file server.
+
+Major2 encoders write zero at16..19 and never compute a packet CRC; decoders
+check framing, bounds, version, identity and reserved zeros. Payload corruption
+is not detected by a checksum. The20-byte envelope is retained because installed
+EMOS gateways admit records of20..240bytes. Removing its reserved four bytes
+would require a separate resident firmware change; none is introduced here.
 
 EMOS -> P4: private owned envelope `23,0,F6,length,record`. P4 -> EMOS:
 `8D,length,record`. F6/8D are local Extender service selectors, never sent to
@@ -66,7 +75,7 @@ exception, not admission of external `.emo` providers. See the
 [EMOS utility contract](https://github.com/bgates747/agon-emos/blob/main/docs/emos-utilities.md)
 and [deployment evidence](../tasks/AUDIT-008/HARDWARE.md).
 The receive ISR stores at most one admitted record;
-the foreground copies it under a bounded interrupt lock. CRC/file semantics
+the foreground copies it under a bounded interrupt lock. Record/file semantics
 belong in the application; valid keyboard packets never wait for filesystem I/O.
 Oversized/unowned frames are consumed by declared length, not scanned as keys.
 Malformed service records cannot acquire filesystem access. Transport framing
@@ -91,7 +100,10 @@ without following the existing keyboard lifecycle.
 
 ## Host request lifecycle
 
-1. GET `/sd/status` returns local capability, online/pending state and boot ID.
+1. GET `/sd/status` returns online/pending state, boot ID and the protocol from
+   the listener's presence (0 before discovery,1 checked,2 fast). The host
+   selects its carrier before HELLO. CLI `--fast` refuses major1 before sending
+   any record, without a fallback to checked traffic.
 2. POST `/sd/rpc` submits one binary request (Content-Length required, <=240).
    Return HTTP 202 while pending, HTTP 200 with the binary completed response,
    409 for another outstanding/conflicting request, 400 for malformed input and
@@ -126,20 +138,20 @@ or recovery targets before creating any sibling files.
 | STAT | path | size:u32, attributes:u8 |
 | LIST | cursor:u32, path | next-cursor:u32, eof:u8, optionally attributes:u8,size:u32,name-length:u8,name |
 | READ | offset:u32, count:u16 (<=216), path | total-size:u32, actual data (0..count bytes) |
-| BEGIN_WRITE | transfer:u32, length:u32, expected-crc:u32, path | transfer:u32, next-offset:u32 |
+| BEGIN_WRITE | transfer:u32, length:u32, expected-crc-or-fast-zero:u32, path | transfer:u32, next-offset:u32 |
 | WRITE | transfer:u32, offset:u32, data (1..212 bytes) | transfer:u32, next-offset:u32 |
-| FINISH_WRITE | transfer:u32 | size:u32, crc:u32 (measured normally; declared identity in fast mode) |
+| FINISH_WRITE | transfer:u32 | size:u32, crc-or-fast-zero:u32 |
 | ACTIVATE | transfer:u32 | empty |
 | CANCEL | transfer:u32 | empty |
 | RECOVER | action:u8, path | state:u8 |
 | EXIT | empty | empty, then close service and return to caller |
 
 HELLO features bit0 read, bit1 staged write, bit2 listing, bit3 recovery.
-Bit4 (0x10), added by sdserve v0.2.0, means the listener was explicitly started
-with `--fast`: FINISH/ACTIVATE omit whole-file digest rereads. Protocol major,
-packet CRC, framing and operation payload sizes remain unchanged. The updated
-host queries HELLO before BEGIN and rejects mismatched listener/`put --fast`
-selections. Without bit4, normal verification semantics apply.
+Bit4 (0x10) means the listener was started with `--fast`. Earlier installed
+sdserve v0.2.0 retained major1 packet CRCs and omitted only whole-file rereads;
+its evidence stays historical. Prepared bit6 (0x40), together with bit4 and
+major2, identifies corrected fast operation with no CRC work. The new host
+requires all three before a fast BEGIN. Checked major1 semantics are unchanged.
 
 LIST
 returns at most one entry, advances a zero-based filesystem enumeration cursor,
@@ -151,7 +163,9 @@ operation 0 online, operation 1 closing. Status codes: 0 OK, 1 bad request,
 7 integrity failure, 8 recovery required. Error payload optionally carries one
 byte underlying FatFS result; otherwise it is empty. Sequence validation errors
 do not advance the expected sequence. Other accepted operations, including
-filesystem failures, do advance and are cached. CRC-invalid records are dropped.
+filesystem failures, do advance and are cached. Major1 CRC-invalid and major2
+structurally invalid records are dropped. The listener rejects a wrong major
+for its startup mode before interpreting an operation.
 Status 4 is exclusively a stale session. An invalid/inactive transfer ID within
 the current session returns bad request (1), advancing and caching normally;
 it must not be confused with a session rejection that did not execute.
@@ -170,7 +184,8 @@ the open staged file, not power-failure durability.
 
 FINISH_WRITE requires the complete declared byte count and syncs/closes with
 checked results. Normally it then rereads the stage and verifies length/CRC.
-With bit4 set, it instead echoes the declared size/CRC without measuring them.
+With corrected fast major2, it returns the declared size and zero without
+computing a digest. Earlier major1 fast bytes echoed an unmeasured CRC.
 The internal state is finished, not necessarily verified. ACTIVATE is separate and preserves
 a recoverable old target. For target T, siblings are T.p17part (staged data),
 T.p17meta (fixed metadata) and T.p17bak (previous target). BEGIN rejects any
@@ -179,6 +194,12 @@ magic SDT1, transfer:u32, expected-size:u32, expected-crc:u32, metadata-crc:u32;
 the last CRC covers its first 16 bytes. Write/sync/close metadata before data
 admission. Its immutable expected identity is used for post-restart recovery.
 These sidecar suffixes are reserved and cannot themselves be client targets.
+
+Fast major2 uses20-byte SDT2 metadata: magic, transfer ID, declared size, then
+eight reserved zero bytes. BEGIN and MOVE require former CRC fields to be zero;
+no endpoint calculates a replacement checksum. Fast recovery does not evaluate
+old SDT1 metadata: it reports invalid metadata and preserves files for explicit
+checked recovery or direct card inspection. Checked recovery preserves SDT2.
 
 ACTIVATE requires this session's active, finished transfer; FINISH has already
 closed the stage and performed the normal-mode stage digest. ACTIVATE does not
@@ -248,20 +269,25 @@ file semantics are implemented by agon-emos projects/sdserve/src/service.c; host
 verification is in scripts/sdcard.py. The operating guide links exact retained
 builds and acceptance limits. Frozen procedures require review before reuse.
 
-## Opt-in fast upload (bounded physical validation)
+## Corrected checksum-free fast upload (prepared, not installed)
 
 The listener selects fast mode for its whole foreground invocation. The host
 `put --fast` skips its independent stage and activated-target READ comparisons,
-and reports activation without verification, never a verified SHA256. It still
-computes the expected CRC for immutable recovery metadata. Packet CRC, exact
-write counts, sync/close errors, sequence/replay, path/root/self protection,
-staging and backups are unchanged. Recovery's existing checks are unchanged.
-An older host still performs its own full readbacks, but does not know about the
-missing listener checks; use the paired updated host for explicit mode selection.
+and reports activation without verification, never a verified SHA256. Major2
+performs no packet, file, metadata, MOVE-descriptor or recovery CRC calculation.
+Exact write counts, sync/close errors, sequence/replay, path/root/self protection,
+staging and backups remain. Fast recovery action2 compares declared size when
+the stage is absent, without proving equal contents. Action3 checks target
+open/size/one-byte-read/close results before explicit backup removal, without
+reading the entire file. Other modes' metadata is preserved, not reinterpreted.
+Old clients/listeners are incompatible with major2; new host CLI `--fast`
+refuses a legacy peer before sending HELLO.
 
 This can accept corruption that full readback catches. It does not promise
-power-atomic replacement. Downloads and directory operations are unchanged.
-See [implementation and evidence](../tasks/REMOTE-005/FAST-TRANSFER.md).
+power-atomic replacement. A fast listener also uses major2 for downloads,
+directory operations, presence and errors. Earlier physical timing evidence
+belongs only to the [original fast implementation](../tasks/REMOTE-005/FAST-TRANSFER.md);
+it does not qualify or measure the corrected path.
 
 ## Development directory extension (not deployed)
 
@@ -273,7 +299,8 @@ not advertise it. Existing framing and operations 1–11 are unchanged.
 2. REMOVE (13): mode byte followed by one length-prefixed path. Mode 0 deletes
    one file or empty directory; mode 1 validates mutation guards without changing
    storage. A recursive client must preflight before descending into children.
-3. MOVE (14): total length u16, offset u16, descriptor CRC32 u32, then at most
+3. MOVE (14): total length u16, offset u16, descriptor CRC32 (major1) or reserved
+   zero (major2) u32, then at most
    184 descriptor bytes. Descriptor: class 6 u8, options 0 u8, source length u16,
    destination length u16, reserved 0 u16, then exact source and destination
    bytes. Each path is at most 120 bytes; descriptor at most 248 bytes. Reply:

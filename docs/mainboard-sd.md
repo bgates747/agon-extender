@@ -1,5 +1,13 @@
 # Mainboard SD service operating guide
 
+**2026-10-25 correction pending:** the installed original `--fast` skips whole-file
+verification but still computes packet CRCs. The Author's processor-link policy
+requires an explicit request before using those old bytes. The prepared paired
+host/P4/listener correction uses checksum-free fast major2 throughout, including
+metadata, directory operations and recovery. It is not installed or physically
+qualified; do not assume the new client alone upgrades old peers. See the
+[carrier contract](protocols/mainboard-sd.md) and [active correction](tasks/REMOTE-005.md#r05-11--remove-checksum-work-from-fast-transfers--2026-10-25).
+
 Two mainboard transfer methods exist. **Selected production v0.1.0** provides
 checked/fast transfers through the foreground `sdserve` EMOSlet in Legacy mode.
 The **newer development candidate** adds automatic, P4-card-staged WebDAV jobs
@@ -292,7 +300,7 @@ that recorded identity as the final visible Legacy result after playing the
 cue. A failed success hook makes the job status `failure` while preserving the
 primary command's separate status and exit code.
 
-## Opt-in fast transfer — bounded physical pass
+## Original opt-in fast transfer — retained bounded physical pass
 
 The deployed draft sdserve v0.2.0 uses the same executable and transport. Start
 it with `--fast` to omit whole-file stage/target CRC rereads; supply `--fast` to

@@ -33,17 +33,20 @@ def path_payload(path):
         raise ValueError('Path must be absolute, 1..120 bytes, without NUL')
     return bytes([len(data)])+data
 
-def record(session,seq,op,payload=b''):
+def record(session,seq,op,payload=b'',*,version=1):
     if len(payload)>220: raise ValueError('Payload too large')
-    h=HEADER.pack(b'SD',1,1,session,seq,op,0,len(payload))
-    return h+struct.pack('<I',zlib.crc32(h+payload))+payload
+    if version not in (1,2):raise ValueError('Unsupported protocol')
+    h=HEADER.pack(b'SD',version,1,session,seq,op,0,len(payload))
+    return h+(b'\0'*4 if version==2 else struct.pack('<I',zlib.crc32(h+payload)))+payload
 
 def response(data,request):
     if not 20<=len(data)<=240: raise RemoteError('Invalid response length')
     magic,version,kind,sid,seq,op,status,n=HEADER.unpack(data[:16])
-    if (magic,version,kind)!=(b'SD',1,2) or n!=len(data)-20 or data[4:13]!=request[4:13]:
+    if version not in (1,2) or (magic,version,kind)!=(b'SD',request[2],2) or n!=len(data)-20 or data[4:13]!=request[4:13]:
         raise RemoteError('Response identity/length mismatch')
-    if struct.unpack_from('<I',data,16)[0]!=zlib.crc32(data[:16]+data[20:]):
+    if version==2:
+        if data[16:20]!=b'\0'*4:raise RemoteError('Nonzero fast reserved field')
+    elif struct.unpack_from('<I',data,16)[0]!=zlib.crc32(data[:16]+data[20:]):
         raise RemoteError('Response CRC mismatch')
     return status,data[20:]
 
@@ -101,17 +104,25 @@ class Client:
     def rpc(self,op,payload=b''):
         if self.state['pending']:raise RemoteError('Uncertain earlier request; use resume before another command')
         if self.state['sequence']==0xffffffff:raise RemoteError('Session exhausted; restart service and use a fresh state')
-        self.state['pending']=record(self.state['session'],self.state['sequence']+1,op,payload).hex()
+        self.state['pending']=record(self.state['session'],self.state['sequence']+1,op,payload,
+                                     version=self.state.get('protocol',1)).hex()
         self.save();return self.resolve()
-    def connect(self):
+    def connect(self,*,require_fast=False):
         current=self.status()
-        if current.get('protocol')!=1:raise RemoteError('Unsupported protocol')
+        version=current.get('protocol')
+        if version not in (1,2):raise RemoteError('Unsupported protocol')
+        if require_fast and version!=2:
+            raise RemoteError('Checksum-free fast transfer requires the updated P4 and listener; no HELLO sent')
         if self.state['boot'] is not None and current['boot']!=self.state['boot']:
             raise RemoteError('Service restarted; preserve this state, use a new state file, and inspect stage recovery')
         if not current['online']:raise RemoteError('Run sdserve on the Agon first')
+        if self.state.get('protocol',1)!=version and (self.state['sequence'] or self.state['pending']):
+            raise RemoteError('Listener protocol changed; preserve state and use a new state file')
+        self.state['protocol']=version;self.save()
         if not self.state['sequence']:
             data=self.rpc(1);boot,chunk,features=struct.unpack('<IHH',data)
             if chunk!=212 or features&15!=15:raise RemoteError('Missing required capabilities')
+            if version==2 and features&0x50!=0x50:raise RemoteError('Missing checksum-free fast capability')
             self.state['boot']=boot;self.save()
     def download(self,path):
         result=bytearray();offset=0;total=None
@@ -172,9 +183,10 @@ class Client:
         self.directory_capability();self.operation_path(source);self.operation_path(destination)
         a=source.encode('ascii');b=destination.encode('ascii')
         descriptor=struct.pack('<BBHHH',6,0,len(a),len(b),0)+a+b
+        crc=0 if self.state.get('protocol',1)==2 else zlib.crc32(descriptor)
         for offset in range(0,len(descriptor),184):
             piece=descriptor[offset:offset+184];end=offset+len(piece)
-            reply=self.rpc(14,struct.pack('<HHI',len(descriptor),offset,zlib.crc32(descriptor))+piece)
+            reply=self.rpc(14,struct.pack('<HHI',len(descriptor),offset,crc)+piece)
             if reply!=struct.pack('<HB',end,int(end==len(descriptor))):raise RemoteError('Unexpected MOVE acknowledgement; inspect both paths')
     def remove(self,path,*,recursive=False,report=lambda *args:None):
         self.directory_capability();self.operation_path(path)
@@ -227,11 +239,13 @@ class Client:
         if chunk!=212 or features&15!=15:raise RemoteError('Missing required capabilities')
         if bool(features&16)!=bool(fast):
             raise RemoteError('Upload mode mismatch: use put --fast with sdserve --fast, or normal mode on both')
-        tid=secrets.randbelow(0xffffffff)+1;crc=zlib.crc32(data)
+        if fast and (not features&64 or self.state.get('protocol',1)!=2):
+            raise RemoteError('Listener still uses CRCs; checksum-free fast transfer requires updated peers')
+        tid=secrets.randbelow(0xffffffff)+1;crc=0 if fast else zlib.crc32(data)
         got=self.rpc(5,struct.pack('<III',tid,len(data),crc)+encoded)
         if got!=struct.pack('<II',tid,0):raise RemoteError('Unexpected BEGIN acknowledgement')
         print(f'Transfer {tid}, {len(data)} bytes; '+
-              ('fast mode, no whole-file readback' if fast else 'stage only until verified activation'),flush=True)
+              ('fast mode, no CRCs or whole-file verification' if fast else 'stage only until verified activation'),flush=True)
         for offset in range(0,len(data),212):
             chunk=data[offset:offset+212]
             got=self.rpc(6,struct.pack('<II',tid,offset)+chunk)
@@ -263,14 +277,14 @@ def main():
     move=commands.add_parser('move');move.add_argument('source');move.add_argument('destination')
     copy=commands.add_parser('copy');copy.add_argument('source');copy.add_argument('destination');copy.add_argument('--recursive',action='store_true');copy.add_argument('--replace',action='store_true');copy.add_argument('--fast',action='store_true')
     get=commands.add_parser('get');get.add_argument('path');get.add_argument('output',type=Path)
-    put=commands.add_parser('put');put.add_argument('input',type=Path);put.add_argument('path');put.add_argument('--activate',action='store_true');put.add_argument('--fast',action='store_true',help='Skip whole-file readbacks; requires sdserve --fast')
+    put=commands.add_parser('put');put.add_argument('input',type=Path);put.add_argument('path');put.add_argument('--activate',action='store_true');put.add_argument('--fast',action='store_true',help='No CRCs or whole-file verification; requires updated P4 and sdserve --fast')
     for name in ('activate','cancel'):commands.add_parser(name).add_argument('transfer',type=int)
     recover=commands.add_parser('recover');recover.add_argument('path')
     recover.add_argument('action',choices=('inspect','restore','abandon','cleanup'),default='inspect',nargs='?')
     a=p.parse_args();client=Client(a.url,a.state,a.timeout)
     if a.command=='status':print(json.dumps(client.status(),indent=2));return
     if a.command=='resume':print('Recovered response:',client.resolve().hex());return
-    client.connect()
+    client.connect(require_fast=getattr(a,'fast',False))
     report=lambda operation,path:print(json.dumps({'completed':operation,'path':path}),flush=True)
     if a.command=='mkdir':client.make_directory(a.path,parents=a.parents,report=report)
     elif a.command=='remove':client.remove(a.path,recursive=a.recursive,report=report)
