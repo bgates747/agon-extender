@@ -17,6 +17,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <lwip/sockets.h>
+#include "http_peer.hpp"
 namespace agon::extender::controller {
 class Runtime {
  public:
@@ -98,12 +99,13 @@ class Runtime {
   }
   static esp_err_t open(httpd_req_t*r){
     std::uint8_t data[24]{};if(!body(r,data,sizeof(data))||get32(data+20))return respond(r,400,"{\"error\":\"invalid open\"}");
-    sockaddr_in peer{};socklen_t length=sizeof(peer);
-    if(getpeername(httpd_req_to_sockfd(r),reinterpret_cast<sockaddr*>(&peer),&length)<0||peer.sin_family!=AF_INET)return respond(r,400,"{\"error\":\"IPv4 required\"}");
+    sockaddr_storage peer{};socklen_t length=sizeof(peer);std::uint32_t address;
+    if(getpeername(httpd_req_to_sockfd(r),reinterpret_cast<sockaddr*>(&peer),&length)<0||
+       !httpPeerIPv4(peer,length,address))return respond(r,400,"{\"error\":\"IPv4 required\"}");
     auto&self=owner(r);int result;std::uint64_t session;
     {std::lock_guard<std::mutex>lock(self.mutex_);
       result=self.link_lost_.load()||!self.worker_.load()?503:self.core_.open(get64(data),get64(data+8),
-        {peer.sin_addr.s_addr,get16(data+16)},get16(data+18),random64(),now());session=self.core_.snapshot(now()).session;}
+        {address,get16(data+16)},get16(data+18),random64(),now());session=self.core_.snapshot(now()).session;}
     if(result!=200)return respond(r,result,"{\"error\":\"admission refused\"}");
     char out[100];snprintf(out,sizeof(out),"{\"session\":\"%016llx\",\"timeout_ms\":%u}",(unsigned long long)session,get16(data+18));
     return respond(r,200,out);
