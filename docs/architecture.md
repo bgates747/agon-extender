@@ -24,6 +24,17 @@ The remaining sections state design obligations unless an implemented subset is
 identified explicitly. Full fault recovery, generalized EDU APIs and compatibility
 coverage must not be inferred from the working console or diagnostic services.
 
+## Processor communication cost
+
+EMOS and Extender VDP must not compute or require CRCs for their communications
+unless the Author specifically requests them. This includes application copies
+of their traffic. Use ordinary MOS/VDP framing and existing transport error
+handling; do not substitute another software checksum. Firmware space,
+communication bandwidth and processor time are scarce resources on this hobby
+computer. The [accepted policy](decisions/ADR-2026-10-25-processor-link-crc-policy.md)
+broadens the existing ExExt prohibition; installed experimental CRC-bearing
+components are not thereby corrected or qualified.
+
 ## Analog controller ownership
 
 Oryx publishes latest controller state over UDP, with separately numbered and

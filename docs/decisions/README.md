@@ -51,6 +51,8 @@ attention instructions are not continuing execution authorization.
 
 [Agon controller viewer in mode20](ADR-2026-10-24-controller-viewer.md): Accepted / Complete within viewer scope; live EMOS delivery remains in INPUT-001.
 
+[No processor-link CRCs without an explicit Author request](ADR-2026-10-25-processor-link-crc-policy.md): Accepted / Complete; applies to EMOS–Extender VDP communications generally, including controller traffic.
+
 [Staged WebDAV with EMOS admission](ADR-2026-09-27-staged-webdav-admission.md): Proposed / Partial; review and open decisions in REMOTE-005.
 
 When changing an ADR's identity, title, status or completeness, update this index.

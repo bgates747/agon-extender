@@ -1,19 +1,20 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r190
-updated_at: 2026-10-25T03:51:13Z
+registry_revision: r191
+updated_at: 2026-10-25T04:24:35Z
 
 artifacts:
   - artifact_id: controller-viewer
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: controller-viewer-r02
+    latest_identity: controller-viewer-r03
     status: experimental
     variants: []
     description: Mode20 AgonDev controller state viewer through EMOS, with explicit replay.
     notes:
-      - Author approved r01, then r02 diagnostic correction/deployment on 2026-10-24; physical review pending.
+      - Author approved r03 for the checksum-free96-byte matched correction on2026-10-25; build/deployment pending, not physically accepted.
+      - r01/r02 human reviews failed with controller and keyboard input loss; retain evidence.
 
   - artifact_id: hdmi-aspect
     kind: test_fixture
@@ -42,11 +43,12 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r11
+    latest_identity: indexed-hdmi-r12
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
+      - r12 is the Author-approved checksum-free controller carrier2 correction; preserves the installed r11 HDMI composition. Build/deployment pending.
       - r11 accepts IPv4-mapped IPv6 HTTP peers while retaining IPv4 UDP binding; Author approved correction identity/deployment, physical validation pending.
       - r10 adds optional controller input to the retained r09 HDMI composition; Author approved experimental identity/deployment, physical validation pending.
       - r07 applies the HDMI-003 native640x240 row-aspect correction on the same matched source as rgb-001-r13. Host-tested candidate; build/hardware/visual qualification pending.
@@ -576,13 +578,14 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.25
+    latest_identity: agon-emos-v0.1.26
     status: draft
     variants:
       - port008-forward
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - v0.1.26 is the Author-approved matched controller correction: checksum-free96-byte payload and interrupt-enabled READ; build/deployment pending.
       - v0.1.25 adds optional resident controller cache/gateway; Author approved experimental identity/deployment, physical review pending.
       - v0.1.24 adds bounded mainboard Pingo P3DR completion dispatch independently of keyboard source; INTEG-015 linked checks and bounded physical completion/input test pass, installed draft pending Author acceptance; not production.
       - v0.1.22 adds finite-job private binding/terminal exchange and two-slot finite reception; REMOTE-005 A09-A11 candidate under standing preapproval.

@@ -134,6 +134,7 @@ EMOS application decisions remain here for later review.
 | IN001-D07 | Selected for LAN: latest snapshots plus128 retained ordered transitions, ACK of storage | EMOS consumption/acknowledgement is unresolved; queue overflow invalidates input; no end-to-end reliability claim |
 | IN001-D08 | LAN carries raw values without dead zones/inversion; consumer calibration policy remains open | Host preview calibration does not alter transport; existing fsim response remains consumer-owned |
 | IN001-D09 | Implemented candidate for review: resident `ext.controller` cached READ, separate bounded REQUEST and retained-edge consumption | Uses existing gateway/F7 control allocation and private CI namespace/8E reply; no app callback or raw UART. Blocking per-read RPC was avoided to keep response waits outside the UI read. Physical timing/reset/coexistence and final API acceptance remain open |
+| IN001-D10 | Accepted by Author,2026-10-25: no CRCs in EMOS–Extender VDP communications unless specifically requested | Firmware space, communication bandwidth and processor time are scarce. Ordinary framing/transport error handling remains; another software checksum is not a substitute. Installed controller candidate is nonconforming; correction and newly identified builds remain outstanding |
 
 ## Stable implementation subtasks
 
@@ -591,3 +592,106 @@ controls at handback. This is service preparation, not Agon consumption proof.
 Author review: `VDU 22 20`, wait at least one whole second, then `RUN &040000`.
 Report the full `EMOS link lost: ...` line if failure recurs. IN001-F02 remains
 unresolved until that diagnostic or working physical input establishes cause.
+
+
+### Viewer-r02 human result and linked-image diagnosis — 2026-10-25
+
+The Author reports `EMOS link lost: request35` (reading tentative). The viewer
+still fails after initial drawing was moved before REQUEST. Do not claim that
+initial drawing caused or corrected IN001-F02. REQUEST/unavailable35 can follow
+resident lease expiry or loss of healthy UART ownership/admission; the failing
+operation alone does not distinguish those paths.
+
+A bounded headless instruction experiment executes the exact installed
+131,010-byte EMOS image, including the real public gateway, controller service,
+assembly byte parser and complete98-byte response dispatch. Only the physical
+UART send boundary is mocked; clock/IRQ arrivals are controlled. OPEN, READ busy,
+REQUEST, framed8E response, READ of actual axes/triggers and next REQUEST pass.
+This rules out a deterministic ABI/wire decoding failure in that controlled
+sequence, not physical timing/IRQ/FIFO interaction. Response dispatch and READ
+each execute roughly177,000 instructions in this model; those counts are not
+physical cycles, calibrated latency or a demonstrated timeout cause.
+
+The running viewer has not been stopped or reset during this diagnosis. P4
+still reports keyboard admission, but that is not proof that eZ80 input works.
+Author Escape/CLI observation is needed to distinguish controller-only expiry
+from loss of the resident keyboard/UART path. The restarted Oryx source also
+ended after82.9seconds with missing fresh ACKs; its log/capture are retained.
+LAN cadence/timeout remains a separate unresolved failure, not an explanation
+for why EMOS returns35 rather than a responsive invalid-source snapshot.
+
+
+Author confirms Escape does not exit viewer-r02, and also failed in the prior
+run. This supports investigating the shared resident input path, rather than
+only controller lease freshness. Source inspection finds READ executes two
+96-byte CRC calculations while keyboard interrupts are disabled, including when
+a new P4 reply is outstanding. That is an unsafe receive-overlap window: UART1
+can receive a100-byte response while EMOS cannot drain its16-byte FIFO and has
+not asserted receive backpressure. Actual physical fault timing has not been
+captured, and the running failed instance remains preserved.
+
+The Author challenges why controller delivery uses checksums when ordinary MOS
+packets do not. CRC was an agent-added private protocol choice, not an official
+MOS requirement. Recommendation: remove the controller UART/application CRC
+work and rely on bounded typed/length framing, caller/query correlation and the
+existing UART error/fault handling. Do not treat this discussion as approval
+of a new wire contract, firmware version or deployment. LAN checksum policy is
+a separate transport decision. No correction has yet been built or flashed.
+
+
+## IN001-F02 correction prepared — 2026-10-25
+
+The Author directs continuing the bug fixes after accepting the no-CRC policy.
+The old installed ROM is reproduced under a bounded instruction-arrival model:
+a P4 reply overlaps a cached READ, UART1 FIFO overruns, the actual resident
+fault handler disables keyboard input, and the next REQUEST returns35. This
+matches the observed controller error plus dead Escape. It is controlled
+instruction evidence, not a physical timing capture.
+
+1. Prepared carrier2 removes every controller CRC calculation and the response
+   trailer: result96bytes/`CIS2`. The existing fixed F7 envelope remains16bytes
+   with its last two bytes reserved zero; this avoids changing the shared
+   console recognizer. Old carrier1 and98-byte app buffers are refused. P4,
+   EMOS and the Agon viewer must be updated as a matched combination.
+2. EMOS returns busy31 for READ while a refresh is pending. With no outstanding
+   request the cache cannot be republished; EMOS unlocks interrupts for copying,
+   zeroing unused records and freshness calculations, then briefly locks to
+   revalidate and commit post-copy acknowledgement. Tick/fault cleanup changes
+   flags without modifying cache bytes. The request timestamp now precedes its
+   waiting flag to avoid an ISR observing an old timestamp on a new request.
+3. The linked correction rejects the controlled overlap without faulting,
+   returns a coherent fresh sample afterward, and delivers an entire Escape
+   record through the actual receive IRQ during a cached READ. Normal cached
+   READ masking falls from176,936 to82 executed instructions in the tested
+   path. These are instruction counts, not calibrated elapsed time/cycles.
+4. All27 host/controller tests, the resident host harness, AgonDev viewer
+   compilation and the full EMOS wrapper/mandatory linked checks pass. The
+   unversioned ROM uses130,748bytes with324free; exact named-build size remains
+   to be measured. Canonical P4/EMOS carrier copies match. Actual P4 target
+   compilation passes for the network owner and console owner. Its isolated
+   source starts from installed r11/source14c7f7b6 and adds only the two
+   controller files (commit0b49540b); display code/configuration stays pinned.
+5. Full P4 preparation is blocked specifically by the indexed-PPA builder's
+   requirement for a clean, named indexed-hdmi revision. Proposed matched
+   identities are EMOSv0.1.26, indexed-hdmi-r12 and controller-viewer-r03;
+   Author naming agreement is still required before identified builds or
+   deployment. Do not reuse a prior revision or weaken the builder gate.
+6. No live input, reset, flash, SD transfer or test invocation was performed.
+   The failed viewer instance and existing firmware/startup remain preserved.
+   Oryx publication/receiver cadence and missing-ACK timeout are a separate
+   unresolved gate, not claimed corrected by this UART change. Existing
+   non-controller console/SD CRC dependencies are separate policy migration
+   debt; this correction makes no platform-wide CRC-removal claim.
+
+The maintained paired contract now describes the prepared checksum-free
+format; the earlier carrier description is frozen under the task evidence.
+Build/target-object/linked-test logs and hashes remain in the ignored local
+INPUT-001 evidence record. Physical review and production promotion remain open.
+
+
+Author approves EMOSv0.1.26, indexed-hdmi-r12 and controller-viewer-r03 on
+2026-10-25 and directs continuing the matched correction. This settles naming
+for the private experimental carrier/API change; it does not accept the feature
+or promote production. Build/installation verification is authorized, with the
+viewer left stopped for Author invocation. Preserve mainboard VDP/startup and
+follow the no-CRC processor-communication policy for deployment.

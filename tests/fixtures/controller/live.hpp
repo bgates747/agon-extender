@@ -35,7 +35,7 @@ class Live {
         if(!opened)return false;
         const auto result=call(1);
         if(!result){
-            if(request[22]!=sizeof(output)||request[23]||request[24]||memcmp(output,"CIS1",4)||output[11]>8){error=19;return false;}
+            if(request[22]!=sizeof(output)||request[23]||request[24]||memcmp(output,CONTROLLER_RESULT_MAGIC,4)||output[11]>8){error=19;return false;}
             if(!have_source||memcmp(source,output+12,16)){
                 memcpy(source,output+12,16);have_source=true;edge=0;
                 ++s.generation;memset(s.presses,0,sizeof(s.presses));

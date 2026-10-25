@@ -225,6 +225,18 @@ problems, identify the project and version or commit, evidence or issue, local
 remedy, and removal condition. Distinguish defects from intentional upstream
 behavior and local environment constraints.
 
+## Processor communication cost — Author instruction, 2026-10-25
+
+Do not add or use CRCs for communications between Extender VDP (E/VDP) and
+Extender MOS (E/MOS, EMOS) unless the Author specifically requests them. This
+applies to control packets, requests, replies, payloads and application copies
+of that traffic. Use ordinary MOS/VDP framing and existing transport error
+handling. Do not substitute another software checksum to evade this rule.
+
+This is a hobby computer with limited processing power, firmware space and
+communication bandwidth. Treat all three as scarce resources; additional
+integrity work is not a default protocol requirement.
+
 Prefer numbered items over bullets when the Author may need to reference or
 dispose individual points quickly.
 

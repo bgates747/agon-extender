@@ -38,7 +38,7 @@ uint24_t controller_gateway_call(std::uint8_t*r){
 }
 }
 static void deliver(){
-    std::uint8_t p[98];assert(peer.take(p,core,now_ms));
+    std::uint8_t p[CONTROLLER_RESULT_SIZE];assert(peer.take(p,core,now_ms));
     irq=0;emos_controller_packet(p,sizeof(p));irq=1;
 }
 int main(){
@@ -71,7 +71,7 @@ int main(){
     // the fake clock. This is a sequence-boundary check, not a latency run.
     for(unsigned i=0;i<65004;++i){
         assert(client->update(sample));
-        std::uint8_t body[98];
+        std::uint8_t body[CONTROLLER_RESULT_SIZE];
         if(peer.take(body,core,now_ms)){irq=0;emos_controller_packet(body,sizeof(body));irq=1;}
     }
     assert(closes==1&&sample.presses[5]==1&&sample.presses[0]==0);

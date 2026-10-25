@@ -8,7 +8,9 @@ independently verified. Oryx-to-P4 admission/live snapshots work, but the first
 Agon viewer review reported an EMOS link failure. Diagnostic viewer-r02 is
 installed and preloaded, stopped for Author review. It displays the failed
 service operation/status and draws its initial screen before requesting input.
-The cause and physical controller delivery remain unresolved;
+The masked-read UART failure is reproduced offline; a checksum-free correction
+with interrupt-enabled snapshot copies passes source/target checks but is not
+yet installed. Physical controller delivery remains unresolved;
 [INPUT-001](tasks/INPUT-001.md) retains the evidence and remaining gates.
 The first receive window accepted about22 states/s despite120Hz publication;
 rate/load tuning remains open. Physical Oryx→P4→Agon controller delivery has
