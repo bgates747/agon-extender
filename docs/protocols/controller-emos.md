@@ -2,8 +2,9 @@
 
 The mode20 Agon application reads controller state through a candidate resident
 EMOS service. P4 retains button/D-pad transitions until EMOS has copied them to
-the caller. This describes uninstalled development source, not an accepted
-production ABI or physical qualification. [INPUT-001](../tasks/INPUT-001.md)
+the caller. This describes installed development candidates, not an accepted
+production ABI or physical qualification. The first viewer review reports a
+link failure; diagnostic viewer-r02 review is pending. [INPUT-001](../tasks/INPUT-001.md)
 owns review, naming and hardware gates.
 
 The canonical byte definitions are

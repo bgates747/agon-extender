@@ -4,7 +4,9 @@ This mode20 AgonDev C++ application recreates the host viewer's controls in
 512×384/64 colours with12×16 text. It reads live input through the matched
 EMOS/P4 development service, or plays explicitly labelled recorded input.
 All three components build and the native software pipeline passes. The
-candidates are uninstalled; physical Oryx→P4→Agon delivery is not yet proven.
+development candidates are installed, but the first physical review reported
+an EMOS link failure. Diagnostic viewer-r02 is staged; physical
+Oryx→P4→Agon delivery is not yet proven.
 
 ## Build without operating a bench
 
@@ -61,7 +63,7 @@ For recorded-input review use `RUN &040000 replay`. An optional path after
    Live reads/refresh requests run independently at nominal60Hz, with one
    outstanding reply. Source-session changes reset observed press counts;
    repeated cached reads never count a tap twice. Link loss remains visible
-   until Escape; a new application invocation explicitly reopens the service.
+   until Escape, including the failed gateway operation and numeric status; a new application invocation explicitly reopens the service.
    Healthy wire leases renew before sequence exhaustion without resetting the
    input source or observed counts.
 3. R clears only displayed counts. Escape exits; other keys, including Alt-Tab,

@@ -565,3 +565,29 @@ Author approves viewer-r02 diagnostic replacement and deployment on2026-10-24.
 Firmware and startup remain unchanged; leave the replacement stopped for Author
 invocation. Keyboard admission/source have since expired; ordinary monitored
 recovery is required before the SD transfer.
+
+
+### Viewer-r02 diagnostic deployment handback — 2026-10-24
+
+`controller-viewer-r02-b2026-10-25-03-51-23Z`, source
+`2055b680f4e7fb2a28602e3d6bcd0b494018e9a3`, is deployed at
+`/extender/controller/ctrlview.bin`:28,795bytes, SHA256
+`deb715574983c8c4017dc960299d23cf80a12bb3b270884b41d48053ec6fc62f`. Independent full binary
+readback matches. The prior viewer-r01 binary is retained locally and as the
+listener sibling backup. The finite `/extender/install/cv-load02.txt` loads
+this binary then starts the foreground listener; observed listener reentry
+establishes LOAD completion. Listener EXIT closes that final batch command;
+Legacy CLI has the viewer preloaded at040000, never RUN by the agent.
+
+One ordinary Agon reset restored fresh input admission after the failed review;
+no P4 reset or firmware flash was needed. Cleared/fresh ExCom CLI/status output
+verified actual EMOS command execution before returning Legacy and transferring.
+Startup was read back before and after deployment and matches its retained
+99-byte load-only original. P4r11, EMOSv0.1.25 and mainboard VDP remain unchanged.
+The timed-out Oryx source ended; its recording/logs are retained. An explicitly
+restarted sender has fresh P4 active/valid snapshots, no fault and neutral
+controls at handback. This is service preparation, not Agon consumption proof.
+
+Author review: `VDU 22 20`, wait at least one whole second, then `RUN &040000`.
+Report the full `EMOS link lost: ...` line if failure recurs. IN001-F02 remains
+unresolved until that diagnostic or working physical input establishes cause.
