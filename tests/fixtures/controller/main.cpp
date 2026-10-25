@@ -114,6 +114,10 @@ int main(int argc,char **argv){
     const uint8_t font[]={23,0,0x95,1,1,250,12,16,14,0,23,0,0x95,0,1,250,0};
     ok=write_bytes(font,sizeof(font))&&ok;
     Canvas canvas;controller_view::View<Canvas> view(canvas);controller_view::Sample sample{};sample.replay=recorded;
+    // No controller request may be outstanding during the first, complete
+    // screen draw: rendering must not consume the resident transport deadline.
+    view.paint(sample);ok=ok&&canvas.healthy;
+    char link_error[43]{};
     const auto start=ticks();auto last=start;
     uint32_t elapsed_ticks=0,next_paint=0,next_input=0,fuse=20000000;
     bool exit=false,r_down=false,link_ok=true;
@@ -124,7 +128,13 @@ int main(int argc,char **argv){
         if(recorded)ok=replay.advance(elapsed_ticks*1000/120,sample);
         else if(link_ok&&elapsed_ticks>=next_input){
             link_ok=live.update(sample);next_input=elapsed_ticks+2;
-            if(!link_ok){sample.valid=sample.connected=false;view.status("EMOS controller link lost");}
+            if(!link_ok){
+                sample.valid=sample.connected=false;
+                snprintf(link_error,sizeof(link_error),"EMOS link lost: %s %u",
+                         live.error_operation==1?"read":live.error_operation==2?"request":"service",
+                         unsigned(live.error));
+                view.status(link_error);
+            }
         }
         if(!ok)break;
         // Six sysvar units give nominal20Hz, staying below30Hz even when an
@@ -144,6 +154,7 @@ int main(int argc,char **argv){
     const uint8_t cleanup[]={4,23,0,0x95,0,255,255,0,23,0,0x95,4,1,250,23,0,160,1,250,2};
     ok=write_bytes(cleanup,sizeof(cleanup))&&ok;
     bool restored=mode.restore();
+    if(link_error[0])puts(link_error);
     puts(!restored?"Controller viewer cleanup failed.":!ok||!fuse?"Controller viewer failed.":"Controller viewer closed.");
     return ok&&restored&&fuse?0:1;
 }

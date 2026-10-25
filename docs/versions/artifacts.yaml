@@ -1,19 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r189
-updated_at: 2026-10-25T03:13:48Z
+registry_revision: r190
+updated_at: 2026-10-25T03:51:13Z
 
 artifacts:
   - artifact_id: controller-viewer
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: controller-viewer-r01
+    latest_identity: controller-viewer-r02
     status: experimental
     variants: []
     description: Mode20 AgonDev controller state viewer through EMOS, with explicit replay.
     notes:
-      - Author approved identity and bench deployment on 2026-10-24; physical review pending.
+      - Author approved r01, then r02 diagnostic correction/deployment on 2026-10-24; physical review pending.
 
   - artifact_id: hdmi-aspect
     kind: test_fixture

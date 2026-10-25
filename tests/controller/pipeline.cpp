@@ -18,6 +18,7 @@ extern "C" {
 volatile std::uint8_t emos_key_source=2,emos_key_faulted=0,uart1_keyboard_owned=1;
 std::uint32_t emos_controller_gateway(void*);
 void emos_controller_packet(const std::uint8_t*,std::uint8_t);
+void emos_controller_tick();
 std::uint8_t emos_keyboard_lock(){auto old=irq;irq=0;return old;}
 void emos_keyboard_unlock(std::uint8_t value){irq=value;}
 std::uint8_t emos_keyboard_clock(){return std::uint8_t(now_ms*120/1000);}
@@ -76,4 +77,10 @@ int main(){
     assert(closes==1&&sample.presses[5]==1&&sample.presses[0]==0);
     assert(client->close());
     assert(closes==2);
+    // Preserve the actual failed operation/status for the on-screen diagnosis.
+    assert(client->open()&&client->update(sample));
+    now_ms+=300;emos_controller_tick();
+    assert(!client->update(sample));
+    assert(client->error==35&&client->error_operation==1);
+    assert(client->close());
 }

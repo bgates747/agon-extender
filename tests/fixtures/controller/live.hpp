@@ -15,6 +15,7 @@ class Live {
     uint8_t request[66]{},input[1]{},output[CONTROLLER_RESULT_SIZE]{};
     uint8_t source[16]{};uint32_t edge=0;bool opened=false,have_source=false;
     uint24_t call(uint8_t operation){
+        error_operation=operation;
         memset(request,0,sizeof(request));input[0]=operation;
         request[0]=66;request[2]=1;request[4]=3;request[5]=10;request[6]=2;
         pointer(request+10,uint24_t(input));request[13]=1;
@@ -25,6 +26,7 @@ class Live {
     static void pointer(uint8_t*p,uint24_t value){p[0]=value;p[1]=value>>8;p[2]=value>>16;}
  public:
     uint24_t error=0;
+    uint8_t error_operation=0;
     bool open(){
         if(!controller_gateway_available()){error=35;return false;}
         error=call(0);opened=error==0;return opened;

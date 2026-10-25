@@ -536,3 +536,32 @@ observation, not a calibrated latency/throughput qualification or proof of
 where packets were lost. Retained transitions remain queued until consumption.
 Receive cadence/load needs investigation in IN001-04/IN001-08 after the first
 manual state/visual review; do not advertise120Hz P4 application delivery.
+
+## IN001-F02 — First human viewer run loses EMOS link — 2026-10-24
+
+The Author invoked viewer-r01 and reports no position markers or button
+changes; the displayed status is `EMOS controller link lost`. Host/P4 status
+remains active and valid, with44 retained transitions not consumed by Agon.
+This bounds the observed failure to Agon-side service/delivery, rather than
+controller detection. The exact failing operation/status is not yet known.
+The running application and firmware have been left untouched during diagnosis.
+
+1. Prepared viewer correction: perform the initial full screen draw before
+   the first controller REQUEST. Previously that draw ran after REQUEST and
+   could consume its30-unit deadline. This is a timing hazard, not yet a
+   demonstrated physical cause of this failure.
+2. Preserve and display the failed gateway operation and numeric status on the
+   failure screen and after normal exit; do not automatically reopen a failed
+   lease or replay the application.
+3. Native cross-component regression passes, including an actual resident
+   timeout returning READ/unavailable35 through the application client.
+   The modified app cross-compiles as unversioned, nondeployable preparation.
+4. Author approval of viewer-r02 is required before stamping/deploying the
+   replacement. Keep EMOS, P4, mainboard VDP and startup unchanged for this
+   diagnostic step. Actual cause, corrected physical input handling and visual
+   acceptance remain open; preserve the original viewer-r01 failure.
+
+Author approves viewer-r02 diagnostic replacement and deployment on2026-10-24.
+Firmware and startup remain unchanged; leave the replacement stopped for Author
+invocation. Keyboard admission/source have since expired; ordinary monitored
+recovery is required before the SD transfer.
