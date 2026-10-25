@@ -104,6 +104,7 @@ class State:
         self.axes = axes
         self.values = dict(values)
         self.pressed = set(pressed)
+        self.last_edges = []
         self.pending_axes = {}
         self.pending_keys = []
         self.dropping = False
@@ -151,12 +152,14 @@ class State:
         elif event_type == EV_KEY and code in BUTTONS and value in (0, 1):
             self.pending_keys.append((code, value))
         elif event_type == EV_SYN and code == SYN_REPORT:
+            self.last_edges = []
             self.values.update(self.pending_axes)
             for key, down in self.pending_keys:
                 if bool(down) != (key in self.pressed):
                     (self.pressed.add if down else self.pressed.discard)(key)
                     (self.presses if down else self.releases)[key] += 1
                     self.history.append((received_ns, key, bool(down)))
+                    self.last_edges.append((key, bool(down)))
             for key, current in self.pending_axes.items():
                 self.stats[key].observe(current)
             self.pending_axes.clear()
@@ -312,6 +315,8 @@ class Recorder:
 class Observer:
     def __init__(self, selected=None):
         self.selected = selected
+        self.on_frame = None
+        self.on_gap = None
         self.device = None
         self.message = 'Waiting for F310 in X mode'
         self.next_scan = 0
@@ -380,12 +385,16 @@ class Observer:
                 received = time.monotonic_ns()
                 self.log('event', session=self.session, received_ns=received, **event)
                 action = self.state.feed(event['type'], event['code'], event['value'], received)
+                if action == 'gap' and self.on_gap:
+                    self.on_gap()
                 if action == 'resync':
                     values, pressed = self.device.query()
                     self.state.resync(values, pressed)
                     self.log('resync', session=self.session, state=self.state.snapshot())
                 elif action == 'frame':
                     self.log('frame', session=self.session, state=self.state.snapshot())
+                    if self.on_frame:
+                        self.on_frame(self.state)
         except OSError as error:
             self.log('disconnect', session=self.session, reason=str(error))
             self.device.close()

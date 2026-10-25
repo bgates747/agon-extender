@@ -26,8 +26,15 @@ current bench ownership, foreground state or firmware admission.
 [controller_view.py](controller_view.py) and [controller_input.py](controller_input.py)
 read an F310 on a Linux desktop, display native/eight-bit axis and button state,
 and record/replay timestamped input. See the [viewer guide](../docs/testing/controller-viewer.md).
-Author handling review remains pending; these tools do not send input to P4 or
-EMOS and do not implement a game-controller transport.
+Host appearance and exercised recordings have passed Author review; these tools
+do not themselves send input to P4 or EMOS.
+
+[controller_udp.py](controller_udp.py) adds an explicitly invoked developmental
+LAN sender. It defaults to120Hz/250ms with retained button/D-pad taps and stops
+on source/session loss. The P4 receiver requires a separate controller-enabled
+build/installation; the EMOS/Agon consumer is an uninstalled candidate. See the
+[controller guide](../docs/controller-input.md) and
+[wire contract](../docs/protocols/controller-lan.md).
 
 ## P4-local storage candidate client
 

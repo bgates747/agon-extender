@@ -12,6 +12,7 @@ established by a successful experiment or by this documentation reconciliation.
 |---|---|---|
 | Ordinary display | Legacy and bounded ExCom over UART work; Dual/Exclusive Extended remain broader design requirements | [Console contract](protocols/excom-console.md), PORT-003 / SETUP-005 |
 | Input | Mainboard selection and admitted Extender USB/browser/agent input; platform/fault limits remain | [Keyboard guide](remote-keyboard.md) |
+| Analog controller | Oryx sender, P4 cache/peer, EMOS service and Agon viewer candidates pass software/build checks; uninstalled | [Controller guide](controller-input.md) |
 | Mainboard SD | Foreground EMOSlet through resident `ext.sdlink` in Legacy; not a background filesystem | [SD guide](mainboard-sd.md) |
 | Generalized callbacks | Accepted production requirement; current private timing callback is not the finalized general ABI | [ADR-0017](decisions/ADR-0017-generalized-edp-callbacks.md) |
 | Audio / P4-local SD / local video | Accepted or researched directions, not current working output/storage capabilities | PORT-004 / PORT-007 / P4PC-001 |
@@ -22,6 +23,30 @@ established by a successful experiment or by this documentation reconciliation.
 The remaining sections state design obligations unless an implemented subset is
 identified explicitly. Full fault recovery, generalized EDU APIs and compatibility
 coverage must not be inferred from the working console or diagnostic services.
+
+## Analog controller ownership
+
+Oryx publishes latest controller state over UDP, with separately numbered and
+retained button/D-pad transitions. The existing P4 Ethernet owner admits one
+sender, starts a bounded socket worker and stores coherent input. Session loss
+invalidates raw state; recovery requires deliberate sender restart. Defaults
+are120Hz publication and250ms timeout, adjustable during development. Native
+capture is preserved; compact F310 encoding is used only when exactly reversible.
+
+Controller, keyboard, video and SD sessions have independent ownership. The
+controller worker never injects keyboard input, writes UART or changes routing.
+EMOS owns the transport/application interface, and each consumer owns
+response curves and loss policy. P4 queue acknowledgement means stored input,
+not application consumption. The candidate resident consumer acknowledges only
+after copying transitions to its caller. It is uninstalled and unqualified.
+See the [decision](decisions/ADR-2026-10-24-controller-udp.md),
+[LAN contract](protocols/controller-lan.md) and [usage boundary](controller-input.md).
+
+The Author selects an Agon/eZ80 controller viewer in mode20 and permits AgonDev
+C++ for that application. Its live client and explicit replay mode compile; the
+matching [EMOS read candidate](protocols/controller-emos.md) passes software and
+ROM/linked checks. This does not adopt a different EMOS foundation/toolchain.
+See the [viewer decision](decisions/ADR-2026-10-24-controller-viewer.md).
 
 ## Test appliance and host-runner ownership
 

@@ -33,6 +33,9 @@ constexpr char kIdentity[]="legacy-devkit";
 }
 #endif
 #include "../input/p4_usb_host.hpp"
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+#include "../input/controller/appliance.hpp"
+#endif
 #include "../input/usb_cli_keyboard.hpp"
 #include "../input/usb_key_queue.hpp"
 #include "../diagnostics/frame_timing.hpp"
@@ -81,6 +84,9 @@ void consoleLayout(int region) {
 }
 void consolePoll() { if(console_locale_pending) console_admit_pending=true; }
 bool consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+  if(agon::extender::controller::applianceRequest(p))return true;
+#endif
   uint8_t reply[CONSOLE_SIZE];
   if (p[2]==PARALLEL_WIRE_VERSION) {
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
@@ -574,6 +580,14 @@ void runConsole(VDUStreamProcessor *processor) {
 #endif
     keyboard.tick(now,emit);
     agon::extender::input::usbhost::setLeds(keyboard.ledState());
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+    if(!used && !discard && console_keys.empty() && !s.count && !transmitting && !console_admit_pending){
+      uint8_t reply[CONTROLLER_RESULT_SIZE];
+      if(agon::extender::controller::applianceTake(reply)){
+        s.write(CONTROLLER_REPLY);s.write(uint8_t(sizeof(reply)));s.write(reply,sizeof(reply));
+      }
+    }
+#endif
 #if defined(AGON_EXTENDER_SD_SERVICE)
     // Service records wait behind complete keyboard/reply packets. Only this
     // task touches the UART queue; HTTP callbacks never send bytes themselves.

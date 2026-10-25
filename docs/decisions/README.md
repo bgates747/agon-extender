@@ -47,6 +47,10 @@ attention instructions are not continuing execution authorization.
 
 [Test appliance mode lifecycle and normal reset](ADR-2026-10-15-test-appliance-lifecycle.md): Accepted / Complete; implementation and runner migration remain in SCROLL-001.
 
+[Controller state over UDP](ADR-2026-10-24-controller-udp.md): Accepted / Complete within LAN scope; EMOS API decisions and hardware qualification remain in INPUT-001.
+
+[Agon controller viewer in mode20](ADR-2026-10-24-controller-viewer.md): Accepted / Complete within viewer scope; live EMOS delivery remains in INPUT-001.
+
 [Staged WebDAV with EMOS admission](ADR-2026-09-27-staged-webdav-admission.md): Proposed / Partial; review and open decisions in REMOTE-005.
 
 When changing an ADR's identity, title, status or completeness, update this index.

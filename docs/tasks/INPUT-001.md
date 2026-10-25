@@ -4,16 +4,22 @@ Prepare a reusable Oryx-to-P4 controller bridge, an EMOS-owned application
 interface, and a readable axis/button test appliance. Start with the attached
 Logitech F310 in XInput mode. Preserve analog input and keep future direct P4
 USB capture compatible with the same logical controller interface. The current
-host reader, viewer and recording tranche has passed Author review. LAN
-transport contract preparation is now released; P4/EMOS and transport
-implementation remain behind their separate review gates.
+host reader, viewer and recording tranche has passed Author review. The Author
+has selected UDP and delegated packet layout, cadence and timeout. Host sender
+and P4 receiver implementation was released for offline validation/building.
+The Author now selects the Agon viewer in mode20 with AgonDev C++ permitted;
+matching app/P4/EMOS candidate source and software/build checks are complete.
+Interface review, identified staging and physical validation remain gates.
+The Author subsequently releases the bench for deployment, requesting that the
+installed mainboard VDP be retained. This authorizes P4/EMOS installation and
+app staging; the viewer remains stopped for the Author to invoke.
 
 ## State and authority
 
 1. **Status:** First host-only tranche implemented 2026-10-24; Author approves host
    viewer appearance and authorizes commit/push followed by LAN contract work.
    Guide and physical reconnect are verified; rest calibration remains
-   optional/unreviewed. No network/target implementation is released.
+   optional/unreviewed. The subsequent UDP tranche is authorized below.
 2. The Author transferred the generic controller task from fsim on 2026-10-14.
    On 2026-10-24 the Author selected host capture before direct P4 USB work,
    requested sampling/wire design and an axis/button display program, and
@@ -24,10 +30,11 @@ implementation remain behind their separate review gates.
    change or target appliance is authorized by this tranche.
 4. The older task's HTTP path and 30 Hz fsim examples were proposals, not
    approved transport or sampling contracts. UDP and 100 Hz discussed in chat
-   are likewise proposals. Do not silently select either.
-5. The first consumer processor remains unresolved. Recommend an eZ80 state
-   viewer as the first end-to-end consumer, since delivery to P4 alone does not
-   demonstrate Agon input. A host viewer should precede target deployment.
+   were proposals at that point. The Author subsequently selected UDP and
+   delegated packet layout, cadence and timeout for tuning during development.
+5. The Author subsequently selects the eZ80/Agon state viewer in mode20. The
+   reviewed host viewer precedes it; delivery to P4 alone does not demonstrate
+   Agon input. Candidate implementation is not hardware acceptance.
 
 ## Confirmed controller and bounded research précis
 
@@ -47,7 +54,8 @@ implementation remain behind their separate review gates.
 3. Linux's advertised signed 16-bit range does not prove 16-bit hardware
    precision. Measure actual steps before promising precision or discarding
    information. User interest in efficient eight-bit eZ80 values is recorded;
-   eight-bit quantization has not been selected as the mandatory wire/API format.
+   the LAN codec now uses the exact observed eight-bit lattice when reversible,
+   with native signed16 fallback. No EMOS API format is selected by this.
 4. Logitech's [F310 guide](https://www.logitech.com/assets/47879/f310-gamepad-quick-start-guide.pdf)
    distinguishes analog triggers in XInput from digital triggers in DirectInput.
 5. Existing fsim handling is documented in
@@ -76,7 +84,7 @@ receipts belong in ignored local evidence, not tracked deployment recipes.
    bridge selects the device and maps physical events to logical controls.
 2. The Oryx bridge sends versioned messages across the LAN to a P4 service.
    Extender owns admission, bounded queues, sequencing, receiver timestamps,
-   connection health and coherent controller-state storage. Transport is open.
+   connection health and coherent controller-state storage. UDP is accepted.
 3. EMOS owns the P4-to-eZ80 transport and application-facing controller contract.
    Implementation belongs in agon-emos; assembled-product requirements and P4
    services belong here. Existing UART1 wiring is the candidate physical path;
@@ -90,24 +98,43 @@ receipts belong in ignored local evidence, not tracked deployment recipes.
    USB enumeration/keyboard/hub repairs, rumble and game integration are outside
    the first implementation tranche. Do not claim USB compatibility now.
 
-## Decision register — proposals pending Author review
+## LAN implementation — authorized offline tranche
+
+The Author accepted UDP ("UDP it is. make it so.") and then delegated layout,
+cadence and timeout: "do whatever you think best ... we'll tune as we go."
+The [decision record](../decisions/ADR-2026-10-24-controller-udp.md) and
+[maintained protocol](../protocols/controller-lan.md) supersede the numerical
+draft in the [LAN proposal](INPUT-001/LAN-PROPOSAL.md). Defaults are120Hz/250ms,
+exact raw8/native fallback and128 retained transitions per endpoint.
+
+The host sender and portable P4 receiver are implemented. Twenty-five host/core
+checks pass, including real loopback sockets with synthetic input and the same
+C++ core compiled into P4. Recorded-input loss replay preserves all44+2 button
+transitions in exact order. Physical LAN timing, worker lifecycle and coexistence
+still require bench validation. The candidate EMOS consumer now acknowledges
+after copying transitions to its caller. LAN ACK still proves P4 queue storage
+only;128 unconsumed transitions exhaust its bounded queue. No physical game
+input or end-to-end readiness is claimed.
+
+## Decision register
 
 Present unresolved architectural decisions one at a time when implementation
-is released. Each accepted material decision requires the project ADR,
-architecture, task and dated-log updates; this draft accepts none of them.
+is released. LAN choices below are recorded in the accepted decision record;
+EMOS application decisions remain here for later review.
 
 | ID | Recommendation | Alternatives, prerequisites and effects |
 |---|---|---|
-| IN001-D01 | First target viewer runs on eZ80 through EMOS; host viewer first | P4-only first is simpler but leaves Agon delivery/cost unproved; confirm first consumer before API work |
-| IN001-D02 | Keep native values in capture; offer explicit eight-bit quantization at a documented boundary | Fixed native-width wire/API preserves data; fixed eight-bit saves bytes. Measure actual stick steps and consumer needs before choosing; reserve versioned layout/capabilities |
-| IN001-D03 | Compare UDP state snapshots with persistent HTTP/binary delivery; prefer UDP if measured simplicity/latency justify it | UDP needs loss/reorder/session/edge handling; HTTP reuses services but may add serialization, acknowledgement and scheduling costs. Verify present P4 networking limits and firmware ownership first |
-| IN001-D04 | Event-driven capture plus paced latest-state sends; evaluate 60/100/120 Hz | Choose cadence using latency, jitter, traffic and P4/eZ80 CPU measurements, not fsim frame rate alone; bound overload and heartbeat behavior |
-| IN001-D05 | One deliberately selected controller and one admitted sender initially | Multi-controller/source takeover needs larger API and arbitration; reserve extensibility without implementing it. Keyboard remains separate |
-| IN001-D06 | Explicit freshness/connected status; neutralize sticks/buttons on loss and require deliberate rearming | Timeout must be selected and measured. Trigger raw neutral is released, but game throttle state/hold/pause is consumer policy; never promise a silent generic engine cutoff |
-| IN001-D07 | Coherent snapshots plus bounded retained button transitions with acknowledgement/overflow reporting | Per-button counters are an alternative if ordering is unnecessary; snapshots alone lose short taps. Bound retention/retries and distinguish delivery from game consumption |
-| IN001-D08 | Device normalization in bridge; game dead zones/expo remain configurable above transport | Define calibration/inversion ownership explicitly to prevent double dead zones. Existing fsim settings are prior art, not a universal default |
+| IN001-D01 | Accepted by Author: Agon/eZ80 viewer in mode20, AgonDev C++ permitted | Host viewer is reviewed; target UI is built for recorded-input visual review. Live delivery still requires EMOS service/API work |
+| IN001-D02 | Selected under delegation: native capture; reversible raw8 on observed lattice, native fallback | Saves four LAN bytes without rounding; EMOS representation remains unresolved |
+| IN001-D03 | Accepted by Author: UDP snapshots and retained transitions | TCP/WebSocket considered; UDP loss/ordering/expiry handling is explicit; no physical latency advantage measured |
+| IN001-D04 | Revised after Author feedback: event-driven capture and120Hz paced publication, matching nominal MOS tick rate | Supersedes initial100Hz; independently paced, not phase-locked. Tune1–240Hz with no catch-up bursts; physical latency/load measurement remains |
+| IN001-D05 | Selected for the LAN tranche: one controller, one HTTP-admitted IPv4/UDP source | Endpoint/session binding; no implicit takeover; keyboard remains separate; no authentication claim |
+| IN001-D06 | Selected under delegation:250ms timeout, neutral invalid raw state, explicit restart | Tunable50–2000ms, at least two publication periods; consumer throttle/pause/rearm policy remains separate |
+| IN001-D07 | Selected for LAN: latest snapshots plus128 retained ordered transitions, ACK of storage | EMOS consumption/acknowledgement is unresolved; queue overflow invalidates input; no end-to-end reliability claim |
+| IN001-D08 | LAN carries raw values without dead zones/inversion; consumer calibration policy remains open | Host preview calibration does not alter transport; existing fsim response remains consumer-owned |
+| IN001-D09 | Implemented candidate for review: resident `ext.controller` cached READ, separate bounded REQUEST and retained-edge consumption | Uses existing gateway/F7 control allocation and private CI namespace/8E reply; no app callback or raw UART. Blocking per-read RPC was avoided to keep response waits outside the UI read. Physical timing/reset/coexistence and final API acceptance remain open |
 
-## Stable implementation subtasks — host tranche only released
+## Stable implementation subtasks
 
 1. [ ] **IN001-01 — Contract and prior art.** Review official API documentation,
    Extender production/network/runtime boundaries, current EMOS owner guidance,
@@ -130,7 +157,8 @@ architecture, task and dated-log updates; this draft accepts none of them.
    Use monotonic receiver clocks for expiry; do not infer one-way LAN latency
    from unsynchronized host/P4 timestamps. Select ports through current service
    ownership, not hard-coded historical addresses or accidental collisions.
-4. [ ] **IN001-04 — Host sender and P4 receiver.** After approval, implement
+4. [ ] **IN001-04 — Host sender and P4 receiver.** Offline implementation and
+   target build pass; physical lifecycle/coexistence validation remains. Implement
    paced coalesced axis snapshots and required transition/heartbeat delivery.
    Bound message size, queue depth, work per iteration and retries; don't block
    Linux event capture, P4 render ownership or keyboard/SD services. Reject
@@ -150,7 +178,10 @@ architecture, task and dated-log updates; this draft accepts none of them.
    edge overflow and protocol identity. Large text and high contrast matter
    for Author review. Label measurement clocks and distinguish source, P4 and
    application-observed states; do not paint host-only values as end-to-end proof.
-7. [ ] **IN001-07 — EMOS delivery and reusable API.** Define an atomic/coherent,
+7. [ ] **IN001-07 — EMOS delivery and reusable API.** Matching candidate source,
+   full-ROM/linked checks and native pipeline pass; see the
+   [EMOS-owned task](../../../agon-emos/docs/tasks/INPUT-001.md).
+   Interface acceptance/physical costs remain. Define an atomic/coherent,
    bounded nonblocking application read with validity/freshness and transition
    semantics. Choose pull/push/cache policy and measure full packet/poll cost,
    stale-read behavior and eZ80 ROM/RAM/CPU use. Preserve ordinary VDU routing,
@@ -185,13 +216,15 @@ architecture, task and dated-log updates; this draft accepts none of them.
    appliance or staging helper may change /autoexec.txt, including load-only
    startup left by another project. No reset-start or automatic test replay.
 4. Gate 0 task review released host-only capture/view/recording. Host viewer
-   review is accepted; the Author now releases LAN contract preparation.
-   Later gates are approved API/protocol/ownership, offline paired implementation,
+   review is accepted; UDP selection/delegation now releases offline paired
+   implementation and target compilation. The subsequent Agon viewer request
+   releases the app and matching EMOS/P4 candidate software path. Later gates
+   include interface review/identified staging,
    explicit hardware staging/invocation, end-to-end Author acceptance, and
    versioned production closeout. Approval of one gate does not release all.
-5. No daemon/service, LAN receiver, firmware build/deployment, persistent
-   controller configuration write, fsim integration or bench reservation is
-   authorized by this host tranche. No end-to-end qualification is complete.
+5. No automatic daemon, physical firmware deployment, persistent controller
+   configuration write, fsim integration or bench reservation is authorized by
+   this offline tranche. No end-to-end qualification is complete.
 
 
 ## Host tranche evidence — 2026-10-24
@@ -215,8 +248,9 @@ architecture, task and dated-log updates; this draft accepts none of them.
    Author review item; only simulated fault paths have been qualified so far.
 5. IN001-02 and host portion of IN001-06 are prepared for review, not closed.
    Host implementation is subsequently accepted below. IN001-03 contract work
-   is now released; IN001-04/07 implementation and target viewer remain gated. No architectural transport,
-   wire quantization or controller-loss game policy was accepted implicitly.
+   was subsequently released; the later UDP authorization below releases
+   IN001-04 offline work. IN001-07 and target viewer remain gated. No
+   controller-loss game policy was accepted implicitly.
 
 
 ## Author host review — 2026-10-24
@@ -246,3 +280,165 @@ invent a release version/tag. Separate production packaging/version agreement
 remains a closeout boundary. Prepare a concrete bounded LAN proposal, present
 architectural decisions one at a time, and obtain their acceptance before
 implementing P4 service or EMOS counterparts. No bench use is needed.
+
+The Author then explicitly selected UDP and delegated the remaining LAN layout,
+cadence and timeout choices. This supersedes the proposal-only boundary for
+host/P4 offline implementation and compilation. It does not release physical
+firmware deployment, EMOS ABI work or fsim integration.
+
+## UDP implementation evidence — 2026-10-24
+
+| Check | Result and scope |
+|---|---|
+| Reader/core/sender regressions |25 pass on Pi and Oryx, including actual loopback UDP/HTTP with synthetic controller reports |
+| Recorded-input replay |44/44 and2/2 transitions in exact order; every seventh STATE and every fifth delivered-state ACK deliberately dropped |
+| Native sanitizers |100,000 malformed packets plus queue saturation/overflow pass ASan/UBSan; corpus includes valid headers to reach body validation |
+| Existing native-builder checks |18 pass |
+| P4-PC console compilation |Pass with controller option; actual compile graph/header dependencies and16-socket effective ceiling verified |
+| Physical P4/network/controller qualification |Not performed; no firmware installed |
+
+The compiled exploratory app is1,615,952bytes, SHA256
+`f8efce2bda9364959153ca303e96bf7b1cad76f52ac702cb3ad09071804e1bc6`.
+It is explicitly `UNVERSIONED-DO-NOT-DEPLOY`, built from host-publication commit
+`29c4a8810707ad1edafdada3e6901429c1fb1fa2` plus dirty implementation inputs.
+ESP-IDF is pinned at
+`b774170ff46c393eeb5e495ea37936038d3f4f4f`; the dependency lock retains the
+selected Arduino/component identities. No qualified or production identity is
+created by this build. The base browser-console build does not reproduce the
+bench's separately composed HDMI firmware.
+
+Ignored local evidence retains source hashes, build/validation manifests,
+app/factory images, test logs, replay receipts and Oryx staging receipts. The
+Oryx sender is left stopped; no network query or session was sent to physical
+P4. Actual controller-worker stack/heap, scheduling, Ethernet restart, concurrent
+keyboard/video/SD behavior and EMOS delivery remain unmeasured.
+
+Implementation gotcha: Arduino3.3.11 declares `IPAddress INADDR_NONE`, while
+ESP-IDF5.5.5/lwIP defines that name as a macro. Including controller socket
+headers before the established Arduino network header fails compilation. The
+network owner includes the adapter afterward, with an adjacent explanatory
+comment. This preserves upstream dependencies without editing their sources.
+
+The Author subsequently challenged100Hz against MOS's nominal120Hz cadence.
+The host sender default and current instructions now use120Hz (8⅓ms), retaining
+the250ms timeout. The existing100Hz replay and unversioned P4 build records are
+unchanged; the P4 receiver has no fixed publication rate. This host-only tuning
+requires no P4 rebuild, installation or EMOS change.
+
+## Agon viewer instruction and UI tranche — 2026-10-24
+
+The Author directs recreating the test application for Agon, permits AgonDev C++
+and explicitly chooses mode20. This settles the first target processor/viewer
+choice. It does not make the absent EMOS read service available. The maintained
+application is `tests/fixtures/controller`, with explicit source/output bounds
+in its README. It has no private UART/GPIO access or provisional API allocation.
+
+The initial compiled UI is a clearly labelled recorded-input visual appliance:
+two sticks with signed/native and eight-bit values, two analog triggers, eleven
+buttons, D-pad and press totals. Mode20 is512×384/64colours; a12×16 font and
+incremental nominal20Hz updates prioritize readability. Escape exits, R clears
+displayed counts, and Alt-Tab does not request exit. Single-buffered entry mode
+is queried/restored with required settling; double-buffered entry is refused.
+The temporary VDP font buffer reservation64001 and release are documented.
+
+The reviewed22.455s host recording converts to896 checked states including final
+invalidation. Native layout preview is generated from the target's shared C++
+renderer; it does not establish execution/font/mode restoration on Agon. The
+build is exploratory/unversioned, not deployed or ready for live-controller use.
+No EMOS/P4 firmware, startup, route or SD contents changed. The remaining live
+integration gate is an EMOS-owned, bounded controller read and retained-edge
+consumption contract; an application must never open the physical UART itself.
+
+### Bounded viewer research
+
+The read-only official references were checked clean at MOSv3.0.2
+(`8336409351ee5314e02801a7b72a4f1bb5282519`) and VDPv2.16.0
+(`c7ac293d2aa81ddfa693390549bcd909069c8fc3`); consulted Agon-docs commit
+`f9806bd3cbff6ed5d1c08bef1d51fed11764b86b`.
+
+1. [Screen modes](../../../../agon-docs/docs/vdp/Screen-Modes.md) specifies
+   mode20 as512×384/64colours/60Hz and describes double-buffered CLI hazards.
+2. [VDU commands](../../../../agon-docs/docs/vdp/VDU-Commands.md),
+   [system commands](../../../../agon-docs/docs/vdp/System-Commands.md) and
+   [PLOT commands](../../../../agon-docs/docs/vdp/PLOT-Commands.md) establish
+   mode query22/86, pixel scalingC0, counted drawing, rectangles65 and circles95.
+3. [Font API](../../../../agon-docs/docs/vdp/Font-API.md) defines byte-aligned,
+   MSB-first monochrome glyphs, 256 characters and explicit font selection/
+   deletion. The12×16 font uses8192bytes and selects the built-in font at cleanup.
+4. [MOS API/sysvars](../../../../agon-docs/docs/mos/API.md) defines mode flags,
+   screen data, keyboard-down state and clock increments. Escape checks key-down
+   plus ASCII27, not an arbitrary-key return. Replay time remains nominal and
+   uncalibrated; the repaint interval is conservative for60/70Hz clocks.
+5. Maintained [EMOS service contract](../../../agon-emos/docs/emos-v1-contract.md)
+   and `src/emos.c` at`76834b9eb58c7b105bbdb6b968c7b971ebd292d8` establish the
+   existing resident gateway but contain no analog-controller service. No
+   placeholder service identity or private packet is called by the viewer.
+
+## Final live software candidate — 2026-10-24
+
+Live default mode now uses the matching candidate EMOS service; explicit replay
+remains available. The [development service contract](../protocols/controller-emos.md)
+defines the existing gateway/F7 carrier and private CI/8E namespace. No new global
+MOS/function allocation, application UART bypass or SD lease is used.
+
+| Final exploratory component | Bytes | SHA256 |
+|---|---:|---|
+| AgonDev C++ mode20 app |28,514 |`059e6b818b44f4d90dc3fd1b93ef4d4d69626e9de0bbb3231f5f39cb0bb5efe7` |
+| EMOS controller profile |130,972;100 ROM bytes free |`8feace3ad4a903e4d987933bad7824035b72994484ddb4e7f4b8e93ed5c8f6ee` |
+| P4-PC browser-console app |1,618,032 |`3a0055e4d357ce36d71d55baf1a365615b45a2e61ba9c84d3ca8945a3baf8807` |
+
+App/P4 compilation, EMOS full-ROM/mandatory linked guards, resident native tests,
+shared-renderer bounds and the real P4→EMOS→Agon-client native pipeline pass.
+The pipeline exercises65,004 queries through healthy lease renewal without
+resetting counts. VBlank deadlines prevent delayed replies/low-byte clock wrap
+from reviving expired input; source age includes conservative return transit.
+Marker/bar redraws avoid full-panel clearing. Physical appearance/timing and
+mode cleanup remain untested.
+
+Native-width age arithmetic avoids AgonDev's unreviewed`__smulu` runtime helper;
+the generic runtime/toolchain was unchanged. The final freshness checks reduce
+free ROM from the preceding479-byte checkpoint to100; further growth needs a
+separate size plan. All builds are explicitly unversioned/experimental dirty
+source, with exact local source/tool/API/header/build receipts. The P4 browser
+composition is a compile proof, not a replacement for the deployed indexed-HDMI
+composition. No bench access, install/reset, SD/startup change, emulator or
+application invocation occurred.
+
+## Deployment preparation after bench release — 2026-10-24
+
+The Author says: "ok bench is yours to deploy. if we can keep mainboard VDP as
+is that would be grand." Preserve the mainboard ESP32 VDP and user startup.
+The eZ80 EMOS and P4 require their matching controller-enabled builds. Leave
+the viewer stopped at handback; no visual/smoke invocation is part of preparation.
+
+1. Read-only preflight finds the expected P4-PC USB identity, available HDMI,
+   admitted neutral keyboard and offline/idle SD listener. Oryx enumerates the
+   F310 XInput event device; neither Agon SD card is mounted there. Latest peer
+   handoff releases the bench with a newer composed-frame mainboard VDP; that
+   supersedes the earlier diagnostic image and must remain installed.
+2. The retained installed P4 build uses indexed HDMI, automatic carrier,
+   rolling scanout, frame/visible snapshots, bitmap fast path, BGR overlay,
+   graphics timing, FS/LS USB and the configured reset bridge. The browser-only
+   controller compile proof is unsuitable for this installation. Prepare an
+   explicit source comparison and matching composition before building/flashing;
+   current maintained source has retired some historical diagnostic switches.
+3. Existing controller builds/profile are explicitly unversioned and excluded
+   from deployment. Obtain agreement on the new experimental component
+   identities before changing that guard or creating identified builds. Older
+   task-specific standing version approvals do not establish an explicit
+   controller identity agreement. Production promotion/version/tag is separate.
+4. After identity agreement, freeze the exact source, run the identified full
+   builds and mandatory guards, retain independently verified incoming P4/EMOS
+   rollback and startup, then install/read back only the changed components.
+   Stage the viewer under `/extender/controller`, establish input/source
+   readiness and stop before invocation. Never modify `/autoexec.txt`.
+
+No reset, firmware write, SD transfer, controller session or viewer invocation
+occurred during this read-only preflight. Local receipts retain the exact
+observations; they do not establish installation readiness.
+
+
+Author agrees experimental EMOS v0.1.25, indexed-hdmi-r10 and
+controller-viewer-r01 identities and directs proceeding with deployment.
+Preserve mainboard VDP/startup; leave the viewer stopped for Author invocation.
+This supersedes the pending identity gate above, not physical acceptance.

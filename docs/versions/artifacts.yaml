@@ -1,10 +1,20 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r187
-updated_at: 2026-10-13T18:15:56Z
+registry_revision: r188
+updated_at: 2026-10-25T02:39:54Z
 
 artifacts:
+  - artifact_id: controller-viewer
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: controller-viewer-r01
+    status: experimental
+    variants: []
+    description: Mode20 AgonDev controller state viewer through EMOS, with explicit replay.
+    notes:
+      - Author approved identity and bench deployment on 2026-10-24; physical review pending.
+
   - artifact_id: hdmi-aspect
     kind: test_fixture
     identity_scheme: revision
@@ -32,11 +42,12 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r07
+    latest_identity: indexed-hdmi-r10
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
+      - r10 adds optional controller input to the retained r09 HDMI composition; Author approved experimental identity/deployment, physical validation pending.
       - r07 applies the HDMI-003 native640x240 row-aspect correction on the same matched source as rgb-001-r13. Host-tested candidate; build/hardware/visual qualification pending.
       - RESEARCH-007 R07-I01-I05; explicit committed-source build selection, not production.
       - Preserves stock64 visible semantics and packed-depth fallback; no programmable256-colour application API.
@@ -564,13 +575,14 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.24
+    latest_identity: agon-emos-v0.1.25
     status: draft
     variants:
       - port008-forward
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - v0.1.25 adds optional resident controller cache/gateway; Author approved experimental identity/deployment, physical review pending.
       - v0.1.24 adds bounded mainboard Pingo P3DR completion dispatch independently of keyboard source; INTEG-015 linked checks and bounded physical completion/input test pass, installed draft pending Author acceptance; not production.
       - v0.1.22 adds finite-job private binding/terminal exchange and two-slot finite reception; REMOTE-005 A09-A11 candidate under standing preapproval.
       - v0.1.21 adds the R05-A05 application-owned SD lease; candidate under standing identity preapproval, not production.

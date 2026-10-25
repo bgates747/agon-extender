@@ -207,6 +207,6 @@ headings no longer compete with the approved current sequence.
 
 - [ ] **[SCROLL-001 — Pattern-based scrolling qualification](docs/tasks/SCROLL-001.md)** — Mode lifecycle r03 compiles and Pi coordinator passes offline simulation; live adapter, double-buffered entry cleanup and physical validation remain. Bench reserved by another project; earlier startup modification needs separately authorized repair.
 
-## Analog controller input — task review
+## Analog controller input
 
-- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Host F310 reader/viewer/recording staged on Oryx; 14 semantic checks and virtual-display/live-enumeration checks pass. Author approves appearance; exercised recording validates six-axis travel and ten buttons, with eight-bit stick lattice observed. Guide and physical reconnect now validate too; rest calibration/held-button unplug remain unreviewed. LAN, P4/EMOS and target viewer remain unreleased.
+- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Reviewed host viewer;120Hz/250ms UDP. AgonDev C++ mode20 viewer, P4 peer and EMOS cache candidates implemented; native pipeline and app/P4/EMOS builds pass. EMOS fits at130,972bytes/100free. Interface review, identified staging and physical lifecycle/load/visual validation remain; no controller firmware installed.
