@@ -631,7 +631,7 @@ correction installation; it does not accept new installed bytes.
 3. [x] Exercise the P4 state machine/host codec and maintained eZ80 engine.
    Verify zero fast CRC calls, checked regression, wrong-mode refusal,
    interruption/replay, binary sizes and recovery. Compile the target listener.
-4. [ ] Obtain new P4/listener naming agreement before identified builds. Keep
+4. [x] Obtain new P4/listener naming agreement before identified builds. Keep
    prepared P4r12 immutable. EMOSv26 and viewer-r03 need no source change.
    Bootstrap requires direct card access or an explicit one-installation
    legacy-service exception. Leave the controller viewer stopped; preserve
@@ -669,3 +669,22 @@ one final legacy CRC-bearing transfer session to bootstrap their installation.
 This is a bounded exception, not general permission for checked traffic.
 Matched installation/readback and source readiness are authorized; viewer
 invocation remains with the Author. Preserve mainboard VDP and startup.
+
+
+## R05-11 installation verification — 2026-10-25
+
+The Author-approved P4r13 and sdserve-v0.3.0 named builds are installed and
+independently read back. Exact P4 startup identity and preserved outside-sector
+bytes pass. The single old CRC-bearing bootstrap session is closed; all later
+file traffic uses major2. New listener22968bytes and retained old listener
+19243bytes match independent reads. Native CLI rename/copy installed the
+listener only after its old foreground instance exited; no self-overwrite.
+
+New service downloads two full128KiB ROM images and uploads/readbacks the
+551-byte current installation record. One whole-ROM download takes32.11seconds
+of Pi monotonic host time, including HTTP/RPC/SD/transport; this is neither
+rendering timing nor a controlled speed comparison. P4/EMOS/viewer identities
+and remaining physical controller gate are recorded in INPUT-001. No suite
+was invoked. Mainboard VDP and startup are unchanged. Physical large-upload,
+interruption and broad fast-copy qualification remain unperformed; historical
+v0.2.0 fast benchmarks do not qualify this new carrier.

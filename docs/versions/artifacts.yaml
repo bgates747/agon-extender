@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r191
-updated_at: 2026-10-25T05:14:10Z
+registry_revision: r192
+updated_at: 2026-10-25T05:35:45Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -48,7 +48,7 @@ artifacts:
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
-      - r13 is the Author-approved checksum-free fast SD carrier2 addition to the controller-corrected r12 HDMI source; identified build/install pending.
+      - r13 adds checksum-free fast SD carrier2 to the controller-corrected HDMI source; full build/validation, installed flash readback and startup identity pass. Author controller review and wider qualification pending.
       - r12 full build/validation passes; retained unchanged as controller-correction evidence, not installed.
       - r11 accepts IPv4-mapped IPv6 HTTP peers while retaining IPv4 UDP binding; Author approved correction identity/deployment, physical validation pending.
       - r10 adds optional controller input to the retained r09 HDMI composition; Author approved experimental identity/deployment, physical validation pending.
@@ -470,7 +470,7 @@ artifacts:
     variants: []
     description: Foreground mainboard SD service through the owned EMOS gateway.
     notes:
-      - v0.3.0 is the Author-approved checksum-free fast carrier2 correction. Checked v1 compatibility retained; identified build/install pending.
+      - v0.3.0 checksum-free fast carrier2 installed/readback verified;128KiB downloads and551-byte install receipt upload/readback pass. Checked v1 compatibility retained; broader qualification/Author acceptance pending.
       - Selected sdserve v0.2.0 MOSlet build passed checked/fast transfer and Author acceptance in RELEASE-001 R01-07; extender-installation-r02 owns combination scope. Historical draft label retained; no general qualification of other layouts/builds. Registry r113 supersedes the earlier pending-deployment note.
   - artifact_id: mainboard-sd-qualification
     kind: test_procedure

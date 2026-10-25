@@ -2,11 +2,13 @@
 
 The mode20 Agon application reads controller state through a candidate resident
 EMOS service. P4 retains button/D-pad transitions until EMOS has copied them to
-the caller. This document describes the prepared checksum-free carrier2 and
+the caller. This document describes the checksum-free carrier2 and
 96-byte application result. Source/software and target compilation checks pass;
-this correction is not installed or physically qualified. The installed
-CRC-bearing EMOSv0.1.25/P4r11/viewer-r02 combination loses controller and keyboard
-input. [INPUT-001](../tasks/INPUT-001.md) owns naming, deployment and physical gates.
+the corrected EMOSv0.1.26/P4r13/viewer-r03 combination is installed with exact
+ROM/application RAM readbacks. The viewer is not invoked; physical controller
+delivery and Escape review remain open. The earlier CRC-bearing
+EMOSv0.1.25/P4r11/viewer-r02 failure is retained in
+[INPUT-001](../tasks/INPUT-001.md), which owns deployment and physical gates.
 The [frozen carrier1 description](../tasks/INPUT-001/CONTROLLER-CARRIER-V1.md)
 retains the earlier98-byte layout; the two combinations must not be mixed.
 

@@ -1,9 +1,11 @@
 # Mainboard SD service wire contract
 
-Checked protocol major1 and prepared checksum-free fast major2, maintained for
+Checked protocol major1 and checksum-free fast major2, maintained for
 the EMOS-owned gateway, P4 service and foreground `sdserve` application/EMOSlet.
 The [operating guide](../mainboard-sd.md) owns invocation and installed identities.
-Major2 is not installed or physically qualified. It changes checksum semantics
+Major2 is installed in the developmental P4r13/sdserve-v0.3.0 combination, with
+bounded installation upload/download readbacks; broader qualification is pending.
+It changes checksum semantics
 while preserving the existing packet offsets and resident gateway ABI.
 The Author's standing policy forbids operational major1 traffic without an
 explicit request; its checked implementation remains compatibility code.
@@ -269,7 +271,7 @@ file semantics are implemented by agon-emos projects/sdserve/src/service.c; host
 verification is in scripts/sdcard.py. The operating guide links exact retained
 builds and acceptance limits. Frozen procedures require review before reuse.
 
-## Corrected checksum-free fast upload (prepared, not installed)
+## Corrected checksum-free fast upload (development installation)
 
 The listener selects fast mode for its whole foreground invocation. The host
 `put --fast` skips its independent stage and activated-target READ comparisons,

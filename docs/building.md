@@ -271,9 +271,10 @@ make -C projects/sdserve RAM_START=0xB0000 RAM_SIZE=0x8000
 The clean step prevents reuse of objects from the other memory layout. Both
 layouts produce the same output filename: do not interchange their payloads.
 The MOSlet installs as `/emos/sdserve.bin` and is invoked through `EMOS sdserve`;
-the ordinary application fallback uses LOAD/RUN. `prepare_sdserve.py` prepares
-ordinary application bundles; it does not by itself select the MOSlet layout.
-Identified MOSlet builds and their validation are recorded in the
+the ordinary application fallback uses LOAD/RUN. `prepare_sdserve.py --moslet`
+creates a clean identified B0000/32KiB bundle, recording its layout/address;
+omitting that flag retains the ordinary application layout. The earlier
+identified MOSlet builds and their validation are recorded in the
 [fast-transfer tasklet](tasks/REMOTE-005/FAST-TRANSFER.md). Consult the
 [EMOS utility contract](https://github.com/bgates747/agon-emos/blob/main/docs/emos-utilities.md)
 for dispatch and memory limits. No build command in this guide deploys firmware.

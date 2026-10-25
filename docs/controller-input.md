@@ -3,18 +3,22 @@
 The reviewed Linux viewer displays the Logitech F310's two sticks, separate
 analog triggers, D-pad and eleven buttons. A developmental UDP sender and P4
 receiver, resident EMOS service and Agon mode20 viewer now pass software checks
-and target builds. The Author-approved experimental P4 r11/EMOS v0.1.25 installation is
-independently verified. Oryx-to-P4 admission/live snapshots work, but the first
-Agon viewer review reported an EMOS link failure. Diagnostic viewer-r02 is
-installed and preloaded, stopped for Author review. It displays the failed
-service operation/status and draws its initial screen before requesting input.
-The masked-read UART failure is reproduced offline; a checksum-free correction
-with interrupt-enabled snapshot copies passes source/target checks but is not
-yet installed. Physical controller delivery remains unresolved;
+and target builds. The Author-approved experimental P4r13/EMOSv0.1.26,
+sdserve-v0.3.0 and viewer-r03 installation is independently verified. The masked
+READ/UART failure is reproduced offline and corrected with checksum-free
+controller records and interrupt-enabled copies. Full EMOS ROM and loaded
+viewer RAM readbacks match; viewer-r03 remains stopped for Author invocation.
+It retains the detailed operation/status display and initial static drawing.
+Physical controller delivery remains unresolved until that review;
 [INPUT-001](tasks/INPUT-001.md) retains the evidence and remaining gates.
 The first receive window accepted about22 states/s despite120Hz publication;
 rate/load tuning remains open. Physical Oryx→P4→Agon controller delivery has
 not been demonstrated.
+
+The correction's review sender uses the existing `--timeout-ms 1000` option
+at120Hz to reduce premature missing-ACK shutdowns. This permits a one-second
+network-failure timeout; it does not relax EMOS's250ms cached-input freshness
+check or establish120Hz delivery. The tool's default remains250ms.
 
 Use the [viewer guide](testing/controller-viewer.md) for local handling and
 recording. Select X on the F310's rear switch, then unplug/replug after changing

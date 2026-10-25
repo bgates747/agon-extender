@@ -743,3 +743,26 @@ one final legacy CRC-bearing transfer session to bootstrap their installation.
 This is a bounded exception, not general permission for checked traffic.
 Matched installation/readback and source readiness are authorized; viewer
 invocation remains with the Author. Preserve mainboard VDP and startup.
+
+
+## Corrected installation verified — 2026-10-25
+
+P4 indexed-hdmi-r13-b2026-10-25-05-14-41Z/source27d93dcc passes full build and
+all21 artifact hashes. Selective flash, independent16MiB readback, unchanged
+bytes outside written sectors and actual startup identity pass. EMOS
+agon-emos-v0.1.26-b2026-10-25-04-24-35Z/source11b7a5c1 passes exact128KiB ROM
+readback. Viewer-r03 b2026-10-25-04-24-35Z is installed and its28795 loaded RAM
+bytes match the binary; it has never been invoked by the agent.
+
+The paired sdserve-v0.3.0-b2026-10-25-05-14-41Z/source9a92d811 MOSlet is22968
+bytes, SHA-25604e7ef596a862b1a6b4f265b6c647e461ef0f65db4851873ac3dd31e4f03f10d.
+New fast-major2 downloads and a551-byte installation-receipt upload/readback
+work. One legacy bootstrap session is closed; no fallback to CRC-bearing
+traffic. Old listener, old full ROM and viewer-r01/r02 are preserved.
+
+Normal startup is byte-identical, mainboard VDP unchanged, Legacy CLI and
+admitted neutral input restored, listener closed. Physical controller/keyboard
+behavior after viewer invocation remains for the Author; no rendering smoke,
+workload or controller application was run. Oryx sender preparation uses120Hz
+and the existing1000ms timeout option, with EMOS250ms freshness unchanged.
+Known receive-rate tuning and broader qualification/production acceptance remain.

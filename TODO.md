@@ -51,7 +51,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 
-- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — R05-11: checksum-free fast correction passes host/target checks; naming/bootstrap and physical review pending. Earlier fast-transfer evidence remains frozen. Broader work: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Selected production retains EMOS v0.1.19; development v0.1.23/finite application-card path forms AUDIT-010's pre-LCD baseline. YMODEM comparison complete; external protocol unselected. SD layout cleanup, transaction migration, interactive sessions and R05-10 procedure refresh remain.
+- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — R05-11: checksum-free P4r13/sdserve-v0.3.0 installed and independently verified; bounded new-service upload/download works, broader qualification/acceptance pending. Legacy bootstrap is closed. Earlier fast evidence remains frozen. Broader file-manager research, transaction migration, interactive sessions and R05-10 procedure refresh remain; production selection is unchanged.
 
 - [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — Delivered tranche closed out; further extraction and broader qualification parked. Revisit for measured ROM pressure or a concrete utility benefit, not routine splitting for its own sake.
 
@@ -209,4 +209,4 @@ headings no longer compete with the approved current sequence.
 
 ## Analog controller input
 
-- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — P4r11/EMOSv25 remain installed; failed viewer-r02 preserved. Named controller correction builds pass: P4r12, EMOSv26 (286 ROM bytes free), viewer-r03. Fast-copy correction under REMOTE-005 requires a new matched P4/listener and bootstrap agreement before installation. Oryx-to-P4 cadence/ACK tuning, physical review/coexistence and production acceptance remain; mainboard VDP/startup preserved.
+- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Corrected P4r13/EMOSv26/sdserve-v0.3.0 installed with independent readbacks; viewer-r03 loaded RAM matches its file and is stopped for Author review. EMOS has286 ROM bytes free. Oryx source uses120Hz/1000ms review settings. Physical controller/Escape review, cadence/ACK tuning, coexistence and production acceptance remain; mainboard VDP/startup preserved.
