@@ -1,5 +1,7 @@
-/* PORT-017 v1 byte codec. Shared reviewed copy for the eZ80 foreground agent.
+/* SD checked-v1 / checksum-free fast-v2 byte codec. Shared reviewed eZ80 copy.
  * No allocation, alignment assumptions, device calls or native struct wire ABI.
+ * Fast records keep the20-byte envelope required by installed EMOS gateways;
+ * bytes16..19 are reserved zero, never a checksum. No fast CRC is computed.
  */
 #ifndef EXTENDER_SD_WIRE_H
 #define EXTENDER_SD_WIRE_H
@@ -11,6 +13,8 @@
 #define SD_REQUEST 1
 #define SD_RESPONSE 2
 #define SD_PRESENCE 3
+#define SD_CHECKED_VERSION 1
+#define SD_FAST_VERSION 2
 enum sd_operation { SD_HELLO=1, SD_STAT, SD_LIST, SD_READ, SD_BEGIN,
     SD_WRITE, SD_FINISH, SD_ACTIVATE, SD_CANCEL, SD_RECOVER, SD_EXIT,
     SD_MKDIR, SD_REMOVE, SD_MOVE };
@@ -38,15 +42,18 @@ static inline uint32_t sd_crc(const uint8_t *p,size_t n) {
     return sd_crc_update(UINT32_C(0xffffffff),p,n)^UINT32_C(0xffffffff);
 }
 static inline void sd_seal(uint8_t *p) {
+    if(p[2]==SD_FAST_VERSION) { sd_put32(p+16,0);return; }
     uint32_t c=sd_crc_update(UINT32_C(0xffffffff),p,16);
     c=sd_crc_update(c,p+SD_HEADER,sd_u16(p+14));
     sd_put32(p+16,c^UINT32_C(0xffffffff));
 }
 static inline int sd_valid(const uint8_t *p,size_t n) {
     uint32_t c;
-    if(n<SD_HEADER || n>SD_MAX_RECORD || p[0]!='S' || p[1]!='D' || p[2]!=1 ||
+    if(n<SD_HEADER || n>SD_MAX_RECORD || p[0]!='S' || p[1]!='D' ||
+        (p[2]!=SD_CHECKED_VERSION && p[2]!=SD_FAST_VERSION) ||
         p[3]<SD_REQUEST || p[3]>SD_PRESENCE || sd_u16(p+14)!=n-SD_HEADER ||
         sd_u32(p+4)==0) return 0;
+    if(p[2]==SD_FAST_VERSION) return sd_u32(p+16)==0;
     c=sd_crc_update(UINT32_C(0xffffffff),p,16);
     c=sd_crc_update(c,p+SD_HEADER,n-SD_HEADER)^UINT32_C(0xffffffff);
     return sd_u32(p+16)==c;
@@ -56,5 +63,11 @@ static inline void sd_header(uint8_t *p,uint8_t kind,uint32_t session,
     p[0]='S';p[1]='D';p[2]=1;p[3]=kind;
     sd_put32(p+4,session);sd_put32(p+8,sequence);p[12]=op;p[13]=status;
     sd_put16(p+14,n);
+}
+static inline void sd_header_mode(uint8_t *p,uint8_t kind,uint32_t session,
+                                 uint32_t sequence,uint8_t op,uint8_t status,
+                                 uint16_t n,int fast) {
+    sd_header(p,kind,session,sequence,op,status,n);
+    if(fast) p[2]=SD_FAST_VERSION;
 }
 #endif

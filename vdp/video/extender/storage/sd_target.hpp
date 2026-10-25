@@ -76,8 +76,10 @@ inline unsigned sdPost(const std::uint8_t *p,unsigned n,std::uint8_t *out,
   auto result=sd_service.post(p,n,out,out_length,now);
   portEXIT_CRITICAL(&sd_mutex);return result;
 }
-inline void sdStatus(std::uint32_t now,bool &online,bool &pending,std::uint32_t &boot) {
+inline void sdStatus(std::uint32_t now,bool &online,bool &pending,std::uint32_t &boot,
+                     unsigned &protocol) {
   portENTER_CRITICAL(&sd_mutex);online=sd_service.online(now);
-  pending=sd_service.pending();boot=sd_service.boot();portEXIT_CRITICAL(&sd_mutex);
+  pending=sd_service.pending();boot=sd_service.boot();protocol=sd_service.protocol();
+  portEXIT_CRITICAL(&sd_mutex);
 }
 }
