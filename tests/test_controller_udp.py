@@ -98,6 +98,13 @@ class WireTests(unittest.TestCase):
         self.receiver.receive(data)
         self.assertEqual(self.receiver.field(7),1234)
 
+    def test_http_ipv4_and_mapped_peer_admission(self):
+        executable=Path(self.temp.name)/'http-peer'
+        subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror',
+                        '-I',str(ROOT/'vdp/video'),str(ROOT/'tests/controller/http_peer.cpp'),
+                        '-o',str(executable)],check=True)
+        subprocess.run([str(executable)],check=True,timeout=5)
+
     def test_loss_duplicate_gap_reorder_and_tap_retention(self):
         s=state();q=Transitions(s)
         s.last_edges=[(304,True),(304,False)];q.report(s)

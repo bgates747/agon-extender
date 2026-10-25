@@ -209,4 +209,4 @@ headings no longer compete with the approved current sequence.
 
 ## Analog controller input
 
-- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Reviewed host viewer;120Hz/250ms UDP. AgonDev C++ mode20 viewer, P4 peer and EMOS cache candidates implemented; native pipeline and app/P4/EMOS builds pass. EMOS fits at130,972bytes/100free. Interface review, identified staging and physical lifecycle/load/visual validation remain; no controller firmware installed.
+- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — EMOS v0.1.25/P4 r10 installed and independently verified; mode20 viewer loaded but stopped, mainboard VDP/startup preserved. P4 dual-stack HTTP rejects IPv4 controller admission. Correction passes12 focused checks and actual target-object compilation; new P4 identity/build/install and physical review remain. EMOS has62 ROM bytes free.

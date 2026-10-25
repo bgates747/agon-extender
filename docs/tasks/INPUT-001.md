@@ -9,7 +9,8 @@ has selected UDP and delegated packet layout, cadence and timeout. Host sender
 and P4 receiver implementation was released for offline validation/building.
 The Author now selects the Agon viewer in mode20 with AgonDev C++ permitted;
 matching app/P4/EMOS candidate source and software/build checks are complete.
-Interface review, identified staging and physical validation remain gates.
+The Author-approved identified installation is now verified; P4 HTTP admission
+needs the correction recorded below before controller/visual validation can begin.
 The Author subsequently releases the bench for deployment, requesting that the
 installed mainboard VDP be retained. This authorizes P4/EMOS installation and
 app staging; the viewer remains stopped for the Author to invoke.
@@ -442,3 +443,57 @@ Author agrees experimental EMOS v0.1.25, indexed-hdmi-r10 and
 controller-viewer-r01 identities and directs proceeding with deployment.
 Preserve mainboard VDP/startup; leave the viewer stopped for Author invocation.
 This supersedes the pending identity gate above, not physical acceptance.
+
+
+## Identified deployment and admission correction — 2026-10-24
+
+The Author approved EMOS v0.1.25, indexed-hdmi-r10 and controller-viewer-r01
+and directed deployment. P4 and eZ80 installation/readback verification is
+complete; the mainboard ESP32 VDP and99-byte startup remain unchanged. The
+viewer is loaded at040000 but has never been invoked. The foreground listener
+is closed and the Legacy CLI has admitted neutral Extender keyboard input.
+Controller input is **not ready**: the first Oryx sender received HTTP400 on
+admission and stopped without transmitting a UDP state.
+
+| Component | Exact build | Source commit | Verification |
+|---|---|---|---|
+| P4 | `indexed-hdmi-r10-b2026-10-25-02-40-35Z` | `2ebf044f893be59e769e6e95ba9d6e1c84e44094` | Full incoming rollback, flash verification, independent16MiB readback and observed boot ID |
+| EMOS | `agon-emos-v0.1.25-b2026-10-25-02-41-10Z` | `b783e17ba3f2ab199baf8ed969065803c7350c55` | Complete131072-byte ROM readback matches selected padded image; CLI identity observed |
+| Mode20 viewer | `controller-viewer-r01-b2026-10-25-02-41-10Z` | `6861af2e836ddc68024a49a59e1fd67bdb588119` | Installed28,528-byte binary readback exact; loaded without RUN |
+
+The P4 source freeze is the installed r09 source28514129 plus only the
+optional controller integration. Every display source hash, timing/carrier,
+scanout/storage setting and configured reset bridge matches r09. SDK differences
+are source paths and the intentional socket ceiling10→16. EMOS occupies131010
+ROM bytes, leaving62. These are experimental builds, not production promotion.
+The initial post-boot maintenance batch did not reach its listener; a subsequently
+verified CLI/status exchange and fresh readback batch completed without another
+FLASH. Input-ready during startup does not establish that load-only startup has
+finished; future deployment coordination needs actual CLI handback before dispatch.
+
+### IN001-F01 — IPv4 controller refused by the dual-stack HTTP listener
+
+1. Observed failure: Oryx sender admission returns HTTP400, `IPv4 required`,
+   with zero sent/acknowledged UDP states and no admitted controller session.
+2. ESP-IDF5.5.5 commitb774170ff46c393eeb5e495ea37936038d3f4f4f
+   `components/esp_http_server/src/httpd_main.c:httpd_server_init` deliberately
+   selects PF_INET6 when CONFIG_LWIP_IPV6 is enabled. Its IPv4 clients have mapped
+   IPv6 peer addresses. This is intentional upstream behavior, not an SDK defect.
+   The new local handler incorrectly allocated sockaddr_in and required AF_INET.
+3. The prepared correction uses sockaddr_storage and extracts either ordinary
+   IPv4 or mapped IPv4, retaining the network-order source address for UDP
+   binding. Genuine IPv6 remains outside the IPv4 UDP contract. The adjacent
+   `http_peer.hpp` explains the adaptation; remove/rework it only when listener
+   or controller transport address-family ownership deliberately changes.
+4. Twelve focused tests pass, including a real IPv4 loopback client accepted
+   by an IPv6 socket, mapped/raw address equivalence, truncation and genuine
+   IPv6 rejection. A fresh isolated object using the actual P4 SDK/compiler
+   action also compiles. The frozen r10 build outputs were not changed.
+5. Corrected source is prepared in maintained source and the isolated HDMI
+   composition. A new P4 revision agreement, full identified build and verified
+   installation remain before starting the sender again. Do not reflash EMOS
+   or mainboard VDP, rerun uncertain commands, or launch the viewer as a check.
+
+Machine-local receipts, rollback bytes and stopped Oryx sender evidence remain
+under the ignored installation record. No controller handling, visual, latency,
+mode-cleanup or coexistence acceptance is claimed.
