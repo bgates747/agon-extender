@@ -13,8 +13,8 @@ class Appliance {
  public:
     bool request(const std::uint8_t*p,Receiver&core,std::uint64_t now){
         if(p[0]!='C'||p[1]!='I')return false;
-        if(p[2]!=1||(p[3]!=1&&p[3]!=2)||!controller_u32(p+4)||!controller_u16(p+12)||
-           controller_crc(p,14)!=controller_u16(p+14))return true;
+        if(p[2]!=CONTROLLER_CARRIER_VERSION||(p[3]!=1&&p[3]!=2)||
+           !controller_u32(p+4)||!controller_u16(p+12)||p[14]||p[15])return true;
         const auto token=controller_u32(p+4);
         if(p[3]==2){if(token==owner_)ready_=false;return true;}
         const auto s=core.snapshot(now);
@@ -28,7 +28,7 @@ class Appliance {
         // Snapshot when the console owner can actually enqueue the reply;
         // network/keyboard backpressure must not make an old reply look fresh.
         const auto s=core.snapshot(now);reply_session_=s.session;
-        std::memset(out,0,CONTROLLER_RESULT_SIZE);std::memcpy(out,"CIS1",4);
+        std::memset(out,0,CONTROLLER_RESULT_SIZE);std::memcpy(out,CONTROLLER_RESULT_MAGIC,4);
         controller_put32(out+4,owner_);controller_put16(out+8,controller_u16(request_.data()+12));
         out[10]=(s.active?1:0)|(s.valid?2:0);
         put64(out+12,s.instance);put64(out+20,s.session);put32(out+28,s.sequence);
@@ -40,7 +40,7 @@ class Appliance {
             Edge edge;if(!core.peek(i,edge))break;
             auto*e=out+48+i*6;put32(e,edge.sequence);e[4]=edge.control;e[5]=edge.down;++out[11];
         }
-        put16(out+96,controller_crc(out,96));ready_=false;return true;
+        ready_=false;return true;
     }
 };
 bool applianceRequest(const std::uint8_t*p);
