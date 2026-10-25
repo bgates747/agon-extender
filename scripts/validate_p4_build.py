@@ -109,6 +109,7 @@ def main() -> None:
     parser.add_argument("--scroll-fast", action="store_true")
     parser.add_argument("--bitmap-fast", action="store_true")
     parser.add_argument("--bitmap-lut", action="store_true")
+    parser.add_argument("--controller-input", action="store_true")
     parser.add_argument("--graphics-timing", action="store_true")
     parser.add_argument("--overlay-bgr", action="store_true")
     parser.add_argument("--hdmi-link-watch", action="store_true")
@@ -125,7 +126,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing, args.controller_input)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -203,6 +204,8 @@ def main() -> None:
                 fail("HDMI timing selection disagrees with compiled definitions")
         if ("-DAGON_EXTENDER_USB_FSLS_ONLY=1" in argv) != args.usb_fsls_only:
             fail("USB FSLS application diagnostic disagrees with compiled HCD")
+        if not selected_definition(argv, "AGON_EXTENDER_CONTROLLER_INPUT", args.controller_input):
+            fail("controller service selection differs from compile action")
         missing = [item for item in required_definitions
                    if f"-D{item}" not in argv]
         if missing:
@@ -305,6 +308,16 @@ def main() -> None:
                         fail(f"silicon bounds differ in {config}")
             config_lines = (output / "sdkconfig").read_text().splitlines()
             compiled_config = (output / "build/config/sdkconfig.h").read_text().splitlines()
+            if args.controller_input:
+                if "#define CONFIG_LWIP_MAX_SOCKETS 16" not in compiled_config:
+                    fail("controller composition requires the recorded 16-socket ceiling")
+                network = next(c for c in selected_commands
+                               if Path(c["file"]).name == "wired_network_service.cpp")
+                deps = subprocess.check_output(
+                    ["ninja", "-C", str(output / "build"), "-t", "deps", network["output"]], text=True)
+                for name in ("wire.hpp", "receiver.hpp", "runtime.hpp"):
+                    if str(VDP / "video/extender/input/controller" / name) not in deps:
+                        fail("controller source absent from actual compiler dependencies: " + name)
             if args.rolling_scanout and "#define CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL 0" not in compiled_config:
                 raise SystemExit("rolling scanout requires the recorded PSRAM malloc preference")
             if ("#define CONFIG_HEAP_ABORT_WHEN_ALLOCATION_FAILS 1" in compiled_config) != args.abort_on_alloc_failure:

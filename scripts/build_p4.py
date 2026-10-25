@@ -118,7 +118,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False, sw_visible_snapshot: bool = False, indexed_output_cache_once: bool = False, indexed_snapshot_pie: bool = False, graphics_timing: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False, sw_visible_snapshot: bool = False, indexed_output_cache_once: bool = False, indexed_snapshot_pie: bool = False, graphics_timing: bool = False, controller_input: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -127,6 +127,10 @@ def select_display_profile(document: dict, name: str, board: str,
     if hdmi_timing not in HDMI_GEOMETRIES or (hdmi_timing != "1280x720" and display_output != "hdmi"):
         raise SystemExit("custom HDMI timing requires HDMI output")
     profile = deepcopy(document["profiles"][name])
+    if controller_input:
+        if name != "p4-console":
+            raise SystemExit("controller input requires p4-console")
+        profile["definitions"].append("AGON_EXTENDER_CONTROLLER_INPUT=1")
     if graphics_timing:
         if name != "p4-console" or render_benchmark_output not in (None, "normal") or parallel_boot_candidate or parallel_probe_candidate or exext_stream:
             raise SystemExit("graphics timing requires ordinary p4-console execution and normal output")
@@ -617,6 +621,7 @@ def main() -> None:
     parser.add_argument("--direct-rgb888", action="store_true", help="RGB-001 experimental CPU pixel storage; never production")
     parser.add_argument("--render-benchmark-output", choices=("normal", "hold", "off", "convert-off"),
                         help="BENCH-009 diagnostic windows and output controls")
+    parser.add_argument("--controller-input", action="store_true", help="Compile candidate controller UDP/admission service; no EMOS delivery")
     parser.add_argument("--graphics-timing", action="store_true", help="SCROLL-001 execution counters")
     parser.add_argument("--tools-path", type=Path, default=TOOLS,
                         help="host-native ESP-IDF tools directory")
@@ -668,7 +673,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing, args.controller_input)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -756,6 +761,10 @@ def main() -> None:
         f'CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="{VDP / "partitions.csv"}"',
     )
     config = apply_sdk_overrides(config, board["sdkconfig_overrides"])
+    if args.controller_input:
+        # One controller UDP socket plus ordinary HTTP/storage/control sockets.
+        # This raises the compile-time ceiling, not a claim of runtime capacity.
+        config = apply_sdk_overrides(config, {"CONFIG_LWIP_MAX_SOCKETS":"16"})
     if args.rolling_scanout:
         # HDMI02-M02c: even the 1KiB preference exhausted internal RAM during
         # Nurples bitmap loading (84-byte pthread semaphore allocation fails).
@@ -840,6 +849,8 @@ def main() -> None:
         validation.append("--bitmap-fast")
     if args.bitmap_lut:
         validation.append("--bitmap-lut")
+    if args.controller_input:
+        validation.append("--controller-input")
     if args.graphics_timing:
         validation.append("--graphics-timing")
     if args.overlay_bgr:
@@ -912,6 +923,7 @@ def main() -> None:
         "overlay_bgr": args.overlay_bgr,
         "scroll_fast": args.scroll_fast,
         "graphics_timing": args.graphics_timing,
+        "controller_input": args.controller_input,
         "parallel_boot_candidate": args.parallel_boot_candidate,
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,

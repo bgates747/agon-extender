@@ -38,6 +38,15 @@
 
 #include <esp_log.h>
 #include <lwip/sockets.h>
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+// Keep Arduino IPAddress declarations ahead of lwIP's INADDR_NONE macro.
+// The network service header above establishes the Arduino include order.
+#include "extender/input/controller/runtime.hpp"
+namespace agon::extender::controller {
+bool applianceRequest(const std::uint8_t*p){return runtime.applianceRequest(p);}
+bool applianceTake(std::uint8_t*out){return runtime.applianceTake(out);}
+}
+#endif
 
 #include "extender/web/embedded_assets.hpp"
 
@@ -164,6 +173,10 @@ void WiredNetworkService::onNetworkEvent(DevkitEthernet::Event event) noexcept {
     case DevkitEthernet::Event::Stopped: bit = EthernetStopped; break;
     default: return;
   }
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+  if(event==DevkitEthernet::Event::LostIp||event==DevkitEthernet::Event::Disconnected||event==DevkitEthernet::Event::Stopped)
+    controller::runtime.linkLost(); // Atomic notification; no network I/O on event task.
+#endif
   pending_events_.fetch_or(bit, std::memory_order_release);
   notifyWorker();
 }
@@ -186,6 +199,9 @@ void WiredNetworkService::worker() noexcept {
 }
 
 void WiredNetworkService::processEvents(std::uint32_t events) noexcept {
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+  if(events&(EthernetLostIp|EthernetDisconnected|EthernetStopped))controller::runtime.stop();
+#endif
   if ((events & EthernetStarted) != 0) {
     state_.store(WiredServiceState::LinkDown, std::memory_order_release);
     ESP_LOGI(kTag, "Ethernet interface started");
@@ -381,6 +397,9 @@ bool WiredNetworkService::startHttp() noexcept {
 #endif
   if (!local_sd::startHttp()) ESP_LOGW(kTag, "P4 SD HTTP server unavailable");
 #endif
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+  if(!controller::runtime.start())ESP_LOGW(kTag,"Controller UDP unavailable; existing services retained");
+#endif
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
 #if !defined(AGON_EXTENDER_HDMI)
@@ -390,9 +409,19 @@ bool WiredNetworkService::startHttp() noexcept {
 #endif
   auto const &assets = web::embeddedBrowserAssets();
   HttpVideoConfig options;
-  options.max_uri_handlers = 18; // common assets/video plus optional console routes
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+  options.max_uri_handlers = 24;
+#else
+  options.max_uri_handlers = 18;
+#endif
   if (!startServer(assets.data(), assets.size(), options)) return false;
   auto const server = server_.load(std::memory_order_acquire);
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+  if(!controller::runtime.routes(server)){
+    controller::runtime.stop();
+    ESP_LOGW(kTag,"Controller routes unavailable; existing services retained");
+  }
+#endif
   httpd_uri_t screen{};
   screen.uri="/screen/text";screen.method=HTTP_GET;screen.handler=&screen_text::handle;
   if(httpd_register_uri_handler(server,&screen)!=ESP_OK){http_fault_=true;stopHttp();return false;}
@@ -476,6 +505,9 @@ bool WiredNetworkService::startHttp() noexcept {
 }
 
 void WiredNetworkService::stopHttp() noexcept {
+#if defined(AGON_EXTENDER_CONTROLLER_INPUT)
+  controller::runtime.stop();
+#endif
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
   input::remoteLocked([](auto &r){r.cancel(input::RemoteKeyboard::disconnected);return 0;});
 #endif
