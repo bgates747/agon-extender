@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r188
-updated_at: 2026-10-25T02:39:54Z
+registry_revision: r189
+updated_at: 2026-10-25T03:13:48Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -42,11 +42,12 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r10
+    latest_identity: indexed-hdmi-r11
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
+      - r11 accepts IPv4-mapped IPv6 HTTP peers while retaining IPv4 UDP binding; Author approved correction identity/deployment, physical validation pending.
       - r10 adds optional controller input to the retained r09 HDMI composition; Author approved experimental identity/deployment, physical validation pending.
       - r07 applies the HDMI-003 native640x240 row-aspect correction on the same matched source as rgb-001-r13. Host-tested candidate; build/hardware/visual qualification pending.
       - RESEARCH-007 R07-I01-I05; explicit committed-source build selection, not production.

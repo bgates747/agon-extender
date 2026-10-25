@@ -3,10 +3,14 @@
 The reviewed Linux viewer displays the Logitech F310's two sticks, separate
 analog triggers, D-pad and eleven buttons. A developmental UDP sender and P4
 receiver, resident EMOS service and Agon mode20 viewer now pass software checks
-and target builds. The Author-approved experimental P4 r10/EMOS v0.1.25 installation and viewer
-files are independently verified. Controller input is blocked by the P4 HTTP
-admission correction in [INPUT-001](tasks/INPUT-001.md); the viewer is stopped.
-Physical Oryx→P4→Agon controller delivery has not been demonstrated.
+and target builds. The Author-approved experimental P4 r11/EMOS v0.1.25 installation and viewer
+files are independently verified. Oryx-to-P4 admission and live UDP snapshots
+are checked; the Agon viewer is preloaded and stopped for Author review. The
+r10 HTTP peer-address rejection is corrected; [INPUT-001](tasks/INPUT-001.md)
+retains evidence and remaining physical gates.
+The first receive window accepted about22 states/s despite120Hz publication;
+rate/load tuning remains open. Physical Oryx→P4→Agon controller delivery has
+not been demonstrated.
 
 Use the [viewer guide](testing/controller-viewer.md) for local handling and
 recording. Select X on the F310's rear switch, then unplug/replug after changing

@@ -209,4 +209,4 @@ headings no longer compete with the approved current sequence.
 
 ## Analog controller input
 
-- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — EMOS v0.1.25/P4 r10 installed and independently verified; mode20 viewer loaded but stopped, mainboard VDP/startup preserved. P4 dual-stack HTTP rejects IPv4 controller admission. Correction passes12 focused checks and actual target-object compilation; new P4 identity/build/install and physical review remain. EMOS has62 ROM bytes free.
+- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — P4 r11/EMOS v0.1.25 installed and independently verified; Oryx UDP admission works with source configured120Hz/250ms; short P4 receive cadence22/s needs tuning. Mode20 viewer preloaded but stopped for Author handling/lifecycle review. Mainboard VDP/startup preserved; EMOS has62 ROM bytes free. Broader physical failure/coexistence qualification and production acceptance remain.

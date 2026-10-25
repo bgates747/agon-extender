@@ -9,8 +9,8 @@ has selected UDP and delegated packet layout, cadence and timeout. Host sender
 and P4 receiver implementation was released for offline validation/building.
 The Author now selects the Agon viewer in mode20 with AgonDev C++ permitted;
 matching app/P4/EMOS candidate source and software/build checks are complete.
-The Author-approved identified installation is now verified; P4 HTTP admission
-needs the correction recorded below before controller/visual validation can begin.
+The Author-approved identified installation and corrected P4 r11 source admission
+are verified. The preloaded viewer remains stopped for controller/visual review.
 The Author subsequently releases the bench for deployment, requesting that the
 installed mainboard VDP be retained. This authorizes P4/EMOS installation and
 app staging; the viewer remains stopped for the Author to invoke.
@@ -497,3 +497,42 @@ finished; future deployment coordination needs actual CLI handback before dispat
 Machine-local receipts, rollback bytes and stopped Oryx sender evidence remain
 under the ignored installation record. No controller handling, visual, latency,
 mode-cleanup or coexistence acceptance is claimed.
+
+
+Author approves indexed-hdmi-r11 and directs proceeding with the prepared
+mapped-IPv4 admission correction. Full identified build and P4-only installation
+are authorized. Preserve EMOSv0.1.25, mainboard VDP and startup; viewer remains
+stopped. Source freeze14c7f7b6 derives from the retained r10 HDMI composition.
+
+
+## r11 deployment handback — 2026-10-24
+
+P4 `indexed-hdmi-r11-b2026-10-25-03-12-12Z`, source `14c7f7b6f7d395dc0dd1a9a0be44e1a66e9ab28e`, is installed. Canonical full
+build/compile-graph checks, verified incoming rollback, flash verification,
+independent16MiB readback and observed startup identity pass. Outside written
+flash sectors is unchanged. HDMI/display/reset selection remains the r10/r09
+composition. IN001-F01 is corrected: Oryx HTTP admission succeeds and real
+F310 UDP snapshots arrive with valid current source state and acknowledgements
+at the configured120Hz/250ms. This checks host-to-P4 readiness, not Agon
+application consumption, visual timing or all fault cases.
+
+EMOSv0.1.25 and the mainboard VDP were not flashed again. Startup matches its
+retained99-byte original. A real CLI/status handback is observed after reboot
+before dispatching the finite stopped-viewer LOAD helper. The SD listener exits
+to a Legacy CLI, keyboard neutral; viewer-r01 is loaded at040000 but never RUN.
+The Oryx source remains running for the Author. No test invocation, controller
+handling/visual acceptance or production promotion is claimed.
+
+Interactive review: `VDU 22 20`, wait at least one whole second, then
+`RUN &040000`. Escape exits; R clears displayed counts. Source/flash/CLI receipts
+and original rollback remain in the machine-local record.
+
+
+Receive-cadence limit: the configured Oryx publisher is120Hz, but a short
+2.014-second Pi-monotonic observation saw45 new P4 accepted states
+(22.3/s) while the highest source sequence advanced236. Source/ACKs stayed
+valid with no reported rejection or queued edges. This is a bounded counter
+observation, not a calibrated latency/throughput qualification or proof of
+where packets were lost. Retained transitions remain queued until consumption.
+Receive cadence/load needs investigation in IN001-04/IN001-08 after the first
+manual state/visual review; do not advertise120Hz P4 application delivery.
