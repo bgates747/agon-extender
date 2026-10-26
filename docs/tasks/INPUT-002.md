@@ -111,6 +111,7 @@ be coordinated before controller traffic or application invocation.
 | I2-D02 | Use monotonic timestamps and report uncertainty; do not set clocks | Selected investigation method; wall-clock synchronization is unnecessary |
 | I2-D03 | Finite explicit background runs, no service/autostart or automatic takeover | Selected implementation choice; preserves source and bench ownership |
 | I2-D04 | Further timestamp probe layout and eZ80 timebase | Unresolved until installed-source review and initial measurements; propose the smallest justified extension |
+| I2-D05 | Prepare a priority4 UDP worker as a bounded scheduling control | Experimental source choice under investigation authority; preserves eight-packet budget/2ms block and all wire formats; build only until deployment identity is agreed |
 
 Follow the [test lifecycle](../procedures/test-appliances.md) and
 [execution protocol](../procedures/test-execution.md). Never edit `/autoexec.txt`.
@@ -121,4 +122,19 @@ or leave an indefinite synthetic controller source running after a campaign.
 
 ## Results
 
-Task recorded before implementation. Host and hardware measurements pending.
+The task and preceding owned dirt were committed/pushed before implementation
+in Extender `b96c8d52` and EMOS `1dafee0`; installed P4 source `27d93dcc` was
+also published on its retained branch. The finite source/campaign and offline
+clock-bound analyzer are implemented. Forty-one host/core checks pass, with
+fourteen new probe/clock checks also passing on Oryx. Local socket controls and
+bounded Oryx/Pi-to-P4 campaigns completed; no Agon application was invoked.
+
+[First results](INPUT-002/RESULTS-2026-10-26.md) identify substantial delay/loss
+before EMOS. The exact P4 blocking/scheduling point remains unproven. A minimal
+priority4 source control is committed against the installed P4 composition.
+The canonical indexed-PPA builder requires an approved `indexed-hdmi` revision
+even for compilation and refuses the unversioned sentinel. Its build therefore
+awaits the Author's version decision; no target build or flash is claimed.
+No new firmware identity, flash, production selection or downstream timing
+claim is implied. Remaining work is the identified P4 scheduling comparison,
+then justified timestamp probes and EMOS/application/presentation attribution.

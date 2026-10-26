@@ -4,9 +4,12 @@ The mode20 Agon application reads controller state through a candidate resident
 EMOS service. P4 retains button/D-pad transitions until EMOS has copied them to
 the caller. This document describes the checksum-free carrier2 and
 96-byte application result. Source/software and target compilation checks pass;
-the corrected EMOSv0.1.26/P4r13/viewer-r03 combination is installed with exact
-ROM/application RAM readbacks. The viewer is not invoked; physical controller
-delivery and Escape review remain open. The earlier CRC-bearing
+the corrected EMOSv0.1.26/P4r13/viewer-r03 installation had exact
+ROM/application RAM readbacks. The Author subsequently reported it working;
+EMOSv0.1.27 preserves that controller composition and adds bounded mainboard
+VDPlet replies. [Latency measurements](../tasks/INPUT-002/RESULTS-2026-10-26.md)
+now show delay/loss on the host/P4 UDP path before EMOS is involved. Exact
+downstream latency and broader lifecycle acceptance remain open. The earlier CRC-bearing
 EMOSv0.1.25/P4r11/viewer-r02 failure is retained in
 [INPUT-001](../tasks/INPUT-001.md), which owns deployment and physical gates.
 The [frozen carrier1 description](../tasks/INPUT-001/CONTROLLER-CARRIER-V1.md)

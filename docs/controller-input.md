@@ -3,17 +3,24 @@
 The reviewed Linux viewer displays the Logitech F310's two sticks, separate
 analog triggers, D-pad and eleven buttons. A developmental UDP sender and P4
 receiver, resident EMOS service and Agon mode20 viewer now pass software checks
-and target builds. The Author-approved experimental P4r13/EMOSv0.1.26,
+and target builds. The Author-approved experimental P4r13/EMOSv0.1.27,
 sdserve-v0.3.0 and viewer-r03 installation is independently verified. The masked
-READ/UART failure is reproduced offline and corrected with checksum-free
-controller records and interrupt-enabled copies. Full EMOS ROM and loaded
-viewer RAM readbacks match; viewer-r03 remains stopped for Author invocation.
-It retains the detailed operation/status display and initial static drawing.
-Physical controller delivery remains unresolved until that review;
-[INPUT-001](tasks/INPUT-001.md) retains the evidence and remaining gates.
-The first receive window accepted about22 states/s despite120Hz publication;
-rate/load tuning remains open. Physical Oryx→P4→Agon controller delivery has
-not been demonstrated.
+READ/UART failure was corrected with checksum-free controller records and
+interrupt-enabled copies. The Author subsequently reported that the controller
+worked and identified latency as the next problem. EMOSv27 also admits bounded
+mainboard VDPlet discovery replies and leaves270 resident ROM bytes free.
+[INPUT-001](tasks/INPUT-001.md) retains integration evidence and acceptance gates.
+
+The [latency investigation](testing/controller-latency.md) now has a finite
+deterministic Linux source and retained host/P4 measurements. At120Hz Oryx
+publication, P4 stored691 of3600 states in30seconds; median ACK round trip was
+260.658ms. A Pi source reproduced the degradation. Even5Hz traffic had about
+27–29ms median round trips while Oryx ICMP averaged0.558ms. This narrows the
+investigation toward P4 UDP processing/scheduling; it does not identify the
+exact blocking call or measure EMOS/display latency. The viewer's nominal20Hz
+redraw adds a separate potential delay. Firmware and normal startup were
+unchanged during these measurements. Current [results](tasks/INPUT-002/RESULTS-2026-10-26.md)
+record scope and limits; production acceptance remains open.
 
 The correction's review sender uses the existing `--timeout-ms 1000` option
 at120Hz to reduce premature missing-ACK shutdowns. This permits a one-second

@@ -88,6 +88,7 @@ outside selected production and has no complete product HDMI acceptance.
 | Capture failures and uninstrumented controls | [Capture protocol](qualification/capture-failure-protocol.md) |
 | Offline HDMI candidate ranking | [HDMI candidate tool](testing/hdmi-candidates.md), experimental; no hardware changes or acceptance guarantees |
 | Timing scopes, PRT units and package reuse boundary | [Game timing](testing/game-timing.md) |
+| Deterministic controller source, host/P4 timing and clock uncertainty | [Controller latency](testing/controller-latency.md), experimental investigation |
 | Deterministic rendering load, indefinite visual fixtures and paired mainboard/P4 measurements | [Rendering load suite](testing/render-load.md), experimental; campaign paused with partial results and an offline plotting tool |
 | Permanent representative rendering fixtures and local-card result collection | [Resident rendering suite](testing/resident-render-suite.md), exact existing files and bounded acceptance |
 | Installed-firmware acceptance suite | [Qualification suite](../qualification/README.md) |

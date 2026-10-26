@@ -32,9 +32,19 @@ do not themselves send input to P4 or EMOS.
 [controller_udp.py](controller_udp.py) adds an explicitly invoked developmental
 LAN sender. It defaults to120Hz/250ms with retained button/D-pad taps and stops
 on source/session loss. The P4 receiver requires a separate controller-enabled
-build/installation; the EMOS/Agon consumer is an uninstalled candidate. See the
+build/installation; the experimental EMOS/Agon consumer is installed and the
+Author reports it working, with substantial latency still under investigation. See the
 [controller guide](../docs/controller-input.md) and
 [wire contract](../docs/protocols/controller-lan.md).
+
+[controller_probe.py](controller_probe.py) generates deterministic axes without
+opening a controller. [controller_probe_campaign.py](controller_probe_campaign.py)
+coordinates finite rate comparisons using that same source; it stops on a
+partial/failing case and never takes over an active source. Evidence distinguishes
+host scheduling and P4 ACK timing from EMOS/display latency.
+[controller_clock.py](controller_clock.py) analyzes supplied four-timestamp
+exchanges offline; no clocks or protocol fields are changed. See the experimental
+[latency guide](../docs/testing/controller-latency.md) for scope and commands.
 
 ## P4-local storage candidate client
 
