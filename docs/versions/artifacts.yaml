@@ -1,7 +1,7 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r193
+registry_revision: r194
 updated_at: 2026-10-26T02:19:36Z
 
 artifacts:
@@ -43,11 +43,12 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r13
+    latest_identity: indexed-hdmi-r14
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
+      - r14 is Author-approved on2026-10-26 for the prepared controller-worker priority2-to4 scheduling comparison against exact r13; build/deployment/comparison pending, no production acceptance.
       - r13 adds checksum-free fast SD carrier2 to the controller-corrected HDMI source; full build/validation, installed flash readback and startup identity pass. Author controller review and wider qualification pending.
       - r12 full build/validation passes; retained unchanged as controller-correction evidence, not installed.
       - r11 accepts IPv4-mapped IPv6 HTTP peers while retaining IPv4 UDP binding; Author approved correction identity/deployment, physical validation pending.

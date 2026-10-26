@@ -111,7 +111,7 @@ be coordinated before controller traffic or application invocation.
 | I2-D02 | Use monotonic timestamps and report uncertainty; do not set clocks | Selected investigation method; wall-clock synchronization is unnecessary |
 | I2-D03 | Finite explicit background runs, no service/autostart or automatic takeover | Selected implementation choice; preserves source and bench ownership |
 | I2-D04 | Further timestamp probe layout and eZ80 timebase | Unresolved until installed-source review and initial measurements; propose the smallest justified extension |
-| I2-D05 | Prepare a priority4 UDP worker as a bounded scheduling control | Experimental source choice under investigation authority; preserves eight-packet budget/2ms block and all wire formats; build only until deployment identity is agreed |
+| I2-D05 | Compare a priority4 UDP worker as a bounded scheduling control | Author says proceed on2026-10-26 after reviewing the r14 naming request and starvation explanation; approved experimental identity `indexed-hdmi-r14`, build/verified P4-only deployment and finite comparison under existing investigation authority. Preserve eight-packet budget/2ms block and all wire formats |
 
 Follow the [test lifecycle](../procedures/test-appliances.md) and
 [execution protocol](../procedures/test-execution.md). Never edit `/autoexec.txt`.
@@ -134,7 +134,9 @@ before EMOS. The exact P4 blocking/scheduling point remains unproven. A minimal
 priority4 source control is committed against the installed P4 composition.
 The canonical indexed-PPA builder requires an approved `indexed-hdmi` revision
 even for compilation and refuses the unversioned sentinel. Its build therefore
-awaits the Author's version decision; no target build or flash is claimed.
-No new firmware identity, flash, production selection or downstream timing
+was initially paused at the version decision. The Author subsequently says
+proceed: `indexed-hdmi-r14` is approved for the exact prepared scheduling
+comparison. Build/backup/selective P4 installation/independent verification and
+finite comparison now proceed; no production selection or downstream timing
 claim is implied. Remaining work is the identified P4 scheduling comparison,
 then justified timestamp probes and EMOS/application/presentation attribution.
