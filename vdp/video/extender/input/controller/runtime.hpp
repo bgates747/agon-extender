@@ -32,7 +32,15 @@ class Runtime {
     {std::lock_guard<std::mutex>lock(mutex_);core_.begin(random64());appliance_=Appliance{};port_=ntohs(local.sin_port);}
     socket_=fd;stopping_=false;link_lost_=false;
     TaskHandle_t task{};
-    if(xTaskCreate(&entry,"controller-udp",6144,this,2,&task)!=pdPASS){
+    // INPUT-002 scheduling control, not yet physically validated. Priority2
+    // in installed27d93dcc sits below the continuously runnable priority3
+    // parser on core0 and priority6 output on core1. Measured UDP service
+    // gaps cluster around53ms, although ICMP remains sub-ms. Priority4 lets
+    // this bounded eight-packet worker preempt the parser, while remaining
+    // below drawing/output. Retain the2ms block; do not busy-spin or raise it
+    // above video. Compare against the unchanged installed build before
+    // attributing the observed lag to starvation or promoting this policy.
+    if(xTaskCreate(&entry,"controller-udp",6144,this,4,&task)!=pdPASS){
       ::close(fd);socket_=-1;
       std::lock_guard<std::mutex>lock(mutex_);core_.invalidate(Fault::Link);port_=0;
       return false;
