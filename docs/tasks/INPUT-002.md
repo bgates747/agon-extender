@@ -15,9 +15,10 @@ commit/push before implementation. This task extends [INPUT-001](INPUT-001.md);
 it does not replace that task's transport, admission or acceptance contract.
 
 The controller viewer was reported working by the Author after the corrected
-installation. No calibrated end-to-end latency result exists. The bench last
-belonged to an independent human wireframe comparison; its availability must
-be coordinated before controller traffic or application invocation.
+installation. The Author subsequently approved r14's scheduling comparison.
+That bounded comparison passed and the bench was released. No calibrated
+end-to-end latency result exists; future bench work still needs fresh ownership
+and state checks.
 
 ## Scope and ownership
 
@@ -138,5 +139,16 @@ was initially paused at the version decision. The Author subsequently says
 proceed: `indexed-hdmi-r14` is approved for the exact prepared scheduling
 comparison. Build/backup/selective P4 installation/independent verification and
 finite comparison now proceed; no production selection or downstream timing
-claim is implied. Remaining work is the identified P4 scheduling comparison,
-then justified timestamp probes and EMOS/application/presentation attribution.
+claim is implied.
+
+The [r14 comparison](INPUT-002/R14-COMPARISON.md) now passes: same Oryx120Hz
+source,3600/3600 ACKs, median1.794ms versus fresh-boot r13's261.703ms (−99.31%).
+The60/240Hz cases, independent Pi120Hz case and real keyboard/fast-SD coexistence
+also pass. Exact application-only install/full readback and unchanged surrounding
+flash sectors are verified. All sources stopped, actual CLI handed back, r14
+retained experimentally; no production promotion or Agon visual-latency pass.
+
+Remaining work is EMOS/application/presentation attribution and Author review.
+The demonstrated priority correction makes additional P4 stall instrumentation
+optional unless a remaining symptom warrants it. Cross-clock timestamp probes
+and the eZ80 fine timebase remain separate unresolved preparation decisions.

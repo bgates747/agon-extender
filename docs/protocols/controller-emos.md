@@ -7,8 +7,9 @@ the caller. This document describes the checksum-free carrier2 and
 the corrected EMOSv0.1.26/P4r13/viewer-r03 installation had exact
 ROM/application RAM readbacks. The Author subsequently reported it working;
 EMOSv0.1.27 preserves that controller composition and adds bounded mainboard
-VDPlet replies. [Latency measurements](../tasks/INPUT-002/RESULTS-2026-10-26.md)
-now show delay/loss on the host/P4 UDP path before EMOS is involved. Exact
+VDPlet replies. [The P4 r14 comparison](../tasks/INPUT-002/R14-COMPARISON.md)
+removes the measured host/P4 UDP backlog by raising worker priority; wire
+formats and EMOS remain unchanged. Exact
 downstream latency and broader lifecycle acceptance remain open. The earlier CRC-bearing
 EMOSv0.1.25/P4r11/viewer-r02 failure is retained in
 [INPUT-001](../tasks/INPUT-001.md), which owns deployment and physical gates.

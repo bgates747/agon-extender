@@ -7,6 +7,13 @@ locate host/network delays; they do not establish EMOS delivery or visible
 screen latency. The tools are experimental and require an explicitly available
 controller service. [INPUT-002](../tasks/INPUT-002.md) owns the investigation.
 
+The [r14 comparison](../tasks/INPUT-002/R14-COMPARISON.md) is the current result:
+raising P4's UDP worker above the parser removes the measured backlog in the
+bounded cases. At120Hz, median ACK round trip falls261.703→1.794ms with100%
+ACK delivery. This does not measure EMOS/application/display latency or qualify
+all rendering modes. The earlier [baseline study](../tasks/INPUT-002/RESULTS-2026-10-26.md)
+retains its exact measurements and initial diagnosis.
+
 ## Finite individual and background runs
 
 Use the current host's project Python environment. `$EXTENDER_URL` is the

@@ -209,6 +209,6 @@ headings no longer compete with the approved current sequence.
 
 ## Analog controller input
 
-- [ ] **[INPUT-002 — Deterministic controller traffic and latency attribution](docs/tasks/INPUT-002.md)** — Finite Oryx source deployed;41 software checks pass. Oryx/Pi measurements reproduce P4 UDP delay/loss before EMOS;120Hz Oryx ACK median260.658ms. Exact worker stall, timestamp probes and downstream timing remain; all sources stopped, firmware/startup preserved.
+- [ ] **[INPUT-002 — Deterministic controller traffic and latency attribution](docs/tasks/INPUT-002.md)** — P4r14 priority correction installed/full-readback verified;120Hz ACK median261.703→1.794ms and100% delivery.60/240Hz,Pi120Hz and keyboard/fast-SD coexistence pass. EMOS/application/display latency, Author review and justified timestamp probes remain; all sources stopped,CLI handed back.
 
-- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Author reports corrected viewer-r03 working; experimental P4r13/EMOSv27/sdserve-v0.3.0 installed with independent readbacks. EMOS has270 ROM bytes free. Latency investigation is INPUT-002; broader input/reset/coexistence and production acceptance remain. Mainboard VDP/startup preserved.
+- [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Author reports corrected viewer-r03 working; experimental P4r14/EMOSv27/sdserve-v0.3.0 installed with independent readbacks. EMOS has270 ROM bytes free. UDP backlog corrected under INPUT-002; downstream latency,broader input/reset/coexistence and production acceptance remain. Mainboard VDP/startup preserved.

@@ -33,7 +33,8 @@ do not themselves send input to P4 or EMOS.
 LAN sender. It defaults to120Hz/250ms with retained button/D-pad taps and stops
 on source/session loss. The P4 receiver requires a separate controller-enabled
 build/installation; the experimental EMOS/Agon consumer is installed and the
-Author reports it working, with substantial latency still under investigation. See the
+Author reports it working. P4r14 corrects the measured UDP backlog; downstream
+latency remains under investigation. See the
 [controller guide](../docs/controller-input.md) and
 [wire contract](../docs/protocols/controller-lan.md).
 

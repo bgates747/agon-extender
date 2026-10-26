@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r194
-updated_at: 2026-10-26T02:19:36Z
+registry_revision: r195
+updated_at: 2026-10-26T20:05:03Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -48,8 +48,8 @@ artifacts:
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
-      - r14 is Author-approved on2026-10-26 for the prepared controller-worker priority2-to4 scheduling comparison against exact r13; build/deployment/comparison pending, no production acceptance.
-      - r13 adds checksum-free fast SD carrier2 to the controller-corrected HDMI source; full build/validation, installed flash readback and startup identity pass. Author controller review and wider qualification pending.
+      - r14 priority2-to4 controller scheduling correction is installed/full-readback verified; matched120Hz ACK median261.703-to1.794ms and100% delivery,60/240Hz,Pi and bounded keyboard/fast-SD coexistence pass; Agon latency/Author review remain, not production.
+      - r13 adds checksum-free fast SD carrier2 to the controller-corrected HDMI source; full build/validation, installed flash readback and startup identity pass. Author reported working with latency; later r14 addresses the UDP backlog. Wider qualification pending.
       - r12 full build/validation passes; retained unchanged as controller-correction evidence, not installed.
       - r11 accepts IPv4-mapped IPv6 HTTP peers while retaining IPv4 UDP binding; Author approved correction identity/deployment, physical validation pending.
       - r10 adds optional controller input to the retained r09 HDMI composition; Author approved experimental identity/deployment, physical validation pending.

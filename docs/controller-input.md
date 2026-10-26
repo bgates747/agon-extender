@@ -3,7 +3,7 @@
 The reviewed Linux viewer displays the Logitech F310's two sticks, separate
 analog triggers, D-pad and eleven buttons. A developmental UDP sender and P4
 receiver, resident EMOS service and Agon mode20 viewer now pass software checks
-and target builds. The Author-approved experimental P4r13/EMOSv0.1.27,
+and target builds. The Author-approved experimental P4r14/EMOSv0.1.27,
 sdserve-v0.3.0 and viewer-r03 installation is independently verified. The masked
 READ/UART failure was corrected with checksum-free controller records and
 interrupt-enabled copies. The Author subsequently reported that the controller
@@ -11,21 +11,24 @@ worked and identified latency as the next problem. EMOSv27 also admits bounded
 mainboard VDPlet discovery replies and leaves270 resident ROM bytes free.
 [INPUT-001](tasks/INPUT-001.md) retains integration evidence and acceptance gates.
 
-The [latency investigation](testing/controller-latency.md) now has a finite
-deterministic Linux source and retained host/P4 measurements. At120Hz Oryx
-publication, P4 stored691 of3600 states in30seconds; median ACK round trip was
-260.658ms. A Pi source reproduced the degradation. Even5Hz traffic had about
-27–29ms median round trips while Oryx ICMP averaged0.558ms. This narrows the
-investigation toward P4 UDP processing/scheduling; it does not identify the
-exact blocking call or measure EMOS/display latency. The viewer's nominal20Hz
-redraw adds a separate potential delay. Firmware and normal startup were
-unchanged during these measurements. Current [results](tasks/INPUT-002/RESULTS-2026-10-26.md)
-record scope and limits; production acceptance remains open.
+The [latency investigation](testing/controller-latency.md) found a low-priority
+P4 UDP worker waiting behind parser/video work. r14 raises that worker from
+priority2 to4, below drawing/output. In the matched120Hz comparison, all3600
+packets were acknowledged and median ACK round trip fell from261.703ms to
+1.794ms (99.31% lower). The60/240Hz cases, independent Pi source and real CLI/
+fast-SD coexistence also pass. [Current results](tasks/INPUT-002/R14-COMPARISON.md)
+retain exact installation, counts, units and limits.
 
-The correction's review sender uses the existing `--timeout-ms 1000` option
-at120Hz to reduce premature missing-ACK shutdowns. This permits a one-second
-network-failure timeout; it does not relax EMOS's250ms cached-input freshness
-check or establish120Hz delivery. The tool's default remains250ms.
+These are host/P4 round trips. EMOS/application/display latency remains
+unmeasured; the viewer's nominal20Hz redraw is a separate possible delay.
+The EMOS/mainboard firmware and normal startup were preserved during r14's
+application-only P4 installation. Production acceptance remains open.
+
+Earlier r13 physical-review sessions used `--timeout-ms 1000` at120Hz to tolerate
+ACK stalls. The matched r14 Oryx tests use the250ms default; existing review
+launchers may still specify1000ms. That option changes failure detection, not
+input latency or EMOS's250ms cached-input freshness check. Neither setting
+establishes end-to-end120Hz application delivery.
 
 Use the [viewer guide](testing/controller-viewer.md) for local handling and
 recording. Select X on the F310's rear switch, then unplug/replug after changing

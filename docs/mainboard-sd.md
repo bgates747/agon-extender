@@ -1,6 +1,6 @@
 # Mainboard SD service operating guide
 
-**2026-10-25 development installation:** P4r13 and sdserve-v0.3.0 use checksum-free
+**2026-10-26 development installation:** P4r14 and sdserve-v0.3.0 use checksum-free
 fast major2 throughout, including metadata, directory operations and recovery.
 Exact installation readbacks,128KiB downloads and a551-byte installation-record
 upload/readback pass. Broader fast-transfer qualification is pending. Original
@@ -8,6 +8,12 @@ sdserve-v0.2.0 fast bytes still compute packet CRCs and require an explicit Auth
 request before use; the approved one-time bootstrap is closed. Do not assume
 the new client alone upgrades old peers. See the
 [carrier contract](protocols/mainboard-sd.md) and [active correction](tasks/REMOTE-005.md#r05-11--remove-checksum-work-from-fast-transfers--2026-10-25).
+
+The larger transfer checks above were recorded with r13. r14 retains the same
+carrier and changes controller scheduling only; actual listener start,99-byte
+startup read and EXIT pass both after installation and during120Hz controller
+traffic. See the [bounded comparison](tasks/INPUT-002/R14-COMPARISON.md). No new
+large-transfer or full coexistence qualification is implied.
 
 Two mainboard transfer methods exist. **Selected production v0.1.0** provides
 checked/fast transfers through the foreground `sdserve` EMOSlet in Legacy mode.

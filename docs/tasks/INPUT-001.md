@@ -9,11 +9,13 @@ has selected UDP and delegated packet layout, cadence and timeout. Host sender
 and P4 receiver implementation was released for offline validation/building.
 The Author now selects the Agon viewer in mode20 with AgonDev C++ permitted;
 matching app/P4/EMOS candidate source and software/build checks are complete.
-The Author-approved identified installation and corrected P4 r11 source admission
-are verified. The preloaded viewer remains stopped for controller/visual review.
-The Author subsequently releases the bench for deployment, requesting that the
-installed mainboard VDP be retained. This authorizes P4/EMOS installation and
-app staging; the viewer remains stopped for the Author to invoke.
+The Author subsequently reported the corrected viewer-r03 working, with latency
+as the next problem. Experimental P4r14/EMOSv27/sdserve-v0.3.0 are now installed
+and independently verified. [INPUT-002](INPUT-002.md) records r14's bounded
+controller-priority correction:120Hz ACK median261.703→1.794ms and100% delivery.
+EMOS/application/display latency and broader acceptance remain open. Mainboard
+VDP and normal startup were retained; no game/rendering fixture ran in that
+network comparison. Earlier staged/stopped states below retain their dates.
 
 ## State and authority
 
