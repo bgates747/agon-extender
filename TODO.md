@@ -209,4 +209,6 @@ headings no longer compete with the approved current sequence.
 
 ## Analog controller input
 
+- [ ] **[INPUT-002 — Deterministic controller traffic and latency attribution](docs/tasks/INPUT-002.md)** — Authorized Oryx background packet source and unattended latency investigation; measure host/P4 timing first, then bound clock alignment and downstream delivery. Coordinate occupied bench before live traffic.
+
 - [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Corrected P4r13/EMOSv26/sdserve-v0.3.0 installed with independent readbacks; viewer-r03 loaded RAM matches its file and is stopped for Author review. EMOS has286 ROM bytes free. Oryx source uses120Hz/1000ms review settings. Physical controller/Escape review, cadence/ACK tuning, coexistence and production acceptance remain; mainboard VDP/startup preserved.

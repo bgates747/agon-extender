@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r192
-updated_at: 2026-10-25T05:35:45Z
+registry_revision: r193
+updated_at: 2026-10-26T02:19:36Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -580,14 +580,15 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.26
+    latest_identity: agon-emos-v0.1.27
     status: draft
     variants:
       - port008-forward
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
-      - v0.1.26 is the Author-approved matched controller correction: checksum-free96-byte payload and interrupt-enabled READ; build/deployment pending.
+      - v0.1.27 is the Author-approved bounded VDPL reply admission alongside P3DR, retaining the optional v26 controller composition; installed/full-ROM verified;1594linked cases and real discovery/Escape pass modes0/20, not production.
+      - v0.1.26 matched controller correction is installed and independently verified; the Author reports the controller works, with latency deferred. No production promotion.
       - v0.1.25 adds optional resident controller cache/gateway; Author approved experimental identity/deployment, physical review pending.
       - v0.1.24 adds bounded mainboard Pingo P3DR completion dispatch independently of keyboard source; INTEG-015 linked checks and bounded physical completion/input test pass, installed draft pending Author acceptance; not production.
       - v0.1.22 adds finite-job private binding/terminal exchange and two-slot finite reception; REMOTE-005 A09-A11 candidate under standing preapproval.

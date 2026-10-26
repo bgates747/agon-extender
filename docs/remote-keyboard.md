@@ -22,7 +22,7 @@ emission and separately observed eZ80 command/application completion.
 
 ## Pingo completion compatibility in the development EMOS build
 
-The installed EMOS v0.1.24 draft permits the Pingo mainboard VDP's ten-byte
+The installed development EMOS v0.1.27 retains v0.1.24's Pingo mainboard VDP ten-byte
 `P3DR` render-completion callback while Extender keyboard input is selected and
 the committed display route is Legacy. It delivers the unchanged payload to
 the application's registered `mos_setkbvector` callback without treating the
@@ -30,6 +30,14 @@ completion as a key. Genuine mainboard keys still obey keyboard-source selection
 This correction has passed linked CPU checks and a bounded physical Pingo
 completion/input test; it is not part of the selected production v0.1.0 bundle.
 See the EMOS owner's [contract and evidence](../../agon-emos/docs/tasks/INTEG-015.md).
+
+The Author-approved v0.1.27 build additionally admits exact ten-byte `VDPL`
+replies through that same callback-only path. It retains the Legacy display
+guard, genuine-key filtering and optional controller service. Mandatory linked
+checks and 1594 linked CPU cases pass. Installation is verified by independent
+full-ROM readback; finite real discovery, unchanged reply/key state and Extender
+Escape checks pass in modes0/20. This is not selected production or a rendering,
+module-lifecycle or complete consumer-fixture pass.
 
 ## Host API and timing
 
