@@ -4,9 +4,14 @@ This mode20 AgonDev C++ application recreates the host viewer's controls in
 512×384/64 colours with12×16 text. It reads live input through the matched
 EMOS/P4 development service, or plays explicitly labelled recorded input.
 All three components build and the native software pipeline passes. The
-development candidates are installed, but the first physical review reported
-an EMOS link failure. Diagnostic viewer-r02 is staged; physical
-Oryx→P4→Agon delivery is not yet proven.
+checksum-free viewer-r03/EMOSv27/P4r14 development combination is installed.
+The Author previously reported live input working; a subsequent interactive
+review reported another freeze, which remains under investigation. Native
+checks and the improved host/P4 timing do not qualify application reliability.
+The October27 source supports the directly attached P4 F310 through that same
+EMOS service. Corrected viewer `controller-viewer-r03-b2026-10-27-22-23-38Z`
+passes actual USB resting-state delivery and Escape/mode0 restoration;
+full physical control exercise remains with the Author.
 
 ## Build without operating a bench
 
@@ -26,7 +31,8 @@ The preview uses the same layout code; it does not validate Agon execution.
 ## Invocation after separately authorized installation
 
 Live input requires matching controller-enabled EMOS/P4 firmware, existing
-healthy Extender keyboard/UART admission and an explicitly invoked Linux sender.
+healthy Extender keyboard/UART admission and either an admitted P4-local F310
+USB source or an explicitly invoked Linux sender.
 This application does not enable admission or install firmware. Old EMOS returns
 service-not-found/unavailable before the app changes mode. The mainboard VDP
 does not require a controller-specific firmware change.
@@ -34,19 +40,21 @@ does not require a controller-specific firmware change.
 Place the package under `/extender/controller`. Keep evidence under
 `/agents/extender`; preserve unknown card files and `/autoexec.txt`. The app
 does not change the EMOS display route. Select the intended route separately
-through EMOS. With that route verified, optionally preselect:
-
-```text
-VDU 22 20
-```
-
-Wait at least one whole second, then invoke:
+through EMOS. For this interactive viewer, invoke directly from the existing
+CLI mode; do not preselect mode20 outside the application:
 
 ```text
 CD /extender/controller
 LOAD ctrlview.bin
 RUN &040000
 ```
+
+The viewer records its entry mode, selects mode20 only when necessary, verifies
+the change and waits at least one second before drawing. Escape restores the
+recorded mode, with the same settling interval after an actual restoration
+switch. Preselecting mode20 would instead make mode20 the recorded entry mode.
+This interactive invocation follows the Author's clarification on2026-10-26;
+unattended suite coordination retains its separately specified mode lifecycle.
 
 For recorded-input review use `RUN &040000 replay`. An optional path after
 `replay` selects another `.cvr` file; that mode requires no controller service.
@@ -76,7 +84,8 @@ For recorded-input review use `RUN &040000 replay`. An optional path after
    development appliance reserves that ID while running; no preservation claim
    is made for a pre-existing application resource with that ID. Cleanup selects
    the built-in CLI font before releasing it. Agon physical lifecycle/font/input
-   behavior remains untested.
+   behavior has bounded physical mode20/entry-mode0 coverage; broader lifecycle
+   and human control review remain pending.
 
 The existing scrolling fixture's pure mode policy is an explicit source
 dependency; the app uses its own MOS assembly bindings and no scrolling callback.

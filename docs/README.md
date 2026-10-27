@@ -22,7 +22,7 @@ flash, rollback, transfer and monitoring, including correction/stop boundaries.
 | P4-local SD file/directory management candidate | [P4 SD HTTP guide](p4-sd.md), candidate only; not in selected production |
 | Mainboard SD: foreground checked/fast, candidate automatic WebDAV and application transfers | [Mainboard SD](mainboard-sd.md) |
 | Physical/browser/agent input, ownership and platform limits | [Keyboard input](remote-keyboard.md) |
-| F310 host/Agon viewers; P4r14/EMOSv27 installed, UDP backlog correction passes; Agon latency open | [Analog controller input](controller-input.md) |
+| F310 USB/LAN acquisition and Agon viewer; native USB resting-state/cleanup check passes, human control review open | [Analog controller input](controller-input.md) |
 | Read visible ExCom text without taking video ownership | [Screen text](screen-text.md) |
 | Mainboard USB diagnostic capture without separate reset-line transitions | [Serial capture](serial-monitor.md) |
 | Normal Agon reset and browser reset button | [Bench reset](bench-reset.md) |

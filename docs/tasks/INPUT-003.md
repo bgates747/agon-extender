@@ -16,6 +16,9 @@ before requiring attention. The initial task/plan must be published before
 implementation or bench diagnostics. Machine-local identities, reservations and
 receipts belong in `HARDWARE.local.md` and ignored task evidence.
 
+State: native USB/resting-state viewer and cleanup checks pass; the corrected
+viewer is loaded and stopped at the Legacy CLI for Author control review.
+
 This is experimental work, not production acceptance. No physical rewiring,
 replacement keyboard/controller, user button exercise, or firmware production
 promotion is assumed. Stop for the Author when those actions become necessary,
@@ -88,7 +91,7 @@ or when the verified viewer is ready for interactive control review.
 
 1. [x] Publish this task and TODO entry. Reserve the available bench, inspect
    fresh status and passively collect P4 USB diagnostics without resetting.
-2. [ ] Establish enumeration result. If already-connected state is invisible,
+2. [x] Establish enumeration result. If already-connected state is invisible,
    prepare a descriptor/connection diagnostic and use only the bounded reset
    or hub reinitialization justified by the observed host state. Read reset,
    installation and serial procedures before their respective operations.
@@ -99,15 +102,15 @@ or when the verified viewer is ready for interactive control review.
 4. [x] Exercise malformed reports, stick/trigger endpoints, D-pad/buttons,
    transition order, stale/unplug/error neutralization and source exclusion in
    meaningful offline checks. Run existing controller pipeline checks.
-5. [ ] Build the exact experimental P4 composition. Before flashing preserve a
+5. [x] Build the exact experimental P4 composition. Before flashing preserve a
    current full-flash backup and startup identity, verify application offset,
    use a selective application write, independently read back the result and
    verify unaffected flash regions. Preserve normal boot and mainboard images.
-6. [ ] Reestablish real keyboard/CLI/service readiness and obtain fresh USB
+6. [x] Reestablish real keyboard/CLI/service readiness and obtain fresh USB
    descriptor/report evidence. Verify the installed viewer/assets, use an
    explicitly invoked finite diagnostic if needed, and restore Legacy/CLI.
    Do not call a copied fixture ready while input or firmware is still pending.
-7. [ ] Stop with the viewer ready for the Author, or with a precise observed
+7. [x] Stop with the viewer ready for the Author, or with a precise observed
    hardware/operator dependency. Report what was identified, installed and
    observed; retain exact build and rollback receipts. Human control feel,
    complete button/axis exercise and physical coexistence require Author review.
@@ -117,9 +120,10 @@ or when the verified viewer is ready for interactive control review.
 | ID | State | Decision and consequence |
 |---|---|---|
 | I3-01 | Implementation direction authorized | Reuse the existing viewer and EMOS carrier; add P4-local USB acquisition first. EMOS/mainboard firmware remain unchanged unless evidence proves a separate change necessary. |
-| I3-02 | Initial evidence | Existing P4r14 restart logs reach HID-client rejection of non-HID device address2, without enumeration errors. Confirm VID/PID/configuration using the new dedicated client before claiming native acquisition. |
+| I3-02 | Observed | F310046d:c21d enumerates at full speed through the onboard hub: address2/interface0, IN81,32-byte maximum packet, interval4ms. The decoder accepts a real20-byte XInput resting-state report and the Agon viewer displays it. |
 | I3-03 | Experimental implementation | A recognized USB pad with its first valid report reserves local input while attached. It cannot steal an active LAN source; a LAN close/expiry releases that source. LAN admission conflicts while USB owns/reserves input. Unplug/error invalidates USB only. A new EMOS caller may explicitly rearm queue overflow/worker expiry; physical USB faults require reconnect. No production decision/acceptance is inferred. |
 | I3-04 | Deferred | Simultaneous physical keyboard/controller and an EXT1 breakout/hub are follow-up scopes after native F310 acquisition is proven or onboard hardware blocks progress. |
+| I3-05 | Open | Decouple cold-boot native USB startup from Ethernet/HTTP initialization before claiming standalone/offline operation. Current hardware proof includes the network startup; no physical network-loss check was performed. |
 
 ## Validation and closeout
 
@@ -165,3 +169,51 @@ acceptance and the canonical qualification requirements.
    The viewer's post-selection query must disregard earlier mode20 replies and
    wait within its existing deadline for the selected entry mode. This is a
    viewer-only correction; the shared scroll fixture and firmware stay unchanged.
+
+## Installed result — 2026-10-27
+
+The F310 drives the existing viewer through the P4/EMOS service without an Oryx
+controller sender. A finite instrumented check observes the actual viewer
+identity, `Agon received controller input`, resting sticks128/−129 on both
+sides, triggers0/0 and no held buttons. Escape prints `Controller viewer closed.`
+and a separate fresh CLI query confirms mode0/640×480/16colours. This proves
+resting-state delivery and cleanup, not physical exercise of every control.
+
+| Component / check | Exact result |
+|---|---|
+| P4 build | `indexed-hdmi-r14-b2026-10-27-22-05-29Z`, clean source`1ee4d7a3d6314b662c78e685d300dab326164418` |
+| P4 application |1777312bytes, SHA-256`d6c6f5e7d2126d611f23e7df5586b7d6d038977677f4e7204885e2760a22a0d0` |
+| Firmware write | Application only at0x20000; independent full16MiB readback matches application and preserves all bytes outside written sectors[0x20000,0x1d2000) |
+| Incoming/current full flash | Before`ca6e75f748fb2a84039f135d76d93ffcbf484da8d209bc58d1f328a68cd9cc17`; after`a895790d55c7c70846a8d99f0ca18e4902722cfc6a5328ffdf39b0897cd40f68` |
+| Build composition | Board/display configuration, dependency lock, normalized SDK and compiler-source/definition selections match the prior installed P4; the unnecessary320-scaler build option was excluded before any write |
+| Viewer build | `controller-viewer-r03-b2026-10-27-22-23-38Z`, clean source`c9191a6bb8a6a2ea0cce982a2440d633b0cbe7a8` |
+| Viewer bytes |28860bytes, SHA-256`4e7e0da37fe37d2fe04ea2342737173507090873244227b2286c88322aca2d51`; independent SD readback matches |
+| Source exclusion | A real LAN OPEN receives409 while USB owns input; same USB session remains valid |
+| Controller software checks |42pass, including the existing P4/EMOS/viewer pipeline and USB decoder/source lifecycle |
+| Live viewer check |19.686host-monotonic seconds including invocation, rendering, Escape and cleanup; printer mirror enabled during observation, no latency/FPS claim |
+| Preserved components | EMOSv27 and mainboard VDP not flashed; normal99-byte startup read back unchanged; no processor-link checksum added |
+
+The old viewer and its preceding retained backup are independently archived
+under `/agents/extender/fixtures/input003`, with `relocations.json` on the card.
+Protected transaction backups were archived as verified files and removed only
+through the canonical target recovery-cleanup operation. Current support remains
+`/extender/controller/ctrlview.bin`.
+
+The terminal state is a verified Legacy CLI, mode0, corrected viewer freshly
+loaded at0x040000 but stopped, admitted neutral remote keyboard, valid USB
+source, SD listener offline/idle and printer mirror off. Host serial/client
+workers have ended. The explicit review invocation is `RUN &040000`.
+
+## Remaining Author review / qualification
+
+1. [ ] Exercise both sticks through their ranges, both independent analog
+   triggers, four D-pad directions and all eleven buttons. Judge the viewer
+   visually; use R to clear counts and Escape to return to the entry mode.
+2. [ ] Qualify physical unplug/reconnect and USB fault recovery, retained
+   transitions under load, source conflicts in both directions and keyboard
+   coexistence. Current unplug/error coverage is portable software testing.
+3. [ ] Resolve I3-05 before standalone/offline cold-boot claims; preserve the
+   current bounded network-startup requirement in operating instructions.
+4. [ ] Perform the applicable canonical firmware qualification and obtain tested
+   Author acceptance/version authority before production promotion. Selected
+   production and release tags remain unchanged.

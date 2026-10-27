@@ -71,7 +71,9 @@ acknowledgement is supplied.
 ### Board selection and compile-time pin mapping
 
 The optional `--controller-input` flag with `--profile p4-console` compiles the
-developmental UDP controller worker and admission/status routes. It raises the
+developmental UDP controller worker, F310 XInput USB client and admission/status
+routes. The USB client shares the installed host library with keyboard
+acquisition, retaining a separate claimed controller interface. It raises the
 lwIP socket ceiling to16; the validator checks both compiled definitions and
 actual controller-header dependencies. The optional typed console peer serves
 the matching EMOS/Agon controller candidate; none is selected production
