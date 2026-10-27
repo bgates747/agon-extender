@@ -209,6 +209,8 @@ headings no longer compete with the approved current sequence.
 
 ## Analog controller input
 
+- [ ] **[INPUT-003 — Direct F310 USB input on P4-PC](docs/tasks/INPUT-003.md)** — Identify the hotplugged F310 through the onboard hub, add native P4 acquisition and feed the existing mode-20 Agon viewer; preserve remote keyboard, EMOS/mainboard firmware and normal startup. Initial plan publication precedes implementation.
+
 - [ ] **[INPUT-002 — Deterministic controller traffic and latency attribution](docs/tasks/INPUT-002.md)** — P4r14 priority correction installed/full-readback verified;120Hz ACK median261.703→1.794ms and100% delivery.60/240Hz,Pi120Hz and keyboard/fast-SD coexistence pass. EMOS/application/display latency, Author review and justified timestamp probes remain; all sources stopped,CLI handed back.
 
 - [ ] **[INPUT-001 — PC game controllers over Extender network input](docs/tasks/INPUT-001.md)** — Author reports corrected viewer-r03 working; experimental P4r14/EMOSv27/sdserve-v0.3.0 installed with independent readbacks. EMOS has270 ROM bytes free. UDP backlog corrected under INPUT-002; downstream latency,broader input/reset/coexistence and production acceptance remain. Mainboard VDP/startup preserved.
