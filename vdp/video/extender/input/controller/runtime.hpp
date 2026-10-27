@@ -5,6 +5,7 @@
 #endif
 #include "receiver.hpp"
 #include "appliance.hpp"
+#include "usb_host.hpp"
 #include <atomic>
 #include <mutex>
 #include <cstdio>
@@ -29,7 +30,14 @@ class Runtime {
     socklen_t length=sizeof(local);
     if(getsockname(fd,reinterpret_cast<sockaddr*>(&local),&length)<0||
        fcntl(fd,F_SETFL,O_NONBLOCK)<0){::close(fd);return false;}
-    {std::lock_guard<std::mutex>lock(mutex_);core_.begin(random64());appliance_=Appliance{};port_=ntohs(local.sin_port);}
+    {std::lock_guard<std::mutex>lock(mutex_);
+      if(!initialized_){core_.begin(random64());appliance_=Appliance{};initialized_=true;}
+      port_=ntohs(local.sin_port);}
+    if(!usb_started_){
+      usb_.diagnostics(&usbDiagnostics);
+      usb_started_=usb_.start(&usbEvent,this);
+      if(!usb_started_)printf("USB F310 client startup failed; LAN controller retained\n");
+    }
     socket_=fd;stopping_=false;link_lost_=false;
     TaskHandle_t task{};
     // INPUT-002 scheduling control, not yet physically validated. Priority2
@@ -42,14 +50,19 @@ class Runtime {
     // attributing the observed lag to starvation or promoting this policy.
     if(xTaskCreate(&entry,"controller-udp",6144,this,4,&task)!=pdPASS){
       ::close(fd);socket_=-1;
-      std::lock_guard<std::mutex>lock(mutex_);core_.invalidate(Fault::Link);port_=0;
+      std::lock_guard<std::mutex>lock(mutex_);if(!local_.owns(core_))core_.invalidate(Fault::Link);port_=0;
       return false;
     }
     worker_.store(task);return true;
   }
   void linkLost()noexcept{link_lost_=true;}
   bool applianceRequest(const std::uint8_t*p){
-    std::lock_guard<std::mutex>lock(mutex_);return appliance_.request(p,core_,now());
+    std::lock_guard<std::mutex>lock(mutex_);
+    if(p[0]=='C'&&p[1]=='I'&&p[2]==CONTROLLER_CARRIER_VERSION&&p[3]==1&&
+       controller_u32(p+4)&&controller_u16(p+12)&&!p[14]&&!p[15]){
+      local_.rearm(core_,controller_u32(p+4));local_.tick(core_,now(),random64());
+    }
+    return appliance_.request(p,core_,now());
   }
   bool applianceTake(std::uint8_t*out){
     std::lock_guard<std::mutex>lock(mutex_);return appliance_.take(out,core_,now());
@@ -57,7 +70,10 @@ class Runtime {
   void stop(){
     stopping_=true;
     while(worker_.load())vTaskDelay(1);
-    std::lock_guard<std::mutex>lock(mutex_);core_.invalidate(Fault::Link);appliance_=Appliance{};port_=0;
+    std::lock_guard<std::mutex>lock(mutex_);
+    // Ethernet loss invalidates a LAN owner, not a locally attached USB pad.
+    if(!local_.owns(core_)){core_.invalidate(Fault::Link);appliance_=Appliance{};}
+    port_=0;
   }
   bool routes(httpd_handle_t server){
     for(auto route: {Route{"/controller/status",HTTP_GET,&status},
@@ -80,6 +96,17 @@ class Runtime {
   static std::uint64_t now(){return esp_timer_get_time()/1000;}
   static std::uint64_t random64(){std::uint64_t v;esp_fill_random(&v,sizeof(v));return v?v:1;}
   static Runtime& owner(httpd_req_t*r){return *static_cast<Runtime*>(r->user_ctx);}
+  static void usbEvent(void*context,unsigned event,const State*state){
+    auto&self=*static_cast<Runtime*>(context);std::lock_guard<std::mutex>lock(self.mutex_);
+    if(event==0)self.local_.connect(self.core_);
+    else if(event==1)self.local_.disconnect(self.core_);
+    else if(event==2)self.local_.fail(self.core_);
+    else if(event==4&&state)self.local_.report(*state);
+    self.local_.tick(self.core_,now(),random64());
+  }
+  static void usbDiagnostics(const UsbDiagnostics*value,void*context){
+    auto&self=*static_cast<Runtime*>(context);std::lock_guard<std::mutex>lock(self.mutex_);self.usb_status_=*value;
+  }
   static esp_err_t respond(httpd_req_t*r,int code,const char*body){
     httpd_resp_set_status(r,code==200?"200 OK":code==409?"409 Conflict":code==410?"410 Gone":code==503?"503 Service Unavailable":"400 Bad Request");
     httpd_resp_set_type(r,"application/json");httpd_resp_set_hdr(r,"Cache-Control","no-store");
@@ -96,13 +123,19 @@ class Runtime {
     return true;
   }
   static esp_err_t status(httpd_req_t*r){
-    auto&self=owner(r);Snapshot s;unsigned port;
-    {std::lock_guard<std::mutex>lock(self.mutex_);s=self.core_.snapshot(now());port=self.port_;}
-    char out[768];
+    auto&self=owner(r);Snapshot s;unsigned port;UsbDiagnostics usb;bool local;
+    {std::lock_guard<std::mutex>lock(self.mutex_);s=self.core_.snapshot(now());port=self.port_;usb=self.usb_status_;local=self.local_.owns(self.core_);}
+    char out[1200];
     snprintf(out,sizeof(out),"{\"protocol\":1,\"instance\":\"%016llx\",\"session\":\"%016llx\",\"udp_port\":%u,\"active\":%s,\"valid\":%s,\"fault\":%u,\"sequence\":%lu,\"edge_ack\":%lu,\"queued\":%lu,\"received\":%lu,\"rejected\":%lu,\"age_ms\":%llu,\"sticks\":[%d,%d,%d,%d],\"triggers\":[%u,%u],\"held\":%u}",
       (unsigned long long)s.instance,(unsigned long long)s.session,port,s.active?"true":"false",s.valid?"true":"false",unsigned(s.fault),
       (unsigned long)s.sequence,(unsigned long)s.edge_ack,(unsigned long)s.queued,(unsigned long)s.received,(unsigned long)s.rejected,
       (unsigned long long)(s.valid?now()-s.last_state:0),s.state.sticks[0],s.state.sticks[1],s.state.sticks[2],s.state.sticks[3],s.state.triggers[0],s.state.triggers[1],s.state.held);
+    const auto used=std::strlen(out);
+    // Append source diagnostics while preserving the existing LAN fields.
+    snprintf(out+used-1,sizeof(out)-used+1,",\"source\":\"%s\",\"usb\":{\"running\":%s,\"attached\":%s,\"valid\":%s,\"vid\":%u,\"pid\":%u,\"speed\":%u,\"address\":%u,\"interface\":%u,\"endpoint\":%u,\"packet\":%u,\"interval\":%u,\"reports\":%u,\"ignored\":%u,\"fault\":%u,\"report_age_ms\":%llu}}",
+      s.active?(local?"usb":"lan"):"none",usb.running?"true":"false",usb.attached?"true":"false",usb.valid?"true":"false",
+      usb.vid,usb.pid,usb.speed,usb.address,usb.interface,usb.endpoint,usb.packet,usb.interval,usb.reports,usb.ignored,usb.fault,
+      (unsigned long long)(usb.last_report_ms?now()-usb.last_report_ms:0));
     return respond(r,200,out);
   }
   static esp_err_t open(httpd_req_t*r){
@@ -112,7 +145,9 @@ class Runtime {
        !httpPeerIPv4(peer,length,address))return respond(r,400,"{\"error\":\"IPv4 required\"}");
     auto&self=owner(r);int result;std::uint64_t session;
     {std::lock_guard<std::mutex>lock(self.mutex_);
-      result=self.link_lost_.load()||!self.worker_.load()?503:self.core_.open(get64(data),get64(data+8),
+      const bool local_reserved=self.local_.owns(self.core_)||
+        (self.local_.ready()&&!self.core_.snapshot(now()).active);
+      result=self.link_lost_.load()||!self.worker_.load()?503:local_reserved?409:self.core_.open(get64(data),get64(data+8),
         {address,get16(data+16)},get16(data+18),random64(),now());session=self.core_.snapshot(now()).session;}
     if(result!=200)return respond(r,result,"{\"error\":\"admission refused\"}");
     char out[100];snprintf(out,sizeof(out),"{\"session\":\"%016llx\",\"timeout_ms\":%u}",(unsigned long long)session,get16(data+18));
@@ -121,13 +156,13 @@ class Runtime {
   static esp_err_t close(httpd_req_t*r){
     std::uint8_t data[16];if(!body(r,data,sizeof(data)))return respond(r,400,"{\"error\":\"invalid close\"}");
     auto&self=owner(r);int result;
-    {std::lock_guard<std::mutex>lock(self.mutex_);result=self.core_.close(get64(data),get64(data+8));}
+    {std::lock_guard<std::mutex>lock(self.mutex_);result=self.local_.owns(self.core_)?409:self.core_.close(get64(data),get64(data+8));}
     return respond(r,result,result==200?"{\"closed\":true}":"{\"error\":\"wrong session\"}");
   }
   static void entry(void*p){static_cast<Runtime*>(p)->run();}
   void run(){
     while(!stopping_.load()){
-      if(link_lost_.load()){std::lock_guard<std::mutex>lock(mutex_);core_.invalidate(Fault::Link);}
+      if(link_lost_.load()){std::lock_guard<std::mutex>lock(mutex_);if(!local_.owns(core_))core_.invalidate(Fault::Link);}
       {std::lock_guard<std::mutex>lock(mutex_);core_.expire(now());}
       for(unsigned i=0;i<8&&!link_lost_.load();++i){
         std::uint8_t data[MaxPacket+1];sockaddr_in peer{};socklen_t length=sizeof(peer);
@@ -143,6 +178,7 @@ class Runtime {
     ::close(socket_);socket_=-1;worker_=nullptr;vTaskDelete(nullptr);
   }
   Receiver core_;Appliance appliance_;std::mutex mutex_;
+  UsbSource local_;UsbHost usb_;UsbDiagnostics usb_status_{};bool initialized_{},usb_started_{};
   std::atomic<bool>stopping_{false},link_lost_{false};
   std::atomic<TaskHandle_t>worker_{nullptr};int socket_=-1;unsigned port_{};
 };

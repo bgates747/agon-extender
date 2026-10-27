@@ -16,6 +16,7 @@ struct Snapshot {
 class Receiver {
  public:
   void begin(std::uint64_t instance){*this=Receiver{};snapshot_.instance=instance;}
+  std::uint64_t session()const{return snapshot_.session;}
   void expire(std::uint64_t now){
     if(snapshot_.active&&now>=last_fresh_&&now-last_fresh_>=timeout_)invalidate(Fault::Timeout);
   }
