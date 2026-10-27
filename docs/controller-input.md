@@ -45,20 +45,27 @@ This is separate from the rear XInput/DirectInput switch.
 
 ## Direct P4 USB candidate
 
-The experimental P4-PC build `indexed-hdmi-r14-b2026-10-27-22-05-29Z`
+The experimental P4-PC build `indexed-hdmi-r14-b2026-10-27-22-46-52Z`
 accepts the F310 directly through the onboard USB-A hub in rear-switch XInput
 mode (`046d:c21d`). A bounded physical check delivered its real resting state
 through EMOSv27 to the mode20 viewer, without a Linux controller sender.
 Escape and entry-mode0 restoration pass with the corrected viewer build
 `controller-viewer-r03-b2026-10-27-22-23-38Z`.
 [INPUT-003](tasks/INPUT-003.md) records exact installation and remaining review.
+Author control exercise found a latched USB report error at D-pad up-left. The
+current correction cancels opposite contacts on each hat axis, matching Linux
+xpad, while preserving normal diagonals. Its physical retry remains pending;
+the original rejected raw packet was unavailable.
 
 1. Connect the F310 to a P4-PC onboard USB-A socket. Keep existing Extender
    keyboard admission and the intended EMOS display route. Use the same viewer
    invocation below; the app needs no different controller configuration.
 2. Inspect `/controller/status`: `source: "usb"` with top-level `valid: true`
    identifies the admitted source. The `usb` object reports attachment, VID/PID,
-   endpoint, actual report count and USB errors. Its `report_age_ms` measures
+   endpoint, actual report count and USB errors. `dpad_conflicts` counts normalized
+   opposite contacts; `malformed` counts framing rejects. `anomaly_kind` is0
+   for none,1 for framing and2 for opposite contacts; `anomaly_bytes` and
+   `anomaly_hex` retain one bounded latest raw anomaly. Its `report_age_ms` measures
    time since the last actual USB report; a quiet controller can retain its
    state while the live USB task renews the cache. It is not input latency.
 3. A recognized USB pad with a valid first report reserves local input. It

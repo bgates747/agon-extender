@@ -16,11 +16,11 @@ before requiring attention. The initial task/plan must be published before
 implementation or bench diagnostics. Machine-local identities, reservations and
 receipts belong in `HARDWARE.local.md` and ignored task evidence.
 
-State: Author control review found a latched USB report fault while exercising
-D-pad up-left. Viewer Escape and MOS keyboard remain responsive; restarting the
-viewer does not recover USB input. Correct the report decoder and retain bounded
-rejected-report diagnostics before the next review. Resting-state/cleanup checks
-remain historical passes, not a complete control pass.
+State: a D-pad decoder correction is installed and full-readback verified.
+The Author review previously found a latched USB report fault at up-left;
+normal diagonals already passed decoding, but opposite contacts were wrongly
+classified as malformed. The correction matches Linux hat-axis semantics and
+retains anomaly bytes for the next review. Physical confirmation is pending.
 
 This is experimental work, not production acceptance. No physical rewiring,
 replacement keyboard/controller, user button exercise, or firmware production
@@ -236,12 +236,47 @@ workers have ended. The explicit review invocation is `RUN &040000`.
    contacts to neutral on that axis. The local decoder instead rejects them as
    malformed. Match the reference axis semantics before packing the existing
    controller mask; do not weaken LAN or EMOS framing/held-mask contracts.
-4. [ ] Cover all sixteen D-pad wire combinations and meaningful transitions,
+4. [x] Cover all sixteen D-pad wire combinations and meaningful transitions,
    including up-left and simultaneous opposite contacts with other buttons.
-5. [ ] Retain bounded anomaly bytes/counts on P4 for HTTP inspection; avoid
+5. [x] Retain bounded anomaly bytes/counts on P4 for HTTP inspection; avoid
    per-report logging and processor-link protocol changes. Preserve existing
    transfer-error recovery policy until a framing fault is actually observed.
-6. [ ] Build and selectively install an identified correction from the exact
+6. [x] Build and selectively install an identified correction from the exact
    installed P4 composition, with verified backup/readback and unchanged EMOS,
    mainboard VDP, viewer and startup. Restore responsive CLI, load viewer, stop
    for Author control review. Retain the unresolved raw-report qualification.
+
+### D-pad correction installed
+
+The application-only build `indexed-hdmi-r14-b2026-10-27-22-46-52Z` uses clean
+matched source`cabbea341ebaeaa36ae8504d6ff0ec0e76355aa1`. Its1777632-byte P4
+application has SHA-256
+`df35f816f4ef8f0202a6ccf4690ff9bb27144735564436baad9e1f5cc9c6027d`.
+Fresh whole-device verification matched the saved incoming USB installation,
+then independent full16MiB readback confirmed the new app exactly and all bytes
+outside application sectors[0x20000,0x1d2000) unchanged. Incoming full-flash
+SHA-256`a895790d55c7c70846a8d99f0ca18e4902722cfc6a5328ffdf39b0897cd40f68`;
+new full-flash SHA-256
+`5d8dd6ec176d2a581885a6edb032be2a7c0a61bc4daa1b31d6ca0af6832b081d`.
+
+Native build/action validation and42 controller software checks pass. USB
+startup has a fresh valid resting-state report with no error, and remote
+keyboard admission is fresh. No EMOS/mainboard VDP/viewer/startup bytes changed.
+All sixteen raw D-pad combinations now produce valid controller masks;
+opposite horizontal/vertical contacts cancel on their own axis. Normal diagonal
+input remains unchanged. This corrects a demonstrated decoder/reference mismatch;
+the original rejected packet was not retained, so the precise physical trigger
+still requires the Author's retry.
+
+The added USB diagnostics report `malformed`, `dpad_conflicts`, `anomaly_kind`
+(0none,1malformed framing,2opposite contacts), `anomaly_bytes`, and
+`anomaly_hex` (at most64 report bytes). One latest anomaly is retained in P4 RAM,
+without per-report serial logging or extra EMOS carrier traffic. Actual USB
+transfer errors and genuinely malformed framing still invalidate the source;
+no broader automatic fault-recovery contract was introduced.
+
+After installation, fresh fast-listener reads independently verify unchanged
+startup and viewer bytes. Listener EXIT and actual `LOAD`/`LOADOK`/MOS prompt are
+observed; printer mirror is disabled. The unchanged viewer is freshly loaded at
+0x040000, stopped. No viewer/test invocation followed this firmware correction.
+The Author should retry D-pad up-left and rolling diagonals via `RUN &040000`.

@@ -209,7 +209,7 @@ headings no longer compete with the approved current sequence.
 
 ## Analog controller input
 
-- [ ] **[INPUT-003 — Direct F310 USB input on P4-PC](docs/tasks/INPUT-003.md)** — Native F310 USB candidate installed/full-readback verified;42 controller checks and actual Agon viewer resting-state/Escape/mode0 restoration pass. Corrected viewer is loaded/stopped for Author control review. Unplug/coexistence/load, offline startup and production qualification remain; EMOS/mainboard/startup preserved.
+- [ ] **[INPUT-003 — Direct F310 USB input on P4-PC](docs/tasks/INPUT-003.md)** — Native F310 USB D-pad correction installed/full-readback verified;42 controller checks cover all raw hat combinations. Author up-left failure was a latched USB decoder error; exact rejected bytes were unavailable. Physical correction retry remains open. Unplug/coexistence/load, offline startup and production qualification remain; EMOS/mainboard/startup preserved.
 
 - [ ] **[INPUT-002 — Deterministic controller traffic and latency attribution](docs/tasks/INPUT-002.md)** — P4r14 priority correction installed/full-readback verified;120Hz ACK median261.703→1.794ms and100% delivery.60/240Hz,Pi120Hz and keyboard/fast-SD coexistence pass. EMOS/application/display latency, Author review and justified timestamp probes remain; all sources stopped,CLI handed back.
 
