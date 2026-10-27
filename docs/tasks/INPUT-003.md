@@ -16,11 +16,10 @@ before requiring attention. The initial task/plan must be published before
 implementation or bench diagnostics. Machine-local identities, reservations and
 receipts belong in `HARDWARE.local.md` and ignored task evidence.
 
-State: a D-pad decoder correction is installed and full-readback verified.
-The Author review previously found a latched USB report fault at up-left;
-normal diagonals already passed decoding, but opposite contacts were wrongly
-classified as malformed. The correction matches Linux hat-axis semantics and
-retains anomaly bytes for the next review. Physical confirmation is pending.
+State: the Author accepts the native USB control/D-pad correction after the
+physical retry, reporting "excellent work. all else seems in order." The exact
+tested P4/viewer bytes and installation evidence are retained below. Broader
+qualification, offline-startup behavior and production promotion remain open.
 
 This is experimental work, not production acceptance. No physical rewiring,
 replacement keyboard/controller, user button exercise, or firmware production
@@ -279,4 +278,23 @@ After installation, fresh fast-listener reads independently verify unchanged
 startup and viewer bytes. Listener EXIT and actual `LOAD`/`LOADOK`/MOS prompt are
 observed; printer mirror is disabled. The unchanged viewer is freshly loaded at
 0x040000, stopped. No viewer/test invocation followed this firmware correction.
-The Author should retry D-pad up-left and rolling diagonals via `RUN &040000`.
+The subsequent Author retry passed; acceptance is recorded below.
+
+## Author control acceptance — 2026-10-27
+
+1. Following the requested D-pad retry, the Author reports: "excellent work.
+   all else seems in order." Record this as acceptance of native USB handling
+   and the D-pad correction on the exact installed P4 build above. Do not infer
+   an exhaustive timed/button matrix, physical unplug/reconnect, simultaneous
+   USB keyboard, offline cold boot or input-to-photon latency qualification.
+2. The tested application, matched clean source, independent full-flash readback,
+   previous rollback bytes and unchanged viewer identity remain retained. No new
+   firmware build is needed to record this acceptance. The original rejected
+   packet remains unknown; the successful retry does not reconstruct its bytes.
+3. Production promotion is pending the applicable canonical qualification on
+   these exact bytes and agreement with the Author on the production version.
+   AGENTS.md and production/README.md prohibit substituting this scoped handling
+   acceptance for that qualification. Do not change current.yaml or tag a release
+   before those dependencies are resolved. No broader suite is invoked by this
+   closeout; remaining work stays in this task and TODO.
+4. Live application/CLI state after Author review was not polled or changed.

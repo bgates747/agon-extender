@@ -54,8 +54,9 @@ Escape and entry-mode0 restoration pass with the corrected viewer build
 [INPUT-003](tasks/INPUT-003.md) records exact installation and remaining review.
 Author control exercise found a latched USB report error at D-pad up-left. The
 current correction cancels opposite contacts on each hat axis, matching Linux
-xpad, while preserving normal diagonals. Its physical retry remains pending;
-the original rejected raw packet was unavailable.
+xpad, while preserving normal diagonals. The Author subsequently accepted
+the physical retry and reports other controls in order. The original rejected
+raw packet was unavailable; broader qualification remains open.
 
 1. Connect the F310 to a P4-PC onboard USB-A socket. Keep existing Extender
    keyboard admission and the intended EMOS display route. Use the same viewer
