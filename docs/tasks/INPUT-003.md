@@ -117,8 +117,8 @@ or when the verified viewer is ready for interactive control review.
 | ID | State | Decision and consequence |
 |---|---|---|
 | I3-01 | Implementation direction authorized | Reuse the existing viewer and EMOS carrier; add P4-local USB acquisition first. EMOS/mainboard firmware remain unchanged unless evidence proves a separate change necessary. |
-| I3-02 | Investigate | Determine the F310 interface/protocol and onboard-hub enumeration result from the actual connected device. |
-| I3-03 | Open | Choose explicit USB admission and USB/LAN exclusion/loss behavior after inspecting existing source lifecycle; no implicit takeover of a live LAN source. |
+| I3-02 | Initial evidence | Existing P4r14 restart logs reach HID-client rejection of non-HID device address2, without enumeration errors. Confirm VID/PID/configuration using the new dedicated client before claiming native acquisition. |
+| I3-03 | Experimental implementation | A recognized USB pad with its first valid report reserves local input while attached. It cannot steal an active LAN source; a LAN close/expiry releases that source. LAN admission conflicts while USB owns/reserves input. Unplug/error invalidates USB only. A new EMOS caller may explicitly rearm queue overflow/worker expiry; physical USB faults require reconnect. No production decision/acceptance is inferred. |
 | I3-04 | Deferred | Simultaneous physical keyboard/controller and an EXT1 breakout/hub are follow-up scopes after native F310 acquisition is proven or onboard hardware blocks progress. |
 
 ## Validation and closeout
@@ -130,3 +130,18 @@ do not infer end-to-end latency from packet or polling counters. Update current
 input/build guidance when behavior becomes usable, while preserving historical
 evidence. Production promotion/version approval follows explicit tested Author
 acceptance and the canonical qualification requirements.
+
+## Initial implementation evidence — 2026-10-27
+
+1. Passive capture and existing-build restart identify P4r14 exactly and log
+   `hid-host: No HID device at USB port 2`. The device identity is not yet
+   available through the boot-keyboard-only acquisition path. Normal startup
+   was read back unchanged before resetting; a fresh Agon input epoch followed.
+2. The portable F310 decoder follows the XInput wire facts in Linux
+   [v6.12 xpad.c](https://github.com/torvalds/linux/blob/v6.12/drivers/input/joystick/xpad.c),
+   `xpad360_process_packet`: little-endian signed sticks, complemented Y axes,
+   trigger bytes4/5 and independent buttons. New code implements those protocol
+   facts without importing the Linux driver. All65,536 signed values are checked
+   for X/Y orientation/endpoints, alongside descriptors, buttons and source loss.
+3. The first offline controller pass is42/42, including the actual P4/EMOS/viewer
+   software pipeline. These tests do not establish USB hardware operation.
