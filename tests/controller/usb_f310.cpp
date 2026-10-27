@@ -60,7 +60,7 @@ static void lifecycle(){
   usb.connect(r);usb.report(s);usb.tick(r,32,702);assert(r.session()==702);
   usb.fail(r);usb.report(s);usb.tick(r,40,703);
   assert(!r.snapshot(40).valid&&!r.snapshot(40).state.held);
-  usb.rearm(r,20);usb.tick(r,48,704);assert(!r.snapshot(48).active);
+  usb.rearm(r,20,48);usb.tick(r,48,704);assert(!r.snapshot(48).active);
   // A newly attached USB pad cannot take over a live UDP owner.
   Receiver lan;lan.begin(321);assert(lan.open(321,1,{2,3},250,55,0)==200);
   UsbSource blocked;blocked.connect(lan);blocked.report(s);blocked.tick(lan,8,56);
@@ -71,15 +71,21 @@ static void lifecycle(){
   // A stopped worker expires; it cannot revive input on its next heartbeat.
   assert(!lan.snapshot(266).valid);blocked.tick(lan,267,58);
   assert(!lan.snapshot(267).active);
-  blocked.rearm(lan,44);blocked.tick(lan,268,59);assert(lan.snapshot(268).valid);
+  blocked.rearm(lan,44,268);blocked.tick(lan,268,59);assert(lan.snapshot(268).valid);
+  // The new caller itself may be the first observer after worker starvation;
+  // do not evaluate expiry using the USB task's previous (stale) timestamp.
+  Receiver stalled;stalled.begin(999);UsbSource resumed;
+  resumed.connect(stalled);resumed.report(s);resumed.tick(stalled,0,800);
+  resumed.rearm(stalled,17,300);resumed.tick(stalled,300,801);
+  assert(stalled.snapshot(300).valid&&stalled.session()==801);
   // Overflow invalidates input and remains latched until explicit new caller.
   Receiver full;full.begin(3);UsbSource fast;fast.connect(full);s.held=0;
-  fast.report(s);fast.tick(full,0,600);fast.rearm(full,1);
+  fast.report(s);fast.tick(full,0,600);fast.rearm(full,1,0);
   for(unsigned i=1;i<=129;++i){s.held=i&1;fast.report(s);fast.tick(full,i,600);}
   assert(full.snapshot(129).fault==Fault::Overflow&&!full.snapshot(129).valid);
-  fast.tick(full,130,601);fast.rearm(full,1);fast.tick(full,131,601);
+  fast.tick(full,130,601);fast.rearm(full,1,131);fast.tick(full,131,601);
   assert(!full.snapshot(131).active);
-  fast.rearm(full,2);fast.tick(full,132,602);
+  fast.rearm(full,2,132);fast.tick(full,132,602);
   assert(full.snapshot(132).valid&&full.snapshot(132).queued==0);
   // Old network/USB identities cannot publish into the new source session.
   Packet old{};old.instance=3;old.session=600;old.sequence=500;
