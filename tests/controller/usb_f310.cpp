@@ -19,9 +19,20 @@ static void decoder(){
     p[2]=p[3]=0;p[byte[i]]=mask[i];
     assert(decodeF310(p.data(),20,s)==UsbReport::state);assert(s.held==(1u<<i));
   }
-  p[2]=3;const auto before=s;
-  assert(decodeF310(p.data(),20,s)==UsbReport::invalid);assert(s.held==before.held);
+  // Explicit expected hats, including diagonals and opposite contact overlap.
+  // Non-hat buttons, triggers and analog axes must survive normalization.
+  constexpr std::uint16_t hats[]={0,0x2000,0x4000,0,0x0800,0x2800,0x4800,0x0800,
+                                0x1000,0x3000,0x5000,0x1000,0,0x2000,0x4000,0};
+  for(unsigned hat=0;hat<16;++hat){
+    p[2]=0xf0|hat;p[3]=0xf7;
+    assert(decodeF310(p.data(),20,s)==UsbReport::state);
+    assert(s.held==(0x07ff|hats[hat])&&validHeld(s.held));
+    assert(s.triggers[1]==255&&s.sticks[0]==-32768&&s.sticks[1]==32767);
+    assert(f310DpadConflict(hat)==(hat==3||hat==7||hat==11||hat>=12));
+  }
+  const auto before=s;
   p[2]=0;p[1]=19;assert(decodeF310(p.data(),20,s)==UsbReport::invalid);
+  assert(s.held==before.held);
   p[1]=20;assert(decodeF310(p.data(),19,s)==UsbReport::invalid);
   assert(decodeF310(p.data(),0,s)==UsbReport::invalid);
   p[0]=1;assert(decodeF310(p.data(),3,s)==UsbReport::ignored);
@@ -33,6 +44,24 @@ static void decoder(){
     const int signed_value=v>=32768?int(v)-65536:int(v);
     assert(s.sticks[0]==signed_value&&s.sticks[1]==-1-signed_value);
   }
+}
+static void dpadTransitions(){
+  Receiver r;r.begin(321);UsbSource usb;usb.connect(r);
+  std::array<std::uint8_t,20>p{};p[1]=20;State s{};
+  // Roll through up-left, opposing horizontal/vertical contacts and release.
+  // Keep A held: no invented A release/press when a hat axis cancels.
+  constexpr unsigned raw[]={0,1,5,13,15,10,0};
+  constexpr unsigned expected[]={1,0x2001,0x2801,0x2001,1,0x5001,1};
+  constexpr unsigned counts[]={0,1,2,3,4,6,8};
+  for(unsigned i=0;i<7;++i){
+    p[2]=raw[i];p[3]=16;
+    assert(decodeF310(p.data(),20,s)==UsbReport::state);
+    usb.report(s);usb.tick(r,i*8,77);
+    const auto snap=r.snapshot(i*8);
+    assert(snap.active&&snap.valid&&snap.state.held==expected[i]);
+    assert(snap.queued==counts[i]&&snap.session==77);
+  }
+  for(unsigned i=0;i<8;++i){Edge e{};assert(r.peek(i,e)&&e.sequence==i+1&&e.control>=11);}
 }
 static void descriptors(){
   std::array<std::uint8_t,25>c{9,2,25,0,1,1,0,0x80,50,9,4,2,0,1,0xff,0x5d,1,0,7,5,0x81,3,32,0,4};
@@ -91,4 +120,4 @@ static void lifecycle(){
   Packet old{};old.instance=3;old.session=600;old.sequence=500;
   std::array<std::uint8_t,40>ack{};assert(!full.receive(old,{0,1},133,ack));
 }
-int main(){decoder();descriptors();lifecycle();puts("F310 decoder, descriptors, source exclusion and lifecycle PASS");}
+int main(){decoder();dpadTransitions();descriptors();lifecycle();puts("F310 decoder, D-pad transitions, descriptors, source exclusion and lifecycle PASS");}

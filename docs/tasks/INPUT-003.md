@@ -16,8 +16,11 @@ before requiring attention. The initial task/plan must be published before
 implementation or bench diagnostics. Machine-local identities, reservations and
 receipts belong in `HARDWARE.local.md` and ignored task evidence.
 
-State: native USB/resting-state viewer and cleanup checks pass; the corrected
-viewer is loaded and stopped at the Legacy CLI for Author control review.
+State: Author control review found a latched USB report fault while exercising
+D-pad up-left. Viewer Escape and MOS keyboard remain responsive; restarting the
+viewer does not recover USB input. Correct the report decoder and retain bounded
+rejected-report diagnostics before the next review. Resting-state/cleanup checks
+remain historical passes, not a complete control pass.
 
 This is experimental work, not production acceptance. No physical rewiring,
 replacement keyboard/controller, user button exercise, or firmware production
@@ -217,3 +220,28 @@ workers have ended. The explicit review invocation is `RUN &040000`.
 4. [ ] Perform the applicable canonical firmware qualification and obtain tested
    Author acceptance/version authority before production promotion. Selected
    production and release tags remain unchanged.
+
+## D-pad review failure — 2026-10-27
+
+1. The Author reports that sticks/buttons worked until D-pad up-left caused
+   `Waiting for controller`. Escape works, MOS accepts browser keyboard, and
+   restarting the viewer still waits. Fresh P4 status has USB report fault3,
+  1472 accepted reports, receiver Source5/inactive and no queued transitions.
+   This identifies a USB decoder rejection followed by a permanent acquisition
+   stop; it is not a viewer hang, UART loss or queue overflow.
+2. Installed code does not retain the rejected bytes. A valid up-left report
+   passes the decoder. Whether the actual report had opposite contacts or bad
+   length/header therefore remains unresolved; do not claim either as observed.
+3. The Linux v6.12 `xpad360_process_packet` reference resolves opposite D-pad
+   contacts to neutral on that axis. The local decoder instead rejects them as
+   malformed. Match the reference axis semantics before packing the existing
+   controller mask; do not weaken LAN or EMOS framing/held-mask contracts.
+4. [ ] Cover all sixteen D-pad wire combinations and meaningful transitions,
+   including up-left and simultaneous opposite contacts with other buttons.
+5. [ ] Retain bounded anomaly bytes/counts on P4 for HTTP inspection; avoid
+   per-report logging and processor-link protocol changes. Preserve existing
+   transfer-error recovery policy until a framing fault is actually observed.
+6. [ ] Build and selectively install an identified correction from the exact
+   installed P4 composition, with verified backup/readback and unchanged EMOS,
+   mainboard VDP, viewer and startup. Restore responsive CLI, load viewer, stop
+   for Author control review. Retain the unresolved raw-report qualification.
