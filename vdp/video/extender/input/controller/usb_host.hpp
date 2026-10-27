@@ -14,6 +14,8 @@ namespace agon::extender::controller {
 struct UsbDiagnostics {
   bool running{},attached{},valid{};
   unsigned address{},vid{},pid{},speed{},interface{},endpoint{},packet{},interval{},reports{},ignored{},fault{};
+  unsigned malformed{},dpad_conflicts{},anomaly_bytes{},anomaly_kind{};
+  char anomaly_hex[129]{};
   std::uint64_t last_report_ms{};
 };
 class UsbHost {
@@ -47,8 +49,14 @@ class UsbHost {
     if(self.gone_)return;
     if(t->status!=USB_TRANSFER_STATUS_COMPLETED){self.fail(2,"input transfer");return;}
     State state{};const auto result=decodeF310(t->data_buffer,t->actual_num_bytes,state);
-    if(result==UsbReport::invalid){self.fail(3,"malformed input report");return;}
+    if(result==UsbReport::invalid){
+      ++self.diag_.malformed;self.retainAnomaly(t,1);
+      self.fail(3,"malformed input report");return;
+    }
     if(result==UsbReport::ignored){++self.diag_.ignored;return;}
+    if(f310DpadConflict(t->data_buffer[2])){
+      ++self.diag_.dpad_conflicts;self.retainAnomaly(t,2);
+    }
     ++self.diag_.reports;self.diag_.last_report_ms=esp_timer_get_time()/1000;self.diag_.valid=true;
     if(self.diag_.reports==1){
       printf("USB F310 FIRST REPORT bytes=%d data=",t->actual_num_bytes);
@@ -56,6 +64,14 @@ class UsbHost {
       printf("\n");
     }
     self.sink_(self.context_,4,&state);
+  }
+  void retainAnomaly(const usb_transfer_t*t,unsigned kind){
+    // Retain one bounded raw report for HTTP diagnosis, without logging each
+    // contact transition or adding bytes to the EMOS controller carrier.
+    diag_.anomaly_kind=kind;diag_.anomaly_bytes=t->actual_num_bytes;
+    const auto n=std::size_t(t->actual_num_bytes)<64?std::size_t(t->actual_num_bytes):64;
+    for(std::size_t i=0;i<n;++i)snprintf(diag_.anomaly_hex+i*2,3,"%02x",t->data_buffer[i]);
+    diag_.anomaly_hex[n*2]=0;
   }
   void fail(unsigned code,const char*where){
     if(!diag_.fault)printf("USB F310 FAIL %s code=%u\n",where,code);

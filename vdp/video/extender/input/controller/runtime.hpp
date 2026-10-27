@@ -126,7 +126,7 @@ class Runtime {
   static esp_err_t status(httpd_req_t*r){
     auto&self=owner(r);Snapshot s;unsigned port;UsbDiagnostics usb;bool local;
     {std::lock_guard<std::mutex>lock(self.mutex_);s=self.core_.snapshot(now());port=self.port_;usb=self.usb_status_;local=self.local_.owns(self.core_);}
-    char out[1200];
+    char out[1600];
     snprintf(out,sizeof(out),"{\"protocol\":1,\"instance\":\"%016llx\",\"session\":\"%016llx\",\"udp_port\":%u,\"active\":%s,\"valid\":%s,\"fault\":%u,\"sequence\":%lu,\"edge_ack\":%lu,\"queued\":%lu,\"received\":%lu,\"rejected\":%lu,\"age_ms\":%llu,\"sticks\":[%d,%d,%d,%d],\"triggers\":[%u,%u],\"held\":%u}",
       (unsigned long long)s.instance,(unsigned long long)s.session,port,s.active?"true":"false",s.valid?"true":"false",unsigned(s.fault),
       (unsigned long)s.sequence,(unsigned long)s.edge_ack,(unsigned long)s.queued,(unsigned long)s.received,(unsigned long)s.rejected,
@@ -137,6 +137,9 @@ class Runtime {
       s.active?(local?"usb":"lan"):"none",usb.running?"true":"false",usb.attached?"true":"false",usb.valid?"true":"false",
       usb.vid,usb.pid,usb.speed,usb.address,usb.interface,usb.endpoint,usb.packet,usb.interval,usb.reports,usb.ignored,usb.fault,
       (unsigned long long)(usb.last_report_ms?now()-usb.last_report_ms:0));
+    const auto end=std::strlen(out);
+    snprintf(out+end-2,sizeof(out)-end+2,",\"malformed\":%u,\"dpad_conflicts\":%u,\"anomaly_kind\":%u,\"anomaly_bytes\":%u,\"anomaly_hex\":\"%s\"}}",
+      usb.malformed,usb.dpad_conflicts,usb.anomaly_kind,usb.anomaly_bytes,usb.anomaly_hex);
     return respond(r,200,out);
   }
   static esp_err_t open(httpd_req_t*r){

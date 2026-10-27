@@ -4,6 +4,9 @@
 #include "receiver.hpp"
 namespace agon::extender::controller {
 enum class UsbReport { state, ignored, invalid };
+inline bool f310DpadConflict(std::uint8_t value){
+  return (value&3)==3||(value&12)==12;
+}
 inline UsbReport decodeF310(const std::uint8_t*p,std::size_t n,State&out){
   if(!n)return UsbReport::invalid;
   if(p[0]!=0)return UsbReport::ignored; // XInput status, not a controller snapshot.
@@ -21,7 +24,13 @@ inline UsbReport decodeF310(const std::uint8_t*p,std::size_t n,State&out){
   constexpr unsigned byte[]={3,3,3,3,3,3,2,2,3,2,2,2,2,2,2};
   constexpr unsigned mask[]={16,32,128,64,1,2,32,16,4,64,128,4,8,1,2};
   for(unsigned i=0;i<15;++i)if(p[byte[i]]&mask[i])s.held|=1u<<i;
-  if(!validHeld(s.held))return UsbReport::invalid;
+  // Linux v6.12 xpad360_process_packet reports each hat axis as positive
+  // contact minus negative contact. Opposite contacts therefore cancel; they
+  // are not a malformed USB packet. The old decoder faulted the entire USB
+  // client on these transitions (INPUT-003 D-pad review). Keep LAN/carrier
+  // validHeld strict by normalizing only this device's raw contacts here.
+  if((p[2]&12)==12)s.held&=~std::uint16_t(0x1800);
+  if((p[2]&3)==3)s.held&=~std::uint16_t(0x6000);
   out=s;return UsbReport::state;
 }
 
