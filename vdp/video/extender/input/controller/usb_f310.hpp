@@ -64,14 +64,13 @@ class UsbSource {
   bool owns(const Receiver&core)const{return token_&&coreSession(core)==token_;}
   // An explicit new EMOS application token may rearm queue overflow. Physical
   // USB faults still require reconnect; a healthy running app is never reset.
-  void rearm(Receiver&core,std::uint32_t caller){
+  void rearm(Receiver&core,std::uint32_t caller,std::uint64_t now){
     if(caller&&caller!=caller_){
       caller_=caller;
-      if(owns(core)&&!core.snapshot(clock_).active)token_=0;
+      if(owns(core)&&!core.snapshot(now).active)token_=0;
     }
   }
   void tick(Receiver&core,std::uint64_t now,std::uint64_t token){
-    clock_=now;
     if(!ready())return;
     auto s=core.snapshot(now);
     if(token_){
@@ -95,7 +94,7 @@ class UsbSource {
   // must not advance expiry with a fabricated clock.
   static std::uint64_t coreSession(const Receiver&core){return core.session();}
   State latest_{};bool attached_{},have_{},fault_{};
-  std::uint64_t token_{},clock_{};std::uint32_t sequence_{},edge_{},caller_{};
+  std::uint64_t token_{};std::uint32_t sequence_{},edge_{},caller_{};
   std::uint16_t previous_{};
 };
 }

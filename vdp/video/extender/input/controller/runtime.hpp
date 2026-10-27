@@ -60,7 +60,8 @@ class Runtime {
     std::lock_guard<std::mutex>lock(mutex_);
     if(p[0]=='C'&&p[1]=='I'&&p[2]==CONTROLLER_CARRIER_VERSION&&p[3]==1&&
        controller_u32(p+4)&&controller_u16(p+12)&&!p[14]&&!p[15]){
-      local_.rearm(core_,controller_u32(p+4));local_.tick(core_,now(),random64());
+      const auto timestamp=now();
+      local_.rearm(core_,controller_u32(p+4),timestamp);local_.tick(core_,timestamp,random64());
     }
     return appliance_.request(p,core_,now());
   }
