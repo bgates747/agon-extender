@@ -136,8 +136,8 @@ def build(args):
     raster(output/'preview.svg',output/'preview.png')
     (package/'README.txt').write_text('Live input needs the matched controller-enabled EMOS/P4 candidates.\n'
         'Deploy under /extender/controller. Do not change autoexec.\n'
-        'VDU 22 20\nWait at least one second, then:\n'
         'CD /extender/controller\nLOAD ctrlview.bin\nRUN &040000\n'
+        'The app saves its entry mode, selects/settles mode20 if needed, and restores the entry mode on exit.\n'
         'For explicitly labelled recorded input use: RUN &040000 replay\n'
         'Esc exits; R clears displayed press counts. Recorded timing is nominal.\n')
     manifest=dict(status='experimental',build_id=args.build_id,mode=20,

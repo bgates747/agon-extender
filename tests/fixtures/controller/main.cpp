@@ -34,17 +34,34 @@ struct Canvas {
     }
 };
 struct ModeIO {
+    int expected_mode=-1;
     bool query(test_appliance::Mode &out){
         sysvars[sysvar_vdp_pflags]&=uint8_t(~vdp_pflag_mode);
         const uint8_t p[]={23,0,0x86};if(!write_bytes(p,sizeof(p)))return false;
         auto start=ticks();uint32_t fuse=8000000;
-        while(!(sysvars[sysvar_vdp_pflags]&vdp_pflag_mode)&&uint24_t(ticks()-start)<600&&--fuse){}
-        if(!(sysvars[sysvar_vdp_pflags]&vdp_pflag_mode))return false;
-        out={sysvars[sysvar_scrMode],uint16_t(getsysvar_scrwidth()),uint16_t(getsysvar_scrheight()),sysvars[sysvar_scrColours]};
-        return out.width&&out.height&&out.colours;
+        // Stock VDP v2.16.0 vdu_fonts.h emits unsolicited mode information
+        // when selecting/deleting fonts. Cleanup can leave a mode20 reply
+        // ahead of the selected entry-mode reply. A shared completion flag
+        // cannot identify which request produced it. Keep the one query
+        // outstanding and consume replies until the selected mode arrives;
+        // never mistake that earlier font reply for failed restoration.
+        while(uint24_t(ticks()-start)<600&&--fuse){
+            if(!(sysvars[sysvar_vdp_pflags]&vdp_pflag_mode))continue;
+            out={sysvars[sysvar_scrMode],uint16_t(getsysvar_scrwidth()),uint16_t(getsysvar_scrheight()),sysvars[sysvar_scrColours]};
+            if(out.width&&out.height&&out.colours&&
+               (expected_mode<0||out.number==expected_mode)){
+                expected_mode=-1;return true;
+            }
+            sysvars[sysvar_vdp_pflags]&=uint8_t(~vdp_pflag_mode);
+        }
+        expected_mode=-1;return false;
     }
     bool cli_supported(const test_appliance::Mode&s){return s.number<128;}
-    bool select(uint8_t mode){const uint8_t p[]={22,mode};return write_bytes(p,sizeof(p));}
+    bool select(uint8_t mode){
+        const uint8_t p[]={22,mode};
+        if(!write_bytes(p,sizeof(p)))return false;
+        expected_mode=mode;return true;
+    }
     bool settle(){
         // Nominal sysvar clock advances twice per60/70Hz VBlank.160ticks
         // exceeds one second on either, with an independent stopped-clock fuse.

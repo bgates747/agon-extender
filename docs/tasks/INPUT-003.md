@@ -86,17 +86,17 @@ or when the verified viewer is ready for interactive control review.
 
 ## Work plan and gates
 
-1. [ ] Publish this task and TODO entry. Reserve the available bench, inspect
+1. [x] Publish this task and TODO entry. Reserve the available bench, inspect
    fresh status and passively collect P4 USB diagnostics without resetting.
 2. [ ] Establish enumeration result. If already-connected state is invisible,
    prepare a descriptor/connection diagnostic and use only the bounded reset
    or hub reinitialization justified by the observed host state. Read reset,
    installation and serial procedures before their respective operations.
-3. [ ] Record the actual F310 transport/interface/report contract and a bounded
+3. [x] Record the expected F310 transport/interface/report contract and a bounded
    local source policy. Implement portable decoding and lifecycle/source-conflict
    checks, plus P4 USB ownership and status diagnostics. Keep driver operations
    off the UART owner and avoid per-report log floods.
-4. [ ] Exercise malformed reports, stick/trigger endpoints, D-pad/buttons,
+4. [x] Exercise malformed reports, stick/trigger endpoints, D-pad/buttons,
    transition order, stale/unplug/error neutralization and source exclusion in
    meaningful offline checks. Run existing controller pipeline checks.
 5. [ ] Build the exact experimental P4 composition. Before flashing preserve a
@@ -145,3 +145,23 @@ acceptance and the canonical qualification requirements.
    for X/Y orientation/endpoints, alongside descriptors, buttons and source loss.
 3. The first offline controller pass is42/42, including the actual P4/EMOS/viewer
    software pipeline. These tests do not establish USB hardware operation.
+4. Source commit `eb8b9ab4` corrects explicit rearm to evaluate expiry at the
+   current monotonic time, including when the new caller is the first observer
+   after a USB worker stall. The updated42-case controller run passes. The exact
+   installed-source composition is committed separately as `1ee4d7a3` on
+   `codex/input003-usb-f310`, retaining the installed display options.
+5. An application-only install must compare the incoming bootloader with the
+   prior verified device readback, not the newly linked factory bootloader:
+   earlier application-only updates retained older boot bytes. The initial
+   pre-write guard stopped without a flash write; the actual immutable prefix
+   matches the retained installed readback. The original P4/Agon CLI was restored
+   and startup was verified unchanged. Reuse of that full backup requires a
+   fresh whole-device verification before any write.
+6. Native USB reception and actual Agon viewer delivery now pass. The old
+   viewer incorrectly reported mode cleanup failure even though a later fresh
+   CLI query confirmed mode0/640×480/16colours. Official read-only VDPv2.16.0
+   source (`c7ac293d2aa81ddfa693390549bcd909069c8fc3`, clean tag) explains the
+   race: `video/vdu_fonts.h` sends unsolicited mode information on font changes.
+   The viewer's post-selection query must disregard earlier mode20 replies and
+   wait within its existing deadline for the selected entry mode. This is a
+   viewer-only correction; the shared scroll fixture and firmware stay unchanged.
