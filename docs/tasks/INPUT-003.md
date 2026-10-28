@@ -325,6 +325,19 @@ The subsequent Author retry passed; acceptance is recorded below.
    production qualification. Do not infer USB acquisition, controller CLOSE,
    display changes, power or watchdog as the cause from chronology alone.
    No further bench run, reset, firmware change or investigation is authorized
-   solely by this peer report. Fsim handed the bench back with a separately
-   named fixed flight copy loaded/stopped for Author review; its normal app,
-   startup and firmware were preserved.
+   solely by this peer report. Fsim initially reported a separately named fixed flight copy loaded/stopped;
+   that final-load assertion was subsequently retracted as recorded below. Its
+   normal app, startup and firmware were reported preserved.
+
+### Correction to peer handback readiness
+
+Fsim subsequently retracted its final fixed-copy LOAD and printer-mirror-OFF
+assertions. The saved handback serial transcript shows `OAD flight059f.bin
+&040000` followed by `Invalid command`, then `3` followed by another invalid
+command. A prompt-only validator accepted failed commands as readiness. The
+previous successful traced/untraced run evidence remains valid; the final RAM
+application identity and mirror state were not verified. Do not use that
+handback as authority to run the fixed copy. Fsim is preserving the Author's
+newly reported failure; Extender has made no live bench operation. Its separate
+prior controller-viewer handback transcript was checked offline and contains the
+complete LOAD, LOADOK sentinel and VDU3 commands, without this prefix loss.
