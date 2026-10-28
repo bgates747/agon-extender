@@ -128,7 +128,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 |---|---|---|
 | I4-01 | Author direction | Pursue onboard USB keyboard first; GPIO wiring remains a separately selected contingency. |
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
-| I4-03 | Open | Original and CHERRY keyboards both fail initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. Actual wire behavior remains unresolved. CHERRY's capture also shows F310 reconnection and a changed parent hub address; clarify simultaneous physical actions before isolating a cause. |
+| I4-03 | Open | Original and CHERRY keyboards both fail initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The Author confirms only the keyboard cable was plugged during CHERRY capture. F310 disappearance/reacquisition was not an intentional controller unplug. Actual wire behavior and the shared USB event's cause remain unresolved. |
 | I4-04 | Partially established | Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Linux subsequently identifies the Author-transferred specimen as `04d9:a088`, a Holtek vendor ID with no manufacturer/product strings. Retail brand/model and physical socket label remain unrecorded. |
 | I4-05 | Linux inventory complete | The Author supplied all four keyboards in turn. All enumerate at 1.5 Mbit/s and expose compatible boot-keyboard interfaces. Exact descriptors/speed evidence are retained; captured P4 comparisons remain the next physical gate. |
 
@@ -471,8 +471,8 @@ or proof that ISR logging caused the earlier abort.
 The Author connects the CHERRY after the P4 passive reader reports ready.
 CHERRY fails at the same first SETUP stage as the original keyboard. HDMI and
 P4 remain live. The connection window also contains a controller disconnect/
-reacquisition; the physical-action boundary needs clarification before the
-broader bus event can be assigned to a keyboard-only connection.
+reacquisition. The Author confirms that only the keyboard cable was plugged;
+the shared USB event's mechanism remains unresolved.
 
 1. Preserved before/after service snapshots and a bounded passive capture on
    the unchanged installed candidate. Same P4 incarnation and mainboard input
@@ -495,9 +495,41 @@ broader bus event can be assigned to a keyboard-only connection.
    lines, status snapshots and wall-clock collection bounds are retained in the
    local bench record. The configured 300 s limit bounds collection only and
    does not authorize recovery or replay.
-5. Ask whether the Author also touched F310, a USB hub or other cable while
-   connecting CHERRY. With that boundary resolved, choose the next experiment:
+5. Establish whether the Author also touched F310, a USB hub or other cable
+   while connecting CHERRY (resolved below). Then choose the next experiment:
    a further model control or actual failed-SETUP register/wire inspection. Two
    distinct standard keyboards failing before HID strengthens a common P4
    low-speed-path hypothesis; it does not prove a universal incompatibility,
    a particular host register defect or an electrical fault.
+6. The Author clarifies that only the keyboard cable was plugged. Preserve that
+   observation with the capture: the controller disappearance/reacquisition is
+   an additional symptom of this keyboard-only attachment, not an operator
+   controller replug. It does not establish a physical hub reset or power fault.
+
+### Shared USB event follow-up
+
+1. Against pinned ESP-IDF 5.5.5 `b774170ff46c393eeb5e495ea37936038d3f4f4f`,
+   `components/usb/hub.c:root_port_handle_events` handles root disconnection,
+   root error and overcurrent through the same device-removal branch. Current
+   retained logs cannot distinguish which root event, if any, occurred.
+2. `components/usb/ext_port.c:handle_disable` and
+   `components/usb/hub.c:hub_port_reset` scope ordinary downstream failure/
+   reset handling to the selected parent hub/port. That inspected child-failure
+   path does not itself request a reset or removal of the sibling F310.
+3. Project `vdp/video/extender/input/controller/usb_host.hpp:event` sets
+   `gone_` on the matching USB host DEV_GONE event; `run` then calls `remove`,
+   producing the observed DISCONNECTED line. Its generic input-failure code2
+   does not itself set `gone_` or reset the hub. Code2 is a project diagnostic
+   category for any non-completed input transfer, not the underlying USB
+   transfer status. The latter was not retained and must not be inferred.
+4. F310 reacquisition is logged before the first captured LS SETUP failure.
+   Investigate the shared host/hub lifecycle rather than assigning that prior
+   controller loss to the later keyboard-error cleanup. Event/log ordering
+   still does not prove a physical mechanism.
+5. The next bounded diagnostic should retain the exact root event, hub/device
+   removal identity, downstream connection/enable/power status and actual
+   controller transfer status, alongside the planned failed-SETUP hardware
+   register snapshot. Publish outside ISR/locks; preserve existing timing,
+   transfer actions and display guard. Do not select speculative power, clock,
+   reset-delay or IRQ-affinity changes from this evidence. No new build,
+   installation, reset or physical retry was performed for this source review.

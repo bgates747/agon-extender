@@ -75,9 +75,10 @@ for all four devices, while sysfs and `lsusb -t` correctly report 1.5 Mbit/s.
    the original keyboard's failing stage. No successful CHERRY enumeration or
    HID acquisition is captured. HDMI remains fault-free and P4/input epochs
    are unchanged. F310 disconnects and reacquires during the connection window;
-   the parent hub address is now 4, previously 1. Clarify any simultaneous
-   physical controller/hub/cable action before treating this as an isolated
-   keyboard hotplug. No agent reset, replug or retry was performed. This result
+   the parent hub address is now 4, previously 1. The Author confirms only the
+   keyboard cable was plugged: F310's disappearance was not an intentional
+   controller replug. The shared USB event's mechanism remains unresolved.
+   No agent reset, replug or retry was performed. This result
    strengthens a shared low-speed-path lead without proving its mechanism.
 
 ## Evidence identity and collection limits
