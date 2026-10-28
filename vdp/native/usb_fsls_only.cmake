@@ -159,4 +159,7 @@ if(DEFINED usb_target)
     message(FATAL_ERROR "Expected exactly one selected USB HCD translation unit")
   endif()
   set_property(TARGET "${usb_target}" PROPERTY SOURCES "${selected_sources}")
+  # Native USB selection also defers upstream EP0 ISR logging. Standalone HCD
+  # recipe checks supply USB_HCD_SOURCE and do not select another SDK unit.
+  include("${CMAKE_CURRENT_LIST_DIR}/usb_ep0_task_logging.cmake")
 endif()

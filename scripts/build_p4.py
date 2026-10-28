@@ -891,7 +891,9 @@ def main() -> None:
         artifact_paths.append(build/"exext-parlio/parlio_rx.c")
     if args.usb_fsls_only:
         artifact_paths.extend([VDP / "native/usb_fsls_only.cmake",
-                               build / "agon-extender-usb/hcd_dwc.c"])
+                               build / "agon-extender-usb/hcd_dwc.c",
+                               VDP / "native/usb_ep0_task_logging.cmake",
+                               build / "agon-extender-usb/usbh.c"])
     if source_record is not None:
         artifact_paths.extend([output / "source.tar.gz", output / "source-inputs.json"])
     record = {
@@ -929,6 +931,7 @@ def main() -> None:
         "parallel_data_check": args.parallel_data_check,
         "exext_stream": args.exext_stream,
         "usb_fsls_only": args.usb_fsls_only,
+        "usb_ep0_task_logging": args.usb_fsls_only,
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "display_inputs": display_record,
