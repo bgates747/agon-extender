@@ -767,3 +767,53 @@ register toggle or additional hardware operation follows from this result. The
 retained public PDF/text and the bounded source-research notes are under the
 ignored task evidence directory. Actual keyboard enumeration remains the next
 functional gate after an evidence-supported remedy.
+
+
+## Minimal native USB baseline — authorized 2026-10-28
+
+The Author approves a USB-only P4 comparison, leaving the keyboard and F310
+attached. Extender will temporarily install a pinned Espressif HID-host example
+adapted only for board bring-up, explicit serial invocation, bounded evidence
+and the required FS/LS-only root-reset backport, then restore the exact verified
+Extender application. Success supplies a working baseline for integration
+comparisons; repeated initial SETUP failure supplies a compact reproducer, not
+proof of a vendor defect.
+
+1. Initial checkout is clean; no pending dirt requires a safety commit. Publish
+   this scope before the diagnostic build/install. The native fixture is
+   `input004-usb-minimal-r01`, with a fresh identified UTC build and exact source
+   archive/hash/commit. It remains outside production and ordinary P4 profiles.
+2. Pin ESP-IDF5.5.5/b774170f and HID1.2.1 to the installed retained component
+   bytes. Preserve board hub reset, selected HS peripheral, hub support, USB
+   configuration, core1 USB installation/IRQ ownership, silicon revision bounds,
+   app offset and partition table. Remove Extender display/network/controller/
+   Agon transport services. Do not call direct Agon registers or bypass EMOS.
+3. Use only the required FS/LS root-reset derivative; retain its exact original
+   source hash and generated hash. The installed cache/diagnostic/USBH logging
+   derivatives are intentionally absent. Judge descriptor enumeration and HID
+   admission first; stock non-control IN cache behavior may independently affect
+   later reports. Preserve this difference in the comparison record.
+4. P4 startup remains inert until the Pi explicitly sends serial START. Create
+   event ownership before USB starts, print exact build/start/end identities and
+   counts, and bound acquisition to20 seconds or admitted keyboard plus5 clean
+   seconds. A serial STOP may end the acquisition after the host observes a
+   definitive SDK enumeration failure. An app timeout is inconclusive by itself.
+   Do not use GPIO0 as a guessed quit button or start/retry work after reset.
+5. Finish source/configuration/compiled-linkage review and identify the actual
+   application bytes before flashing. Freshly prove actual MOS CLI and unchanged
+   setup-only startup. Keep verified full rollback and exact sector bytes; hold
+   Agon reset across minimal P4 installation, invocation and restoration.
+6. Use app-only writes at0x20000 with independent app/full readback comparisons.
+   Leave bootloader, partitions, NVS/OTA, EMOS, mainboard VDP, startup and SD
+   contents unchanged. No operator replug, Agon application or rendering test is
+   part of this experiment. Capture serial evidence and record host/target clocks
+   separately; a duration estimate does not authorize resets or replay.
+7. Restore `indexed-hdmi-r14-b2026-10-28-22-35-11Z`, application SHA-256
+   `ecf69e4b0276b91108d08d50e32315fc2ae93bc33d5ca6b2129b335c18566549`,
+   independently verify application/full readback and new P4 startup before
+   releasing Agon. Then prove fresh admission, actual MOS CLI, unchanged startup,
+   listener exit and mirror-OFF. Any uncertain write remains journaled with Agon
+   held for explicit root reconciliation; never blindly retry or release.
+8. Record enumeration, actual typing/report exercise and restoration separately.
+   No automatic vendor message, speculative register change, SDK upgrade,
+   additional hardware change or production promotion follows from the result.
