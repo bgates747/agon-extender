@@ -448,3 +448,9 @@ or proof that ISR logging caused the earlier abort.
    Binary descriptor/driver/capability evidence is retained. Both audited
    devices match the current ordinary-keyboard decoder; neither is full speed.
    Two additional keyboard models remain for the Author to attach in turn.
+5. The third keyboard identifies as CHERRY `046a:0011` (G83 / RS 6000 USB-ID
+   database label), revision `0x0111`, again low speed 1.5 Mbit/s. It has one
+   ordinary boot-keyboard interface, an 8-byte report and three lock LEDs, with
+   no extra HID interfaces. Linux enumeration succeeds. Its simpler composition
+   is useful for comparison but is not an established SETUP-failure remedy.
+   One final keyboard remains for Linux audit; no P4 access occurred.
