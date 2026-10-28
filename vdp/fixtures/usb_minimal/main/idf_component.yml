@@ -1,0 +1,5 @@
+# Provenance declaration only. The reviewed builder disables Component Manager
+# and provides a hash-verified pristine local components/usb_host_hid copy.
+dependencies:
+  idf: "==5.5.5"
+  espressif/usb_host_hid: "==1.2.1"
