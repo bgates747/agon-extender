@@ -128,7 +128,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-01 | Author direction | Pursue onboard USB keyboard first; GPIO wiring remains a separately selected contingency. |
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
 | I4-03 | Open | Failure is localized to initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The wire-level cause remains unresolved. |
-| I4-04 | Partially established | Author attached keyboard; actual Legacy CLI is verified. Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Keyboard VID/PID cannot be read until its first descriptor succeeds. Physical socket label/model remain unrecorded. |
+| I4-04 | Partially established | Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Linux subsequently identifies the Author-transferred specimen as `04d9:a088`, a Holtek vendor ID with no manufacturer/product strings. Retail brand/model and physical socket label remain unrecorded. |
 | I4-05 | Author direction, in progress | Audit four different keyboard models on the Linux host, starting with the attached Logitech; the Author exchanges devices after each completed audit. Preserve descriptor/speed evidence and compare boot-keyboard compatibility before selecting further P4 tests. |
 
 ## Evidence and stop boundaries
@@ -441,3 +441,10 @@ or proof that ISR logging caused the earlier abort.
    input capabilities without collecting user keystrokes. No driver detach,
    reset, protocol/LED change, event grab or firmware operation is needed for
    the host descriptor audit. Keep the P4 bench untouched during these queries.
+4. The Author moves the original P4 keyboard to the Linux workstation. It
+   enumerates as `04d9:a088`, low speed 1.5 Mbit/s, revision `0x0113`, with a
+   standard boot keyboard on interface 0 and separate system/media/mouse HID
+   on interface 1. No manufacturer/product strings establish a retail model.
+   Binary descriptor/driver/capability evidence is retained. Both audited
+   devices match the current ordinary-keyboard decoder; neither is full speed.
+   Two additional keyboard models remain for the Author to attach in turn.
