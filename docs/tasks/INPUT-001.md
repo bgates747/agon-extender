@@ -211,8 +211,11 @@ EMOS application decisions remain here for later review.
    and settle for at least one second, and restore visible responsive CLI.
    Exclude unqualified double-buffered entry cleanup rather than claim success.
 2. Display route belongs to EMOS. Report selected route and controller source
-   visibly. Provide explicit interactive CLI commands with separately paced
-   mode preselection. Escape exits; gamepad buttons are observations, not hidden
+   visibly. Author clarification on2026-10-26: launch this interactive viewer
+   directly, with application-owned entry-mode capture, conditional mode20
+   selection/settling and restoration. Do not preselect mode20 in its interactive
+   instructions; that would replace the CLI mode the Author wants restored.
+   Escape exits; gamepad buttons are observations, not hidden
    exit/reset/menu commands. Release viewer-owned input/session state on return
    without terminating unrelated host/controller consumers.
 3. Keep the host viewer usable before new P4/EMOS installation. Retain working

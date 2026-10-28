@@ -152,3 +152,99 @@ Remaining work is EMOS/application/presentation attribution and Author review.
 The demonstrated priority correction makes additional P4 stall instrumentation
 optional unless a remaining symptom warrants it. Cross-clock timestamp probes
 and the eZ80 fine timebase remain separate unresolved preparation decisions.
+
+## Interactive retry — unresolved freeze,2026-10-26
+
+1. The Author invoked the unchanged viewer-r03 after its SD bytes were read
+   back exactly. A physical F310 sender was explicitly admitted at120Hz/250ms.
+   Initial P4 input was valid, queue empty, with the fast SD listener exited.
+   The Author subsequently reported the application frozen and still running.
+2. Read-only HTTP and source-log observations retained in ignored
+   `agents/input002/viewer-freeze-observation.json` show the sender stopped
+   after581.018s:69719 sends,69718 ACKs, final receiver fault4 (transition
+   overflow). P4's last stored transition sequence is128. With a128-entry
+   queue and contiguous source transitions, this indicates no transitions
+   were retired before the next transition overflowed the session. The
+   overflow may follow an earlier EMOS/application stall or link failure;
+   it does not establish the initial fault or a repeat of the old IRQ defect.
+3. P4 instance and keyboard boot epoch stayed unchanged, keyboard status
+   remained ready/neutral and scanout advanced with zero reported faults.
+   P4 output mode remained0; the active Legacy mainboard display is distinct.
+   These observations do not prove the eZ80 foreground or its keyboard path
+   is responsive. No input, reset, source restart, flash or SD operation was
+   issued against the running viewer during this observation.
+4. Remaining diagnosis: establish the visible viewer status and whether Escape
+   returns to the CLI, then isolate app loop/rendering, resident request/reply
+   progress and UART/keyboard health using the smallest justified probe. Do
+   not restart the source or replay the viewer merely to clear its evidence.
+5. The Author requests application-owned mode selection for this interactive
+   test. Installed viewer-r03 already captures entry mode, conditionally selects
+   and verifies mode20, waits for monitor settling and restores entry mode on
+   handled exit. Interactive guidance now omits the external VDU preselection,
+   which otherwise makes mode20 the captured entry mode. No executable rebuild
+   or new firmware identity is needed for that invocation correction.
+6. The Author subsequently identifies the visible message as "Waiting for
+   controller" and confirms Escape exited the application. This rules out
+   an unresponsive foreground in that observation. The installed renderer
+   uses the same waiting message before any valid sample and for an invalid
+   source received through an otherwise healthy EMOS carrier. Its label alone
+   therefore cannot identify absence of replies or an eZ80 stall. Establish
+   whether valid controls appeared before loss before attributing the queue
+   overflow to a regression; a source that filled before viewer invocation
+   also produces a responsive waiting viewer. No source restart or reset has
+   followed this clarification.
+7. After the old sender was confirmed stopped, the agent explicitly admitted
+   a fresh physical F310 source at120Hz/250ms and verified P4 valid/fault0.
+   The Author reports the resulting viewer usable: right-stick analog plotting
+   works, while the left stick changes the D-pad labels rather than its analog
+   marker. This is partial interactive evidence, not a complete handling pass.
+   Logitech's F310 quick-start guide describes the front Mode button swapping
+   the left analog stick and D-pad in sports mode. That is the leading
+   explanation; confirmation by toggling the Mode button remains pending.
+   No software remapping, controller setting or firmware change was made.
+8. The Author confirms the D-pad and left stick are swapped. This matches
+   the documented F310 Mode-button setting; do not compensate with a software
+   axis remap. Return to ordinary left-stick analog operation by selecting
+   the controller's flight setting. Corrected handling after that physical
+   selection has not yet been reported.
+9. The Author then confirms the front Mode button restored normal left-stick
+   operation. The reported swap was the controller's hardware setting, not a
+   demonstrated software axis defect. The Author delegates consumer questions
+   to fsim; Extender sent the exact contract/source/build identities, foreground
+   polling and expiry constraints, test references and current bench boundary
+   through the mailbox. No hardware operation accompanied that handoff.
+10. Fsim's proposed asynchronous foreground consumer policy is compatible,
+    subject to continued polling while paused and fresh-sample validation after
+    explicit close/open rearm. Offline artifact inspection confirms the recorded
+    installed mainboard SDK/wireframe image is distinct from fsim's accepted
+    flight-compositor image. The consumer owns that renderer dependency and its
+    eventual physical gate; no controller-driven firmware replacement was
+    authorized or performed. The compatibility answer was sent by mailbox.
+11. Extender reviewed fsim's concrete adapter read-only. Wire bytes, gateway
+    bindings and static-lifetime storage match. A bounded native reproduction
+    shows failed explicit rearm falling back to keyboard flight without a fresh
+    neutral controller sample; entry/exit mode changes also lack a fresh query
+    confirming the selected mode. Both findings and suggested checks were sent
+    through the mailbox for fsim-owned correction. No fsim source, emulator or
+    hardware state was changed during review; physical gates remain open.
+12. Revised fsim source closes both findings; Extender independently ran the
+    updated native controller checks successfully and matched the retained
+    target-replay source identity. A new notice-path defect remains: Waiting/
+    Lost text is drawn in double-buffered mode after compositor shutdown without
+    presenting that page. Extender returned the supported stock-swap remedy and
+    requested bounded visible-status replay coverage through the mailbox.
+13. Retained actual-application images now show both notices on the presented
+    page; the matching source/app manifest and labelled replay receipt verify
+    the reviewed identity. All three original concrete findings are closed.
+    Extender also noted that failed compositor-stop acknowledgement must remain
+    blocked during fsim's existing handled-error work. Final fsim regressions,
+    actual controller/flight review and renderer-installation authority remain
+    independent; no hardware or emulator operation accompanied this closeout.
+14. Fsim's physical handback reports independently verified compositor
+    restoration and real-stream neutral flights in both editions:120physics
+    ticks/242polls each, maximum service gap2nominal MOS units, no reported
+    drops/controller/flight errors. Pause/reset/rearm/exit also pass in a separate
+    finite check. Extender inspected the retained restoration/result receipts
+    offline and acknowledged the handback. The normal flight app is loaded but
+    stopped for Author review. These polling observations do not measure actual
+    input latency or close the Author's gameplay/handling gate.

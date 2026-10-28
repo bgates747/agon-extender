@@ -27,6 +27,10 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired and bounded hardware checks pass without firmware changes. Author review/fsim helper adoption and broader USB loss/paired-reset investigation remain; see R02 results.
 
+## Physical keyboard support — active
+
+- [ ] **[INPUT-004 — P4-PC onboard USB keyboard support](docs/tasks/INPUT-004.md)** — Research the remaining low-speed enumeration failure, implement the smallest supported remedy, and qualify actual typing/LEDs/reconnect alongside the working F310. Publish plan/current dirt first; preserve EMOS, mainboard VDP and normal startup.
+
 ## Active board-build preparation
 
 - [ ] **[SPRITE-001 — Nurples hardware-sprite trial](docs/tasks/SPRITE-001.md)** — Author reports beautiful output from the full684 memory remedy; the thin tear disappears when paused, and mainboard hardware sprites show no tear. Rollback reproduces ordinary Nurples's upper-playfield visibility defect. HDMI-002 now selects a480-line carrier on mode0 exit; Author confirms full upper text. ExCom SD admission, tearing and broader qualification remain open.

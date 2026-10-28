@@ -42,6 +42,35 @@ another tool flashes or takes the same port. Unsupported joined control updates
 fail instead of silently falling back to the unsafe sequence. The advisory
 exclusive lock complements, and does not replace, bench ownership.
 
+## Observing Legacy CLI and application text
+
+A mainboard serial capture does not automatically contain MOS CLI or application
+`printf` output: those bytes normally go to the mainboard display. Stock VDP
+supports a printer mirror to its USB debug serial, enabled by `VDU 2` and
+disabled by `VDU 3`. Verify support in the exact installed VDP composition;
+the retained F049 mainboard composition includes it. This requires no EMOS
+observer, firmware replacement or display-route change.
+
+1. The bench owner establishes an actual CLI, including acknowledged listener
+   EXIT if the foreground SD listener was running, then opens the maintained
+   passive reader described above.
+2. At that CLI, the owner sends `VDU 2`, followed separately by a printable
+   sentinel such as `VDU 65 13 10`. Observe its `A` and newline in the capture
+   before relying on the channel for any separately authorized diagnostic.
+3. The VDP mirrors future printable text and controls8–13. It does not dump
+   bitmap/resource payloads or recover text printed before mirroring began.
+   Pace any subsequent diagnostic by its actual output; do not send repeated
+   Ready keys into an unknown foreground state.
+4. After collection, at a verified CLI, the owner sends `VDU 3` to end the
+   diagnostic mirror and closes the reader. Exclude the extra serial output
+   from claims about uninstrumented performance or input latency.
+
+P4's `/screen/text` endpoint and `scripts/screen_text.py` read the P4-rendered
+screen; they do not observe Legacy mainboard video. Stock `VDU 23,0,&83,x;y;`
+can recognize a currently drawn character through MOS, but it matches glyph
+pixels against the selected font/colours rather than reading a durable text
+transcript. Font changes, graphics or later output can prevent recovery.
+
 ## Why the old reader reset Agon
 
 Linux's nonblocking tty open asserts both DTR/RTS together. Pyserial's ordinary

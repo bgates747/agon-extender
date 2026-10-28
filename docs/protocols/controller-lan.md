@@ -1,8 +1,10 @@
 # Controller LAN protocol
 
 Oryx sends fresh analog state and retained button/D-pad transitions to P4.
-This developmental protocol is implemented for offline validation and target
-compilation; it is not installed production support or an EMOS application API.
+This developmental protocol is installed with experimental P4r14 and has
+bounded physical host/P4 measurements plus Author review through the matched
+EMOS viewer. It is not selected production support or the application API;
+eZ80 consumers use the separately specified EMOS controller gateway.
 The [accepted decision](../decisions/ADR-2026-10-24-controller-udp.md) establishes
 the LAN design. [INPUT-001](../tasks/INPUT-001.md) owns further implementation
 and physical qualification. No production version is assigned here.
@@ -24,8 +26,9 @@ and physical qualification. No production version is assigned here.
    by differencing snapshots after loss.
 5. The [development EMOS service](controller-emos.md) supplies a separately
    identified application consumer. Its source/software tests/target builds
-   pass, but it is uninstalled and physically unqualified. HTTP status reads
-   do not drain transitions. Without that consumer,128 unconsumed transitions
+   pass, and its EMOSv27/viewer-r03 combination is installed with bounded
+   Author handling review; broader lifecycle qualification remains open.
+   HTTP status reads do not drain transitions. Without that consumer,128 unconsumed transitions
    fill the queue and the next new transition invalidates input.
 
 ## Admission and lifecycle
