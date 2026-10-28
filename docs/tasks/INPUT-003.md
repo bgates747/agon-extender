@@ -341,3 +341,23 @@ handback as authority to run the fixed copy. Fsim is preserving the Author's
 newly reported failure; Extender has made no live bench operation. Its separate
 prior controller-viewer handback transcript was checked offline and contains the
 complete LOAD, LOADOK sentinel and VDU3 commands, without this prefix loss.
+
+### Superseding verified fsim handback
+
+Fsim later supplied `finish-r2-resume/{result.json,serial.txt,cold-summary.txt}`;
+Extender reviewed those saved files without bench access. A cold mainboard boot
+followed by RUN without a new LOAD reports the revised flight ID,153ticks,
+154poses and308native USB polls, maximum gap2nominal units, no FIFO/dropped-clock/
+controller/flight/cleanup errors, and Escape/actual CLI. The final transcript
+contains the complete separate-copy LOAD and VDU3; fsim additionally records a
+quiet fast-listener HELLO/read/EXIT check. This supersedes the invalid final-load
+assertion above without deleting that correction or its failed evidence.
+
+Fsim's separate `flight059r2.bin` is86524bytes, SHA-256
+`5ce0185eb9f7e8f9edc8069b1b5f7306569dfc72a509846827ec89f9108d4200`.
+Its startup selects this copy with LOAD only, no RUN; the prior startup is backed
+up and the original flight application is retained. No P4 reset/firmware write
+is reported. Peer final state is freshly loaded/stopped copy, mode0, keyboard
+admitted, USB valid, listener idle and mirror off, with all peer handles closed.
+Author visual retry/publication remains fsim-owned. The separate unexpected
+P4 restart remains unresolved; neither recovery nor this successful run closes it.
