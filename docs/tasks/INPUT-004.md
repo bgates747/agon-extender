@@ -657,8 +657,91 @@ Prepared source: eight raw registers (`HCINT`, `HCCHAR`, `HCTSIZ`, `HCFG`,
 control. The generated HCD SHA-256 is
 `c5eb6da09c15c16324e15aba65e97a596207019aa8fc20625991ae231d81dae7`.
 Independent source review passes. All 32 focused host checks pass in 1.17 host
-monotonic seconds; the new generated-handler harness covers 13 ISR/dequeue
+monotonic seconds; the new generated-handler harness covers 21 ISR/dequeue
 cases including destructive decoder mutation and poisoned post-unlock state.
 The private record grows from 8 to 44 bytes on 32-bit P4; nine MMIO reads and
 larger local copies have unmeasured execution cost. Target compile/installation
 and hardware interpretation remain separate gates.
+
+
+Matched preparation: root source `996a80c0` and installed-composition child
+`632d35c0` are committed and published. The child directly follows installed
+`f00c5a05`; its four-file patch exactly matches the reviewed root delta while
+preserving the matched validator's existing display options. Nine focused
+matched-source tests pass, with no other build-input or selection changes.
+The identified build is `indexed-hdmi-r14-b2026-10-28-22-35-11Z`; compilation and
+final artifact/composition validation remain pending at this preparation gate.
+A fresh actual CLI/unchanged startup preflight passes, with the listener exited
+and temporary printer mirroring disabled. No hardware installation follows from
+source-test success alone.
+
+
+## Register diagnostic installed and initial SETUP captured — 2026-10-28
+
+The P4 diagnostic is installed and the original keyboard failure is reproduced
+with actual hardware registers retained. No keyboard remedy is established.
+The low-speed/PRE selection is present in hardware, matching the driver's
+software fields; the captured error still cannot distinguish absent response
+from malformed signaling.
+
+1. Build `indexed-hdmi-r14-b2026-10-28-22-35-11Z`, matched source `632d35c0`,
+   passes native compilation/validation in 455.12 host monotonic seconds. The
+   application is 1,778,560 bytes, SHA-256
+   `ecf69e4b0276b91108d08d50e32315fc2ae93bc33d5ca6b2129b335c18566549`,
+   448 bytes larger than installed `f00c5a05`. Independent review verifies all
+   23 retained artifacts, both complete 5,524-file source inventories, unchanged
+   selections and the intended USB compile/archive/ELF linkage.
+2. All 1,853 compile actions match after exact path normalization except IDF's
+   `esp_app_desc.c` generic `PROJECT_VER` metadata (`88293037` to `996a80c0`).
+   That field follows the containing broad-root Git identity; the build manifest
+   identifies actual matched source `632d35c0` and the Extender header embeds
+   the exact build ID above. Do not infer source provenance from `PROJECT_VER`.
+   The rebuilt bootloader differs only in compile timestamp/image integrity
+   fields and is not flashed; actual incoming bootloader bytes are preserved.
+3. Fresh actual CLI/startup preflight passes. The saved full incoming P4 image
+   matches the device before reuse as rollback. App-only write at `0x20000`,
+   independent app verification and complete 16 MiB readback pass; every byte
+   outside written sectors `[0x20000,0x1d3000)` is unchanged. The outgoing full
+   readback SHA-256 is
+   `ffb16a6833e9e8028cbd1a4f15bd35d59c640ed6ca07e6e99cddc36f2caa171a`.
+   Installation takes 212.51 host monotonic seconds, excluding the separate
+   post-installation command check. Exact rollback bytes remain retained.
+4. The new P4 startup/USB host, attached F310 and HDMI initialization pass before
+   Agon reset is released. Actual Legacy CLI commands and a read-only fast2
+   startup download then pass, with listener EXIT and printer mirroring OFF
+   independently verified in 7.35 host monotonic seconds. Startup remains the
+   same 108 bytes; EMOS, mainboard VDP and SD files are unchanged. No guest or
+   test application is invoked. All serial readers and reset holds are closed.
+5. The attached Author-selected K120 fails once at hub port3 during ordinary
+   P4 initialization. Initial SETUP/stage0, address0/EP0, MPS8 and HAL XCS_XACT
+   match the preceding model comparisons. No physical replug is required.
+   The raw 7,273-byte boot capture SHA-256 is
+   `a97fee1ce3b20b4a224f432907a22f048b8909bd8dd912e28043e655e10c93c0`.
+6. Final read-only status shows advancing HDMI frames and zero fault/sequence/
+   overbudget/underrun counts. F310 native USB remains valid/fault0; actual
+   controller movement is not exercised. Extender input is admitted and neutral;
+   SD listener is offline/idle. These checks establish bounded installation and
+   command readiness, not keyboard typing or broader hotplug qualification.
+
+| Retained register | Raw value | Supported interpretation |
+|---|---|---|
+| HCINT | `0x00001002` | Channel halted plus excessive transaction error; no unique cause |
+| HCCHAR | `0x00020008` | Address0/EP0, OUT/control, MPS8, actual low-speed/PRE bit1 |
+| HCTSIZ | `0x000002ff` | Descriptor-DMA scheduling255, three-descriptor encoding, PID field0 |
+| HCFG | `0x06800204` | FS/LS-only and descriptor DMA enabled |
+| GUSBCFG | `0x2000140d` | Host mode, HS UTMI selection, 16-bit interface, timeout calibration5 |
+| HFIR | `0x0000ea60` | Raw frame-interval count60000; not itself a duration measurement |
+| HPRT | `0x00021405` | Enabled/powered full-speed root hub link, no active overcurrent bit |
+| UTMI.FC06 | `0x00000049` | LS parallel/keepalive enabled, preamble-related bit2 clear; polarity unresolved |
+
+The frame sample is373 and HS PHY type3. Register reads are sequential samples
+at interrupt service, not USB wire observations. Neither PRE selection nor an
+absent captured ACK bit proves what the downstream keyboard received or sent.
+Do not toggle the ambiguously documented UTMI preamble bit, change clocks or
+increase delays solely from these register values. Further source/clock/PRE
+interpretation is offline; no additional hardware change is queued.
+
+Machine-local build, composition, independent-review, installer and CLI receipts,
+raw capture and decoded register JSON remain under `agents/input004` and are
+indexed by the current local bench record. This remains an experimental
+diagnostic installation; production selection and acceptance status are unchanged.
