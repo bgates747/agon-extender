@@ -12,6 +12,9 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 1. On 2026-10-28 the Author requests this research/implementation task, a commit
    and push of all current dirt before proceeding, then work toward an onboard
    keyboard. Publish this plan before implementation or live diagnostics.
+   The Author subsequently confirms a powered/free bench, attaches the keyboard
+   and authorizes the first physical tranche. The diagnostic P4 application is
+   now installed and verified; actual keyboard operation remains failing.
 2. This is an implementation goal, not authorization for physical rewiring or
    speculative wholesale SDK/USB-stack replacement. Continue useful offline
    work while keyboard identity/attachment and current bench state are unknown.
@@ -97,7 +100,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
    project-owned matched composition. Add meaningful offline checks for the
    affected low-level contract; run relevant existing input/controller checks.
    Do not claim target/device success from host tests.
-5. [ ] Build a clean identified candidate preserving installed hardware/display/
+5. [x] Build a clean identified candidate preserving installed hardware/display/
    dependency settings. Before deployment freshly preserve/verify rollback and
    startup state, selectively write P4 app only, independently read it back and
    verify flash outside written sectors unchanged. Read installation/reset/
@@ -121,8 +124,8 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 |---|---|---|
 | I4-01 | Author direction | Pursue onboard USB keyboard first; GPIO wiring remains a separately selected contingency. |
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
-| I4-03 | Open | Remaining failure mechanism: distinguish LS-via-FS-hub signaling/stage timing, DMA/cache ownership, device quirks and other host errors. |
-| I4-04 | Open | Exact keyboard/port/attachment and current bench foreground must be established before device tests. |
+| I4-03 | Open | Failure is localized to initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The wire-level cause remains unresolved. |
+| I4-04 | Partially established | Author attached keyboard; actual Legacy CLI is verified. Failure is on parent hub1/port1; keyboard VID/PID cannot be read until its first descriptor succeeds. Physical socket label/model remain unrecorded. |
 
 ## Evidence and stop boundaries
 
@@ -206,10 +209,9 @@ Stop at an explicit Author boundary; never replay uncertain input/transfers.
    ASan/UBSan check the cache helper; leak scanning is disabled only because
    the managed runner's ptrace prevents it, and that harness allocates no heap.
 5. An independent source review found no blocking lifetime/locking issue for
-   compilation. This remains preparation: no candidate has been installed,
-   no keyboard/control exercise has been claimed and no EMOS/mainboard/startup
-   change is selected. Actual keyboard attachment/port and foreground remain
-   the physical evidence gate.
+   compilation. This was source preparation; the first physical tranche below
+   records subsequent installation and actual device evidence. No EMOS,
+   mainboard or startup change is selected.
 6. The 50 selected host checks pass in 6.75 monotonic host seconds. The matched
    source commit is`8c90c869`, based on the installed`cabbea34`; its source
    difference is restricted to this USB derivative, validator and tests.
@@ -220,8 +222,8 @@ Stop at an explicit Author boundary; never replay uncertain input/transfers.
    Independent comparison verifies the source archives and unchanged board,
    display, dependencies, SDK configuration and generated application inputs
    after exact path/build-identity normalization. Five focused checks also pass
-   from the matched checkout. The image is UNINSTALLED; gate5's deployment
-   and all physical keyboard checks remain pending.
+   from the matched checkout. The first physical tranche below records later
+   installation. Actual keyboard typing checks remain pending.
 8. The new application is 416 bytes larger than the prior image. At the existing
    application offset 0x20000 its 4 KiB write-sector range is [0x20000,0x1d3000),
    one sector larger than the prior image's range. Refresh selective-write,
@@ -249,3 +251,69 @@ line. A generic transaction error still does not distinguish no response from
 other wire-level failures. Compare the existing image before installing the
 candidate when physical state permits; do not manufacture a baseline by
 restarting a running Author application.
+
+## First physical tranche — 2026-10-28
+
+The P4 now reports the precise failing stage, but the attached keyboard still
+cannot enumerate. The failure precedes descriptor data and HID keyboard setup.
+The installed diagnostic preserves working native F310 acquisition, admitted
+host input, actual MOS CLI access and unchanged load-only startup. This is a
+retained informative failure, not keyboard acceptance or production promotion.
+
+| Observation | Existing P4 image | Diagnostic P4 image |
+|---|---|---|
+| Keyboard first descriptor request | Generic status1; stage unavailable | Initial SETUP, HAL XCS_XACT / three consecutive transaction errors |
+| Requested low-speed path | LS-via-FS warning | Root FS, PRE selected, EP0/address0, MPS8, frame172 |
+| Onboard hub | Full-speed, VID:PID 1a40:0101 | Same hub identity/speed |
+| Native F310 | Valid first report, fault0 | Valid first report, fault0 |
+| Actual MOS CLI and fast2 listener read/EXIT | Verified | Verified after fresh admission |
+| Startup |108 bytes; unchanged, load-only | Same exact bytes; no RUN/EXEC |
+
+1. Existing startup was independently downloaded before resets; the diagnostic
+   installation used a fresh whole-device backup and whole-device verification.
+   Only application sectors [0x20000,0x1d3000) were written. Independent 16 MiB
+   readback matches the application exactly and every byte outside those sectors
+   matches the incoming image. Actual bootloader, partitions, NVS and OTA were
+   retained. No EMOS/mainboard firmware or SD file was written.
+2. Incoming whole-flash SHA-256 is
+   `dd878e47395f967341aeee403ba60681df7a602ca77a0bfdc81e490d9b3db4a0`;
+   after-write SHA-256 is
+   `75c185767b3260cde7094da1a8c4cc811d2f64679faa68acba1619164940999e`.
+   The exact expanded rollback sectors are retained locally. Restoring only
+   the shorter old application does not restore the extra tail sector.
+3. Exact new console identity, USB host, F310 and display readiness preceded
+   Agon reset release. Fresh admission was followed by observed CLI commands,
+   two checksum-free fast2 startup reads/EXITs and verified quiet printer mirror.
+   Final CLI input is neutral; listener is offline/idle, card stays mounted,
+   all captures/clients/reset holds are closed and no guest application ran.
+4. Installation took 530.19 host monotonic seconds. Backup read 231.1 s, application
+   write 14.0 s and independent full readback 236.2 s are separate esptool-reported
+   elapsed times; their rates vary with the host/link. A retained 154.3 s read
+   underestimated this run. Keep that uncertainty in future advance estimates.
+5. The HCD configuration confirms PRE selection and MPS8, not actual wire
+   signaling. Initial SETUP failure precedes the existing 1000 us interstage
+   workaround. Pinned source also enables UTMI parallel low-speed operation and
+   keepalive. Neither a missing HID mapping nor an increased interstage delay
+   is supported by this failure. The independent non-control-IN cache backport
+   did not make this keyboard enumerate; do not infer broader cache qualification.
+6. Log interpretation gotcha: HID1.2.1's `No HID device at USB port 2` prints
+   `dev_addr`, not the downstream socket number. Here it describes the vendor
+   F310 interface. The enumeration failure's `[1:1]` is parent hub address 1,
+   port 1, as defined in pinned `components/usb/enum.c`; do not confuse them.
+7. Official [USB guidance](https://docs.espressif.com/projects/esp-usb/en/latest/esp32p4/usb_host.html#full-low-speed-only-host)
+   describes FS/LS-only operation as avoiding the HS-hub split limitation.
+   [Espressif issue15683](https://github.com/espressif/esp-idf/issues/15683)
+   contains P4 reports with the same generic LS descriptor error, including
+   unsuccessful 500 ms reset/power delay trials. Those reports do not establish
+   our exact mechanism; their nested HS-hub explanations cannot be assigned to
+   this confirmed FS root. No source-supported additional remedy was found.
+8. Next physical discriminator: the Author exchanges the existing keyboard and
+   F310 sockets; the agent captures both devices on the unchanged diagnostic
+   image. If the failure follows the keyboard while F310 works in either socket,
+   the port-specific explanation weakens. F310 is FS and still does not qualify
+   LS signaling. Then compare a known FS boot keyboard if available. No GPIO
+   rewiring or speculative clock/delay/MC-EC patch is selected.
+
+Machine-local evidence is indexed by `HARDWARE.local.md`, including baseline and
+new boot captures, preflight/CLI receipts, exact flash/rollback bytes, source
+comparison notes and the first-tranche duration receipt.
