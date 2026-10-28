@@ -533,3 +533,30 @@ the shared USB event's mechanism remains unresolved.
    transfer actions and display guard. Do not select speculative power, clock,
    reset-delay or IRQ-affinity changes from this evidence. No new build,
    installation, reset or physical retry was performed for this source review.
+
+### Author reports electrostatic discharges at USB shields
+
+1. The Author reports building up static and receiving several shocks on
+   touching USB connector shields during connections/disconnections. No
+   correlation with the specific captured CHERRY event is yet established.
+   Treat ESD as a plausible confounder for the shared USB interruption, not a
+   proven explanation for persistent initial-SETUP failures or damaged hardware.
+2. Verified the clean read-only Olimex Rev C reference at
+   `04032d68e5c727870f9d40beb9e37b7ab3a66916`. In
+   [the board design](https://github.com/OLIMEX/ESP32-P4-PC/blob/04032d68e5c727870f9d40beb9e37b7ab3a66916/HARDWARE/ESP32-P4-PC-Rev.C/ESP32-P4-PC_Rev_C.kicad_pcb),
+   footprints `USB_HOST1-2` and `USB_HOST3-4` each assign all four mechanical
+   shield pads, number0, directly to net1/GND. This establishes design intent
+   for circuit-ground bonding, not measured continuity or a verified earth
+   reference for the installed bench. A grounded shield alone is not an ESD
+   immunity qualification.
+3. [Phidgets' manufacturer guidance](https://www.phidgets.com/docs/Improving_Phidgets_Hardware_Reliability#Static_Discharge)
+   describes ESD disrupting USB communications and triggering detach/reattach.
+   [TI's USB ESD application note](https://www.ti.com/lit/pdf/slva796), section4.2,
+   explains why discharge routing/layout matter in addition to ground naming.
+   These support the general mechanism; they do not diagnose this P4 board.
+4. Ask whether the Author felt a discharge during the particular CHERRY
+   attachment. For a future controlled comparison, reduce charge with proper
+   ESD handling and retain any felt-discharge observation alongside root/hub
+   diagnostics. Do not deliberately inject sparks, infer a protective-earth
+   connection or perform a grounding/wiring change as part of this research.
+   No bench operation, continuity measurement or electrical change occurred.
