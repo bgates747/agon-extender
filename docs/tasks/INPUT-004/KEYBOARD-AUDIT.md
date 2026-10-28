@@ -3,9 +3,9 @@
 All four audited keyboards enumerate successfully on Linux at 1.5 Mbit/s and expose
 standard boot-keyboard interfaces. The originally failing P4 keyboard identifies
 as `04d9:a088`, a Holtek USB vendor ID, without brand/model strings. None
-supplies the full-speed control proposed in the task. The original and CHERRY
-keyboards both fail initial SETUP on P4, before HID report handling. Logitech
-and IBM remain untested on P4. CHERRY and IBM each have one keyboard interface.
+supplies the full-speed control proposed in the task. The original, CHERRY and
+IBM keyboards fail initial SETUP on P4, before HID report handling. Logitech
+remains untested on P4. CHERRY and IBM each have one keyboard interface.
 
 ## Comparison
 
@@ -31,7 +31,7 @@ and IBM remain untested on P4. CHERRY and IBM each have one keyboard interface.
 | Observed Linux topology | Host root hub directly; no internal hub | Host root hub directly; no internal hub | Host root hub directly; no internal hub | Host root hub directly; no internal hub |
 | Linux enumeration | Successful | Successful | Successful | Successful |
 | Actual Linux typing / LED exercise | Not performed | Not performed | Not performed | Not performed |
-| P4 enumeration / typing | Not tested | SETUP failure captured; Author observes no characters | Initial SETUP failure captured; HID admission not reached | Not tested |
+| P4 enumeration / typing | Not tested | SETUP failure captured; Author observes no characters | Initial SETUP failure captured; HID admission not reached | Initial SETUP failure captured; HID admission not reached |
 
 The interval values are endpoint declarations, not measured report rates or
 input latency. Configuration power is declared demand, not a current or voltage
@@ -80,6 +80,15 @@ for all four devices, while sysfs and `lsusb -t` correctly report 1.5 Mbit/s.
    controller replug. The shared USB event's mechanism remains unresolved.
    No agent reset, replug or retry was performed. This result
    strengthens a shared low-speed-path lead without proving its mechanism.
+7. IBM is connected during a fresh passive capture on unchanged firmware. The
+   Author reports a large shock from the USB hub at this attachment. One
+   control failure shows the same initial SETUP/XCS_XACT/rootFULL/PRE1/MPS8
+   signature, under hub4/port3. No successful keyboard enumeration occurs.
+   P4 and input epochs remain unchanged; F310 retains its address/session,
+   valid/fault0 state and has no logged disconnect; HDMI stays fault-free.
+   Record the felt shock without assigning the transfer failure to ESD or
+   treating it as a measured discharge. Capture closes cleanly. Logitech K120
+   is the remaining untried P4 model; no transient-diagnostic build was made.
 
 ## Evidence identity and collection limits
 

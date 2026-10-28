@@ -131,6 +131,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-03 | Open | Original and CHERRY keyboards both fail initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The Author confirms only the keyboard cable was plugged during CHERRY capture. F310 disappearance/reacquisition was not an intentional controller unplug. Actual wire behavior and the shared USB event's cause remain unresolved. |
 | I4-04 | Partially established | Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Linux subsequently identifies the Author-transferred specimen as `04d9:a088`, a Holtek vendor ID with no manufacturer/product strings. Retail brand/model and physical socket label remain unrecorded. |
 | I4-05 | Linux inventory complete | The Author supplied all four keyboards in turn. All enumerate at 1.5 Mbit/s and expose compatible boot-keyboard interfaces. Exact descriptors/speed evidence are retained; captured P4 comparisons remain the next physical gate. |
+| I4-06 | Author direction | Deprioritize the recovered controller transient and resume captured keyboard model comparisons on the unchanged firmware. Do not let speculative transient diagnostics delay the next attachment trial. |
 
 ## Evidence and stop boundaries
 
@@ -562,3 +563,33 @@ the shared USB event's mechanism remains unresolved.
    diagnostics. Do not deliberately inject sparks, infer a protective-earth
    connection or perform a grounding/wiring change as part of this research.
    No bench operation, continuity measurement or electrical change occurred.
+5. The Author considers the recovered controller disruption a potentially rare
+   transient and requests the next captured keyboard connection. Preserve the
+   evidence and hypotheses, but resume model comparisons rather than preparing
+   a new transient-diagnostic firmware tranche. Next intended specimen is IBM
+   NetVista; retain the installed candidate and ordinary passive capture path.
+
+## Captured IBM NetVista P4 comparison — 2026-10-28
+
+1. Under the Author's direction to continue model comparisons, started a fresh
+   bounded passive reader on the unchanged P4 candidate and signalled ready.
+   The Author connects the intended IBM keyboard and reports a large shock
+   from the USB hub during this attachment. The electrical event was not
+   instrumented; retain the observation without diagnosing its cause.
+2. One captured LS control failure is address0/EP0, rootFULL/PRE1/MPS8,
+   SETUP stage0/HAL XCS_XACT, followed by hub4/port3 short-descriptor failure
+   and port disable. No HID acquisition or IBM VID/PID is reached on P4.
+   The Author-selected specimen's identity is established by its preceding
+   Linux audit, not by a successful P4 descriptor transfer.
+3. P4 incarnation and mainboard input epoch remain unchanged. HDMI frames
+   advance with zero faults/sequence errors/overbudget/underruns. F310 remains
+   valid/fault0 with unchanged USB address5 and carrier session; no controller
+   disconnect/reacquisition appears in this capture. Actual controller movement
+   was not exercised. The shock did not reproduce the earlier logged bus loss.
+4. Capture stops cleanly with exit0 after the Author reports connection. Retain
+   before/after snapshots, raw log/hash, wall-clock collection bounds and the
+   felt-shock observation. No reset, flash, input injection, guest invocation,
+   startup/SD change or agent connection retry. Three different keyboards now
+   fail initial SETUP; Logitech K120 remains for the next captured comparison.
+   Preserve the Author's priority to test models rather than pursue the
+   recovered controller transient.
