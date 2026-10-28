@@ -128,10 +128,12 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 |---|---|---|
 | I4-01 | Author direction | Pursue onboard USB keyboard first; GPIO wiring remains a separately selected contingency. |
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
-| I4-03 | Open | Original and CHERRY keyboards both fail initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The Author confirms only the keyboard cable was plugged during CHERRY capture. F310 disappearance/reacquisition was not an intentional controller unplug. Actual wire behavior and the shared USB event's cause remain unresolved. |
+| I4-03 | Open | All four audited keyboards fail initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The register diagnostic confirms actual channel PRE=1 and the intended SETUP configuration. Actual wire behavior and cause remain unresolved. The separate CHERRY/F310 transient remains Author-deprioritized under I4-06. |
 | I4-04 | Partially established | Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Linux subsequently identifies the Author-transferred specimen as `04d9:a088`, a Holtek vendor ID with no manufacturer/product strings. Retail brand/model and physical socket label remain unrecorded. |
-| I4-05 | Linux inventory complete | The Author supplied all four keyboards in turn. All enumerate at 1.5 Mbit/s and expose compatible boot-keyboard interfaces. Exact descriptors/speed evidence are retained; captured P4 comparisons remain the next physical gate. |
+| I4-05 | Model comparisons complete | All four keyboards enumerate on Linux at 1.5 Mbit/s with compatible boot-keyboard interfaces, but fail initial SETUP in captured P4 trials. Exact descriptors and each failing comparison are retained. Further model swapping is not the current diagnostic lead. |
 | I4-06 | Author direction | Deprioritize the recovered controller transient and resume captured keyboard model comparisons on the unchanged firmware. Do not let speculative transient diagnostics delay the next attachment trial. |
+| I4-07 | Established for captured sample | Actual channel/host settings agree with explicit pinned SDK assignments. No register toggle or timing remedy is justified by this capture. Keyboard enumeration and typing still fail. |
+| I4-08 | Open source contract | Establish the integrated HS-UTMI frame-clock/HFIR contract in FS-only host mode and the exact FC06 bit2 preamble polarity from primary P4/PHY documentation. A count of60000 or an ambiguous field label does not establish a defect. |
 
 ## Evidence and stop boundaries
 
@@ -745,3 +747,23 @@ Machine-local build, composition, independent-review, installer and CLI receipts
 raw capture and decoded register JSON remain under `agents/input004` and are
 indexed by the current local bench record. This remains an experimental
 diagnostic installation; production selection and acceptance status are unchanged.
+
+
+### Primary-reference boundary for I4-08
+
+The inspected [Espressif ESP32-P4 Technical Reference Manual](https://documentation.espressif.com/esp32-p4_technical_reference_manual_en.pdf#page=3169)
+is Pre-release v0.7, with creation metadata dated 2026-08-20; retained PDF SHA-256
+`622fe9625d19cf00bd7aa49e65f0b5dd6ef2197f83cb7a88b4405078d6a957d4`.
+Section52.5, printed/PDF page3169, withholds comprehensive USB OTG register
+specifications under the IP provider's NDA and directs individual register
+questions to Espressif Technical Support. The inspected manual and bounded
+primary-source searches do not resolve the integrated HS-UTMI HFIR clock contract
+or FC06 bit2 polarity. This is a limit of the located evidence, not proof that
+no vendor document can answer either question.
+
+Extender must obtain the precise vendor/IP contract or independent discriminating
+evidence before selecting a clock/preamble change. No support message, speculative
+register toggle or additional hardware operation follows from this result. The
+retained public PDF/text and the bounded source-research notes are under the
+ignored task evidence directory. Actual keyboard enumeration remains the next
+functional gate after an evidence-supported remedy.
