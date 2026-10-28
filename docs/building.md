@@ -149,10 +149,18 @@ each root-port reset. It keeps the onboard hub and pin mapping, with a
 12 Mbit/s upstream link. Other board/profile combinations reject the flag;
 omitting it retains the existing USB source. The SDK checkout remains unchanged.
 The manifest records the option and recipe/derivative hashes; validation checks
-the actual compile action and USB archive. The Author's keyboard tests fail;
-passive serial confirms full-speed operation followed by failure of the initial
-device-descriptor transfer. Physical keyboard operation remains unqualified;
-see BOARD-001.
+the actual compile action, USB archive and complete generated source identity.
+The current recipe also retains a failed low-speed control transfer's stage/HAL
+error and emits one line from task-context dequeue after releasing the HCD lock.
+It adds no delay/retry or successful-report logging. A separately identified
+Espressif USB1.6.0 correction cleans non-control IN buffers before DMA; control
+buffers already received that operation. The pinned SDK itself stays unchanged.
+
+The Author's earlier keyboard tests failed during the initial descriptor
+transfer, before HID admission. These diagnostic/cache changes are prepared for
+that investigation; physical keyboard operation remains unqualified. See
+[INPUT-004](tasks/INPUT-004.md) for current research and candidate gates, and
+[BOARD-001](tasks/BOARD-001.md) for the original evidence.
 
 ### Selected DevKit configuration
 

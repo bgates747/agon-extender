@@ -82,10 +82,10 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 
 ## Work plan and gates
 
-1. [ ] Publish task/TODO and all reviewed existing dirt as requested. Preserve
+1. [x] Publish task/TODO and all reviewed existing dirt as requested. Preserve
    private ignored files and immutable evidence; do not stage generated private
    firmware, secrets or another project's emulator implementation.
-2. [ ] Pin current code/build/reference inputs and collect a source-level USB
+2. [x] Pin current code/build/reference inputs and collect a source-level USB
    failure-path précis. Compare upstream fixes and the cache-coherency lead;
    identify expected signatures and smallest discriminating checks. Independent
    offline research may run in parallel, with only one bench owner.
@@ -93,7 +93,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
    connection and socket. Collect bounded existing-build enumeration evidence
    before changing firmware. Compare one alternative keyboard if available;
    keep each physical state stable and ask the Author for needed physical work.
-4. [ ] Implement an evidence-supported remedy or diagnostic extension in a
+4. [x] Implement an evidence-supported remedy or diagnostic extension in a
    project-owned matched composition. Add meaningful offline checks for the
    affected low-level contract; run relevant existing input/controller checks.
    Do not claim target/device success from host tests.
@@ -132,3 +132,81 @@ change, physical rewiring, broad suite or production selection follows merely
 from this task. If the current source cannot reveal the failure, prepare a bounded
 instrumented candidate rather than repeatedly power-cycling or guessing delays.
 Stop at an explicit Author boundary; never replay uncertain input/transfers.
+
+## Source research results — 2026-10-28
+
+1. Plan/current dirt were committed and pushed as`01a2e17b` before source work
+   or live diagnostics. Three bounded independent reviews covered LS transfers,
+   DMA/cache ownership and the existing HID keyboard client. Their ignored notes
+   are under `agents/input004`; conclusions relied on here are recorded below.
+2. Pinned SDK`hcd_dwc.c:1739–1745` already enables LS-via-FS-hub preambles;
+   `:388–404` already delays1000us between successful LS control stages for
+   internal Espressif issueIDF-12986. Current upstream retains these mechanisms.
+   Adding them again or blindly increasing reset/stage delays is unsupported.
+3. `CHECK_SHORT_DEV_DESC` covers SETUP, DATA and STATUS. Its generic status1
+   collapses HCD ERROR_XFER / HAL XCS_XACT (three failed transactions); it does
+   not disclose which stage or why the device transaction failed. Stage data
+   is cleared during ISR buffer parsing, so it must be retained before that
+   destructive point, then published later from task context.
+4. Pinned `cache_sync_data_buffer`, lines310–319, already cleans ALL control
+   buffers before DMA and invalidates them after completion. Thus the recorded
+   initial descriptor error is not explained by missing pre-IN cleaning.
+   A separate omission exists for non-control IN enqueue. Official
+   [Espressif USB1.6.0](https://components.espressif.com/components/espressif/usb/versions/1.6.0/changelog?language=en),
+   repository commit`630f1c4e61f71d62bb57ff1b840931da24c3329f`, corrects the
+   [HCD helper](https://github.com/espressif/esp-usb/blob/630f1c4e61f71d62bb57ff1b840931da24c3329f/host/usb/src/hcd_dwc.c)
+   to clean all enqueue directions while preserving post-IN/control invalidation.
+   This is a bounded input-path correctness backport, not a keyboard-cause claim.
+5. EspUsbHost v2.8.0 pin`d6f34638bf917e337b56322a8a4b289a834e1709` supports that
+   non-control-IN mechanism. Its allocator-zeroing assertion does not match our
+   SDK: transfer data uses aligned internal DMA heap allocation without zeroing;
+   the separate URB structure is calloc'ed. No new alignment defect is proven.
+6. Root and installed HID keyboard acquisition source match. Public HID1.2.1
+   APIs report only successfully enumerated devices, not early EP0 failures.
+   Existing controller client already logs every enumerated device identity.
+   A tentative stale-active-handle concern was retracted after the pinned HID
+   close callback was inspected. Do not patch unconfirmed lifecycle guesses.
+7. Small candidate scope: retain LS EP0 stage/HAL error/frame in a private pipe
+   record under the existing HCD ISR lock, copy/clear it for the matching dequeued
+   URB under the same lock, and emit one diagnostic line only after task-context
+   unlock. No logging, allocation or added waits in the ISR, no report contents,
+   successful-transfer logs, retries, delay changes or peripheral rerouting.
+   The independent official cache correction must remain separately identified
+   in the generated derivative and tests; neither change proves device success.
+8. Initial read-only P4 service snapshot shows healthy attached F310, admitted
+   neutral remote keyboard and no pending SD operation. Fsim confirms no active
+   or queued exclusive bench work. Actual Author foreground and physical
+   keyboard identity/connection remain unknown. One bounded passive P4 capture
+   uses the maintained opener; no keys, reset, flash or mainboard operation.
+
+## Prepared diagnostic / independent cache backport
+
+1. The complete generated HCD remains pinned to upstream SHA-256
+   `33fea9059ee546d1c773fc5e86ed0c294e600e645c4c14e0788ce879f596280b`
+   and derivative SHA-256
+   `2fb477b78bafbd16d292103c2438fc8abba1bdc10cefbd254e62e1426b50492b`.
+   The validator rejects any unrelated generated-byte change; original SDK
+   bytes remain unchanged. Only PC FS/LS builds select this derivative.
+2. A failed LS control URB records its stage, HAL error and frame under the
+   existing ISR HCD lock. Matching task dequeue copies identity/port fields,
+   clears retained ownership, unlocks, then logs one line. No live HCD pointer
+   is dereferenced after unlock, and no successful transfer/key data is logged.
+   The one-slot-per-pipe record can lose an earlier diagnostic if multiple
+   failures precede dequeue; it does not alter transfer/recovery behavior.
+3. The independent official one-condition IN preclean correction is included
+   in the same identified candidate. Control-transfer synchronization is
+   unchanged, but extra work on other active IN pipes may affect scheduling;
+   therefore an eventual device pass would not by itself attribute causality
+   to either change. Do not describe this combined candidate as an unchanged
+   timing control or reconstruct a missing original failure from its result.
+4. Meaningful host checks compile the actual generated ISR snapshot/dequeue
+   code against lock/queue spies and the original/generated cache helpers
+   against a synchronization spy. They cover matched/older URB ownership,
+   repeated reuse, gates, post-unlock logging and16 cache ownership combinations.
+   ASan/UBSan check the cache helper; leak scanning is disabled only because
+   the managed runner's ptrace prevents it, and that harness allocates no heap.
+5. An independent source review found no blocking lifetime/locking issue for
+   compilation. This remains preparation: no candidate has been installed,
+   no keyboard/control exercise has been claimed and no EMOS/mainboard/startup
+   change is selected. Actual keyboard attachment/port and foreground remain
+   the physical evidence gate.
