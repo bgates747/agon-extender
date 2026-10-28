@@ -15,8 +15,9 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
    The Author subsequently confirms a powered/free bench, attaches the keyboard
    and authorizes the first physical tranche. After a hotplug-related scanout
    abort, the P4 error-logging candidate is installed and verified. One controlled
-   Author replug passes with no restart or scanout fault. Actual keyboard
-   operation remains unverified; its last captured enumeration attempt failed.
+   Author replug passes with no restart or scanout fault. The Author confirms
+   physical typing still produces no characters; the last captured enumeration
+   attempt failed before HID acquisition.
 2. This is an implementation goal, not authorization for physical rewiring or
    speculative wholesale SDK/USB-stack replacement. Continue useful offline
    work while keyboard identity/attachment and current bench state are unknown.
@@ -128,6 +129,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
 | I4-03 | Open | Failure is localized to initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The wire-level cause remains unresolved. |
 | I4-04 | Partially established | Author attached keyboard; actual Legacy CLI is verified. Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Keyboard VID/PID cannot be read until its first descriptor succeeds. Physical socket label/model remain unrecorded. |
+| I4-05 | Author direction, in progress | Audit four different keyboard models on the Linux host, starting with the attached Logitech; the Author exchanges devices after each completed audit. Preserve descriptor/speed evidence and compare boot-keyboard compatibility before selecting further P4 tests. |
 
 ## Evidence and stop boundaries
 
@@ -418,6 +420,24 @@ or proof that ISR logging caused the earlier abort.
    ready flag or the absence of an error in that delayed capture. The last
    directly captured keyboard attempt failed initial SETUP. Request an actual
    physical typing observation before claiming any new keyboard result.
+   The Author subsequently types on the physical keyboard and confirms that
+   no characters appear; the end-to-end input check fails.
 4. All serial readers are closed. Input remains admitted/neutral and SD service
    offline/idle; both devices remain attached. No change to EMOS, mainboard VDP,
    startup or SD contents. Evidence remains in the machine-local bench index.
+
+## Multi-keyboard Linux audit — 2026-10-28
+
+1. The Author supplies a Logitech keyboard on the Linux workstation and
+   authorizes read-only queries. The Author will next attach the keyboard from
+   P4 and has two more different models available for the same audit.
+2. [Keyboard comparison](INPUT-004/KEYBOARD-AUDIT.md) records the first result:
+   Logitech K120 `046d:c31c`, actual low speed 1.5 Mbit/s, two HID interfaces,
+   standard 8-byte boot keyboard on interface 0 and separate media/system
+   controls on interface 1. Linux enumeration succeeds. Physical typing and
+   P4 operation have not been tested for this specimen.
+3. Preserve binary descriptors and actual negotiated speed for each attachment,
+   rather than inferring speed from USB specification or product strings. Read
+   input capabilities without collecting user keystrokes. No driver detach,
+   reset, protocol/LED change, event grab or firmware operation is needed for
+   the host descriptor audit. Keep the P4 bench untouched during these queries.
