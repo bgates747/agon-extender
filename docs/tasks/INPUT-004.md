@@ -611,3 +611,54 @@ the shared USB event's mechanism remains unresolved.
    are complete and fail the same pre-HID stage. Continue with failed-SETUP
    hardware-register evidence rather than further unbounded model swaps;
    keep the recovered controller transient deprioritized as the Author directed.
+
+## Failed-SETUP register diagnostic tranche — authorized 2026-10-28
+
+The Author directs proceeding after all four keyboards fail the same stage.
+The P4 will retain actual USB channel/host configuration and interrupt status
+for the failed low-speed control transaction, rather than infer hardware state
+from cached endpoint parameters. This is a diagnostic candidate, not a proposed
+timing or signaling remedy. The recovered controller transient remains outside
+this tranche.
+
+1. Review pinned HCD/HAL/LL read semantics. Raw channel interrupt status must
+   be copied before the HAL decoder clears it; inspect actual channel/host
+   configuration through the pinned HAL handles. Select only safe scalar reads
+   that answer the SETUP/PRE/clock/configuration question. No register writes,
+   resets, retries, delay changes, allocation, logging or new locks in the ISR.
+2. Gate predecode reads to active low-speed-via-hub control traffic. Retain only
+   a failed transfer's detached snapshot in the existing per-pipe record, copy
+   and consume it for the matching URB at task dequeue, then format after unlock.
+   Record that reads add bounded ISR work and are sequential, not atomic wire
+   observations. Do not turn a decoded transaction error into proof of absent
+   ACK or electrical corruption.
+3. Extend generated-code lifecycle checks with distinct hardware sentinels,
+   destructive decoder simulation and later register mutation, proving capture
+   order, gating, ownership and post-unlock publication. Preserve original USB
+   actions and the complete derivative/source identity checks. Independently
+   review the generated patch before an identified build.
+4. Commit/publish the reviewed source and selectively apply only this tranche
+   to a clean child of the installed matched composition. Build with unchanged
+   display/controller/board/SDK/dependency inputs; independently compare complete
+   source archives, configuration, generated units and actual link selection.
+5. Refresh the app-only installer against exact new bytes and the current full
+   backup, preflight actual CLI/unchanged startup, preserve expanded rollback
+   sectors and independently verify the whole P4 readback. Keep EMOS/mainboard
+   VDP/startup/SD contents unchanged. Verify new console, scanout, F310, input
+   admission and actual CLI before announcing a staged capture test.
+6. A keyboard left attached may produce a diagnostic during the verified P4
+   initialization capture. Preserve that evidence without replaying hotplug or
+   invoking a guest. Decode its registers only against the pinned definitions;
+   otherwise stage a bounded capture and coordinate the next physical replug.
+   No new transient-campaign work or production promotion is implied.
+
+Prepared source: eight raw registers (`HCINT`, `HCCHAR`, `HCTSIZ`, `HCFG`,
+`GUSBCFG`, `HFIR`, `HPRT`, UTMI `FC06`) plus frame before decoding, gated to LS
+control. The generated HCD SHA-256 is
+`c5eb6da09c15c16324e15aba65e97a596207019aa8fc20625991ae231d81dae7`.
+Independent source review passes. All 32 focused host checks pass in 1.17 host
+monotonic seconds; the new generated-handler harness covers 13 ISR/dequeue
+cases including destructive decoder mutation and poisoned post-unlock state.
+The private record grows from 8 to 44 bytes on 32-bit P4; nine MMIO reads and
+larger local copies have unmeasured execution cost. Target compile/installation
+and hardware interpretation remain separate gates.

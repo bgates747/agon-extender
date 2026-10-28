@@ -9,9 +9,16 @@
 # Generate a derivative; never edit the SDK. Remove after upgrading to an SDK
 # with the public fsls_only setting and qualifying that replacement on P4-PC.
 # This limits the onboard hub's upstream link to 12 Mbit/s; wiring is unchanged.
-# INPUT-004 also retains one failed LS-control stage/HAL reason per pipe until
-# task-context URB dequeue. The ISR only copies scalar data under the existing
-# HCD lock; no successful-stage/report logging or added transfer delays.
+# INPUT-004 also retains one failed LS-control stage/HAL reason and register
+# snapshot per pipe until task-context URB dequeue. Before the destructive HAL
+# decoder, the ISR reads eight raw registers plus the frame number only for
+# LS-control channels under the existing HCD lock. No report-path reads,
+# successful-stage logging, register writes or added transfer delays.
+# Pinned access contracts: components/hal/usb_dwc_hal.c:508 (HCINT clear),
+# components/hal/esp32p4/include/hal/usb_dwc_ll.h:772 (HCINT W1C),
+# components/soc/esp32p4/include/soc/usb_dwc_struct.h (volatile registers),
+# components/soc/esp32p4/register/hw_ver{1,3}/soc/usb_utmi_struct.h
+# (fc_06 ordinary R/W LS parallel bit0 and keepalive bit3).
 # Remove this diagnostic after the LS enumeration cause is established and
 # durable error reporting replaces it, or when replacing the pinned HCD.
 # Independently backport the missing non-control IN pre-DMA cache clean from
@@ -57,6 +64,10 @@ set(after [=[    // Espressif USB 1.6.0/630f1c4: clean every buffer before DMA, 
     if (!done || is_in || is_ctrl) {]=])
 usb_hcd_replace_once("pre-DMA cache ownership" "${before}" "${after}")
 
+set(before "#include \"hal/usb_dwc_hal.h\"")
+set(after "#include \"hal/usb_dwc_hal.h\"\n#include \"soc/usb_utmi_struct.h\"  // Extender P4-only, read-only LS PHY diagnostic.")
+usb_hcd_replace_once("P4 UTMI diagnostic register declaration" "${before}" "${after}")
+
 set(before "struct pipe_obj {")
 set(after [=[// Extender INPUT-004: one failed LS-control URB, protected by the HCD lock.
 // No key/report bytes; consumed by matching task-context dequeue before reuse.
@@ -65,11 +76,48 @@ typedef struct {
     uint16_t frame;
     uint8_t stage;
     uint8_t hal_error;
+    uint32_t hcint;
+    uint32_t hcchar;
+    uint32_t hctsiz;
+    uint32_t hcfg;
+    uint32_t gusbcfg;
+    uint32_t hfir;
+    uint32_t hprt;
+    uint32_t utmi_fc06;
+    uint8_t hsphy_type;  // Zero means UTMI was not read; otherwise actual HW PHY type.
 } extender_ls_error_t;
 
 struct pipe_obj {
     extender_ls_error_t extender_ls_error;]=])
 usb_hcd_replace_once("private LS diagnostic storage" "${before}" "${after}")
+
+set(before [=[    usb_dwc_hal_chan_event_t chan_event = usb_dwc_hal_chan_decode_intr(chan_obj);
+    hcd_pipe_event_t event = HCD_PIPE_EVENT_NONE;]=])
+set(after [=[    // Extender INPUT-004: sequential, read-only ISR-service snapshot, not a
+    // transaction-start timestamp or atomic wire trace. HCINT is read BEFORE
+    // the unchanged HAL decoder acknowledges it. Nine MMIO reads per LS-control
+    // interrupt (including success); no reads on ordinary interrupt reports.
+    // Retain the local values only if the decoder reports an error below.
+    extender_ls_error_t ls_before_decode = {0};
+    if (pipe->ep_char.type == USB_DWC_XFER_TYPE_CTRL && pipe->ep_char.ls_via_fs_hub) {
+        usb_dwc_dev_t *dev = pipe->port->hal->dev;
+        ls_before_decode.frame = usb_dwc_hal_port_get_cur_frame_num(pipe->port->hal);
+        ls_before_decode.hcint = chan_obj->regs->hcint_reg.val;
+        ls_before_decode.hcchar = chan_obj->regs->hcchar_reg.val;
+        // HCTSIZ includes the actual PID; SG-DMA low fields are not byte counts.
+        ls_before_decode.hctsiz = chan_obj->regs->hctsiz_reg.val;
+        ls_before_decode.hcfg = dev->hcfg_reg.val;
+        ls_before_decode.gusbcfg = dev->gusbcfg_reg.val;
+        ls_before_decode.hfir = dev->hfir_reg.val;
+        ls_before_decode.hprt = dev->hprt_reg.val;
+        ls_before_decode.hsphy_type = pipe->port->hal->constant_config.hsphy_type;
+        if (ls_before_decode.hsphy_type != 0) {
+            ls_before_decode.utmi_fc06 = USB_UTMI.fc_06.val;
+        }
+    }
+    usb_dwc_hal_chan_event_t chan_event = usb_dwc_hal_chan_decode_intr(chan_obj);
+    hcd_pipe_event_t event = HCD_PIPE_EVENT_NONE;]=])
+usb_hcd_replace_once("LS predecode register snapshot" "${before}" "${after}")
 
 set(before [=[        usb_dwc_hal_chan_error_t chan_error = usb_dwc_hal_chan_get_error(chan_obj);
         pipe->last_event = pipe_decode_error_event(chan_error);]=])
@@ -78,10 +126,10 @@ set(after [=[        usb_dwc_hal_chan_error_t chan_error = usb_dwc_hal_chan_get_
         // _buffer_parse clears the stage; defer all logging until task-context dequeue.
         if (pipe->ep_char.type == USB_DWC_XFER_TYPE_CTRL && pipe->ep_char.ls_via_fs_hub) {
             dma_buffer_block_t *failed = pipe->buffers[pipe->multi_buffer_control.rd_idx];
+            pipe->extender_ls_error = ls_before_decode;
             pipe->extender_ls_error.urb = failed->urb;
             pipe->extender_ls_error.stage = failed->flags.ctrl.cur_stg;
             pipe->extender_ls_error.hal_error = chan_error;
-            pipe->extender_ls_error.frame = usb_dwc_hal_port_get_cur_frame_num(pipe->port->hal);
         }
         pipe->last_event = pipe_decode_error_event(chan_error);]=])
 usb_hcd_replace_once("LS error ISR snapshot" "${before}" "${after}")
@@ -123,11 +171,16 @@ set(before [=[    HCD_EXIT_CRITICAL();
 set(after [=[    HCD_EXIT_CRITICAL();
     // Extender INPUT-004: task context, outside HCD lock, detached scalar copies only.
     if (ls_error.urb != NULL) {
-        ESP_LOGE(HCD_DWC_TAG, "LS control failed: addr=%u ep=%u port_speed=%u ls_pre=%u mps=%u stage=%u hal_error=%u frame=%u",
+        ESP_LOGE(HCD_DWC_TAG, "LS control failed: addr=%u ep=%u port_speed=%u ls_pre=%u mps=%u stage=%u hal_error=%u frame=%u hcint=%08x hcchar=%08x hctsiz=%08x hcfg=%08x gusbcfg=%08x hfir=%08x hprt=%08x hsphy=%u utmi_fc06=%08x",
                  (unsigned)ls_ep_char.dev_addr, (unsigned)ls_ep_char.bEndpointAddress,
                  (unsigned)ls_port_speed, (unsigned)ls_ep_char.ls_via_fs_hub,
                  (unsigned)ls_ep_char.mps, (unsigned)ls_error.stage,
-                 (unsigned)ls_error.hal_error, (unsigned)ls_error.frame);
+                 (unsigned)ls_error.hal_error, (unsigned)ls_error.frame,
+                 (unsigned)ls_error.hcint, (unsigned)ls_error.hcchar,
+                 (unsigned)ls_error.hctsiz,
+                 (unsigned)ls_error.hcfg, (unsigned)ls_error.gusbcfg,
+                 (unsigned)ls_error.hfir, (unsigned)ls_error.hprt,
+                 (unsigned)ls_error.hsphy_type, (unsigned)ls_error.utmi_fc06);
     }
     return urb;
 }

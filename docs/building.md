@@ -151,8 +151,13 @@ omitting it retains the existing USB source. The SDK checkout remains unchanged.
 The manifest records the option and recipe/derivative hashes; validation checks
 the actual compile action, USB archive and complete generated source identity.
 The current recipe also retains a failed low-speed control transfer's stage/HAL
-error and emits one line from task-context dequeue after releasing the HCD lock.
-It adds no delay/retry or successful-report logging. A separately identified
+error and actual channel/host/UTMI registers, emitting one line from task-context
+dequeue after releasing the HCD lock. Nine sequential MMIO reads (eight raw
+registers plus frame number) occur before HAL interrupt decoding only on
+low-speed control channels; successful snapshots are discarded. These reads
+add diagnostic ISR work without changing delays, transfer actions or register
+values. They describe ISR service, not an atomic wire trace or transfer latency.
+There is no successful-report logging. A separately identified
 Espressif USB1.6.0 correction cleans non-control IN buffers before DMA; control
 buffers already received that operation. The pinned SDK itself stays unchanged.
 The same explicit selection generates a separately hash-pinned USBH derivative
