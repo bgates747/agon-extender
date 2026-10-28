@@ -17,7 +17,8 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
    abort, the P4 error-logging candidate is installed and verified. One controlled
    Author replug passes with no restart or scanout fault. The Author confirms
    physical typing still produces no characters; the last captured enumeration
-   attempt failed before HID acquisition.
+   attempt failed before HID acquisition. A subsequent captured CHERRY
+   comparison also fails initial SETUP; shared low-speed handling remains open.
 2. This is an implementation goal, not authorization for physical rewiring or
    speculative wholesale SDK/USB-stack replacement. Continue useful offline
    work while keyboard identity/attachment and current bench state are unknown.
@@ -127,7 +128,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 |---|---|---|
 | I4-01 | Author direction | Pursue onboard USB keyboard first; GPIO wiring remains a separately selected contingency. |
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
-| I4-03 | Open | Failure is localized to initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The wire-level cause remains unresolved. |
+| I4-03 | Open | Original and CHERRY keyboards both fail initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. Actual wire behavior remains unresolved. CHERRY's capture also shows F310 reconnection and a changed parent hub address; clarify simultaneous physical actions before isolating a cause. |
 | I4-04 | Partially established | Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Linux subsequently identifies the Author-transferred specimen as `04d9:a088`, a Holtek vendor ID with no manufacturer/product strings. Retail brand/model and physical socket label remain unrecorded. |
 | I4-05 | Linux inventory complete | The Author supplied all four keyboards in turn. All enumerate at 1.5 Mbit/s and expose compatible boot-keyboard interfaces. Exact descriptors/speed evidence are retained; captured P4 comparisons remain the next physical gate. |
 
@@ -464,3 +465,39 @@ or proof that ISR logging caused the earlier abort.
    does not predict a SETUP remedy or establish measured latency. Coordinate
    the Author's next physical attachment with an active bounded capture before
    drawing any new P4 enumeration/typing conclusion.
+
+## Captured CHERRY P4 comparison — 2026-10-28
+
+The Author connects the CHERRY after the P4 passive reader reports ready.
+CHERRY fails at the same first SETUP stage as the original keyboard. HDMI and
+P4 remain live. The connection window also contains a controller disconnect/
+reacquisition; the physical-action boundary needs clarification before the
+broader bus event can be assigned to a keyboard-only connection.
+
+1. Preserved before/after service snapshots and a bounded passive capture on
+   the unchanged installed candidate. Same P4 incarnation and mainboard input
+   epoch; HDMI frames advance with faults/sequence/overbudget/underruns zero.
+   No reset, flash, keys, guest invocation, startup/SD write or agent retry.
+2. Twenty-two diagnostic records show address0/EP0, rootFULL, PRE1, MPS8,
+   stage0/SETUP, HAL XCS_XACT. ENUM reports `[4:3] CHECK_SHORT_DEV_DESC FAILED`
+   and port disabled/reset attempts1. These are logged control attempts, not
+   evidence of 22 Author plug cycles. HID keyboard acquisition is never reached;
+   there is no reason to request a typing trial on this failed enumeration.
+3. The capture shows F310 input transfer code2, disconnect/invalidation, then
+   valid enumeration/acquisition at address5 with its first report. Before the
+   attachment F310 was address3. Final controller state is valid/fault0. The
+   failed keyboard's parent hub is address4, previously address1; these address
+   numbers are not physical socket labels, and no immediately preceding hub
+   snapshot pins when that hub address changed. Do not infer a whole-P4 reset or
+   identify the physical reason for that bus event from logs alone.
+4. The agent requests capture stop after the Author reports connection; the
+   maintained reader closes with exit0. Captured bytes and hashes, acquisition
+   lines, status snapshots and wall-clock collection bounds are retained in the
+   local bench record. The configured 300 s limit bounds collection only and
+   does not authorize recovery or replay.
+5. Ask whether the Author also touched F310, a USB hub or other cable while
+   connecting CHERRY. With that boundary resolved, choose the next experiment:
+   a further model control or actual failed-SETUP register/wire inspection. Two
+   distinct standard keyboards failing before HID strengthens a common P4
+   low-speed-path hypothesis; it does not prove a universal incompatibility,
+   a particular host register defect or an electrical fault.

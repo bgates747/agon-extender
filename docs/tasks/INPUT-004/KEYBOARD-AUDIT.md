@@ -3,9 +3,9 @@
 All four audited keyboards enumerate successfully on Linux at 1.5 Mbit/s and expose
 standard boot-keyboard interfaces. The originally failing P4 keyboard identifies
 as `04d9:a088`, a Holtek USB vendor ID, without brand/model strings. None
-supplies the full-speed control proposed in the task. Logitech, CHERRY and IBM
-remain untested on P4; the original keyboard's captured P4 failure precedes HID
-report handling. CHERRY and IBM each have one ordinary keyboard interface.
+supplies the full-speed control proposed in the task. The original and CHERRY
+keyboards both fail initial SETUP on P4, before HID report handling. Logitech
+and IBM remain untested on P4. CHERRY and IBM each have one keyboard interface.
 
 ## Comparison
 
@@ -31,7 +31,7 @@ report handling. CHERRY and IBM each have one ordinary keyboard interface.
 | Observed Linux topology | Host root hub directly; no internal hub | Host root hub directly; no internal hub | Host root hub directly; no internal hub | Host root hub directly; no internal hub |
 | Linux enumeration | Successful | Successful | Successful | Successful |
 | Actual Linux typing / LED exercise | Not performed | Not performed | Not performed | Not performed |
-| P4 enumeration / typing | Not tested | SETUP failure captured; Author observes no characters | Not tested | Not tested |
+| P4 enumeration / typing | Not tested | SETUP failure captured; Author observes no characters | Initial SETUP failure captured; HID admission not reached | Not tested |
 
 The interval values are endpoint declarations, not measured report rates or
 input latency. Configuration power is declared demand, not a current or voltage
@@ -70,6 +70,15 @@ for all four devices, while sysfs and `lsusb -t` correctly report 1.5 Mbit/s.
    low-speed control. No full-speed keyboard was found. The Author must attach
    each selected device for a bounded captured P4 enumeration/typing trial;
    retain browser recovery and the unchanged verified firmware composition.
+6. The Author subsequently connects CHERRY during an active passive P4 capture.
+   Twenty-two LS control failures report stage0/SETUP and HAL XCS_XACT, matching
+   the original keyboard's failing stage. No successful CHERRY enumeration or
+   HID acquisition is captured. HDMI remains fault-free and P4/input epochs
+   are unchanged. F310 disconnects and reacquires during the connection window;
+   the parent hub address is now 4, previously 1. Clarify any simultaneous
+   physical controller/hub/cable action before treating this as an isolated
+   keyboard hotplug. No agent reset, replug or retry was performed. This result
+   strengthens a shared low-speed-path lead without proving its mechanism.
 
 ## Evidence identity and collection limits
 
