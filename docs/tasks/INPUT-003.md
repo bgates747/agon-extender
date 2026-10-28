@@ -298,3 +298,33 @@ The subsequent Author retry passed; acceptance is recorded below.
    before those dependencies are resolved. No broader suite is invoked by this
    closeout; remaining work stays in this task and TODO.
 4. Live application/CLI state after Author review was not polled or changed.
+
+## Subsequent flight coexistence / unexplained P4 restart — 2026-10-27
+
+1. Fsim reports that its separate untraced startup-corrected flight review copy
+   completed160physics ticks,161poses and322controller polls (maximum gap2nominal
+   MOS clock units), with no reported controller/FIFO/flight errors, and Escape
+   returned to an actual CLI. The app startup correction addresses a late
+   selected-mode reply before controller OPEN; it changes no EMOS/P4 firmware.
+2. After that completed run, HTTP timed out and the P4 receiver instance,
+   keyboard boot and service defaults changed. The Author denied manual reset
+   and observed the P4 blue screen/branding return. This is retained evidence
+   of an unexpected P4 reinitialization, with unknown cause. No Extender owner
+   live operation was pending; fsim reports no P4 reset or firmware write.
+3. Fsim retained HTTP snapshots, completed-run data and a bounded passive P4
+   capture. That capture contains post-boot metrics but no retained reset-reason
+   or panic/backtrace. Missing panic text is not evidence of a clean reset.
+   Mainboard-only recovery subsequently restored input without changing the
+   new P4 instance; it did not replay flight or establish a restart remedy.
+4. Fsim owns the immutable incident/run evidence under its
+   `utilities/corsair-flight/build/hardware/direct-usb-freeze` directory,
+   including `run-normal`, `p4-restart` and `handback/check.json`. Current installed
+   P4 remains the exact correction build documented above; its matched ELF/map
+   and rollback evidence are retained for future owner diagnosis.
+5. Keep this incident open against native USB/application coexistence and
+   production qualification. Do not infer USB acquisition, controller CLOSE,
+   display changes, power or watchdog as the cause from chronology alone.
+   No further bench run, reset, firmware change or investigation is authorized
+   solely by this peer report. Fsim handed the bench back with a separately
+   named fixed flight copy loaded/stopped for Author review; its normal app,
+   startup and firmware were preserved.
