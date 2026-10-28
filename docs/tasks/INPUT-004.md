@@ -317,3 +317,48 @@ retained informative failure, not keyboard acceptance or production promotion.
 Machine-local evidence is indexed by `HARDWARE.local.md`, including baseline and
 new boot captures, preflight/CLI receipts, exact flash/rollback bytes, source
 comparison notes and the first-tranche duration receipt.
+
+## Socket exchange failure and bounded correction — 2026-10-28
+
+The Author reinserted the keyboard first after exchanging sockets and reported
+a blank blue P4 display. Preserved HTTP evidence shows the same P4 incarnation
+and live services/F310, with a latched HDMI scanout sequence fault. This is an
+informative failure, separate from the keyboard's unsuccessful USB enumeration.
+
+1. Retain initial service/counter snapshots and passive serial capture before
+   recovery. `STRIP_FAULT_SEQUENCE=8`, detail 14 means 14 completed strip callbacks
+   where the 848x480 frame needs 15; `430244=28682*15+14` corroborates it. The
+   driver disables scanout DMA; it does not paint an error page or reboot P4.
+   Refill 5392 us/copy 5389 us include delayed completion callbacks and do not prove
+   that DMA execution itself took that long. Do not infer causality from replug
+   chronology or convert the USB/JTAG console bytes using a UART baud rate.
+2. The standing first Agon reset yields fresh input but does not clear the
+   HDMI latch. P4 initialization followed by Agon reset restores scanout on the
+   unchanged image. A new bounded boot capture shows the keyboard still fails
+   SETUP/XCS_XACT, now parenthub1/port3; F310 is valid. The failure follows the
+   keyboard across sockets. No firmware was changed for this comparison.
+3. Source shows the USB ISR and rolling display IRQs are installed on core1.
+   The existing 1000 us HCD critical-section delay is a risk on successful LS
+   control stages but is not executed for this failed first SETUP. Pinned
+   `components/usb/usbh.c:ep0_pipe_callback` additionally uses synchronous
+   `ESP_EARLY_LOGE` from ISR for EP0 ERROR/STALL. It selects ROM USB/JTAG output.
+   This blocking I/O is a concrete deadline exposure; its duration and causal
+   contribution to this failure have not been measured.
+4. Prepare a minimal project-owned, original/derivative-hash-pinned `usbh.c`
+   backport under the existing explicit PC FSLS selection. Replace ISR error
+   prints with two internal pending-action bits, and print retained ERROR/STALL
+   visibility from `usbh_process` after releasing the existing lock and before
+   any device free. Preserve original transfer actions, callbacks, wakeups,
+   allocation, clocks, timing delays, CPU affinity and peripheral mapping.
+   Existing pending actions may coalesce; record that reporting limit.
+5. Meaningful host checks compile actual generated callback/action processing,
+   test ISR and task events, all error kinds, unchanged original action bits,
+   batch coalescing, no ISR/locked logging and log-before-free lifetime. Extend
+   build validation and artifact records to prove the generated USBH unit is
+   the only selected/archived/linked unit. SDK checkouts remain untouched.
+6. Build and stage only a clean matched candidate, preserving current display/
+   controller/dependency choices and verified rollback. After deployment, record
+   actual CLI/input/scanout handback. The Author's controlled replug is the
+   acceptance gate for this correction; host checks and cold boot are not a
+   hotplug pass. Do not claim it repairs keyboard enumeration or merely raise
+   the HDMI deadline guard to conceal missed callbacks.

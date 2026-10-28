@@ -155,6 +155,13 @@ error and emits one line from task-context dequeue after releasing the HCD lock.
 It adds no delay/retry or successful-report logging. A separately identified
 Espressif USB1.6.0 correction cleans non-control IN buffers before DMA; control
 buffers already received that operation. The pinned SDK itself stays unchanged.
+The same explicit selection generates a separately hash-pinned USBH derivative
+via [`usb_ep0_task_logging.cmake`](../vdp/native/usb_ep0_task_logging.cmake).
+It retains EP0 ERROR/STALL actions and reports those errors from the USB task
+after unlocking, before device cleanup, instead of synchronous ISR printing.
+Repeated messages of the same kind coalesce per pending action batch. Its sole
+compile unit, USB archive, ELF link and complete source bytes are validated.
+This removes an ISR scheduling risk; hotplug/scanout qualification is pending.
 
 The Author's earlier keyboard tests failed during the initial descriptor
 transfer, before HID admission. These diagnostic/cache changes are prepared for
