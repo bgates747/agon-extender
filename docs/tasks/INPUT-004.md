@@ -9,7 +9,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 
 ## State and authorization
 
-1. On2026-10-28 the Author requests this research/implementation task, a commit
+1. On 2026-10-28 the Author requests this research/implementation task, a commit
    and push of all current dirt before proceeding, then work toward an onboard
    keyboard. Publish this plan before implementation or live diagnostics.
 2. This is an implementation goal, not authorization for physical rewiring or
@@ -55,7 +55,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
    transfer error does not identify bad descriptors, power, DMA or timing.
 2. Official Espressif guidance: [USB host / FS-LS only](https://docs.espressif.com/projects/esp-usb/en/latest/esp32p4/usb_host.html#full-low-speed-only-host).
    The onboard HS-capable controller can run full/low speed without changing
-   wiring. Pinned ESP-IDF5.5.5/b774170ff46c393eeb5e495ea37936038d3f4f4f lacks the
+   wiring. Pinned ESP-IDF 5.5.5/b774170ff46c393eeb5e495ea37936038d3f4f4f lacks the
    public fsls_only field; maintained `vdp/native/usb_fsls_only.cmake` generates
    a hash-checked HCD derivative enabling it before root resets. This option is
    already in the installed matched native-controller composition.
@@ -141,9 +141,9 @@ Stop at an explicit Author boundary; never replay uncertain input/transfers.
    are under `agents/input004`; conclusions relied on here are recorded below.
 2. Pinned SDK`hcd_dwc.c:1739–1745` already enables LS-via-FS-hub preambles;
    `:388–404` already delays1000us between successful LS control stages for
-   internal Espressif issueIDF-12986. Current upstream retains these mechanisms.
+   internal Espressif issue IDF-12986. Current upstream retains these mechanisms.
    Adding them again or blindly increasing reset/stage delays is unsupported.
-3. `CHECK_SHORT_DEV_DESC` covers SETUP, DATA and STATUS. Its generic status1
+3. `CHECK_SHORT_DEV_DESC` covers SETUP, DATA and STATUS. Its generic status 1
    collapses HCD ERROR_XFER / HAL XCS_XACT (three failed transactions); it does
    not disclose which stage or why the device transaction failed. Stage data
    is cleared during ISR buffer parsing, so it must be retained before that
@@ -152,7 +152,7 @@ Stop at an explicit Author boundary; never replay uncertain input/transfers.
    buffers before DMA and invalidates them after completion. Thus the recorded
    initial descriptor error is not explained by missing pre-IN cleaning.
    A separate omission exists for non-control IN enqueue. Official
-   [Espressif USB1.6.0](https://components.espressif.com/components/espressif/usb/versions/1.6.0/changelog?language=en),
+   [Espressif USB 1.6.0](https://components.espressif.com/components/espressif/usb/versions/1.6.0/changelog?language=en),
    repository commit`630f1c4e61f71d62bb57ff1b840931da24c3329f`, corrects the
    [HCD helper](https://github.com/espressif/esp-usb/blob/630f1c4e61f71d62bb57ff1b840931da24c3329f/host/usb/src/hcd_dwc.c)
    to clean all enqueue directions while preserving post-IN/control invalidation.
@@ -202,7 +202,7 @@ Stop at an explicit Author boundary; never replay uncertain input/transfers.
 4. Meaningful host checks compile the actual generated ISR snapshot/dequeue
    code against lock/queue spies and the original/generated cache helpers
    against a synchronization spy. They cover matched/older URB ownership,
-   repeated reuse, gates, post-unlock logging and16 cache ownership combinations.
+   repeated reuse, gates, post-unlock logging and 16 cache ownership combinations.
    ASan/UBSan check the cache helper; leak scanning is disabled only because
    the managed runner's ptrace prevents it, and that harness allocates no heap.
 5. An independent source review found no blocking lifetime/locking issue for
@@ -210,3 +210,42 @@ Stop at an explicit Author boundary; never replay uncertain input/transfers.
    no keyboard/control exercise has been claimed and no EMOS/mainboard/startup
    change is selected. Actual keyboard attachment/port and foreground remain
    the physical evidence gate.
+6. The 50 selected host checks pass in 6.75 monotonic host seconds. The matched
+   source commit is`8c90c869`, based on the installed`cabbea34`; its source
+   difference is restricted to this USB derivative, validator and tests.
+7. Experimental build`indexed-hdmi-r14-b2026-10-28-19-32-01Z` passes native
+   compilation and declared/compiled/archived/linked validation in 406.24 host
+   monotonic seconds. Its application is 1,778,048 bytes, SHA-256
+   `bb903f05123b0642772cc5b8774ebbc65ccf746dbb392a5629142eeaef6195aa`.
+   Independent comparison verifies the source archives and unchanged board,
+   display, dependencies, SDK configuration and generated application inputs
+   after exact path/build-identity normalization. Five focused checks also pass
+   from the matched checkout. The image is UNINSTALLED; gate5's deployment
+   and all physical keyboard checks remain pending.
+8. The new application is 416 bytes larger than the prior image. At the existing
+   application offset 0x20000 its 4 KiB write-sector range is [0x20000,0x1d3000),
+   one sector larger than the prior image's range. Refresh selective-write,
+   whole-flash backup/readback and outside-sector comparisons accordingly;
+   do not reuse the earlier installation helper's hardcoded limits.
+
+### Reading the first device failure
+
+The pinned HCD's control-stage values are 0=SETUP, 1=DATA and 2=STATUS
+(`components/usb/hcd_dwc.c`, `_buffer_exec_cont`). HAL error values are
+0=three consecutive transaction errors, 1=buffer unavailable, 2=packet babble
+and 3=STALL (`components/hal/include/hal/usb_dwc_hal.h`). Buffer-unavailable
+still follows the stock fatal path and may abort before task-context publication.
+
+| Observation | What it establishes | Next bounded investigation |
+|---|---|---|
+| SETUP transaction failure | The first eight-byte request did not complete. | LS signaling/preamble, device response and host scheduling; do not blame HID parsing. |
+| DATA transaction failure | SETUP completed; descriptor reception failed. | Direction/PID, response length and stage transition, retaining existing cache proof. |
+| STATUS transaction failure | Descriptor DATA completed; final acknowledgement failed. | Opposite direction/PID and stage transition; do not call this a missing descriptor. |
+| STALL | The device rejected that control transaction. | Exact request/identity and any device-specific contract. |
+| Keyboard enumerates | This device reached HID acquisition in this composition. | Actual typing/release/LED/reconnect and controller coexistence; no causal attribution from success alone. |
+
+Capture attachment time and complete enumeration context, not just one error
+line. A generic transaction error still does not distinguish no response from
+other wire-level failures. Compare the existing image before installing the
+candidate when physical state permits; do not manufacture a baseline by
+restarting a running Author application.
