@@ -129,7 +129,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
 | I4-03 | Open | Failure is localized to initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The wire-level cause remains unresolved. |
 | I4-04 | Partially established | Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Linux subsequently identifies the Author-transferred specimen as `04d9:a088`, a Holtek vendor ID with no manufacturer/product strings. Retail brand/model and physical socket label remain unrecorded. |
-| I4-05 | Author direction, in progress | Audit four different keyboard models on the Linux host, starting with the attached Logitech; the Author exchanges devices after each completed audit. Preserve descriptor/speed evidence and compare boot-keyboard compatibility before selecting further P4 tests. |
+| I4-05 | Linux inventory complete | The Author supplied all four keyboards in turn. All enumerate at 1.5 Mbit/s and expose compatible boot-keyboard interfaces. Exact descriptors/speed evidence are retained; captured P4 comparisons remain the next physical gate. |
 
 ## Evidence and stop boundaries
 
@@ -454,3 +454,13 @@ or proof that ISR logging caused the earlier abort.
    no extra HID interfaces. Linux enumeration succeeds. Its simpler composition
    is useful for comparison but is not an established SETUP-failure remedy.
    One final keyboard remains for Linux audit; no P4 access occurred.
+6. The fourth keyboard identifies as IBM NetVista `04b3:3025`, with LITE-ON
+   manufacturer string, revision `0x0109`, low speed 1.5 Mbit/s. One standard
+   boot-keyboard interface uses 8-byte input and three lock LEDs; interrupt
+   interval is declared 24 ms. Linux enumeration succeeds. All four inventories
+   are complete, with no full-speed specimen found and no P4 access during
+   audit. Recommend CHERRY first and IBM second for captured P4 comparison,
+   ranking interface simplicity then shorter declared polling interval. This
+   does not predict a SETUP remedy or establish measured latency. Coordinate
+   the Author's next physical attachment with an active bounded capture before
+   drawing any new P4 enumeration/typing conclusion.
