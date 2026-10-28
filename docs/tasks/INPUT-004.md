@@ -13,8 +13,9 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
    and push of all current dirt before proceeding, then work toward an onboard
    keyboard. Publish this plan before implementation or live diagnostics.
    The Author subsequently confirms a powered/free bench, attaches the keyboard
-   and authorizes the first physical tranche. The diagnostic P4 application is
-   now installed and verified; actual keyboard operation remains failing.
+   and authorizes the first physical tranche. After a hotplug-related scanout
+   abort, the P4 error-logging candidate is installed and verified. Controlled
+   Author replug validation is pending; keyboard enumeration remains failing.
 2. This is an implementation goal, not authorization for physical rewiring or
    speculative wholesale SDK/USB-stack replacement. Continue useful offline
    work while keyboard identity/attachment and current bench state are unknown.
@@ -362,3 +363,33 @@ informative failure, separate from the keyboard's unsuccessful USB enumeration.
    acceptance gate for this correction; host checks and cold boot are not a
    hotplug pass. Do not claim it repairs keyboard enumeration or merely raise
    the HDMI deadline guard to conceal missed callbacks.
+7. Implemented/pushed the correction as `88293037`, with clean matched source
+   `f00c5a0560b172d885af64a458eafac1ca763dce`. Built and independently validated
+   `indexed-hdmi-r14-b2026-10-28-20-24-08Z`; application 1,778,112 bytes, SHA-256
+   `b87f26792ee25737b47153e07dc76718c438d9cdc61111a5f3cb05246db43547`.
+   All 31 focused host checks pass. Independent composition review confirms
+   that the installed display, controller and dependency selections are retained.
+8. Installed only application sectors [0x20000,0x1d3000). The retained incoming
+   whole-device backup was freshly verified against the actual P4 before reuse.
+   Independent full 16 MiB readback matches the application and every byte
+   outside those sectors is unchanged. Incoming whole-image SHA-256 is
+   `75c185767b3260cde7094da1a8c4cc811d2f64679faa68acba1619164940999e`;
+   after-write SHA-256 is
+   `5f924aa780531de0c70f2bd8da33b70703b6c13c5e0f33874ddea7e2cc90131c`.
+   Exact expanded rollback sectors and installation receipts are retained locally.
+9. Exact new P4 console/USB/F310/display readiness preceded Agon release. Fresh
+   input admission, actual Legacy MOS CLI, unchanged load-only startup and two
+   fast2 read/EXIT exchanges with quiet printer mirror all pass. Final scanout
+   advances with zero faults; F310 is valid/fault0, input neutral and the listener
+   offline/idle. EMOS, mainboard VDP and SD files remain unchanged. No guest
+   application or full suite ran. All serial readers and reset holds are closed.
+10. Native build took 603.25 host monotonic seconds; installation took 221.95 s,
+    including a separately reported 166.1 s full readback. These are elapsed host
+    times, not calibrated device timings. Reusing a freshly verified backup
+    avoided another full-flash read. Retained receipts support future estimates.
+11. The keyboard still fails initial SETUP on hub1/port3. This candidate addresses
+    the identified ISR logging exposure, not a proven hotplug cause or keyboard
+    remedy. The next gate is the Author unplugging both devices and reconnecting
+    keyboard first, then F310, retaining their current sockets. Keep P4 serial
+    readers closed during this physical comparison. Hotplug acceptance, actual
+    keyboard operation and production promotion remain pending.
