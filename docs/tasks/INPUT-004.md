@@ -14,8 +14,9 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
    keyboard. Publish this plan before implementation or live diagnostics.
    The Author subsequently confirms a powered/free bench, attaches the keyboard
    and authorizes the first physical tranche. After a hotplug-related scanout
-   abort, the P4 error-logging candidate is installed and verified. Controlled
-   Author replug validation is pending; keyboard enumeration remains failing.
+   abort, the P4 error-logging candidate is installed and verified. One controlled
+   Author replug passes with no restart or scanout fault. Actual keyboard
+   operation remains unverified; its last captured enumeration attempt failed.
 2. This is an implementation goal, not authorization for physical rewiring or
    speculative wholesale SDK/USB-stack replacement. Continue useful offline
    work while keyboard identity/attachment and current bench state are unknown.
@@ -126,7 +127,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-01 | Author direction | Pursue onboard USB keyboard first; GPIO wiring remains a separately selected contingency. |
 | I4-02 | Existing implementation | Retain installed FS/LS-only host and existing HID keyboard/controller clients unless source/evidence requires a bounded change. |
 | I4-03 | Open | Failure is localized to initial SETUP/XCS_XACT with FS root, PRE selected and MPS8. The wire-level cause remains unresolved. |
-| I4-04 | Partially established | Author attached keyboard; actual Legacy CLI is verified. Failure is on parent hub1/port1; keyboard VID/PID cannot be read until its first descriptor succeeds. Physical socket label/model remain unrecorded. |
+| I4-04 | Partially established | Author attached keyboard; actual Legacy CLI is verified. Initial SETUP failure followed the keyboard from parent hub1/port1 to hub1/port3. Keyboard VID/PID cannot be read until its first descriptor succeeds. Physical socket label/model remain unrecorded. |
 
 ## Evidence and stop boundaries
 
@@ -393,3 +394,30 @@ informative failure, separate from the keyboard's unsuccessful USB enumeration.
     keyboard first, then F310, retaining their current sockets. Keep P4 serial
     readers closed during this physical comparison. Hotplug acceptance, actual
     keyboard operation and production promotion remain pending.
+
+## Controlled replug result — 2026-10-28
+
+The Author unplugged both devices and reconnected the keyboard first, then F310,
+in their current sockets. The Author observed no P4 reset and left both attached.
+Read-only service snapshots confirm that this replug did not reproduce the HDMI
+abort. This is one passing physical comparison, not a general hotplug guarantee
+or proof that ISR logging caused the earlier abort.
+
+1. P4 incarnation and mainboard input epoch are unchanged from the candidate
+   handback. Two snapshots show scanout advancing from frame143839 to143960,
+   with faults, sequence errors, overbudget and underruns all zero. No reset,
+   firmware write, input injection, mode change or guest invocation occurred.
+2. F310 reacquired as USB address3, valid/fault0, nine reports and no malformed
+   packets. This confirms acquisition after the completed replug; a simultaneous
+   physical typing/controller exercise has not yet been performed.
+3. P4 serial readers stayed closed through the physical comparison. A later
+   bounded six-second passive capture contains normal display/network metrics;
+   it did not retain the earlier enumeration event. The existing HTTP keyboard
+   status describes EMOS admission/neutral state, not USB keyboard attachment.
+   Therefore current physical keyboard acquisition cannot be inferred from its
+   ready flag or the absence of an error in that delayed capture. The last
+   directly captured keyboard attempt failed initial SETUP. Request an actual
+   physical typing observation before claiming any new keyboard result.
+4. All serial readers are closed. Input remains admitted/neutral and SD service
+   offline/idle; both devices remain attached. No change to EMOS, mainboard VDP,
+   startup or SD contents. Evidence remains in the machine-local bench index.
