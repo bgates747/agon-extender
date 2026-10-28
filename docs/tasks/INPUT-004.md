@@ -537,8 +537,10 @@ the shared USB event's mechanism remains unresolved.
 ### Author reports electrostatic discharges at USB shields
 
 1. The Author reports building up static and receiving several shocks on
-   touching USB connector shields during connections/disconnections. No
-   correlation with the specific captured CHERRY event is yet established.
+   touching USB connector shields during connections/disconnections. The Author
+   subsequently confirms shocks during earlier tests but none felt during the
+   captured CHERRY connection. Absence of a felt shock does not exclude ESD;
+   there is no direct ESD observation correlated with that captured failure.
    Treat ESD as a plausible confounder for the shared USB interruption, not a
    proven explanation for persistent initial-SETUP failures or damaged hardware.
 2. Verified the clean read-only Olimex Rev C reference at
@@ -554,8 +556,8 @@ the shared USB event's mechanism remains unresolved.
    [TI's USB ESD application note](https://www.ti.com/lit/pdf/slva796), section4.2,
    explains why discharge routing/layout matter in addition to ground naming.
    These support the general mechanism; they do not diagnose this P4 board.
-4. Ask whether the Author felt a discharge during the particular CHERRY
-   attachment. For a future controlled comparison, reduce charge with proper
+4. The CHERRY discharge-observation question is resolved above. For a future
+   controlled comparison, reduce charge with proper
    ESD handling and retain any felt-discharge observation alongside root/hub
    diagnostics. Do not deliberately inject sparks, infer a protective-earth
    connection or perform a grounding/wiring change as part of this research.
