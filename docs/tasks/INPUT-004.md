@@ -593,3 +593,21 @@ the shared USB event's mechanism remains unresolved.
    fail initial SETUP; Logitech K120 remains for the next captured comparison.
    Preserve the Author's priority to test models rather than pursue the
    recovered controller transient.
+
+## Captured Logitech K120 P4 comparison — 2026-10-28
+
+1. The Author requests the monitor, then connects the intended K120 after
+   capture ready. One LS control attempt fails initial SETUP/XCS_XACT, rootFULL,
+   PRE1, MPS8, hub4/port3. No device VID/PID or HID keyboard admission is reached.
+   Specimen identity comes from the Author-selected preceding Linux audit.
+2. P4 incarnation and mainboard input epoch are unchanged. F310 remains
+   valid/fault0 at address5 with the same carrier session and no captured
+   disconnect. HDMI frames advance with zero faults/sequence errors/overbudget/
+   underruns. Actual typing/controller movement was not requested on this
+   failed enumeration. No shock was reported for this particular trial.
+3. The passive reader closes with exit0. Preserve before/after snapshots, raw
+   log/hash and host wall-clock bounds. No reset, flash, keys, application,
+   startup/SD change or agent connection retry. All four keyboard model controls
+   are complete and fail the same pre-HID stage. Continue with failed-SETUP
+   hardware-register evidence rather than further unbounded model swaps;
+   keep the recovered controller transient deprioritized as the Author directed.

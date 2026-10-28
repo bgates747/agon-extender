@@ -3,9 +3,10 @@
 All four audited keyboards enumerate successfully on Linux at 1.5 Mbit/s and expose
 standard boot-keyboard interfaces. The originally failing P4 keyboard identifies
 as `04d9:a088`, a Holtek USB vendor ID, without brand/model strings. None
-supplies the full-speed control proposed in the task. The original, CHERRY and
-IBM keyboards fail initial SETUP on P4, before HID report handling. Logitech
-remains untested on P4. CHERRY and IBM each have one keyboard interface.
+supplies the full-speed control proposed in the task. All four fail initial
+SETUP on P4, before HID report handling. This strengthens the shared low-speed
+host/hub-path hypothesis without establishing the electrical or driver cause.
+CHERRY and IBM each have one keyboard interface.
 
 ## Comparison
 
@@ -31,7 +32,7 @@ remains untested on P4. CHERRY and IBM each have one keyboard interface.
 | Observed Linux topology | Host root hub directly; no internal hub | Host root hub directly; no internal hub | Host root hub directly; no internal hub | Host root hub directly; no internal hub |
 | Linux enumeration | Successful | Successful | Successful | Successful |
 | Actual Linux typing / LED exercise | Not performed | Not performed | Not performed | Not performed |
-| P4 enumeration / typing | Not tested | SETUP failure captured; Author observes no characters | Initial SETUP failure captured; HID admission not reached | Initial SETUP failure captured; HID admission not reached |
+| P4 enumeration / typing | Initial SETUP failure captured; HID admission not reached | SETUP failure captured; Author observes no characters | Initial SETUP failure captured; HID admission not reached | Initial SETUP failure captured; HID admission not reached |
 
 The interval values are endpoint declarations, not measured report rates or
 input latency. Configuration power is declared demand, not a current or voltage
@@ -89,6 +90,13 @@ for all four devices, while sysfs and `lsusb -t` correctly report 1.5 Mbit/s.
    Record the felt shock without assigning the transfer failure to ESD or
    treating it as a measured discharge. Capture closes cleanly. Logitech K120
    is the remaining untried P4 model; no transient-diagnostic build was made.
+8. The final Logitech K120 comparison also logs one initial SETUP/XCS_XACT
+   failure, rootFULL/PRE1/MPS8, hub4/port3. No keyboard HID acquisition. P4 and
+   input epochs remain unchanged, F310 retains its session/address/valid state
+   without a logged disconnect, and HDMI remains fault-free. Capture closes
+   cleanly. All four supplied models have now been compared on P4; more model
+   swapping has diminishing diagnostic value. Failed-SETUP hardware evidence
+   is the next software lead; transient recovery remains deprioritized.
 
 ## Evidence identity and collection limits
 
