@@ -134,7 +134,9 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-06 | Author direction | Deprioritize the recovered controller transient and resume captured keyboard model comparisons on the unchanged firmware. Do not let speculative transient diagnostics delay the next attachment trial. |
 | I4-07 | Established for captured sample | Actual channel/host settings agree with explicit pinned SDK assignments. No register toggle or timing remedy is justified by this capture. Keyboard enumeration and typing still fail. |
 | I4-08 | Open source contract | Establish the integrated HS-UTMI frame-clock/HFIR contract in FS-only host mode and the exact FC06 bit2 preamble polarity from primary P4/PHY documentation. A count of60000 or an ambiguous field label does not establish a defect. |
-| I4-09 | Minimal reproduction established | The pinned USB-only image reproduces CHECK_SHORT_DEV_DESC failure while F310 enumerates at full speed. No keyboard HID admission. Minimal evidence does not identify the failed SETUP/DATA/STATUS stage or a vendor defect; assess one official USB-stack candidate for actual pre-v3 compatibility before proposing another temporary comparison. |
+| I4-09 | Minimal reproduction established | The pinned USB-only image reproduces CHECK_SHORT_DEV_DESC failure while F310 enumerates at full speed. No keyboard HID admission. Minimal evidence does not identify the failed SETUP/DATA/STATUS stage or a vendor defect. The subsequent official candidate assessment is recorded under I4-10. |
+| I4-10 | Compatibility assessment complete | Official USB host 1.6.0 admits IDF 5.5.5, but its public FSLS option requires a HAL capability absent from the pinned SDK. A component-only adaptation retains the same PHY/HAL and selected initial-control functions; no targeted correction was identified. Defer a speculative build/flash. Exact source and bounded newer-SDK findings are in [the assessment](INPUT-004/USB-COMPATIBILITY.md). |
+| I4-11 | Open — Author diagnostic selection | Recommendation: Author review and authorize a focused Espressif report, using the prepared draft and retained minimal evidence. Extender would submit only the approved material; vendor guidance could identify a correction or precise wire observation. Alternatives: an independently discriminating USB wire capture (requires suitable instrumentation/operator access), or a deliberately scoped component comparison (changes broader scheduling, with no identified fix). None authorizes guessed registers, whole-SDK migration, public source attachments or hardware rewiring. |
 
 ## Evidence and stop boundaries
 
@@ -916,3 +918,45 @@ operator movement exercise. All readers and reset holds are closed/released.
 No mainboard firmware, EMOS, startup or SD write occurred. Both devices remain
 attached, and no further hardware operation is queued. Retained machine-local
 completion/readback/CLI evidence is indexed by the current bench record.
+
+## Official USB candidate assessment — 2026-10-28
+
+The Author directs commit/push of any dirt and continuation of the proposed
+compatibility check. The checkout was already clean and published. Three bounded
+independent source reviews assess the official USB host 1.6.0 package, actual
+pre-v3 SDK support and the initial-control path. The [assessment](INPUT-004/USB-COMPATIBILITY.md)
+records exact pins, feature limits, function comparisons and primary references.
+
+1. USB 1.6.0 declares IDF >=5.5.3 and officially supports overriding the bundled
+   IDF 5.x USB component. It still compiles against the selected SDK PHY/HAL.
+   Its public FSLS option explicitly refuses the pinned SDK's absent configured
+   HAL API. Do not fake the feature macro, suppress that refusal or widen the
+   board's revision bounds.
+2. The selected initial-request descriptor, PRE, execution, completion and
+   EP0 callback functions remain byte-identical. The existing CTRL synchronization
+   and completed-stage delay were already present. Broader scheduling/lifecycle
+   changes can affect behavior, but no reviewed source change identifies a fix
+   for the captured first request. A speculative native variant was not built.
+3. The examined newer released SDKs retain explicit pre-v3 support, but the
+   bounded HAL checks identify no released configured-HAL pair. Their detailed
+   retrieval limits are retained. Current development HAL's FSLS restriction
+   uses the same reset ordering already backported; no SDK migration is selected.
+4. Retain the official package, exact-commit HCD/CMake cross-check, component
+   inventory/digest and independent review under the ignored task evidence.
+   Prepare [the report draft](INPUT-004/USB-REPRODUCER-DRAFT.md) from the existing
+   minimal capture/source. No vendor contact or public attachment occurs.
+5. This tranche performs offline research/documentation only: no bench access,
+   new native build, flash, reset, input, SD/startup change or production promotion.
+   Exact previously verified installed firmware and the negative baseline remain
+   unchanged. I4-11 holds the next diagnostic choice and concrete prerequisites.
+
+The internal source/evidence review archive contains the exact 11 tested source
+files, 32 pristine HID files, original raw capture/result, current report drafts
+and an inventory. Only two partition-filename strings are normalized in a
+separately labeled SDK configuration export; the original configuration hash is
+recorded. Archive metadata has no local owner/path identity. This is not a
+standalone build or installer, and contains no firmware binary. The retained
+50-member archive is 88,277 bytes, SHA-256
+`78784a494c486004728c6bd87145a5d1bc09301e1c7014c22c74e5a74a7b9d85`.
+Its internal location/packaging receipt remains in the ignored task evidence.
+No external distribution is implied by preparing it.
