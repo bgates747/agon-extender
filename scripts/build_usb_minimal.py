@@ -173,6 +173,21 @@ def main():
     aliases = {"CONFIG_COMPILER_OPTIMIZATION_LEVEL_DEBUG", "CONFIG_COMPILER_OPTIMIZATION_DEFAULT",
                "CONFIG_COMPILER_OPTIMIZATION_LEVEL_RELEASE", "CONFIG_ESP_CONSOLE_UART_NONE",
                "CONFIG_ESPTOOLPY_FLASHMODE_DOUT", "CONFIG_ESPTOOLPY_FLASHFREQ_120M"}
+    exceptions = []
+    # Kconfig removes these when their owning component/debug feature is absent.
+    # Record the actual change rather than claiming complete configuration equality.
+    # IDF5.5.5 freertos/Kconfig:362 depends on debug/coredump/GDB support;
+    # usb/ext_port.c:22-26 falls back to exactly one reset attempt.
+    no_coredump = not any("/espcoredump/" in c["file"] for c in
+                         json.loads((build / "compile_commands.json").read_text()))
+    for key, expected, reason in (
+            ("CONFIG_FREERTOS_TASK_FUNCTION_WRAPPER", "y", "Task wrapper absent with removed debug/coredump support; deliberate diagnostic configuration difference"),
+            ("CONFIG_USB_HOST_EXT_PORT_RESET_ATTEMPTS", "1", "Experimental menu absent; pinned ext_port.c fallback remains one attempt"),
+            ("CONFIG_ESP_COREDUMP_ENABLE_TO_NONE", "y", "No espcoredump component is selected at all")):
+        if key not in actual:
+            require(selected.get(key) == expected and no_coredump, "Unexpected configuration exception: " + key)
+            aliases.add(key)
+            exceptions.append({"key": key, "baseline_or_requested": expected, "actual": "absent", "reason": reason})
     diffs = [{"key": k, "expected": v, "actual": actual.get(k)} for k, v in selected.items()
              if k not in aliases and k in actual and actual[k] != v]
     missing = [k for k in selected if k not in actual and k not in aliases and selected[k] != "n"]
@@ -206,7 +221,9 @@ def main():
     app = build / layout["app"]["file"]
     elf = next(build.glob("*.elf"))
     require(args.build_id.encode() in app.read_bytes() and source_commit.encode() in app.read_bytes(), "Missing embedded identities")
-    validation = {"passed": True, "source_commit": source_commit, "selected_settings_equal": True,
+    validation = {"passed": True, "source_commit": source_commit,
+                  "selected_settings_match_with_documented_exceptions": True,
+                  "configuration_exceptions": exceptions, "coredump_component_absent": no_coredump,
                   "partition_bytes_equal": True, "pristine_usbh": True, "pristine_hid": True,
                   "sole_fsls_hcd_backport": True, "hcd_sha256": sha(derivative),
                   "compile_actions": len(commands), "usb_compile_actions": hcd_actions + usbh_actions + hid_actions,

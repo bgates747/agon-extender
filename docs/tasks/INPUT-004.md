@@ -817,3 +817,17 @@ proof of a vendor defect.
 8. Record enumeration, actual typing/report exercise and restoration separately.
    No automatic vendor message, speculative register change, SDK upgrade,
    additional hardware change or production promotion follows from the result.
+
+
+Minimal-build preparation notes: USB Serial/JTAG's VFS console requires an
+explicit `vfs` component in the fixture's main dependency list. Native compilation
+then succeeds. The final configuration checker records three bounded differences:
+FreeRTOS's task-function wrapper disappears with removed coredump/debug support;
+no coredump component is selected; the experimental external-port reset-count
+symbol disappears but pinned `ext_port.c` falls back to the same value1. Other
+selected effective USB/core/cache/clock/silicon/console settings must agree.
+These differences are retained comparison limits, not complete configuration
+equality. HID1.2.1 is independently verified against the vendor package aggregate
+`74b9c84cd2921a5e987f504c1713ca7819f7e8be80565e5253e9e9c7e07ab881`;
+the installed component is byte-identical, including its upstream disconnect
+cleanup. No local HID patch is introduced or removed by this baseline.
