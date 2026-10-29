@@ -174,6 +174,15 @@ that investigation; physical keyboard operation remains unqualified. See
 [INPUT-004](tasks/INPUT-004.md) for current research and candidate gates, and
 [BOARD-001](tasks/BOARD-001.md) for the original evidence.
 
+The separate experimental `--usb-direct-fs` selection uses P4-PC GPIO26/D- and
+GPIO27/D+ through EXT1 contacts4/6, bypassing the onboard hub. It requires
+`p4-console --board p4-pc` and excludes `--usb-fsls-only`. The default board
+profile remains unchanged; the manifest/compiled definition record peripheral
+mask2. The host skips hub reset and selects only the FS controller. IDF5.5.5
+initializes one PHY here, so this keyboard-only trial does not service an F310
+on the onboard HS hub. Preserve the matched installed display composition when
+preparing a bench variant. Wiring and execution gates remain in INPUT-004.
+
 ### Selected DevKit configuration
 
 The maintained [board definition](../vdp/boards/olimex_esp32_p4_devkit.json),

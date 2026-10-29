@@ -136,7 +136,8 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-08 | Open source contract | Establish the integrated HS-UTMI frame-clock/HFIR contract in FS-only host mode and the exact FC06 bit2 preamble polarity from primary P4/PHY documentation. A count of60000 or an ambiguous field label does not establish a defect. |
 | I4-09 | Minimal reproduction established | The pinned USB-only image reproduces CHECK_SHORT_DEV_DESC failure while F310 enumerates at full speed. No keyboard HID admission. Minimal evidence does not identify the failed SETUP/DATA/STATUS stage or a vendor defect. The subsequent official candidate assessment is recorded under I4-10. |
 | I4-10 | Compatibility assessment complete | Official USB host 1.6.0 admits IDF 5.5.5, but its public FSLS option requires a HAL capability absent from the pinned SDK. A component-only adaptation retains the same PHY/HAL and selected initial-control functions; no targeted correction was identified. Defer a speculative build/flash. Exact source and bounded newer-SDK findings are in [the assessment](INPUT-004/USB-COMPATIBILITY.md). |
-| I4-11 | Open — Author diagnostic selection | Recommendation: Author review and authorize a focused Espressif report, using the prepared draft and retained minimal evidence. Extender would submit only the approved material; vendor guidance could identify a correction or precise wire observation. Alternatives: an independently discriminating USB wire capture (requires suitable instrumentation/operator access), or a deliberately scoped component comparison (changes broader scheduling, with no identified fix). None authorizes guessed registers, whole-SDK migration, public source attachments or hardware rewiring. |
+| I4-11 | Deferred by Author | Author prefers Olimex as the first vendor contact because P4-PC adds the hub/connector path, then defers vendor contact entirely in favor of the direct full-speed header experiment. The Espressif-addressed draft and frozen review archive remain unsubmitted historical preparation; do not submit them or silently relabel the frozen archive. |
+| I4-12 | Author-selected experiment; wiring researched | Try a keyboard through the P4-PC's exposed full-speed USB signals, bypassing the onboard hub. Author reports a successful directly wired keyboard on the P4-DevKit; this is a useful control, not P4-PC qualification. Rev C EXT1 maps +5V=2, GND=3, GPIO26/D-=4, GPIO27/D+=6; pin1 is +3.3V and pin5 is ESP_EN. Firmware controller selection and simultaneous use of onboard F310 remain implementation/qualification gates. No physical rewiring, build or flash was performed during wiring research. |
 
 ## Evidence and stop boundaries
 
@@ -960,3 +961,56 @@ standalone build or installer, and contains no firmware binary. The retained
 `78784a494c486004728c6bd87145a5d1bc09301e1c7014c22c74e5a74a7b9d85`.
 Its internal location/packaging receipt remains in the ignored task evidence.
 No external distribution is implied by preparing it.
+
+## Author selects direct full-speed USB header experiment
+
+The Author defers vendor contact and selects Discord's proposed direct keyboard
+connection. A plain USB-A socket breakout can expose VBUS, D-, D+ and ground;
+the P4 contains the full-speed PHY, so no external USB controller or level shifter
+is required for this route. Breakout protection circuitry varies by product.
+
+Read-only comparison of the manufacturer Rev C schematic and PCB at
+`04032d68e5c727870f9d40beb9e37b7ab3a66916` independently verifies EXT1 pads2/3/4/6
+as +5V/GND/GPIO26-D-/GPIO27-D+. Pad1 is square. This is the separate full-speed
+controller, not a parallel connection to the hub's existing data pair.
+[Manufacturer schematic](https://github.com/OLIMEX/ESP32-P4-PC/blob/04032d68e5c727870f9d40beb9e37b7ab3a66916/HARDWARE/ESP32-P4-PC-Rev.C/ESP32-P4-PC_Rev_C.pdf).
+Espressif's [USB hardware guidance](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32p4/schematic-checklist-esp32p4.html#usb)
+confirms default FS D-/D+=GPIO26/27 and recommends22/33ohm series resistors near
+the chip and connector-side USB ESD protection. No added pull-up/level shifter
+is part of this host connection. Select the correct controller in a separately
+identified firmware implementation before claiming input operation. Current
+firmware, bench state, startup and SD remain unchanged by this research.
+
+## Direct FS keyboard-only execution authorized
+
+The Author reports the P4-PC wired and powered and directs a test. The controller
+is deliberately disconnected to avoid interference. The DevKit breadboard was
+used only as a wire-colour reference; do not infer a P4-PC power-rail connection
+from that discussion. Green/white/red/black are D+/D-/VBUS/ground. This later
+completed-wiring report supersedes the earlier unresolved contact counting for
+the purpose of the authorized test; it is not an agent continuity measurement.
+
+1. Preserve the exact installed matched display/transport composition. Prepare
+   the explicit experimental `--usb-direct-fs` selection for P4-PC/p4-console,
+   using the same IDF5.5.5 and HID1.2.1. Record source/build identities before
+   installation; do not select root HEAD's different display implementation.
+2. Pinned SDK `usb_host.h` specifies BIT1 (=2) for peripheral1. Its
+   `soc/esp32p4/usb_dwc_periph.c` maps that FS controller to GPIO26/27.
+   `usb_host.c` currently initializes one PHY, so do not select mask3 as a
+   guessed way to retain both controllers. This trial does not service the HS
+   hub/F310. Skip onboard-hub reset for this explicit selection.
+3. Exclude `--usb-fsls-only`: it selects the HS workaround/diagnostics, not this
+   separate FS peripheral. Leave SDK/HAL/PHY bytes and the board's physical
+   mapping unchanged. Actual compiler definitions, preprocessed USB selection,
+   linked source, partitions and pre-v3 bounds must match the recorded variant.
+4. Fresh read-only CLI/startup preflight precedes app-only installation. Preserve
+   verified incoming full-flash/sector rollback, assert Agon reset while P4 is
+   replaced, independently verify app/full readback and P4 initialization, then
+   release Agon and prove fresh input admission/actual CLI. No EMOS, mainboard
+   VDP, startup or SD write. No automatic replay on uncertain effects.
+5. Capture keyboard enumeration/HID admission separately from physical typing.
+   On success leave the reviewed variant ready for Author typing; it remains
+   experimental until bounded physical input tests and acceptance. On failure
+   retain the diagnostic result and restore the exact verified original P4
+   application before ordinary handback. This is no simultaneous-controller
+   qualification, broader suite or production promotion.

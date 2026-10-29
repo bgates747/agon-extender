@@ -137,6 +137,7 @@ def main() -> None:
     parser.add_argument("--profile", required=True)
     parser.add_argument("--board", help="require and verify board provenance for new builds")
     parser.add_argument("--usb-fsls-only", action="store_true")
+    parser.add_argument("--usb-direct-fs", action="store_true")
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser")
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720")
     parser.add_argument("--parallel-data-check", action="store_true")
@@ -158,6 +159,8 @@ def main() -> None:
     parser.add_argument("--render-benchmark-output", choices=("normal", "hold", "off", "convert-off"))
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
+    if args.usb_direct_fs and ((args.board, args.profile) != ("p4-pc", "p4-console") or args.usb_fsls_only):
+        parser.error("direct FS requires p4-pc / p4-console and excludes HS FSLS backport")
     output = args.output.resolve()
     document = json.loads(PROFILES.read_text())
     checked_display_ownership(document)
@@ -234,6 +237,8 @@ def main() -> None:
                 fail("HDMI timing selection disagrees with compiled definitions")
         if ("-DAGON_EXTENDER_USB_FSLS_ONLY=1" in argv) != args.usb_fsls_only:
             fail("USB FSLS application diagnostic disagrees with compiled HCD")
+        if ("-DAGON_EXTENDER_USB_DIRECT_FS=1" in argv) != args.usb_direct_fs:
+            fail("Direct FS USB controller selection differs from compile action")
         if not selected_definition(argv, "AGON_EXTENDER_CONTROLLER_INPUT", args.controller_input):
             fail("controller service selection differs from compile action")
         missing = [item for item in required_definitions
@@ -383,6 +388,8 @@ def main() -> None:
         "exext_stream": args.exext_stream,
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,
+        "usb_direct_fs": args.usb_direct_fs,
+        "usb_selected_peripheral_map": 2 if args.usb_direct_fs else (board["usb"]["peripheral_map"] if args.board else None),
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "render_benchmark_output": args.render_benchmark_output,
