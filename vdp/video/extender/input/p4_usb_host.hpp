@@ -100,6 +100,7 @@ inline void hostEvents(void *) {
 }
 inline bool begin() {
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
+#if !defined(AGON_EXTENDER_USB_DIRECT_FS)
   if constexpr (board::kUsbHubReset >= 0) {
     // P4-PC Rev C: dedicated HS host connects through the onboard hub.
     // Match Olimex's active-low reset sequence before installing USB host.
@@ -112,6 +113,7 @@ inline bool begin() {
     vTaskDelay(pdMS_TO_TICKS(board::kUsbResetRecoveryMs));
   }
 #endif
+#endif
   events=xQueueCreate(32,sizeof(Event));ledMutex=xSemaphoreCreateMutex();
   if (!events || !ledMutex) return false;
   usb_host_config_t host{}; host.intr_flags=ESP_INTR_FLAG_LEVEL1;
@@ -121,7 +123,18 @@ inline bool begin() {
   printf("USB HOST CONFIG: FS/LS only on onboard HS controller (12 Mbit/s hub)\n");
 #endif
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
+#if defined(AGON_EXTENDER_USB_DIRECT_FS)
+  // INPUT-004: Author-wired P4-PC EXT1.4/6 connects directly to the separate
+  // FS PHY. IDF5.5.5 usb_host.h selects peripheral1 with BIT1 (=2), and
+  // soc/esp32p4/usb_dwc_periph.c maps its D-/D+ to GPIO26/27. Do not use map3:
+  // this SDK initializes one PHY only. The onboard HS hub/F310 is not serviced
+  // by this keyboard-only experiment. Keep the physical board profile unchanged;
+  // explicit build selection and manifests record this experimental route.
+  host.peripheral_map=2;
+  printf("USB HOST CONFIG: direct FS controller, GPIO26 D-/GPIO27 D+, map=2\n");
+#else
   host.peripheral_map=board::kUsbPeripheralMap;
+#endif
 #else
   host.peripheral_map=0; // Historical DevKit dedicated HS USB-P/USB-N.
 #endif

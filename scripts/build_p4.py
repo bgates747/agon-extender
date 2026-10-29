@@ -596,6 +596,8 @@ def main() -> None:
                         help="tracked board name (default: p4-devkit)")
     parser.add_argument("--usb-fsls-only", action="store_true",
                         help="experimental P4-PC-only full/low-speed USB host backport")
+    parser.add_argument("--usb-direct-fs", action="store_true",
+                        help="INPUT-004 keyboard-only P4-PC GPIO26/27 USB controller")
     parser.add_argument("--parallel-data-check", action="store_true", help="comparison-only native roundtrip; excludes PCNT and probe logging")
     parser.add_argument("--exext-stream", action="store_true", help="experimental ordinary bidirectional ExExt VDU stream")
     parser.add_argument("--parallel-probe-candidate", action="store_true", help="private PORT-008 qualification storage/receipts")
@@ -679,6 +681,8 @@ def main() -> None:
     board, board_path = load_board(args.board, args.profile)
     if args.usb_fsls_only and (args.board != "p4-pc" or args.profile != "p4-console"):
         parser.error("--usb-fsls-only requires p4-pc / p4-console")
+    if args.usb_direct_fs and ((args.board, args.profile) != ("p4-pc", "p4-console") or args.usb_fsls_only):
+        parser.error("--usb-direct-fs requires p4-pc / p4-console and excludes --usb-fsls-only")
     if args.abort_on_alloc_failure and not (args.rolling_scanout and args.allow_dirty_experimental):
         parser.error("--abort-on-alloc-failure requires an explicit experimental rolling build")
     payload_arguments = (args.mos, args.mos_sha256, args.flash_agent)
@@ -810,6 +814,7 @@ def main() -> None:
                f"-DSDKCONFIG={sdkconfig}",
                f"-DAGON_DSP_LIFETIME_FIX={'ON' if profile.get('dsp_lifetime_fix') else 'OFF'}",
                f"-DAGON_USB_FSLS_ONLY={'ON' if args.usb_fsls_only else 'OFF'}",
+               f"-DAGON_USB_DIRECT_FS={'ON' if args.usb_direct_fs else 'OFF'}",
                *([f"-DAGON_HDMI_COMPONENT_DIR={checked_dir(HDMI_COMPONENT)}"]
                  if args.display_output == "hdmi" else []),
                "build"]
@@ -867,6 +872,8 @@ def main() -> None:
         validation.append("--direct-rgb888")
     if args.usb_fsls_only:
         validation.append("--usb-fsls-only")
+    if args.usb_direct_fs:
+        validation.append("--usb-direct-fs")
     subprocess.run(validation, check=True)
     size_tool = compiler.with_name("riscv32-esp-elf-size")
     elf = build / "agon_extender.elf"
@@ -932,6 +939,8 @@ def main() -> None:
         "exext_stream": args.exext_stream,
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,
+        "usb_direct_fs": args.usb_direct_fs,
+        "usb_selected_peripheral_map": 2 if args.usb_direct_fs else board["usb"]["peripheral_map"],
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "display_inputs": display_record,
