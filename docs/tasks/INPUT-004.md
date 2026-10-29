@@ -134,6 +134,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-06 | Author direction | Deprioritize the recovered controller transient and resume captured keyboard model comparisons on the unchanged firmware. Do not let speculative transient diagnostics delay the next attachment trial. |
 | I4-07 | Established for captured sample | Actual channel/host settings agree with explicit pinned SDK assignments. No register toggle or timing remedy is justified by this capture. Keyboard enumeration and typing still fail. |
 | I4-08 | Open source contract | Establish the integrated HS-UTMI frame-clock/HFIR contract in FS-only host mode and the exact FC06 bit2 preamble polarity from primary P4/PHY documentation. A count of60000 or an ambiguous field label does not establish a defect. |
+| I4-09 | Minimal reproduction established | The pinned USB-only image reproduces CHECK_SHORT_DEV_DESC failure while F310 enumerates at full speed. No keyboard HID admission. Minimal evidence does not identify the failed SETUP/DATA/STATUS stage or a vendor defect; assess one official USB-stack candidate for actual pre-v3 compatibility before proposing another temporary comparison. |
 
 ## Evidence and stop boundaries
 
@@ -172,7 +173,7 @@ Stop at an explicit Author boundary; never replay uncertain input/transfers.
    non-control-IN mechanism. Its allocator-zeroing assertion does not match our
    SDK: transfer data uses aligned internal DMA heap allocation without zeroing;
    the separate URB structure is calloc'ed. No new alignment defect is proven.
-6. Root and installed HID keyboard acquisition source match. Public HID1.2.1
+6. Root and installed HID keyboard acquisition source match. Public HID 1.2.1
    APIs report only successfully enumerated devices, not early EP0 failures.
    Existing controller client already logs every enumerated device identity.
    A tentative stale-active-handle concern was retracted after the pinned HID
@@ -304,7 +305,7 @@ retained informative failure, not keyboard acceptance or production promotion.
    keepalive. Neither a missing HID mapping nor an increased interstage delay
    is supported by this failure. The independent non-control-IN cache backport
    did not make this keyboard enumerate; do not infer broader cache qualification.
-6. Log interpretation gotcha: HID1.2.1's `No HID device at USB port 2` prints
+6. Log interpretation gotcha: HID 1.2.1's `No HID device at USB port 2` prints
    `dev_addr`, not the downstream socket number. Here it describes the vendor
    F310 interface. The enumeration failure's `[1:1]` is parent hub address 1,
    port 1, as defined in pinned `components/usb/enum.c`; do not confuse them.
@@ -783,7 +784,7 @@ proof of a vendor defect.
    this scope before the diagnostic build/install. The native fixture is
    `input004-usb-minimal-r01`, with a fresh identified UTC build and exact source
    archive/hash/commit. It remains outside production and ordinary P4 profiles.
-2. Pin ESP-IDF5.5.5/b774170f and HID1.2.1 to the installed retained component
+2. Pin ESP-IDF5.5.5/b774170f and HID 1.2.1 to the installed retained component
    bytes. Preserve board hub reset, selected HS peripheral, hub support, USB
    configuration, core1 USB installation/IRQ ownership, silicon revision bounds,
    app offset and partition table. Remove Extender display/network/controller/
@@ -827,7 +828,91 @@ no coredump component is selected; the experimental external-port reset-count
 symbol disappears but pinned `ext_port.c` falls back to the same value1. Other
 selected effective USB/core/cache/clock/silicon/console settings must agree.
 These differences are retained comparison limits, not complete configuration
-equality. HID1.2.1 is independently verified against the vendor package aggregate
+equality. HID 1.2.1 is independently verified against the vendor package aggregate
 `74b9c84cd2921a5e987f504c1713ca7819f7e8be80565e5253e9e9c7e07ab881`;
 the installed component is byte-identical, including its upstream disconnect
 cleanup. No local HID patch is introduced or removed by this baseline.
+
+
+## Minimal USB-only result — 2026-10-28
+
+The keyboard's first descriptor request also fails in the USB-only P4 image.
+F310 enumerates successfully at full speed on that image. The failure is thus
+reproduced without Extender display, network, controller client or EMOS transport
+services, yielding a compact baseline for vendor-stack comparisons. It does not
+prove a silicon/SDK defect or determine the wire-level cause.
+
+1. Final build `input004-usb-minimal-r01-b2026-10-29-00-05-23Z` uses committed
+   source `4610e9672bdb420e554cef1326a6fea756426ede`. Its application is 289,184
+   bytes, SHA-256
+   `0e0d896847907dd43ce5231adeb83591730bdbdee09b912ea952a18b33907a3b`.
+   Native build/validation passes in 179.53 host monotonic seconds. Independent
+   review verifies actual compile/object/archive/link-map/ELF agreement, all
+   manifest artifacts, pristine HID/USBH, the sole FSLS root-reset derivative
+   and the documented effective-configuration exceptions.
+2. Fresh actual MOS CLI/startup preflight passes in 8.86 host monotonic seconds.
+   The incoming whole P4 flash matches its retained rollback image before reuse.
+   Minimal app write/independent verification and full 16 MiB readback pass before
+   START. Agon remains held throughout the native image and planned restoration.
+   No mainboard/EMOS/startup/SD change, physical replug or Agon test invocation.
+3. Exact inert ready/build/source receipts precede one explicit serial START.
+   P4 confirms host IRQ allocation on core 1. The observer records F310
+   `046d:c21d` enumerated at full speed. The ordinary SDK emits
+   `Bad transfer status 1: CHECK_SHORT_DEV_DESC`, then request failure and hub-port
+   disable. No keyboard device identity/HID admission or keyboard report follows.
+4. After five observed seconds following the definite SDK failure, the host
+   sends one STOP. The app emits one HOST_STOPPED terminal receipt with elapsed
+   6,027,266 microseconds and keyboard_admitted=false; the host retains five
+   additional clean seconds. This is controlled collection completion, not a
+   keyboard pass, deadline expiration or measured enumeration latency. The
+   `esp_timer` clock's physical calibration is not measured.
+5. Raw serial capture is 5,180 bytes, SHA-256
+   `92ac6466a4daa58bb8706df45a13a5b2a605a8ba951922a9e3a5546a1c37be9e`.
+   Independent review confirms the raw capture/result counts and hash. Minimal
+   HCD instrumentation deliberately has no stage/HAL/register snapshot, so this
+   result cannot be labeled a newly proven SETUP0/XCS_XACT failure. The earlier
+   full-application snapshot alone proves that earlier sample's stage.
+
+| Observation | Installed Extender diagnostic baseline | Minimal USB-only image |
+|---|---|---|
+| Keyboard request | CHECK_SHORT_DEV_DESC fails | CHECK_SHORT_DEV_DESC fails |
+| Exact failing USB stage | Captured SETUP0/XCS_XACT | Not captured |
+| Keyboard HID admission | Absent | Absent |
+| F310 | Native USB valid/fault0 | Full-speed enumeration; no XInput client |
+| USB installation/IRQ core | 1 | 1 |
+| ESP-IDF / HID | 5.5.5/b774170f; pristine HID 1.2.1 | Same pins |
+| Extender display/network/EMOS services | Present | Absent |
+| HCD / USBH derivatives | FSLS, cache/diagnostics, task logging | Sole FSLS root-reset backport |
+
+The warning about no HID device at USB address2 concerns F310's vendor interface;
+it is not evidence of another socket failure. Further offline work should assess
+one official USB-host candidate's actual support for P4 revisions 100–199 and the
+pinned IDF/PHY interfaces. Do not relax revision checks, change unknown registers
+or automatically deploy another stack. Preserve this baseline and current
+production selection. Exact restoration and final CLI handback are recorded
+separately after verification.
+
+
+### Exact restoration and completed handback
+
+Run `INPUT-004-2026-10-29-00-11-58Z` completes its hardware transaction in 423.50
+host monotonic seconds, including both flash installations/readbacks, native
+acquisition and restored startup/admission. This is separate from compilation,
+preflight and the subsequent 7.40-second actual CLI check. Fixture/full readback
+retrieval takes 167.6 seconds; restored full readback takes 181.2 seconds. These are
+host USB-flash transport durations, not P4 rendering or device-input performance.
+
+After the controlled negative result, the host restores the exact incoming
+sectors `[0x20000,0x1d3000)`, including the original app tail. Independent app
+verification and full 16 MiB readback prove byte-for-byte equality to the incoming
+image, SHA-256
+`ffb16a6833e9e8028cbd1a4f15bd35d59c640ed6ca07e6e99cddc36f2caa171a`.
+The exact original Extender app/build is active again; the minimal image is no
+longer installed. P4 startup, HDMI/F310 readiness and then Agon admission pass
+before actual Legacy MOS commands are checked. Unchanged 108-byte startup,
+listener EXIT, printer mirror OFF and neutral input are verified. Final HDMI
+frames advance with zero faults; F310 status remains valid/fault0 without an
+operator movement exercise. All readers and reset holds are closed/released.
+No mainboard firmware, EMOS, startup or SD write occurred. Both devices remain
+attached, and no further hardware operation is queued. Retained machine-local
+completion/readback/CLI evidence is indexed by the current bench record.
