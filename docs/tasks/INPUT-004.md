@@ -1010,7 +1010,41 @@ the purpose of the authorized test; it is not an agent continuity measurement.
    VDP, startup or SD write. No automatic replay on uncertain effects.
 5. Capture keyboard enumeration/HID admission separately from physical typing.
    On success leave the reviewed variant ready for Author typing; it remains
-   experimental until bounded physical input tests and acceptance. On failure
-   retain the diagnostic result and restore the exact verified original P4
-   application before ordinary handback. This is no simultaneous-controller
+   experimental until bounded physical input tests and acceptance. If P4 startup
+   or ordinary CLI fails, retain the diagnostic result and restore the exact
+   verified original P4 application before ordinary handback. A healthy P4 with
+   no detected keyboard may retain the direct variant during the still-active
+   physical connection investigation; identify that state explicitly. This is no simultaneous-controller
    qualification, broader suite or production promotion.
+
+### Direct FS trial result — 2026-10-28
+
+The direct-FS driver starts normally, but keyboard connection/HID admission has
+not been observed. No descriptor failure is logged either. This differs from the
+earlier onboard-hub trial and does not establish an electrical or SDK cause.
+
+1. Root source `c7919440` and exact matched P4 source
+   `fd212503e34eb19761d59bc919f68bdda02b3954` are published. The latter changes
+   only four controller-selection/build files relative to the installed source;
+   all selected display/transport/board/configuration/dependency inputs match.
+2. Build `indexed-hdmi-r14-b2026-10-29-02-35-19Z` passes native validation in
+   613.82 host monotonic seconds. Application1,777,312bytes, SHA-256
+   `cdef666761a767e2675c8f2b2b397d0cc3836961cef783555219b8cff0360e61`.
+   Root verifies source archives, actual dependencies/compile flags and
+   preprocessed host mask2 with hub reset absent. SDK HCD/USBH remain pristine.
+   Embedded build/profile identity and manifest/archive source identity are
+   separate, as in the baseline; no full matched source hash is claimed embedded.
+3. Incoming whole flash freshly matches the retained rollback. App-only write,
+   independent app verification and complete16MiB readback pass; bytes outside
+   written app sectors remain unchanged. P4 initialization/direct-port banner/
+   display pass before Agon release. No mainboard/EMOS/startup/SD writes.
+4. Fresh admission and actual Legacy MOS CLI pass; startup remains the same
+   108bytes, listener exits and printer mirroring is disabled. Controller is
+   physically absent throughout, as requested. Physical typing was not tested.
+5. Initial boot and an additional bounded15second passive capture show no
+   keyboard connection/HID-ready indication or enumeration-error line. All
+   readers and reset holds are closed. Keep the healthy direct variant for the
+   active connection investigation; the original image/sector rollback remains
+   retained. Obtain red-to-black VBUS voltage at the USB connection before
+   attributing this result to signal wiring or driver behavior. Detailed
+   machine-specific receipts remain under ignored task evidence.
