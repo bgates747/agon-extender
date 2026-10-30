@@ -72,6 +72,35 @@ def check_usb_ep0_linkage(commands: list[dict], ninja: str, build: Path, enabled
         fail("USBH derivative archive is absent from ELF link")
 
 
+def check_usb_dual_derivative(upstream: Path, derivative: Path) -> None:
+    if hashlib.sha256(upstream.read_bytes()).hexdigest() != "90c363001ce460d2d1648db89f2db4a7aab126446ce2f6840e27c462a009f83f":
+        fail("USB host upstream identity changed")
+    if hashlib.sha256(derivative.read_bytes()).hexdigest() != "a8d0f5cd0f67d317e727ab181cdb2cddca5374376dc5f6b0bfc0e61bbc959d6f":
+        fail("USB host derivative differs from the complete bounded dual-host backport")
+
+
+def check_usb_dual_linkage(commands: list[dict], ninja: str, build: Path, enabled: bool) -> None:
+    """Require the sole complete host derivative in its USB archive and ELF."""
+    derivative = (build / "agon-extender-usb/usb_host.c").resolve()
+    actions = [c for c in commands if Path(c["file"]).name == "usb_host.c"]
+    if len(actions) > 1 or (enabled and len(actions) != 1):
+        fail("expected exactly one USB host compile action")
+    action = actions[0] if actions else None
+    if bool(action and Path(action["file"]).resolve() == derivative) != enabled:
+        fail("dual-host selection differs from compiled USB host source")
+    if not enabled:
+        return
+    check_usb_dual_derivative(IDF / "components/usb/usb_host.c", derivative)
+    archive = "esp-idf/usb/libusb.a"
+    edges = [line for line in ninja.splitlines() if line.startswith(f"build {archive}:")]
+    obj = action.get("output")
+    if len(edges) != 1 or not obj or obj not in edges[0].split():
+        fail("USB host derivative object is absent from USB archive")
+    elf = [line for line in ninja.splitlines() if line.startswith("build agon_extender.elf:")]
+    if len(elf) != 1 or archive not in elf[0].split():
+        fail("USB host derivative archive is absent from ELF link")
+
+
 def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, rolling_scanout: bool = False, build: Path | None = None, hdmi_timing: str = "1280x720") -> None:
     """Prove the selected bridge object reaches the ELF; reject stale copies."""
     bridge = (VDP / HDMI_COMPONENT / "esp_lcd_lt8912b.c").resolve()
@@ -142,6 +171,7 @@ def main() -> None:
     parser.add_argument("--board", help="require and verify board provenance for new builds")
     parser.add_argument("--usb-fsls-only", action="store_true")
     parser.add_argument("--usb-direct-fs", action="store_true")
+    parser.add_argument("--usb-dual-host", action="store_true")
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser")
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720")
     parser.add_argument("--parallel-data-check", action="store_true")
@@ -167,6 +197,8 @@ def main() -> None:
     parser.add_argument("--render-benchmark-output", choices=("normal", "hold", "off", "convert-off"))
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
+    if args.usb_dual_host and ((args.board, args.profile) != ("p4-pc", "p4-console") or args.usb_direct_fs or not args.usb_fsls_only):
+        parser.error("dual host requires p4-pc / p4-console / --usb-fsls-only and excludes direct FS only")
     if args.usb_direct_fs and ((args.board, args.profile) != ("p4-pc", "p4-console") or args.usb_fsls_only):
         parser.error("direct FS requires p4-pc / p4-console and excludes HS FSLS backport")
     output = args.output.resolve()
@@ -206,6 +238,7 @@ def main() -> None:
         if len(usb_edges) != 1 or hcd_action["output"] not in usb_edges[0]:
             fail("USB derivative object is absent from USB archive")
     check_usb_ep0_linkage(commands, ninja_path.read_text(), output / "build", args.usb_fsls_only)
+    check_usb_dual_linkage(commands, ninja_path.read_text(), output / "build", args.usb_dual_host)
     selected = [(VDP / item).resolve() for item in profile["sources"]]
     forbidden = [(VDP / item).resolve() for item in profile["forbidden_sources"]]
     problems: list[str] = []
@@ -246,6 +279,8 @@ def main() -> None:
                 fail("HDMI timing selection disagrees with compiled definitions")
         if ("-DAGON_EXTENDER_USB_FSLS_ONLY=1" in argv) != args.usb_fsls_only:
             fail("USB FSLS application diagnostic disagrees with compiled HCD")
+        if ("-DAGON_EXTENDER_USB_DUAL_HOST=1" in argv) != args.usb_dual_host:
+            fail("Dual-host USB selection differs from compile action")
         if ("-DAGON_EXTENDER_USB_DIRECT_FS=1" in argv) != args.usb_direct_fs:
             fail("Direct FS USB controller selection differs from compile action")
         if not selected_definition(argv, "AGON_EXTENDER_CONTROLLER_INPUT", args.controller_input):
@@ -398,7 +433,8 @@ def main() -> None:
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,
         "usb_direct_fs": args.usb_direct_fs,
-        "usb_selected_peripheral_map": 2 if args.usb_direct_fs else (board["usb"]["peripheral_map"] if args.board else None),
+        "usb_dual_host": args.usb_dual_host,
+        "usb_selected_peripheral_map": 3 if args.usb_dual_host else (2 if args.usb_direct_fs else (board["usb"]["peripheral_map"] if args.board else None)),
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "render_benchmark_output": args.render_benchmark_output,
