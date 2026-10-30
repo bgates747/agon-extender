@@ -123,11 +123,17 @@ inline bool begin() {
   printf("USB HOST CONFIG: FS/LS only on onboard HS controller (12 Mbit/s hub)\n");
 #endif
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
-#if defined(AGON_EXTENDER_USB_DIRECT_FS)
+#if defined(AGON_EXTENDER_USB_DUAL_HOST)
+  // INPUT-004: both PHYs are initialized by the source-pinned upstream dual
+  // backport. The onboard hub uses the HS-capable controller's FSLS remedy;
+  // the keyboard retains its independent GPIO26/27 FS PHY and normal HID client.
+  host.peripheral_map=3;
+  printf("USB HOST CONFIG: dual host, onboard hub + GPIO26 D-/GPIO27 D+, map=3\n");
+#elif defined(AGON_EXTENDER_USB_DIRECT_FS)
   // INPUT-004: Author-wired P4-PC EXT1.4/6 connects directly to the separate
   // FS PHY. IDF5.5.5 usb_host.h selects peripheral1 with BIT1 (=2), and
-  // soc/esp32p4/usb_dwc_periph.c maps its D-/D+ to GPIO26/27. Do not use map3:
-  // this SDK initializes one PHY only. The onboard HS hub/F310 is not serviced
+  // soc/esp32p4/usb_dwc_periph.c maps its D-/D+ to GPIO26/27. Map3 needs
+  // the separately selected dual-host backport; unpatched SDK initializes one PHY. The onboard HS hub/F310 is not serviced
   // by this keyboard-only experiment. Keep the physical board profile unchanged;
   // explicit build selection and manifests record this experimental route.
   host.peripheral_map=2;

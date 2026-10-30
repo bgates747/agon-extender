@@ -174,6 +174,17 @@ that investigation; physical keyboard operation remains unqualified. See
 [INPUT-004](tasks/INPUT-004.md) for current research and candidate gates, and
 [BOARD-001](tasks/BOARD-001.md) for the original evidence.
 
+The experimental `--usb-dual-host --usb-fsls-only` selection runs the P4-PC's
+onboard hub/controller and directly wired GPIO26/27 keyboard together. The
+source-pinned [dual-host recipe](../vdp/native/usb_dual_host.cmake) backports
+Espressif's per-port PHY initialization/cleanup into generated `usb_host.c`;
+the SDK remains unchanged. It selects map3, defaults both FIFOs and preserves
+the existing HS FSLS remedy. The keyboard-only `--usb-direct-fs` option is
+mutually exclusive. Manifests and validation require the sole complete host
+derivative to reach the USB archive and ELF, alongside the existing HCD/USBH
+derivatives. Native lifecycle tests cover partial failures and cleanup; physical
+coexistence is still pending in [INPUT-004](tasks/INPUT-004/COEXISTENCE-R01.md).
+
 The separate experimental `--usb-direct-fs` selection uses P4-PC GPIO26/D- and
 GPIO27/D+ through EXT1 contacts4/6, bypassing the onboard hub. It requires
 `p4-console --board p4-pc` and excludes `--usb-fsls-only`. The default board

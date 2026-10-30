@@ -560,6 +560,8 @@ def main() -> None:
                         help="tracked board name (default: p4-devkit)")
     parser.add_argument("--usb-fsls-only", action="store_true",
                         help="experimental P4-PC-only full/low-speed USB host backport")
+    parser.add_argument("--usb-dual-host", action="store_true",
+                        help="INPUT-004 P4-PC onboard controller plus direct FS keyboard")
     parser.add_argument("--usb-direct-fs", action="store_true",
                         help="INPUT-004 keyboard-only P4-PC GPIO26/27 USB controller")
     parser.add_argument("--parallel-data-check", action="store_true", help="comparison-only native roundtrip; excludes PCNT and probe logging")
@@ -642,6 +644,8 @@ def main() -> None:
     board, board_path = load_board(args.board, args.profile)
     if args.usb_fsls_only and (args.board != "p4-pc" or args.profile != "p4-console"):
         parser.error("--usb-fsls-only requires p4-pc / p4-console")
+    if args.usb_dual_host and ((args.board, args.profile) != ("p4-pc", "p4-console") or args.usb_direct_fs or not args.usb_fsls_only):
+        parser.error("--usb-dual-host requires p4-pc / p4-console / --usb-fsls-only and excludes --usb-direct-fs")
     if args.usb_direct_fs and ((args.board, args.profile) != ("p4-pc", "p4-console") or args.usb_fsls_only):
         parser.error("--usb-direct-fs requires p4-pc / p4-console and excludes --usb-fsls-only")
     if args.abort_on_alloc_failure and not (args.rolling_scanout and args.allow_dirty_experimental):
@@ -775,6 +779,7 @@ def main() -> None:
                f"-DSDKCONFIG={sdkconfig}",
                f"-DAGON_DSP_LIFETIME_FIX={'ON' if profile.get('dsp_lifetime_fix') else 'OFF'}",
                f"-DAGON_USB_FSLS_ONLY={'ON' if args.usb_fsls_only else 'OFF'}",
+               f"-DAGON_USB_DUAL_HOST={'ON' if args.usb_dual_host else 'OFF'}",
                f"-DAGON_USB_DIRECT_FS={'ON' if args.usb_direct_fs else 'OFF'}",
                *([f"-DAGON_HDMI_COMPONENT_DIR={checked_dir(HDMI_COMPONENT)}"]
                  if args.display_output == "hdmi" else []),
@@ -827,6 +832,8 @@ def main() -> None:
         validation.append("--usb-fsls-only")
     if args.usb_direct_fs:
         validation.append("--usb-direct-fs")
+    if args.usb_dual_host:
+        validation.append("--usb-dual-host")
     subprocess.run(validation, check=True)
     size_tool = compiler.with_name("riscv32-esp-elf-size")
     elf = build / "agon_extender.elf"
@@ -854,6 +861,10 @@ def main() -> None:
                                build / "agon-extender-usb/hcd_dwc.c",
                                VDP / "native/usb_ep0_task_logging.cmake",
                                build / "agon-extender-usb/usbh.c"])
+    if args.usb_dual_host:
+        artifact_paths.extend([VDP / "native/usb_dual_host.cmake",
+                               VDP / "compat/usb_dual_host/usb_host.patch",
+                               build / "agon-extender-usb/usb_host.c"])
     if source_record is not None:
         artifact_paths.extend([output / "source.tar.gz", output / "source-inputs.json"])
     record = {
@@ -889,7 +900,8 @@ def main() -> None:
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,
         "usb_direct_fs": args.usb_direct_fs,
-        "usb_selected_peripheral_map": 2 if args.usb_direct_fs else board["usb"]["peripheral_map"],
+        "usb_dual_host": args.usb_dual_host,
+        "usb_selected_peripheral_map": 3 if args.usb_dual_host else (2 if args.usb_direct_fs else board["usb"]["peripheral_map"]),
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "display_inputs": display_record,
