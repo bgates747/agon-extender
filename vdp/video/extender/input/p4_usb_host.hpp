@@ -124,8 +124,8 @@ inline bool begin() {
 #endif
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
 #if defined(AGON_EXTENDER_USB_DUAL_HOST)
-  // INPUT-004: both PHYs are initialized by the source-pinned upstream dual
-  // backport. The onboard hub uses the HS-capable controller's FSLS remedy;
+  // INPUT-004: the archive-pinned complete USB1.6.0 override initializes both
+  // PHYs and root ports. IDF5.5.5 hub.c selected only one even with both PHYs. The onboard hub uses the HS-capable controller's FSLS remedy;
   // the keyboard retains its independent GPIO26/27 FS PHY and normal HID client.
   host.peripheral_map=3;
   printf("USB HOST CONFIG: dual host, onboard hub + GPIO26 D-/GPIO27 D+, map=3\n");

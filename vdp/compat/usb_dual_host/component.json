@@ -1,0 +1,149 @@
+{
+  "component": "espressif/usb",
+  "version": "1.6.0",
+  "source_commit": "630f1c4e61f71d62bb57ff1b840931da24c3329f",
+  "archive_sha256": "da5be2a2743ede3bd63e6c4046e381e24b16567ea8a7541b6f5d094abea5098b",
+  "license": "Apache-2.0",
+  "files": [
+    {
+      "path": "usb/CHANGELOG.md",
+      "bytes": 3021,
+      "sha256": "cb0b0d65b9e66c93b070605311539dbd839af1d9bb3dc5fbaeb673e6bfd9f0e4"
+    },
+    {
+      "path": "usb/CMakeLists.txt",
+      "bytes": 2984,
+      "sha256": "0b970ef46c310dbe175d7d2fddbc5051a5a7a0cae1e90b93365a93e2d12548e5"
+    },
+    {
+      "path": "usb/Kconfig",
+      "bytes": 11349,
+      "sha256": "e3ab7801e8e267ce09b6d8a6f52f672a10df902fa6c30e2eb5d3cd1649366af9"
+    },
+    {
+      "path": "usb/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "usb/README.md",
+      "bytes": 3087,
+      "sha256": "d12a90c0d05cd5e10f4c38656e2b0e87520ad81abc53a48d7839bfbf0726980a"
+    },
+    {
+      "path": "usb/idf_component.yml",
+      "bytes": 545,
+      "sha256": "da59208eee4b3f5e0c666dddd589a3fced771bcbfc1da1b59366b7735298b597"
+    },
+    {
+      "path": "usb/include/usb/usb_helpers.h",
+      "bytes": 8066,
+      "sha256": "116f32608a3597a29491de997aa442e1e44835a12e3d01b77628c3a900840b53"
+    },
+    {
+      "path": "usb/include/usb/usb_host.h",
+      "bytes": 34294,
+      "sha256": "0b92de54a06f6e230b35c357e120aedc446ffcbe8f4897dffb89db15335c6450"
+    },
+    {
+      "path": "usb/include/usb/usb_types_ch11.h",
+      "bytes": 14930,
+      "sha256": "ae164e42c3904898c57e65afea757559dcbe90ca2a91d70387f153d293cca861"
+    },
+    {
+      "path": "usb/include/usb/usb_types_ch9.h",
+      "bytes": 25295,
+      "sha256": "4cbd0ee3f767cfd6e6dde91f7c8bbd6982d231815908bb50589f5f06c2311d2c"
+    },
+    {
+      "path": "usb/include/usb/usb_types_stack.h",
+      "bytes": 10940,
+      "sha256": "948508cf6eb2d593852b90b305baffbf0fe42ddc02766e246626a23811b87fa6"
+    },
+    {
+      "path": "usb/maintainers.md",
+      "bytes": 12251,
+      "sha256": "70dd4683d22b8eb5f9af567e6bd70803b3152ce091f17c8ca8da3d7681b34575"
+    },
+    {
+      "path": "usb/private_include/enum.h",
+      "bytes": 4985,
+      "sha256": "9d39eb3a94cd748e46fa01e1cdd5909372f58b4328524c6f0dee68ccbed87ef2"
+    },
+    {
+      "path": "usb/private_include/ext_hub.h",
+      "bytes": 9237,
+      "sha256": "cc589ea02b005ee7852d70a4e6cdb6f6d5b43b329314320d4af86d81803bd42f"
+    },
+    {
+      "path": "usb/private_include/ext_port.h",
+      "bytes": 6457,
+      "sha256": "44d4cd3df884def12c5041f12df6c80b9167b126c1515bf48506feec5ffee6b7"
+    },
+    {
+      "path": "usb/private_include/hcd.h",
+      "bytes": 22044,
+      "sha256": "71b13f768818bab0c0cb38584be667ace2126362dc175076bd1ffa1b1bafbf37"
+    },
+    {
+      "path": "usb/private_include/hub.h",
+      "bytes": 13043,
+      "sha256": "7c40a9160aef68db9dd5aad3668501b0482924530411ef86605d2a1830359814"
+    },
+    {
+      "path": "usb/private_include/usb_private.h",
+      "bytes": 3066,
+      "sha256": "cdc1354f59ef0444e3168d97815eb0bda56d1b362196d16924d800e9d391a9ae"
+    },
+    {
+      "path": "usb/private_include/usbh.h",
+      "bytes": 28748,
+      "sha256": "192a26aba75d60cae52a8c9a07fee3c0ccf0baf8e6512b5a0d435d2489b98ae8"
+    },
+    {
+      "path": "usb/src/enum.c",
+      "bytes": 55946,
+      "sha256": "ef3c16c712c065031c1aebc46308c1ecdf24f49230727300b918b0e1b7c051d9"
+    },
+    {
+      "path": "usb/src/ext_hub.c",
+      "bytes": 71607,
+      "sha256": "31d96a2082cd12648bd3eb999e117803368447e9c23b646090450eff141d269f"
+    },
+    {
+      "path": "usb/src/ext_port.c",
+      "bytes": 49731,
+      "sha256": "0760b3c8ef14813db621b66c19d27caea5391793c592ca480b6ce18121797736"
+    },
+    {
+      "path": "usb/src/hcd_dwc.c",
+      "bytes": 124071,
+      "sha256": "f7be5cff2be70176baab93e1b4e643e1d5bd3cd56383f01cc79392c76c5adc15"
+    },
+    {
+      "path": "usb/src/hub.c",
+      "bytes": 52573,
+      "sha256": "faf1f4e3c92ab3b97c3f9c4b714bc1c0bffa8d617d2fed8a96a83d81e175db8b"
+    },
+    {
+      "path": "usb/src/usb_helpers.c",
+      "bytes": 14840,
+      "sha256": "a156fba100eb3bdb7afcfc6b9e62a743635f3ac93b0125acb9050c6c5854f2f8"
+    },
+    {
+      "path": "usb/src/usb_host.c",
+      "bytes": 77122,
+      "sha256": "5c5309bf67fdaaec1d0a9b6778942c955873b9101462118c851ea20242229e33"
+    },
+    {
+      "path": "usb/src/usb_private.c",
+      "bytes": 2184,
+      "sha256": "04c809f6574e94d32696ab13467750917fde1e15995139cd82b271ab2c572ca1"
+    },
+    {
+      "path": "usb/src/usbh.c",
+      "bytes": 71613,
+      "sha256": "e4caa9cfeb665c0a04756d1eec491493ededfe0d65c449f1b14d2406c6be32bb"
+    }
+  ]
+}

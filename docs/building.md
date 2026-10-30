@@ -176,14 +176,20 @@ that investigation; physical keyboard operation remains unqualified. See
 
 The experimental `--usb-dual-host --usb-fsls-only` selection runs the P4-PC's
 onboard hub/controller and directly wired GPIO26/27 keyboard together. The
-source-pinned [dual-host recipe](../vdp/native/usb_dual_host.cmake) backports
-Espressif's per-port PHY initialization/cleanup into generated `usb_host.c`;
-the SDK remains unchanged. It selects map3, defaults both FIFOs and preserves
-the existing HS FSLS remedy. The keyboard-only `--usb-direct-fs` option is
-mutually exclusive. Manifests and validation require the sole complete host
-derivative to reach the USB archive and ELF, alongside the existing HCD/USBH
-derivatives. Native lifecycle tests cover partial failures and cleanup; physical
-coexistence is still pending in [INPUT-004](tasks/INPUT-004/COEXISTENCE-R01.md).
+archive-pinned [complete component](../vdp/compat/usb_dual_host/README.md)
+replaces only the USB host library with Espressif USB1.6.0. The earlier PHY-only
+adaptation failed: IDF5.5.5's hub still initialized one root port. The complete
+override includes the two-root hub/enumerator dependencies, retains the SDK
+PHY/HAL and HID driver, and leaves all pristine sources unchanged. Generated
+HCD/USBH derivatives retain only the HS FSLS reset assignment and task-owned
+EP0 error logging. Its public `fsls_only` option remains false because this
+older HAL rejects it; no capability guard is bypassed. The keyboard-only
+`--usb-direct-fs` selection remains mutually exclusive. Validation requires
+every selected USB source/object/archive/ELF edge, correct public-header
+precedence and the original SDK PHY. Host regressions execute the actual
+two-root hub initialization/power/cleanup and deferred EP0 action code.
+Physical coexistence and the HTTP-stack mitigation remain unverified; see
+[INPUT-004](tasks/INPUT-004/COEXISTENCE-R01.md).
 
 The separate experimental `--usb-direct-fs` selection uses P4-PC GPIO26/D- and
 GPIO27/D+ through EXT1 contacts4/6, bypassing the onboard hub. It requires

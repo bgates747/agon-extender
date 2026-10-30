@@ -1,4 +1,6 @@
-"""Execute the generated host lifecycle; mock only PHY/HCD/RTOS boundaries."""
+"""Historical PHY-only lifecycle regression; this does not test the hub.
+The maintained complete component is covered by test_usb_host_component.py.
+"""
 from pathlib import Path
 import subprocess
 import sys

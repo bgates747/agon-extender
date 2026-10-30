@@ -39,7 +39,7 @@ HDMI_GEOMETRIES = {"auto": (848, 480), "1280x720": (1280, 720), "848x480": (848,
 EXPERIMENTAL_HDMI_ID = re.compile(r"hdmi-001-r[0-9]{2}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 EXPERIMENTAL_BENCH_ID = re.compile(r"bench-009-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py",
-                "scripts/p4_board.py", "scripts/p4_ppa_clut.py")
+                "scripts/p4_board.py", "scripts/p4_ppa_clut.py", "scripts/p4_usb_host.py")
 
 
 def check_parallel_qualification_identity(build_id: str, selected: bool,
@@ -674,6 +674,9 @@ def main() -> None:
     shutil.copyfile(VDP / "native/CMakeLists.txt", project / "CMakeLists.txt")
     generated = project / "components/agon_vdp"
     generated.mkdir(parents=True)
+    if args.usb_dual_host:
+        from p4_usb_host import prepare
+        prepare(project)
     board_record = write_board_inputs(board, board_path, output, generated)
     asset_overrides: dict[str, Path] = {}
     if args.reset_url or args.display_output == "hdmi":
@@ -856,15 +859,20 @@ def main() -> None:
                                build/"dsi-strip/dw_gdma.c"])
     if args.exext_stream:
         artifact_paths.append(build/"exext-parlio/parlio_rx.c")
-    if args.usb_fsls_only:
+    if args.usb_fsls_only and not args.usb_dual_host:
         artifact_paths.extend([VDP / "native/usb_fsls_only.cmake",
                                build / "agon-extender-usb/hcd_dwc.c",
                                VDP / "native/usb_ep0_task_logging.cmake",
                                build / "agon-extender-usb/usbh.c"])
     if args.usb_dual_host:
-        artifact_paths.extend([VDP / "native/usb_dual_host.cmake",
-                               VDP / "compat/usb_dual_host/usb_host.patch",
-                               build / "agon-extender-usb/usb_host.c"])
+        from p4_usb_host import PACKAGE, verify
+        component = verify(project)
+        artifact_paths.extend([VDP / "native/usb_host_component.cmake",
+                               PACKAGE / "component.json", PACKAGE / "usb-1.6.0.zip",
+                               PACKAGE / "hcd_dwc.c.patch", PACKAGE / "usbh.c.patch",
+                               build / "agon-extender-usb/hcd_dwc.c",
+                               build / "agon-extender-usb/usbh.c"])
+        artifact_paths.extend(project / "components" / item["path"] for item in component["files"])
     if source_record is not None:
         artifact_paths.extend([output / "source.tar.gz", output / "source-inputs.json"])
     record = {
@@ -901,6 +909,7 @@ def main() -> None:
         "usb_ep0_task_logging": args.usb_fsls_only,
         "usb_direct_fs": args.usb_direct_fs,
         "usb_dual_host": args.usb_dual_host,
+        "usb_host_component": "espressif/usb1.6.0" if args.usb_dual_host else "IDF5.5.5",
         "usb_selected_peripheral_map": 3 if args.usb_dual_host else (2 if args.usb_direct_fs else board["usb"]["peripheral_map"]),
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
