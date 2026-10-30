@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-30T22:19:06.832304+00:00",
+  "result": "Rejected physical initialization; exact keyboard-only P4 restored; Agon admission not recovered",
+  "candidate": {
+    "build_id": "indexed-hdmi-r15-b2026-10-30-21-49-00Z",
+    "source_commit": "2d88a884e9d49c855a2dea774bbb6e2d3c7f01b9",
+    "before_sha256": "245adb1c4d30b0791b7f71c9d6bd63f66f12e6d56754f2337357d77d8b514224",
+    "after_sha256": "e43f3631702965a33618eee573d2e30ab685f29a15ca3f54cbf8d6153e3c549c",
+    "app_sha256": "bb61ba8c6e73bfe3fccceee1a3ebfda073add39f6aceb601314261285e6296f2",
+    "app_bytes": 1779152,
+    "written_sector_range": [
+      131072,
+      1912832
+    ],
+    "app_exact": true,
+    "outside_written_sectors_unchanged": true,
+    "bootloader_partitions_nvs_ota_retained": true,
+    "EMOS_flashed": false,
+    "mainboard_VDP_flashed": false,
+    "startup_modified": false
+  },
+  "candidate_boot": {
+    "keyboard_HID_admitted": true,
+    "F310_admission_observed": false,
+    "httpd_stack_overflow_count": 2,
+    "repeated_initialization": true,
+    "Agon_held_during_candidate": true,
+    "viewer_invoked": false
+  },
+  "restored": {
+    "restored_app_sha256": "cdef666761a767e2675c8f2b2b397d0cc3836961cef783555219b8cff0360e61",
+    "all_expanded_app_sectors_exact": true,
+    "whole_flash_verified": true,
+    "full_sha256": "149c48598685a8863f64126c93914994e1d34c911373e5d728af7c38ab987029",
+    "fresh_crash_NVS_prefix_preserved": true,
+    "EMOS_mainboard_VDP_startup_unchanged": true
+  },
+  "recovery": {
+    "restored_P4_exact_startup_keyboard_HTTP_and_five_seconds_stable": true,
+    "reset_hold_released": true,
+    "Agon_only_reset_admission_returned": false,
+    "P4_then_Agon_reset_admission_returned": false,
+    "mainboard_passive_captures_bytes": [
+      0,
+      0
+    ],
+    "operator_mainboard_reset_needed": true,
+    "no_test_or_application_invocation": true
+  },
+  "cause_limit": "Core dump confirms httpd stack-overflow detection; the offending handler/instruction and relationship to missing HS hub remain unresolved. The crashed task stack is unavailable in decoded dump.",
+  "evidence": {
+    "install/boot.bin": {
+      "bytes": 25293,
+      "sha256": "38f3c6d204342cd817d52b874d93e0f3c0c25d005b5cce657233195942066feb"
+    },
+    "crash-coredump.bin": {
+      "bytes": 31044,
+      "sha256": "d46f612d2247fb5c758eb8687d762581fa56820a505fb56d6816caf10f75ab13"
+    },
+    "crash-analysis.txt": {
+      "bytes": 39344,
+      "sha256": "e94993c04a181e1dfdec462a11a2f0a6210c2083f145da68b82c04ac1285e6a7"
+    },
+    "restore/boot.bin": {
+      "bytes": 6964,
+      "sha256": "51913a2a6831f500b1f8c6670aeabb247dc80078fab6beb3c0eb390567e95653"
+    },
+    "paired-p4-reset.bin": {
+      "bytes": 6514,
+      "sha256": "8a974e5b3858b3b3374f4c2a1fc5360ecc7ddc3fbc8baf7ce3425ea5c43165e0"
+    }
+  },
+  "subsequent_author_observation": {
+    "MOS_prompt_visible": true,
+    "Extender_keyboard_enabled": true,
+    "physical_keyboard_works": true,
+    "flight_simulator_runs": true,
+    "flight_simulator_controller_detected": false,
+    "controller_absence_expected_on_restored_direct_FS_P4": true,
+    "fresh_agent_CLI_check_performed": false
+  }
+}

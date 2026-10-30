@@ -22,6 +22,10 @@ Keep EMOS, mainboard VDP, startup and existing display behavior unchanged.
    layers accept multiple peripheral bits. Setting map3 alone is insufficient.
    The [pinned guide](https://docs.espressif.com/projects/esp-idf/en/v5.5.5/esp32p4/api-reference/peripherals/usb_host.html)
    explicitly identifies the one-host limitation.
+   **Corrected after physical failure:** HCD supports multiple peripherals,
+   but the selected `components/usb/hub.c:570` selects one root port, preferring
+   BIT1. The initial PHY-only backport therefore cannot service both devices.
+   The lifecycle mock proved PHY cleanup only and did not exercise that hub.
 4. Espressif [PR402](https://github.com/espressif/esp-usb/pull/402), commit
    `48b250fa36e92c64a37c333dc548c84cb48c6eac`, merged as
    `5d6ace9fbf86d00578bbc133e28306e8001ffca7`, adds per-port PHY handles,
@@ -72,7 +76,7 @@ This bounded continuation makes no simultaneous-device pass or byte-saving
 claim before measurement. No controller checksum, generic packet tunnel, extra
 EMOS diagnostic or application policy is introduced.
 
-## Prepared candidate — not installed
+## Prepared candidate — before physical installation
 
 Matched source `2d88a884e9d49c855a2dea774bbb6e2d3c7f01b9` builds cleanly as
 `indexed-hdmi-r15-b2026-10-30-21-49-00Z`. Complete native validation and actual
@@ -95,3 +99,65 @@ occurred. Fresh confirmation of Agon's foreground state and device attachments
 precedes those helpers: historical prompt receipts cannot establish a current
 idle application. Keyboard-only firmware remains installed; EMOS/mainboard
 VDP/startup are unchanged. This is a candidate, not test-readiness or a physical pass.
+
+## Physical initialization rejected and P4 restored — 2026-10-30
+
+After the Author confirmed both devices connected and an idle Legacy MOS prompt,
+actual CLI/startup checks passed. P4 application and full-flash readback matched;
+all bytes outside the application sectors were unchanged before execution.
+The candidate admitted the direct keyboard but did not demonstrate F310/hub
+admission. Two `httpd` stack-overflow panics restarted P4 during readiness checks.
+The decoded retained core confirms the task and panic; its crashed stack cannot
+identify the offending handler. Do not infer a USB/electrical root cause from
+that symptom. The installer retained Agon reset rather than releasing it into
+this rejected candidate. Future installation checks must stop at the first
+panic, stack-overflow indication or repeated startup before another status poll.
+
+The agent explicitly restored the incoming keyboard-only P4 application and
+every expanded application sector. Independent sector readback and full-device
+verification pass. The fresh crash/NVS prefix was preserved; no EMOS, mainboard
+VDP, startup or SD file was written. The restored exact P4 build, keyboard HID,
+HTTP startup and five clean seconds pass. The controller viewer was never run.
+[Installation evidence](COEXISTENCE-INSTALL-R01.json) records identities and limits.
+
+Agon's fresh Extender input admission did not return after reset-hold release.
+Both standing recovery steps were attempted: one Agon reset, then independently
+verified restored P4 reset/initialization followed by one Agon reset. Neither
+restored admission; both passive mainboard captures contain zero bytes. All
+readers/workers/holds are closed or released. Physical mainboard reset and current
+screen observation are required before dependent live checks. Steps4–6 remain
+incomplete; there is no simultaneous-device pass or production promotion.
+
+The Author subsequently reports a regular MOS prompt, Extender keyboard enabled
+and physical typing working. The loaded flight simulator runs but finds no
+controller. This is expected with the restored keyboard-only P4 selection, which
+does not service the onboard controller hub; it does not establish a simulator
+or EMOS regression. The agent made no EMOS or simulator change. Record this as
+Author-observed recovery, separate from the failed automated handback. Current
+foreground application must be confirmed before any further live intervention.
+
+## Offline correction boundary
+
+1. Replace the incomplete PHY-only adaptation with Espressif USB1.6.0 as one
+   complete, exact archive-pinned component override. It contains the two-root
+   hub, enumeration and public host changes together. Keep IDF5.5.5, its PHY/HAL,
+   pre-v3 silicon guards, clocks, HID1.2.1, board/display and both input clients.
+   The [official component contract](https://components.espressif.com/components/espressif/usb/versions/1.6.0/readme)
+   supports overriding the built-in5.x library; its exact source is
+   `630f1c4e61f71d62bb57ff1b840931da24c3329f`. Archive SHA-256 is
+   `da5be2a2743ede3bd63e6c4046e381e24b16567ea8a7541b6f5d094abea5098b`.
+2. Keep the public `fsls_only` field false: the pinned older HAL explicitly
+   lacks that capability. Retain the existing HS-only root-reset assignment
+   as a source-pinned derivative, and task-owned EP0 error reporting with bits
+   that do not collide with the newer component's existing actions. Do not
+   copy old LS probes or duplicate upstream cache fixes into the replacement.
+3. Bound the HTTP-task remediation independently. Its current request stack
+   is4096bytes and the controller status formatter reserves1600bytes before
+   SDK/formatting calls. Review actual compiled frames and provide headroom;
+   this does not prove the missing core stack's original call site. Keep the
+   crash evidence and distinguish a mitigation from a measured physical fix.
+4. Stop initialization observation on the first panic/stack-overflow/repeated
+   startup before another readiness poll. Verify that behavior offline.
+5. Produce and verify a fresh matched-source candidate offline. No additional
+   physical action is selected while the Author may be running the simulator.
+   Fresh foreground/attachment confirmation precedes a later installation.
