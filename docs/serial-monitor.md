@@ -65,6 +65,14 @@ observer, firmware replacement or display-route change.
    diagnostic mirror and closes the reader. Exclude the extra serial output
    from claims about uninstrumented performance or input latency.
 
+A missing mirrored prompt does not by itself establish failed keyboard input.
+At an independently established idle MOS prompt, an authorized finite listener
+start/read/EXIT exchange can verify actual command execution without relying on
+the mirror; a second successful listener invocation demonstrates CLI reentry.
+Keep that service exchange separate from serial capture and do not send it into
+an unknown foreground application. Record a silent observation channel as
+inconclusive rather than converting it into a keyboard-failure claim.
+
 P4's `/screen/text` endpoint and `scripts/screen_text.py` read the P4-rendered
 screen; they do not observe Legacy mainboard video. Stock `VDU 23,0,&83,x;y;`
 can recognize a currently drawn character through MOS, but it matches glyph

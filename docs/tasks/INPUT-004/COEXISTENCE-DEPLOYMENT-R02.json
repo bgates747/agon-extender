@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-30",
+  "result": "installed and bounded initialization/actual CLI checks pass; Author physical coexistence review pending",
+  "candidate": {
+    "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+    "source_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+    "app_bytes": 1786256,
+    "app_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+    "app_offset": 131072
+  },
+  "flash": {
+    "backup_bytes": 16777216,
+    "backup_sha256": "08b728b05545246893f8dbbe15d5910db6a6a1088195ae763512face860350ee",
+    "independent_readback_bytes": 16777216,
+    "readback_sha256": "5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833",
+    "written_sector_range": [
+      131072,
+      1921024
+    ],
+    "application_exact": true,
+    "outside_written_sectors_unchanged_before_execution": true,
+    "bootloader_partition_NVS_OTA_preserved": true,
+    "expanded_sector_rollback_retained": true
+  },
+  "initialization": {
+    "exact_build_marker_once": true,
+    "direct_keyboard_HID_admitted": true,
+    "keyboard_USB_VID_PID": "04d9:a088",
+    "onboard_hub_present": true,
+    "hub_USB_VID_PID": "1a40:0101",
+    "F310_USB_VID_PID": "046d:c21d",
+    "F310_first_report_valid": true,
+    "controller_source": "usb",
+    "controller_faults": 0,
+    "USB_faults": 0,
+    "malformed_reports": 0,
+    "native_USB_reports_observed": 1,
+    "clean_seconds_after_readiness": 5,
+    "display_available": true,
+    "display_faults": 0,
+    "crash_or_repeated_startup_observed": false
+  },
+  "actual_CLI": {
+    "verified": true,
+    "method": "two explicit listener/read/EXIT exchanges, second starts after first EXIT and VDU3",
+    "listener_exchanges": 2,
+    "listener_EXIT_acknowledged_and_offline": true,
+    "startup_bytes": 108,
+    "startup_sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "startup_unchanged": true,
+    "mirror_disable_command_executed": true,
+    "serial_mirror_capture_verified": false
+  },
+  "fixture": {
+    "SD_path": "/extender/controller/ctrlview.bin",
+    "build_id": "controller-viewer-r03-b2026-10-27-22-23-38Z",
+    "bytes": 28860,
+    "sha256": "4e7e0da37fe37d2fe04ea2342737173507090873244227b2286c88322aca2d51",
+    "matched_existing_EMOS_operations": "0-3",
+    "new_reduced_EMOS_gateway_installed": false,
+    "invoked": false,
+    "commands": [
+      "LOAD /extender/controller/ctrlview.bin",
+      "RUN &040000"
+    ],
+    "mode": "application captures entry mode, selects20 when necessary, settles and restores on Escape"
+  },
+  "durations": {
+    "clock": "host monotonic seconds",
+    "calibration": "not independently calibrated; operational durations, not controller latency or rendering measurements",
+    "installation_including_backup_verification_write_full_readback_and_initialization_seconds": 394.9403601009981,
+    "separate_actual_CLI_startup_and_viewer_readback_seconds": 12.65017539501423,
+    "physical_review_duration_measured": false
+  },
+  "unchanged": {
+    "EMOS_flash_written": false,
+    "mainboard_VDP_flash_written": false,
+    "startup_written": false,
+    "SD_file_written": false,
+    "simulator_modified": false
+  },
+  "handback": {
+    "Agon_reset_released": true,
+    "P4_and_mainboard_serial_readers_closed": true,
+    "keyboard_ready_neutral": true,
+    "SD_listener_offline": true,
+    "at_MOS_CLI": true,
+    "test_invocation_pending": true,
+    "no_background_operation_queued": true
+  },
+  "limits": [
+    "Physical keyboard typing and controller travel/buttons together on this candidate require Author review. Only one actual resting USB controller report was observed; cached publication counters are not USB report counts.",
+    "HTTP stack mitigation passed bounded initialization/service reads; the original missing crash stack still prevents attribution and this is not long-duration qualification.",
+    "Serial mirror silence did not establish failed keyboard input: Author confirmation and network-only CLI checks in the same input epoch corrected that interpretation.",
+    "Production selection, version and tag are unchanged; no new acceptance is claimed."
+  ]
+}

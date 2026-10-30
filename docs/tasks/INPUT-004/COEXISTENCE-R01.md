@@ -57,7 +57,7 @@ Keep EMOS, mainboard VDP, startup and existing display behavior unchanged.
    preserve all display/transport/board/dependency inputs, and produce a fresh
    clean identified experimental build. Verify actual compile/archive/link
    selection and pre-v3 guards. Run relevant offline input/build checks.
-4. [ ] Verify fresh bench state and actual CLI, read unchanged setup-only
+4. [x] Verify fresh bench state and actual CLI, read unchanged setup-only
    startup, retain rollback, then write only authorized P4 application sectors.
    Independently read back the app and untouched flash, initialize P4 before
    releasing/resetting Agon, and establish fresh input/actual CLI. Do not modify
@@ -67,7 +67,7 @@ Keep EMOS, mainboard VDP, startup and existing display behavior unchanged.
    its mode lifecycle. Actual physical key/controller exercise and visible
    smoothness require Author review. Ask in chat only for missing attachment or
    physical actions, preserving the keyboard-only rollback if coexistence fails.
-6. [ ] Close all unnecessary readers/input sessions, leave a responsive CLI or
+6. [x] Close all unnecessary readers/input sessions, leave a responsive CLI or
    explicitly identified review application, record exact final bytes/results
    and update current bench/task guides. Production/version promotion remains
    governed by later Author acceptance and agreed release identity.
@@ -229,3 +229,65 @@ failed gates. A new installer has passed static artifact/composition checks,
 but its mandatory successful live actuator/CLI receipts are absent, so it is
 not executable deployment authority. Printer mirroring after the latest failed
 command is not independently known; do not claim it was turned off.
+
+
+## Author correction and independent CLI proof — 2026-10-30
+
+The Author confirms that both HTTP and local USB keyboard input work extremely
+well, including switching, without any reset required. The missing serial
+mirror prompt was an inconclusive observation channel, not an established loss
+of MOS input. Do not preserve the earlier interpretation as a keyboard defect.
+
+A network-only check independently started the foreground fast listener, read
+unchanged startup and acknowledged EXIT twice, with VDU3 between exchanges.
+The second successful invocation proves CLI reentry after the first EXIT. Both
+exchanges pass in3.95host monotonic seconds, in the SAME input epoch observed
+after the preceding deliberate USB reset; no new reset occurred. Startup is
+still108bytes with its recorded hash and no RUN/EXEC. This supplies the missing
+actual CLI evidence and, with the retained fresh startup/input epoch from the
+USB circuit, permits the already authorized P4-only installation to resume.
+
+The agent selected the existing mainboard CH341 RTS/Q4 circuit for an independent
+reset hold; the Pi GPIO path remains unproved. The hold uses joined neutral
+open/release, asserts only logical RTS with DTR clear, verifies the exact local
+USB identity/path and records its independent process for explicit recovery.
+It does not write mainboard firmware or depend on the P4 being programmed.
+Preserve the prior failed observations as evidence; do not claim their exact
+cause or a repaired serial mirror. Production reset instructions are unchanged.
+
+
+## Complete component installed; physical control exercise pending
+
+The r16 complete dual-root candidate is installed with exact independent full
+readback. Only application sectors changed; bootloader, partitions and mutable
+prefix were preserved. Fresh rollback covers every expanded sector. Direct
+keyboard04d9:a088 and onboard hub1a40:0101 enumerate together; the F310046d:c21d
+provides a valid first USB report and becomes the active USB controller source.
+P4 display, five clean seconds, fresh Agon admission and two actual network-only
+CLI/listener/read/EXIT exchanges pass, with no observed crash or service error.
+The existing EMOS, mainboard VDP, startup and simulator were not modified.
+
+The installed old-ABI viewer-r03 is independently downloaded and matches its
+28,860-byte/hash identity. No reduced INPUT-005 EMOS endpoint or new-ABI viewer
+was installed. The viewer remains stopped; explicit invocation is:
+
+```text
+LOAD /extender/controller/ctrlview.bin
+RUN &040000
+```
+
+The app owns mode20 selection/settling and Escape restores the entry mode.
+Author review must exercise physical keyboard input/Escape and both sticks,
+triggers, D-pad including diagonals and buttons while both devices stay attached.
+One resting USB report is not that review, nor are cache-publication counters a
+physical USB report-rate measurement. Do not replace or launch the flight
+simulator as a substitute for this matched viewer check.
+
+[Deployment evidence](COEXISTENCE-DEPLOYMENT-R02.json) records exact bytes,
+bounded passes and remaining limits. Installation took394.94host monotonic
+seconds including backup/readback, separate from12.65seconds for actual CLI,
+startup and viewer readback. These clocks are not independently calibrated and
+are not controller-to-photon or rendering timing. All serial readers and reset
+controls are released, listener offline, keyboard neutral/ready, actual MOS CLI
+verified. No background work is queued. Physical coexistence acceptance,
+production promotion and agreed version/tag remain pending.
