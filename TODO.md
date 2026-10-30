@@ -29,7 +29,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Physical keyboard support — active
 
-- [ ] **[INPUT-005 — Application-owned controller routines and minimal EMOS transport](docs/tasks/INPUT-005.md)** — Recover maximum practical resident flash with a reusable personal API include, no MOSlet; preserve admitted transport and measure complete EMOS/application costs. Plan/freeze before implementation; offline tranche.
+- [ ] **[INPUT-005 — Application-owned controller routines and minimal EMOS transport](docs/tasks/INPUT-005.md)** — Offline extraction complete: 991 ROM bytes and 29 RAM bytes recovered; controller EMOS 126,826 /4,246 free. One public application include and mode20 viewer build; host/linked checks pass. Matched deployment/version selection, physical review and acceptance remain; hardware unchanged.
 
 - [ ] **[DIAG-003 — Extract remaining EMOS diagnostics](docs/tasks/DIAG-003.md)** — Offline implementation complete: 2,947 ROM bytes recovered; text utility and ordinary/controller builds pass host/linked checks. Physical review/deployment identity and acceptance remain; installed hardware unchanged.
 

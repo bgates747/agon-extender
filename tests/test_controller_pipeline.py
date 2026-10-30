@@ -8,6 +8,14 @@ ROOT=Path(__file__).resolve().parents[1]
 EMOS=ROOT.parent/'agon-emos'
 
 class Pipeline(unittest.TestCase):
+    def test_standalone_public_header(self):
+        with tempfile.TemporaryDirectory() as temp:
+            binary=Path(temp)/'public-header'
+            subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror',
+                            '-fsanitize=address,undefined','-I'+str(ROOT/'include'),
+                            str(ROOT/'tests/controller/public_header.cpp'),'-o',str(binary)],check=True)
+            subprocess.run([str(binary)],check=True)
+
     def test_p4_to_resident_service_to_actual_application_client(self):
         with tempfile.TemporaryDirectory() as temp:
             out=Path(temp)
@@ -23,7 +31,7 @@ class Pipeline(unittest.TestCase):
                             '-I'+str(EMOS/'tests/host'),'-I'+str(EMOS/'src'),
                             '-c',str(EMOS/'src/emos_controller.c'),'-o',str(out/'emos.o')],check=True)
             subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror',
-                            '-fsanitize=address,undefined','-I'+temp,'-I'+str(ROOT/'vdp/video'),
+                            '-fsanitize=address,undefined','-I'+temp,'-I'+str(ROOT/'vdp/video'),'-I'+str(ROOT/'include'),
                             str(ROOT/'tests/controller/pipeline.cpp'),str(out/'emos.o'),
                             '-o',str(out/'pipeline')],check=True)
             subprocess.run([str(out/'pipeline')],check=True)

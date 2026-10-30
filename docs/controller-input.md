@@ -1,15 +1,23 @@
 # Analog controller input
 
-The reviewed Linux viewer displays the Logitech F310's two sticks, separate
-analog triggers, D-pad and eleven buttons. A developmental UDP sender and P4
-receiver, resident EMOS service and Agon mode20 viewer now pass software checks
-and target builds. The Author-approved experimental P4r14/EMOSv0.1.27,
-sdserve-v0.3.0 and viewer-r03 installation is independently verified. The masked
-READ/UART failure was corrected with checksum-free controller records and
-interrupt-enabled copies. The Author subsequently reported that the controller
-worked and identified latency as the next problem. EMOSv27 also admits bounded
+The Linux and Agon viewers display the Logitech F310's two sticks, separate
+analog triggers, D-pad and eleven buttons. Current development source provides
+a reusable [application controller API](controller-api.md): application-linked
+routines interpret input while EMOS retains a small admitted UART endpoint.
+The new include/viewer requires matched reduced EMOS source; its gateway
+operations differ from the earlier physical installation. Software checks and
+AgonDev builds do not establish a newly installed or physically tested combination.
+
+Earlier physical review independently verified the experimental
+P4r14/EMOSv0.1.27, sdserve-v0.3.0 and viewer-r03 combination. That work corrected
+the masked READ/UART failure with checksum-free controller records and
+interrupt-enabled copies. The Author reported working input and identified
+latency as the next problem. That named EMOS image also admits bounded
 mainboard VDPlet discovery replies and leaves270 resident ROM bytes free.
-[INPUT-001](tasks/INPUT-001.md) retains integration evidence and acceptance gates.
+[INPUT-001](tasks/INPUT-001.md) retains those exact results and acceptance gates;
+the [frozen gateway contract](tasks/INPUT-005/CONTROLLER-GATEWAY-V1.md) describes
+their older operations0–3. This application extraction changes no installed
+firmware, startup or production selection.
 
 The [latency investigation](testing/controller-latency.md) found a low-priority
 P4 UDP worker waiting behind parser/video work. r14 raises that worker from
@@ -27,7 +35,8 @@ application-only P4 installation. Production acceptance remains open.
 Earlier r13 physical-review sessions used `--timeout-ms 1000` at120Hz to tolerate
 ACK stalls. The matched r14 Oryx tests use the250ms default; existing review
 launchers may still specify1000ms. That option changes failure detection, not
-input latency or EMOS's250ms cached-input freshness check. Neither setting
+input latency or the250ms application freshness bound. The new application
+library owns that bound; the earlier resident service applied it in EMOS. Neither setting
 establishes end-to-end120Hz application delivery.
 
 Use the [viewer guide](testing/controller-viewer.md) for local handling and
@@ -144,11 +153,15 @@ reports an absent service before changing mode. It also supports clearly
 labelled recorded-input review. Neither the native layout preview nor native
 pipeline test establishes physical font, mode restoration or controller timing.
 
-The [development service contract](protocols/controller-emos.md) describes
-EMOS's cached READ, bounded REQUEST and retained-edge acknowledgement. No
-application UART access, SD-lease borrowing or new global MOS API is supported.
-These experimental firmware builds are installed only within the recorded bench
-scope; they are not accepted or selected production.
+The [development transport contract](protocols/controller-emos.md) describes
+new gateway operations4–7, one-shot raw reply delivery and the application
+library's validation-before-acknowledgement. The reusable include owns source
+identity, press counts and stale-input neutralization. EMOS owns admission,
+correlation, bounded storage/deadlines and UART reception/serialization. The
+new library and reduced EMOS endpoint require a matched pair: an old endpoint
+rejects the new OPEN, and the reduced endpoint rejects old operations.
+P4's physical CI2/CIS2 carrier remains unchanged. No application UART/GPIO
+access, SD-lease borrowing or new global MOS API is supported.
 
 The corrected October27 viewer waits for the selected mode after a switch:
 stock VDP font changes also send mode information, and an older reply must not
@@ -169,6 +182,9 @@ ticks and242controller polls; maximum observed service gap is2nominal MOS units,
 with no reported drops/input/flight errors. These are foreground polling
 observations, not controller-to-photon measurements. Author gameplay/handling
 review remains open in the [fsim-owned task](../../agon-fsim/docs/tasks/FLIGHT-057.md).
+Those recorded runs use the earlier gateway. An external consumer must adopt
+the new public include together with matching EMOS before using the reduced
+endpoint; this tranche does not modify fsim or another project's mappings.
 
 ## Building and validation boundary
 

@@ -54,35 +54,33 @@ Preserve controller operation, ordinary input and EMOS ownership of transport.
 
 ## Work plan and gates
 
-1. [ ] Publish/freeze this task, component task and accepted architecture before
+1. [x] Publish/freeze this task, component task and accepted architecture before
    coding. Preserve diagnostic-extraction baseline bytes/maps/provenance.
-2. [ ] Specify the small gateway and application include together. Keep a single
+2. [x] Specify the small gateway and application include together. Keep a single
    active consumer, opaque boot-local ownership and request correlation; use
    finite expiry and distinguish source invalidity from carrier loss.
-3. [ ] Implement the reusable, allocation-free include in a role-named public
+3. [x] Implement the reusable, allocation-free include in a role-named public
    location. Provide named buttons, native sticks/triggers, optional eight-bit
    conversion, validity/age/source generation and retained press accounting.
    Bind through admitted EMOS calls; keep the header usable in host tests.
-4. [ ] Reduce resident code iteratively, moving request encoding, controller
+4. [x] Reduce resident code iteratively, moving request encoding, controller
    semantics, source/ACK tracking and age interpretation into the include.
    Preserve caller/buffer bounds, fixed endpoint, lifetime cleanup and short
    interrupt locks. Compare measured alternatives before retaining complexity.
-5. [ ] Make the mode20 viewer use the same include without changing its display
+5. [x] Make the mode20 viewer use the same include without changing its display
    lifecycle or input pacing. Identify fsim integration changes; do not modify
    another project's consumer or emulator without its own authority/review.
-6. [ ] Update meaningful tests for malformed state/transitions, no premature ACK,
+6. [x] Update meaningful tests for malformed state/transitions, no premature ACK,
    duplicate/short taps, source change, clock wrap, expiry/reopen, old-service
    refusal, failure cleanup and keyboard/Escape delivery. Exercise actual P4,
    resident and application code together; compile the public include on Agon.
-7. [ ] Build complete ordinary/controller EMOS through owner wrappers and all
+7. [x] Build complete ordinary/controller EMOS through owner wrappers and all
    mandatory guards. Record ROM/RAM deltas, resident increment, application
    code/RAM cost and exact artifacts. Keep rendering/transport timing separate.
-8. [ ] Update current public/operating/build contracts, frozen old-ABI description,
+8. [x] Update current public/operating/build contracts, frozen old-ABI description,
    task evidence and logs. Commit reviewable offline work where no emulator
    validation gate applies. Leave deployment identity, physical review and
    production acceptance/promotion explicitly pending.
-
-## Completion boundary
 
 ## Selected gateway layout for coordinated implementation
 
@@ -119,3 +117,32 @@ working target build of the existing viewer and passing software/instruction
 regressions complete the offline tranche. No claimed minimum size or universal
 USB compatibility follows from a code-size reduction. Physical USB coexistence
 remains INPUT-004, and future calibration/mapping UI remains a separate feature.
+
+## Offline tranche result — 2026-10-30
+
+[Measured results](INPUT-005/RESULTS.md) and [artifact metrics](INPUT-005/results.json)
+record 991 ROM bytes and 29 static RAM bytes recovered. Controller EMOS is 126,826
+bytes /4,246 free; its module is 1,208 ROM /102 RAM. Ordinary EMOS remains
+byte-identical. The public include and 32,267-byte mode20 viewer build on AgonDev;
+all 145 EMOS and 43 controller tests, linked controller/Escape,298 diagnostic and
+21 reservation cases pass. Fixed P4 physical CI2/CIS2 bytes are unchanged.
+
+A measured three-byte selective-lock improvement is retained. Final application
+review also corrects sample aging after potentially blocking SEND/healthy
+renewal calls; model regressions reproduce the prior stale-valid window.
+No firmware-space saving depends on dropping transport/caller/expiry guards.
+
+The [application guide](../controller-api.md) and current transport/fixture guides
+own recurring use. The old gateway description is frozen verbatim; its relative
+links preserve the old docs/protocols context. New operations 4–7 require a matched
+application/EMOS pair. Fsim's consumer migration, USB coexistence and calibration
+UI remain their respective owners' work. No emulator/hardware operation, SD or
+startup change, production selection or physical acceptance occurred.
+
+The repository-wide version validator still reports an unchanged published
+harness connectivity-hash mismatch; controller and component checks pass.
+Identification/deployment, physical review and agreed production version remain
+outside this completed offline tranche.
+
+EMOS implementation is committed as `c5cf7aa`; compiled input identities
+match the retained final source.

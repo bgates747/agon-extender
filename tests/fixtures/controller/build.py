@@ -109,21 +109,26 @@ def build(args):
     wire=ROOT/'vdp/video/extender/input/controller/appliance_wire.h'
     if wire.read_bytes()!=(args.emos_source/'src/emos_controller_wire.h').read_bytes():
         raise ValueError('EMOS/P4 controller wire definitions disagree')
-    shutil.copy2(wire,src/'controller_wire.h')
+    public=ROOT/'include/agon/controller.hpp'
+    public_text=public.read_text()
+    embedded=public_text.split('// BEGIN mechanically copied appliance_wire.h\n',1)[1].split('// END mechanically copied appliance_wire.h',1)[0]
+    if embedded!=wire.read_text():
+        raise ValueError('Public controller include/P4 wire definitions disagree')
+    (src/'agon').mkdir();shutil.copy2(public,src/'agon/controller.hpp')
     canonical_api=(args.emos_source/'src/mos_api.inc').read_text()
-    definitions=[]
     for symbol,owner in (('MOS_GETFUNCTION','mos_getfunction'),('EMOS_GATEWAY','mos_emos_gateway'),
                          ('EMOS_FUNCTION_GATEWAY','mos_function_emos_gateway')):
         match=re.search(r'^'+owner+r':\s+EQU\s+([0-9a-f]+)h',canonical_api,re.I|re.M)
         if not match:raise ValueError('Missing canonical EMOS binding: '+owner)
-        definitions.append(f'.equ {symbol}, 0x{match[1]}')
-    (src/'emos_api.inc').write_text('; Generated from maintained EMOS mos_api.inc; do not edit.\n'+'\n'.join(definitions)+'\n')
+        public_match=re.search(r'^#define AGON_CONTROLLER_'+symbol+r'\s+(0x[0-9a-f]+)',public_text,re.I|re.M)
+        if not public_match or int(public_match[1],16)!=int(match[1],16):
+            raise ValueError('Public controller include/EMOS binding disagrees: '+owner)
     font=font_data()
     (src/'font.hpp').write_text('// Generated12x16 monochrome font; do not edit.\n'
                               'static const unsigned char controller_font[]={'+','.join(str(b) for b in font)+'};\n')
     (work/'Makefile').write_text('NAME=ctrlview\nLDHAS_ARG_PROCESSING=1\nLDHAS_EXIT_HANDLER=0\n'
                                'include $(shell agondev-config --makefile)\n'
-                               'CXXFLAGS += -std=c++17 -fno-exceptions -fno-rtti -Wall -Wextra -Werror\n')
+                               'CXXFLAGS += -Isrc -std=c++17 -fno-exceptions -fno-rtti -Wall -Wextra -Werror\n')
     env=dict(os.environ,PATH=str(args.toolchain_bin.resolve())+os.pathsep+os.environ['PATH'])
     subprocess.run(['make','-C',str(work)],env=env,check=True)
     shutil.copy2(work/'bin/ctrlview.bin',package/'ctrlview.bin')
@@ -151,7 +156,7 @@ def build(args):
                   files={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in package.iterdir()},
                   inputs={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in
                           (HERE/'main.cpp',HERE/'live.hpp',HERE/'view.hpp',HERE/'native.cpp',HERE/'build.py',HERE/'identity.json',
-                           HERE.parent/'scroll/mode_lifecycle.hpp',HERE/'mos_io.asm',wire)},
+                           HERE.parent/'scroll/mode_lifecycle.hpp',HERE/'mos_io.asm',wire,public)},
                   emos_api_sha256=hashlib.sha256((args.emos_source/'src/mos_api.inc').read_bytes()).hexdigest())
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(output)

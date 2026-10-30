@@ -6,6 +6,13 @@
 #include <cstring>
 #include <cassert>
 using uint24_t=std::uintptr_t;
+struct PipelineBinding {
+    std::uint8_t request[66]{};
+    bool available(){return true;}
+    std::uint32_t clock();
+    std::uint32_t exchange(std::uint8_t*,unsigned,std::uint8_t*,unsigned,unsigned&);
+};
+#define AGON_CONTROLLER_VIEW_BINDING PipelineBinding
 #include "../fixtures/controller/live.hpp"
 #include "extender/input/controller/appliance.hpp"
 using namespace agon::extender::controller;
@@ -30,12 +37,21 @@ std::uint8_t emos_keyboard_send(const std::uint8_t*p,std::uint16_t length){
     if(p[6]==2)++closes;
     assert(peer.request(p+3,core,now_ms));return 0;
 }
-uint24_t controller_gateway_available(){return 1;}
-uint24_t controller_gateway_call(std::uint8_t*r){
-    assert(r[0]==66&&r[2]==1&&r[4]==3&&r[5]==10&&r[6]==2);
-    assert(!std::memcmp(r+25,"ext",3)&&!std::memcmp(r+41,"controller",10));
-    return emos_controller_gateway(r);
 }
+std::uint32_t PipelineBinding::clock(){return now_ms*120/1000;}
+std::uint32_t PipelineBinding::exchange(std::uint8_t*input,unsigned n,
+                                      std::uint8_t*output,unsigned cap,unsigned&received){
+    auto pointer=[](std::uint8_t*p,const void*address){
+        const auto value=reinterpret_cast<std::uintptr_t>(address);
+        p[0]=value;p[1]=value>>8;p[2]=value>>16;
+    };
+    std::memset(request,0,sizeof(request));request[0]=66;request[2]=1;
+    request[4]=3;request[5]=10;request[6]=2;
+    pointer(request+10,input);request[13]=n;
+    if(cap){pointer(request+16,output);request[19]=cap;}
+    std::memcpy(request+25,"ext",3);std::memcpy(request+41,"controller",10);
+    const auto result=emos_controller_gateway(request);received=emos_read24(request+22);
+    return result;
 }
 static void deliver(){
     std::uint8_t p[CONTROLLER_RESULT_SIZE];assert(peer.take(p,core,now_ms));
@@ -56,7 +72,7 @@ int main(){
     deliver();assert(client->update(sample));
     assert(sample.valid&&sample.stick[0]==32767&&sample.trigger[0]==255);
     assert(sample.presses[0]==1&&sample.held==0&&core.snapshot(0).queued==0);
-    assert(client->update(sample)&&sample.presses[0]==1); // Cached read: no duplicate tap.
+    assert(client->update(sample)&&sample.presses[0]==1); // Waiting: no duplicate tap.
     for(const unsigned time:{60u,120u,180u,240u,260u}){
         now_ms=time;deliver();assert(client->update(sample));
     }

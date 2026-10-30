@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "scope": "offline application-owned controller extraction; no deployment",
+  "build_identity": "UNVERSIONED-DO-NOT-DEPLOY",
+  "rom_capacity_bytes": 131072,
+  "baseline_emos_commit": "eebdd763f3b80c8671faa2e597e8471b4501308c",
+  "plan_commits": {
+    "extender": "b9c844aa7e2bd4ffe3f3258ce40e83bf9e8403dd",
+    "emos": "379bf34e7405d1ebe029b788b99e241692028c95"
+  },
+  "profiles": {
+    "controller": {
+      "before_rom_bytes": 127817,
+      "after_rom_bytes": 126826,
+      "rom_saved_bytes": 991,
+      "rom_change_percent": -0.7753272256429113,
+      "before_free_bytes": 3255,
+      "after_free_bytes": 4246,
+      "before_static_ram_bytes": 4189,
+      "after_static_ram_bytes": 4160,
+      "before_artifacts": {
+        "MOS.bin": {
+          "bytes": 127817,
+          "sha256": "33e93ccb7f5b31b2c24ef28be05a449a767373de205d1cc50c3bec84a6e0d144"
+        },
+        "MOS.elf": {
+          "bytes": 324388,
+          "sha256": "b42eaeeb92069ca8d2e2cb217ff8d4bb349190dfd8e037cd48fd3da3ef397ac9"
+        },
+        "MOS.map": {
+          "bytes": 79387,
+          "sha256": "6ad45c6ef323e7454467cd9a8bea0c13ab794c5171cc0b83d9d60d375ced999c"
+        }
+      },
+      "after_artifacts": {
+        "MOS.bin": {
+          "bytes": 126826,
+          "sha256": "90296038f8f1a33e34fbd0a1ea00bf0081dfa822cbf930cbf79782d4043c6fd4"
+        },
+        "MOS.elf": {
+          "bytes": 324200,
+          "sha256": "ed7ae4d9f1de32774e427ac270d5b2369086de072988a8e866a8cfd1f514f80f"
+        },
+        "MOS.map": {
+          "bytes": 79387,
+          "sha256": "2b013979e35cb697e5e947f5a8a41ebac37a229a969609353c8af3746ae90508"
+        }
+      }
+    },
+    "ordinary": {
+      "before_rom_bytes": 125520,
+      "after_rom_bytes": 125520,
+      "rom_saved_bytes": 0,
+      "rom_change_percent": 0.0,
+      "before_free_bytes": 5552,
+      "after_free_bytes": 5552,
+      "before_static_ram_bytes": 4058,
+      "after_static_ram_bytes": 4058,
+      "before_artifacts": {
+        "MOS.bin": {
+          "bytes": 125520,
+          "sha256": "9b442b14d7a29d15a46ee87087102846f23f5a3f77ffd7fa93c91cc849fa9b74"
+        },
+        "MOS.elf": {
+          "bytes": 323812,
+          "sha256": "fe8b2676f35d99e6ee3c1907cf40da4e551cb8815e4d6b9f82aec038369bacb3"
+        },
+        "MOS.map": {
+          "bytes": 78774,
+          "sha256": "dd94b081347c470da3f6849fbd9124ebb528c35b5ecdbd4a76831475ab001cff"
+        }
+      },
+      "after_artifacts": {
+        "MOS.bin": {
+          "bytes": 125520,
+          "sha256": "9b442b14d7a29d15a46ee87087102846f23f5a3f77ffd7fa93c91cc849fa9b74"
+        },
+        "MOS.elf": {
+          "bytes": 323812,
+          "sha256": "fe8b2676f35d99e6ee3c1907cf40da4e551cb8815e4d6b9f82aec038369bacb3"
+        },
+        "MOS.map": {
+          "bytes": 78774,
+          "sha256": "dd94b081347c470da3f6849fbd9124ebb528c35b5ecdbd4a76831475ab001cff"
+        }
+      }
+    }
+  },
+  "controller_object": {
+    "before": {
+      "rom": 2199,
+      "ram": 131,
+      "text": 2194,
+      "rodata": 5,
+      "data": 0,
+      "bss": 131,
+      "vectors": 0
+    },
+    "after": {
+      "rom": 1208,
+      "ram": 102,
+      "text": 1201,
+      "rodata": 7,
+      "data": 0,
+      "bss": 102,
+      "vectors": 0
+    },
+    "rom_change_percent": -45.06593906321055
+  },
+  "lock_experiment": {
+    "first_extraction_rom_bytes": 1211,
+    "selective_lock_rom_bytes": 1208,
+    "additional_rom_saved_bytes": 3,
+    "static_ram_bytes": 102
+  },
+  "application_probe": {
+    "scope": "same toolchain/SDK/options; two update calls plus state observation; includes newly linked shared helpers and3-byte observation variable",
+    "empty": {
+      "file_bytes": 1110,
+      "sha256": "252ce04cbd54e39cd998376839a85216dd0e9b934bf1a15f763298c30aa064cc",
+      "static_ram_bytes": 132,
+      "bss_bytes": 54,
+      "main_bss_bytes": 0
+    },
+    "controller": {
+      "file_bytes": 6095,
+      "sha256": "43a13002914c396508c91482033b184e67c606956406d76055e6b6cb13cf7942",
+      "static_ram_bytes": 417,
+      "bss_bytes": 339,
+      "main_bss_bytes": 285
+    },
+    "file_increment_bytes": 4985,
+    "static_ram_increment_bytes": 285,
+    "client_object_bytes": 282,
+    "observation_variable_bytes": 3,
+    "public_header_sha256": "afaf2adfa332376b5fc52c0af0e5776f34ccd34bf137cac286f9564dbe5a1b77"
+  },
+  "viewer": {
+    "file_bytes": 32267,
+    "sha256": "8ff425990ee50b5ea1fcfc21eb19297244461531985f10c18c8c8feac27e7abf",
+    "scope": "complete mode20 live/replay viewer including UI/font/mode lifecycle; no physical execution"
+  },
+  "validation": {
+    "emos_host_tests": 145,
+    "extender_controller_host_tests": 43,
+    "linked_uart_diagnostic_cases": 298,
+    "linked_uart_reservation_cases": 21,
+    "linked_controller": "PASS:96 raw stores with IRQ enabled; real Escape IRQ; bounds/correlation/lifetime/expiry/cleanup/IFF/SP/IX",
+    "receive_model_instructions": 1510,
+    "receive_model_longest_masked_instructions": 86,
+    "receive_escape_model_instructions": 2031,
+    "receive_escape_model_longest_masked_instructions_including_irq": 519,
+    "timing_scope": "synthetic instruction counts; not calibrated physical time",
+    "hardware_executed": false,
+    "production_changed": false
+  },
+  "source_verification": {
+    "verified_firmware_inputs": 117,
+    "unchanged_generic_adaptations": [
+      "main.c",
+      "src/clock.h",
+      "src/defines.h",
+      "src/mos.c",
+      "src/mos_api.asm",
+      "src/mos_editor.c",
+      "src/sd.asm",
+      "src/timer.c",
+      "src/uart.c",
+      "src/vdp_protocol.asm",
+      "src_fatfs/diskio.c"
+    ],
+    "builder_commit": "49dc33fee817cb184572351ee71dae7da9a139c4"
+  },
+  "source_archives": {
+    "emos-firmware-source.tar.gz": "5da9ed05b18a89c07bf79e36394739da6cade56b004a12bf1ac364e474ea428c"
+  },
+  "unrelated_preexisting_check": {
+    "command": ".venv/bin/python scripts/validate-version-records.py",
+    "status": "fails on unchanged published harness profile connectivity hash mismatch",
+    "profile": "hardware/designs/light2-harness-r02/profile.yaml",
+    "connectivity": "hardware/designs/light2-harness-r02/connectivity.yaml",
+    "published_head_connectivity_sha256": "c68e4d4ffa2211cb18d3d558b3c88393cb1583d431e9258b6e78e7a10a6eda6f",
+    "expected_connectivity_sha256": "560ab589c9f0bbf63ecc17e747eff15208fb672723489c3b4755d7d9fea6b79c"
+  },
+  "implementation_emos_commit": "c5cf7aa1133f7c7091157d90cc24a9dbd8ba2062",
+  "compiler": {
+    "sha256": "b26b8b361834c7af13d272408efafd350cf8d6493c89e50cecd73f9d9e70a220",
+    "version": "clang version 15.0.7 (https://github.com/AgonPlatform/agon-llvm-project.git c76386c0083e6a6236ff774275227e2389f85538)"
+  }
+}

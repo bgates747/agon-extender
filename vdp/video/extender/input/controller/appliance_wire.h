@@ -11,6 +11,14 @@
 #define CONTROLLER_RESULT_MAGIC "CIS2"
 #define CONTROLLER_RESULT_SIZE 96
 #define CONTROLLER_BATCH 8
+/* Application-owned controller interpretation: distinct gateway operations
+ * reject the older resident-semantic ABI. CI2/CIS2 UART bytes are unchanged. */
+#define CONTROLLER_GATEWAY_OPEN 4
+#define CONTROLLER_GATEWAY_RECEIVE 5
+#define CONTROLLER_GATEWAY_SEND 6
+#define CONTROLLER_GATEWAY_CLOSE 7
+#define CONTROLLER_GATEWAY_RESULT_SIZE 98
+#define CONTROLLER_GATEWAY_SEND_SIZE 20
 static unsigned short controller_u16(const unsigned char*p){return p[0]|((unsigned short)p[1]<<8);}
 static unsigned long controller_u32(const unsigned char*p){return (unsigned long)controller_u16(p)|((unsigned long)controller_u16(p+2)<<16);}
 static void controller_put16(unsigned char*p,unsigned short v){p[0]=v;p[1]=v>>8;}
