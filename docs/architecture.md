@@ -37,6 +37,12 @@ components are not thereby corrected or qualified.
 
 ## Analog controller ownership
 
+The Author's [application-controller decision](decisions/ADR-2026-10-30-application-controller-api.md)
+places request/reply interpretation, source/edge tracking and freshness policy
+in one reusable application include, without a MOSlet. P4 adapters normalize
+physical devices. EMOS retains admitted UART routing and bounded safe delivery;
+INPUT-005 owns migration from the larger installed resident controller service.
+
 Diagnostic sequences, grammar, timeout policy and reporting belong to external
 utilities where practical. EMOS retains minimum admitted transport operations,
 mode/input ownership and abandoned-utility cleanup. Fake hardware adapters

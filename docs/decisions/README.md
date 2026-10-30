@@ -55,6 +55,8 @@ attention instructions are not continuing execution authorization.
 
 [Keep diagnostic algorithms outside resident EMOS](ADR-2026-10-30-external-diagnostics.md): Accepted / Complete; DIAG-003 owns extraction and compatibility migration.
 
+[Keep controller interpretation in a reusable application include](ADR-2026-10-30-application-controller-api.md): Accepted / Complete; INPUT-005 owns the small resident endpoint and personal API include.
+
 [Staged WebDAV with EMOS admission](ADR-2026-09-27-staged-webdav-admission.md): Proposed / Partial; review and open decisions in REMOTE-005.
 
 When changing an ADR's identity, title, status or completeness, update this index.

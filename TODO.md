@@ -29,6 +29,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Physical keyboard support — active
 
+- [ ] **[INPUT-005 — Application-owned controller routines and minimal EMOS transport](docs/tasks/INPUT-005.md)** — Recover maximum practical resident flash with a reusable personal API include, no MOSlet; preserve admitted transport and measure complete EMOS/application costs. Plan/freeze before implementation; offline tranche.
+
 - [ ] **[DIAG-003 — Extract remaining EMOS diagnostics](docs/tasks/DIAG-003.md)** — Offline implementation complete: 2,947 ROM bytes recovered; text utility and ordinary/controller builds pass host/linked checks. Physical review/deployment identity and acceptance remain; installed hardware unchanged.
 
 - [ ] **[INPUT-004 — P4-PC onboard USB keyboard support](docs/tasks/INPUT-004.md)** — Author reports direct-header keyboard operation. Restore concurrent F310 acquisition on P4, audit resident controller logic for application ownership, and qualify typing/LEDs/reconnect/coexistence. Preserve EMOS, mainboard VDP and normal startup.
