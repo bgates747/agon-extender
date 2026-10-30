@@ -8,6 +8,11 @@ current behavior. Dated evidence supports claims but is not a second manual.
 Production **v0.1.0** is the accepted local combination. The [current approved local installation](../production/README.md) selects exact
 firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 
+The Author also accepts the newer P4-PC direct-keyboard/onboard-hub F310
+combination. Its [immutable application update](../production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml)
+preserves tested bytes and current EMOS; successor production selection/tagging
+await the declared version and canonical paired qualification gates.
+
 ## Before operational work
 
 Agents must use the [operation-protocol index](procedures/README.md) to select

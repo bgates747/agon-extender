@@ -20,6 +20,19 @@ and conflicting duplicates are rejected. Layout/admission loss invalidates the
 session. The host reports the difference between request acceptance, UART
 emission and separately observed eZ80 command/application completion.
 
+## Accepted P4-PC direct keyboard/controller combination
+
+The Author accepts native r16 P4-PC input with a keyboard on the separately
+exposed USB controller and an F310 through the onboard USB-A hub. P4's USB1.6.0
+host component services both controllers; the existing EMOS input admission and
+physical/browser ownership remain unchanged. The tested keyboard wiring uses
+GPIO26/D- and GPIO27/D+ with the documented USB power/ground; machine-local wiring
+remains in the hardware record. This does not establish onboard-hub keyboard
+compatibility or other-device/LED/reconnect coverage. See the
+[accepted update](../production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml)
+and [controller guide](controller-input.md) for exact bytes and the matched
+old-ABI viewer. Formal production selection remains separately gated.
+
 ## Pingo completion compatibility in the development EMOS build
 
 The installed development EMOS v0.1.27 retains v0.1.24's Pingo mainboard VDP ten-byte

@@ -75,8 +75,8 @@ checks pass. The Author reports working simultaneous input after the matched
 viewer review. Other devices, replug/LED behavior and long-duration operation
 remain unqualified. This P4-only update preserves the existing EMOS
 operations0–3; use the verified viewer-r03 at `/extender/controller/ctrlview.bin`,
-not the new operations4–7 viewer. [Coexistence evidence](tasks/INPUT-004/COEXISTENCE-DEPLOYMENT-R02.json)
-records its exact build, preserved components and limits. It is not production
+not the new operations4–7 viewer. [Accepted update bundle](../production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml)
+records its exact build, preserved components, archive location and limits. It is not production
 promotion or an end-to-end latency result.
 
 1. Connect the F310 to a P4-PC onboard USB-A socket. Keep existing Extender
@@ -98,8 +98,8 @@ promotion or an end-to-end latency result.
 4. Native USB acquisition currently starts with the HTTP/controller runtime
    after Ethernet initialization. Cold boot without that network startup is
    unqualified. Physical unplug/reconnect, complete control exercise,
-   simultaneous physical keyboard/controller and end-to-end latency remain
-   review gates. The bounded pass used browser/agent keyboard input.
+   other-device/reconnect behavior and end-to-end latency remain unqualified.
+   The newer r16 combination has separate Author simultaneous-input acceptance.
 
 ## Developmental LAN client
 

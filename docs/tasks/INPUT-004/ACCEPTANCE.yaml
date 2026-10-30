@@ -22,21 +22,21 @@ p4:
   silicon_revision_bounds: [100, 199]
   flash_offset: '0x20000'
   write_scope: application only; preserve incoming bootloader, partitions, NVS, OTA and startup
-  USB_host_component: espressif/usb1.6.0
+  usb_host_component: espressif/usb1.6.0
   peripheral_map: 3
 viewer:
   build_id: controller-viewer-r03-b2026-10-27-22-23-38Z
   source_commit: c9191a6bb8a6a2ea0cce982a2440d633b0cbe7a8
-  SD_path: /extender/controller/ctrlview.bin
+  sd_path: /extender/controller/ctrlview.bin
   size_bytes: 28860
   sha256: 4e7e0da37fe37d2fe04ea2342737173507090873244227b2286c88322aca2d51
 compatibility:
-  EMOS_build: agon-emos-v0.1.27-b2026-10-26-01-06-54Z
-  EMOS_ROM_sha256: 84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79
-  EMOS_source_state: Exact archived patch; not a clean-input canonical qualification receipt.
-  EMOS_controller_operations: '0-3; reduced INPUT-005 operations4-7 are not deployed'
+  emos_build: agon-emos-v0.1.27-b2026-10-26-01-06-54Z
+  emos_rom_sha256: 84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79
+  emos_source_state: Exact archived patch; not a clean-input canonical qualification receipt.
+  emos_controller_operations: '0-3; reduced INPUT-005 operations4-7 are not deployed'
   sdserve_build: sdserve-v0.3.0-b2026-10-25-05-14-41Z
-  mainboard_VDP: Preserved F060 app SHA-256 58aadf642e465bbb15006a24d54e47a9bb68eeaf403295e35981e8b1166b2c27
+  mainboard_vdp: Preserved F060 app SHA-256 58aadf642e465bbb15006a24d54e47a9bb68eeaf403295e35981e8b1166b2c27
 installed_readback_sha256: 5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833
 limits:
   - Onboard-hub keyboard enumeration remains unresolved; accepted keyboard wiring uses GPIO26 D- and GPIO27 D+.

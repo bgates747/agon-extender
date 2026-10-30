@@ -230,7 +230,7 @@ The separate native packager leaves the historical hybrid recipe untouched.
 R01-U01 [x] Record explicit feature acceptance, exact component identities,
 independent readback, rollback availability, preserved components and scope.
 
-R01-U02 [ ] Generate, extract and independently verify immutable runtime and
+R01-U02 [x] Generate, extract and independently verify immutable runtime and
 source/support archives, publish their portable bundle record and update current
 guides. Preserve private-configured binaries locally; no public upload.
 
@@ -250,3 +250,12 @@ in production/current.yaml, complete production docs, commit, create the agreed
 annotated immutable version tag, and publish commit/tag. Until then current
 qualified production remains v0.1.0; the accepted native update is unselected.
 No hardware operation is authorized merely by this packaging closeout.
+
+
+The accepted r16 application-update runtime/source-support archives are generated
+from committed packager inputs and independently extracted/hash/inventory
+verified. Their immutable production record is
+`production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml`;
+archive bytes remain locally in the matching dist/production directory. No
+bootloader/factory/full-device-backup payload is distributed. Packaging and
+acceptance are complete; R01-U03/U04/U05 remain explicit production gates.

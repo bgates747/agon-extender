@@ -36,6 +36,26 @@ retained; the installation baseline records bounded qualification. See the
 [status interpretation](../docs/versions/README.md#status-belongs-to-a-record-and-its-declared-scope):
 a build-time draft label does not negate its later recorded acceptance.
 
+## Accepted native keyboard/controller update
+
+The Author accepts the P4-PC direct-header USB keyboard and onboard-hub F310
+coexistence build `indexed-hdmi-r16-b2026-10-30-22-37-38Z`. Its exact tested
+application, matched old-ABI viewer, source/support and archive hashes are frozen
+in [the native update bundle](bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml).
+Both generated archives are retained under
+`dist/production/indexed-hdmi-r16-b2026-10-30-22-37-38Z/`; extraction and independent
+inventory/checksum verification pass. This component update preserves the
+existing bootloader, partitions, EMOSv27, listener and mainboard VDP. It does not
+contain an untested replacement factory image.
+
+Use [native update handling](native-p4-update.md) and its [source/notices](native-p4-notices.md).
+The archive is local-only and embeds the existing private reset endpoint.
+It remains **unselected**: an agreed successor production version and complete
+canonical paired qualification are still required before changing `current.yaml`
+or creating a release tag. The earlier v0.2.0 authorization applies to the older
+r10/EMOSv24 combination. [Release closeout](../docs/tasks/RELEASE-001.md) owns these
+remaining gates; feature acceptance is recorded without claiming a suite pass.
+
 The earlier `extender-installation-r01` is failed preparation evidence with an
 incompatible bootloader. **Do not deploy it.** Its immutable records and archives
 remain retained; they are not an alternative current installation.
