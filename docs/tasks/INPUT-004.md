@@ -7,6 +7,13 @@ failed its first descriptor transfer. Establish the remaining cause from pinned
 source and physical evidence, implement the smallest justified correction, and
 qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 
+**State:** The Author accepts the direct-header keyboard plus onboard-hub F310
+coexistence result on2026-10-30. Exact acceptance/build records are in
+[ACCEPTANCE.yaml](INPUT-004/ACCEPTANCE.yaml); the [coexistence record](INPUT-004/COEXISTENCE-R01.md)
+retains implementation and installed-byte proof. Onboard-hub keyboard failures
+and broader device/LED/reconnect coverage remain unqualified. RELEASE-001 owns
+formal production selection/version/qualification gates.
+
 ## State and authorization
 
 1. On 2026-10-28 the Author requests this research/implementation task, a commit
@@ -158,7 +165,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-12 | Author-selected experiment; wiring researched | Try a keyboard through the P4-PC's exposed full-speed USB signals, bypassing the onboard hub. Author reports a successful directly wired keyboard on the P4-DevKit; this is a useful control, not P4-PC qualification. Rev C EXT1 maps +5V=2, GND=3, GPIO26/D-=4, GPIO27/D+=6; pin1 is +3.3V and pin5 is ESP_EN. Firmware controller selection and simultaneous use of onboard F310 remain implementation/qualification gates. No physical rewiring, build or flash was performed during wiring research. |
 | I4-14 | Rejected incomplete implementation | The initial dual-PHY/map3 backport omitted IDF5.5.5's single-root hub limitation. The physical candidate admitted only the keyboard and crashed in HTTP readiness; exact keyboard-only P4 rollback is verified. No EMOS/mainboard VDP/startup change. |
 | I4-13 | Author constraint; application extraction implemented offline | Minimize resident controller logic and prefer Agon application ownership. Restore concurrent USB acquisition on P4 without EMOS growth. The initial candidates/baseline remain in [the audit](INPUT-004/EMOS-CONTROLLER-AUDIT.md). The application extraction and matched reduced EMOS are implemented under [INPUT-005](INPUT-005.md), but have not been installed on this bench. |
-| I4-15 | Selected offline correction | Replace only the USB host component with archive-pinned Espressif USB1.6.0, retaining SDK/PHY/HAL, silicon guards, HID and display. Keep the HS reset/EP0 task-log accommodations with complete source/linkage verification. Provide HTTP stack headroom and stop readiness checks on the first crash. Fresh Author foreground confirmation precedes physical installation; no coexistence pass is claimed. |
+| I4-15 | Implemented and Author accepted — 2026-10-30 | Replace only the USB host component with archive-pinned Espressif USB1.6.0, retaining SDK/PHY/HAL, silicon guards, HID and display. Keep the HS reset/EP0 task-log accommodations with complete source/linkage verification. Provide HTTP stack headroom and stop readiness checks on the first crash. Fresh Author foreground confirmation precedes physical installation; no coexistence pass is claimed. |
 
 ## Evidence and stop boundaries
 
@@ -1079,3 +1086,16 @@ requirements and validation/deployment gates. This is P4 acquisition work;
 EMOS/mainboard VDP/startup remain unchanged. The INPUT-005 application/EMOS
 extraction stays a separately matched offline result until its own deployment
 is selected. No existing simultaneous-device pass is claimed.
+
+
+## Accepted closeout — 2026-10-30
+
+The Author reports "works" after the simultaneous-device viewer review and
+explicitly requests acceptance plus commit/push. The complete USB1.6.0 component
+in r16 is installed/readback verified and accepted for the recorded keyboard
+on direct GPIO26/27 plus F310 on the onboard hub. EMOS, mainboard VDP, startup
+and simulator remain unchanged. No generic-controller, hub-keyboard, hotplug,
+LED, network-offline or long-duration qualification is inferred. This closes
+the selected implementation tranche; preserve its informative prior failures.
+The firmware bundle and current guides provide the durable interface, while
+RELEASE-001 retains the formal production gates and unresolved release version.

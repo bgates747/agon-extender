@@ -67,12 +67,13 @@ xpad, while preserving normal diagonals. The Author subsequently accepted
 the physical retry and reports other controls in order. The original rejected
 raw packet was unavailable; broader qualification remains open.
 
-The newer installed coexistence candidate
+The Author-accepted coexistence build
 `indexed-hdmi-r16-b2026-10-30-22-37-38Z` enables both USB controllers: a keyboard
 on the directly wired full-speed port and the F310 through the onboard hub.
-Both devices enumerate together; a valid resting pad report, actual MOS CLI and
-fast listener/read/EXIT checks pass. Physical simultaneous typing/control travel
-still requires Author review. This P4-only update preserves the existing EMOS
+Both devices enumerate together; actual MOS CLI and fast listener/read/EXIT
+checks pass. The Author reports working simultaneous input after the matched
+viewer review. Other devices, replug/LED behavior and long-duration operation
+remain unqualified. This P4-only update preserves the existing EMOS
 operations0–3; use the verified viewer-r03 at `/extender/controller/ctrlview.bin`,
 not the new operations4–7 viewer. [Coexistence evidence](tasks/INPUT-004/COEXISTENCE-DEPLOYMENT-R02.json)
 records its exact build, preserved components and limits. It is not production

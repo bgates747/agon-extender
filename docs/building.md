@@ -174,7 +174,7 @@ that investigation; physical keyboard operation remains unqualified. See
 [INPUT-004](tasks/INPUT-004.md) for current research and candidate gates, and
 [BOARD-001](tasks/BOARD-001.md) for the original evidence.
 
-The experimental `--usb-dual-host --usb-fsls-only` selection runs the P4-PC's
+The Author-accepted `--usb-dual-host --usb-fsls-only` selection runs the P4-PC's
 onboard hub/controller and directly wired GPIO26/27 keyboard together. The
 archive-pinned [complete component](../vdp/compat/usb_dual_host/README.md)
 replaces only the USB host library with Espressif USB1.6.0. The earlier PHY-only
@@ -188,8 +188,11 @@ older HAL rejects it; no capability guard is bypassed. The keyboard-only
 every selected USB source/object/archive/ELF edge, correct public-header
 precedence and the original SDK PHY. Host regressions execute the actual
 two-root hub initialization/power/cleanup and deferred EP0 action code.
-Physical coexistence and the HTTP-stack mitigation remain unverified; see
-[INPUT-004](tasks/INPUT-004/COEXISTENCE-R01.md).
+The exact r16 build passes installed-byte verification, bounded startup/service
+checks and Author keyboard/controller review; broader canonical qualification
+and long-duration HTTP stability remain open. Preserve the accepted source
+`5f8ef676e3cf4982d009f1fd6a0f00887be34198` and its original build bytes. See
+[acceptance](tasks/INPUT-004/ACCEPTANCE.yaml) for the matched components.
 
 The separate experimental `--usb-direct-fs` selection uses P4-PC GPIO26/D- and
 GPIO27/D+ through EXT1 contacts4/6, bypassing the onboard hub. It requires

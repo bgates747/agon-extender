@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r195
-updated_at: 2026-10-26T20:05:03Z
+registry_revision: r196
+updated_at: 2026-10-30T23:29:39Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -43,11 +43,13 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r14
+    latest_identity: indexed-hdmi-r16
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
+      - r16 complete USB1.6.0 dual-root composition is installed/readback verified and Author accepted for direct-header keyboard plus onboard-hub F310 on2026-10-30. Exact source5f8ef676/build22-37-38Z; canonical paired qualification and successor production selection/version remain pending.
+      - r15 PHY-only adaptation is rejected; it omitted the single-root hub dependency and encountered HTTP stack overflow. Exact keyboard-only rollback was verified before the r16 correction.
       - r14 priority2-to4 controller scheduling correction is installed/full-readback verified; matched120Hz ACK median261.703-to1.794ms and100% delivery,60/240Hz,Pi and bounded keyboard/fast-SD coexistence pass; Agon latency/Author review remain, not production.
       - r13 adds checksum-free fast SD carrier2 to the controller-corrected HDMI source; full build/validation, installed flash readback and startup identity pass. Author reported working with latency; later r14 addresses the UDP backlog. Wider qualification pending.
       - r12 full build/validation passes; retained unchanged as controller-correction evidence, not installed.

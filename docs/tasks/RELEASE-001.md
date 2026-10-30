@@ -8,7 +8,9 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: complete — accepted extender-installation-r02 is current.**
+**State:** The earlier r02 DevKit release is complete/current. Native P4-PC
+promotion remains open; accepted keyboard/controller r16 is preserved separately
+while canonical qualification and the successor production version are pending.
 [Production selection](../../production/README.md) is the routine entry point.
 [R01-08 closeout](RELEASE-001/R01-08.md) records exact packaging and validation.
 No new hardware work is started by promotion.
@@ -212,3 +214,39 @@ R01-N04 [ ] Update current operating/build/install documentation for the scoped
 P4-PC combination, commit the verified selection, create annotated v0.2.0 tag
 and publish under standing acceptance-promotion authorization. Do not include
 unaccepted 240-line experiments in the accepted r10 bundle.
+
+
+## Accepted native keyboard/controller combination — 2026-10-30
+
+The Author explicitly accepts r16 direct-header keyboard/onboard-hub F310
+coexistence and requests commit/push. INPUT-004/ACCEPTANCE.yaml freezes the
+installed P4 source/build/hash, unchanged old-ABI EMOS and matched viewer.
+The native application-update archive uses the existing P4 build ID as its
+directory identity; no new component revision or production version is invented.
+It preserves the tested application only, with native source/support and viewer
+provenance. Untested replacement bootloader/factory bytes are excluded.
+The separate native packager leaves the historical hybrid recipe untouched.
+
+R01-U01 [x] Record explicit feature acceptance, exact component identities,
+independent readback, rollback availability, preserved components and scope.
+
+R01-U02 [ ] Generate, extract and independently verify immutable runtime and
+source/support archives, publish their portable bundle record and update current
+guides. Preserve private-configured binaries locally; no public upload.
+
+R01-U03 [ ] Resolve the successor production version with the Author. Existing
+v0.2.0 approval names the older r10/EMOSv24 combination and does not select r16.
+Do not move the existing v0.1.0 tag or silently extend that older authorization.
+
+R01-U04 [ ] Adapt exact paired qualification receipts and complete the canonical
+installed-hardware suite under separately authorized bench scope. The current
+EMOSv27 artifact came from an archived uncommitted patch; preserve its exact
+bytes/provenance rather than fabricating a clean-input receipt. The legacy suite
+must also be reviewed against current startup/no-CRC requirements before reuse.
+Feature acceptance and the bounded viewer pass do not replace this gate.
+
+R01-U05 [ ] Once those concrete gates pass, select the verified native combination
+in production/current.yaml, complete production docs, commit, create the agreed
+annotated immutable version tag, and publish commit/tag. Until then current
+qualified production remains v0.1.0; the accepted native update is unselected.
+No hardware operation is authorized merely by this packaging closeout.

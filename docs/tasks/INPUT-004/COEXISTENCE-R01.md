@@ -62,7 +62,7 @@ Keep EMOS, mainboard VDP, startup and existing display behavior unchanged.
    Independently read back the app and untouched flash, initialize P4 before
    releasing/resetting Agon, and establish fresh input/actual CLI. Do not modify
    EMOS, mainboard VDP, SD startup or an unrelated application.
-5. [ ] Verify direct keyboard HID admission and native F310 reports while both
+5. [x] Verify direct keyboard HID admission and native F310 reports while both
    clients run. Stage the already matched controller viewer if needed; preserve
    its mode lifecycle. Actual physical key/controller exercise and visible
    smoothness require Author review. Ask in chat only for missing attachment or
@@ -291,3 +291,20 @@ are not controller-to-photon or rendering timing. All serial readers and reset
 controls are released, listener offline, keyboard neutral/ready, actual MOS CLI
 verified. No background work is queued. Physical coexistence acceptance,
 production promotion and agreed version/tag remain pending.
+
+
+## Author acceptance — 2026-10-30
+
+After the matched viewer was staged and its manual commands supplied, the Author
+reports: "works. well done. make this part of the accepted firmware, push and
+commit." This accepts the tested direct-header keyboard/onboard-hub F310
+coexistence result. It does not establish other devices, replug/LED behavior,
+offline-network startup, all-mode performance or a canonical paired suite pass.
+The exact component identities and accepted scope are frozen in ACCEPTANCE.yaml.
+
+The accepted component is being preserved as an application-update bundle under
+production/bundles, with generated runtime/source-support archives in dist.
+Its recurring source/build/operation guidance belongs in the handbook and
+controller/build guides. RELEASE-001 owns the remaining complete-production
+qualification, version and selection/tag gates. Do not rebuild accepted bytes
+or reuse the older HDMI-only v0.2.0 authorization for this changed combination.

@@ -33,7 +33,6 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[DIAG-003 — Extract remaining EMOS diagnostics](docs/tasks/DIAG-003.md)** — Offline implementation complete: 2,947 ROM bytes recovered; text utility and ordinary/controller builds pass host/linked checks. Physical review/deployment identity and acceptance remain; installed hardware unchanged.
 
-- [ ] **[INPUT-004 — P4-PC onboard USB keyboard support](docs/tasks/INPUT-004.md)** — Author reports direct-header keyboard operation. Restore concurrent F310 acquisition on P4, audit resident controller logic for application ownership, and qualify typing/LEDs/reconnect/coexistence. Preserve EMOS, mainboard VDP and normal startup.
 
 ## Active board-build preparation
 
@@ -205,7 +204,7 @@ before future output qualification; do not assume that a current firmware cap
 has been verified. See PLAN-001-N04 in the disposition table. Old experiment
 headings no longer compete with the approved current sequence.
 
-- [ ] **[RELEASE-001 — Native HDMI production v0.2.0](docs/tasks/RELEASE-001.md)** — Version authorized; preserve accepted r10/EMOS bytes, complete native receipt/paired qualification and packaging before selection and annotated release tag.
+- [ ] **[RELEASE-001 — Native P4-PC production promotion](docs/tasks/RELEASE-001.md)** — Preserve the Author-accepted keyboard/F310 r16 update and matched old-ABI EMOS/viewer; finish verified archives, resolve the successor version and canonical paired qualification before current selection/tag. Retain the earlier r10/v0.2.0 authorization separately.
 
 ## Deferred game-renderer experiments
 
