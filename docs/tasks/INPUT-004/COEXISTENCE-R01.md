@@ -161,3 +161,40 @@ foreground application must be confirmed before any further live intervention.
 5. Produce and verify a fresh matched-source candidate offline. No additional
    physical action is selected while the Author may be running the simulator.
    Fresh foreground/attachment confirmation precedes a later installation.
+6. Verify the current reset actuator before relying on a hold for another P4
+   replacement. The failed automated recovery observed Pi output transitions,
+   not a fresh EMOS admission or mainboard boot. GPIO level alone does not prove
+   the physical mainboard is held. Keep the exact cause unresolved rather than
+   claiming the circuit is broken or the earlier hold was independently proved.
+
+The retained failed ELF reserves2016bytes in the controller HTTP status handler
+and1152bytes in its libc `_svfprintf_r` callee:3168bytes before formatting wrappers,
+HTTP parsing and other callees. These are compiled static frames, not runtime
+stack high-water measurements or proof of the missing core stack's call site.
+The correction adds2048bytes to that controller-enabled HTTP task's PSRAM stack
+(4096→6144); no eZ80 flash/RAM is used. Physical verification remains required.
+
+## Complete component candidate built — uninstalled
+
+Matched source `5f8ef676e3cf4982d009f1fd6a0f00887be34198` produces
+`indexed-hdmi-r16-b2026-10-30-22-37-38Z`:1,786,256application bytes,
+SHA-256 `594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62`.
+Native validation and25independent source/archive/configuration/compiler checks
+pass. All28pristine component files and both complete derivative hashes match;
+the sole host/hub/enumerator/HCD/USBH objects reach the USB archive and ELF,
+with new public headers preceding SDK USB headers and the original SDK PHY.
+Board/display/partition bytes and all managed dependencies remain unchanged.
+The three new USB suspend/resume timing defaults are recorded explicitly.
+
+Regressions execute9actual dual-root hub power/lifecycle/failure cases and18
+actual USB1.6.0 EP0 callback/action cases with sanitizers. Existing USB input,
+F310 and native build checks pass. The new startup guard rejects the retained
+first crash before reboot. Build duration is627.61host monotonic seconds;
+this is separate from any later installation, input or rendering measurement.
+[Portable candidate evidence](COEXISTENCE-COMPONENT-R01.json) retains identities.
+
+No bench operation occurred during this correction. The Author's working
+keyboard-only P4 remains installed. Await fresh idle foreground/attachments and
+verify the current remote reset actuator before selecting a new installer.
+The earlier installer has obsolete candidate/composition pins and must not be
+rerun. Simultaneous input, HTTP mitigation and production acceptance remain open.

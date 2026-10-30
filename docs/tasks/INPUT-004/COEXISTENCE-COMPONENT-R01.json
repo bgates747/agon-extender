@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-30T22:49:48.668801+00:00",
+  "status": "built and independently checked; not installed",
+  "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+  "source_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+  "baseline_source_commit": "fd212503e34eb19761d59bc919f68bdda02b3954",
+  "app_bytes": 1786256,
+  "app_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+  "USB_component": {
+    "name": "espressif/usb",
+    "version": "1.6.0",
+    "source_commit": "630f1c4e61f71d62bb57ff1b840931da24c3329f",
+    "archive_sha256": "da5be2a2743ede3bd63e6c4046e381e24b16567ea8a7541b6f5d094abea5098b",
+    "pristine_files_verified": 28,
+    "peripheral_map": 3,
+    "IDF_PHY_and_HAL_retained": true,
+    "public_fsls_only": false,
+    "HS_only_reset_backport": true,
+    "task_owned_EP0_diagnostics": true,
+    "old_LS_MMIO_probes_imported": false
+  },
+  "static_HTTP_stack_review": {
+    "scope": "Static compiled frames from rejected candidate, not runtime high-water or original panic call site",
+    "rejected_build": "indexed-hdmi-r15-b2026-10-30-21-49-00Z",
+    "controller_status_frame_bytes": 2016,
+    "libc_svfprintf_frame_bytes": 1152,
+    "sum_before_wrappers_and_HTTP_bytes": 3168,
+    "old_HTTP_task_stack_bytes": 4096,
+    "new_HTTP_task_stack_bytes": 6144,
+    "additional_P4_PSRAM_bytes": 2048,
+    "EMOS_change_bytes": 0
+  },
+  "source_archive_SHA256": "919084436b7e26be23036c1b521543e30604bd2c5ae25c0a76c33e497a89e405",
+  "source_configuration_compile_and_archive_checks": {
+    "source_pinned": true,
+    "native_validator_passed": true,
+    "matched_HS_remedy": true,
+    "unchanged_board.json": true,
+    "unchanged_display.json": true,
+    "unchanged_project/components/agon_vdp/CMakeLists.txt": true,
+    "only_reviewed_source_delta": true,
+    "managed_dependencies_unchanged": true,
+    "only_expected_USB_sdk_configuration_delta": true,
+    "chip_guards_preserved": true,
+    "archive_inventory_paths": true,
+    "archive_inventory_bytes": true,
+    "manifest_artifacts": true,
+    "dual_flag_compiled": true,
+    "sole_pinned_hcd_dwc.c": true,
+    "sole_pinned_usbh.c": true,
+    "actual_usb_header_dependency": true,
+    "legacy_zdi_not_selected": true,
+    "preprocessed_map3_only": true,
+    "preprocessed_hub_reset_present": true,
+    "preprocessed_route_banner": true,
+    "embedded_build_identity": true,
+    "embedded_route_banner": true,
+    "layout_equal": true,
+    "partition_bytes_equal": true
+  },
+  "sdk_configuration_delta": {
+    "CONFIG_USB_HOST_RESUME_RECOVERY_MS": [
+      null,
+      "20"
+    ],
+    "CONFIG_USB_HOST_RESUME_HOLD_MS": [
+      null,
+      "30"
+    ],
+    "CONFIG_USB_HOST_SUSPEND_ENTRY_MS": [
+      null,
+      "20"
+    ]
+  },
+  "host_regressions": {
+    "actual_dual_root_hub_cases": 9,
+    "actual_USB16_EP0_action_cases": 18,
+    "native_USB_tests": 12,
+    "existing_USB_input_tests": 5,
+    "native_build_contract_tests": 18,
+    "boot_guard_tests": 4,
+    "F310_decoder_and_lifecycle_test": true,
+    "saved_first_crash_rejected_before_reboot": true
+  },
+  "build_elapsed_host_monotonic_seconds": 627.605730692,
+  "timing_limit": "Build duration only; not device, transfer, input or rendering timing. Host clock calibration not measured.",
+  "hardware_operations_this_correction": false,
+  "EMOS_mainboard_VDP_SD_startup_and_simulator_unchanged": true,
+  "remaining_gates": [
+    "Fresh idle foreground/attachment confirmation",
+    "Current remote reset-actuator verification",
+    "Independent P4-only installation and initialization proof",
+    "Actual keyboard/controller exercise through matched old-gateway viewer",
+    "Separate simulator consumer compatibility check if needed"
+  ],
+  "limits": "No simultaneous-device pass, proven HTTP crash correction or production promotion."
+}

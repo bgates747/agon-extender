@@ -25,8 +25,9 @@
     "F310_admission_observed": false,
     "httpd_stack_overflow_count": 2,
     "repeated_initialization": true,
-    "Agon_held_during_candidate": true,
-    "viewer_invoked": false
+    "viewer_invoked": false,
+    "Pi_reset_hold_asserted_during_candidate": true,
+    "physical_reset_hold_independently_observed": false
   },
   "restored": {
     "restored_app_sha256": "cdef666761a767e2675c8f2b2b397d0cc3836961cef783555219b8cff0360e61",
@@ -46,7 +47,8 @@
       0
     ],
     "operator_mainboard_reset_needed": true,
-    "no_test_or_application_invocation": true
+    "no_test_or_application_invocation": true,
+    "next_installation_requires_current_reset_actuator_verification": true
   },
   "cause_limit": "Core dump confirms httpd stack-overflow detection; the offending handler/instruction and relationship to missing HS hub remain unresolved. The crashed task stack is unavailable in decoded dump.",
   "evidence": {

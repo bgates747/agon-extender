@@ -108,7 +108,12 @@ python3 -m esptool --chip esp32p4 --port "$P4_SERIAL" \
 ```
 
 Observe the exact startup identity and USB/network readiness separately from
-flash verification. This local package preserves the accepted browser reset
+flash verification. Stop observation at the first panic, stack-overflow message
+or repeated application startup, before another readiness probe; branding after
+a reboot does not establish readiness. New Python installation observers can
+call `scripts/p4_boot_guard.py`'s `check_startup()` after each serial read and
+before probing services. The guard performs no hardware action or recovery.
+This local package preserves the accepted browser reset
 endpoint in its firmware. It is specific to the commissioned bench. Do not assume
 it is usable elsewhere or publish it. A different endpoint requires a new
 identified build and validation, not an edited package. Templates remain
