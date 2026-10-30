@@ -204,7 +204,7 @@ before future output qualification; do not assume that a current firmware cap
 has been verified. See PLAN-001-N04 in the disposition table. Old experiment
 headings no longer compete with the approved current sequence.
 
-- [ ] **[RELEASE-001 — Combined native P4-PC v0.2.1 promotion](docs/tasks/RELEASE-001.md)** — Author approves combining accepted HDMI and keyboard/F310 work as v0.2.1. Source integration and exact r16 update archives are verified; complete canonical paired qualification/receipt prerequisites and final current selection/tag. Older standalone v0.2.0 promotion is consolidated into this target.
+- [ ] **[RELEASE-001 — Combined native P4-PC v0.2.1 promotion](docs/tasks/RELEASE-001.md)** — Source integration and exact r16 update archives verified. Next: offline runner/output-profile and exact paired receipt adaptation, then separately authorized hardware qualification and bounded visual review before current selection/tag. Bench occupied; no hardware access during current preparation. Older standalone v0.2.0 promotion is consolidated into this target.
 
 ## Deferred game-renderer experiments
 

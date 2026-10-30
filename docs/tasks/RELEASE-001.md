@@ -272,3 +272,50 @@ The bundle itself is not rewritten merely to replace its creation-time null
 version metadata. Canonical paired qualification, its receipt/provenance and
 startup/no-CRC adapter prerequisites, complete production selection and the
 annotated v0.2.1 tag remain R01-U04/U05. No bench work starts from this record.
+
+## Next steps — combined v0.2.1 qualification
+
+The accepted images and source integration are preserved. The remaining work
+is to modernize the canonical runner, qualify that exact installed combination,
+complete a bounded visual review and select/tag the release. The Author
+authorizes offline preparation on 2026-10-30; the bench is occupied, only the
+mainboard is active, and Extender is completely offline. Do not contact either
+board, deploy fixtures, open serial, reset, flash or invoke hardware tests in
+this tranche. Preparation is not a claim that the physical suite is ready.
+
+1. [ ] **Adapt the Pi runner and its manifest.** Remove all startup writes and
+   reset-launched tests; use explicit CLI invocation and preserve startup as
+   read-only evidence. Enforce checksum-free fast transfers, conditional mode
+   selection, at least one-second settling and entry route/mode/CLI restoration.
+   Declare output-profile-specific mandatory coverage: native HDMI intentionally
+   has no browser-video route, so browser WebSocket frame checks cannot serve as
+   its scanout oracle. Preserve browser-video coverage for builds that provide
+   it. Bind reset commands to the commissioned actuator and require fresh boot
+   plus actual command/service handback; do not infer execution from ready flags
+   or an absent serial mirror. Verify these changes offline before any bench use.
+2. [ ] **Bind exact paired installation evidence.** Adapt qualification receipts
+   for the accepted P4 r16 and unchanged EMOS v27 without rebuilding or flashing
+   merely to fit an old receipt schema. Retain byte-level installation evidence,
+   exact source closure and honest archived-patch provenance for EMOS. Resolve
+   fixture-source compatibility separately from installed-firmware provenance.
+   Missing evidence must block qualification rather than produce a fabricated
+   clean-source receipt.
+3. [ ] **Run the canonical physical suite when separately authorized.** Check
+   bench ownership, actual foreground, attached devices, unchanged normal startup,
+   installed identities and reset readiness first. Cover boot/reset, USB/browser
+   input, Legacy/ExCom routing, HDMI display/mode behavior, SD round trips and
+   independently verified cleanup. Retain the guarded raw-sector write/read/
+   restore case, its preimage and uncertain-I/O stop boundary. The historical
+   inventory is 25 checks across three cases; profile adaptation must explicitly
+   account for coverage rather than quietly skip mandatory browser cases.
+4. [ ] **Complete Author visual review.** On the exact combined build, review
+   representative loaded graphics/gameplay, mode changes and visible clean exit
+   with keyboard/controller attached. Credit the existing accepted controller
+   review; do not require an unrelated full rendering/performance campaign.
+5. [ ] **Promote after all gates pass.** Retain the complete paired report,
+   identities, individual outcomes and durations with preparation, execution,
+   retrieval and notification distinguished. Verify the complete native
+   installation selection, update production/current.yaml and current guides,
+   commit, then create/push the agreed annotated v0.2.1 tag. Preserve immutable
+   accepted archives and rollback; no tag or production selection before these
+   gates pass.
