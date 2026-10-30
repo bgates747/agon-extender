@@ -1,5 +1,10 @@
 # SD-loaded visible-text sample
 
+Historical matched-firmware fixture: the DIAG-003 development EMOS source
+retires `edu.text-probe`. This sample requires its original resident-service
+firmware and dedicated P4 peer; it does not qualify the new external VDPTEXT
+utility. See [extraction compatibility](../../../docs/tasks/DIAG-003/RESULTS.md).
+
 This C application is the sender component of `uart-visible-text-probe-r03`.
 Its maintained sample is `src/main.c`; `snprintf` converts the binary counter
 1..10 into decimal lines. `VTEXT.BIN` runs from ordinary Agon application RAM.

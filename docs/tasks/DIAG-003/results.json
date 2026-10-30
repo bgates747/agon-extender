@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "scope": "offline diagnostic extraction; no deployment",
+  "build_identity": "UNVERSIONED-DO-NOT-DEPLOY",
+  "rom_capacity_bytes": 131072,
+  "profiles": {
+    "controller": {
+      "before_rom_bytes": 130764,
+      "after_rom_bytes": 127817,
+      "rom_saved_bytes": 2947,
+      "rom_change_percent": -2.2536783824294147,
+      "before_free_bytes": 308,
+      "after_free_bytes": 3255,
+      "before_static_ram_bytes": 4189,
+      "after_static_ram_bytes": 4189,
+      "before_artifacts": {
+        "MOS.bin": {
+          "bytes": 130764,
+          "sha256": "125844dbe548a521d4a4585f177e749b266ae7b502e3290d8725534ac3889c12"
+        },
+        "MOS.elf": {
+          "bytes": 325080,
+          "sha256": "72db56cc3b08615185a80d8a2163463549565561288a919d37cd8b9ffb530560"
+        },
+        "MOS.map": {
+          "bytes": 79979,
+          "sha256": "4297977af3347e087ebf49e1528f249a02de2ae13d34b01654af2a86f53722d6"
+        }
+      },
+      "after_artifacts": {
+        "MOS.bin": {
+          "bytes": 127817,
+          "sha256": "33e93ccb7f5b31b2c24ef28be05a449a767373de205d1cc50c3bec84a6e0d144"
+        },
+        "MOS.elf": {
+          "bytes": 324388,
+          "sha256": "b42eaeeb92069ca8d2e2cb217ff8d4bb349190dfd8e037cd48fd3da3ef397ac9"
+        },
+        "MOS.map": {
+          "bytes": 79387,
+          "sha256": "6ad45c6ef323e7454467cd9a8bea0c13ab794c5171cc0b83d9d60d375ced999c"
+        }
+      }
+    },
+    "ordinary": {
+      "before_rom_bytes": 128467,
+      "after_rom_bytes": 125520,
+      "rom_saved_bytes": 2947,
+      "rom_change_percent": -2.2939743280375504,
+      "before_free_bytes": 2605,
+      "after_free_bytes": 5552,
+      "before_static_ram_bytes": 4058,
+      "after_static_ram_bytes": 4058,
+      "before_artifacts": {
+        "MOS.bin": {
+          "bytes": 128467,
+          "sha256": "b8d298659ff7fdc0d2930af7ce17c794232cc729be773955541012fbe9eb3340"
+        },
+        "MOS.elf": {
+          "bytes": 324504,
+          "sha256": "2955aade3ff57851a2b8e9c767664890652c1d9a987e58ab61e88cae72c4286c"
+        },
+        "MOS.map": {
+          "bytes": 79366,
+          "sha256": "f97b0477ab93d91b11489f4edaa8e8d3bf9f352337f26d3009bdad7566b85cb5"
+        }
+      },
+      "after_artifacts": {
+        "MOS.bin": {
+          "bytes": 125520,
+          "sha256": "9b442b14d7a29d15a46ee87087102846f23f5a3f77ffd7fa93c91cc849fa9b74"
+        },
+        "MOS.elf": {
+          "bytes": 323812,
+          "sha256": "fe8b2676f35d99e6ee3c1907cf40da4e551cb8815e4d6b9f82aec038369bacb3"
+        },
+        "MOS.map": {
+          "bytes": 78774,
+          "sha256": "dd94b081347c470da3f6849fbd9124ebb528c35b5ecdbd4a76831475ab001cff"
+        }
+      }
+    }
+  },
+  "changed_controller_objects": {
+    "obj/src/emos.o": {
+      "before_rom_bytes": 6548,
+      "after_rom_bytes": 5597,
+      "rom_saved_bytes": 951
+    },
+    "obj/src/emos_keyboard.o": {
+      "before_rom_bytes": 3383,
+      "after_rom_bytes": 2974,
+      "rom_saved_bytes": 409
+    },
+    "obj/src/emos_uart_probe.o": {
+      "before_rom_bytes": 1587,
+      "after_rom_bytes": 0,
+      "rom_saved_bytes": 1587
+    }
+  },
+  "utilities": {
+    "uarttest": {
+      "file_bytes": 9523,
+      "sha256": "75ff96e320ac24bad82ef88b112a5e2b2f80ba3be4dacf904c9ebe855c44a743",
+      "static_ram_bytes": 124,
+      "static_end_address": "0xb25af",
+      "heap_stack_available_bytes": 23121
+    },
+    "vdppoll": {
+      "file_bytes": 9522,
+      "sha256": "9d20c31e108281a2b411153c3f7dfed73f333be98848c872787d97a781167f8d",
+      "static_ram_bytes": 124,
+      "static_end_address": "0xb25ae",
+      "heap_stack_available_bytes": 23122
+    },
+    "vdptext": {
+      "file_bytes": 9236,
+      "sha256": "49abfe394eb865ab396a2c5aab8eaabddd68f04e7631d847cca14b354470f1be",
+      "static_ram_bytes": 124,
+      "static_end_address": "0xb2490",
+      "heap_stack_available_bytes": 23408
+    }
+  },
+  "checks": {
+    "emos_host_tests": 145,
+    "controller_host_tests": 42,
+    "visible_text_transport_scenarios": 42,
+    "linked_uart_diagnostic_cases": 298,
+    "linked_uart_reservation_cases": 21,
+    "linked_controller_overlap_escape": "pass",
+    "mandatory_profile_link_checks": "pass",
+    "hardware_tested": false,
+    "emulator_launched": false
+  },
+  "implementation_source_commit": "eebdd763f3b80c8671faa2e597e8471b4501308c",
+  "builder_commit": "49dc33fee817cb184572351ee71dae7da9a139c4",
+  "compiled_source_verification": {
+    "ordinary": {
+      "compile_input_files_verified": 112,
+      "unchanged_pinned_port_adaptations": [
+        "main.c",
+        "src/clock.h",
+        "src/defines.h",
+        "src/mos.c",
+        "src/mos_api.asm",
+        "src/mos_editor.c",
+        "src/sd.asm",
+        "src/timer.c",
+        "src/uart.c",
+        "src/vdp_protocol.asm",
+        "src_fatfs/diskio.c"
+      ],
+      "prepared_source_archive_sha256": "c6c6af73d608d82e15d430ddb767b37d13c043da5d1801a6e17515d8813a42dd"
+    },
+    "controller": {
+      "compile_input_files_verified": 112,
+      "unchanged_pinned_port_adaptations": [
+        "main.c",
+        "src/clock.h",
+        "src/defines.h",
+        "src/mos.c",
+        "src/mos_api.asm",
+        "src/mos_editor.c",
+        "src/sd.asm",
+        "src/timer.c",
+        "src/uart.c",
+        "src/vdp_protocol.asm",
+        "src_fatfs/diskio.c"
+      ],
+      "prepared_source_archive_sha256": "17befed24f486bb5c1bd7cc4de32c17dd6ae795fcd5ae61e7271e314ec8cc6da"
+    },
+    "final_patch_sha256": "78def1d011cba4c3e1c55a929c92702cc21e5a98d25e670220be9efc5a9d5e2a"
+  }
+}

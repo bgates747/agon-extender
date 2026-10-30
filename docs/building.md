@@ -336,13 +336,14 @@ instruction image is never firmware. Earlier
 historical build sizes and validation limits.
 
 The extracted diagnostics build in sibling `agon-emos/projects/uartprobe` with
-`make NAME=uarttest` and `make NAME=vdppoll`, using the selected AgonDev toolchain.
+`make NAME=uarttest`, `make NAME=vdppoll` and `make NAME=vdptext`, using the selected AgonDev toolchain.
 During an authorized paired development deployment their binaries belong at
-`/emos/uarttest.bin` and `/emos/vdppoll.bin`; they are not present on SD by
+`/emos/uarttest.bin`, `/emos/vdppoll.bin` and `/emos/vdptext.bin`; they are not present on SD by
 assumption. Commands keep their EMOS prefix, require an idle Legacy CLI and an
 unclaimed UART1, and retain their distinct peer/baud requirements. See the
 [component guide](../../agon-emos/projects/uartprobe/README.md). No build command
-installs either file or authorizes bench use.
+installs those files or authorizes bench use. The [remaining text/fake extraction](tasks/DIAG-003/RESULTS.md)
+is an offline candidate; the installed v0.1.27 image still has resident text hooks.
 
 ## Deployed candidates versus the base target
 

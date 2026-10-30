@@ -60,6 +60,17 @@ authorizes this task, plan publication/commit/push, then implementation.
 
 ## Research boundary
 
+Offline implementation and checks are complete; see [measured results](DIAG-003/RESULTS.md)
+and [portable metrics](DIAG-003/results.json). Net ROM recovery is 2,947 bytes
+in both measured profiles, with RAM unchanged. Physical utility/firmware review,
+deployment identity and acceptance/promotion remain separate gates. No hardware
+operation occurred during this tranche.
+
+EMOS implementation and component closeout are published as `eebdd76`;
+the component checkout is clean. Extender plan/audit publication was `b90e3169`,
+and the component plan was `b63b956`. Exact compiled inputs are verified against
+the final source, including unchanged pinned AgonDev preparation adaptations.
+
 Read-only official executable/API contracts are in `../../agon-docs/docs/mos/`
 resolved from Extender root. MOSlets occupy B0000 and must fit 32 KiB; ordinary
 MOS headers do not prove their link address. EMOS's maintained utility launcher
