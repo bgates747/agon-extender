@@ -1,0 +1,31 @@
+--- a/usbh.c
++++ b/usbh.c
+@@ -42,0 +43,2 @@
++    DEV_ACTION_EP0_LOG_ERROR        = (1 << 12),    // Extender: task-owned error log
++    DEV_ACTION_EP0_LOG_STALL        = (1 << 13),    // Extender: task-owned STALL log
+@@ -461,6 +463,2 @@
+-                       DEV_ACTION_EP0_CLEAR;
+-        if (in_isr) {
+-            ESP_EARLY_LOGE(USBH_TAG, "Dev %d EP 0 Error", dev_obj->constant.address);
+-        } else {
+-            ESP_LOGE(USBH_TAG, "Dev %d EP 0 Error", dev_obj->constant.address);
+-        }
++                       DEV_ACTION_EP0_CLEAR |
++                       DEV_ACTION_EP0_LOG_ERROR;
+@@ -470,6 +468,2 @@
+-        action_flags = DEV_ACTION_EP0_DEQUEUE | DEV_ACTION_EP0_CLEAR;
+-        if (in_isr) {
+-            ESP_EARLY_LOGE(USBH_TAG, "Dev %d EP 0 STALL", dev_obj->constant.address);
+-        } else {
+-            ESP_LOGE(USBH_TAG, "Dev %d EP 0 STALL", dev_obj->constant.address);
+-        }
++        action_flags = DEV_ACTION_EP0_DEQUEUE | DEV_ACTION_EP0_CLEAR |
++                       DEV_ACTION_EP0_LOG_STALL;
+@@ -865,0 +860,7 @@
++        // Extender: task context, outside the lock and before device actions/free.
++        if (action_flags & DEV_ACTION_EP0_LOG_ERROR) {
++            ESP_LOGE(USBH_TAG, "Dev %d EP 0 Error", dev_obj->constant.address);
++        }
++        if (action_flags & DEV_ACTION_EP0_LOG_STALL) {
++            ESP_LOGE(USBH_TAG, "Dev %d EP 0 STALL", dev_obj->constant.address);
++        }

@@ -1,3 +1,5 @@
+# Historical PHY-only adaptation; the maintained dual selection now uses
+# usb_host_component.cmake. This alone cannot enable IDF5.5.5's single-root hub.
 # INPUT-004: ESP-IDF 5.5.5 USB host initializes only one selected PHY.
 # Backport Espressif esp-usb PR402 / 48b250fa36e92c64a37c333dc548c84cb48c6eac
 # (Apache-2.0) into generated output, retaining the pinned SDK/HCD/HAL.

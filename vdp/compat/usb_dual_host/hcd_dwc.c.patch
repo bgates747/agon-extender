@@ -1,0 +1,7 @@
+--- a/hcd_dwc.c
++++ b/hcd_dwc.c
+@@ -1360,0 +1361,4 @@
++    // Extender: old IDF HAL lacks public fsls_only; restrict only the HS PHY.
++    if (port->hal->constant_config.hsphy_type != 0) {
++        usb_dwc_ll_hcfg_set_fsls_supp_only(port->hal->dev);
++    }

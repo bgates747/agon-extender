@@ -411,6 +411,11 @@ bool WiredNetworkService::startHttp() noexcept {
   HttpVideoConfig options;
 #if defined(AGON_EXTENDER_CONTROLLER_INPUT)
   options.max_uri_handlers = 24;
+  // INPUT-004: the controller status formatter reserves1600B before HTTP/libc
+  // calls. A4096B httpd stack overflowed in the dual-host initialization trial.
+  // Allow2048B additional PSRAM headroom; retain the panic until bench review
+  // identifies the original call site and verifies this bounded mitigation.
+  options.stack_bytes = 6144;
 #else
   options.max_uri_handlers = 18;
 #endif

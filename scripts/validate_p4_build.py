@@ -218,27 +218,31 @@ def main() -> None:
     for command in commands:
         source = Path(command["file"]).resolve()
         by_source.setdefault(source, []).append(command)
-    # Verify actual compile actions and final USB archive linkage, not merely
-    # a selected CMake option or a generated patch that might be unused.
-    derivative = output / "build/agon-extender-usb/hcd_dwc.c"
-    hcd_actions = [c for c in commands if Path(c["file"]).name == "hcd_dwc.c"]
-    if len(hcd_actions) > 1 or (args.usb_fsls_only and len(hcd_actions) != 1):
-        fail("expected exactly one USB HCD compile action")
-    hcd_action = hcd_actions[0] if hcd_actions else None
-    compiled_derivative = bool(hcd_action and Path(hcd_action["file"]).resolve() == derivative)
-    if compiled_derivative != args.usb_fsls_only:
-        fail("USB FSLS selection differs from compiled HCD source")
-    if args.usb_fsls_only:
-        if args.board != "p4-pc":
-            fail("USB FSLS experiment is P4-PC only")
-        upstream = ROOT / "agents/build001/native-tools/esp-idf/components/usb/hcd_dwc.c"
-        check_usb_hcd_derivative(upstream, derivative)
-        usb_edges = [line for line in ninja_path.read_text().splitlines()
-                     if line.startswith("build esp-idf/usb/libusb.a:")]
-        if len(usb_edges) != 1 or hcd_action["output"] not in usb_edges[0]:
-            fail("USB derivative object is absent from USB archive")
-    check_usb_ep0_linkage(commands, ninja_path.read_text(), output / "build", args.usb_fsls_only)
-    check_usb_dual_linkage(commands, ninja_path.read_text(), output / "build", args.usb_dual_host)
+    if args.usb_dual_host:
+        from p4_usb_host import check_linkage
+        check_linkage(commands, ninja_path.read_text().replace("$\n  ", ""), output, IDF)
+    else:
+        # Verify actual compile actions and final USB archive linkage, not merely
+        # a selected CMake option or a generated patch that might be unused.
+        derivative = output / "build/agon-extender-usb/hcd_dwc.c"
+        hcd_actions = [c for c in commands if Path(c["file"]).name == "hcd_dwc.c"]
+        if len(hcd_actions) > 1 or (args.usb_fsls_only and len(hcd_actions) != 1):
+            fail("expected exactly one USB HCD compile action")
+        hcd_action = hcd_actions[0] if hcd_actions else None
+        compiled_derivative = bool(hcd_action and Path(hcd_action["file"]).resolve() == derivative)
+        if compiled_derivative != args.usb_fsls_only:
+            fail("USB FSLS selection differs from compiled HCD source")
+        if args.usb_fsls_only:
+            if args.board != "p4-pc":
+                fail("USB FSLS experiment is P4-PC only")
+            upstream = ROOT / "agents/build001/native-tools/esp-idf/components/usb/hcd_dwc.c"
+            check_usb_hcd_derivative(upstream, derivative)
+            usb_edges = [line for line in ninja_path.read_text().splitlines()
+                         if line.startswith("build esp-idf/usb/libusb.a:")]
+            if len(usb_edges) != 1 or hcd_action["output"] not in usb_edges[0]:
+                fail("USB derivative object is absent from USB archive")
+        check_usb_ep0_linkage(commands, ninja_path.read_text(), output / "build", args.usb_fsls_only)
+        check_usb_dual_linkage(commands, ninja_path.read_text(), output / "build", args.usb_dual_host)
     selected = [(VDP / item).resolve() for item in profile["sources"]]
     forbidden = [(VDP / item).resolve() for item in profile["forbidden_sources"]]
     problems: list[str] = []
@@ -434,6 +438,7 @@ def main() -> None:
         "usb_ep0_task_logging": args.usb_fsls_only,
         "usb_direct_fs": args.usb_direct_fs,
         "usb_dual_host": args.usb_dual_host,
+        "usb_host_component": "espressif/usb1.6.0" if args.usb_dual_host else "IDF5.5.5",
         "usb_selected_peripheral_map": 3 if args.usb_dual_host else (2 if args.usb_direct_fs else (board["usb"]["peripheral_map"] if args.board else None)),
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
