@@ -156,6 +156,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-10 | Compatibility assessment complete | Official USB host 1.6.0 admits IDF 5.5.5, but its public FSLS option requires a HAL capability absent from the pinned SDK. A component-only adaptation retains the same PHY/HAL and selected initial-control functions; no targeted correction was identified. Defer a speculative build/flash. Exact source and bounded newer-SDK findings are in [the assessment](INPUT-004/USB-COMPATIBILITY.md). |
 | I4-11 | Deferred by Author | Author prefers Olimex as the first vendor contact because P4-PC adds the hub/connector path, then defers vendor contact entirely in favor of the direct full-speed header experiment. The Espressif-addressed draft and frozen review archive remain unsubmitted historical preparation; do not submit them or silently relabel the frozen archive. |
 | I4-12 | Author-selected experiment; wiring researched | Try a keyboard through the P4-PC's exposed full-speed USB signals, bypassing the onboard hub. Author reports a successful directly wired keyboard on the P4-DevKit; this is a useful control, not P4-PC qualification. Rev C EXT1 maps +5V=2, GND=3, GPIO26/D-=4, GPIO27/D+=6; pin1 is +3.3V and pin5 is ESP_EN. Firmware controller selection and simultaneous use of onboard F310 remain implementation/qualification gates. No physical rewiring, build or flash was performed during wiring research. |
+| I4-13 | Selected implementation | Restore both existing P4 USB clients using a focused upstream dual-PHY host backport and explicit map3 composition, retaining the HS FSLS remedy and matched display source. Preserve EMOS, mainboard VDP and startup; physical coexistence remains to be demonstrated. |
 | I4-13 | Author constraint; audit recorded | Minimize resident controller logic and prefer Agon application ownership. Restore concurrent USB acquisition on P4 without EMOS growth. Actual EMOS relocation candidates, compatibility gates and measured baseline are in [the audit](INPUT-004/EMOS-CONTROLLER-AUDIT.md); no revised controller ABI or firmware reduction is implemented yet. |
 
 ## Evidence and stop boundaries
@@ -1067,3 +1068,13 @@ earlier onboard-hub trial and does not establish an electrical or SDK cause.
    retained. Obtain red-to-black VBUS voltage at the USB connection before
    attributing this result to signal wiring or driver behavior. Detailed
    machine-specific receipts remain under ignored task evidence.
+
+## Keyboard/controller coexistence selected — 2026-10-30
+
+The Author directs restoration of controller operation alongside the working
+direct-header keyboard. [The bounded continuation](INPUT-004/COEXISTENCE-R01.md)
+records the exact upstream dual-host patch, matched P4 composition, preservation
+requirements and validation/deployment gates. This is P4 acquisition work;
+EMOS/mainboard VDP/startup remain unchanged. The INPUT-005 application/EMOS
+extraction stays a separately matched offline result until its own deployment
+is selected. No existing simultaneous-device pass is claimed.
