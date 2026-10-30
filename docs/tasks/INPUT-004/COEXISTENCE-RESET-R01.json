@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-30",
+  "result": "installation not attempted; post-reset actual CLI handback unverified",
+  "candidate": {
+    "source_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+    "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+    "app_bytes": 1786256,
+    "app_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+    "installed": false
+  },
+  "incoming_keyboard_only_build": "indexed-hdmi-r14-b2026-10-29-02-35-19Z",
+  "checks": [
+    {
+      "operation": "initial actual CLI/startup read/listener EXIT/mirror off",
+      "passed": true,
+      "elapsed_host_monotonic_seconds": 7.3822925059939735,
+      "startup_bytes": 108,
+      "startup_sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423"
+    },
+    {
+      "operation": "one Pi GPIO reset pulse",
+      "command_completed": true,
+      "fresh_input_epoch": false,
+      "input_epoch_before_and_after": 3150431254,
+      "GPIO_released_to_input_pulldown": true,
+      "actual_CLI_still_worked_after_pulse": true,
+      "physical_reset_path_proved": false
+    },
+    {
+      "operation": "one deliberate Agon CH341 reset pulse",
+      "mainboard_startup_capture_bytes": 97,
+      "mainboard_startup_capture_sha256": "d2d9858bf02050811c5b8bd73268842e4cff7a474f32a6fb08f1815d6c5a0ce0",
+      "input_epoch_after": 3150431255,
+      "input_admission_ready": true,
+      "actual_CLI_verified": false,
+      "CLI_capture_bytes": 0,
+      "modem_controls_released": true
+    },
+    {
+      "operation": "standing paired recovery P4 reset only",
+      "reset_only": true,
+      "exact_keyboard_only_build": true,
+      "keyboard_admitted": true,
+      "HTTP_initialized": true,
+      "stable_seconds": 5,
+      "capture_bytes": 6514,
+      "capture_sha256": "6802b4f5d47eedd2c2f2f58b231acd0b8997cd4adc95321c402e588bbc5550e1"
+    },
+    {
+      "operation": "standing paired recovery Agon CH341 reset",
+      "mainboard_startup_capture_bytes": 97,
+      "mainboard_startup_capture_sha256": "d2d9858bf02050811c5b8bd73268842e4cff7a474f32a6fb08f1815d6c5a0ce0",
+      "input_epoch_after": 39766922,
+      "input_admission_ready": true,
+      "actual_CLI_verified": false,
+      "CLI_capture_bytes": 0,
+      "modem_controls_released": true
+    }
+  ],
+  "unchanged": {
+    "P4_flash_written": false,
+    "EMOS_written": false,
+    "mainboard_VDP_written": false,
+    "startup_written": false,
+    "SD_file_written": false,
+    "application_RUN_issued": false
+  },
+  "final": {
+    "serial_readers_closed": true,
+    "USB_reset_hold_active": false,
+    "Pi_reset_hold_active": false,
+    "no_queued_hardware_action": true,
+    "printer_mirror_off_after_latest_reset_not_verified": true,
+    "actual_CLI_not_verified": true,
+    "Author_observation_or_physical_recovery_required": true
+  },
+  "limits": "An admitted keyboard epoch is not actual MOS command execution. The USB circuit produced a fresh mainboard startup, but CLI handback failed both directly and after verified P4 initialization. No GPIO wiring defect, EMOS defect, reset timing cause or candidate regression is established. New installer static gates pass but its required live actuator/CLI receipts are absent; it must not run."
+}

@@ -198,3 +198,34 @@ keyboard-only P4 remains installed. Await fresh idle foreground/attachments and
 verify the current remote reset actuator before selecting a new installer.
 The earlier installer has obsolete candidate/composition pins and must not be
 rerun. Simultaneous input, HTTP mitigation and production acceptance remain open.
+
+
+## Reset gate stopped deployment — 2026-10-30
+
+The Author freshly confirmed idle Legacy MOS with both physical Extender and
+HTTP keyboard input working. Actual CLI, unchanged setup-only108-byte startup,
+listener EXIT and mirror-off checks pass. One commissioned Pi reset command
+completed and released GPIO, but its input epoch stayed unchanged. A second
+read-only actual CLI/startup exchange still passed; the Pi's physical reset path
+was therefore not proved, and the agent did not flash the new P4 candidate.
+
+The agent then deliberately pulsed the existing mainboard CH341 reset circuit
+(logical RTS asserted with DTR clear, joined release) as an alternative Agon
+actuator. Mainboard startup text and a new admitted input epoch were observed,
+but the subsequent harmless CLI command produced no mirrored prompt. Following
+the standing recovery order, the agent reset P4 without flashing, independently
+verified the original keyboard-only build/USB keyboard/HTTP startup and five
+clean seconds, then sent one Agon USB reset. Again, fresh startup/admission was
+observed but actual CLI handback failed. Both captures retain the evidence;
+ready=true alone is not command-execution proof. The exact cause remains open.
+
+[Reset-gate evidence](COEXISTENCE-RESET-R01.json) distinguishes those results.
+The checked complete-component candidate remains uninstalled. No EMOS,
+mainboard VDP, startup, SD file or application was changed or invoked. All
+readers and reset controls are closed/released, with no queued hardware action.
+The Author must report current mainboard/keyboard behavior, using a physical
+Agon reset if input is unresponsive. Do not continue resets or flash from these
+failed gates. A new installer has passed static artifact/composition checks,
+but its mandatory successful live actuator/CLI receipts are absent, so it is
+not executable deployment authority. Printer mirroring after the latest failed
+command is not independently known; do not claim it was turned off.
