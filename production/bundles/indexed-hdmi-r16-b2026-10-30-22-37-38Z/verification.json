@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "archives": [
+    {
+      "archive": "indexed-hdmi-r16-b2026-10-30-22-37-38Z.tar.gz",
+      "sha256": "a4a5017fedd2a3ac026b7bf9f9f12d467ab21c6f0e8d20eab46f786003577348",
+      "all_extracted_checksums_pass": true,
+      "verified_files": 6
+    },
+    {
+      "archive": "indexed-hdmi-r16-b2026-10-30-22-37-38Z-sources.tar.gz",
+      "sha256": "3267baf128c030bb1c835e6873e9eaeec009216699d332c485aa13e489e27130",
+      "all_extracted_checksums_pass": true,
+      "verified_files": 11
+    }
+  ],
+  "accepted_app_exact": true,
+  "embedded_original_build_id_retained": true,
+  "no_factory_bootloader_or_full_backup_distributed": true,
+  "canonical_hardware_suite_run": false,
+  "production_selected": false
+}

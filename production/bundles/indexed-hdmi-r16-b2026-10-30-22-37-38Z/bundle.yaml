@@ -1,0 +1,120 @@
+schema_version: 1
+acceptance:
+  status: accepted
+  date: '2026-10-30'
+  author_statement: works. well done. make this part of the accepted firmware, push
+    and commit.
+  scope: Direct-header USB keyboard and onboard-hub Logitech F310 working together
+    on Olimex ESP32-P4-PC Rev C, using the matched mode20 viewer.
+  evidence: docs/tasks/INPUT-004/COEXISTENCE-DEPLOYMENT-R02.json
+production_version: null
+production_tag: null
+canonical_qualification:
+  procedure: qualification/run.py
+  outcome: null
+  state: Pending paired receipt adaptation and an authorized complete run; feature
+    acceptance does not claim this pass.
+p4:
+  artifact_id: indexed-hdmi
+  build_id: indexed-hdmi-r16-b2026-10-30-22-37-38Z
+  source_commit: 5f8ef676e3cf4982d009f1fd6a0f00887be34198
+  embedded_status_retained: experimental
+  size_bytes: 1786256
+  sha256: 594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62
+  chip: esp32p4
+  silicon_revision_bounds:
+  - 100
+  - 199
+  flash_offset: '0x20000'
+  write_scope: application only; preserve incoming bootloader, partitions, NVS, OTA
+    and startup
+  usb_host_component: espressif/usb1.6.0
+  peripheral_map: 3
+viewer:
+  build_id: controller-viewer-r03-b2026-10-27-22-23-38Z
+  source_commit: c9191a6bb8a6a2ea0cce982a2440d633b0cbe7a8
+  sd_path: /extender/controller/ctrlview.bin
+  size_bytes: 28860
+  sha256: 4e7e0da37fe37d2fe04ea2342737173507090873244227b2286c88322aca2d51
+compatibility:
+  emos_build: agon-emos-v0.1.27-b2026-10-26-01-06-54Z
+  emos_rom_sha256: 84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79
+  emos_source_state: Exact archived patch; not a clean-input canonical qualification
+    receipt.
+  emos_controller_operations: 0-3; reduced INPUT-005 operations4-7 are not deployed
+  sdserve_build: sdserve-v0.3.0-b2026-10-25-05-14-41Z
+  mainboard_vdp: Preserved F060 app SHA-256 58aadf642e465bbb15006a24d54e47a9bb68eeaf403295e35981e8b1166b2c27
+installed_readback_sha256: 5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833
+limits:
+- Onboard-hub keyboard enumeration remains unresolved; accepted keyboard wiring uses
+  GPIO26 D- and GPIO27 D+.
+- Other keyboards/controllers, unplug/reconnect, LEDs, offline-network startup and
+  long-duration HTTP stability are not newly qualified.
+- No new end-to-end latency or all-mode qualification claim.
+- Current production selection remains v0.1.0 until its successor version and canonical
+  qualification gates are resolved.
+kind: native_p4_application_update
+selection: unselected
+packaging_commit: da15b8b4baeecc26f7b54f0e89c3675e9535341d
+publication: local only; private reset endpoint embedded; no public binary publication
+archives:
+- filename: indexed-hdmi-r16-b2026-10-30-22-37-38Z.tar.gz
+  sha256: a4a5017fedd2a3ac026b7bf9f9f12d467ab21c6f0e8d20eab46f786003577348
+  size_bytes: 1082785
+- filename: indexed-hdmi-r16-b2026-10-30-22-37-38Z-sources.tar.gz
+  sha256: 3267baf128c030bb1c835e6873e9eaeec009216699d332c485aa13e489e27130
+  size_bytes: 28511206
+runtime_files:
+  INSTALL.md:
+    sha256: 397f2f0bf495812a74c20650839d224ff139f6c77ce215d7b6a90ac505f342e4
+    size_bytes: 2930
+  NOTICES.md:
+    sha256: b763af23b54d886af333c6d279501fbe87f8c5cae9d0df638c5f0df2c23bed16
+    size_bytes: 1457
+  acceptance.yaml:
+    sha256: 8668e124b190d57abf781e05c839a6a5d0ec07ffbb6bc0080fb2d9e9269b360d
+    size_bytes: 2429
+  licenses/agon-extender-LICENSE:
+    sha256: 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986
+    size_bytes: 35149
+  p4/firmware.bin:
+    sha256: 594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62
+    size_bytes: 1786256
+  sd/extender/controller/ctrlview.bin:
+    sha256: 4e7e0da37fe37d2fe04ea2342737173507090873244227b2286c88322aca2d51
+    size_bytes: 28860
+source_support_files:
+  NOTICES.md:
+    sha256: b763af23b54d886af333c6d279501fbe87f8c5cae9d0df638c5f0df2c23bed16
+    size_bytes: 1457
+  dependencies.lock:
+    sha256: a02df352a446db976bf1375db3de3eb7c6cdfd9603169c62ba84d30bccea78fc
+    size_bytes: 14602
+  licenses/agon-extender-LICENSE:
+    sha256: 3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986
+    size_bytes: 35149
+  manifest.json:
+    sha256: 53685e671d490023a9ab6a906755f96c2dc4c5d95dd5c0651cb9dfaf96da3d7b
+    size_bytes: 23630
+  package_native_p4.py:
+    sha256: 14210346c88e8ab20e8edf022e1bb3c175231e5a18144689254f531795142d3a
+    size_bytes: 8341
+  sdkconfig:
+    sha256: b51d8f0669e7ee2928be874d993f5baa39166f3e9c9862e5c02217e47e2db8b8
+    size_bytes: 92562
+  source-inputs.json:
+    sha256: a08bdcfc4914dc577d212ad5efed91141120a1587af767f0443dc25413713f39
+    size_bytes: 1151563
+  source.tar.gz:
+    sha256: 919084436b7e26be23036c1b521543e30604bd2c5ae25c0a76c33e497a89e405
+    size_bytes: 28158663
+  validation.json:
+    sha256: 85eb8e9ffffccc5e1748cb9adf5339ef60a951413d357da390b435674580f889
+    size_bytes: 9749
+  viewer-manifest.json:
+    sha256: 9784bbc9651e9f9c72425aa6e6352d0cb8de6a03119743ef989b770c1f0d459d
+    size_bytes: 2057
+  viewer-source.tar.gz:
+    sha256: e5c479005277cc62925e1d102d04edfa609980cd1c5355850184ba7669cdbd68
+    size_bytes: 24208
+archive_directory: ../../../dist/production/indexed-hdmi-r16-b2026-10-30-22-37-38Z
