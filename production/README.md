@@ -50,11 +50,18 @@ contain an untested replacement factory image.
 
 Use [native update handling](native-p4-update.md) and its [source/notices](native-p4-notices.md).
 The archive is local-only and embeds the existing private reset endpoint.
-It remains **unselected**: an agreed successor production version and complete
-canonical paired qualification are still required before changing `current.yaml`
-or creating a release tag. The earlier v0.2.0 authorization applies to the older
-r10/EMOSv24 combination. [Release closeout](../docs/tasks/RELEASE-001.md) owns these
-remaining gates; feature acceptance is recorded without claiming a suite pass.
+The Author selects **v0.2.1** for the combined previously accepted HDMI and
+keyboard/controller result. The tested r16 source already includes the accepted
+HDMI import; no new firmware build or v0.2.2 fallback is required. The
+[combined release record](releases/v0.2.1.yaml) binds that version to the immutable
+update and companion identities. This consolidates the older standalone v0.2.0
+promotion; its original bytes and acceptance remain historical evidence.
+
+The combined release remains **unselected** until complete canonical paired
+qualification and final selection/tag closeout. `current.yaml` and the v0.1.0
+tag remain unchanged. [Release closeout](../docs/tasks/RELEASE-001.md) owns those
+remaining gates; source integration and feature acceptance do not claim a
+canonical suite pass.
 
 The earlier `extender-installation-r01` is failed preparation evidence with an
 incompatible bootloader. **Do not deploy it.** Its immutable records and archives

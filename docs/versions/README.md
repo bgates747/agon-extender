@@ -354,3 +354,20 @@ Component versions and build identities remain independent. Installation bundle
 revisions identify immutable packaging records; they are not firmware versions.
 A production version can name an already accepted exact bundle without rebuilding
 or renaming its binaries or editing its archived manifests.
+
+
+### Combined native production v0.2.1 — authorized 2026-10-30
+
+The Author directs combining the previously accepted HDMI work and accepted
+P4-PC keyboard/controller coexistence as v0.2.1, with v0.2.2 only if integration
+is problematic. Offline source reconciliation confirms both are already in the
+exact tested r16 build, so v0.2.1 is selected as the release target and the
+fallback is unused. The earlier standalone v0.2.0 promotion is consolidated;
+its artifact identities and acceptance evidence are not renamed or discarded.
+
+[The combined release record](../../production/releases/v0.2.1.yaml) names exact
+bytes, preserved companions and evidence. This version authorization is not
+canonical hardware qualification or a published release tag. Preserve the
+existing immutable application-update archive and original embedded build ID;
+complete the declared qualification/selection gates before creating the
+annotated v0.2.1 tag. Do not move v0.1.0 or invent a separate v0.2.0 tag.

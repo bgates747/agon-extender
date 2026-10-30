@@ -10,8 +10,10 @@ firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 
 The Author also accepts the newer P4-PC direct-keyboard/onboard-hub F310
 combination. Its [immutable application update](../production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml)
-preserves tested bytes and current EMOS; successor production selection/tagging
-await the declared version and canonical paired qualification gates.
+preserves tested bytes and current EMOS. The Author selects
+[combined v0.2.1](../production/releases/v0.2.1.yaml), including the earlier
+accepted HDMI work already present in that source. Production selection/tagging
+await canonical paired qualification and final closeout.
 
 ## Before operational work
 

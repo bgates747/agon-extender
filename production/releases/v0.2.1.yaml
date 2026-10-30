@@ -1,0 +1,75 @@
+schema_version: 1
+production_version: v0.2.1
+git_tag: v0.2.1
+status: candidate
+selection: unselected
+authorization:
+  date: '2026-10-30'
+  author_statement: if i accepted the earlier HDMI build, we need to merge them and
+    make them v0.2.1, unless that is problematic, then it becomes v0.2.2.
+  scope: Combine the previously accepted native HDMI work and accepted direct-keyboard/onboard-hub
+    F310 coexistence in one release.
+  conditional_fallback_version: v0.2.2
+  fallback_condition: A demonstrated integration problem makes v0.2.1 inappropriate.
+  fallback_used: false
+accepted_scopes:
+- feature: native HDMI centered proven carriers, modes and rolling sprite/lifecycle
+    work
+  original_build: rgb-001-r10-b2026-10-07-22-56-28Z
+  acceptance: ../../docs/tasks/HDMI-002/R10-PHYSICAL-RESULTS.md
+  disposition: Incorporated into the combined v0.2.1 target; standalone v0.2.0 promotion
+    is superseded, original bytes/evidence retained.
+- feature: direct-header keyboard plus F310 through onboard hub
+  original_build: indexed-hdmi-r16-b2026-10-30-22-37-38Z
+  acceptance: ../../docs/tasks/INPUT-004/ACCEPTANCE.yaml
+source_integration:
+  state: already_combined
+  hdmi_import_commit: 8800ca84577410d5b4a9d70fbd830c10624fc326
+  combined_source_commit: 5f8ef676e3cf4982d009f1fd6a0f00887be34198
+  hdmi_import_is_ancestor: true
+  unchanged_mode_scanout_queue_files: 7
+  audit: ../../docs/tasks/RELEASE-001/MERGED-SOURCE-V0.2.1.json
+  audit_sha256: ff11f4956c90e79d61d041d756cca8ac0e45bb967c867492b06ecdb57e865a10
+  new_code_merge_or_firmware_rebuild_needed: false
+  integration_conflict_identified: false
+  accepted_hdmi_snapshot_files_imported_exactly: 15
+p4:
+  build_id: indexed-hdmi-r16-b2026-10-30-22-37-38Z
+  source_commit: 5f8ef676e3cf4982d009f1fd6a0f00887be34198
+  sha256: 594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62
+  size_bytes: 1786256
+  flash_offset: '0x20000'
+  immutable_update_bundle: ../bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml
+  immutable_update_bundle_sha256: e5fa192bb2e621d215e001ed042c0908c524ccabcbb41619f14ec1a65fed5a1c
+preserved_companions:
+  emos_build: agon-emos-v0.1.27-b2026-10-26-01-06-54Z
+  emos_rom_sha256: 84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79
+  controller_operations: 0-3
+  sdserve_build: sdserve-v0.3.0-b2026-10-25-05-14-41Z
+  viewer_build: controller-viewer-r03-b2026-10-27-22-23-38Z
+  viewer_sha256: 4e7e0da37fe37d2fe04ea2342737173507090873244227b2286c88322aca2d51
+  mainboard_vdp: Preserved F060; no new payload or replacement selected.
+qualification:
+  procedure: ../../qualification/run.py
+  outcome: null
+  state: Pending exact paired receipt adaptation and authorized complete canonical
+    qualification.
+  source_audit_is_hardware_qualification: false
+  clean_emos_receipt_limit: Current v27 came from a preserved uncommitted patch; do
+    not fabricate clean-input provenance.
+promotion:
+  current_selection: ../current.yaml
+  state: Version and source integration resolved; canonical qualification and full
+    selection/tag closeout remain.
+  annotated_tag_created: false
+  firmware_bytes_renamed_or_rebuilt: false
+notes:
+- Original r10 dirty source snapshot and r16 clean build identities remain intact.
+- The original application-update bundle predates version agreement; its immutable
+  null version fields are historical, this release record supplies the approved combined
+  version.
+- Later indexed/PPA and geometry corrections are part of the already tested r16 build;
+  ancestry does not claim identical performance or all-mode qualification.
+- No firmware flash, board reset, SD write or test invocation is part of this version/source
+  reconciliation.
+- No public distribution authorization is implied.

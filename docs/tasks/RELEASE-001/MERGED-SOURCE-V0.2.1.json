@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-10-30T23:38:07.611831+00:00",
+  "outcome": "pass",
+  "scope": "Offline source integration and exact existing artifact identity; no new physical qualification",
+  "accepted_HDMI_build": "rgb-001-r10-b2026-10-07-22-56-28Z",
+  "accepted_HDMI_base_commit": "3303bab2185cd2cc86066d0859f515f97431f0be",
+  "accepted_HDMI_original_source_dirty": true,
+  "accepted_HDMI_snapshot_verified": true,
+  "accepted_HDMI_import_commit": "8800ca84577410d5b4a9d70fbd830c10624fc326",
+  "import_is_ancestor_of_combined_source": true,
+  "combined_source_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+  "combined_source_dirty": false,
+  "combined_build": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+  "combined_app_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+  "accepted_snapshot_import_checks": [
+    {
+      "path": "vdp/video/extender/display/hdmi_buffer_ownership.hpp",
+      "accepted_HDMI_snapshot_sha256": "3e0b5a32c8a5d7817495285886754f7d47d289595963c7e947703649b0d18d71",
+      "import_commit_exact": true,
+      "combined_source_sha256": "3e0b5a32c8a5d7817495285886754f7d47d289595963c7e947703649b0d18d71",
+      "unchanged_since_accepted_HDMI": true
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_geometry.hpp",
+      "accepted_HDMI_snapshot_sha256": "645fc2c0f27f05fc5f80af875570c0cc8250e08caa4b25a1826881f8e0eca9e1",
+      "import_commit_exact": true,
+      "combined_source_sha256": "15630e87576b25f404291a0c75d467c7aa23446d61005790b2a1b9cea7be1c7a",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_output.cpp",
+      "accepted_HDMI_snapshot_sha256": "d92ac7cabca9dffe02519dcdebab9b58559fbfcdbcbb1800a4421ff5a1523cd6",
+      "import_commit_exact": true,
+      "combined_source_sha256": "fa8c43d4fb89474763c48abe0cbf36e7fad80777102f8e802a97b33b2d82a237",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_output.hpp",
+      "accepted_HDMI_snapshot_sha256": "d44698ed7899e2c4ccf93d0cb5ab92cf7b05063083a74acc130682cd1953af3b",
+      "import_commit_exact": true,
+      "combined_source_sha256": "e6689cfcde1fcc2a2c4696d6809a431bd838f832f462e68a3d746a6aeec2c99c",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/hdmi_timing.hpp",
+      "accepted_HDMI_snapshot_sha256": "a44971d9e70e6988393a6c2b12614f415672b82cfb7a0ed8efe4bbbe61f6cac4",
+      "import_commit_exact": true,
+      "combined_source_sha256": "01c4e6e49821a3b0abeb08356f90c7ecf05da226142c4e53e0b9c76a5da79300",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/primitive_queue.hpp",
+      "accepted_HDMI_snapshot_sha256": "cdf99bf7bbffd33b05c0da34b1dfd584852a8bf07170e3c9fe3ce450a91f5b6b",
+      "import_commit_exact": true,
+      "combined_source_sha256": "cdf99bf7bbffd33b05c0da34b1dfd584852a8bf07170e3c9fe3ce450a91f5b6b",
+      "unchanged_since_accepted_HDMI": true
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/bridge.h",
+      "accepted_HDMI_snapshot_sha256": "8ac7ad6d99ccc2a9411cf48633c09c1b1c3f0016f498ffe932cab1a07eb2885b",
+      "import_commit_exact": true,
+      "combined_source_sha256": "00d8e45b1975add1f2cc83d3c1be914468709f13dd6c5856f4fa9cf9dd1a7dfe",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/patch_dpi.py",
+      "accepted_HDMI_snapshot_sha256": "838ed8d3be9c9ccb3c5a7cc39c5acdc551ca6615cda6c4193da766c6ae82f247",
+      "import_commit_exact": true,
+      "combined_source_sha256": "838ed8d3be9c9ccb3c5a7cc39c5acdc551ca6615cda6c4193da766c6ae82f247",
+      "unchanged_since_accepted_HDMI": true
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/scene.cpp",
+      "accepted_HDMI_snapshot_sha256": "dba1ee4a7d8016928bc38625882917ab3677a00598717bca560da3bd85de83b9",
+      "import_commit_exact": true,
+      "combined_source_sha256": "56dfe2a2fc63fbc56cb7beb806e443319d865600407aaa95437ae4334fded695",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/scene.hpp",
+      "accepted_HDMI_snapshot_sha256": "4fba9c712b5cfab1229960bcf89a47d768a57a5bdfe400e22c7f045017879cd2",
+      "import_commit_exact": true,
+      "combined_source_sha256": "ead78312276ef72ea10212fce6de6d50900b789c2346ced2d6c2cb4d217efba9",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/strip_config.h",
+      "accepted_HDMI_snapshot_sha256": "8fc0c30f67eafd8bf831a6c864f40657466ffe88d7e925c37b3e2ee4d29d1769",
+      "import_commit_exact": true,
+      "combined_source_sha256": "8fc0c30f67eafd8bf831a6c864f40657466ffe88d7e925c37b3e2ee4d29d1769",
+      "unchanged_since_accepted_HDMI": true
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/strip_driver.cmake",
+      "accepted_HDMI_snapshot_sha256": "a3889e1521ed3a70f68b65ec839f8f122210ddc9dfa3a5ec3ee4d44535e4677d",
+      "import_commit_exact": true,
+      "combined_source_sha256": "4bd208049179b4e1baf21823192ef297cd38f45a1cda27670bcfd344427f4c94",
+      "unchanged_since_accepted_HDMI": false
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/strip_probe.h",
+      "accepted_HDMI_snapshot_sha256": "c6ceeb35164abb32c909c295b9b65291a87bbe7c281def2ec1e13dd2162dd91c",
+      "import_commit_exact": true,
+      "combined_source_sha256": "c6ceeb35164abb32c909c295b9b65291a87bbe7c281def2ec1e13dd2162dd91c",
+      "unchanged_since_accepted_HDMI": true
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/strip_runtime.inc",
+      "accepted_HDMI_snapshot_sha256": "7e488fe02c7bf386278dc7cf5ece7d57712d711c1b5bc4eeac25c170f8efd3d8",
+      "import_commit_exact": true,
+      "combined_source_sha256": "7e488fe02c7bf386278dc7cf5ece7d57712d711c1b5bc4eeac25c170f8efd3d8",
+      "unchanged_since_accepted_HDMI": true
+    },
+    {
+      "path": "vdp/video/extender/display/rolling/task_memory.hpp",
+      "accepted_HDMI_snapshot_sha256": "e1f1c56d04d4ee296c0e543ecbf3976274e9e320f2dfdf92f30dad98c6f9671d",
+      "import_commit_exact": true,
+      "combined_source_sha256": "e1f1c56d04d4ee296c0e543ecbf3976274e9e320f2dfdf92f30dad98c6f9671d",
+      "unchanged_since_accepted_HDMI": true
+    }
+  ],
+  "unchanged_mode_table_scanout_and_queue_files": [
+    "vdp/video/agon_screen.h",
+    "vdp/video/extender/display/hdmi_buffer_ownership.hpp",
+    "vdp/video/extender/display/primitive_queue.hpp",
+    "vdp/video/extender/display/rolling/strip_runtime.inc",
+    "vdp/video/extender/display/rolling/strip_config.h",
+    "vdp/video/extender/display/rolling/strip_probe.h",
+    "vdp/video/extender/display/rolling/task_memory.hpp"
+  ],
+  "material_later_differences": [
+    "Indexed physicalRGB222/PPA rendering and snapshot/sprite accommodations, retained in the tested r16 composition.",
+    "640x240 row repetition and matching proven-carrier selection, preserving original logical mode dimensions.",
+    "Shared DMA interrupt teardown correction; original accepted rolling runtime and primitive queue remain byte-identical.",
+    "Native dual-root USB1.6.0 component and bounded HTTP task stack correction."
+  ],
+  "decision": {
+    "production_version": "v0.2.1",
+    "integration_conflict_identified": false,
+    "new_source_merge_required": false,
+    "new_firmware_build_required": false,
+    "v0.2.2_fallback_used": false
+  },
+  "limits": "Ancestry and exact source pins establish integration, not identical rendering implementation/performance or a complete mode/paired-firmware qualification pass. The older dirty snapshot is not relabeled a clean build; its display files exactly match the later committed import."
+}

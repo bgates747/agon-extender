@@ -9,8 +9,9 @@ process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
 **State:** The earlier r02 DevKit release is complete/current. Native P4-PC
-promotion remains open; accepted keyboard/controller r16 is preserved separately
-while canonical qualification and the successor production version are pending.
+promotion targets the Author-approved combined v0.2.1. Exact accepted HDMI and
+keyboard/controller r16 source integration is verified; canonical qualification
+and final production selection/tag closeout remain pending.
 [Production selection](../../production/README.md) is the routine entry point.
 [R01-08 closeout](RELEASE-001/R01-08.md) records exact packaging and validation.
 No new hardware work is started by promotion.
@@ -74,6 +75,7 @@ replaced the failed package and selected the accepted combination.
 | ID | State | Recommendation, alternatives and downstream effect |
 |---|---|---|
 | R01-D01 | Accepted — 2026-09-24 | Author authorized restoring `?rle2=1&packed=2` during R01-04. Preserve a clean raw-request control first, then identify/test the correction separately. Verify negotiation in built browser assets and paired encoder/decoder behavior. Keep current request pacing unchanged; its policy question remains with QUAL-003/BENCH-005. No deployment or release promotion is implied. |
+| R01-D02 | Accepted — 2026-10-30 | Author combines previously accepted native HDMI and keyboard/controller coexistence as production v0.2.1; use v0.2.2 only for a demonstrated integration problem. Offline source audit confirms the r16 build already includes the accepted HDMI import, so no new merge/build or fallback is required. Canonical qualification remains separate. |
 
 This is an implementation discrepancy, not a new architectural decision. The
 accepted compression requirement remains unchanged; source review does not
@@ -180,7 +182,7 @@ historical binaries retain their identities. A packaging milestone does not
 close electrical qualification, all-mode compatibility or the documentation audit.
 
 
-## Native HDMI production v0.2.0 — authorized 2026-10-07
+## Native HDMI v0.2.0 authorization — consolidated into v0.2.1
 
 Author accepts HDMI r10 gameplay and its correctly displayed outro screen and
 explicitly selects v0.2.0 for production promotion. Preserve the tested bytes;
@@ -195,25 +197,12 @@ paired EMOS is `agon-emos-v0.1.24-b2026-10-07-23-11-33Z`, image SHA-256
 Evidence: [HDMI r10 physical results](HDMI-002/R10-PHYSICAL-RESULTS.md) and
 [EMOS callback correction](../../../agon-emos/docs/tasks/INTEG-015.md).
 
-R01-N02 [ ] Adapt native release inputs/receipt mapping for the current P4-PC
-bench and run canonical paired qualification against the exact accepted bytes.
-Existing r10/EMOS receipts retain build/source-closure and full verification
-but do not have the canonical runner's schema-1 component snapshot fields.
-Match committed source to retained build inputs; never fabricate a clean-build
-or qualification claim. Check raw-SD qualification prerequisites before running
-its write/restore case. Preserve current game/startup and input recovery.
-
-R01-N03 [ ] Package a new immutable native bundle with exact firmware, listener,
-host tools, source snapshots, licenses and archive hashes. The existing
-`scripts/package_installation.py` is deliberately pinned to the old hybrid r02;
-it cannot package this native build. Provide a separate native recipe, retaining
-r02 reproduction and rollback. Verify extracted archive contents and deployment
-instructions before updating current selection.
-
-R01-N04 [ ] Update current operating/build/install documentation for the scoped
-P4-PC combination, commit the verified selection, create annotated v0.2.0 tag
-and publish under standing acceptance-promotion authorization. Do not include
-unaccepted 240-line experiments in the accepted r10 bundle.
+R01-N02–R01-N04 are superseded by R01-U04/U05 for the combined v0.2.1 target,
+under the Author's2026-10-30 instruction. The r10/EMOSv24 bytes, acceptance and
+rollback remain frozen; no standalone v0.2.0 promotion or tag is now queued.
+The native archive recipe is implemented for the accepted r16 application update;
+the remaining complete-installation qualification/selection work belongs only
+to the combined target below.
 
 
 ## Accepted native keyboard/controller combination — 2026-10-30
@@ -234,9 +223,10 @@ R01-U02 [x] Generate, extract and independently verify immutable runtime and
 source/support archives, publish their portable bundle record and update current
 guides. Preserve private-configured binaries locally; no public upload.
 
-R01-U03 [ ] Resolve the successor production version with the Author. Existing
-v0.2.0 approval names the older r10/EMOSv24 combination and does not select r16.
-Do not move the existing v0.1.0 tag or silently extend that older authorization.
+R01-U03 [x] Author selects v0.2.1 for the combined accepted HDMI and
+keyboard/controller result. Source integration is already present in exact
+r16/source5f8ef; no conflict justifies the conditional v0.2.2 fallback. Preserve
+older evidence and the v0.1.0 tag; do not produce a separate v0.2.0 release.
 
 R01-U04 [ ] Adapt exact paired qualification receipts and complete the canonical
 installed-hardware suite under separately authorized bench scope. The current
@@ -246,7 +236,7 @@ must also be reviewed against current startup/no-CRC requirements before reuse.
 Feature acceptance and the bounded viewer pass do not replace this gate.
 
 R01-U05 [ ] Once those concrete gates pass, select the verified native combination
-in production/current.yaml, complete production docs, commit, create the agreed
+in production/current.yaml, complete production docs, commit, create the agreed v0.2.1
 annotated immutable version tag, and publish commit/tag. Until then current
 qualified production remains v0.1.0; the accepted native update is unselected.
 No hardware operation is authorized merely by this packaging closeout.
@@ -259,3 +249,26 @@ verified. Their immutable production record is
 archive bytes remain locally in the matching dist/production directory. No
 bootloader/factory/full-device-backup payload is distributed. Packaging and
 acceptance are complete; R01-U03/U04/U05 remain explicit production gates.
+
+
+## Combined v0.2.1 source reconciliation — 2026-10-30
+
+The Author explicitly directs combining both accepted features into v0.2.1,
+with v0.2.2 only if integration is problematic. This resolves the version gate;
+the earlier record that version authority was missing is historical.
+
+The accepted r10 build used a dirty source snapshot based on3303bab. Fifteen
+retained HDMI/rolling files match committed import8800ca84577410d5b4a9d70fbd830c10624fc326
+exactly. That import is an ancestor of tested clean r16/source5f8ef. Seven
+mode-table, buffer ownership, primitive queue and rolling runtime/config files
+remain byte-identical. Later rendering/geometry/DMA corrections are retained;
+this audit is not a claim of identical implementation/performance or new hardware
+coverage. [Source reconciliation](RELEASE-001/MERGED-SOURCE-V0.2.1.json) records
+pins and limits. No source merge, rebuild, reflash or v0.2.2 fallback is needed.
+
+The [combined release record](../../production/releases/v0.2.1.yaml) binds the
+accepted immutable application update and preserved companions to v0.2.1.
+The bundle itself is not rewritten merely to replace its creation-time null
+version metadata. Canonical paired qualification, its receipt/provenance and
+startup/no-CRC adapter prerequisites, complete production selection and the
+annotated v0.2.1 tag remain R01-U04/U05. No bench work starts from this record.
