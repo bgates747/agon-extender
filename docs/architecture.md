@@ -37,6 +37,12 @@ components are not thereby corrected or qualified.
 
 ## Analog controller ownership
 
+Diagnostic sequences, grammar, timeout policy and reporting belong to external
+utilities where practical. EMOS retains minimum admitted transport operations,
+mode/input ownership and abandoned-utility cleanup. Fake hardware adapters
+belong in external test models. The [accepted extraction decision](decisions/ADR-2026-10-30-external-diagnostics.md)
+sets this boundary; DIAG-003 records migration and implementation limits.
+
 Oryx publishes latest controller state over UDP, with separately numbered and
 retained button/D-pad transitions. The existing P4 Ethernet owner admits one
 sender, starts a bounded socket worker and stores coherent input. Session loss

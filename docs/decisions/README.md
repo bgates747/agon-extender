@@ -53,6 +53,8 @@ attention instructions are not continuing execution authorization.
 
 [No processor-link CRCs without an explicit Author request](ADR-2026-10-25-processor-link-crc-policy.md): Accepted / Complete; applies to EMOS–Extender VDP communications generally, including controller traffic.
 
+[Keep diagnostic algorithms outside resident EMOS](ADR-2026-10-30-external-diagnostics.md): Accepted / Complete; DIAG-003 owns extraction and compatibility migration.
+
 [Staged WebDAV with EMOS admission](ADR-2026-09-27-staged-webdav-admission.md): Proposed / Partial; review and open decisions in REMOTE-005.
 
 When changing an ADR's identity, title, status or completeness, update this index.

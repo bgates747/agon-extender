@@ -32,6 +32,17 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 5. The earlier unexplained P4 restart remains a distinct unresolved incident
    in INPUT-003; do not diagnose it from chronology or close it after a keyboard
    pass. Preserve reset reasons/backtraces if another event occurs.
+6. The Author subsequently reports that rewiring the direct USB adapter through
+   the Extender harness breadboard produces a working keyboard. This is an
+   Author observation, not a captured enumeration/typing qualification. F310
+   hotplug does not work with the installed FS-only peripheral selection;
+   restoring concurrent P4 USB acquisition remains unfinished.
+7. On 2026-10-30 the Author requires a resident-logic audit alongside controller
+   restoration: put as much controller logic as practical in the Agon
+   application because eZ80 flash is scarce. The [bounded audit](INPUT-004/EMOS-CONTROLLER-AUDIT.md)
+   records actual resident costs and relocation candidates. Target zero EMOS
+   growth for P4 USB coexistence; do not couple that restoration to an
+   unmeasured EMOS/API rewrite.
 
 ## Scope and ownership
 
@@ -51,6 +62,13 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 5. Keep upstream Agon/SDK/reference repositories read-only. Own any backport in
    project build/source inputs, with exact source hashes, bounded patches,
    provenance, rationale and removal conditions beside unusual code.
+6. Before restoring the F310 alongside the direct-header keyboard, classify
+   each controller duty as P4 acquisition, minimum EMOS transport, or Agon
+   application logic. Audit existing duties too. Keep calibration, deadzones,
+   mappings, repeats, gameplay decisions and presentation in application code.
+   Preserve EMOS routing/UART ownership; moving logic does not admit direct
+   application UART/GPIO access. Measure linked ROM changes before proposing
+   any resident alteration, and account for existing consumer compatibility.
 
 ## Bounded research précis / known evidence
 
@@ -138,6 +156,7 @@ qualify actual typing/LEDs/reconnect plus keyboard/controller coexistence.
 | I4-10 | Compatibility assessment complete | Official USB host 1.6.0 admits IDF 5.5.5, but its public FSLS option requires a HAL capability absent from the pinned SDK. A component-only adaptation retains the same PHY/HAL and selected initial-control functions; no targeted correction was identified. Defer a speculative build/flash. Exact source and bounded newer-SDK findings are in [the assessment](INPUT-004/USB-COMPATIBILITY.md). |
 | I4-11 | Deferred by Author | Author prefers Olimex as the first vendor contact because P4-PC adds the hub/connector path, then defers vendor contact entirely in favor of the direct full-speed header experiment. The Espressif-addressed draft and frozen review archive remain unsubmitted historical preparation; do not submit them or silently relabel the frozen archive. |
 | I4-12 | Author-selected experiment; wiring researched | Try a keyboard through the P4-PC's exposed full-speed USB signals, bypassing the onboard hub. Author reports a successful directly wired keyboard on the P4-DevKit; this is a useful control, not P4-PC qualification. Rev C EXT1 maps +5V=2, GND=3, GPIO26/D-=4, GPIO27/D+=6; pin1 is +3.3V and pin5 is ESP_EN. Firmware controller selection and simultaneous use of onboard F310 remain implementation/qualification gates. No physical rewiring, build or flash was performed during wiring research. |
+| I4-13 | Author constraint; audit recorded | Minimize resident controller logic and prefer Agon application ownership. Restore concurrent USB acquisition on P4 without EMOS growth. Actual EMOS relocation candidates, compatibility gates and measured baseline are in [the audit](INPUT-004/EMOS-CONTROLLER-AUDIT.md); no revised controller ABI or firmware reduction is implemented yet. |
 
 ## Evidence and stop boundaries
 
