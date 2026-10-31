@@ -23,7 +23,8 @@ The renewed 2026-10-31 report identifies physical HDMI. Exact installed EMOSv27
 polling and retained P4 source reproduce the cursor starvation under a controlled
 120 Hz host clock; the repaired parser passes that negative-control regression.
 The combined candidate also restores mode8 scaling. Physical regression exposes
-a separate wide-clear abort; r21 is being built under the linked repair plan.
+a separate wide-clear abort; r21 writeback chunking alone fails physical checks.
+R22 extends task chunking to invalidation under the linked repair plan.
 
 F13-S02 — The renewed Author report and ongoing repair authorization supersede
 the original filing-only boundary for this bounded correction and monitored
