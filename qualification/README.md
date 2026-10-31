@@ -16,6 +16,10 @@ Native mode8 checks require the848×480 carrier used by the existing320×240
 scaler, as well as logical geometry and DMA progress. This rejects builds
 which omit that scaler selection; filtering, object aspect and optical cursor
 flashing still require actual Author review.
+The native review explicitly records `idle-cli-cursor-flash` (empty line,
+typing, Backspace-to-empty and arrow-left with text retained) and
+`mode8-scaled-height` (full-height centered640×480 presentation of logical
+320×240, with correct object aspect). Neither is inferred from a command receipt.
 
 ## Qualification policy
 

@@ -30,7 +30,7 @@
       "acceptance_required": true,
       "destructive": false,
       "timeout_seconds": 180,
-      "description": "8/20/8 without browser video, then profile-specific retained-video 8/20/8 or native HDMI 96/20/96 with text/DMA oracles; entry modes/Legacy route restored by suite lifecycle."
+      "description": "8/20/8 without browser video, requiring848x480 for the native320 scaler, then profile-specific retained-video 8/20/8 or native HDMI 96/20/96 with text/DMA oracles; entry modes/Legacy route restored by suite lifecycle."
     },
     {
       "id": "a10-rp04-raw-sd-write",
@@ -58,10 +58,12 @@
       ]
     },
     "native-hdmi": {
-      "automated_output_oracle": "Committed 8/20/8 modes, then 96/20/96 with fresh glyph/prompt and HDMI DMA progress, carrier and zero fault counters. No browser video requested. Physical pixels are not inferred from counters.",
+      "automated_output_oracle": "Committed 8/20/8 modes with848x480 carrier for the existing320 scaler, then96/20/96 with fresh glyph/prompt and HDMI DMA progress and zero fault counters. No browser video requested. Physical pixels are not inferred from counters.",
       "manual_cases": [
         "loaded-assets-mode-switch-and-exit",
-        "native-hdmi-visual"
+        "native-hdmi-visual",
+        "idle-cli-cursor-flash",
+        "mode8-scaled-height"
       ]
     }
   }
