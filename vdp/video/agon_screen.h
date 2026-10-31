@@ -332,11 +332,13 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	candidate.refresh_hz = timing.refresh_hz;
 	candidate.double_buffered = doubleBuffered;
 #ifdef AGON_EXTENDER_DIRECT_RGB888
-	// RGB-001 borrows the sink's pixels: candidate initialization can no longer
-	// overlap the live mode's drawing/output. Join those owners first, outside
-	// native exclusion. Ordinary independently allocated modes keep RP06 staging.
-	const bool sharedPanel = rgb888ExperimentGeometry(colours,timing.width,timing.height);
-	const bool joinedPanel = sharedPanel && _stockFrameService && _stockController;
+	// HDMI-002: join drawing/output before *any* candidate allocation or clear,
+	// outside native exclusion. Joining only when the target borrows panel pixels
+	// left mode96's indexed/PPA publisher running while native mode3 prepared on
+	// the same carrier. That overlap can exhaust the rolling refill deadline.
+	// The panel keeps scanning its last image; failed preparation restarts the
+	// former service below. No scanout deadline or DMA ownership check is relaxed.
+	const bool joinedPanel = _stockFrameService && _stockController;
 	if(joinedPanel) _stockFrameService->detach();
 #endif
 	if (!prepareModeCandidate(candidate,
