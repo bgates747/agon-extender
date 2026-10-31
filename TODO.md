@@ -204,7 +204,7 @@ before future output qualification; do not assume that a current firmware cap
 has been verified. See PLAN-001-N04 in the disposition table. Old experiment
 headings no longer compete with the approved current sequence.
 
-- [ ] **[RELEASE-001 — Combined native P4-PC v0.2.1 promotion](docs/tasks/RELEASE-001.md)** — Source integration and exact r16 update archives verified. Offline runner/output-profile and retained paired receipt preparation complete. Next: fresh bench identity/reset/cue preflight and deployment, then stop for invocation readiness; physical qualification and bounded visual review precede selection/tag. Bench occupied; no hardware access during this tranche. Older standalone v0.2.0 promotion is consolidated into this target.
+- [ ] **[RELEASE-001 — Combined native P4-PC v0.2.1 promotion](docs/tasks/RELEASE-001.md)** — Exact accepted r16/v27 pair passes complete native automated r03 qualification:25/25, entry modes/Legacy CLI, notification and cleanup verified. Actual Author visual review and explicit native mode3 fault limitation acceptance remain before production selection/tag. Failed r01/r02 evidence retained; firmware/startup unchanged.
 
 ## Deferred game-renderer experiments
 

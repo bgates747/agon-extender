@@ -10,8 +10,10 @@ an equivalent replacement for the deployed snapshot/overlay combination.
 
 **State:** The earlier r02 DevKit release is complete/current. Native P4-PC
 promotion targets the Author-approved combined v0.2.1. Exact accepted HDMI and
-keyboard/controller r16 source integration is verified; canonical qualification
-and final production selection/tag closeout remain pending.
+keyboard/controller r16 source integration is verified. Full native automated
+qualification r03 passes25/25 with restored modes/CLI, notification and cleanup.
+Actual Author visual review, explicit native mode3 limitation acceptance and
+final production selection/tag closeout remain pending.
 [Production selection](../../production/README.md) is the routine entry point.
 [R01-08 closeout](RELEASE-001/R01-08.md) records exact packaging and validation.
 No new hardware work is started by promotion.
@@ -300,7 +302,7 @@ this tranche. Preparation is not a claim that the physical suite is ready.
    fixture-source compatibility separately from installed-firmware provenance.
    Missing evidence must block qualification rather than produce a fabricated
    clean-source receipt.
-3. [ ] **Run the canonical physical suite when separately authorized.** Check
+3. [x] **Run the canonical physical suite when separately authorized.** Check
    bench ownership, actual foreground, attached devices, unchanged normal startup,
    installed identities and reset readiness first. Cover boot/reset, USB/browser
    input, Legacy/ExCom routing, HDMI display/mode behavior, SD round trips and
@@ -472,3 +474,42 @@ qualify native mode3. All25 checks, raw guards, restoration proof and DMA fault
 checks remain mandatory, and the1600µs guard is unchanged. HDMI-002 retains
 the mode3 defect; any release acceptance must explicitly include that limitation.
 Run a fresh complete suite with the corrected host; retain the manual-review gate.
+
+## Complete automated native qualification r03 — 2026-10-30
+
+The [fresh full run](RELEASE-001/QUALIFICATION-R03.json) at host afb28173 succeeds:
+all25 checks across three cases, entry modes0 on both displays, Legacy route,
+actual CLI handback, accepted notification and independently verified removal
+of this run's temporary support files. Sector2 is restored byte-for-byte; all
+raw operation/restore returns are zero. Startup remains exactly108 bytes with
+SHA-256 `9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423`.
+Neither processor firmware nor mainboard VDP is replaced.
+
+| Measured phase | Host monotonic seconds | Scope |
+|---|---:|---|
+| Host job total |341.92|Complete invocation including process setup and terminal completion|
+| Runner total |340.19|Preparation, cases, restoration, notification and final verification/cleanup|
+| Preparation |112.13|CLI/state staging and full current EMOS ROM retrieval/verification|
+| Integrated case |68.38|13 checks; includes transfers, cleanup and resets|
+| Mode case |71.37|7 checks; includes mode settling and recovery|
+| Raw SD case |29.49|5 checks; includes staging, workload, result retrieval and startup verification|
+| Initial restoration |14.50|Both entry modes and CLI verified before notification|
+| Notification |22.71|Accepted player, finite playback allowance and service handback|
+
+These phases are operational measurements, not calibrated rendering or input
+latency. Case timings include host communication; raw operation time alone is
+not measured. Final verification/cleanup is included in total, without a separate
+timer. One comparable successful run supports an approximate six-minute advance
+estimate for this configuration, not an automatic reset deadline.
+
+A separate final read-only check observes15 DMA frames advancing over at least
+0.25 seconds, zero fault counters, admitted neutral keyboard, valid USB F310 and
+the foreground listener offline. It sends no input and preserves the final cue.
+No suite job, serial reader or reset hold remains.
+
+The next release gate is actual Author review of loaded assets, mode changes,
+visible clean exit and native HDMI aspect/centering/colours/motion, with existing
+accepted controller exercise credited. Native mode3 remains an unresolved
+scanout fault, explicitly outside this representative mode20 raw-API run; it
+requires acceptance as a known limitation or a separately qualified remedy.
+Do not manufacture a manual receipt or advance production selection/tag yet.

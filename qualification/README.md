@@ -188,3 +188,11 @@ This does not qualify native mode3 or resolve its display fault. All sector
 oracles, 25 required checks, DMA fault counters and timing guards remain enforced.
 The release task and HDMI-002 retain the separate mode3 defect. Any release
 acceptance must include this known limitation; no all-mode claim is supported.
+
+The fresh complete native r03 run succeeds25/25 with verified restoration,
+notification and cleanup; its [portable result](../docs/tasks/RELEASE-001/QUALIFICATION-R03.json)
+records exact identities and phase timings. The measured total is about342 host
+monotonic seconds for this configuration, including preparation and notification;
+allow approximately six minutes for a comparable run. This is one successful
+observation, not a calibrated duration or reset/collection deadline. Actual
+Author visual review and mode3 limitation acceptance remain release gates.

@@ -5,20 +5,19 @@ status: candidate
 selection: unselected
 authorization:
   date: '2026-10-30'
-  author_statement: if i accepted the earlier HDMI build, we need to merge them and
-    make them v0.2.1, unless that is problematic, then it becomes v0.2.2.
+  author_statement: if i accepted the earlier HDMI build, we need to merge them and make them
+    v0.2.1, unless that is problematic, then it becomes v0.2.2.
   scope: Combine the previously accepted native HDMI work and accepted direct-keyboard/onboard-hub
     F310 coexistence in one release.
   conditional_fallback_version: v0.2.2
   fallback_condition: A demonstrated integration problem makes v0.2.1 inappropriate.
   fallback_used: false
 accepted_scopes:
-- feature: native HDMI centered proven carriers, modes and rolling sprite/lifecycle
-    work
+- feature: native HDMI centered proven carriers, modes and rolling sprite/lifecycle work
   original_build: rgb-001-r10-b2026-10-07-22-56-28Z
   acceptance: ../../docs/tasks/HDMI-002/R10-PHYSICAL-RESULTS.md
-  disposition: Incorporated into the combined v0.2.1 target; standalone v0.2.0 promotion
-    is superseded, original bytes/evidence retained.
+  disposition: Incorporated into the combined v0.2.1 target; standalone v0.2.0 promotion is
+    superseded, original bytes/evidence retained.
 - feature: direct-header keyboard plus F310 through onboard hub
   original_build: indexed-hdmi-r16-b2026-10-30-22-37-38Z
   acceptance: ../../docs/tasks/INPUT-004/ACCEPTANCE.yaml
@@ -51,29 +50,33 @@ preserved_companions:
   mainboard_vdp: Preserved F060; no new payload or replacement selected.
 qualification:
   procedure: ../../qualification/run.py
-  outcome: infrastructure-failure
-  state: 'First complete native invocation stopped at post-reset actual CLI/listener
-    handback: 1/25 checks, remaining mode/raw-sector cases blocked. Paired recovery
-    restored CLI; no test replay. Reset-to-CLI correction and a fresh explicit full
-    suite remain pending.'
+  outcome: automated-success-awaiting-author-review
+  state: Full native r03 passes25/25 with both entry modes/Legacy CLI restored, notification
+    and cleanup verified. Actual Author visual review and native mode3 limitation acceptance
+    remain before production selection/tag.
   source_audit_is_hardware_qualification: false
   clean_emos_receipt_limit: Current v27 came from a preserved uncommitted patch; archive/inventory
     and full retained ROM verify, without a clean-source claim.
-  latest_attempt: ../../docs/tasks/RELEASE-001/QUALIFICATION-R01.json
-  latest_attempt_sha256: 4b353ce5fa721d47e4bec4d4702d5b97ce73af89bc1b49f6e938a099bf428e43
+  latest_attempt: ../../docs/tasks/RELEASE-001/QUALIFICATION-R03.json
+  latest_attempt_sha256: 8156fc6c72c185c0f1d06b8cfd7128f7ea5c3a3073f832d413b9568d9cbd241b
+  known_limits:
+  - Native mode3 scanout abort remains unresolved; native raw SD API case uses representative
+    mode20. No all-mode qualification.
+  informative_failed_attempts:
+  - ../../docs/tasks/RELEASE-001/QUALIFICATION-R01.json
+  - ../../docs/tasks/RELEASE-001/QUALIFICATION-R02.json
 promotion:
   current_selection: ../current.yaml
-  state: Version and source integration resolved; canonical qualification and full
-    selection/tag closeout remain.
+  state: Automated native qualification passed; actual Author visual review and mode3 limitation
+    acceptance precede full selection/tag closeout.
   annotated_tag_created: false
   firmware_bytes_renamed_or_rebuilt: false
 notes:
 - Original r10 dirty source snapshot and r16 clean build identities remain intact.
-- The original application-update bundle predates version agreement; its immutable
-  null version fields are historical, this release record supplies the approved combined
-  version.
-- Later indexed/PPA and geometry corrections are part of the already tested r16 build;
-  ancestry does not claim identical performance or all-mode qualification.
+- The original application-update bundle predates version agreement; its immutable null version
+  fields are historical, this release record supplies the approved combined version.
+- Later indexed/PPA and geometry corrections are part of the already tested r16 build; ancestry
+  does not claim identical performance or all-mode qualification.
 - No firmware flash, board reset, SD write or test invocation is part of this version/source
   reconciliation.
 - No public distribution authorization is implied.

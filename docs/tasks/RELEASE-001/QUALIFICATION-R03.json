@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "artifact_id": "native-release-qualification-r03",
+  "host_commit": "afb2817364173a5c2e2e9a4d81535f3f1e42552d",
+  "status": "success",
+  "qualification_state": "awaiting-author-review",
+  "full_suite": true,
+  "output_profile": "native-hdmi",
+  "started_at": "2026-10-31-02-13-20Z",
+  "ended_at": "2026-10-31-02-19-00Z",
+  "clock": "host monotonic seconds; operational timing, not independently calibrated",
+  "preparation_seconds": 112.12998219000292,
+  "runner_total_seconds": 340.18646049001836,
+  "job": {
+    "started_at": "2026-10-31T02:13:18.600298+00:00",
+    "status": "success",
+    "command_elapsed_seconds": 341.9158674479986,
+    "exit_code": 0,
+    "ended_at": "2026-10-31T02:19:00.517758+00:00",
+    "elapsed_seconds": 341.91590443000314
+  },
+  "checks": {
+    "pass": 25,
+    "required": 25
+  },
+  "cases": [
+    {
+      "id": "installed-p4-integrated-smoke",
+      "status": "pass",
+      "started_at": "2026-10-31-02-15-12Z",
+      "ended_at": "2026-10-31-02-16-20Z",
+      "total_case_seconds": 68.38182001101086,
+      "checks": [
+        {
+          "id": "p4-web-assets",
+          "status": "pass"
+        },
+        {
+          "id": "agon-reset-and-keyboard-readmission",
+          "status": "pass"
+        },
+        {
+          "id": "legacy-screen-capture",
+          "status": "pass"
+        },
+        {
+          "id": "excom-mode-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "excom-clear",
+          "status": "pass"
+        },
+        {
+          "id": "excom-keyboard-and-text-render",
+          "status": "pass"
+        },
+        {
+          "id": "display-status-contract",
+          "status": "pass"
+        },
+        {
+          "id": "hdmi-dma-progress",
+          "status": "pass"
+        },
+        {
+          "id": "legacy-mode-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-service",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-round-trip",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-cleanup",
+          "status": "pass"
+        },
+        {
+          "id": "final-startup-recovery",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "id": "a10-rp06-mode-transaction",
+      "status": "pass",
+      "started_at": "2026-10-31-02-16-20Z",
+      "ended_at": "2026-10-31-02-17-32Z",
+      "total_case_seconds": 71.37063016899629,
+      "checks": [
+        {
+          "id": "rp06-browser-absent-mode8",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-browser-absent-mode20",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-browser-absent-return-mode8",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-wide96",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-standard20",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-return-wide96",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-final-startup-recovery",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "id": "a10-rp04-raw-sd-write",
+      "status": "pass",
+      "started_at": "2026-10-31-02-17-32Z",
+      "ended_at": "2026-10-31-02-18-01Z",
+      "total_case_seconds": 29.48789360700175,
+      "checks": [
+        {
+          "id": "emos-receipt-and-fixture-source",
+          "status": "pass"
+        },
+        {
+          "id": "emos-fixture-staging",
+          "status": "pass"
+        },
+        {
+          "id": "emos-fixture-completion-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "emos-raw-sector-write-read-restore",
+          "status": "pass"
+        },
+        {
+          "id": "emos-startup-unchanged",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "raw_sector_oracle": {
+    "schema": "1",
+    "case": "a10-rp04-raw-sd-write",
+    "status": "pass",
+    "sector": "2",
+    "test_rc": "0",
+    "restore_rc": "0",
+    "restore_verify_rc": "0",
+    "before_crc32": "b2aa7578",
+    "pattern_crc32": "3b3befd6",
+    "observed_crc32": "3b3befd6",
+    "restored_crc32": "b2aa7578",
+    "detail": "completed",
+    "first_partition_lba": "8192",
+    "write_attempted": "1",
+    "token": "13E352A13B7E49A7"
+  },
+  "restoration": {
+    "status": "verified",
+    "duration_seconds": 14.497881363990018
+  },
+  "notification": {
+    "status": "success",
+    "duration_seconds": 22.70697814101004
+  },
+  "paired_component_identities": {
+    "p4": {
+      "target": "p4",
+      "component_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+      "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+      "artifact_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+      "installed_readback_sha256": "5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833",
+      "source": {
+        "kind": "clean-build-archive",
+        "base_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+        "dirty": false,
+        "files_verified": 5533,
+        "archive_sha256": "919084436b7e26be23036c1b521543e30604bd2c5ae25c0a76c33e497a89e405",
+        "inventory_sha256": "a08bdcfc4914dc577d212ad5efed91141120a1587af767f0443dc25413713f39"
+      },
+      "verification_scope": "retained-installation"
+    },
+    "emos": {
+      "target": "emos",
+      "component_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+      "build_id": "agon-emos-v0.1.27-b2026-10-26-01-06-54Z",
+      "artifact_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "installed_readback_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "source": {
+        "kind": "archived-patch",
+        "base_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+        "dirty": true,
+        "files_verified": 557,
+        "archive_sha256": "70eee01c830f9d1e98cbaad596f256589e05de09b8a4a7926d8673a3d88f96d0",
+        "inventory_sha256": "92d82b9f68e20a2f8ded9f74d998ba77d6aa7e49b82ea7181b378b8e7792bccc"
+      },
+      "verification_scope": "retained-installation"
+    }
+  },
+  "startup": {
+    "bytes": 108,
+    "sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "unchanged": true,
+    "writes": 0
+  },
+  "native_raw_mode": 20,
+  "firmware_flashed": false,
+  "cleanup": {
+    "status": "verified",
+    "removed": [
+      "/extender/.qstate-908ec084a3db4968.bin",
+      "/extender/.qstate-AE5DF4AA35E8413D.txt",
+      "/extender/.rom-593E4FD8C4744C2C.txt",
+      "/extender/.raw-sd-13E352A13B7E49A7.bin",
+      "/extender/.raw-sd-13E352A13B7E49A7.txt",
+      "/extender/.qstate-EDE54C31FD134570.txt",
+      "/extender/.qstate-3EBAD71424324D14.txt"
+    ],
+    "retained_results": [
+      "/agents/extender/results/qstate-AE5DF4AA35E8413D.txt",
+      "/agents/extender/results/rom-593E4FD8C4744C2C.bin",
+      "/agents/extender/results/cleanup-3596ddc3f1054cc8.txt",
+      "/agents/extender/results/qstate-EDE54C31FD134570.txt",
+      "/agents/extender/results/qstate-3EBAD71424324D14.txt",
+      "/agents/extender/results/cleanup-1fe401528e9d4c42.txt"
+    ]
+  },
+  "entry": {
+    "route": "legacy",
+    "mainboard": {
+      "mode": 0,
+      "width": 640,
+      "height": 480,
+      "colors": 16
+    },
+    "extender": {
+      "mode": 0,
+      "width": 640,
+      "height": 480,
+      "colors": 16
+    }
+  },
+  "manual_cases_required": [
+    "loaded-assets-mode-switch-and-exit",
+    "native-hdmi-visual"
+  ],
+  "actual_author_review_recorded": false,
+  "known_limitations": [
+    "Native mode3 remains unqualified after the retained r02 scanout-budget abort; representative native raw API output uses mode20.",
+    "No all-mode, pixel, performance or human hearing acceptance is inferred from host checks.",
+    "Current production selection and version tag remain pending actual Author visual review and limitation acceptance."
+  ],
+  "evidence_sha256": {
+    "run/summary.json": "d0872c778346aa4880f24eac8256e9dfcaa8df7218e1d4e77848615db561294a",
+    "job/result.json": "ede39a7f30feb60343882540fa384b7db12de4463403dea34f0de0174ef91302",
+    "source-pin.json": "1d8e52e3970ae3fee96627302f2936acdebb62f5c52868314b18b49b359b0064",
+    "run/support-cleanup.json": "8295152cdbf5a327fc9f432f57cedf4a868dbc579467d6300e96285fd6df954d",
+    "run/entry-state.json": "060397b7bb87878d39eb7c4c563d7fe035d9880754fb695fb3a84ea7a2e53a95",
+    "final-readiness.json": "3259116ab939f7591dae947e49137e87114a1012f48d3bf06d051250819e82b7"
+  },
+  "private_evidence": "Ignored release run directory and current machine-local bench record.",
+  "final_read_only_verification": {
+    "mode": 0,
+    "dma_frames_advanced": 15,
+    "rolling_faults": 0,
+    "keyboard_ready_and_neutral": true,
+    "USB_controller_valid": true,
+    "foreground_listener_offline": true,
+    "completion_cue_preserved": true
+  }
+}
