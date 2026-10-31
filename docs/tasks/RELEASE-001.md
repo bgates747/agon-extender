@@ -533,3 +533,19 @@ the terminal CLI after the completion player. This is host-only; no firmware,
 startup, raw fixture or accepted component bytes change. The r03 evidence stays
 frozen at its original source; the cursor-only correction has host checks and
 an isolated live CLI command, not another full-suite qualification receipt.
+
+## Display-only mode3 investigation — 2026-10-31
+
+The Author authorizes mode3 testing on a normally booted bench. The
+[bounded isolation result](HDMI-002/MODE3-ISOLATION-R02.json) passes all six
+clear/text/scroll controls entering from0/20 and reproduces a1932µs scanout abort
+on the first96→3 entry, before that case's clear or text. The1600µs guard remains.
+No raw SD or resident firmware change is involved, narrowing the earlier r02
+failure to a display transition rather than requiring raw-sector work.
+
+HDMI-002 owns the source hypothesis and candidate/validation next steps. Existing
+r03 automated qualification remains frozen at its original scope; this extra
+diagnostic is an actual failure, not another pass. Mode3 transition repair or
+explicit limitation acceptance and actual Author visual review still precede
+production selection/tag. Recovery restores both mode0 displays, Legacy CLI,
+cursor commands, unchanged startup and support cleanup; no active job remains.

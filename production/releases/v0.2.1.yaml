@@ -60,11 +60,17 @@ qualification:
   latest_attempt: ../../docs/tasks/RELEASE-001/QUALIFICATION-R03.json
   latest_attempt_sha256: 8156fc6c72c185c0f1d06b8cfd7128f7ea5c3a3073f832d413b9568d9cbd241b
   known_limits:
-  - Native mode3 scanout abort remains unresolved; native raw SD API case uses representative
-    mode20. No all-mode qualification.
+  - Mode96-to3 scanout-budget abort reproduced without raw SD. Native raw SD API case uses
+    representative mode20; no all-mode qualification.
   informative_failed_attempts:
   - ../../docs/tasks/RELEASE-001/QUALIFICATION-R01.json
   - ../../docs/tasks/RELEASE-001/QUALIFICATION-R02.json
+  additional_mode3_diagnostic:
+    report: ../../docs/tasks/HDMI-002/MODE3-ISOLATION-R02.json
+    sha256: a8a8a6278ec13904f0be14e9adebc43e8c7fec589ec1690d231a8b3aa8036ab0
+    status: test-failure
+    scope: Six display controls pass; first96-to3 transition aborts before clear/text, no
+      raw SD.
 promotion:
   current_selection: ../current.yaml
   state: Automated native qualification passed; actual Author visual review and mode3 limitation

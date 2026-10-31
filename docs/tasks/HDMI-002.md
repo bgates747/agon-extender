@@ -1109,3 +1109,87 @@ and maximum refill934µs against the1600µs guard. Retain the earlier1746µs abo
 as an observed transition/workload failure with an unresolved trigger; do not
 claim mode3 inherently or consistently fails. A clean idle sample does not
 resolve the earlier event or qualify every transition/load.
+
+### Authorized mode3 isolation plan — 2026-10-31
+
+The Author supplies a powered, normally booted bench and authorizes mode3
+investigation. The Pi will reuse the maintained qualification session, QSTATE
+fixture and checksum-free listener; no resident firmware or startup changes.
+Official VDU22 mode selection and VDU4/23,1 cursor semantics are taken from
+`agon-docs/docs/vdp/VDU-Commands.md` at f9806bd3cbff6ed5d1c08bef1d51fed11764b86b.
+Stock references remain MOS v3.0.2 and VDP v2.16.0, read-only.
+
+1. Capture live boot/display/input/service state and prove actual CLI through
+   startup-read/listener/EXIT. Save both entry modes and preserve startup bytes.
+2. Stage one reviewed synchronous MOS text-output batch, with only ECHO lines,
+   a fresh terminal marker and no raw SD operations. Record exact source/config
+   identities and timing in a fresh local run directory.
+3. Exercise mode3 entry from mode0, mode20 and mode96, three repetitions each.
+   Verify committed geometry and at least one second of monitor settling.
+   Show a mode/case banner, test clear, 64 lines of text (including scrolling),
+   then verify fresh completion marker/prompt and bounded idle DMA progress.
+4. Capture native counters before/after every significant step. Stop workload
+   dispatch on any fault, changed boot epoch, lost input/CLI or nonadvancing DMA.
+   Never raise the1600µs guard. Preserve the first failure before recovery;
+   use the standing Agon-first, then P4/Agon recovery order if required.
+5. On clean completion restore both entry modes, text/show/flashing cursors,
+   Legacy CLI, unchanged startup and session-owned support cleanup. Retain
+   operational start/end durations, exact coverage and unresolved limits.
+
+These bounded cases isolate mode/clear/text behavior and do not replay the
+raw-sector fixture. A failure to reproduce does not resolve the earlier abort;
+any further workload extension must be recorded separately before execution.
+
+Mode3 isolation reader correction: full-screen text placed the prompt on the
+text reader's unsupported bottom row. Exact support-file cleanup and entry
+restoration pass without reset. Corrected text batches clear once after their
+64 output lines, then display their unique marker and prompt at the top. This
+is a setup correction, not a scanout failure; detailed setup captures discarded.
+
+### Mode96-to-mode3 abort reproduced without raw SD — 2026-10-31
+
+The [display-only isolation result](HDMI-002/MODE3-ISOLATION-R02.json) reproduces
+an actual P4 scanout-budget abort. Six complete cases pass: three mode0→3→0
+and three mode20→3→20, each with clear,64-line text scroll, receipt clear,
+flashing-cursor command and bounded idle-progress checks. The first mode96→3
+entry fails its first post-selection counter check, before its banner, clear,
+cursor or text workload. Two remaining wide-origin repetitions are not invoked.
+No raw-sector I/O or firmware change occurs. Actual run179.91host-monotonic
+seconds includes preparation/staging and cases; it excludes later recovery.
+
+| Origin → mode3 | Passed | Failed | Not run | Highest refill reported while in mode3, µs |
+|---|---:|---:|---:|---:|
+|96 →3|0|1|2|1932|
+|0 →3|3|0|0|902|
+|20 →3|3|0|0|898|
+
+Rows rank by highest reported refill. P4 counters belong to the carrier
+incarnation and can include origin-mode work; these are not isolated rendering
+measurements. The unchanged refill guard is1600µs. On the failed transition,
+copy maximum1437µs and queue-wait maximum476µs are consistent with excess
+retirement-to-ready latency, without proving its owner or exact cause.
+
+The source in `vdp/video/agon_screen.h::changeResolution` joins the old service
+early only when the requested target borrows panel pixels. Mode3 does not satisfy
+that condition, so its unchanged-carrier candidate preparation can overlap the
+old mode96 indexed/PPA publisher. This is the leading hypothesis, not a proven
+root cause. Both phases use the848×480 HDMI carrier, which distinguishes this
+transition from the clean20→3 carrier replacement.
+
+1. Prepare a bounded candidate that joins old drawing/output before candidate
+   initialization for this transition, preserving failed-preparation reattach
+   and official old/default-mode fallback. Keep all timing/DMA guards unchanged.
+2. Verify candidate-preparation failure and successful mode commit on the host;
+   build and preserve the exact accepted r16 rollback before physical deployment.
+3. Re-run the failed96→3 path repeatedly, both control origins and the complete
+   canonical suite on any replacement firmware. Do not claim this hypothesis
+   fixed from source review or a clean idle display.
+
+Standing recovery first resets Agon: actual CLI service returns, but normal
+mode0 rebuilding cannot complete through the faulted P4 output. The second
+step resets P4, observes five clean initialization seconds, then resets Agon.
+Actual CLI/read/EXIT, both entry modes0, Legacy route, cursor commands and exact
+owned support cleanup pass. Final read-only observation advances15 DMA frames
+in0.27host seconds with zero faults; keyboard neutral/admitted, F310 valid,
+listener offline. Startup unchanged; no firmware flash, serial reader, hold or
+running suite remains. The failure and recovery evidence are retained separately.

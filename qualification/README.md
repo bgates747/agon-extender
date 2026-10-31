@@ -203,3 +203,10 @@ receipt predates this cursor-only host correction. The Author's later mode3
 observation is stable, confirmed by advancing DMA and zero faults (maximum
 refill934µs); the earlier abort's precise trigger remains unresolved. Do not
 interpret that failure as mode3 consistently failing.
+
+Later [display-only mode3 isolation](../docs/tasks/HDMI-002/MODE3-ISOLATION-R02.json)
+passes six controls entering from0/20, then reproduces a1932µs abort on96→3
+before clear/text. This strengthens the transition diagnosis without proving
+the source cause. The guard remains1600µs; no raw SD or firmware change occurs.
+Default entry modes/Legacy CLI and support cleanup are verified after standing
+recovery. Frozen r03 results remain separate from this failed extra diagnostic.

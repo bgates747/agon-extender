@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "artifact_id": "mode3-transition-isolation-r02",
+  "run_id": "HDMI-002-2026-10-31-17-22-26Z",
+  "status": "test-failure",
+  "host_commit": "83bf2597da1d24147cc0bcf873265ad1bc3f9d54",
+  "started_at": "2026-10-31-17-22-26Z",
+  "ended_at": "2026-10-31-17-25-26Z",
+  "duration_seconds": 179.9138247860028,
+  "clock": "host monotonic seconds, not independently calibrated",
+  "scope": "Explicit CLI transitions, clear, 64-line text scroll, final receipt clear and bounded idle. No raw sector or resident firmware changes.",
+  "counts": {
+    "pass": 6,
+    "test_failure": 1,
+    "not_run": 2,
+    "planned": 9
+  },
+  "cases": [
+    {
+      "id": "case-01-from-0",
+      "origin_mode": 0,
+      "repeat": 1,
+      "status": "pass",
+      "started_at": "2026-10-31-17-23-27Z",
+      "duration_seconds": 19.91027207099978,
+      "ended_at": "2026-10-31-17-23-47Z"
+    },
+    {
+      "id": "case-02-from-0",
+      "origin_mode": 0,
+      "repeat": 2,
+      "status": "pass",
+      "started_at": "2026-10-31-17-23-47Z",
+      "duration_seconds": 19.35675711499789,
+      "ended_at": "2026-10-31-17-24-06Z"
+    },
+    {
+      "id": "case-03-from-0",
+      "origin_mode": 0,
+      "repeat": 3,
+      "status": "pass",
+      "started_at": "2026-10-31-17-24-06Z",
+      "duration_seconds": 17.740833335999923,
+      "ended_at": "2026-10-31-17-24-24Z"
+    },
+    {
+      "id": "case-04-from-20",
+      "origin_mode": 20,
+      "repeat": 1,
+      "status": "pass",
+      "started_at": "2026-10-31-17-24-24Z",
+      "duration_seconds": 22.072252822996234,
+      "ended_at": "2026-10-31-17-24-46Z"
+    },
+    {
+      "id": "case-05-from-20",
+      "origin_mode": 20,
+      "repeat": 2,
+      "status": "pass",
+      "started_at": "2026-10-31-17-24-46Z",
+      "duration_seconds": 18.623444917000597,
+      "ended_at": "2026-10-31-17-25-05Z"
+    },
+    {
+      "id": "case-06-from-20",
+      "origin_mode": 20,
+      "repeat": 3,
+      "status": "pass",
+      "started_at": "2026-10-31-17-25-05Z",
+      "duration_seconds": 17.934795687993756,
+      "ended_at": "2026-10-31-17-25-23Z"
+    },
+    {
+      "id": "case-07-from-96",
+      "origin_mode": 96,
+      "repeat": 1,
+      "status": "test-failure",
+      "started_at": "2026-10-31-17-25-23Z",
+      "failure_stage": "first post-mode-selection sample, before case banner/clear/cursor/text"
+    },
+    {
+      "id": "case-08-from-96",
+      "origin_mode": 96,
+      "status": "not-run",
+      "reason": "first real scanout fault stops workload dispatch"
+    },
+    {
+      "id": "case-09-from-96",
+      "origin_mode": 96,
+      "status": "not-run",
+      "reason": "first real scanout fault stops workload dispatch"
+    }
+  ],
+  "by_origin": [
+    {
+      "origin_mode": 96,
+      "planned": 3,
+      "pass": 0,
+      "fail": 1,
+      "not_run": 2,
+      "maximum_reported_refill_us_while_mode3": 1932
+    },
+    {
+      "origin_mode": 0,
+      "planned": 3,
+      "pass": 3,
+      "fail": 0,
+      "not_run": 0,
+      "maximum_reported_refill_us_while_mode3": 902
+    },
+    {
+      "origin_mode": 20,
+      "planned": 3,
+      "pass": 3,
+      "fail": 0,
+      "not_run": 0,
+      "maximum_reported_refill_us_while_mode3": 898
+    }
+  ],
+  "counter_scope": "P4 internal nominal microseconds. Peak counters belong to the HDMI carrier incarnation; values sampled in mode3 can include preceding origin-mode work. These are not isolated application render times.",
+  "pre_transition": {
+    "available": true,
+    "mode": 96,
+    "width": 848,
+    "height": 480,
+    "colors": 64,
+    "refresh_hz": 60,
+    "double_buffered": false,
+    "output": "hdmi",
+    "output_width": 848,
+    "output_height": 480,
+    "output_nominal_refresh_hz": 60,
+    "frame_clock": "dma-frame-complete",
+    "render_storage": "linear-rgb222",
+    "render_memory": "psram-linear",
+    "rolling": {
+      "frames": 66,
+      "faults": 0,
+      "late": 0,
+      "over_budget": 0,
+      "underruns": 0,
+      "refill_max_us": 1033,
+      "free_internal": 56091,
+      "invalid_blocks": 0,
+      "sequence_errors": 0,
+      "cache_errors": 0,
+      "overlap": 0,
+      "first_fault": 0,
+      "first_error": 0,
+      "queued": 0,
+      "queue_wait_max_us": 33,
+      "blocks": 992,
+      "refills": 991,
+      "refill_total_us": 499357,
+      "copy_total_us": 478801,
+      "copy_max_us": 1001,
+      "compose_total_us": 2465,
+      "compose_max_us": 25
+    }
+  },
+  "failed_display": {
+    "available": true,
+    "mode": 3,
+    "width": 640,
+    "height": 240,
+    "colors": 64,
+    "refresh_hz": 60,
+    "double_buffered": false,
+    "output": "hdmi",
+    "output_width": 848,
+    "output_height": 480,
+    "output_nominal_refresh_hz": 60,
+    "frame_clock": "dma-frame-complete",
+    "render_storage": "native",
+    "render_memory": "native",
+    "rolling": {
+      "frames": 102,
+      "faults": 1,
+      "late": 0,
+      "over_budget": 1,
+      "underruns": 1,
+      "refill_max_us": 1932,
+      "free_internal": 58123,
+      "invalid_blocks": 0,
+      "sequence_errors": 0,
+      "cache_errors": 0,
+      "overlap": 0,
+      "first_fault": 2,
+      "first_error": 1932,
+      "queued": 3,
+      "queue_wait_max_us": 476,
+      "blocks": 1533,
+      "refills": 1532,
+      "refill_total_us": 808117,
+      "copy_total_us": 773519,
+      "copy_max_us": 1437,
+      "compose_total_us": 4458,
+      "compose_max_us": 34
+    }
+  },
+  "failure_stage": "mode96 to mode3 selection; first fresh mode3 sample fails, before any case7 clear/text/scroll.",
+  "trigger_observed": true,
+  "source_cause_proven": false,
+  "source_hypothesis": {
+    "file": "vdp/video/agon_screen.h",
+    "region": "changeResolution candidate preparation, AGON_EXTENDER_DIRECT_RGB888 joinedPanel",
+    "finding": "Early output/drawing detach is conditional on the requested mode sharing panel storage. Target mode3 does not satisfy that condition, so unchanged-carrier preparation can overlap the old mode96 indexed/PPA publisher. Excess memory/IRQ latency is plausible, unproved.",
+    "first_candidate": "Join old drawing/output service before candidate initialization for this transition, preserve existing fallback restart and all scanout guards. Validate on hardware before attributing cause or acceptance."
+  },
+  "firmware_flashed": false,
+  "startup_writes": 0,
+  "raw_sector_IO": false,
+  "P4_build_string_verified_during_recovery": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+  "fresh_flash_readback_performed": false,
+  "source_sha256": {
+    "qualification/lifecycle.py": "68be6004cdd99dea17ae20aca16f1eea1ff03c83a8ca4a44eb2f024a9cb37a12",
+    "qualification/run.py": "f28740a54121e0fab875dbe7874551e1fc6791cfa42d5e3fb054aa2a6f422896",
+    "scripts/hardware_validation.py": "6f83df613214f7e63b9b7f136cf5da14ad9872c5cd7a4603ea71d8234679f971",
+    "agents/release001/mode3-isolation-r02/run.py": "f1dc3e23c178ec2feeba240e876fb9c5e1194aea9c9afea1de56ae7901fdd884"
+  },
+  "evidence_sha256": {
+    "result.json": "bf7396b811b5793d07a9b228695c7cfd6e0c7d935a7d7ad14877d5ddf0ac0023",
+    "source-pin.json": "3f1bcb552fc59565da58c8a78af433d5cece713f1d41db754192faed62ac2fc3",
+    "case-07-from-96-origin.json": "35a0e74d4cc4bce0e3ae26be65ea7f9236aa955e0bc83f008023d75538671984",
+    "case-07-from-96-mode3.json": "e8c577ff2fe2a33d17ddd8a8106f0d2381715d6c11974623f73e4690385544a9",
+    "paired-recovery/p4-boot.bin": "00ca8ee30eee68eb3d4bac9e459ccdb5afbb8501a3868266d4755c1c49d805d4",
+    "recovery-cleanup/receipt.json": "175eeea7394176838d7a7370b38dc52407625c4fbbca58205c202434827afe4a",
+    "recovery-cleanup/support-cleanup.json": "4af3817f77533c72951a15e7d343acc87d401a1b5d09c22b793166347a68519e",
+    "final-readiness.json": "2503e3b923834c10117c16abf398d84d1a00cc7e7e4e050046c5894ac289ba14",
+    "paired-recovery/admission.json": "451d58652e505af75b267904a7449c9508e07419af92c2b71f0d314f6aaf21fc"
+  },
+  "ordinary_setup_note": "Initial reader setup placed the CLI prompt on its unreadable edge row. Final receipt clear corrects that; setup captures discarded after verified cleanup. This is separate from the real transition failure.",
+  "recovery": {
+    "status": "verified",
+    "Agon_resets": 2,
+    "P4_resets": 1,
+    "first_Agon_reset": "Fresh admission and listener/read/EXIT pass, but normal ExCom mode0 recovery fails command release while P4 remains faulted.",
+    "second_step": "P4 clean initialization verified for five seconds, then Agon reset; actual CLI/read/EXIT and entry modes/cursors restored.",
+    "entry": {
+      "route": "legacy",
+      "mainboard": {
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colors": 16
+      },
+      "extender": {
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colors": 16
+      }
+    },
+    "startup_unchanged": true,
+    "startup_sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "owned_support_cleanup": "verified",
+    "firmware_changed": false,
+    "workload_replayed": false,
+    "read_only_final_check": {
+      "mode": 0,
+      "DMA_frames_advanced": 15,
+      "elapsed_seconds": 0.26987596199614927,
+      "faults": 0,
+      "keyboard_ready_and_neutral": true,
+      "USB_controller_valid": true,
+      "listener_offline": true
+    },
+    "visual_flashing_cursor_acceptance": "Command executed; actual visible flashing remains Author observation."
+  },
+  "private_evidence": "Ignored mode3 isolation directory and current machine-local bench record."
+}
