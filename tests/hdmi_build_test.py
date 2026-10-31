@@ -14,9 +14,26 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import build_p4
 import validate_p4_build
+from unittest.mock import patch
 
 
 class HdmiBuildTest(unittest.TestCase):
+    def test_rolling_cache_source_archive_and_link_contract(self):
+        output = Path('/tmp/cache-link-test')
+        source = output / 'project/components/esp_mm/esp_cache_msync.c'
+        obj = 'esp-idf/esp_mm/cache.obj'
+        archive = 'esp-idf/esp_mm/libesp_mm.a'
+        action = {'file': str(source), 'output': obj}
+        edge = f'build {archive}: ARCHIVE {obj}\n'
+        elf = f'build agon_extender.elf: LINK {archive}\n'
+        with patch('p4_cache_msync.verify', return_value={}):
+            validate_p4_build.check_cache_linkage([action], edge + elf, output / 'build', True)
+            for actions, ninja in [([], edge+elf), ([action, action], edge+elf),
+                                   ([{'file': str(validate_p4_build.IDF/'components/esp_mm/esp_cache_msync.c'), 'output': obj}], edge+elf),
+                                   ([action], elf), ([action], edge)]:
+                with self.subTest(actions=actions, ninja=ninja), self.assertRaises(SystemExit):
+                    validate_p4_build.check_cache_linkage(actions, ninja, output / 'build', True)
+
     def test_compiled_rolling_cache_contract_rejects_uninterruptible_or_wrong_quantum(self):
         selected = "#define CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS 1"
         length = "#define CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN "

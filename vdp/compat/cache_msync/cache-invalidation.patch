@@ -1,0 +1,61 @@
+--- a/esp_cache_msync.c
++++ b/esp_cache_msync.c
+@@ -70,6 +70,35 @@
+ }
+ #endif
+ 
++// HDMI-002: IDF 5.5.5 chunks task C2M but masks interrupts across whole
++// M2C planes. Use its existing quantum/critical-section policy for invalidation
++// too. Full esp_cache_msync range/flag/alignment validation and its task mutex
++// still surround this helper. ISR/non-yieldable callers retain one operation.
++// Rolling ISR readers never write the task-owned PSRAM output planes. Reassess
++// if that ownership changes or Espressif supplies this capability upstream.
++static bool s_invalidate_ops(uint32_t vaddr, size_t size)
++{
++#if CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS
++    if (xPortCanYield() && size > CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN) {
++        bool valid = true;
++        size_t offset = 0;
++        while (offset < size) {
++            size_t chunk_len = ((size - offset) > CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN) ? CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN : (size - offset);
++            esp_os_enter_critical_safe(&s_spinlock);
++            valid &= cache_hal_invalidate_addr(vaddr + offset, chunk_len);
++            esp_os_exit_critical_safe(&s_spinlock);
++            offset += chunk_len;
++        }
++        return valid;
++    }
++#endif
++    bool valid;
++    esp_os_enter_critical_safe(&s_spinlock);
++    valid = cache_hal_invalidate_addr(vaddr, size);
++    esp_os_exit_critical_safe(&s_spinlock);
++    return valid;
++}
++
+ //no ops if ISR context or critical section context
+ static void s_acquire_mutex_from_task_context(void)
+ {
+@@ -130,10 +159,8 @@
+             ESP_RETURN_ON_FALSE_ISR(false, ESP_ERR_INVALID_ARG, TAG, "M2C direction doesn't allow ESP_CACHE_MSYNC_FLAG_UNALIGNED");
+         }
+ 
+-        esp_os_enter_critical_safe(&s_spinlock);
+         //Add preload feature / flag here, IDF-7800
+-        valid = cache_hal_invalidate_addr(vaddr, size);
+-        esp_os_exit_critical_safe(&s_spinlock);
++        valid = s_invalidate_ops(vaddr, size);
+         assert(valid);
+     } else {
+         ESP_EARLY_LOGV(TAG, "C2M DIR");
+@@ -145,9 +172,7 @@
+         s_c2m_ops(vaddr, size);
+ 
+         if (flags & ESP_CACHE_MSYNC_FLAG_INVALIDATE) {
+-            esp_os_enter_critical_safe(&s_spinlock);
+-            valid &= cache_hal_invalidate_addr(vaddr, size);
+-            esp_os_exit_critical_safe(&s_spinlock);
++            valid &= s_invalidate_ops(vaddr, size);
+         }
+         assert(valid);
+ #endif  //#if SOC_CACHE_WRITEBACK_SUPPORTED

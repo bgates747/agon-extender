@@ -38,7 +38,7 @@ HDMI_COMPONENT = "components/esp_lcd_lt8912b"
 HDMI_GEOMETRIES = {"auto": (848, 480), "1280x720": (1280, 720), "848x480": (848, 480), "512x384": (512, 384), "684x384": (684, 384)}
 EXPERIMENTAL_HDMI_ID = re.compile(r"hdmi-001-r[0-9]{2}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 EXPERIMENTAL_BENCH_ID = re.compile(r"bench-009-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
-SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py",
+SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py", "scripts/p4_cache_msync.py",
                 "scripts/p4_board.py", "scripts/p4_ppa_clut.py", "scripts/p4_usb_host.py")
 
 ROLLING_SDK_OVERRIDES = {
@@ -717,6 +717,9 @@ def main() -> None:
     if args.indexed_ppa:
         from p4_ppa_clut import prepare
         prepare(IDF,project)
+    if args.rolling_scanout:
+        from p4_cache_msync import prepare
+        prepare(IDF,project)
     payload_artifacts = []
     if profile.get("mos_recovery_payload"):
         payload_header = generated / "generated/mos_recovery_payload.hpp"
@@ -866,6 +869,10 @@ def main() -> None:
     if args.rolling_scanout:
         artifact_paths.extend([build/"dsi-strip/esp_lcd_panel_dpi.c",
                                build/"dsi-strip/dw_gdma.c"])
+        from p4_cache_msync import verify
+        cache_component = verify(IDF, project)
+        artifact_paths.extend(project / "components/esp_mm" / item["path"]
+                              for item in cache_component["files"])
     if args.exext_stream:
         artifact_paths.append(build/"exext-parlio/parlio_rx.c")
     if args.usb_fsls_only and not args.usb_dual_host:
@@ -923,6 +930,7 @@ def main() -> None:
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "display_inputs": display_record,
+        "cache_component": cache_component if args.rolling_scanout else None,
         "reset_url_sha256": (hashlib.sha256(args.reset_url.encode()).hexdigest()
                              if args.reset_url else None),
         "artifacts": [artifact_record(path) for path in artifact_paths],

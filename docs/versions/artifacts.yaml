@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r202
-updated_at: 2026-10-31T19:55:00Z
+registry_revision: r203
+updated_at: 2026-10-31T20:20:00Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -43,12 +43,13 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r21
+    latest_identity: indexed-hdmi-r22
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
-      - r21 retains r20 cursor/scaler and r19 worker join, selecting IDF5.5.5 task C2M chunking at16KiB only for rolling scanout. Compiled macros are mandatory; physical wide-clear/transition/full-suite proof remains pending. Existing1600us guard and DMA ownership stay intact.
+      - r22 retains r21 features/SDK settings and adds a hash-pinned project-local esp_mm derivative for task invalidation using the same16KiB quantum. Whole-range validation/mutex/ISR paths and1600us guard preserved; host negative control and22 build tests pass; physical proof pending.
+      - r21 C2M chunking alone fails the fifth isolated wide clear at1632us; first4cycles pass. Preserve verified installation/failure and complete recovery; no320/raw/full suite or optical pass.
       - r20 classifies F6/F7 control traffic without suppressing the cursor and restores the existing320x240 PPA scaler. Host checks/build/installation pass, but physical regression reproduces a mode96 clear deadline abort before any320-mode case. Retain failures and completed recovery; no full-suite or optical pass.
       - r19 matches exact accepted r16 composition with one early-worker-join source repair. Application-only installation/full-readback,16 targeted mode3 transitions and canonical native25/25 paired checks pass2026-10-31; actual Author visual retry/acceptance and successor production binding remain. r17/r18 were rejected offline and never installed.
       - r18 was rejected offline for selecting the optional320 scaler absent from accepted r16; never installed. Source repair is unchanged in corrected r19.

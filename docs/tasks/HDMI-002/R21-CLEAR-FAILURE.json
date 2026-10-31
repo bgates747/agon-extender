@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "status": "rejected-physical-regression",
+  "build_id": "indexed-hdmi-r21-b2026-10-31-19-55-31Z",
+  "source_commit": "d6fe9604b39802588aaca07c83456b3ff7df798c",
+  "app_sha256": "9bdab7d94166fd868a830d29912534f21f73b252aaf31e4a0aeb4137ce2608bc",
+  "app_bytes": 1789744,
+  "installation_verified": true,
+  "flash_after_sha256": "766a68388118df25dc70f1cde2f3b63f9d58f81f35fe8c96580d1c34301144f1",
+  "SDK_selection": "existing C2M task chunker enabled,16KiB; invalidation still whole-range",
+  "refill_guard_us": 1600,
+  "staged_cycles_planned": 8,
+  "staged_cycles_completed": 4,
+  "failed_step": "c4-cleared96",
+  "duration_seconds": 60.53154662399902,
+  "rolling": {
+    "frames": 7007,
+    "faults": 1,
+    "late": 0,
+    "over_budget": 1,
+    "underruns": 1,
+    "refill_max_us": 1632,
+    "copy_max_us": 1544,
+    "queue_wait_max_us": 484,
+    "invalid_blocks": 0,
+    "sequence_errors": 0,
+    "cache_errors": 0,
+    "overlap": 0
+  },
+  "unperformed": [
+    "12 cursor/scaler cases including all320-mode cases",
+    "canonical suite",
+    "raw-sector I/O",
+    "Author optical review"
+  ],
+  "recovery": {
+    "Agon_only_actual_CLI_verified_but_HDMI_still_stopped": true,
+    "P4_clean_init_then_Agon_reset_completed": true,
+    "actual_CLI_exchanges": 2,
+    "startup_unchanged": true,
+    "startup_bytes": 108,
+    "mode": 0,
+    "rolling_faults": 0
+  },
+  "clock": "host monotonic seconds, not independently calibrated; P4 microsecond counters are cumulative maxima, not necessarily one operation",
+  "preserved": [
+    "EMOSv27",
+    "mainboardVDP",
+    "normalstartup",
+    "allDMAguards",
+    "r19/r20rollback"
+  ],
+  "evidence_sha256": {
+    "wide-isolation-r21/result.json": "d97463083fcc3da6e2e08e518b3d6664a5c1bdaa2a552627d715dc693b5c8707",
+    "build-review.json": "1e7e29dc96fbff54116f260a8398cc58ff8ec6e588710cbf2d7ad4a6967a16fc",
+    "install-r21/flash-verification.json": "3d445a556afa23e856eaea067706d76acc62a76b375280cf049ce6473ddccc2d",
+    "recovery-agon-cli/receipt.json": "156abac3f021168cebe5bd24d0e547867d7654a9cfc9342323be14daea86c0fb",
+    "recovery-paired-cli/receipt.json": "bdc75ac6423ab05ccd1fa7b935164fea64e4eb2b1aee3b652522aa351b6c99f0"
+  }
+}

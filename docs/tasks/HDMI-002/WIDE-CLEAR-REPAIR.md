@@ -59,3 +59,37 @@ installation, counters, completed recovery and original evidence hashes.
 5. Verify normal CLI/cursors, entry modes, startup and support cleanup. Actual
    Author cursor-flash, mode8 height/aspect and other native visual review
    remain required. Do not change production selection/tag before acceptance.
+
+## r21 result and r22 scope
+
+1. R21 source d6fe9604/app9bdab7d9 passes native build, complete source/config
+   comparison, application-only full-flash readback and actual CLI/startup proof.
+   Isolated cycles0–3 pass. The fifth96 selection and dwell pass, but VDU12
+   aborts1632µs (copy maximum1544µs, queue maximum484µs), budget1/underrun1,
+   frame7007 stopped. The run stops at60.53 host-monotonic seconds. No320,
+   raw-sector or complete-suite case runs. C2M chunking alone is insufficient.
+2. Agon-only reset restores actual CLI twice but leaves the native fault/frame
+   unchanged. P4 clean initialization thenAgon reset restores actual CLI twice,
+   unchanged108Bstartup and fault-free mode0. No firmware change or test replay
+   occurs during recovery. Keep the exact candidate/readbacks and both failures.
+3. Pinned SDK esp_cache_msync still invalidates entire M2C planes and the
+   INVALIDATE tail of C2M calls inside single critical sections. PPA's blend
+   driver invokes full-row M2C before DMA; HdmiPpaIndexed invalidates again
+   after blocking PPA completion. Treat this as an intentional upstream policy
+   incompatible with the local deadline hypothesis, not an upstream correctness
+   defect. No critical-section elapsed duration has been measured.
+4. R22 retains r21 features and C2M selection. A project-owned pinned esp_mm
+   derivative adds task invalidation chunking using the existing16KiB quantum.
+   Preserve complete original validation before chunking, its one task mutex,
+   ISR/non-yieldable paths, synchronization completion before buffer publication,
+   all output ownership and1600µs/DMA guards. No EMOS/mainboard/startup change.
+5. Pin all27 component files and the exact patch. Generate only in a fresh
+   native project; keep the SDK pristine. Native validation must prove complete
+   bytes, sole cache compile action, archive and ELF reachability. Host actual
+   API/helper tests require the old full-plane negative control, contiguous
+   bounded ranges, flags/overflow/alignment rejection and unchanged ISR/critical
+   behavior. They do not measure hardware timing or prove cache coherence.
+6. Freeze a new controlled source/build and independently verify installation.
+   Require staged8wide cycles,12cursor/scaler cases and canonical25checks before
+   handback for actual visual review. Retain/recover a first failure; no weaker
+   guard, discarded informative failure or success claim from source alone.
