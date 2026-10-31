@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "artifact_id": "native-release-qualification-r02",
+  "status": "infrastructure-failure",
+  "qualification_state": "not-qualified",
+  "output_profile": "native-hdmi",
+  "host_commit": "b92dc6a26da7db693d99dd5ccc659f1a15e7eb7a",
+  "started_at": "2026-10-31-01-55-28Z",
+  "ended_at": "2026-10-31-02-00-13Z",
+  "clock": "host monotonic seconds; operational timing, not independently calibrated",
+  "preparation_seconds": 108.2226806890103,
+  "total_runner_seconds": 285.5751669850142,
+  "checks": {
+    "pass": 25,
+    "required": 25
+  },
+  "cases": [
+    {
+      "id": "installed-p4-integrated-smoke",
+      "status": "pass",
+      "total_case_seconds": 68.01088562599034,
+      "checks": [
+        {
+          "id": "p4-web-assets",
+          "status": "pass"
+        },
+        {
+          "id": "agon-reset-and-keyboard-readmission",
+          "status": "pass"
+        },
+        {
+          "id": "legacy-screen-capture",
+          "status": "pass"
+        },
+        {
+          "id": "excom-mode-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "excom-clear",
+          "status": "pass"
+        },
+        {
+          "id": "excom-keyboard-and-text-render",
+          "status": "pass"
+        },
+        {
+          "id": "display-status-contract",
+          "status": "pass"
+        },
+        {
+          "id": "hdmi-dma-progress",
+          "status": "pass"
+        },
+        {
+          "id": "legacy-mode-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-service",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-round-trip",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-cleanup",
+          "status": "pass"
+        },
+        {
+          "id": "final-startup-recovery",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "id": "a10-rp06-mode-transaction",
+      "status": "pass",
+      "total_case_seconds": 71.27426270698197,
+      "checks": [
+        {
+          "id": "rp06-browser-absent-mode8",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-browser-absent-mode20",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-browser-absent-return-mode8",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-wide96",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-standard20",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-return-wide96",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-final-startup-recovery",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "id": "a10-rp04-raw-sd-write",
+      "status": "pass",
+      "total_case_seconds": 25.055945519008674,
+      "checks": [
+        {
+          "id": "emos-receipt-and-fixture-source",
+          "status": "pass"
+        },
+        {
+          "id": "emos-fixture-staging",
+          "status": "pass"
+        },
+        {
+          "id": "emos-fixture-completion-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "emos-raw-sector-write-read-restore",
+          "status": "pass"
+        },
+        {
+          "id": "emos-startup-unchanged",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "paired_component_identities": {
+    "p4": {
+      "target": "p4",
+      "component_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+      "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+      "artifact_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+      "installed_readback_sha256": "5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833",
+      "source": {
+        "kind": "clean-build-archive",
+        "base_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+        "dirty": false,
+        "files_verified": 5533,
+        "archive_sha256": "919084436b7e26be23036c1b521543e30604bd2c5ae25c0a76c33e497a89e405",
+        "inventory_sha256": "a08bdcfc4914dc577d212ad5efed91141120a1587af767f0443dc25413713f39"
+      },
+      "verification_scope": "retained-installation"
+    },
+    "emos": {
+      "target": "emos",
+      "component_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+      "build_id": "agon-emos-v0.1.27-b2026-10-26-01-06-54Z",
+      "artifact_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "installed_readback_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "source": {
+        "kind": "archived-patch",
+        "base_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+        "dirty": true,
+        "files_verified": 557,
+        "archive_sha256": "70eee01c830f9d1e98cbaad596f256589e05de09b8a4a7926d8673a3d88f96d0",
+        "inventory_sha256": "92d82b9f68e20a2f8ded9f74d998ba77d6aa7e49b82ea7181b378b8e7792bccc"
+      },
+      "verification_scope": "retained-installation"
+    }
+  },
+  "raw_sector_oracle": {
+    "schema": "1",
+    "case": "a10-rp04-raw-sd-write",
+    "status": "pass",
+    "sector": "2",
+    "test_rc": "0",
+    "restore_rc": "0",
+    "restore_verify_rc": "0",
+    "before_crc32": "b2aa7578",
+    "pattern_crc32": "3b3befd6",
+    "observed_crc32": "3b3befd6",
+    "restored_crc32": "b2aa7578",
+    "detail": "completed",
+    "first_partition_lba": "8192",
+    "write_attempted": "1",
+    "token": "FB0FB247E8914290"
+  },
+  "restoration": {
+    "status": "failed",
+    "error": "KeyboardError('Release not confirmed; retain journal')",
+    "duration_seconds": 12.99681475298712
+  },
+  "notification": {
+    "status": "skipped",
+    "reason": "unsafe-mainboard-foreground",
+    "blocked_by": [
+      "lifecycle-restoration"
+    ],
+    "detail": "No reset or keyboard input was sent after ambiguous fixture completion"
+  },
+  "startup": {
+    "bytes": 108,
+    "sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "writes": 0
+  },
+  "firmware_flashed": false,
+  "failure": {
+    "display": {
+      "available": true,
+      "mode": 3,
+      "width": 640,
+      "height": 240,
+      "colors": 64,
+      "refresh_hz": 60,
+      "double_buffered": false,
+      "output": "hdmi",
+      "output_width": 848,
+      "output_height": 480,
+      "output_nominal_refresh_hz": 60,
+      "frame_clock": "dma-frame-complete",
+      "render_storage": "native",
+      "render_memory": "native",
+      "rolling": {
+        "frames": 2411,
+        "faults": 1,
+        "late": 0,
+        "over_budget": 1,
+        "underruns": 1,
+        "refill_max_us": 1746,
+        "free_internal": 57959,
+        "invalid_blocks": 0,
+        "sequence_errors": 0,
+        "cache_errors": 0,
+        "overlap": 0,
+        "first_fault": 2,
+        "first_error": 1746,
+        "queued": 101,
+        "queue_wait_max_us": 314,
+        "blocks": 36168,
+        "refills": 36167,
+        "refill_total_us": 20014316,
+        "copy_total_us": 19123421,
+        "copy_max_us": 1378,
+        "compose_total_us": 183706,
+        "compose_max_us": 70
+      }
+    },
+    "observation": "Contained native mode3 refill-budget abort; 1746us exceeds unchanged1600us guard.",
+    "timing_inference": "From nominal DMA frame rate, last healthy frame498 at01:59:18.644Z and fault frame2411, abort is around01:59:50.49Z, during mode3 selection/clear and before raw EXEC journal completion01:59:54.268Z. Exact causal mechanism unproven."
+  },
+  "recovery": {
+    "raw_sector_restore_verified_before_recovery": true,
+    "order": "Agon-only reset failed admission; P4 clean initialization then Agon reset restored CLI. Two listener/read/EXIT exchanges verify unchanged startup.",
+    "reflash": false
+  },
+  "next_boundary": "Native raw SD fixture uses representative mode20; preserve native mode3 fault as unresolved. Fresh complete run required; no relabeling of this failed run.",
+  "evidence_sha256": {
+    "run/summary.json": "fc591553553e3c260e7d65eb28ba55907586e76478429bb46cb7f77fe9247171",
+    "result.json": "ecff5f582410a8939aaa1404a111323fc249f8c6a54c20942f05cc1361d79557",
+    "scanout-failure/display-status.json": "acd95bcb107cadc2504d1f26cf2b4edd925253924765dff1082ef029b1ac8a4f"
+  },
+  "private_evidence": "Ignored release run directory and machine-local bench record."
+}

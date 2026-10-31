@@ -109,3 +109,15 @@ fixture now launches through a unique command file containing LOAD then RUN;
 MOS orders load completion, rather than the host inferring it from keyboard
 acknowledgements. Its existing post-I/O token/prompt and verified sector restore
 remain mandatory. No startup mutation, protocol checksum or firmware addition.
+
+## Native raw-SD presentation — 2026-10-30
+
+The second physical attempt passes all25 API/mode checks, including exact raw
+sector restoration, but fails final handback after native mode3 scanout aborts
+at1746µs against the1600µs refill guard. Frame timing suggests mode3 setup/clear
+before raw EXEC; exact causality is not established. Preserve that failure.
+The raw app itself is display-independent; its token and following prompt fit
+512×384 mode20. The Pi selects mode20 only for the native profile and retains
+browser mode3. No raw guard/oracle, timing limit, DMA check or required case
+is removed. Native mode3 remains unresolved in HDMI-002 and must be disclosed
+at release review. Fresh complete qualification and actual manual review remain.

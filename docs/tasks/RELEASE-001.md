@@ -449,3 +449,26 @@ that gate physically; delay alone is never a pass. Also place the raw fixture's
 LOAD/RUN inside one explicit MOS command file so MOS orders them synchronously.
 Fix subsequent demonstrated infrastructure issues and continue through the
 complete suite; do not mark a partial or recovered run qualified.
+
+## Second native run and bounded display correction — 2026-10-30
+
+The [second full run](RELEASE-001/QUALIFICATION-R02.json), host b92dc6a2, passes
+all25 case checks after the reset/command repair. The raw fixture writes sector2
+only after the MBR guard, verifies its pattern and independently restores every
+original byte. Overall qualification still fails: restoration cannot return from
+native mode3 after a contained P4 scanout abort. Refill1746µs exceeds the unchanged
+1600µs guard. Frame-counter timing places this around mode3 selection/clear, before
+raw EXEC completes; the exact software cause remains unresolved. Preserve this
+informative failure and its original summary.
+
+After verified sector restoration, the standing Agon-only reset fails admission;
+P4 clean initialization then Agon reset recovers actual CLI. Two listener/read/EXIT
+exchanges verify unchanged108-byte startup. Neither processor is reflashed.
+
+The raw-SD API fixture's resolution-independent token/prompt fits mode20. The
+Pi now selects mode20 for native HDMI and retains browser mode3. This confines
+the raw API case to the declared representative profile; it does not fix or
+qualify native mode3. All25 checks, raw guards, restoration proof and DMA fault
+checks remain mandatory, and the1600µs guard is unchanged. HDMI-002 retains
+the mode3 defect; any release acceptance must explicitly include that limitation.
+Run a fresh complete suite with the corrected host; retain the manual-review gate.

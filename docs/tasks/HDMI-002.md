@@ -1078,3 +1078,25 @@ reflashed and all four segments verified. Fresh Agon boot, neutral admitted
 keyboard, ExCom MOS prompt, idle SD and no open measurement window verified.
 No scanout faults; no active host operation remains. The bounded investigation
 is complete with a negative native240 result, not a supported native mode.
+
+### Native mode3 scanout abort during release qualification — 2026-10-30
+
+Open defect on accepted r16, application SHA-256
+`594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62`.
+The [release r02 report](RELEASE-001/QUALIFICATION-R02.json) records native mode3
+640×240×64 on the848×480 double-scan carrier: refill1746µs exceeds1600µs, first
+fault2 (budget), one underrun, queued101, queue-wait maximum314µs, copy
+maximum1378µs. Scanout stops and command release later fails. Frame timing
+places the fault around mode selection/clear before raw EXEC completion; no
+exact causal source diagnosis or serial crash trace was obtained.
+
+1. Preserve the actual timing guard and independent DMA generation/fault checks.
+2. Reproduce mode3 setup/clear separately from raw SD, then identify the owner
+   of excess queue/copy/retirement latency before proposing a firmware remedy.
+3. Require clean DMA progress, zero faults and normal mode/CLI restoration for
+   the corrected mode3 path. Nominal HDMI timing alone is insufficient.
+
+The raw SD fixture's original sector was independently restored before recovery.
+The release runner uses representative native mode20 for that API-only fixture,
+with browser mode3 unchanged. This scope choice neither resolves this defect nor
+qualifies native mode3. No firmware change or broader all-mode claim follows.

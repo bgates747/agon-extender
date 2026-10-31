@@ -65,7 +65,8 @@ The raw-sector case is destructive within a narrowly guarded region: the app
 requires an MBR proving sector2 precedes the first partition, retains its preimage,
 then restores through MOS's independent C dispatch and verifies every byte. Its
 local buffer CRC summaries are SD test oracles, not processor-link checksums.
-The Pi launches LOAD/RUN explicitly only after confirmed mode3 and settling. It
+The Pi launches LOAD/RUN explicitly after confirmed native mode20 (512×384) or
+browser mode3 (640×240), followed by monitor settling. It
 waits for the app's unique post-I/O completion token followed by a MOS prompt
 before starting the result listener. Missing completion, changed boot identity
 or unverified restoration blocks input, notification and subsequent cases; no
@@ -172,3 +173,18 @@ coordinator and direct case entry point are disabled because they rewrote startu
 and launched through reset. They must be migrated before hardware reuse. This
 migration and another performance campaign are not v0.2.1 qualification gates.
 Broad graphics/pixel studies remain separately scoped historical evidence.
+
+## Native mode3 limitation found during qualification
+
+The second native attempt passed all25 API/mode case checks, then failed complete
+handback with a contained scanout abort. Its frame counters place that abort
+around the raw fixture's mode3 clear, before raw I/O; exact causal scope remains
+under investigation. Refill1746µs exceeded the unchanged1600µs guard and stopped
+scanout. The actual sector preimage was restored and independently verified.
+
+Native raw-SD output now uses mode20, within the declared representative profile;
+its run token and prompt fit that display. Browser mode3 remains unchanged.
+This does not qualify native mode3 or resolve its display fault. All sector
+oracles, 25 required checks, DMA fault counters and timing guards remain enforced.
+The release task and HDMI-002 retain the separate mode3 defect. Any release
+acceptance must include this known limitation; no all-mode claim is supported.

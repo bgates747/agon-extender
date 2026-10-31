@@ -566,7 +566,14 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         client.lock.close()
     passed("emos-fixture-staging")
     type_line(url, output / "keyboard-excom.json", "EMOS EXCOM --keep-display")
-    select_mode(url, output / "keyboard-mode.json", 3, 640, 240, 64)
+    # This is an EMOS SD API test, with resolution-independent output. Native
+    # mode20 fits its token/prompt and belongs to the declared HDMI profile.
+    # R02 exposed a real mode3 clear/scanout fault before raw I/O; preserve that
+    # limitation separately rather than making this API fixture exercise an
+    # additional, unqualified 640x240 double-scan presentation. No timing/fault
+    # guard or sector oracle is relaxed. Browser output retains its mode3 path.
+    raw_mode = (20, 512, 384, 64) if output_profile(config) == "native-hdmi" else (3, 640, 240, 64)
+    select_mode(url, output / "keyboard-mode.json", *raw_mode)
     type_line(url, output / "keyboard-clear.json", "VDU 12")
     # The marker is printed by the fixture after every raw operation has ended.
     # Do not use an ECHO/prompt before RUN as proof of post-RUN handback.

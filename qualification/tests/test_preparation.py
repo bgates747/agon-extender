@@ -302,11 +302,11 @@ class PreparationTests(unittest.TestCase):
             return "A10-RP04 COMPLETE "+token+"\n/ *\n"
         with tempfile.TemporaryDirectory() as folder:
             binary=Path(folder)/"fixture.bin";binary.write_bytes(b"safe fixture")
-            config={"extender_url":"http://device","_fixtures":{"fixtures":{"raw_sd":{
+            config={"extender_url":"http://device","output_profile":"native-hdmi","_fixtures":{"fixtures":{"raw_sd":{
                 "binary":str(binary),"sha256":digest(binary.read_bytes()),"source_files":{}}}}}
             with mock.patch.object(runner,"type_line",side_effect=type_line), \
                     mock.patch.object(runner,"wait_sd_service",return_value=Client()) as service, \
-                    mock.patch.object(runner,"select_mode"),mock.patch.object(runner,"wait_screen",side_effect=screen), \
+                    mock.patch.object(runner,"select_mode") as selected_mode,mock.patch.object(runner,"wait_screen",side_effect=screen), \
                     mock.patch.object(runner.uuid,"uuid4",return_value=mock.Mock(hex=token)), \
                     mock.patch.object(runner.subprocess,"run",side_effect=AssertionError("no reset/build")):
                 if completes:
@@ -317,6 +317,7 @@ class PreparationTests(unittest.TestCase):
                     with self.assertRaises(runner.UnsafeMainboardState):
                         runner.run_fwbug008(config,{},Path(folder)/"out")
                     self.assertEqual(service.call_count,1)
+                self.assertEqual(selected_mode.call_args.args[2:],(20,512,384,64))
         self.assertNotIn("/autoexec.txt",writes)
         self.assertEqual(sum(line.startswith("EXEC /extender/.raw-sd-") for line in commands),1)
         self.assertFalse(any(line.startswith(("LOAD ", "RUN . ")) for line in commands))
