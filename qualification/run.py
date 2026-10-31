@@ -866,6 +866,8 @@ def main() -> int:
         try:
             session.verify_entry()
             session.cleanup()
+            type_line(config["extender_url"], run / "terminal-cursor.json",
+                      "VDU 4 23 1 1 23 1 3")
             type_line(config["extender_url"], run / "terminal-verdict.json",
                       "ECHO Qualification " + ("automated checks passed; visual review pending" if success else "failed"))
         except BaseException as error:

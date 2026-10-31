@@ -121,3 +121,11 @@ The raw app itself is display-independent; its token and following prompt fit
 browser mode3. No raw guard/oracle, timing limit, DMA check or required case
 is removed. Native mode3 remains unresolved in HDMI-002 and must be disclosed
 at release review. Fresh complete qualification and actual manual review remain.
+
+## Visible CLI cursor contract
+
+Official `agon-docs/docs/vdp/VDU-Commands.md` documents VDU4 text output and
+VDU23,1 values1 (visible) and3 (flashing). A mode query does not establish any
+of these states. Restore them explicitly on both suite-owned displays and at
+the final CLI, without clearing the completion cue. Retain the original r03
+receipt; the subsequent cursor-only host correction is separately verified.

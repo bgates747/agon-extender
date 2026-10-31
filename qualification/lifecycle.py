@@ -294,8 +294,12 @@ class Session:
         if self.unsafe or self.entry is None:
             raise UnsafeForeground("entry state or foreground unproven; restoration blocked")
         self.select_extender_mode(self.entry["extender"])
+        # A matching mode does not undo an application's hidden/steady cursor.
+        # Restore a visibly live text CLI on each display without clearing it.
+        self.command(self.journal("extender-cli-cursor"), "VDU 4 23 1 1 23 1 3")
         self.select_route("legacy")
         self.probe_mainboard(self.entry["mainboard"])
+        self.command(self.journal("mainboard-cli-cursor"), "VDU 4 23 1 1 23 1 3")
         self.verify_startup()
         atomic_json(self.output / "restoration.json", {
             "status": "verified", "entry": self.entry, "boot": self.boot,

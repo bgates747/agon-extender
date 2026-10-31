@@ -80,6 +80,12 @@ reset must remain an escape to normal boot, without launching or resuming tests.
    modes require explicit handling of which buffer receives CLI output and
    which buffer is displayed; a successful mode-number restoration is not
    sufficient if the user sees a frozen screen.
+   Restore text output and a visible flashing cursor on each display used by
+   the suite. Mode restoration alone does not restore an application's hidden
+   or steady cursor. The documented command sequence is `VDU 4 23 1 1 23 1 3`;
+   it selects text output, shows the cursor and enables flashing without clearing
+   the screen. Repeat for the final CLI after any completion player that could
+   alter cursor state. A command receipt alone is not visual confirmation.
 3. Preserve a clear completion or failure indication and the saved result's
    identity. Do not describe an unverified or interrupted test as passed.
 4. The runner and appliance must never rewrite `/autoexec.txt`, even temporarily

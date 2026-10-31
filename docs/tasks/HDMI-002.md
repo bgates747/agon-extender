@@ -1100,3 +1100,12 @@ The raw SD fixture's original sector was independently restored before recovery.
 The release runner uses representative native mode20 for that API-only fixture,
 with browser mode3 unchanged. This scope choice neither resolves this defect nor
 qualifies native mode3. No firmware change or broader all-mode claim follows.
+
+### Mode3 is not consistently failing — 2026-10-30
+
+After release r03, the Author reports a stable mode3 display without visible
+errors. Fresh read-only samples confirm mode3 with advancing DMA, zero faults
+and maximum refill934µs against the1600µs guard. Retain the earlier1746µs abort
+as an observed transition/workload failure with an unresolved trigger; do not
+claim mode3 inherently or consistently fails. A clean idle sample does not
+resolve the earlier event or qualify every transition/load.

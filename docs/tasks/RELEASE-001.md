@@ -513,3 +513,23 @@ accepted controller exercise credited. Native mode3 remains an unresolved
 scanout fault, explicitly outside this representative mode20 raw-API run; it
 requires acceptance as a known limitation or a separately qualified remedy.
 Do not manufacture a manual receipt or advance production selection/tag yet.
+
+## Author handback observation and cursor correction — 2026-10-30
+
+The Author observes ExCom mode3 with no flashing cursor and no visible scanout
+errors. Fresh P4 samples confirm mode3, advancing DMA and zero fault counters;
+maximum refill934µs remains below1600µs. The saved r03 final sample was mode0,
+with the same boot epoch and unchanged HTTP input counters. The cause of the
+subsequent mode/route change is not established; neither observation invalidates
+the other. Do not characterize the earlier abort as a consistent mode3 failure.
+Its precise trigger remains open in HDMI-002.
+
+At the observed MOS prompt, the agent sends `VDU 4 23 1 1 23 1 3`, preserving
+mode3/ExCom and screen contents. A subsequent text sample contains the command
+and a new prompt; actual visible flashing remains an Author observation.
+The runner had no explicit cursor restoration. Cleanup now selects text output,
+shows the cursor and requests flashing on both displays, then repeats it for
+the terminal CLI after the completion player. This is host-only; no firmware,
+startup, raw fixture or accepted component bytes change. The r03 evidence stays
+frozen at its original source; the cursor-only correction has host checks and
+an isolated live CLI command, not another full-suite qualification receipt.

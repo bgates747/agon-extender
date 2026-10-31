@@ -196,3 +196,10 @@ monotonic seconds for this configuration, including preparation and notification
 allow approximately six minutes for a comparable run. This is one successful
 observation, not a calibrated duration or reset/collection deadline. Actual
 Author visual review and mode3 limitation acceptance remain release gates.
+
+Cursor cleanup explicitly restores text output, visibility and flashing on both
+displays, and again at the terminal CLI after notification. The original r03
+receipt predates this cursor-only host correction. The Author's later mode3
+observation is stable, confirmed by advancing DMA and zero faults (maximum
+refill934µs); the earlier abort's precise trigger remains unresolved. Do not
+interpret that failure as mode3 consistently failing.
