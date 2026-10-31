@@ -164,3 +164,10 @@ repair r19 omit AGON_EXTENDER_HDMI_PPA_320, so320×240 is centered unscaled in
 before a2× PPA scale to640×480. Restore that explicit selection, not another
 scaling algorithm or a logical-mode change. Preserve r19's early renderer join
 and1600µs scanout guard.
+
+The r20 parser repair passes the old-source negative control and 120 Hz host
+regression. Its physical transition checks expose a separate mode96 clear
+deadline failure before any 320-mode case runs. Preserve that failure and the
+completed standing recovery. [The wide-clear repair plan](HDMI-002/WIDE-CLEAR-REPAIR.md)
+owns the additional SDK scheduling correction required before this combined
+candidate can complete physical cursor/scaler qualification.

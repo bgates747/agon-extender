@@ -17,6 +17,16 @@ import validate_p4_build
 
 
 class HdmiBuildTest(unittest.TestCase):
+    def test_compiled_rolling_cache_contract_rejects_uninterruptible_or_wrong_quantum(self):
+        selected = "#define CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS 1"
+        length = "#define CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN "
+        for value in ("0x4000", "16384"):
+            validate_p4_build.check_rolling_cache_config([selected, length + value])
+        for lines in ([], [length + "0x4000"], [selected], [selected, length + "bad"],
+                      [selected, length + "0"], [selected, length + "0x20000"]):
+            with self.subTest(lines=lines), self.assertRaises(SystemExit):
+                validate_p4_build.check_rolling_cache_config(lines)
+
     @classmethod
     def setUpClass(cls):
         cls.document = json.loads((ROOT / "vdp/build/p4-profiles.json").read_text())

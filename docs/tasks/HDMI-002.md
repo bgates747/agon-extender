@@ -1244,3 +1244,19 @@ and remaining limits are in the [repair notes](HDMI-002/MODE3-REPAIR.md).
 Actual Author visual retry and acceptance remain; production selection/tag
 and immutable accepted r16 bytes are unchanged. Deliberately injected scanout
 fault recovery and blanket all-mode/performance claims are outside these tests.
+
+### Cursor/scaler follow-up exposes wide clear — 2026-10-31
+
+The Author confirms mode changes now work, reports delayed cursor flashing and
+short mode8 output. The r20 candidate repairs control-poll cursor suppression
+and restores the existing PPA 320×240 scaling option. Host checks pass, but the
+second physical transition case aborts after returning to mode96 and clearing:
+2164µs refill against the unchanged 1600µs guard. A separate staged diagnostic
+keeps mode96 selection healthy, then reproduces a 1634µs abort immediately after
+VDU12. No 320-mode case or complete/raw suite runs on r20.
+
+Standing Agon-first then paired recovery restores actual CLI exchanges and
+unchanged startup. [The bounded wide-clear plan](HDMI-002/WIDE-CLEAR-REPAIR.md)
+selects the pinned SDK's existing interruptible task writeback option for r21;
+it is a source-based hypothesis pending physical validation. Preserve all DMA
+guards, mode3 worker-join repair, r19/r20 evidence and exact rollback bytes.
