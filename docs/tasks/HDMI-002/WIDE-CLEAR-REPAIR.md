@@ -93,3 +93,22 @@ installation, counters, completed recovery and original evidence hashes.
    Require staged8wide cycles,12cursor/scaler cases and canonical25checks before
    handback for actual visual review. Retain/recover a first failure; no weaker
    guard, discarded informative failure or success claim from source alone.
+
+## Current execution boundary
+
+The [r22 preparation record](R22-PREPARATION.json) verifies clean source72bd4de0,
+native build/compiled validation and independent comparison of5537 inputs.
+Application1789856B/4a7277e7 is retained locally, not installed. Only six owned
+recipe/metadata files differ from r21; the sole modified SDK source is the
+pinned cache derivative. Twenty-two build tests and actual API/helper sanitizer
+checks pass, including the original whole-plane negative control. Renderer,
+USB, cursor/scaler source, flags, effective SDK settings and partition layout
+remain identical. Actual cache hardware, deadline and optical proof remain.
+
+The Author withdraws bench access for several hours while r22 builds. Finish
+the current native build, offline validation, evidence and Git publication only.
+Do not deploy, poll, reset, transfer or invoke hardware tests until the Author
+restores access. R22 has not been installed or physically tested. On return,
+re-establish actual CLI, startup and installed component identities before any
+installation; the last recovered r21 state is historical evidence, not fresh
+readiness. Keep all staged tests stopped and normal startup unchanged.

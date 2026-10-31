@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "status": "offline-preparation-complete-hardware-unavailable",
+  "build_id": "indexed-hdmi-r22-b2026-10-31-20-20-02Z",
+  "source_commit": "72bd4de0e048c6e69e86d94529bcfea70867c876",
+  "parent_source_commit": "d6fe9604b39802588aaca07c83456b3ff7df798c",
+  "maintained_integration_commit": "727530394fad128b8d4153da22fd2823b94088b3",
+  "app_bytes": 1789856,
+  "app_sha256": "4a7277e735d7d51a7ffebae3f2006099a9ca2681fa5a029c60f96b6a7de64ab4",
+  "native_build": "PASS",
+  "native_compiled_validation": "PASS",
+  "independent_composition_review": "PASS",
+  "source_inventory_entries": 5537,
+  "source_archive_sha256": "5ab0c8f1eb4cf61aec291257eb11db4e6a100b26b31c198dfcdab96ba51c0c0c",
+  "source_inventory_sha256": "99077f3fb15e53a90dd2483222cc43e6b97aabdcaa1eca922ac7e623ec32274d",
+  "source_delta": [
+    "scripts/build_p4.py",
+    "scripts/p4_cache_msync.py",
+    "scripts/validate_p4_build.py",
+    "vdp/compat/cache_msync/README.md",
+    "vdp/compat/cache_msync/cache-invalidation.patch",
+    "vdp/compat/cache_msync/derivative.json"
+  ],
+  "owned_P4_renderer_USB_cursor_scaler_source_unchanged": true,
+  "same_feature_flags_tools_dependencies_and_SDK_settings_as_r21": true,
+  "normalized_partition_source_paths_only": [
+    "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME",
+    "CONFIG_PARTITION_TABLE_FILENAME"
+  ],
+  "partition_layout_identical": true,
+  "cache_component": {
+    "files": 27,
+    "only_modified_SDK_source": "esp_mm/esp_cache_msync.c",
+    "base_sha256": "7617641c768d38c3f164a7facd4d6f1857c634a8d211f3c5c4c39ee4c6508102",
+    "derived_sha256": "4a1c9c896fadb216348ff78463ebcd39ae98c86a9e6893163537d580009ba631",
+    "selection": "rolling only; existing16KiB C2M task quantum extended to M2C/post-writeback invalidation; whole validation/task mutex/ISR paths retained"
+  },
+  "host_checks": {
+    "cache_actual_API_helpers": {
+      "old": {
+        "exit_code": 40,
+        "passed": true,
+        "expected_exit_code": 40,
+        "stdout": "REPRODUCED: whole-plane task invalidation inside one critical section\n"
+      },
+      "current": {
+        "exit_code": 0,
+        "passed": true,
+        "expected_exit_code": 0,
+        "stdout": "PASS actual API/helpers: contiguous bounded task ranges; C2M/M2C/post-write invalidation; preserved ISR/non-yieldable and complete-range validation\n"
+      },
+      "extra_source_rejected": true
+    },
+    "build_contracts_pass": 22,
+    "reused_cursor_host": "actual methods at120Hz plus old-source starvation negative control",
+    "reused_scaled_sink_host": "PASS; source unchanged; not physical filtering/geometry proof"
+  },
+  "refill_guard_us": 1600,
+  "DMA_guards_unchanged": true,
+  "installed": false,
+  "r22_hardware_tests_invoked": 0,
+  "production_selection_or_tag_changed": false,
+  "execution_boundary": "Author withdraws bench access until further notice; no further hardware calls after that instruction. Fresh readiness/component/startup verification required before deployment.",
+  "remaining_hardware_gates": [
+    "fresh actualCLI/startup/component identities; preserve normalboot",
+    "verified P4 application-only install/full before-after readback/rollback",
+    "8 stagedwide-clear cycles; firstfault stops",
+    "12 cursor/scaler transitions including8/9/136 and96-to3",
+    "complete canonical25 paired checks and restoration/cleanup",
+    "actual Author cursor/height/nativevisual/loadedasset review"
+  ],
+  "retained_failure_records": [
+    "R20-CLEAR-FAILURE.json",
+    "R21-CLEAR-FAILURE.json"
+  ],
+  "evidence_sha256": {
+    "build-review.json": "14172737be5c9ddae50a8d695e77c395b0def2899e1dc065e92436e1429afed2",
+    "build-r22/manifest.json": "0f653ad86405c75efacb046aea0626ce0e97358b202dcc89e4bcbb097d58fa36",
+    "build-r22/validation.json": "f4cb23421de2b70b93fe1ade9df2732eb804550b67ad76a67fca70e5d32d3ee9",
+    "cache-host.json": "79d86b6a8c13809da82d8adc6222177c42d4cf894a5ae2c522f374e25bbae2b7",
+    "cache-host.log": "f2f60aa67b6f3f893c910636440502e3a0ba5db1bbe296756fa9ff10929f1658",
+    "host-build.log": "e952bce7dc007aaea1bce53e40e9344cae2bd99df0acbe14d0e4b75d90e47335"
+  },
+  "limitations": [
+    "No measured critical-section elapsed duration, cache hardware/coherence or physical timing proof.",
+    "No optical cursor/height pass; no all-mode/performance qualification.",
+    "Current installation remains the recovered prior candidate; no claim of present bench readiness."
+  ]
+}
