@@ -585,6 +585,15 @@ An optional `--abort-on-alloc-failure` is restricted to an explicit
 experimental rolling build; it uses IDF's heap-abort diagnostic and must not be
 confused with the memory remedy. Default builds are unaffected. See
 [allocation diagnosis and current checks](tasks/HDMI-002/MEMORY-RESULTS.md).
+The maintained rolling build also selects IDF 5.5.5's task C2M cache-writeback
+chunker with a 16 KiB maximum (`CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS=y`,
+`CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN=0x4000`). The native validator
+checks the actual compiled macros. P4 output tasks can flush full HDMI planes;
+the chunker admits interrupts between task chunks while retaining the existing
+ISR cache path, data synchronization and 1600 µs refill guard. Reassess this
+selection if an ISR starts writing those PSRAM planes or the pinned SDK changes.
+The [wide-clear repair record](tasks/HDMI-002/WIDE-CLEAR-REPAIR.md) owns candidate
+evidence; this build requirement alone is not hardware qualification.
 For controlled comparisons, `--dependencies-lock PATH` seeds dependency
 resolution from a retained build lock. Verify the resulting lock against the
 intended baseline; the option does not itself prevent a resolver update.

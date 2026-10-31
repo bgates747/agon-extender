@@ -18,18 +18,20 @@ Related current audit: [AUDIT-010](AUDIT-010.md). Owning queue: `TODO.md`.
 
 ## State and evidence
 
-F13-S01 — **Open; Author-reported physical observation.** The Author observed
-the symptom at a MOS prompt while operating in ExCom on 2026-09-29. No agent
-capture, source diagnosis, Legacy comparison or exact-build reconciliation has
-yet been completed.
+F13-S01 — **Repair prepared; physical qualification and Author review pending.**
+The renewed 2026-10-31 report identifies physical HDMI. Exact installed EMOSv27
+polling and retained P4 source reproduce the cursor starvation under a controlled
+120 Hz host clock; the repaired parser passes that negative-control regression.
+The combined candidate also restores mode8 scaling. Physical regression exposes
+a separate wide-clear abort; r21 is being built under the linked repair plan.
 
-F13-S02 — Filing this report authorizes no build, deployment, reset, fixture
-run, source repair or production promotion. Schedule investigation consistently
-with the active AUDIT-010 review/repair gate.
+F13-S02 — The renewed Author report and ongoing repair authorization supersede
+the original filing-only boundary for this bounded correction and monitored
+qualification. They do not establish visual acceptance or production selection.
 
-F13-S03 — The report does not yet distinguish the physical Extender display
-from browser replication or another P4 output surface. A later reproducer must
-name every observed output rather than treating one as proof for all outputs.
+F13-S03 — The current Author observation is physical HDMI. Host cursor state,
+browser replication and command receipts do not establish optical flashing.
+Keep those evidence scopes separate through final review.
 
 ## Reported reproduction
 
@@ -65,11 +67,11 @@ different flash behavior.
 
 ## Investigation items
 
-F13-01 [ ] Reconcile the exact installed EMOS and EDP build identities from the
+F13-01 [x] Reconcile the exact installed EMOS and EDP build identities from the
 current deployment evidence before attributing the observation to production,
 the audited pre-LCD baseline or another development build.
 
-F13-02 [ ] Review the official MOS/VDP cursor and text-editing contracts in
+F13-02 [x] Review the official MOS/VDP cursor and text-editing contracts in
 `../../agon-docs`, then consult the read-only official MOS/VDP source only where
 implementation detail is material. Record exact reference tags and commits.
 
@@ -91,8 +93,8 @@ coordinate from transition history. Follow the current test-appliance protocol:
 record entry mode, switch only if needed, settle at least one second, restore
 entry mode and CLI; never modify `/autoexec.txt`.
 
-F13-07 [ ] Complete AUDIT-010 review and then place any correction in its
-itemized repair plan. Retest ordinary prompt editing, all screen edges, cursor
+F13-07 [ ] Complete the current bounded repair and its qualified-source record.
+Retest ordinary prompt editing, all screen edges, cursor
 enable/disable, cursor shape, browser replication and existing text fixtures.
 
 ## Validation gates
@@ -102,7 +104,7 @@ F13-G01 [ ] Exact EMOS/EDP identities and output surfaces are recorded.
 F13-G02 [ ] A retained reproduction distinguishes initial placement,
 Backspace-to-zero and arrow-to-zero, including flash timing.
 
-F13-G03 [ ] Evidence identifies whether EMOS command production, EDP command
+F13-G03 [x] Evidence identifies whether EMOS command production, EDP command
 consumption, cursor timing or output publication owns the defect.
 
 F13-G04 [ ] The repaired cursor flashes at column zero after all three arrival
