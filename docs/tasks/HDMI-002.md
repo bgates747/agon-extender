@@ -1225,3 +1225,22 @@ repeated failed-path checks and complete qualification. First candidate r17 join
 old drawing/output before any new-mode allocation/clear, including native targets
 which do not borrow panel pixels. Preserve fallback and all scanout guards.
 Hardware proof, rather than the source hypothesis, determines whether it works.
+
+### Mode3 repair r19 passes physical qualification — 2026-10-31
+
+The [repair result](HDMI-002/MODE3-REPAIR-RESULT.json) binds the one-file early
+worker-join fix to the exact accepted r16 composition. P4 application-only
+installation/full-device readback pass; EMOS, mainboard VDP and startup remain
+unchanged. The Author's minimal96→3/clear/text/Legacy→ExCom sequence now passes,
+followed by ten96-origin and six0/20 control cases with clear,64-line scrolling,
+fresh prompts and zero DMA faults. Highest observed mode3 refill counter1276µs
+remains below the unchanged1600µs guard. Both entry modes, CLI/cursor commands
+and owned-file cleanup verify.
+
+The [complete paired report](RELEASE-001/QUALIFICATION-R19.json) passes25/25,
+including raw-sector independent restoration, normal startup/reset, mode
+transactions and terminal notification/cleanup. The bounded source mechanism
+and remaining limits are in the [repair notes](HDMI-002/MODE3-REPAIR.md).
+Actual Author visual retry and acceptance remain; production selection/tag
+and immutable accepted r16 bytes are unchanged. Deliberately injected scanout
+fault recovery and blanket all-mode/performance claims are outside these tests.

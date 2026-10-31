@@ -549,3 +549,34 @@ diagnostic is an actual failure, not another pass. Mode3 transition repair or
 explicit limitation acceptance and actual Author visual review still precede
 production selection/tag. Recovery restores both mode0 displays, Legacy CLI,
 cursor commands, unchanged startup and support cleanup; no active job remains.
+
+## Mode3 repair r19 requalification — 2026-10-31
+
+The Author authorizes source repair and complete monitored requalification.
+The [bounded repair](HDMI-002/MODE3-REPAIR.md) joins old P4 drawing/output workers
+before all candidate allocation/clear, including native mode3. Exact r16 build
+composition is preserved; only agon_screen.h changes. Application-only flash,
+full before/after readback, retained rollback and clean dual-USB startup verify.
+EMOSv27, mainboard VDP and108B startup remain unchanged.
+
+The minimal Author sequence passes. All16 dedicated96/0/20→3 transition cases
+then pass with clear/text scrolling, DMA progress and normal entry restoration.
+The [complete native r19 report](RELEASE-001/QUALIFICATION-R19.json) passes25/25
+in349.18 host-monotonic seconds, including preparation and terminal completion.
+Integrated case68.77s, mode case71.43s, raw case29.54s; all raw operation/restore
+return codes0 and the original sector2 image is independently verified restored.
+Representative raw output stays mode20; direct mode3 proof is the separate
+[repair regression](HDMI-002/MODE3-REPAIR-RESULT.json). No old report is rewritten.
+
+Both entry modes0, Legacy CLI, cursor commands, unchanged startup, accepted
+completion notification and exact temporary support cleanup verify. A final
+read-only sample observes18 DMA frames over at least0.3s, zero faults, neutral
+admitted keyboard, valid USB F310 and listener offline. No runner/reader/hold
+remains. The candidate is ready for actual Author visual retry and acceptance.
+The old mode3 failure is resolved within this tested scope; broader injected
+fault recovery/all-mode/performance acceptance is not inferred.
+
+Keep the immutable accepted r16 bundle and combined v0.2.1 release record
+unchanged. After actual r19 acceptance, settle the successor bundle/version
+binding with the Author before production selection/tag; this new application
+must not silently replace the old accepted bytes or inherit a manual receipt.

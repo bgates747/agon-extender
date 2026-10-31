@@ -1,0 +1,388 @@
+{
+  "schema": 1,
+  "artifact_id": "mode3-transition-repair-r19",
+  "status": "automated-pass-awaiting-author-review",
+  "scope": "Early drawing/output join before candidate allocation/clear; same accepted build composition. No timing-guard change.",
+  "source": {
+    "source_commit": "c5046ff4def448807edb3864aafc912955bfcd65",
+    "accepted_parent": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+    "maintained_integration_commit": "2e9eb7f01d81a4452738d9c4afc2874729dad953",
+    "build_id": "indexed-hdmi-r19-b2026-10-31-18-17-20Z",
+    "changed_source_files": [
+      "vdp/video/agon_screen.h"
+    ]
+  },
+  "build": {
+    "passed": true,
+    "source_commit": "c5046ff4def448807edb3864aafc912955bfcd65",
+    "build_id": "indexed-hdmi-r19-b2026-10-31-18-17-20Z",
+    "app_sha256": "536229a7661eed67a4f72256019e93a4547328858edaa14edeb8ff61be9a83e0",
+    "app_bytes": 1786080,
+    "source_inventory_entries": 5533,
+    "changed_source_files": [
+      "vdp/video/agon_screen.h"
+    ],
+    "composition_toolchain_board_reset_endpoint_identical": true,
+    "dependency_lock_identical": true,
+    "sdkconfig_delta": {},
+    "normalized_partition_source_path_keys": [
+      "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME",
+      "CONFIG_PARTITION_TABLE_FILENAME"
+    ],
+    "flash_layout_and_partition_table_identical": true,
+    "refill_guard_unchanged": true,
+    "host_validation_limit": "Legacy directRGB888 lifecycle harness fails to compile against the accepted baseline bridge types. Mode-transaction sanitizers and actual service scheduling pass. Actual target validation PASS; physical evidence remains mandatory."
+  },
+  "installation": {
+    "build_id": "indexed-hdmi-r19-b2026-10-31-18-17-20Z",
+    "source_commit": "c5046ff4def448807edb3864aafc912955bfcd65",
+    "before_sha256": "5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833",
+    "after_sha256": "8338e1aa9310cb36035adddc593f9886d1962d1adcb1aa10a13b3fa64c8f57f1",
+    "app_sha256": "536229a7661eed67a4f72256019e93a4547328858edaa14edeb8ff61be9a83e0",
+    "app_bytes": 1786080,
+    "written_sector_range": [
+      131072,
+      1921024
+    ],
+    "app_exact": true,
+    "outside_written_sectors_unchanged": true,
+    "bootloader_partitions_nvs_ota_retained": true,
+    "EMOS_flashed": false,
+    "mainboard_VDP_flashed": false,
+    "startup_modified": false
+  },
+  "host_validation": {
+    "mode_preparation_fallback_sanitizers": {
+      "status": "pass",
+      "methods": 2,
+      "source_commit": "c5046ff4def448807edb3864aafc912955bfcd65"
+    },
+    "actual_service_scheduling": {
+      "status": "pass",
+      "scope": "native swap ordering, independent frame clock, joined shutdown"
+    },
+    "legacy_direct_RGB888_lifecycle_harness": {
+      "status": "baseline-compile-failure",
+      "reason": "Stub P4Rgb888Controller cannot convert to P4Color64Controller in retained bridge signature. Same failure on unchanged accepted source; candidate patch only changes agon_screen.h.",
+      "claimed_pass": false
+    },
+    "sandbox_note": "Initial sanitizer invocation failed under sandbox ptrace; unsandboxed ASan/UBSan run passed without disabling sanitizer checks."
+  },
+  "minimal_author_sequence": {
+    "status": "success",
+    "started_at": "2026-10-31-18-32-56Z",
+    "ended_at": "2026-10-31-18-33-24Z",
+    "duration_seconds": 27.648278920998564,
+    "mode3_refill_max_us": 1106,
+    "scope": "96-to3; clear/text with fresh prompt; Legacy-toExCom with fresh prompt; normal mode0/Legacy return."
+  },
+  "repeated_regression": {
+    "status": "success",
+    "started_at": "2026-10-31-18-33-37Z",
+    "ended_at": "2026-10-31-18-41-02Z",
+    "duration_seconds": 445.3598954650006,
+    "clock": "host monotonic seconds, not independently calibrated",
+    "scope": "r19 repair: ten96-to3 transitions, three0 controls, three20 controls; clear/64-line scroll/return in every case",
+    "steps": [
+      {
+        "id": "case-01-from-96",
+        "origin_mode": 96,
+        "repeat": 1,
+        "status": "pass",
+        "started_at": "2026-10-31-18-35-02Z",
+        "idle_progress": {
+          "frames_advanced": 128,
+          "interval_seconds": 2,
+          "refill_max_us": 854
+        },
+        "duration_seconds": 23.133750795997912,
+        "ended_at": "2026-10-31-18-35-25Z"
+      },
+      {
+        "id": "case-02-from-96",
+        "origin_mode": 96,
+        "repeat": 2,
+        "status": "pass",
+        "started_at": "2026-10-31-18-35-25Z",
+        "idle_progress": {
+          "frames_advanced": 127,
+          "interval_seconds": 2,
+          "refill_max_us": 1265
+        },
+        "duration_seconds": 18.580766159000632,
+        "ended_at": "2026-10-31-18-35-44Z"
+      },
+      {
+        "id": "case-03-from-96",
+        "origin_mode": 96,
+        "repeat": 3,
+        "status": "pass",
+        "started_at": "2026-10-31-18-35-44Z",
+        "idle_progress": {
+          "frames_advanced": 130,
+          "interval_seconds": 2,
+          "refill_max_us": 1265
+        },
+        "duration_seconds": 18.350639434000186,
+        "ended_at": "2026-10-31-18-36-02Z"
+      },
+      {
+        "id": "case-04-from-96",
+        "origin_mode": 96,
+        "repeat": 4,
+        "status": "pass",
+        "started_at": "2026-10-31-18-36-02Z",
+        "idle_progress": {
+          "frames_advanced": 128,
+          "interval_seconds": 2,
+          "refill_max_us": 879
+        },
+        "duration_seconds": 19.21826358099497,
+        "ended_at": "2026-10-31-18-36-22Z"
+      },
+      {
+        "id": "case-05-from-96",
+        "origin_mode": 96,
+        "repeat": 5,
+        "status": "pass",
+        "started_at": "2026-10-31-18-36-22Z",
+        "idle_progress": {
+          "frames_advanced": 129,
+          "interval_seconds": 2,
+          "refill_max_us": 1121
+        },
+        "duration_seconds": 18.603134449003846,
+        "ended_at": "2026-10-31-18-36-40Z"
+      },
+      {
+        "id": "case-06-from-96",
+        "origin_mode": 96,
+        "repeat": 6,
+        "status": "pass",
+        "started_at": "2026-10-31-18-36-40Z",
+        "idle_progress": {
+          "frames_advanced": 128,
+          "interval_seconds": 2,
+          "refill_max_us": 1276
+        },
+        "duration_seconds": 18.196141923996038,
+        "ended_at": "2026-10-31-18-36-58Z"
+      },
+      {
+        "id": "case-07-from-96",
+        "origin_mode": 96,
+        "repeat": 7,
+        "status": "pass",
+        "started_at": "2026-10-31-18-36-58Z",
+        "idle_progress": {
+          "frames_advanced": 127,
+          "interval_seconds": 2,
+          "refill_max_us": 1276
+        },
+        "duration_seconds": 18.27028615600284,
+        "ended_at": "2026-10-31-18-37-17Z"
+      },
+      {
+        "id": "case-08-from-96",
+        "origin_mode": 96,
+        "repeat": 8,
+        "status": "pass",
+        "started_at": "2026-10-31-18-37-17Z",
+        "idle_progress": {
+          "frames_advanced": 135,
+          "interval_seconds": 2,
+          "refill_max_us": 1276
+        },
+        "duration_seconds": 18.25146200999734,
+        "ended_at": "2026-10-31-18-37-35Z"
+      },
+      {
+        "id": "case-09-from-96",
+        "origin_mode": 96,
+        "repeat": 9,
+        "status": "pass",
+        "started_at": "2026-10-31-18-37-35Z",
+        "idle_progress": {
+          "frames_advanced": 132,
+          "interval_seconds": 2,
+          "refill_max_us": 1276
+        },
+        "duration_seconds": 20.345202256001357,
+        "ended_at": "2026-10-31-18-37-55Z"
+      },
+      {
+        "id": "case-10-from-96",
+        "origin_mode": 96,
+        "repeat": 10,
+        "status": "pass",
+        "started_at": "2026-10-31-18-37-55Z",
+        "idle_progress": {
+          "frames_advanced": 128,
+          "interval_seconds": 2,
+          "refill_max_us": 812
+        },
+        "duration_seconds": 19.28125274299964,
+        "ended_at": "2026-10-31-18-38-15Z"
+      },
+      {
+        "id": "case-11-from-0",
+        "origin_mode": 0,
+        "repeat": 1,
+        "status": "pass",
+        "started_at": "2026-10-31-18-38-15Z",
+        "idle_progress": {
+          "frames_advanced": 134,
+          "interval_seconds": 2,
+          "refill_max_us": 1246
+        },
+        "duration_seconds": 20.80244290799601,
+        "ended_at": "2026-10-31-18-38-35Z"
+      },
+      {
+        "id": "case-12-from-0",
+        "origin_mode": 0,
+        "repeat": 2,
+        "status": "pass",
+        "started_at": "2026-10-31-18-38-35Z",
+        "idle_progress": {
+          "frames_advanced": 128,
+          "interval_seconds": 2,
+          "refill_max_us": 1246
+        },
+        "duration_seconds": 19.371061231002386,
+        "ended_at": "2026-10-31-18-38-55Z"
+      },
+      {
+        "id": "case-13-from-0",
+        "origin_mode": 0,
+        "repeat": 3,
+        "status": "pass",
+        "started_at": "2026-10-31-18-38-55Z",
+        "idle_progress": {
+          "frames_advanced": 133,
+          "interval_seconds": 2,
+          "refill_max_us": 1246
+        },
+        "duration_seconds": 20.15841409999848,
+        "ended_at": "2026-10-31-18-39-15Z"
+      },
+      {
+        "id": "case-14-from-20",
+        "origin_mode": 20,
+        "repeat": 1,
+        "status": "pass",
+        "started_at": "2026-10-31-18-39-15Z",
+        "idle_progress": {
+          "frames_advanced": 127,
+          "interval_seconds": 2,
+          "refill_max_us": 851
+        },
+        "duration_seconds": 21.899122311995598,
+        "ended_at": "2026-10-31-18-39-37Z"
+      },
+      {
+        "id": "case-15-from-20",
+        "origin_mode": 20,
+        "repeat": 2,
+        "status": "pass",
+        "started_at": "2026-10-31-18-39-37Z",
+        "idle_progress": {
+          "frames_advanced": 128,
+          "interval_seconds": 2,
+          "refill_max_us": 854
+        },
+        "duration_seconds": 18.177067174001422,
+        "ended_at": "2026-10-31-18-39-55Z"
+      },
+      {
+        "id": "case-16-from-20",
+        "origin_mode": 20,
+        "repeat": 3,
+        "status": "pass",
+        "started_at": "2026-10-31-18-39-55Z",
+        "idle_progress": {
+          "frames_advanced": 137,
+          "interval_seconds": 2,
+          "refill_max_us": 1104
+        },
+        "duration_seconds": 19.77856132699526,
+        "ended_at": "2026-10-31-18-40-15Z"
+      }
+    ],
+    "restoration": "verified",
+    "entry": {
+      "route": "legacy",
+      "mainboard": {
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colors": 16
+      },
+      "extender": {
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colors": 16
+      }
+    }
+  },
+  "by_origin": [
+    {
+      "origin_mode": 96,
+      "pass": 10,
+      "fail": 0,
+      "mode3_samples": 70,
+      "maximum_reported_refill_us": 1276
+    },
+    {
+      "origin_mode": 0,
+      "pass": 3,
+      "fail": 0,
+      "mode3_samples": 21,
+      "maximum_reported_refill_us": 1246
+    },
+    {
+      "origin_mode": 20,
+      "pass": 3,
+      "fail": 0,
+      "mode3_samples": 21,
+      "maximum_reported_refill_us": 1104
+    }
+  ],
+  "timing_scope": "Maximum lifetime refill counter observed in mode3; may include earlier same-carrier work. Not isolated rendering latency or a throughput comparison.",
+  "startup": {
+    "bytes": 108,
+    "sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "unchanged": true,
+    "writes": 0
+  },
+  "EMOS_and_mainboard_VDP_unchanged": true,
+  "targeted_raw_sector_IO": false,
+  "targeted_owned_support_cleanup": "verified",
+  "manual_acceptance_recorded": false,
+  "production_selection_or_tag_changed": false,
+  "limits": [
+    "Physical visual review remains the Author gate.",
+    "No all-mode, performance or deliberately injected scanout-fault recovery claim."
+  ],
+  "evidence_sha256": {
+    "build-review.json": "7a9f4fbdba0a3a681f8232199dd65e55c6e4dfc3cf5d434d76eb57ff37eaf052",
+    "host-validation.json": "f34fcad24ed96da9ee71b59a39fc0a89ffd3c7d883f35ec3739e4d5db7f21b6e",
+    "p4-installation-receipt.json": "4689e0c50b5058510bd80a865449633af985062f1c70dcf1486788d83b634ddf",
+    "install-r19/flash-verification.json": "09bb13b5e3ace46647163e0b37166b2091698a93092fe4abcdd602d2c5b7c026",
+    "install-r19/boot.bin": "4083ad368e59bb328dadac4b7a8e85cb2e9a44866d9ef2ebbe6eade1bad33f2b",
+    "postinstall-cli/receipt.json": "f6015f15eb87f2ecb312c02e230f322be52957e3e2b5622e26a572359801a8bc",
+    "quick-r19/result.json": "253eaeb7d5b711208a597d5dd42d7580f3328d14834a2dd0688f399b41662072",
+    "targeted-r19/result.json": "739ae32fc8ecbfb60d5ec681e07aea1ae64c426fee218c4acd795daa370017a0",
+    "targeted-r19/source-pin.json": "8a29406cf0cf26a7b2aceec9b8deb91e441310ef53f9d673bef12b75f23d6282",
+    "targeted-r19/lifecycle/support-cleanup.json": "9dd7ff833d41de7543c91148d4b2e7d471d4e67dfe88ca26803c40cb87f5efd9"
+  },
+  "full_suite": {
+    "status": "success",
+    "checks": {
+      "pass": 25,
+      "required": 25
+    },
+    "report": "../RELEASE-001/QUALIFICATION-R19.json"
+  }
+}

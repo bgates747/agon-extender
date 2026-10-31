@@ -1,0 +1,256 @@
+{
+  "schema": 1,
+  "artifact_id": "native-release-qualification-r19",
+  "status": "success",
+  "host_commit": "2e9eb7f01d81a4452738d9c4afc2874729dad953",
+  "host_source_sha256": {
+    "qualification/lifecycle.py": "68be6004cdd99dea17ae20aca16f1eea1ff03c83a8ca4a44eb2f024a9cb37a12",
+    "qualification/run.py": "f28740a54121e0fab875dbe7874551e1fc6791cfa42d5e3fb054aa2a6f422896",
+    "scripts/hardware_validation.py": "6f83df613214f7e63b9b7f136cf5da14ad9872c5cd7a4603ea71d8234679f971"
+  },
+  "qualification_state": "awaiting-author-review",
+  "full_suite": true,
+  "output_profile": "native-hdmi",
+  "started_at": "2026-10-31-18-41-23Z",
+  "ended_at": "2026-10-31-18-47-11Z",
+  "clock": "host monotonic seconds; operational timing, not independently calibrated",
+  "preparation_seconds": 114.42592887100182,
+  "runner_total_seconds": 347.3413622959997,
+  "job": {
+    "started_at": "2026-10-31T18:41:21.970593+00:00",
+    "status": "success",
+    "command_elapsed_seconds": 349.1766016180045,
+    "exit_code": 0,
+    "ended_at": "2026-10-31T18:47:11.148966+00:00",
+    "elapsed_seconds": 349.1766396919993
+  },
+  "checks": {
+    "pass": 25,
+    "required": 25
+  },
+  "cases": [
+    {
+      "id": "installed-p4-integrated-smoke",
+      "status": "pass",
+      "started_at": "2026-10-31-18-43-18Z",
+      "ended_at": "2026-10-31-18-44-26Z",
+      "total_case_seconds": 68.77033443300024,
+      "checks": [
+        {
+          "id": "p4-web-assets",
+          "status": "pass"
+        },
+        {
+          "id": "agon-reset-and-keyboard-readmission",
+          "status": "pass"
+        },
+        {
+          "id": "legacy-screen-capture",
+          "status": "pass"
+        },
+        {
+          "id": "excom-mode-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "excom-clear",
+          "status": "pass"
+        },
+        {
+          "id": "excom-keyboard-and-text-render",
+          "status": "pass"
+        },
+        {
+          "id": "display-status-contract",
+          "status": "pass"
+        },
+        {
+          "id": "hdmi-dma-progress",
+          "status": "pass"
+        },
+        {
+          "id": "legacy-mode-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-service",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-round-trip",
+          "status": "pass"
+        },
+        {
+          "id": "mainboard-sd-cleanup",
+          "status": "pass"
+        },
+        {
+          "id": "final-startup-recovery",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "id": "a10-rp06-mode-transaction",
+      "status": "pass",
+      "started_at": "2026-10-31-18-44-26Z",
+      "ended_at": "2026-10-31-18-45-38Z",
+      "total_case_seconds": 71.42512919100409,
+      "checks": [
+        {
+          "id": "rp06-browser-absent-mode8",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-browser-absent-mode20",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-browser-absent-return-mode8",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-wide96",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-standard20",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-hdmi-return-wide96",
+          "status": "pass"
+        },
+        {
+          "id": "rp06-final-startup-recovery",
+          "status": "pass"
+        }
+      ]
+    },
+    {
+      "id": "a10-rp04-raw-sd-write",
+      "status": "pass",
+      "started_at": "2026-10-31-18-45-38Z",
+      "ended_at": "2026-10-31-18-46-07Z",
+      "total_case_seconds": 29.540411938993202,
+      "checks": [
+        {
+          "id": "emos-receipt-and-fixture-source",
+          "status": "pass"
+        },
+        {
+          "id": "emos-fixture-staging",
+          "status": "pass"
+        },
+        {
+          "id": "emos-fixture-completion-handoff",
+          "status": "pass"
+        },
+        {
+          "id": "emos-raw-sector-write-read-restore",
+          "status": "pass"
+        },
+        {
+          "id": "emos-startup-unchanged",
+          "status": "pass"
+        }
+      ]
+    }
+  ],
+  "restoration": {
+    "status": "verified",
+    "duration_seconds": 16.673230000997137
+  },
+  "notification": {
+    "status": "success",
+    "exit_code": 0,
+    "duration_seconds": 22.815016987995477
+  },
+  "paired_component_identities": {
+    "p4": {
+      "target": "p4",
+      "component_commit": "c5046ff4def448807edb3864aafc912955bfcd65",
+      "build_id": "indexed-hdmi-r19-b2026-10-31-18-17-20Z",
+      "artifact_sha256": "536229a7661eed67a4f72256019e93a4547328858edaa14edeb8ff61be9a83e0",
+      "installed_readback_sha256": "8338e1aa9310cb36035adddc593f9886d1962d1adcb1aa10a13b3fa64c8f57f1",
+      "source": {
+        "kind": "clean-build-archive",
+        "base_commit": "c5046ff4def448807edb3864aafc912955bfcd65",
+        "dirty": false,
+        "files_verified": 5533,
+        "archive_sha256": "2359826f3519c5b7f0ba5009493487a1ffa3b3131d73fb6e3d32498b94c58d6b",
+        "inventory_sha256": "7a58beb873e4785989942f71c45d8a2317aa9ee64c2f870724db233d8f1fe177"
+      },
+      "verification_scope": "retained-installation"
+    },
+    "emos": {
+      "target": "emos",
+      "component_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+      "build_id": "agon-emos-v0.1.27-b2026-10-26-01-06-54Z",
+      "artifact_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "installed_readback_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "source": {
+        "kind": "archived-patch",
+        "base_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+        "dirty": true,
+        "files_verified": 557,
+        "archive_sha256": "70eee01c830f9d1e98cbaad596f256589e05de09b8a4a7926d8673a3d88f96d0",
+        "inventory_sha256": "92d82b9f68e20a2f8ded9f74d998ba77d6aa7e49b82ea7181b378b8e7792bccc"
+      },
+      "verification_scope": "retained-installation"
+    }
+  },
+  "startup": {
+    "bytes": 108,
+    "sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "unchanged": true,
+    "writes": 0
+  },
+  "native_raw_mode": 20,
+  "mode3_regression": "../HDMI-002/MODE3-REPAIR-RESULT.json",
+  "manual_cases_required": [
+    "loaded-assets-mode-switch-and-exit",
+    "native-hdmi-visual"
+  ],
+  "actual_author_review_recorded": false,
+  "production_selection_or_tag_changed": false,
+  "cleanup": {
+    "status": "verified"
+  },
+  "evidence_sha256": {
+    "full-suite-r19/run/summary.json": "4fbfff0fe82fc4f365a167261f695cbdc7f74e1834335115487e638b7dc5d1b2",
+    "full-suite-r19/job/result.json": "9462ea527a573239fb970f04e4922b96801073b9ff732d567b28e82d489c5f17",
+    "full-suite-r19/run/entry-state.json": "060397b7bb87878d39eb7c4c563d7fe035d9880754fb695fb3a84ea7a2e53a95",
+    "full-suite-r19/run/support-cleanup.json": "3756732551640e8695f59a638e2546bade69d24befe68f60eb4413189f64bcc4",
+    "final-readiness.json": "c976f1c80b0a0864deadbb9e77a28088e5326f52969b18d72ad9ca1dd9125139"
+  },
+  "raw_sector_oracle": {
+    "schema": "1",
+    "case": "a10-rp04-raw-sd-write",
+    "status": "pass",
+    "sector": "2",
+    "test_rc": "0",
+    "restore_rc": "0",
+    "restore_verify_rc": "0",
+    "before_crc32": "b2aa7578",
+    "pattern_crc32": "3b3befd6",
+    "observed_crc32": "3b3befd6",
+    "restored_crc32": "b2aa7578",
+    "detail": "completed",
+    "first_partition_lba": "8192",
+    "write_attempted": "1",
+    "token": "DF3CBDF4B34546E8"
+  },
+  "final_read_only_verification": {
+    "mode": 0,
+    "dma_frames_advanced": 18,
+    "sample_interval_seconds": 0.3,
+    "clock": "host monotonic seconds; not independently calibrated",
+    "rolling_faults": 0,
+    "keyboard_ready_and_neutral": true,
+    "USB_controller_valid": true,
+    "foreground_listener_offline": true,
+    "completion_cue_preserved": true,
+    "inputs_sent": 0
+  }
+}

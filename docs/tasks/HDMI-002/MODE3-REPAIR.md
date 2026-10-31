@@ -75,3 +75,86 @@ scheduling pass. Its separate old directRGB888 lifecycle harness does not compil
 against the later committed bridge types; that failure is not caused by the
 agon_screen.h-only patch. Re-evaluate applicable host checks on the controlled
 accepted source; full target compile and physical regression remain mandatory.
+
+## Exact-composition preflight correction
+
+The r17 build passes target validation but differs from the accepted composition
+in sw-visible-snapshot and overlay-BGR options. Offline comparison rejects it
+before any installation. Candidate r18 uses the same c5046ff4 source patch with
+both accepted options restored; verify complete source inventory, SDK, compiler,
+board, dependency and flash-layout agreement again. No firmware changed during
+this build-configuration correction. Preserve r17 as uninstalled build evidence.
+The old directRGB888 lifecycle harness compile failure also exists on the exact
+accepted baseline and is not a result of this repair.
+
+The r18 comparison also rejects the accidentally selected optional320 scaler:
+accepted r16 does not compile that option. Candidate r19 removes it. A pure
+precompile comparison now proves the entire generated component CMake (source
+list, includes, compile definitions/options, dependencies and embeds) matches
+r16 after only exact source/output-prefix normalization; display configuration
+also matches. Repeat the existing finished-build proof. Neither rejected build
+has been installed; the bench still runs accepted r16.
+
+## Installed repair and targeted result — 2026-10-31
+
+The [portable result](MODE3-REPAIR-RESULT.json) binds installed r19 to clean
+source c5046ff4def448807edb3864aafc912955bfcd65, based on accepted r16 source
+5f8ef676e3cf4982d009f1fd6a0f00887be34198. Maintained integration is2e9eb7f0;
+only `vdp/video/agon_screen.h` differs across5533 inventoried source files.
+Generated component definitions/source selection, display settings, compiler,
+dependency lock, board/reset configuration and partition bytes match r16.
+Two SDK entries relocate the identical partition CSV to the clean checkout;
+no other configuration difference is admitted. The finished target validates.
+
+The Pi independently reads/verifies the entire incoming P4 flash, retains
+application-sector rollback, writes only the r19 application at0x20000, then
+reads all16MiB again. Application1786080B SHA-256
+`536229a7661eed67a4f72256019e93a4547328858edaa14edeb8ff61be9a83e0`
+matches; every byte outside the written erase sectors is unchanged. P4 startup
+identity, direct USB keyboard and hub-connected F310 initialize cleanly before
+the Pi releases the Agon reset hold. Two actual listener/read/EXIT exchanges
+verify the MOS CLI and unchanged108B normal startup. No EMOS/mainboard flash.
+
+The Author's minimal96→3/clear/text and Legacy→ExCom round trip now passes
+with fresh prompts and advancing DMA. A separate16-case run passes in445.36
+host-monotonic seconds, including preparation, retrieval and cleanup:
+
+| Origin →3→origin | Passed / run | Highest refill counter observed in mode3, µs |
+|---|---:|---:|
+|96 →3→96|10/10|1276|
+|0 →3→0|3/3|1246|
+|20 →3→20|3/3|1104|
+
+Order is worst observed refill first. These are cumulative carrier-lifetime
+counters sampled in mode3, potentially including earlier work; they are not
+isolated scroll/render timing or comparable throughput results. All112 retained
+mode3 status samples report zero faults, with an unchanged1600µs guard. Each
+case includes clear,64 lines of scrolling text, completion prompt and idle DMA
+progress. Both entry modes0, Legacy CLI, startup and exact owned-file cleanup
+are verified; cursor show/flashing commands execute on both displays.
+
+The physical comparison supports the missing early worker join as the cause
+of the reproduced overlap fault. It does not isolate each contributor to memory
+or interrupt latency, qualify every mode, or test recovery after a deliberately
+injected scanout abort. Mode-transaction sanitizer and actual service scheduling
+checks pass. The older directRGB888 lifecycle stub fails to compile on the
+unchanged accepted baseline too and is not reported as a passing check.
+
+Complete canonical paired qualification also passes25/25 against this exact
+installed application and unchanged EMOSv27; see the
+[paired report](../RELEASE-001/QUALIFICATION-R19.json). Host job349.18s includes
+114.43s preparation,68.77s integrated checks,71.43s mode checks,29.54s raw SD,
+16.67s initial restoration and22.82s notification; total also includes final
+verification/cleanup. These are operational host times, not rendering metrics.
+The raw fixture uses representative native mode20; the separate16-case
+regression above directly qualifies the repaired mode3 path. Raw sector2
+write/read, restoration and independent restore verification all return0.
+Startup is unchanged and temporary support cleanup is verified.
+
+The final read-only handback observes18 DMA frames over at least0.3s, zero
+faults, neutral admitted keyboard, valid USB F310 and listener offline. Both
+entry modes0 and Legacy CLI are restored; cursor show/flashing commands execute
+on both displays and after the completion player. No active runner, serial
+reader or reset hold remains. Actual Author visual review, candidate acceptance
+and release-selection/tag decisions remain separate. Preserve the accepted
+r16 bundle and all old reports; r19 is not silently substituted into them.

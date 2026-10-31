@@ -90,6 +90,15 @@ Normal startup is preserved; reset must not launch or resume tests.
 
 ## Emulator attention cues
 
+Oryx emulator time uses the shared self-service FIFO in
+`../agon-dev-env/cross-agent/vdplet-rollout/README.md` (Author update,
+2026-10-31). Read it before scheduling: reserve, obtain fresh whole-host idle
+evidence, check out and assert ownership before each launch; release after
+owned processes stop, then immediately steer the next agent's chat. Golem
+approval is unnecessary. Use the shared Pi helper/state, never a local queue.
+For GUI reviews the Extender agent holds the reservation, but the Author
+launches the emulator. Machine time grants no additional test authorization.
+
 Finish all independent preparation and checks before launching an emulator to
 request the Author's attention. Launch only when a concrete review or blocking
 decision is ready, and state what needs the Author's input. Do not launch early
