@@ -49,6 +49,33 @@ def check_rolling_cache_config(lines: list[str]) -> None:
         fail("rolling scanout requires the recorded 16KiB C2M quantum")
 
 
+def check_cache_linkage(commands: list[dict], ninja: str, build: Path, enabled: bool) -> None:
+    """Prove the sole pinned cache source reaches its archive and the ELF."""
+    generated = (build.parent / "project/components/esp_mm/esp_cache_msync.c").resolve()
+    actions = [c for c in commands if Path(c["file"]).name == "esp_cache_msync.c"]
+    if len(actions) != 1:
+        fail("expected exactly one cache synchronization compile action")
+    action = actions[0]
+    expected = generated if enabled else (IDF / "components/esp_mm/esp_cache_msync.c").resolve()
+    if Path(action["file"]).resolve() != expected:
+        fail("cache synchronization source differs from rolling selection")
+    if not enabled:
+        return
+    from p4_cache_msync import verify
+    try:
+        verify(IDF, build.parent / "project")
+    except (OSError, ValueError) as error:
+        fail(str(error))
+    archive = "esp-idf/esp_mm/libesp_mm.a"
+    edges = [line for line in ninja.splitlines() if line.startswith(f"build {archive}:")]
+    obj = action.get("output")
+    if len(edges) != 1 or not obj or obj not in edges[0].split():
+        fail("cache source object is absent from its archive")
+    elf = [line for line in ninja.splitlines() if line.startswith("build agon_extender.elf:")]
+    if len(elf) != 1 or archive not in elf[0].split():
+        fail("cache source archive is absent from ELF link")
+
+
 def check_usb_hcd_derivative(upstream: Path, derivative: Path) -> None:
     if hashlib.sha256(upstream.read_bytes()).hexdigest() != USB_HCD_UPSTREAM_SHA256:
         fail("USB HCD upstream identity changed")
@@ -339,6 +366,7 @@ def main() -> None:
 
     ninja = ninja_path.read_text().replace("$\n  ", "")
     check_hdmi_linkage(commands, ninja, args.display_output,args.rolling_scanout,output/"build",args.hdmi_timing)
+    check_cache_linkage(commands, ninja, output / "build", args.rolling_scanout)
     archive_lines = [line for line in ninja.splitlines()
                      if line.startswith("build esp-idf/agon_vdp/libagon_vdp.a:")]
     if len(archive_lines) != 1:
