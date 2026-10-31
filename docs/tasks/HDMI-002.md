@@ -1216,3 +1216,12 @@ The proposed renderer-join candidate remains unimplemented. Its validation must
 also cover route handling after a contained scanout fault: an HTTP ready flag
 must not be treated as CLI recovery, and an ExCom re-entry that cannot complete
 must not silently strand ordinary input. Preserve the original fault guards.
+
+### Mode3 repair authorized — 2026-10-31
+
+The Author says “hunt it down and kill it.” The [bounded repair plan](HDMI-002/MODE3-REPAIR.md)
+owns source reasoning, exact-composition candidate preparation, rollback,
+repeated failed-path checks and complete qualification. First candidate r17 joins
+old drawing/output before any new-mode allocation/clear, including native targets
+which do not borrow panel pixels. Preserve fallback and all scanout guards.
+Hardware proof, rather than the source hypothesis, determines whether it works.
