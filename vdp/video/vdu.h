@@ -14,6 +14,9 @@ extern HardwareSerial DBGSerial;
 // Handle VDU commands
 //
 void VDUStreamProcessor::vdu(uint8_t c, bool usePeek) {
+	// FWBUG-013: defer VDU23 until its subcommand is known. File/controller
+	// control traffic shares this parser but must not hide an idle text cursor.
+	if (c != 0x17) context->hideCursor();
 	// We want to send raw chars back to the debugger
 	// this allows binary (faster) data transfer in ZDI mode
 	// to inspect memory and register values

@@ -612,7 +612,7 @@ void VDUStreamProcessor::processAllAvailable() {
 //
 void VDUStreamProcessor::processNext() {
 	auto hasPending = byteAvailable();
-	if (context->checkForVSYNC(hasPending)) {
+	if (context->checkForVSYNC()) {
 		// TODO consider making this an event pushed to the queue?
 		bufferCallCallbacks(CALLBACK_VSYNC);
 		if (!hasPending) {
@@ -633,7 +633,6 @@ void VDUStreamProcessor::processNext() {
 			// process next byte, if available
 			if (hasPending) {
 				flushEcho();
-				context->hideCursor();
 				vdu(readByte());
 			}
 			break;

@@ -190,7 +190,9 @@ inline int esp_lcd_panel_draw_bitmap(HostPanel *p,int,int,int,int,const void *pi
 // Renderer substitution only supplies the surfaces called by the real sink;
 // the service/controller integration is covered by hdmi_frame_scheduling_test.
 namespace fabgl {
-struct P4Rgb888Controller {
+// Match the maintained controller hierarchy at the scanout bridge boundary.
+struct P4Color64Controller {};
+struct P4Rgb888Controller : P4Color64Controller {
   int w=848,h=480;bool doubled{};
   int getViewPortWidth(){return w;}int getViewPortHeight(){return h;}
   bool isDoubleBuffered(){return doubled;}

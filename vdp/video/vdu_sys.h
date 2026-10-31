@@ -94,6 +94,8 @@ void VDUStreamProcessor::wait_eZ80() {
 //
 void VDUStreamProcessor::vdu_sys() {
 	auto mode = readByte_t();
+	// VDU23,0 needs one more byte before display/control ownership is known.
+	if (mode >= 0 && mode != 0) context->hideCursor();
 
 	//
 	// If mode is -1, then there's been a timeout
@@ -172,6 +174,18 @@ void VDUStreamProcessor::vdu_sys() {
 //
 void VDUStreamProcessor::vdu_sys_video() {
 	auto mode = readByte_t();
+	// FWBUG-013: EMOS sends background-job polls while its CLI line is empty.
+	// These and F7 controller/transport packets have no text drawing effect.
+	// Suppressing the cursor here starves its three-frame idle restoration.
+#ifdef AGON_EXTENDER_CONSOLE
+	if (mode != CONSOLE_OPCODE
+#ifdef AGON_EXTENDER_SD_SERVICE
+		&& mode != 0xF6
+#endif
+	) context->hideCursor();
+#else
+	context->hideCursor();
+#endif
 
 	// TODO - consider whether we want to clear echo for _all_ VDU 23 commands
 	clearEcho();
