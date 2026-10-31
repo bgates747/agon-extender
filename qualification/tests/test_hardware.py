@@ -31,6 +31,34 @@ video = load("qualification_video", ROOT / "qualification/video.py")
 
 
 class HardwareValidationTests(unittest.TestCase):
+    def test_native_mode8_rejects_omitted_scaler_despite_valid_logical_mode(self):
+        def display(mode, width, height, carrier):
+            return dict(mode=mode, width=width, height=height, colors=64,
+                        output_width=carrier[0], output_height=carrier[1])
+        with tempfile.TemporaryDirectory() as directory:
+            for name, carrier, succeeds in (("missing", (684, 384), False),
+                                            ("scaled", (848, 480), True)):
+                def selected(_url, _journal, mode, width, height, _colors):
+                    return display(mode, width, height, carrier if mode == 8 else (848, 480))
+                with mock.patch.multiple(
+                        runner, bridge_reset=mock.Mock(return_value=dict(ready=True, physical_neutral=True)),
+                        capture_text=mock.Mock(return_value="old"), type_line=mock.Mock(),
+                        wait_screen=mock.Mock(return_value="fresh prompt"),
+                        select_mode=mock.Mock(side_effect=selected),
+                        hdmi_progress=mock.Mock(return_value={"dma_frames_advanced": 1})):
+                    args = ({"extender_url": "http://test.invalid", "output_profile": "native-hdmi"},
+                            {"component_commit": "test", "artifact_sha256": "test"},
+                            Path(directory) / name)
+                    if succeeds:
+                        result = runner.run_rp06_mode_transaction(*args)
+                        self.assertEqual(result["status"], "pass")
+                        self.assertEqual(len(result["checks"]), 7)
+                        self.assertTrue(result["checks"][0]["scaled_320_carrier_verified"])
+                        self.assertTrue(result["checks"][2]["scaled_320_carrier_verified"])
+                    else:
+                        with self.assertRaisesRegex(RuntimeError, "320x240 scaling"):
+                            runner.run_rp06_mode_transaction(*args)
+
     def test_repair_manifest_is_explicit_and_valid(self):
         document = json.loads((ROOT / "qualification/manifests/hardware.json").read_text())
         runner.validate_repair_manifest(document)

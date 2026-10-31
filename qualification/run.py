@@ -466,6 +466,13 @@ def run_rp06_mode_transaction(config: dict, receipt: dict, output: Path) -> dict
             display = switch(mode, width, height, label)
             evidence = {"display": display}
             if output_profile(config) == "native-hdmi":
+                # HDMI-002: logical mode/DMA alone let an omitted scaler pass
+                # with a short, unscaled684x384 image. The existing320x240
+                # scaler requires848x480; optical/pixel review is separate.
+                if mode == 8:
+                    if (display.get("output_width"), display.get("output_height")) != (848, 480):
+                        raise RuntimeError("320x240 scaling requires the848x480 HDMI carrier")
+                    evidence["scaled_320_carrier_verified"] = True
                 evidence["progress"] = hdmi_progress(url, output / f"{label}-dma.json")
             passed("rp06-" + label, **evidence)
 

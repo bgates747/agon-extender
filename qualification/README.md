@@ -12,6 +12,11 @@ records verified live staging and CLI handback. The
 stopped at the post-reset actual-CLI gate: 1/25 checks, remaining cases blocked.
 Readiness and recovery do not establish physical qualification.
 
+Native mode8 checks require the848×480 carrier used by the existing320×240
+scaler, as well as logical geometry and DMA progress. This rejects builds
+which omit that scaler selection; filtering, object aspect and optical cursor
+flashing still require actual Author review.
+
 ## Qualification policy
 
 1. Preserve verified installation evidence for both exact images. The offline
