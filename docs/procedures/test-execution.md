@@ -13,6 +13,10 @@ monitor settling and the prohibition on test-driven startup changes.
    current machine-local bench record. Confirm Author authorization, bench
    availability, exact firmware/fixture identities and the actual application
    state. Do not assume keyboard-ready means MOS is at the prompt.
+   The Author's handoff "bench is yours" confirms a ready, idle bench for the
+   agreed work; do not ask them to repeat that confirmation. The agent can
+   establish actual command handback through a finite listener/read/EXIT
+   exchange. Stop and reconcile only if fresh evidence contradicts readiness.
 2. Preserve ordinary startup and any existing fixture configurations. Stage
    identified files in their documented directories and verify their readbacks.
    Prefer an existing fixture; do not alter a frozen executable casually.

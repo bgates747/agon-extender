@@ -289,15 +289,36 @@ class Session:
             "startup_sha256": hashlib.sha256(self.original_startup).hexdigest(),
             "cli_handback": "explicit mode-query application and listener read/EXIT"})
 
-    def cleanup(self) -> None:
+    def cleanup(self, paths: list[str] | None = None) -> None:
         # Old sdserve has no DELETE operation. MOS owns deletion; the separate
         # listener readback proves only these run-owned support paths absent.
+        # Execute the file commands synchronously inside MOS: acknowledged key
+        # events do not establish that a preceding FAT operation has returned.
+        # Retain the command file as result evidence, never delete an open EXEC.
         from sdcard import RemoteError
-        paths = [p for p in self.owned_paths if p.startswith("/extender/.")]
-        for path in paths:
-            self.command(self.journal("delete-support"), "DELETE " + path)
+        paths = ([p for p in self.owned_paths if p.startswith("/extender/.")]
+                 if paths is None else list(paths))
+        if any(p not in self.owned_paths or not p.startswith("/extender/.") for p in paths):
+            raise ValueError("cleanup is limited to this session's owned support files")
+        script = "/agents/extender/results/cleanup-" + uuid.uuid4().hex[:16] + ".txt"
         client = self.service()
         try:
+            self.startup(client)
+            commands = "".join("DELETE -f " + path + "\r\n" for path in paths)
+            stage_new_file(client, script, (commands + "EMOS sdserve --fast /\r\n").encode("ascii"))
+            self.owned_paths.append(script)
+            client.rpc(11)
+        finally:
+            client.lock.close()
+        self.command(self.journal("cleanup-exec"), "EXEC " + script)
+        try:
+            client = wait_sd_service(self.url, self.journal("cleanup-result"), timeout=60,
+                                     require_fast=True)
+        except BaseException as error:
+            self.unsafe = True
+            raise UnsafeForeground("cleanup command file did not hand back; no additional input sent") from error
+        try:
+            self.check_boot()
             self.startup(client)
             for path in paths:
                 try:
@@ -310,8 +331,11 @@ class Session:
             client.rpc(11)
         finally:
             client.lock.close()
-        atomic_json(self.output / "support-cleanup.json", {"status": "verified", "removed": paths,
-                    "retained_results": [p for p in self.owned_paths if p not in paths]})
+        self.owned_paths = [p for p in self.owned_paths if p not in paths]
+        record = {"status": "verified", "removed": paths,
+                  "retained_results": self.owned_paths.copy()}
+        atomic_json(self.journal("cleanup-receipt"), record)
+        atomic_json(self.output / "support-cleanup.json", record)
 
     def verify_entry(self) -> None:
         # In particular, never repair modes after the terminal spoken cue: a

@@ -75,3 +75,22 @@ pass. Current production selection and immutable accepted archives stay intact.
    verifies whole archives in memory without extracting or executing them.
    Local archive/readback paths remain outside tracked reports. Future live
    identity/actuator/cue-file evidence cannot be manufactured from these checks.
+
+## Live preparation contract clarification — 2026-10-30
+
+The Author's ready-bench handoff establishes idle CLI availability; the host
+then obtains actual listener/read/EXIT evidence rather than asking for duplicate
+confirmation. The 128-KiB EMOS ROM and P4 application/bootloader/partition ranges
+can be compared read-only, without reflashing the accepted components.
+
+Ordinary filesystem command completion must not be inferred from acknowledged
+keyboard events. Cleanup now uses a separate explicit MOS EXEC command file,
+queues the fast listener after all owned-file deletions, and independently
+checks absence. The retained command file lives in results evidence; it is not
+deleted while MOS holds it open. Official
+[star commands](../../../../../agon-docs/docs/mos/Star-Commands.md#delete)
+document `DELETE -f`; pinned installed `agon-emos/src/mos.c` also automatically
+forces literal single-file deletion. Therefore confirmation is not established
+as the cause of the observed handback gap. Explicit `-f` makes the reviewed
+noninteractive intent clear; synchronous batch completion is the actual host
+coordination correction. Keep the unresolved failure evidence until diagnosed.

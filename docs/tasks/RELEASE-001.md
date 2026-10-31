@@ -356,3 +356,46 @@ are registered; one experimental linked-ELF harness is explicitly classified as
 requiring separate probe/native/ordinary images and a toolchain. Prior evidence
 is unchanged. Production selection/tag and the bounded Author visual review
 remain pending.
+
+## Physical preparation — 2026-10-30
+
+The Author releases a ready bench and clarifies that “bench is yours” establishes
+ready idle operation; duplicate foreground questions are unnecessary. Preparation
+retains the stop before full-suite invocation. No smoke/rendering/raw-sector
+workload has been invoked, and the accepted firmware is not replaced.
+
+1. Actual CLI execution is verified by repeated fast listener/startup-read/EXIT
+   exchanges. Startup remains the same 108 bytes; no startup write occurs.
+2. The complete current EMOS ROM matches the accepted padded v27 SHA-256
+   `84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79`.
+   Independent P4 prefix readback matches the exact r16 application SHA-256
+   `594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62`
+   and the retained bootloader/partition range. No flash write or erase occurs.
+3. The existing Agon USB RTS/Q4 circuit replaces the unproved GPIO pulse in the
+   private reset bridge configuration. The maintained helper verifies exact
+   adapter identity, uses exclusive ownership and releases both controls together.
+   The bridge produces a fresh admitted boot and actual CLI handback. P4's
+   separate reset command is preserved.
+4. The exact offline-built QSTATE and raw-SD binaries are staged/readback under
+   `/extender`, alongside the accepted speech player/WAV and a new command file
+   using `EMOS sdserve --fast /`. The listener's 22,968 bytes match its accepted
+   checksum-free v0.3.0 identity. The player is not invoked during preparation.
+5. Ordinary host-driven file commands exposed an unresolved command-handback
+   gap. Conservative keyboard pacing and synchronous MOS cleanup batches now
+   replace assumptions that event acknowledgement proves filesystem completion.
+   Temporary deletion remains restricted to verified session-owned names and
+   independently checked absence. One Agon-only recovery failed admission;
+   standing P4 clean-init then Agon reset restored actual CLI access. Preserve
+   informative evidence; do not claim a diagnosed firmware cause or full pass.
+6. Final setup-only mode/cleanup/CLI verification passes. Both displays retain
+   single-buffered mode0 and Legacy routing; the foreground listener is stopped,
+   input is admitted/neutral, no serial reader or reset hold remains, and all
+   identified temporary setup files are removed with independent absence checks.
+   The full 25-check suite, raw-sector workload, physical visual review,
+   production selection and annotated v0.2.1 tag remain unperformed.
+
+Machine-specific commands, readbacks, manifests and journals are retained in the
+ignored release preparation directory and current local bench record. The
+[portable preflight record](RELEASE-001/BENCH-PREPARATION-R01.json) records readiness
+without a qualification pass. The ignored release directory contains the prepared
+explicit Pi launch script; no invocation is queued or running.

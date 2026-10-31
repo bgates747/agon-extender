@@ -6,8 +6,9 @@ This directory owns formal qualification of an exact installed P4/EMOS pair.
 The native HDMI and browser-video profiles have explicit output oracles; neither
 can silently skip the other's checks. The runner never writes `/autoexec.txt`,
 flashes firmware or launches a test through reset. Host-only preparation is
-available while the bench is occupied. The revised physical path still needs
-live commissioning before it can be announced ready.
+available while the bench is occupied. The [combined native release preflight](../docs/tasks/RELEASE-001/BENCH-PREPARATION-R01.json)
+records verified live staging and CLI handback. The full suite remains uninvoked;
+readiness does not establish physical qualification.
 
 ## Qualification policy
 

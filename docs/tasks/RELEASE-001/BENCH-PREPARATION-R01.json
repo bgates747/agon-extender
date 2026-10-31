@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "artifact_id": "release-qualification-preparation-r01",
+  "status": "ready-for-author-invocation",
+  "recorded_at": "2026-10-31T01:17:00.427646+00:00",
+  "scope": "Physical preparation of the accepted native HDMI/USB P4 r16 and EMOS v27; no qualification workload invoked",
+  "preparation_started_at": "2026-10-31T00:44:29.878093+00:00",
+  "clock_note": "UTC host wall clock; preparation window includes host work, transfers, recovery and Author clarification; not a rendering timing or calibrated suite estimate",
+  "components": {
+    "p4": {
+      "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+      "application_bytes": 1786256,
+      "application_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+      "current_flash_readback_matches": true,
+      "retained_bootloader_partition_range_matches": true,
+      "clean_initialization_observed": true,
+      "flash_write_commands": 0
+    },
+    "emos": {
+      "build_id": "agon-emos-v0.1.27-b2026-10-26-01-06-54Z",
+      "ROM_bytes": 131072,
+      "ROM_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "current_full_ROM_matches": true,
+      "flash_write_commands": 0
+    },
+    "mainboard_vdp": {
+      "changed": false,
+      "fresh_flash_readback_performed": false
+    }
+  },
+  "staged_files": [
+    {
+      "fixture": "qstate",
+      "sd_path": "/extender/qualification-state-r01.bin",
+      "bytes": 10017,
+      "sha256": "2b30ae62c595595f3fe937e9b1ed0831ee293ab09a3f59b24d2f40be4c62b62b",
+      "independent_readback": true,
+      "workload_invoked": false
+    },
+    {
+      "fixture": "raw_sd",
+      "sd_path": "/extender/qualification-raw-sd-r02.bin",
+      "bytes": 10460,
+      "sha256": "f78e86653748b34f8c8945405affe7af3d070542b58806ec109196b2f1c442f8",
+      "independent_readback": true,
+      "workload_invoked": false
+    },
+    {
+      "sd_path": "/extender/attention.bin",
+      "bytes": 10436,
+      "sha256": "83db4034a6e955ca56a950f5650991a58a789416f2a81aef793471bc803ffcf2",
+      "independent_readback": true
+    },
+    {
+      "sd_path": "/extender/attention.wav",
+      "bytes": 54990,
+      "sha256": "4a91905c3a6d08143cc32d95d96329b7900917f735d48468ae8800e8d3971b17",
+      "independent_readback": true
+    },
+    {
+      "sd_path": "/extender/attention.txt",
+      "bytes": 60,
+      "sha256": "4106a7277611d434792c67379739d56d35a6835aa3468ea63b50108a5fa31969",
+      "independent_readback": true
+    },
+    {
+      "sd_path": "/emos/sdserve.bin",
+      "present": true,
+      "bytes": 22968,
+      "sha256": "04e7ef596a862b1a6b4f265b6c647e461ef0f65db4851873ac3dd31e4f03f10d"
+    }
+  ],
+  "entry": {
+    "route": "legacy",
+    "mainboard": {
+      "mode": 0,
+      "width": 640,
+      "height": 480,
+      "colors": 16
+    },
+    "extender": {
+      "mode": 0,
+      "width": 640,
+      "height": 480,
+      "colors": 16
+    }
+  },
+  "startup": {
+    "bytes": 108,
+    "sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "unchanged": true,
+    "writes": 0
+  },
+  "readiness": {
+    "actual_CLI_verified": true,
+    "keyboard_admitted_neutral": true,
+    "USB_controller_valid": true,
+    "checksum_free_listener_verified": true,
+    "commissioned_reset": "Agon USB RTS/Q4 through Pi bridge; exact adapter check and joined release",
+    "bridge_fresh_admission_and_actual_CLI": true,
+    "temporary_support_cleanup_verified": true,
+    "sequential_MOS_cleanup_and_queued_listener_verified": true,
+    "reset_controls_released": true,
+    "serial_readers_closed": true,
+    "final_listener_offline": true
+  },
+  "invoked": {
+    "full_suite": false,
+    "smoke_rendering_workloads": false,
+    "raw_sector_workload": false,
+    "spoken_player": false,
+    "setup_only_mode_query": true
+  },
+  "validation": {
+    "host_preparation_tests": 14,
+    "host_hardware_tests": 19,
+    "new_USB_reset_tests": 3,
+    "existing_reset_tests": 2,
+    "passive_serial_tests": 3,
+    "offline_inventory_tests": 3,
+    "offline_check_only": "passed; archive/source/fixture verification, no board contact",
+    "host_source_sha256": {
+      "scripts/reset_agon_usb.py": "19fd4577cdca0e1dc8000ba3a1904f21f544cc597becd96e2592671c7f72406f",
+      "scripts/hardware_validation.py": "6f83df613214f7e63b9b7f136cf5da14ad9872c5cd7a4603ea71d8234679f971",
+      "qualification/run.py": "d0cec90f935655acba731a42d73a60244d398c30d19d4803066640bd025f9672",
+      "qualification/lifecycle.py": "e9eb3027741b4984c553bf957048fcdaf805af0cc04324f90525ddbc4c00e646",
+      "qualification/notify.py": "1cf35bc64f671cd1480bd0f6bd95e5a2361b3093e7d53bac671c895c89df0871"
+    }
+  },
+  "limits": [
+    "The full 25-check/three-case suite is uninvoked; this is readiness, not qualification.",
+    "The ordinary-file-command handback failure is not diagnosed as a firmware defect. Corrected synchronous cleanup passed; informative evidence is retained.",
+    "One Agon-only recovery failed input admission; standing P4 initialization then Agon reset restored actual CLI access.",
+    "Manual graphics/HDMI observations, release selection and annotated v0.2.1 tag remain pending.",
+    "No comparable revised native-suite run exists for a calibrated completion estimate."
+  ],
+  "local_evidence": "Ignored release preparation directory and current machine-local bench record."
+}

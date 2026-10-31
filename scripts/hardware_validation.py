@@ -141,7 +141,11 @@ def type_line(url: str, journal: Path, line: str) -> dict:
             raise RuntimeError("Extender keyboard is not admitted and neutral")
         client.open(status)
         try:
-            client.send(text_events(line + "\n", status["locale"], status["caps"]))
+            # Event-drain acknowledgement is not MOS command completion. Pace
+            # text one character at a time to avoid bursting a whole CLI line
+            # into the mainboard's small input queue. Keep Enter separate.
+            for character in line + "\n":
+                client.send(text_events(character, status["locale"], status["caps"]))
         finally:
             if not client.state.get("pending"):
                 client.cancel()

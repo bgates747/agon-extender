@@ -42,3 +42,12 @@ the SD service, leaving the MOS prompt.
 Private build, deployment and execution receipts are retained under
 `agents/attention-audio-2026-09-14/`. Player SHA-256:
 `83db4034a6e955ca56a950f5650991a58a789416f2a81aef793471bc803ffcf2`.
+
+The current command file uses the accepted player and recording unchanged,
+followed by `EMOS sdserve --fast /`. Do not reuse the historical ordinary-listener
+LOAD/RUN batch: the current foreground listener is the EMOSlet, and all agent
+transfers require checksum-free fast protocol2. The cue does not select a mode
+or change startup. The coordinator selects Legacy with `--keep-display`, then
+verifies entry modes and returns from the queued listener. Installing/readback
+is separate from playing the cue; do not repeat speech while the Author is
+already present.

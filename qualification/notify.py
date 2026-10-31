@@ -44,7 +44,10 @@ def send(url: str, journal: Path, events: list[tuple[int, int]]) -> None:
         if EXPECTED_BOOT is not None and observed.get("boot") != EXPECTED_BOOT:
             raise RuntimeError("Agon reset before notification event dispatch")
         client.open(observed)
-        client.send(events)
+        # Same conservative CLI pacing as hardware_validation.type_line; a
+        # P4 event-drain receipt does not prove MOS consumed a whole text line.
+        for offset in range(0, len(events), 2):
+            client.send(events[offset:offset + 2])
         client.cancel()
     finally:
         client.lock.close()

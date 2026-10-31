@@ -87,7 +87,10 @@ prompt. Otherwise mount the SD on a host, back up `/autoexec.txt` under
 will be ready at the instant startup executes; readiness timeout is a failed
 bootstrap, not permission to continue typing blindly. Use the commissioned
 operator/recovery path to resolve it. No listener or display switch starts
-implicitly from this package. Any fixture video mode belongs only in startup.
+implicitly from this package. Fixture video modes belong to their appliances and
+Pi coordinator, with conditional selection, monitor settling and entry-mode
+restoration; test setup must never modify startup. See the
+[test lifecycle](procedures/test-appliances.md).
 
 I03 — Install the P4 only on the verified DevKit through its serial programming
 interface. Stop any serial observer. `p4/flash-layout.json` records esptool settings

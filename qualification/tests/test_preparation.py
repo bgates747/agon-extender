@@ -29,6 +29,31 @@ def digest(data):
 
 
 class PreparationTests(unittest.TestCase):
+    def test_missing_cleanup_handback_blocks_further_input(self):
+        with tempfile.TemporaryDirectory() as folder:
+            session = lifecycle.Session.__new__(lifecycle.Session)
+            session.url = "http://device"
+            session.output = Path(folder)
+            session.sequence = 0
+            session.unsafe = False
+            session.owned_paths = ["/extender/.owned.bin"]
+            client = mock.Mock()
+            session.service = mock.Mock(return_value=client)
+            session.startup = mock.Mock()
+            session.check_boot = mock.Mock()
+            with (mock.patch.object(lifecycle, "stage_new_file"),
+                  mock.patch.object(lifecycle, "type_line") as typed,
+                  mock.patch.object(lifecycle, "wait_sd_service", side_effect=TimeoutError)):
+                with self.assertRaises(lifecycle.UnsafeForeground):
+                    session.cleanup()
+                self.assertTrue(session.unsafe)
+                self.assertEqual(typed.call_count, 1)
+                self.assertTrue(typed.call_args.args[2].startswith(
+                    "EXEC /agents/extender/results/cleanup-"))
+                with self.assertRaises(lifecycle.UnsafeForeground):
+                    session.command(Path(folder) / "next.json", "ECHO must not dispatch")
+                self.assertEqual(typed.call_count, 1)
+
     def test_checked_transfer_fallback_is_rejected_before_connect(self):
         with mock.patch("sdcard.Client") as client, self.assertRaisesRegex(ValueError,"checksum-free"):
             lifecycle.wait_sd_service("http://device",Path("unused"),require_fast=False)
@@ -162,9 +187,19 @@ class PreparationTests(unittest.TestCase):
             elif line.startswith("VDU 22 "):
                 mode=int(line.split()[-1]);self.assertEqual(state['route'],'excom')
                 self.assertEqual(mode,entry_ext['mode']);state['ext']=entry_ext.copy()
-            elif line.startswith("DELETE "):files.pop(line.split()[1],None)
+            elif line.startswith("DELETE "):
+                self.assertTrue(line.startswith("DELETE -f /extender/."))
+                files.pop(line.split()[2],None)
             elif line.startswith("EXEC "):
                 script=files[line.split()[1]].decode()
+                if line.startswith("EXEC /agents/extender/results/cleanup-"):
+                    for cleanup_line in script.splitlines():
+                        if cleanup_line.startswith('DELETE '):
+                            self.assertTrue(cleanup_line.startswith('DELETE -f /extender/.'))
+                            files.pop(cleanup_line.split()[2],None)
+                        else:self.assertEqual(cleanup_line,'EMOS sdserve --fast /')
+                    state['online']=True
+                    return
                 args=next(x.split()[2:] for x in script.splitlines() if x.startswith("RUN . "))
                 if args[0]=='restore':
                     state['mb']=dict(zip(('mode','width','height','colors'),map(int,args[1:5])))

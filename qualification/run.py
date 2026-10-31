@@ -313,6 +313,8 @@ def output_profile(config: dict) -> str:
 
 def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
     """Exercise the installed P4, EMOS wire, browser assets and reset bridge."""
+    if ACTIVE_SESSION is None:
+        raise ValueError("installed-pair smoke requires its coordinated CLI session")
     output.mkdir(parents=True, exist_ok=False)
     url = config["extender_url"]
     started = time.monotonic()
@@ -397,6 +399,7 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
         client = wait_sd_service(url, output / "sd.json")
         passed("mainboard-sd-service")
         target = "/extender/.qualification-" + uuid.uuid4().hex + ".bin"
+        ACTIVE_SESSION.owned_paths.append(target)
         payload = (receipt["component_commit"] + "\n" + receipt["artifact_sha256"] + "\n").encode()
         try:
             announce("RUN mainboard-sd-round-trip")
@@ -408,28 +411,11 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
         finally:
             client.lock.close()
 
-        # The production listener predates directory capability 0x20, so its
-        # wire protocol cannot remove even a single file. Use MOS's independent
-        # file command, then restart the listener to verify absence remotely.
+        # The listener lacks directory operations. Queue MOS cleanup and its
+        # following listener together; key delivery is not FAT completion.
         announce("RUN mainboard-sd-cleanup")
-        type_line(url, output / "keyboard-delete.json", "DELETE " + target)
-        delete_barrier = capture_text(url)
-        (output / "screen-after-delete.txt").write_text(delete_barrier)
-        type_line(url, output / "keyboard-cleanup-sd.json", "EMOS sdserve --fast /")
-        cleanup = wait_sd_service(url, output / "sd-cleanup.json")
-        try:
-            from sdcard import RemoteError
-            try:
-                cleanup.download(target)
-            except RemoteError as error:
-                if error.status != 6:
-                    raise
-            else:
-                raise RuntimeError("MOS DELETE left the temporary qualification file present")
-            cleanup.rpc(11)
-            passed("mainboard-sd-cleanup")
-        finally:
-            cleanup.lock.close()
+        ACTIVE_SESSION.cleanup([target])
+        passed("mainboard-sd-cleanup")
         announce("RUN final-startup-recovery")
         final = bridge_reset(config, url, output / "final-reset")
         if not final.get("ready") or not final.get("physical_neutral"):

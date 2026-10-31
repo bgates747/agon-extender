@@ -90,6 +90,29 @@ not proof that a workload completed.
 
 ## Host reset command
 
+The machine-local bench record selects the commissioned actuator. Do not assume
+that a formerly working Pi GPIO circuit is still connected. An Agon Light2
+USB-serial RTS/Q4 circuit can provide the same shared eZ80/mainboard-VDP reset;
+it is independent of P4 USB and does not replace either processor's firmware.
+For that commissioned alternative, use:
+
+```sh
+.venv/bin/python scripts/reset_agon_usb.py --config "$USB_RESET_CONFIG" \
+  --verify-url "$EXTENDER_URL"
+```
+
+The private JSON records `stable_port` under `/dev/serial/by-id` and an exact
+`udev` map containing `ID_VENDOR_ID`, `ID_MODEL_ID` and `ID_PATH`. The helper
+checks identity before opening, requires exclusive serial ownership, asserts
+RTS for 100 ms and releases DTR/RTS together, including handled interruption.
+Its verified form requires a fresh admitted neutral input epoch. Actual CLI
+execution still requires the separate listener/read/EXIT exchange. No serial
+bytes, retry or application replay occurs. A reset bridge can select this fixed
+argv instead of the GPIO command; keep its separate P4 command unchanged.
+
+The following command remains the Pi GPIO implementation. Use it only when
+the current local record identifies that physical circuit as commissioned.
+
 From the Extender checkout, after confirming reset authorization and the current
 bench state:
 
@@ -123,8 +146,8 @@ input admission separately. Do not replay an uncertain pulse automatically.
 ## Browser button through the bench Pi
 
 The header's top-right **Reset Agon** button uses `scripts/reset_bridge.py` on the Pi;
-P4 only serves the UI. The bridge executes the same maintained 100 ms actuator
-pulse described above. A confirmation precedes the request, browser keyboard
+P4 only serves the UI. The bridge executes the locally selected maintained
+100 ms GPIO or USB RTS actuator pulse described above. A confirmation precedes the request, browser keyboard
 capture is released, and the operator captures again after boot. Successful reset adds no status text to the layout; failures use a dialog.
 Exit fullscreen to access this header control. Neither page
 load nor video reconnection requests a reset. No automatic retry occurs.
