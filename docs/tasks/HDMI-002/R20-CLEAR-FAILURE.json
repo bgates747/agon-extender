@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "status": "rejected-physical-regression",
+  "build_id": "indexed-hdmi-r20-b2026-10-31-19-20-13Z",
+  "source_commit": "8687f542441ca3784acc7e706136ef45014229e0",
+  "app_sha256": "5eca39c4014e04a0c2e8b8b9fa9f926fea6a52257c6699fd205a8755bbcccf12",
+  "app_bytes": 1789552,
+  "installation_verified": true,
+  "flash_after_sha256": "bf13cbcd475adfd7a8e3a7d213f88e5e253f9c6b7855d69dae27d70c7eb97cdc",
+  "refill_guard_us": 1600,
+  "cursor_host_regression": "PASS actual retained methods and old-source negative control at120Hz; not optical proof",
+  "scaled_sink_host_regression": "PASS; not physical filtering/geometry proof",
+  "failures": [
+    {
+      "id": "targeted-r20",
+      "planned_cases": 12,
+      "completed_cases": 1,
+      "failed_case": "case-02-from-96-to-3",
+      "phase": "return to96, clear, text and glyph prompt readback; mode3 idle had passed",
+      "duration_seconds": 102.46833460599737,
+      "rolling": {
+        "frames": 11264,
+        "faults": 2,
+        "late": 1,
+        "over_budget": 1,
+        "underruns": 1,
+        "refill_max_us": 2164,
+        "copy_max_us": 1629,
+        "queue_wait_max_us": 528,
+        "invalid_blocks": 0,
+        "sequence_errors": 0,
+        "cache_errors": 0,
+        "overlap": 0
+      }
+    },
+    {
+      "id": "wide-isolation-r01",
+      "planned_cycles": 4,
+      "completed_cycles": 1,
+      "failed_step": "c1-cleared96",
+      "phase": "3-to96 selection and0.5s dwell passed; fault immediately after VDU12",
+      "duration_seconds": 18.044363818997226,
+      "rolling": {
+        "frames": 6354,
+        "faults": 1,
+        "late": 0,
+        "over_budget": 1,
+        "underruns": 1,
+        "refill_max_us": 1634,
+        "copy_max_us": 1558,
+        "queue_wait_max_us": 156,
+        "invalid_blocks": 0,
+        "sequence_errors": 0,
+        "cache_errors": 0,
+        "overlap": 0
+      }
+    }
+  ],
+  "unperformed": [
+    "all320-mode physical cases",
+    "complete paired suite",
+    "raw-sector I/O",
+    "Author optical cursor/scaler review"
+  ],
+  "recovery": {
+    "order": "oneAgon reset fails; P4 clean initialization thenAgon reset; actualCLI verified",
+    "startup_unchanged": true,
+    "startup_bytes": 108,
+    "startup_sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "actual_CLI_exchanges": 2,
+    "actual_CLI_duration_seconds": 5.882736557003227,
+    "P4_app_unchanged_after_recovery": true
+  },
+  "preserved_components": [
+    "EMOSv27",
+    "mainboardVDP",
+    "normalstartup",
+    "r19rollback",
+    "allDMAguards"
+  ],
+  "clock": "host monotonic seconds, not independently calibrated; P4 refill/copy/queue counters in microseconds are cumulative maxima, not necessarily same operation",
+  "evidence": [
+    {
+      "path": "agents/release001/cursor-mode8-r01/build-review.json",
+      "sha256": "96a306e45d237a977803afa995fd4e3fd5633430e8c2429682a1dc9dc971f2fd"
+    },
+    {
+      "path": "agents/release001/cursor-mode8-r01/install-r20/flash-verification.json",
+      "sha256": "864ee968a668e0709e1a775d8e0be4bdf43be731adfb55c8c9509cda153a8c9c"
+    },
+    {
+      "path": "agents/release001/cursor-mode8-r01/targeted-r20/result.json",
+      "sha256": "c94085a56dd4ccab9eec0742a001116a562e705c99b9f17182ec42e95e734dc4"
+    },
+    {
+      "path": "agents/release001/cursor-mode8-r01/wide-isolation-r01/result.json",
+      "sha256": "ea239e921ffcc9759a47522b72753971d5289172913f804df9527391a3cb862d"
+    },
+    {
+      "path": "agents/release001/cursor-mode8-r01/recovery-wide-clear-cli/receipt.json",
+      "sha256": "8550425622e98a4aaed1f9bcaaef4a6155a1522f661038b9268b442d0e02f2fc"
+    }
+  ],
+  "next": "r21 tests existing SDK interruptible task writeback; source hypothesis pending physical proof"
+}

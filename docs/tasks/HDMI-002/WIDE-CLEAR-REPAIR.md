@@ -8,6 +8,9 @@ scanout. Keep all1600µs/DMA guards, cursor/scaler changes and rollback evidence
 
 ## Evidence and bounded research
 
+The [portable r20 failure record](R20-CLEAR-FAILURE.json) retains exact build,
+installation, counters, completed recovery and original evidence hashes.
+
 1. Installed r20 source8687f542/app5eca39c4 passes build/readback/CLI/startup.
    Case1 completes96→3→96; case2 keeps mode3 healthy but faults after returning
    to96, clearing and printing/reading a prompt:2164µs refill,1629µs copy,
