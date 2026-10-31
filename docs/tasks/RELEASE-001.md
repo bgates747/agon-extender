@@ -433,3 +433,19 @@ failure verdict was submitted visibly. That separate recovery-notification
 receipt does not rewrite the original summary's blocked notification/restoration
 or turn this attempt into a qualification pass. Human hearing/pixels are not
 claimed from the host receipt.
+
+## Runner repair and repeat qualification authorized — 2026-10-30
+
+The Author directs the agent to do whatever is needed to make the tests work,
+rather than stop at the first infrastructure failure. This explicitly authorizes
+bounded setup diagnostics, host-runner corrections and fresh complete invocations.
+Preserve uncertain raw-I/O evidence and its no-blind-replay boundary, normal
+startup, accepted firmware identities and the final manual-review gate.
+
+EMOS source confirms startup can admit Extender input before CD/LOAD and the
+final prompt. Add a bounded two-second startup allowance before the first CLI
+command, while still requiring actual listener/read/EXIT proof. Characterize
+that gate physically; delay alone is never a pass. Also place the raw fixture's
+LOAD/RUN inside one explicit MOS command file so MOS orders them synchronously.
+Fix subsequent demonstrated infrastructure issues and continue through the
+complete suite; do not mark a partial or recovered run qualified.

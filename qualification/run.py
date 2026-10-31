@@ -533,6 +533,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     completion_token = uuid.uuid4().hex[:16].upper()
     completion_marker = "A10-RP04 COMPLETE " + completion_token
     target = "/extender/.raw-sd-" + completion_token + ".bin"
+    launch_script = "/extender/.raw-sd-" + completion_token + ".txt"
     atomic_json(output / "completion-contract.json", {
         "schema": 1, "token": completion_token, "completion_marker": completion_marker,
         "launch": "explicit CLI RUN; never boot/reset",
@@ -556,8 +557,10 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
             if error.status != 6:
                 raise
         stage_new_file(client, target, binary.read_bytes())
+        stage_new_file(client, launch_script,
+                       (f"LOAD {target}\r\nRUN . {completion_token}\r\n").encode("ascii"))
         if ACTIVE_SESSION:
-            ACTIVE_SESSION.owned_paths.append(target)
+            ACTIVE_SESSION.owned_paths.extend((target, launch_script))
         client.rpc(11)
     finally:
         client.lock.close()
@@ -567,8 +570,9 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     type_line(url, output / "keyboard-clear.json", "VDU 12")
     # The marker is printed by the fixture after every raw operation has ended.
     # Do not use an ECHO/prompt before RUN as proof of post-RUN handback.
-    type_line(url, output / "keyboard-load.json", "LOAD " + target)
-    type_line(url, output / "keyboard-run.json", "RUN . " + completion_token)
+    # MOS orders LOAD completion before RUN. Keyboard delivery cannot prove a
+    # preceding file load returned; early RUN characters can otherwise be lost.
+    type_line(url, output / "keyboard-run.json", "EXEC " + launch_script)
     try:
         text = wait_screen(
             url, lambda text: marker_followed_by_prompt(text, completion_marker),

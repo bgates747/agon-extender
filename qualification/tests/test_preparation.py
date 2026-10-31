@@ -29,6 +29,21 @@ def digest(data):
 
 
 class PreparationTests(unittest.TestCase):
+    def test_post_reset_startup_allowance_precedes_actual_CLI_proof(self):
+        with tempfile.TemporaryDirectory() as folder:
+            session = lifecycle.Session.__new__(lifecycle.Session)
+            session.boot = 1
+            session.config = {}
+            session.output = Path(folder)
+            session.sequence = 0
+            events = []
+            session.check_boot = lambda: events.append("epoch checked")
+            session.verify_startup = lambda: events.append("actual CLI/read/EXIT")
+            with mock.patch.object(lifecycle.time, "sleep", side_effect=lambda n: events.append(n)):
+                session.after_reset({"boot": 2})
+            self.assertEqual(events, [2.0, "epoch checked", "actual CLI/read/EXIT"])
+            self.assertEqual(session.route, "legacy")
+
     def test_missing_cleanup_handback_blocks_further_input(self):
         with tempfile.TemporaryDirectory() as folder:
             session = lifecycle.Session.__new__(lifecycle.Session)
@@ -277,7 +292,11 @@ class PreparationTests(unittest.TestCase):
             def rpc(self,op):assert op==11
         def type_line(url,path,line):
             commands.append(line)
-            if line.startswith("RUN . ") and completes:files["/agents/extender/results/a10-rp04.txt"]=result
+            if line.startswith("EXEC /extender/.raw-sd-"):
+                script = files[line.split()[1]].decode()
+                self.assertEqual(script.splitlines(), [
+                    "LOAD /extender/.raw-sd-"+token+".bin", "RUN . "+token])
+                if completes:files["/agents/extender/results/a10-rp04.txt"]=result
         def screen(*args,**kwargs):
             if not completes:raise TimeoutError("fixture is still active")
             return "A10-RP04 COMPLETE "+token+"\n/ *\n"
@@ -299,8 +318,9 @@ class PreparationTests(unittest.TestCase):
                         runner.run_fwbug008(config,{},Path(folder)/"out")
                     self.assertEqual(service.call_count,1)
         self.assertNotIn("/autoexec.txt",writes)
-        self.assertEqual(sum(line.startswith("RUN . ") for line in commands),1)
-        if not completes:self.assertTrue(commands[-1].startswith("RUN . "))
+        self.assertEqual(sum(line.startswith("EXEC /extender/.raw-sd-") for line in commands),1)
+        self.assertFalse(any(line.startswith(("LOAD ", "RUN . ")) for line in commands))
+        if not completes:self.assertTrue(commands[-1].startswith("EXEC /extender/.raw-sd-"))
 
     def test_archived_dirty_source_is_verified_without_claiming_clean_commit(self):
         with tempfile.TemporaryDirectory() as folder:

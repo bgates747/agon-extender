@@ -236,6 +236,20 @@ class Session:
         if status["boot"] == self.boot:
             raise RuntimeError("reset did not produce a fresh admission epoch")
         self.boot, self.route = status["boot"], "legacy"
+        # EMOS admits Extender input inside normal startup, before later CD/LOAD
+        # commands and the final prompt. Keys injected during LOAD can be lost.
+        # This bounded allowance is for the reviewed setup-only startup, never
+        # a completion claim: the actual listener/read/EXIT below must pass.
+        settle = self.config.get("reset_settle_seconds", 2.0)
+        if isinstance(settle, bool) or not isinstance(settle, (int, float)) or not 2 <= settle <= 30:
+            raise ValueError("reset_settle_seconds must be between 2 and 30")
+        started = time.monotonic()
+        time.sleep(settle)
+        self.check_boot()
+        atomic_json(self.journal("post-reset-settling"), {
+            "boot": self.boot, "minimum_seconds": settle,
+            "elapsed_seconds": time.monotonic() - started,
+            "clock": "host monotonic seconds; startup allowance, not CLI proof"})
         # Fresh service/read/EXIT, not a ready flag or serial mirror, proves CLI.
         self.verify_startup()
 

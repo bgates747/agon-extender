@@ -18,5 +18,6 @@
     "esptool": "/absolute/path/to/esptool.py",
     "flash_bytes": 16777216
   },
-  "output_profile": "native-hdmi"
+  "output_profile": "native-hdmi",
+  "reset_settle_seconds": 2
 }

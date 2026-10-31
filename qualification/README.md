@@ -123,6 +123,12 @@ The legacy `reset_config`/flasher fields remain in the shared config for other
 owner tools; this runner's resets use the configured bridge and fresh boot plus
 an actual listener/read/EXIT handback.
 
+After fresh input admission, the runner allows `reset_settle_seconds` (default2,
+range2–30) for the reviewed normal startup before typing its first CLI command.
+Admission can precede startup's remaining LOAD commands. This allowance is not
+CLI proof: the following listener/read/EXIT must still succeed. Fixture LOAD/RUN
+commands execute together in a separate MOS batch, never as early host keystrokes.
+
 Only after the physical preflight above, replace `--check-only` with
 `--bench-ready` in the command. That flag records the operator's completed
 preflight; it does not perform or authorize firmware deployment. Do not supply

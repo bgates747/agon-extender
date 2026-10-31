@@ -94,3 +94,18 @@ forces literal single-file deletion. Therefore confirmation is not established
 as the cause of the observed handback gap. Explicit `-f` makes the reviewed
 noninteractive intent clear; synchronous batch completion is the actual host
 coordination correction. Keep the unresolved failure evidence until diagnosed.
+
+## Reset/command coordination repair — 2026-10-30
+
+The installed EMOS boot flow initializes EMOS, executes normal startup, then
+enters `mos_input`. Startup's Extender admission command can therefore precede
+its CD/LOAD and final prompt. The runner now allows two seconds after fresh
+admission, checks the epoch again and still requires a complete fast listener/
+startup read/EXIT. The allowance is a reviewed setup safeguard, not a claim of
+arbitrary load completion. Its host trace is retained separately.
+
+Official star-command documentation specifies sequential EXEC commands. The raw
+fixture now launches through a unique command file containing LOAD then RUN;
+MOS orders load completion, rather than the host inferring it from keyboard
+acknowledgements. Its existing post-I/O token/prompt and verified sector restore
+remain mandatory. No startup mutation, protocol checksum or firmware addition.
