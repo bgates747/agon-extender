@@ -41,6 +41,17 @@ EXPERIMENTAL_BENCH_ID = re.compile(r"bench-009-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0
 SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py",
                 "scripts/p4_board.py", "scripts/p4_ppa_clut.py", "scripts/p4_usb_host.py")
 
+ROLLING_SDK_OVERRIDES = {
+    "CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL": "0",
+    "CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL": "32768",
+    # HDMI-002 wide-clear: pinned IDF 5.5.5 otherwise masks interrupts for the
+    # whole C2M writeback, which can starve the 1600us strip-refill deadline.
+    # Reuse its task chunker; ISR refills read PSRAM and write separate SRAM.
+    # Reassess if an ISR starts writing these PSRAM planes or the SDK changes.
+    "CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS": "y",
+    "CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN": "0x4000",
+}
+
 
 def check_parallel_qualification_identity(build_id: str, selected: bool,
         boot: bool, probe: bool, profile: str, board: str, output: str, data_check: bool = False, exext_stream: bool = False) -> bool:
@@ -783,9 +794,7 @@ def main() -> None:
         # RTOS objects and peripheral DMA in internal memory. Preserve the32KiB
         # reserve and three strip slots. This changes placement, not stock VDU
         # semantics or the libstdc++ mutex policy. See HDMI-002 memory results.
-        config = apply_sdk_overrides(config, {
-            "CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL":"0",
-            "CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL":"32768"})
+        config = apply_sdk_overrides(config, ROLLING_SDK_OVERRIDES)
     sdkconfig = output / "sdkconfig"
     # HDMI02-M02c: diagnose the allocation itself before an unchecked upstream
     # mutex constructor fails later in destruction. This is not a runtime fix.

@@ -35,6 +35,20 @@ def fail(message: str) -> None:
     raise SystemExit(f"native P4 validation FAIL: {message}")
 
 
+def check_rolling_cache_config(lines: list[str]) -> None:
+    """Require the candidate task writeback quantum in actual SDK macros."""
+    macros = dict(line[len("#define "):].split(None, 1)
+                  for line in lines if line.startswith("#define CONFIG_") and len(line.split()) == 3)
+    if macros.get("CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS") != "1":
+        fail("rolling scanout requires interruptible task C2M writeback")
+    try:
+        quantum = int(macros.get("CONFIG_ESP_MM_CACHE_MSYNC_C2M_CHUNKED_OPS_MAX_LEN", ""), 0)
+    except ValueError:
+        fail("rolling C2M writeback quantum is missing or malformed")
+    if quantum != 0x4000:
+        fail("rolling scanout requires the recorded 16KiB C2M quantum")
+
+
 def check_usb_hcd_derivative(upstream: Path, derivative: Path) -> None:
     if hashlib.sha256(upstream.read_bytes()).hexdigest() != USB_HCD_UPSTREAM_SHA256:
         fail("USB HCD upstream identity changed")
@@ -391,6 +405,8 @@ def main() -> None:
                         fail(f"silicon bounds differ in {config}")
             config_lines = (output / "sdkconfig").read_text().splitlines()
             compiled_config = (output / "build/config/sdkconfig.h").read_text().splitlines()
+            if args.rolling_scanout:
+                check_rolling_cache_config(compiled_config)
             if args.controller_input:
                 if "#define CONFIG_LWIP_MAX_SOCKETS 16" not in compiled_config:
                     fail("controller composition requires the recorded 16-socket ceiling")
