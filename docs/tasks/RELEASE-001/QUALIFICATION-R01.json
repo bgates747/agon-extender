@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "artifact_id": "native-release-qualification-r01",
+  "run_id": "RELEASE-001-2026-10-31-01-19-17Z",
+  "status": "infrastructure-failure",
+  "qualification_state": "not-qualified",
+  "full_suite_invoked": true,
+  "output_profile": "native-hdmi",
+  "host_commit": "32f22f225e1f569125c5f1dc465270b119a84534",
+  "started_at": "2026-10-31-01-19-17Z",
+  "ended_at": "2026-10-31-01-21-45Z",
+  "clock": "host monotonic seconds; operational timing, not independently calibrated",
+  "preparation_seconds": 104.87973817600869,
+  "total_runner_seconds": 147.73642070501228,
+  "total_job_seconds": 149.7809414129879,
+  "checks": {
+    "pass": 1,
+    "required": 25
+  },
+  "cases": [
+    {
+      "id": "installed-p4-integrated-smoke",
+      "applies_to": [
+        "p4",
+        "emos"
+      ],
+      "status": "infrastructure-error",
+      "error": "UnsafeForeground('listener handback was not established; foreground uncertain')",
+      "foreground_unsafe": true,
+      "checks": [
+        {
+          "id": "p4-web-assets",
+          "status": "pass"
+        }
+      ],
+      "started_at": "2026-10-31-01-21-02Z",
+      "ended_at": "2026-10-31-01-21-45Z",
+      "total_case_seconds": 42.84856765400036
+    },
+    {
+      "id": "a10-rp06-mode-transaction",
+      "applies_to": [
+        "p4"
+      ],
+      "status": "blocked",
+      "blocked_by": [
+        "installed-p4-integrated-smoke"
+      ],
+      "error": "prerequisite physical case did not pass"
+    },
+    {
+      "id": "a10-rp04-raw-sd-write",
+      "applies_to": [
+        "emos"
+      ],
+      "status": "blocked",
+      "blocked_by": [
+        "installed-p4-integrated-smoke",
+        "a10-rp06-mode-transaction"
+      ],
+      "error": "prerequisite physical case did not pass"
+    }
+  ],
+  "paired_component_identities": {
+    "p4": {
+      "target": "p4",
+      "component_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+      "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+      "artifact_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+      "installed_readback_sha256": "5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833",
+      "source": {
+        "kind": "clean-build-archive",
+        "base_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+        "dirty": false,
+        "files_verified": 5533,
+        "archive_sha256": "919084436b7e26be23036c1b521543e30604bd2c5ae25c0a76c33e497a89e405",
+        "inventory_sha256": "a08bdcfc4914dc577d212ad5efed91141120a1587af767f0443dc25413713f39"
+      },
+      "verification_scope": "retained-installation"
+    },
+    "emos": {
+      "target": "emos",
+      "component_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+      "build_id": "agon-emos-v0.1.27-b2026-10-26-01-06-54Z",
+      "artifact_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "installed_readback_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "source": {
+        "kind": "archived-patch",
+        "base_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+        "dirty": true,
+        "files_verified": 557,
+        "archive_sha256": "70eee01c830f9d1e98cbaad596f256589e05de09b8a4a7926d8673a3d88f96d0",
+        "inventory_sha256": "92d82b9f68e20a2f8ded9f74d998ba77d6aa7e49b82ea7181b378b8e7792bccc"
+      },
+      "verification_scope": "retained-installation"
+    }
+  },
+  "startup": {
+    "bytes": 108,
+    "sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "unchanged_before_reset_and_after_recovery": true,
+    "writes": 0
+  },
+  "raw_sector_workload_invoked": false,
+  "raw_sector_write_attempted": false,
+  "firmware_flashed": false,
+  "mode_case_invoked": false,
+  "automated_restoration": {
+    "status": "blocked",
+    "reason": "unsafe foreground",
+    "duration_seconds": 1.648004399612546e-06
+  },
+  "notification": {
+    "status": "skipped",
+    "reason": "unsafe-mainboard-foreground",
+    "blocked_by": [
+      "installed-p4-integrated-smoke"
+    ],
+    "detail": "No reset or keyboard input was sent after ambiguous fixture completion"
+  },
+  "recovery": {
+    "order": "After the suite Agon reset failed actual CLI handback, reset P4, verify clean initialization, then reset Agon once.",
+    "P4_clean_initialization_seconds": 5,
+    "actual_CLI_verified": true,
+    "listener_read_EXIT_exchanges": 2,
+    "foreground_listener_offline": true,
+    "keyboard_ready_and_neutral": true,
+    "USB_controller_valid": true,
+    "qualification_replayed": false,
+    "source_or_firmware_changed": false
+  },
+  "evidence_sha256": {
+    "original_runner_summary": "8c7a2761123889a10824fc537acacf0cddde5da4851351b1c4632b7c7a770fd8",
+    "job_result": "760bf6e999e16a51313a2255561087382d42f72c009ad2ef1522325fb7d48231",
+    "recovery_CLI_receipt": "224ca634ca74dbaeaceec559cdce81bc12d4c52e6090e1c5089f0a087b2a3cc4",
+    "post_recovery_notification": "b260a4ae9699dd2a48a25b1728ede033298d8f8cea492309e0c8c98037b385be"
+  },
+  "finding": "Fresh input admission was observed after the Agon reset, but the following CLI listener command did not produce a service handback. The firmware/host cause is unresolved.",
+  "research_note": "The installed boot sequence can admit Extender input before remaining startup commands finish. Input readiness is not proof of CLI readiness; this is a candidate explanation, not a diagnosed cause.",
+  "next_boundary": "Correct and verify reset-to-CLI coordination, then explicitly invoke a fresh complete suite; no automatic replay of this attempt.",
+  "private_evidence": "Retained ignored release run directory and current machine-local bench record.",
+  "post_recovery_notification": {
+    "status": "success",
+    "label": "Firmware qualification infrastructure failure",
+    "duration_seconds": 21.788622514985036,
+    "attention_listener_exited": true,
+    "proof": "accepted keyboard event stream acknowledged; human hearing and Legacy pixels remain operator observations",
+    "original_run_summary_rewritten": false
+  }
+}

@@ -7,8 +7,10 @@ The native HDMI and browser-video profiles have explicit output oracles; neither
 can silently skip the other's checks. The runner never writes `/autoexec.txt`,
 flashes firmware or launches a test through reset. Host-only preparation is
 available while the bench is occupied. The [combined native release preflight](../docs/tasks/RELEASE-001/BENCH-PREPARATION-R01.json)
-records verified live staging and CLI handback. The full suite remains uninvoked;
-readiness does not establish physical qualification.
+records verified live staging and CLI handback. The
+[first native full invocation](../docs/tasks/RELEASE-001/QUALIFICATION-R01.json)
+stopped at the post-reset actual-CLI gate: 1/25 checks, remaining cases blocked.
+Readiness and recovery do not establish physical qualification.
 
 ## Qualification policy
 

@@ -51,13 +51,16 @@ preserved_companions:
   mainboard_vdp: Preserved F060; no new payload or replacement selected.
 qualification:
   procedure: ../../qualification/run.py
-  outcome: null
-  state: Offline exact retained receipts and native-profile runner/fixtures prepared;
-    live identity/reset/cue preflight, deployment and authorized complete canonical
-    qualification remain pending.
+  outcome: infrastructure-failure
+  state: 'First complete native invocation stopped at post-reset actual CLI/listener
+    handback: 1/25 checks, remaining mode/raw-sector cases blocked. Paired recovery
+    restored CLI; no test replay. Reset-to-CLI correction and a fresh explicit full
+    suite remain pending.'
   source_audit_is_hardware_qualification: false
-  clean_emos_receipt_limit: Current v27 came from a preserved uncommitted patch;
-    archive/inventory and full retained ROM verify, without a clean-source claim.
+  clean_emos_receipt_limit: Current v27 came from a preserved uncommitted patch; archive/inventory
+    and full retained ROM verify, without a clean-source claim.
+  latest_attempt: ../../docs/tasks/RELEASE-001/QUALIFICATION-R01.json
+  latest_attempt_sha256: 4b353ce5fa721d47e4bec4d4702d5b97ce73af89bc1b49f6e938a099bf428e43
 promotion:
   current_selection: ../current.yaml
   state: Version and source integration resolved; canonical qualification and full

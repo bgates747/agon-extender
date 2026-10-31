@@ -399,3 +399,37 @@ ignored release preparation directory and current local bench record. The
 [portable preflight record](RELEASE-001/BENCH-PREPARATION-R01.json) records readiness
 without a qualification pass. The ignored release directory contains the prepared
 explicit Pi launch script; no invocation is queued or running.
+
+## First complete native invocation — 2026-10-30
+
+The Author says “go” after readiness. The agent explicitly invokes the full
+three-case suite at host commit32f22f22. The
+[retained result](RELEASE-001/QUALIFICATION-R01.json) is an infrastructure failure,
+with 1/25 checks passed: browser assets. Complete EMOS ROM verification passed
+during preparation. The Agon bridge reset produced fresh admitted input, but
+the following actual CLI listener command did not establish service handback.
+The mode and raw-sector cases were blocked; no raw write, fixture workload,
+firmware flash, startup write, automatic test replay or production promotion
+occurred. The original summary remains frozen.
+
+The standing second recovery step (P4 clean initialization, then Agon reset)
+restored actual CLI access, proven by two listener/read/EXIT exchanges and exact
+startup readbacks. The foreground listener is stopped and input is admitted and
+neutral; no reader, reset hold or suite job remains active. Automatic suite
+restoration/notification was blocked, not claimed successful after recovery.
+
+The remaining immediate task is to correct reset-to-CLI coordination. Keep
+admission separate from actual CLI readiness: installed startup can select
+Extender input before subsequent CD/LOAD commands return, and the keyboard guide
+already documents lost early characters during MOS commands. This is a candidate
+explanation; the current evidence does not diagnose the cause. Preserve the
+normal startup and exact accepted firmware, and require actual command handback
+before advancing. A corrected host gate still needs a fresh explicit full-suite
+invocation; the failed run must not be silently resumed or relabelled passed.
+
+After independent recovery established actual CLI access, the accepted failure
+notification played once, its queued fast listener exited, and the infrastructure
+failure verdict was submitted visibly. That separate recovery-notification
+receipt does not rewrite the original summary's blocked notification/restoration
+or turn this attempt into a qualification pass. Human hearing/pixels are not
+claimed from the host receipt.
