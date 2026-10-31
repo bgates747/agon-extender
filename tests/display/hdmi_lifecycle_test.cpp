@@ -16,7 +16,7 @@ extern "C" void strip_probe_read(strip_probe_stats *p){*p={};}
 extern "C" void strip_fault_read(strip_fault_stats *p){*p={};}
 extern "C" unsigned agon_scanout_front(){return hdmi_host::front;}
 extern "C" void agon_scanout_reset(){hdmi_host::faults=0;}
-bool agon_scanout_stage(fabgl::P4Rgb888Controller *,unsigned i,int,int){hdmi_host::staged=i;return true;}
+bool agon_scanout_stage(fabgl::P4Color64Controller *,unsigned i,int,int){hdmi_host::staged=i;return true;}
 void agon_scanout_commit(){}
 
 template<class F> void await(F condition) {

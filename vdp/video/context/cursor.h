@@ -393,6 +393,9 @@ inline void Context::enableCursor(uint8_t enable) {
 }
 inline void Context::hideCursor() {
 	AGON_STOCK_NATIVE_GUARD;
+	// FWBUG-013: count idle display frames from actual command dispatch, not
+	// from transport bytes. Extender control envelopes never enter this path.
+	idleFrameCount = 0;
 	// Temporarily hide the cursor if it's visible
 	if (!cursorTemporarilyHidden && (textCursorSprite != nullptr) && textCursorSprite->visible) {
 		textCursorSprite->visible = false;

@@ -87,8 +87,9 @@ publication at column zero. If they differ, assign the producer-side behavior
 to EMOS before altering EDP rendering.
 
 F13-06 [ ] Construct the smallest deterministic fixture that distinguishes
-coordinate from transition history. Follow the current rule that `/autoexec.txt`
-selects the fixture video mode; the fixture must not switch modes itself.
+coordinate from transition history. Follow the current test-appliance protocol:
+record entry mode, switch only if needed, settle at least one second, restore
+entry mode and CLI; never modify `/autoexec.txt`.
 
 F13-07 [ ] Complete AUDIT-010 review and then place any correction in its
 itemized repair plan. Retest ordinary prompt editing, all screen edges, cursor
@@ -118,3 +119,48 @@ broken.
 
 F13-N02 — Do not mask the symptom by forcing a redraw or restarting the flash
 timer on every input event until the responsible contract and actor are known.
+
+## Renewed Author report and bounded repair — 2026-10-31
+
+The Author confirms r19's96→3 repair and other mode changes work, but the
+physical HDMI cursor does not flash until a character is typed. This authorizes
+investigation/correction under the current operation procedures, superseding
+the old filing-only/audit scheduling boundary. Keep EMOSv27, onboard VDP,
+normal startup and exact r19 rollback unchanged; no added processor-link
+integrity work or new display timing.
+
+1. Official docs f9806bd3 record VDU23,1 show/steady/flash and text-cursor
+   behavior. Read-only VDPv2.16.0 c7ac293d and MOSv3.0.2 83364093 remain clean.
+   Stock processNext hides the cursor for every input command and resets idle
+   accounting on pending input; Context restores it after three idle frames.
+2. Exact installed EMOSv27 source archive70eee01c (557 verified inputs, patched
+   base9844ecf3) shows mos_editor.c calling emos_admission_idle only for an
+   empty top-level CLI line. emos_admission.c emits VDU23,0,F6 polling through
+   the EMOS-owned UART at keyboard-clock cadence. A nonempty line stops polling.
+   That explains typed/backspace/arrow asymmetry without a coordinate defect.
+   Keep this owner/source distinct from the later EMOS development checkout.
+3. P4 processNext currently treats those file/control envelopes as display
+   activity: hideCursor suppresses flashing and repeated polls prevent the
+   three-idle-frame restoration. Classify at existing VDU/VDU23/video dispatch
+   boundaries, defer suppression until the subcommand is known, and exempt
+   the existing Extender F6/F7 control envelopes. Actual drawing resets display
+   idle accounting; control traffic does not. Retain ordinary hide/show,
+   flash timing, graphics-cursor exclusion and processor pause behavior.
+4. Reproduce with actual retained cursor/idle/processNext bodies under a
+   controlled host stream/tick clock; include old-source negative control,
+   120Hz control traffic, text/backspace/arrow returns, continuous drawing,
+   cursor disabled/steady and wrapping tick arithmetic. Refresh only the
+   necessary stale host seams before reusing HDMI lifecycle/scaler checks.
+5. Prepare a clean r19-based P4 candidate with only this repair and the
+   existing320×240 scaler selection restored. Compare every compiled/config
+   delta, preserve full readback/rollback, install only the P4 application,
+   verify actual CLI/startup and re-run targeted transitions/full qualification.
+   Do not claim an optical cursor pass from command receipts or host fields;
+   actual Author HDMI review remains required. No emulator is needed.
+
+The companion mode8 observation belongs to HDMI-002: both accepted r16 and
+repair r19 omit AGON_EXTENDER_HDMI_PPA_320, so320×240 is centered unscaled in
+684×384. The existing reviewed scaler selects848×480 and composes all overlays
+before a2× PPA scale to640×480. Restore that explicit selection, not another
+scaling algorithm or a logical-mode change. Preserve r19's early renderer join
+and1600µs scanout guard.

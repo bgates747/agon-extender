@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r200
-updated_at: 2026-10-31T18:48:54Z
+registry_revision: r201
+updated_at: 2026-10-31T19:17:19Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -43,11 +43,12 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r19
+    latest_identity: indexed-hdmi-r20
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
+      - r20 is the authorized follow-up candidate: classify display activity after VDU23 subcommands so F6/F7 controls do not suppress the cursor; restore the existing320x240 PPA scaler selection. Retain r19 renderer join, exact dual USB and1600us guard. Host old-source starvation reproduces and repair/scaler checks pass; build/hardware/visual proof pending.
       - r19 matches exact accepted r16 composition with one early-worker-join source repair. Application-only installation/full-readback,16 targeted mode3 transitions and canonical native25/25 paired checks pass2026-10-31; actual Author visual retry/acceptance and successor production binding remain. r17/r18 were rejected offline and never installed.
       - r18 was rejected offline for selecting the optional320 scaler absent from accepted r16; never installed. Source repair is unchanged in corrected r19.
       - r17 was rejected offline for missing accepted sw-visible-snapshot/overlay-BGR selections; never installed. The same early worker-join source repair is physically qualified in corrected r19; guards remain unchanged.

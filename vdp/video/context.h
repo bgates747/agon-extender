@@ -258,7 +258,7 @@ class Context {
 		}
 #endif
 		void setWaitForFrames(uint8_t frames);
-		bool checkForVSYNC(bool hasPendingCommands);
+		bool checkForVSYNC();
 
 		// Cursor management functions
 		void doCursorFlash();
@@ -1343,13 +1343,12 @@ void Context::setWaitForFrames(uint8_t frames) {
 	setProcessorState(VDUProcessorState::WaitingForFrames);
 }
 
-bool Context::checkForVSYNC(bool hasPendingCommands) {
-	if (hasPendingCommands) {
-		idleFrameCount = 0;
-	}
+bool Context::checkForVSYNC() {
+	// FWBUG-013: UART control polling is not drawing activity. hideCursor()
+	// resets this count only after the dispatcher identifies a display command.
 	if (_VGAController->frameCounter != lastFrameCounter) {
 		lastFrameCounter = _VGAController->frameCounter;
-		if (!hasPendingCommands & processorState == VDUProcessorState::Active) {
+		if (processorState == VDUProcessorState::Active) {
 			if (idleFrameCount <= 3) {
 				idleFrameCount++;
 			}
