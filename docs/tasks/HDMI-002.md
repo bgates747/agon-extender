@@ -1193,3 +1193,26 @@ owned support cleanup pass. Final read-only observation advances15 DMA frames
 in0.27host seconds with zero faults; keyboard neutral/admitted, F310 valid,
 listener offline. Startup unchanged; no firmware flash, serial reader, hold or
 running suite remains. The failure and recovery evidence are retained separately.
+
+### Author confirms minimal transition and post-fault route stall — 2026-10-31
+
+The [manual reproduction](HDMI-002/MODE3-AUTHOR-R01.json) confirms96→3 fails
+without the six preceding automated controls. The Author can briefly issue
+`EMOS LEGACY` via the paste dialogue, then reports full display/CLI
+unresponsiveness after returning to ExCom. Neither board had been reset when
+the agent captures live state: mode3, halted DMA frame47722, refill1938µs,
+copy1426µs, queue510µs, budget fault2 and one underrun. HTTP status/controller
+service still responds and keyboard status says ready; these do not prove a
+usable MOS CLI or establish which blocking wait is responsible.
+
+The first Agon reset does not establish fresh admission; a subsequent actual
+CLI attempt also fails. P4 reset/clean initialization5s then Agon reset restores
+actual listener/read/EXIT twice and unchanged startup. P4 mode0/Legacy CLI and
+cursor commands restored, final DMA advances16frames/0.27s with zero faults;
+keyboard neutral/admitted, controller valid, listener offline. No firmware,
+startup or SD writes, raw-sector work or test replay occurs.
+
+The proposed renderer-join candidate remains unimplemented. Its validation must
+also cover route handling after a contained scanout fault: an HTTP ready flag
+must not be treated as CLI recovery, and an ExCom re-entry that cannot complete
+must not silently strand ordinary input. Preserve the original fault guards.
