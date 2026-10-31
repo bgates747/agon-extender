@@ -228,12 +228,12 @@ keyboard/controller result. Source integration is already present in exact
 r16/source5f8ef; no conflict justifies the conditional v0.2.2 fallback. Preserve
 older evidence and the v0.1.0 tag; do not produce a separate v0.2.0 release.
 
-R01-U04 [ ] Adapt exact paired qualification receipts and complete the canonical
-installed-hardware suite under separately authorized bench scope. The current
-EMOSv27 artifact came from an archived uncommitted patch; preserve its exact
-bytes/provenance rather than fabricating a clean-input receipt. The legacy suite
-must also be reviewed against current startup/no-CRC requirements before reuse.
-Feature acceptance and the bounded viewer pass do not replace this gate.
+R01-U04 [ ] Complete live preflight and the canonical installed-hardware suite
+under separately authorized bench scope. Exact retained paired receipts and
+startup/fast-transfer/HDMI-profile runner preparation now pass offline. EMOSv27
+retains its archived-patch provenance, not a fabricated clean-input receipt.
+Fresh physical identities, commissioned reset/cue support and fixture deployment
+remain prerequisites. Feature acceptance and host checks do not replace this gate.
 
 R01-U05 [ ] Once those concrete gates pass, select the verified native combination
 in production/current.yaml, complete production docs, commit, create the agreed v0.2.1
@@ -283,7 +283,7 @@ mainboard is active, and Extender is completely offline. Do not contact either
 board, deploy fixtures, open serial, reset, flash or invoke hardware tests in
 this tranche. Preparation is not a claim that the physical suite is ready.
 
-1. [ ] **Adapt the Pi runner and its manifest.** Remove all startup writes and
+1. [x] **Adapt the Pi runner and its manifest offline.** Remove all startup writes and
    reset-launched tests; use explicit CLI invocation and preserve startup as
    read-only evidence. Enforce checksum-free fast transfers, conditional mode
    selection, at least one-second settling and entry route/mode/CLI restoration.
@@ -293,7 +293,7 @@ this tranche. Preparation is not a claim that the physical suite is ready.
    it. Bind reset commands to the commissioned actuator and require fresh boot
    plus actual command/service handback; do not infer execution from ready flags
    or an absent serial mirror. Verify these changes offline before any bench use.
-2. [ ] **Bind exact paired installation evidence.** Adapt qualification receipts
+2. [x] **Bind exact retained paired installation evidence.** Adapt qualification receipts
    for the accepted P4 r16 and unchanged EMOS v27 without rebuilding or flashing
    merely to fit an old receipt schema. Retain byte-level installation evidence,
    exact source closure and honest archived-patch provenance for EMOS. Resolve
@@ -319,3 +319,40 @@ this tranche. Preparation is not a claim that the physical suite is ready.
    commit, then create/push the agreed annotated v0.2.1 tag. Preserve immutable
    accepted archives and rollback; no tag or production selection before these
    gates pass.
+
+## Offline preparation result — 2026-10-30
+
+The runner/receipt/fixture preparation is implemented and verified without
+contacting either board. [Preparation research](RELEASE-001/QUALIFICATION-PREPARATION.md)
+bounds the contracts; [offline results](RELEASE-001/OFFLINE-PREPARATION.json)
+records exact hashes and validation scope. The [canonical guide](../../qualification/README.md)
+is the current procedure. These results do not close R01-U04's physical gate.
+
+The supported physical entry is an independently verified idle Legacy CLI with
+single-buffered modes. QSTATE obtains fresh mainboard mode data, and the Pi
+restores both display modes and the entry route. Native HDMI has an explicit
+DMA/text/mode profile; browser-video keeps decoded-frame coverage. Startup is
+read-only in both the coordinator and rebuilt raw-SD app. The EMOS fixture fix
+is committed in its owner as 29434e3; no resident EMOS source/build changed.
+
+Retained schema-2 receipts validate the exact accepted P4 app/full readback and
+EMOS full ROM plus source closure (5,533 P4 files; 557 EMOS files and the
+archived patch). They explicitly do not establish live identity now. The physical
+run additionally compares the current complete EMOS ROM. The P4 current-identity
+preflight must establish that its accepted installation evidence still applies;
+no reflash is required merely to obtain a receipt.
+
+When the bench is released, remaining preparation is actual paired identity/CLI
+verification, reset-bridge actuator commissioning, accepted cue-file review
+(fast listener; no mode/startup change), and fixture deployment/readback. Do not
+use --bench-ready until those prerequisites are complete. Then stop and announce
+readiness before the full suite's invocation, preserving the Author's reserved
+invocation boundary. Current bench remains occupied with Extender fully offline.
+
+The separate cadence runner is disabled pending its own lifecycle migration;
+that migration and a new performance campaign are not this release's gates.
+The existing host inventory is reconciled: 43 omitted no-argument host checks
+are registered; one experimental linked-ELF harness is explicitly classified as
+requiring separate probe/native/ordinary images and a toolchain. Prior evidence
+is unchanged. Production selection/tag and the bounded Author visual review
+remain pending.

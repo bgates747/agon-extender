@@ -1,100 +1,165 @@
 # Firmware qualification authority
 
-This directory is the sole maintained executable authority for accepting an
-Extender P4 or EMOS firmware revision. Historical task fixtures and scripts are
-evidence and research inputs, not acceptance suites. Compatibility launchers
-under `scripts/` may delegate here but contain no qualification logic.
+## Executive summary
 
-## Acceptance policy
+This directory owns formal qualification of an exact installed P4/EMOS pair.
+The native HDMI and browser-video profiles have explicit output oracles; neither
+can silently skip the other's checks. The runner never writes `/autoexec.txt`,
+flashes firmware or launches a test through reset. Host-only preparation is
+available while the bench is occupied. The revised physical path still needs
+live commissioning before it can be announced ready.
 
-An installed Extender/EMOS combination is eligible for Author acceptance only
-when the flash tool has produced verified receipts for both exact installed
-components and one invocation of `qualification/run.py` records all of the
-following against those receipts:
+## Qualification policy
 
-1. every `acceptance_required` case in `manifests/hardware.json` whose
-   `applies_to` includes the flashed component passes on the installed boards;
-2. the runner restores ordinary startup and admitted neutral keyboard state;
-3. the durable summary identifies the flashed artifact and exact source commit,
-   case results, elapsed times, and notification outcome; and
-4. the Author completes any separately declared manual cases, including loaded-
-   asset mode switches, before accepting a revision whose changes intersect
-   those cases.
+1. Preserve verified installation evidence for both exact images. The offline
+   `installation.py` adapter checks the artifact against the independent full
+   readback, build manifest and complete source archive/inventory. For P4 it also
+   compares the full preimage outside the application erase sectors. EMOS can
+   honestly identify an archived patch; its base commit alone is not its source.
+   These schema-2 receipts prove retained installation, not the current board.
+2. Before hardware invocation, the operator establishes exclusive bench access,
+   a verified idle **Legacy** CLI with admitted neutral input, current paired
+   identities, the commissioned reset bridge, required directories and the
+   accepted Legacy spoken-cue files. The current physical recipe supports only
+   single-buffered entry modes. It fails for double-buffered entries rather than
+   silently substitute a mode or claim that a final swap makes future typing live.
+3. One complete `run.py` invocation must pass all 25 automated checks across
+   three mandatory cases, restore both saved modes and the entry Legacy route,
+   preserve startup byte-for-byte, verify temporary support-file cleanup and
+   complete its spoken/visible notification. Startup is read-only evidence.
+4. The Author then completes all manual cases declared by the output profile.
+   `review.py` binds those actual observations to the exact complete run and its
+   summary hash. Automated success is labelled `awaiting-author-review`; a
+   targeted `--case` run cannot qualify firmware. Feature acceptance already
+   recorded remains evidence, not a substituted full-suite pass.
 
-Offline source regression remains a separate development gate in `offline.py`;
-it is not rerun by installed-firmware qualification and cannot substitute for
-it. Build, emulator, browser-simulation, flash-write, boot-identity, and
-human observations remain distinct evidence. No zero-hardware run may report
-firmware qualification success. A flash receipt proves installation; it does
-not substitute for installed-hardware qualification.
+Builds, host simulations, retained installation proof and physical observations
+remain distinct. No zero-hardware command reports hardware qualification. The
+separate `offline.py` source suite is a development gate, not a replacement for
+this installed-pair run. Historical task fixtures are evidence, not launchers.
 
-## Layout
+## Required physical coverage
 
-| Path | Authority |
-|---|---|
-| `run.py` | Installed-firmware acceptance runner |
-| `performance.py` | Separate installed P4 application/video cadence runner; not an acceptance substitute |
-| `offline.py` | Separate pinned-source development regression runner |
-| `notify.py` | Terminal spoken cue and durable visible verdict |
-| `manifests/offline.json` | Complete maintained host/browser/build inventory |
-| `manifests/hardware.json` | Applicable mandatory physical cases and drivers |
-| `config.example.json` | Tracked schema for the ignored bench configuration |
-| `tests/` | Structural tests for this qualification authority |
+| Case | Checks | Common coverage |
+|---|---:|---|
+| Integrated P4/EMOS smoke | 13 | Browser assets/reset bridge, actual CLI/readmission, Legacy/ExCom, text/display status, profile output oracle, checksum-free SD round trip, cleanup and ordinary boot |
+| Mode transaction | 7 | Committed modes 8→20→8, profile-specific second sequence, normal boot/handback |
+| Raw SD API | 5 | Separately pinned fixture, verified staging, unique completion token plus later MOS prompt, guarded write/read/restore, unchanged startup |
 
-The full default run currently requires 25 independently reported checks across
-three physical cases. The integrated P4 case exercises actual browser assets and
-reset bridge, Agon reset/readmission, Legacy and ExCom routing, keyboard input,
-display status, text capture, three fresh decoded WebSocket video frames, an
-exact mainboard-SD round trip, independently verified cleanup, and final startup
-recovery. WebSocket acquisition retains but discards queued transition geometry,
-then requires three distinct frames matching the committed display status. The
-RP06 P4 case exercises mode 8→20→8 first without a browser
-client and then while retaining one browser-video WebSocket, checking committed
-status and decoded frame geometry at every edge. The EMOS case builds its
-receipt-bound fixture, stages it with restoration safeguards, exercises real
-raw-sector write/read/restore with independent CRC oracles, observes a unique
-ExCom start marker, then requires its unique post-I/O completion token and a
-returned MOS prompt before starting its result listener and restoring the
-original startup file. If completion is absent, only that run's start marker
-followed by a later prompt permits recovery input; a bare prompt or retained
-framebuffer content is not a foreground oracle. A missing prerequisite, receipt
-or check fails closed.
+| Output profile | Output and mode oracles | Required Author review |
+|---|---|---|
+| `browser-video` | Three fresh decoded WebSocket frames; second 8→20→8 sequence retains a video connection and checks decoded geometry | Representative loaded assets, mode switch and visible clean exit |
+| `native-hdmi` | Valid carrier/DMA clock and advancing frame-complete count with zero fault counters; second 96→20→96 sequence requires fresh rendered text/prompt and DMA progress at every edge; no `/video` request | Loaded assets/mode switch/exit, plus physical aspect, centering, colours and motion in representative standard20/wide96 modes |
 
-QUAL-003 and QUAL-004 remain provenance for broad graphics and exact paired-
-pixel testing. Their private adapters, diagnostic mainboard firmware, and
-historical payloads are not silently executed as routine acceptance tests.
-Reusable cases must be promoted here with current setup, cleanup, and exact
-oracles before they become mandatory.
+HDMI counters prove scanout progress and fault status, not the pixels on a
+monitor. Late/over-budget counters are retained diagnostic measurements; DMA
+fault, underrun, block/sequence/cache/overlap errors fail the automated check.
+Keep keyboard and controller attached for the bounded combined-build review;
+credit the existing accepted controller exercise. This is not the full rendering
+or performance campaign and does not qualify every mode/controller or hotplug.
 
-## Invocation
+The raw-sector case is destructive within a narrowly guarded region: the app
+requires an MBR proving sector2 precedes the first partition, retains its preimage,
+then restores through MOS's independent C dispatch and verifies every byte. Its
+local buffer CRC summaries are SD test oracles, not processor-link checksums.
+The Pi launches LOAD/RUN explicitly only after confirmed mode3 and settling. It
+waits for the app's unique post-I/O completion token followed by a MOS prompt
+before starting the result listener. Missing completion, changed boot identity
+or unverified restoration blocks input, notification and subsequent cases; no
+reset or retry is inferred from a timeout.
+
+## Offline preparation
+
+Use the repository virtualenv and fresh output paths:
 
 ```sh
+.venv/bin/python qualification/installation.py \
+  --spec /absolute/path/to/installation-spec.json \
+  --output /absolute/path/to/retained-installation.json
+
+.venv/bin/python qualification/build_fixtures.py \
+  --emos-source /absolute/path/to/agon-emos \
+  --toolchain /absolute/path/to/agondev \
+  --output /absolute/path/to/fresh-fixture-build
+
 .venv/bin/python qualification/run.py \
-  --flash-receipt /absolute/path/to/p4-flash-receipt.json \
-  --flash-receipt /absolute/path/to/emos-flash-receipt.json
+  --config /absolute/path/to/private-config.json \
+  --flash-receipt /absolute/path/to/p4-retained-installation.json \
+  --flash-receipt /absolute/path/to/emos-retained-installation.json \
+  --fixtures /absolute/path/to/fresh-fixture-build/fixtures.json \
+  --check-only
 ```
 
-The default run requires one verified receipt for each component. `--case` is
-reserved for targeted diagnostics and cannot establish full acceptance. The
-runner owns its documented board resets, temporary
-qualification SD file, cleanup, and terminal notification. It never flashes.
+`installation-p4.example.json` and `installation-emos.example.json` show the
+portable input shapes. The installation specification names the exact component/build, artifact,
+independent readback, installation evidence and source archive/inventory/build
+manifest, with hashes for every input. P4 additionally names its preimage,
+application offset and erase range; dirty EMOS source additionally names its
+patch and archive prefix. All paths stay in ignored machine-local records.
+`installation.py --help` and the active release's retained local specifications
+provide the concrete inputs. Revalidation checks those bytes again when the
+runner loads a receipt; it never stamps a patch as clean or rebuilds firmware.
 
-The separate performance runner also requires both verified receipts, but it
-does not replace the mandatory acceptance suite:
+The fixture builder copies exact source inputs to its own output, builds a fresh
+QSTATE mode-query/restoration app and the maintained EMOS raw-SD fixture, and
+records source/binary hashes. Old startup-writing binaries/sources are refused.
+The fixture source is independent of the older installed EMOS source snapshot;
+its documented MOS API compatibility is reviewed separately. It never deploys.
+
+`--check-only` validates receipts, source closure, fixture inputs, output profile
+and case plan without constructing a live session or contacting either board.
+It explicitly reports `hardware_ready:false`. No human-review emulator is started.
+
+## Later hardware invocation and handback
+
+Read the [operation protocols](../docs/procedures/README.md) and local bench
+record first. Copy `config.example.json` to an ignored private record and select
+`output_profile` explicitly. Verify the installed browser reset bridge's actual
+actuator; the canonical run does not assume the historical Pi GPIO pulse works.
+The legacy `reset_config`/flasher fields remain in the shared config for other
+owner tools; this runner's resets use the configured bridge and fresh boot plus
+an actual listener/read/EXIT handback.
+
+Only after the physical preflight above, replace `--check-only` with
+`--bench-ready` in the command. That flag records the operator's completed
+preflight; it does not perform or authorize firmware deployment. Do not supply
+it while the bench is occupied or foreground/identities/reset are unresolved.
+The runner then verifies current full EMOS ROM bytes, deploys/readbacks its own
+unique support files, saves both modes, and invokes the cases explicitly.
+Normal reset cannot launch or resume any test.
+
+QSTATE uses supported MOS mode queries, bounded waits and ordinary file APIs.
+The Pi waits for a listener queued *after* QSTATE returns; keyboard acceptance
+alone does not prove completion. The Pi preselects P4 modes only when needed and
+waits at least one second after committed status, including restoration.
+At terminal notification, the runner verifies that the accepted player preserved
+entry modes; it does not clear the new cue with a mode repair. The cue command
+file must use the checksum-free fast listener and must not change modes/startup.
+
+The durable summary records paired identities including source-archive
+provenance, individual results, start/end and host-monotonic durations,
+restoration and notification. Case durations include staging/retrieval and are
+not rendering timings. Preparation, cases, restoration and notification have
+separate accounting; there is no calibrated ETA for this revised native suite.
+Retained historical durations are not reset or collection deadlines.
+
+For actual Author observations, write a schema-1 review document containing
+`author_statement` and `cases`, with one `status:"pass"`/`observations` entry for
+every declared manual case. Never prefill passes. Bind it after the full run:
 
 ```sh
-.venv/bin/python qualification/performance.py \
-  --flash-receipt /absolute/path/to/p4-flash-receipt.json \
-  --flash-receipt /absolute/path/to/emos-flash-receipt.json
+.venv/bin/python qualification/review.py \
+  --run /absolute/path/to/completed-run \
+  --review /absolute/path/to/actual-author-review.json
 ```
 
-Keep ordinary browser video disconnected. The runner supplies its own controlled
-video consumer for the observer-present half of each matched pair and reports
-application updates/s separately from delivered frames/s. Empty controls use
-the current 60-Hz request cap; Nurples adds the retained 30-Hz comparison. Each
-application sample spans 30 seconds of MOS wall time. Nurples starts only after
-loading and gameplay initialization; a post-sample white frame bounds the same
-30-second host receive window without including loading or result cleanup. The
-optional video-work counter endpoint strengthens no-video cases when present;
-its absence is recorded and leaves browser disconnection as an operator-owned
-precondition rather than rejecting an otherwise measurable firmware image.
+The new `author-review.json` retains the summary hash; it does not rewrite the
+original evidence or update production selection/tagging.
+
+## Separate performance work
+
+`performance.py` retains its historical analysis/build helpers. Its old physical
+coordinator and direct case entry point are disabled because they rewrote startup
+and launched through reset. They must be migrated before hardware reuse. This
+migration and another performance campaign are not v0.2.1 qualification gates.
+Broad graphics/pixel studies remain separately scoped historical evidence.

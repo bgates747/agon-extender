@@ -4,32 +4,44 @@
   "cases": [
     {
       "id": "installed-p4-integrated-smoke",
-      "applies_to": ["p4", "emos"],
+      "applies_to": [
+        "p4",
+        "emos"
+      ],
       "receipt_target": "p4",
       "required_checks": 13,
       "driver": "installed-p4-smoke",
       "acceptance_required": true,
       "destructive": false,
       "timeout_seconds": 180,
-      "description": "Exercise the installed browser assets and reset bridge, Agon reset/readmission, live ExCom keyboard and renderer text capture, display status, P4/EMOS SD round trip, and final startup restoration."
+      "description": "Browser assets/reset, actual CLI/input, Legacy/ExCom, display status/text, profile-specific output progress, fast SD round trip/cleanup and ordinary boot; startup never written."
     },
     {
       "id": "a10-rp06-mode-transaction",
-      "applies_to": ["p4"],
+      "applies_to": [
+        "p4"
+      ],
       "receipt_target": "p4",
-      "depends_on": ["installed-p4-integrated-smoke"],
+      "depends_on": [
+        "installed-p4-integrated-smoke"
+      ],
       "required_checks": 7,
       "driver": "rp06-mode-transaction",
       "acceptance_required": true,
       "destructive": false,
       "timeout_seconds": 180,
-      "description": "Prove mode 8 to mode 20 to mode 8 commits with no browser client and with one retained browser-video connection, then restore ordinary startup."
+      "description": "8/20/8 without browser video, then profile-specific retained-video 8/20/8 or native HDMI 96/20/96 with text/DMA oracles; entry modes/Legacy route restored by suite lifecycle."
     },
     {
       "id": "a10-rp04-raw-sd-write",
-      "applies_to": ["emos"],
+      "applies_to": [
+        "emos"
+      ],
       "receipt_target": "emos",
-      "depends_on": ["installed-p4-integrated-smoke", "a10-rp06-mode-transaction"],
+      "depends_on": [
+        "installed-p4-integrated-smoke",
+        "a10-rp06-mode-transaction"
+      ],
       "required_checks": 5,
       "driver": "fwbug008-physical",
       "acceptance_required": true,
@@ -37,5 +49,20 @@
       "timeout_seconds": 180,
       "description": "Prove RST 08h raw SD write effects on MBR-proven pre-partition sector 2, observe a per-run completion token after all raw I/O ends, then restore and verify the exact preimage through the independent C dispatch."
     }
-  ]
+  ],
+  "output_profiles": {
+    "browser-video": {
+      "automated_output_oracle": "Three decoded WebSocket frames; 8/20/8 with browser absent and retained connection present.",
+      "manual_cases": [
+        "loaded-assets-mode-switch-and-exit"
+      ]
+    },
+    "native-hdmi": {
+      "automated_output_oracle": "Committed 8/20/8 modes, then 96/20/96 with fresh glyph/prompt and HDMI DMA progress, carrier and zero fault counters. No browser video requested. Physical pixels are not inferred from counters.",
+      "manual_cases": [
+        "loaded-assets-mode-switch-and-exit",
+        "native-hdmi-visual"
+      ]
+    }
+  }
 }

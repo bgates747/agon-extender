@@ -7,10 +7,16 @@
   "builder_repository": "/absolute/path/to/mos-agondev",
   "fab_root": "/absolute/path/to/fab-agon-emulator",
   "p4": {
-    "ssh": ["ssh", "-o", "BatchMode=yes", "bench-host"],
+    "ssh": [
+      "ssh",
+      "-o",
+      "BatchMode=yes",
+      "bench-host"
+    ],
     "stable_port": "/dev/serial/by-id/EXACT-P4-IDENTITY",
     "usb_serial": "EXPECTED-SERIAL",
     "esptool": "/absolute/path/to/esptool.py",
     "flash_bytes": 16777216
-  }
+  },
+  "output_profile": "native-hdmi"
 }

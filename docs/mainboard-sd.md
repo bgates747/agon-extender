@@ -147,7 +147,8 @@ The argument is the absolute allowed filesystem root. `/` permits whole-card
 development. These services have no authentication; use only on a trusted LAN.
 The installation owner chooses the root explicitly. The no-argument default
 is `/extender/sdtest`, which confines access to that test directory. A root change requires stopping and restarting the application.
-Video mode belongs in startup; the service does not switch modes.
+The service preserves the active video mode. Test appliances and Pi runners
+follow the [mode lifecycle](procedures/test-appliances.md); they never modify startup.
 
 Escape stops the service and returns to its caller, preserving an unfinished
 stage. If invoked from EXEC/autoexec, remaining batch commands may run; return

@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-31T00:29:40.020934+00:00",
+  "status": "offline-preparation-verified",
+  "hardware_contacted": false,
+  "firmware_or_startup_changed": false,
+  "physical_suite_invoked": false,
+  "hardware_ready": false,
+  "paired_retained_installations": {
+    "p4": {
+      "build_id": "indexed-hdmi-r16-b2026-10-30-22-37-38Z",
+      "component_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+      "artifact_bytes": 1786256,
+      "artifact_sha256": "594a15e73aa1480a59e2007de080de7fd7dcd96f8a0f04382037e740ff979a62",
+      "installed_readback_sha256": "5cb76ba565557991593558d9771b08c6b2af90c4f61d6f175b185d721aa93833",
+      "source": {
+        "kind": "clean-build-archive",
+        "base_commit": "5f8ef676e3cf4982d009f1fd6a0f00887be34198",
+        "dirty": false,
+        "files_verified": 5533,
+        "archive_sha256": "919084436b7e26be23036c1b521543e30604bd2c5ae25c0a76c33e497a89e405",
+        "inventory_sha256": "a08bdcfc4914dc577d212ad5efed91141120a1587af767f0443dc25413713f39"
+      },
+      "verification_scope": "retained-installation"
+    },
+    "emos": {
+      "build_id": "agon-emos-v0.1.27-b2026-10-26-01-06-54Z",
+      "component_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+      "artifact_bytes": 131072,
+      "artifact_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "installed_readback_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+      "source": {
+        "kind": "archived-patch",
+        "base_commit": "9844ecf38fde59d157b9006da2ca74ea59348710",
+        "dirty": true,
+        "files_verified": 557,
+        "archive_sha256": "70eee01c830f9d1e98cbaad596f256589e05de09b8a4a7926d8673a3d88f96d0",
+        "inventory_sha256": "92d82b9f68e20a2f8ded9f74d998ba77d6aa7e49b82ea7181b378b8e7792bccc"
+      },
+      "verification_scope": "retained-installation"
+    }
+  },
+  "fixture_builds": {
+    "qstate": {
+      "bytes": 10017,
+      "sha256": "2b30ae62c595595f3fe937e9b1ed0831ee293ab09a3f59b24d2f40be4c62b62b",
+      "source_files": {
+        "Makefile": "750921cddbe3ec9265149cc0fbe0e678914fbddf2c2924344808295ca721de67",
+        "src/main.cpp": "8ed62e30fd9ecdfb09d39f54f8209a130b86774de3d64f93870f208132c87476",
+        "src/mos_io.asm": "831bb311f42b513bd0c4d2c016e70097e4360b830ff22ef2143122a1d8886fd4"
+      },
+      "owner_commit": "cd41e93e732e1b63a4eb7fcd1d15a55818fda751",
+      "source_state": "exact copied inputs; commit alone may have local preparation changes"
+    },
+    "raw_sd": {
+      "bytes": 10460,
+      "sha256": "f78e86653748b34f8c8945405affe7af3d070542b58806ec109196b2f1c442f8",
+      "source_files": {
+        "Makefile": "a4122e66d101ab44b142f8df9831b8b1ebbf0735db6ce8a9be6f51bbb0d1b0a8",
+        "src/get_control.asm": "c393181f583c648e2079ebdf2ad68e3f1e0df9eb36a8c3309807db59d6e523e4",
+        "src/main.c": "9bb2f81b75bd9a88f9dfd855ac5e6cd6a24ec06fe2d194cab8a9784c842205bb"
+      },
+      "owner_commit": "29434e309bafde7bd628398ee886dfbf2566899e",
+      "source_state": "exact copied inputs; commit alone may have local preparation changes"
+    }
+  },
+  "validation": {
+    "host_commands_passed": 52,
+    "host_commands_failed": 0,
+    "commands": [
+      "qualification/tests/test_hardware.py",
+      "qualification/tests/test_offline.py",
+      "qualification/tests/test_performance.py",
+      "qualification/tests/test_preparation.py",
+      "tests/browser_paste_ui_test.py",
+      "tests/browser_reset_ui_test.py",
+      "tests/console_stream_progress_test.py",
+      "tests/console_uart_owner_test.py",
+      "tests/hdmi_browser_ui_test.py",
+      "tests/hdmi_build_test.py",
+      "tests/hdmi_candidates_test.py",
+      "tests/p4_block_coordinator_test.py",
+      "tests/p4_board_test.py",
+      "tests/p4_native_payload_test.py",
+      "tests/p4_parallel_data_check_test.py",
+      "tests/p4_transport_reset_test.py",
+      "tests/p4_uart_parking_test.py",
+      "tests/p4_valid_counter_test.py",
+      "tests/parallel_admission_test.py",
+      "tests/parallel_block_control_test.py",
+      "tests/parallel_boot_release_test.py",
+      "tests/parallel_control_test.py",
+      "tests/parallel_handover_test.py",
+      "tests/parallel_native_coordinator_test.py",
+      "tests/parallel_probe_gateway_test.py",
+      "tests/parallel_probe_moslet_test.py",
+      "tests/parallel_probe_results_test.py",
+      "tests/parallel_reverse_test.py",
+      "tests/parallel_session_test.py",
+      "tests/parallel_vdu_stream_test.py",
+      "tests/static_conversion_analysis_test.py",
+      "tests/test_controller_clock.py",
+      "tests/test_controller_input.py",
+      "tests/test_controller_pipeline.py",
+      "tests/test_controller_probe.py",
+      "tests/test_controller_udp.py",
+      "tests/test_controller_usb.py",
+      "tests/test_dw_gdma_lifetime.py",
+      "tests/test_flash_firmware_commit.py",
+      "tests/test_p4_boot_guard.py",
+      "tests/test_parlio_rx_descriptors.py",
+      "tests/test_passive_serial.py",
+      "tests/test_reset_agon.py",
+      "tests/test_reset_bridge.py",
+      "tests/test_sd_service.py",
+      "tests/test_sdcard_client.py",
+      "tests/test_usb_dma_cache.py",
+      "tests/test_usb_dual_host.py",
+      "tests/test_usb_ep0_task_logging.py",
+      "tests/test_usb_host_component.py",
+      "tests/test_usb_ls_registers.py",
+      "tests/usb_fsls_build_test.py"
+    ],
+    "qualification_test_methods": {
+      "preparation": 13,
+      "hardware_contracts": 19,
+      "retained_performance_and_disabled_entry": 13,
+      "offline_inventory": 3
+    },
+    "fixtures_compiled": 2,
+    "paired_source_archives_verified": 2,
+    "case_plan_checks": 25,
+    "source_inventory_files": {
+      "p4": 5533,
+      "emos": 557
+    },
+    "clock": "host monotonic seconds; host operational checks, not hardware timing; uncalibrated",
+    "retained_host_pass_sample_seconds": 67.72154175699688
+  },
+  "owner_fixture_correction_commit": "29434e3",
+  "excluded_artifact_dependent_harness": {
+    "path": "tests/parallel_probe_link_test.py",
+    "reason": "Requires separately built experimental probe/native/ordinary EMOS ELF images and an explicit toolchain; not a no-argument host check."
+  },
+  "limits": [
+    "Retained readbacks do not establish live board identities while the bench is occupied.",
+    "Supported physical entry is verified idle Legacy CLI with single-buffered modes; double-buffered cleanup is not qualified.",
+    "The revised canonical physical runner, new mode helper and rebuilt raw-SD app remain physically unvalidated.",
+    "HDMI status/DMA/text oracles do not establish physical aspect, colour or gameplay correctness.",
+    "Separate cadence physical execution is disabled pending lifecycle migration; no performance campaign was run.",
+    "Production selection/tag and actual Author manual review remain pending."
+  ],
+  "next_boundary": [
+    "Obtain separately authorized exclusive bench access.",
+    "Verify current pair/CLI, commissioned reset bridge and accepted fast/no-mode-change cue files.",
+    "Deploy and independently verify fixtures, then stop to announce readiness before reserved suite invocation.",
+    "Run all physical cases and bind actual Author visual review before v0.2.1 selection/tag."
+  ]
+}

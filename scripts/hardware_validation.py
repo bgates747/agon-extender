@@ -150,7 +150,9 @@ def type_line(url: str, journal: Path, line: str) -> dict:
         client.lock.close()
 
 
-def wait_sd_service(url: str, state: Path, timeout: float = 60):
+def wait_sd_service(url: str, state: Path, timeout: float = 60, *, require_fast: bool = True):
+    if require_fast is not True:
+        raise ValueError("hardware validation requires checksum-free fast transfers")
     from sdcard import Client
     deadline = time.monotonic() + timeout
     last: object = "no response"
@@ -161,7 +163,7 @@ def wait_sd_service(url: str, state: Path, timeout: float = 60):
             current = client.status()
             last = current
             if current.get("online"):
-                client.connect()
+                client.connect(require_fast=require_fast)
                 keep = True
                 return client
         except Exception as error:

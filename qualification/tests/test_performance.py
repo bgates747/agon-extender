@@ -29,6 +29,13 @@ performance = load()
 
 
 class PerformanceQualificationTests(unittest.TestCase):
+    def test_retired_physical_entry_point_cannot_rewrite_startup(self):
+        client = mock.Mock()
+        with self.assertRaisesRegex(RuntimeError, "disabled"):
+            performance.run_case({}, {}, client, "fixture", "result", Path("unused"),
+                                 Path("unused"), None, None, [], False)
+        self.assertEqual(client.mock_calls, [])
+
     def test_missing_optional_video_timing_endpoint_is_not_fatal(self):
         missing = HTTPError("http://device/diagnostics/video-timing", 404,
                             "Not Found", {}, None)

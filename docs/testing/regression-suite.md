@@ -1,13 +1,11 @@
 # Firmware qualification suite
 
 The canonical executable authority is [`../../qualification/`](../../qualification/README.md).
-The maintained workflow has two independent commands. The first command builds
-and flashes one exact component commit and independently verifies the installed
-bytes and boot identity; run it separately for P4 and EMOS. The second command accepts both receipts,
-runs every applicable installed-hardware case. The separate offline source
-suite remains available for development regressions. A host or emulator pass is never described as
-hardware validation or firmware acceptance. Acceptance requires a successful
-complete canonical run against verified installed bytes.
+The current installed-pair workflow and output profiles are documented in the
+canonical guide above. Offline retained-installation receipts do not require
+reflashing accepted images merely to fit an older receipt schema. The separate
+offline source suite remains available for development regressions. A host or
+emulator pass is never described as hardware qualification.
 
 The maintained regression runner exercises the current Extender host, browser
 and native `p4-console` build closure without flashing or resetting either
@@ -67,77 +65,26 @@ case: it does not own the foreground, and taking that ownership could alter a
 concurrent physical workload. The durable host records are its progress channel.
 Only the terminal notification interacts with the admitted Extender keyboard.
 
-## Commit-pinned hardware workflow
+## Installed-pair qualification workflow
 
-The machine-local `agents/hardware-validation.local.json` follows
-`qualification/config.example.json`. It identifies the component-owner
-checkouts, exact P4 USB identity and remote flashing tool, Extender endpoint,
-and the independently commissioned Agon reset controller. It remains ignored;
-tracked files contain no bench addresses, credentials or unique device values.
+Use the [canonical guide](../../qualification/README.md) for schema-2 evidence
+receipts, offline fixture builds, browser-video/native-HDMI profiles and the
+`--check-only`/later physical invocation boundary. Its current physical entry
+contract is an independently verified idle Legacy CLI with single-buffered modes,
+current paired identities and a commissioned reset bridge. Mode selection is
+conditional, settling is at least one second, and both entry modes are restored.
+Startup stays read-only; raw-SD tests run through explicit CLI LOAD/RUN.
 
-The flash command is independent of the test command:
+Flashing remains an independently authorized operation under the installation
+protocol. Do not use the old generic commit flasher to replace an accepted native
+P4 or patched EMOS image simply to generate qualification paperwork. Exact
+retained readbacks/source closure can instead be verified offline. Native
+production installation still follows its selected component/board recipe.
 
-```sh
-.venv/bin/python scripts/flash_firmware_commit.py \
-  --target emos --commit EMOS_COMMIT
-```
-
-Before an EMOS flash, the command normally verifies and resets the P4 over its
-stable USB identity, waits for the P4 HTTP service, resets the Agon, verifies
-fresh Extender input admission, and stops any foreground SD listener before
-typing at the EMOS prompt. This closes browser video/input and stale agent
-sessions automatically; the operator does not inspect or release them by hand.
-Use `--no-reset-p4` only for a deliberate expert run that preserves those
-sessions and accepts responsibility for an input-ownership conflict.
-
-Use `--target p4 --commit EXTENDER_COMMIT` for an Extender/P4 repair. The
-command resolves the revision to a full commit, builds from a fresh detached
-snapshot, performs exactly one component-appropriate flash, verifies the full
-EMOS ROM or P4 flash plus observed boot identity, and prints the durable local
-receipt path. It never accepts a dirty working tree as the requested firmware.
-After a verified P4 flash and boot, the command normally uses the bench Pi's
-independent reset actuator to reset the Agon, then requires a new EMOS boot
-epoch and working Extender keyboard admission before reporting complete
-success. Use `--no-reset-agon` only for deliberate P4-only work where preserving
-the running Agon is more important than restoring and proving the paired
-connection. A failed or uncertain P4 flash never triggers the Agon reset.
-
-The hardware test command is separately invoked with that receipt:
-
-```sh
-.venv/bin/python qualification/run.py \
-  --flash-receipt /absolute/path/to/p4-flash-receipt.json \
-  --flash-receipt /absolute/path/to/emos-flash-receipt.json
-```
-
-It streams every named check and pass/fail status to the invoking SSH console.
-The full run requires verified P4 and EMOS receipts and runs all applicable
-physical cases against the already installed firmware. It
-does not rebuild or reflash. It writes an overall `summary.json`, restores each
-case's startup state, sends the accepted Legacy spoken cue, and leaves a failure
-verdict on the Legacy screen after alert playback. The operator does not need an
-agent to monitor the run.
-
-The mandatory integrated smoke exercises the installed P4 web assets, browser
-reset bridge, P4-to-EMOS keyboard path, ExCom display/status/text capture, and a
-temporary exact-byte mainboard-SD round trip, then restores the ordinary startup
-state. The dependent `a10-rp06-mode-transaction` case then switches mode
-8→20→8 without a browser consumer and repeats the sequence while retaining
-one browser-video WebSocket. It checks committed display status and decoded
-frame geometry at each edge, closes the browser connection and restores
-ordinary startup. Loaded-asset Nurples remains a separate manual case.
-
-The additional EMOS physical case is `a10-rp04-raw-sd-write`. Its eZ80 fixture
-refuses to write unless the card has a valid MBR whose first partition begins
-after sector 2. It retains sector 2 in RAM, exercises the repaired RST `0x08`
-write API, independently reads the result, restores through MOS's distinct C
-write dispatch, and independently verifies the exact preimage before reporting.
-An unverified restoration is an infrastructure failure and stops advancement.
-The raw-sector fixture itself starts the result service only after no write was
-attempted or after exact restoration was independently verified. The runner
-allows 20 seconds for that positive completion handoff. If it is absent, the
-runner fails without automatically resetting the Agon; a timeout is never
-treated as evidence that interrupting raw media work is safe.
+The historical results below retain their original setup and timing. In
+particular, old startup-mutating recipes and observer-present browser checks
+are not current launch instructions for HDMI. The separate cadence runner is
+disabled pending lifecycle migration; its analysis helpers remain available.
 
 ## First complete RP04 hardware run
 

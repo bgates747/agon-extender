@@ -126,23 +126,23 @@ class HardwareValidationTests(unittest.TestCase):
     def test_bench_startup_requires_extender_and_rejects_mainboard(self):
         runner.require_extender_startup(
             b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\n")
-        with self.assertRaisesRegex(RuntimeError, "does not explicitly select"):
+        with self.assertRaisesRegex(ValueError, "must select"):
             runner.require_extender_startup(b"SET KEYBOARD 1\r\n")
-        with self.assertRaisesRegex(RuntimeError, "unavailable mainboard"):
+        with self.assertRaisesRegex(ValueError, "must select"):
             runner.require_extender_startup(
                 b"EMOS KEYINPUT extender\r\nEMOS KEYINPUT mainboard\r\n")
 
-    def test_reset_helper_owns_fresh_boot_and_input_verification(self):
-        status = {"boot": 12, "ready": True, "physical_neutral": True,
-                  "pending": 0, "held": 0}
-        with (mock.patch.object(runner.subprocess, "run") as invoke,
-              mock.patch.object(runner, "keyboard_status", return_value=status)):
-            result = runner.reset_and_wait(["reset-helper", "--config", "bench.json"],
-                                           "http://device")
-        invoke.assert_called_once_with(
-            ["reset-helper", "--config", "bench.json", "--verify-url",
-             "http://device", "--verify-timeout", "60"], check=True)
-        self.assertEqual(result, status)
+    def test_bridge_reset_requires_a_new_boot_and_records_it(self):
+        status={"boot":12,"ready":True,"physical_neutral":True}
+        with tempfile.TemporaryDirectory() as folder, \
+                mock.patch.object(runner,"wait_keyboard",side_effect=[{"boot":11},status]) as wait, \
+                mock.patch.object(runner,"urlopen") as opened:
+            opened.return_value.__enter__.return_value.read.return_value=b'{"pulse":"released"}'
+            result=runner.bridge_reset({"reset_url":"http://bridge/reset"},"http://device",Path(folder))
+            self.assertEqual(wait.call_args.kwargs["old_boot"],11)
+            self.assertEqual(result["boot"],12)
+            saved=json.loads((Path(folder)/"browser-reset.json").read_text())
+            self.assertEqual(saved["new_boot"],12)
 
     def test_raw_sd_fixture_requires_token_and_prompt_without_unsafe_reset(self):
         source = inspect.getsource(runner.run_fwbug008)
@@ -151,7 +151,8 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertIn("marker_followed_by_prompt", source)
         self.assertIn("host-owned result listener", source)
         self.assertIn("Agon was not reset", source)
-        self.assertIn("try_restore_startup_from_active_service", source)
+        self.assertNotIn("reset_and_wait", source)
+        self.assertNotIn("restore_startup(", source)
         self.assertNotIn("fixture-owned completion service", source)
 
     def test_run_marker_requires_marker_then_prompt(self):
@@ -167,76 +168,23 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertFalse(runner.marker_followed_by_prompt("/ *\n", marker))
         self.assertFalse(runner.marker_followed_by_prompt("/ *\n" + marker, marker))
 
-    def test_raw_sd_startup_selects_excom_before_marker_mode_and_fixture(self):
-        source = inspect.getsource(runner.run_fwbug008)
-        excom = source.index('b"EMOS EXCOM')
-        mode = source.index('VDU 22 3', excom)
-        marker = source.index('start_marker.encode', mode)
-        load = source.index('LOAD /extender/fixtures', mode)
-        self.assertLess(excom, mode)
-        self.assertLess(mode, load)
-        self.assertLess(marker, load)
-        self.assertIn('b"LOAD /extender/fixtures/FWBUG008.bin\\r\\nRUN . "', source)
+    def test_normal_startup_allows_loaded_but_uninvoked_application(self):
+        runner.require_extender_startup(
+            b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nCD /game\r\nLOAD flight.bin &040000\r\n")
+        for command in (b"RUN", b"EXEC /suite.txt", b"IFTHERE a THEN RUN", b"SET Alias$go RUN"):
+            with self.subTest(command=command), self.assertRaises(ValueError):
+                runner.require_extender_startup(b"EMOS KEYINPUT extender\r\n" + command)
 
-    def test_startup_restoration_is_exact_and_stops_listener(self):
-        calls = []
-
-        class Client:
-            def upload(self, path, data, activate, *, fast):
-                calls.append(("upload", path, data, activate, fast))
-
-            def download(self, path):
-                calls.append(("download", path))
-                return b"original\r\n"
-
-            def rpc(self, operation, payload=None):
-                calls.append(("rpc", operation, payload))
-                if operation == 10:
-                    return b"\0"
-                if operation == 11:
-                    return b""
-                raise AssertionError(operation)
-
+    def test_startup_verification_never_uploads_or_repairs(self):
+        client = mock.Mock()
+        client.download.return_value = b"normal"
         with tempfile.TemporaryDirectory() as folder:
-            output = Path(folder)
-            runner.restore_startup(Client(), b"original\r\n", output,
-                                   "replaced.txt")
-            evidence = json.loads((output / "startup-restoration.json").read_text())
-        self.assertEqual(evidence["status"], "restored")
-        self.assertTrue(evidence["independent_readback"])
-        self.assertTrue(evidence["listener_stopped"])
-        self.assertEqual(calls[0],
-                         ("upload", "/autoexec.txt", b"original\r\n", True, True))
-        self.assertEqual(calls[1], ("download", "/autoexec.txt"))
-        self.assertEqual(calls[-1], ("rpc", 11, None))
-
-    def test_unavailable_failure_cleanup_attempt_does_not_reset(self):
-        calls = []
-
-        class Lock:
-            def close(self):
-                calls.append("close")
-
-        class Client:
-            def __init__(self, url, state):
-                calls.append((url, state.name))
-                self.lock = Lock()
-
-            def status(self):
-                calls.append("status")
-                return {"online": False, "pending": False}
-
-        with tempfile.TemporaryDirectory() as folder:
-            output = Path(folder)
-            with mock.patch("sdcard.Client", Client):
-                restored, detail = runner.try_restore_startup_from_active_service(
-                    "http://device", b"original\r\n", output)
-            evidence = json.loads((output / "startup-restoration.json").read_text())
-        self.assertFalse(restored)
-        self.assertIn("not active", detail)
-        self.assertEqual(evidence["status"], "unavailable")
-        self.assertFalse(evidence["reset_attempted"])
-        self.assertEqual(calls[-2:], ["status", "close"])
+            runner.unchanged_startup(client, b"normal", Path(folder))
+            client.upload.assert_not_called()
+            client.download.return_value = b"changed"
+            with self.assertRaises(runner.UnsafeMainboardState):
+                runner.unchanged_startup(client, b"normal", Path(folder))
+        client.upload.assert_not_called()
 
     def test_config_requires_exact_p4_identity_even_for_shared_tool(self):
         document = json.loads((ROOT / "qualification/config.example.json").read_text())
@@ -267,7 +215,8 @@ class HardwareValidationTests(unittest.TestCase):
             def status(self):
                 return {"online": True}
 
-            def connect(self):
+            def connect(self, *, require_fast):
+                assert require_fast
                 calls.append("connect")
 
             def rpc(self, operation):

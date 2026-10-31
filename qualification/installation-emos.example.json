@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "target": "emos",
+  "component_commit": "FULL_40_HEX_COMMIT",
+  "build_id": "EXACT_TESTED_BUILD",
+  "artifact": {
+    "path": "/absolute/path/to/accepted-emos.bin",
+    "sha256": "EXPECTED_SHA256"
+  },
+  "readback": {
+    "path": "/absolute/path/to/independent-full-readback.bin",
+    "sha256": "EXPECTED_SHA256"
+  },
+  "installation_evidence": {
+    "path": "/absolute/path/to/original-installation-evidence.json",
+    "sha256": "EXPECTED_SHA256"
+  },
+  "source": {
+    "archive": {
+      "path": "/absolute/path/to/source.tar.gz",
+      "sha256": "EXPECTED_SHA256"
+    },
+    "inventory": {
+      "path": "/absolute/path/to/source-inputs.json",
+      "sha256": "EXPECTED_SHA256"
+    },
+    "build_manifest": {
+      "path": "/absolute/path/to/build-manifest.json",
+      "sha256": "EXPECTED_SHA256"
+    },
+    "archive_prefix": "agon-emos/",
+    "patch": {
+      "path": "/absolute/path/to/source.patch",
+      "sha256": "EXPECTED_SHA256"
+    }
+  }
+}

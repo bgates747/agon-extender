@@ -52,11 +52,12 @@ preserved_companions:
 qualification:
   procedure: ../../qualification/run.py
   outcome: null
-  state: Pending exact paired receipt adaptation and authorized complete canonical
-    qualification.
+  state: Offline exact retained receipts and native-profile runner/fixtures prepared;
+    live identity/reset/cue preflight, deployment and authorized complete canonical
+    qualification remain pending.
   source_audit_is_hardware_qualification: false
-  clean_emos_receipt_limit: Current v27 came from a preserved uncommitted patch; do
-    not fabricate clean-input provenance.
+  clean_emos_receipt_limit: Current v27 came from a preserved uncommitted patch;
+    archive/inventory and full retained ROM verify, without a clean-source claim.
 promotion:
   current_selection: ../current.yaml
   state: Version and source integration resolved; canonical qualification and full

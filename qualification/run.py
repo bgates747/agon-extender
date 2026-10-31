@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 from pathlib import Path
 import subprocess
 import sys
@@ -19,10 +18,38 @@ ROOT = Path(__file__).resolve().parents[1]
 RP04_COMPLETION_TIMEOUT = 20
 sys.path.insert(0, str(ROOT / "qualification"))
 sys.path.insert(0, str(ROOT / "scripts"))
-from hardware_validation import (atomic_json, clean_snapshot, load_config,
-                                 keyboard_status, resolve_commit, sha256,
-                                 type_line, utc_stamp, wait_keyboard, wait_sd_service)
+from hardware_validation import (atomic_json, load_config,
+                                 keyboard_status, sha256,
+                                 type_line as hardware_type_line, utc_stamp, wait_keyboard, wait_sd_service)
 from video import VideoSession
+from installation import load_receipt
+from lifecycle import Session, UnsafeForeground, require_normal_startup, verify_fixtures, stage_new_file
+
+ACTIVE_SESSION = None
+
+
+def type_line(url: str, journal: Path, line: str) -> dict:
+    if ACTIVE_SESSION is not None:
+        value = ACTIVE_SESSION.command(journal, line)
+        if line.upper().startswith("EMOS LEGACY"):
+            ACTIVE_SESSION.route = "legacy"
+        elif line.upper().startswith("EMOS EXCOM"):
+            ACTIVE_SESSION.route = "excom"
+        return value
+    return hardware_type_line(url, journal, line)
+
+
+def select_mode(url: str, journal: Path, mode: int, width: int, height: int, colors: int) -> dict:
+    if ACTIVE_SESSION is not None:
+        return ACTIVE_SESSION.select_extender_mode(
+            dict(mode=mode, width=width, height=height, colors=colors))
+    before = read_json(url, "/display/status")
+    if (before.get("mode"), before.get("width"), before.get("height")) == (mode, width, height):
+        return before
+    type_line(url, journal, f"VDU 22 {mode}")
+    result = wait_display(url, mode, width, height)
+    time.sleep(1.0)
+    return result
 
 
 class UnsafeMainboardState(RuntimeError):
@@ -36,6 +63,15 @@ def announce(message: str) -> None:
 def validate_repair_manifest(document: dict) -> None:
     if document.get("schema") != 1 or not isinstance(document.get("cases"), list):
         raise ValueError("repair manifest must use schema 1")
+    profiles = document.get("output_profiles", {})
+    if set(profiles) != {"browser-video", "native-hdmi"}:
+        raise ValueError("explicit browser-video and native-hdmi coverage required")
+    for name, profile in profiles.items():
+        manual = profile.get("manual_cases")
+        if (not profile.get("automated_output_oracle") or not isinstance(manual, list) or
+                not manual or len(manual) != len(set(manual)) or
+                any(not isinstance(item, str) or not item for item in manual)):
+            raise ValueError(f"{name}: automated oracle and distinct manual cases required")
     ids = []
     for case in document["cases"]:
         case_id = case.get("id")
@@ -98,47 +134,12 @@ def close_retained_backup(client, path: str, evidence: Path) -> None:
             raise RuntimeError(f"{path}: retained-backup close returned {remaining.hex()}")
 
 
-def restore_startup(client, original: bytes, output: Path, backup_name: str) -> None:
-    """Restore the pre-suite startup exactly and retain independent evidence."""
-    client.upload("/autoexec.txt", original, True, fast=True)
-    observed = client.download("/autoexec.txt")
-    if observed != original:
-        raise RuntimeError("original startup restoration failed independent readback")
-    close_retained_backup(client, "/autoexec.txt", output / backup_name)
-    client.rpc(11)
-    atomic_json(output / "startup-restoration.json", {
-        "status": "restored", "bytes": len(original),
-        "sha256": hashlib.sha256(original).hexdigest(),
-        "independent_readback": True, "listener_stopped": True,
-    })
-
-
-def try_restore_startup_from_active_service(url: str, original: bytes,
-                                            output: Path) -> tuple[bool, str]:
-    """Attempt cleanup without resetting or assuming the fixture is safe to stop."""
-    from sdcard import Client
-    client = Client(url, output / "sd-cleanup-attempt.json")
-    try:
-        current = client.status()
-        if not current.get("online"):
-            detail = f"SD service is not active: {current}"
-            atomic_json(output / "startup-restoration.json", {
-                "status": "unavailable", "attempted": True, "detail": detail,
-                "reset_attempted": False,
-            })
-            return False, detail
-        client.connect()
-        restore_startup(client, original, output, "failure-autoexec-backup.txt")
-        return True, "exact pre-suite startup restored through active SD service"
-    except BaseException as error:
-        detail = repr(error)
-        atomic_json(output / "startup-restoration.json", {
-            "status": "failed", "attempted": True, "detail": detail,
-            "reset_attempted": False,
-        })
-        return False, detail
-    finally:
-        client.lock.close()
+def unchanged_startup(client, original: bytes, output: Path) -> None:
+    if client.download("/autoexec.txt") != original:
+        raise UnsafeMainboardState("startup changed; runner will not repair it or reset")
+    atomic_json(output / "startup-preservation.json", {
+        "status": "unchanged", "sha256": hashlib.sha256(original).hexdigest(),
+        "independent_readback": True, "writes": 0})
 
 
 def parse_result(data: bytes) -> dict[str, str]:
@@ -160,29 +161,8 @@ def parse_result(data: bytes) -> dict[str, str]:
 
 
 def require_extender_startup(data: bytes) -> None:
-    """Reject a bench startup that cannot restore the only working key path."""
-    try:
-        lines = [line.strip().lower() for line in data.decode("ascii").splitlines()
-                 if line.strip() and not line.lstrip().startswith("#")]
-    except UnicodeDecodeError as error:
-        raise RuntimeError("bench startup is not ASCII") from error
-    if "emos keyinput mainboard" in lines:
-        raise RuntimeError("bench startup selects the unavailable mainboard keyboard")
-    if "emos keyinput extender" not in lines:
-        raise RuntimeError("bench startup does not explicitly select Extender keyboard input")
+    require_normal_startup(data)
 
-
-def reset_and_wait(reset: list[str], url: str) -> dict:
-    # The reset helper owns both the pulse and its fresh-boot/input proof.  This
-    # keeps the terminal contract truthful and also permits recovery when the
-    # pre-reset keyboard is not admitted.
-    subprocess.run(reset + ["--verify-url", url, "--verify-timeout", "60"],
-                   check=True)
-    after = keyboard_status(url)
-    if (not after.get("ready") or not after.get("physical_neutral") or
-            after.get("pending") or after.get("held")):
-        raise RuntimeError("verified reset helper returned without usable Extender input")
-    return after
 
 
 def read_json(url: str, path: str, timeout: float = 5) -> dict:
@@ -191,6 +171,8 @@ def read_json(url: str, path: str, timeout: float = 5) -> dict:
 
 
 def bridge_reset(config: dict, url: str, output: Path) -> dict:
+    if ACTIVE_SESSION is not None:
+        ACTIVE_SESSION.verify_startup()
     before = wait_keyboard(url)
     request = Request(
         config["reset_url"], method="POST",
@@ -203,6 +185,8 @@ def bridge_reset(config: dict, url: str, output: Path) -> dict:
     if result.get("pulse") != "released":
         raise RuntimeError(f"browser reset bridge did not confirm release: {result}")
     after = wait_keyboard(url, old_boot=before["boot"], timeout=60)
+    if ACTIVE_SESSION is not None:
+        ACTIVE_SESSION.after_reset(after)
     atomic_json(output / "browser-reset.json", {
         "status": "pass", "old_boot": before["boot"], "new_boot": after["boot"],
         "pulse": result["pulse"], "keyboard_ready": after["ready"],
@@ -213,6 +197,8 @@ def bridge_reset(config: dict, url: str, output: Path) -> dict:
 def capture_text(url: str, timeout: float = 30) -> str:
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
+        if ACTIVE_SESSION is not None:
+            ACTIVE_SESSION.check_boot()
         try:
             with urlopen(url.rstrip("/") + "/screen/text", timeout=5) as response:
                 if response.status == 200:
@@ -281,14 +267,55 @@ def wait_video_geometry(session: VideoSession, output: Path, label: str,
         f"browser video did not publish {width}x{height} for {label}: {last}")
 
 
+HDMI_FAULTS = ("faults", "underruns", "invalid_blocks", "sequence_errors",
+               "cache_errors", "overlap", "first_fault", "first_error")
+
+
+def hdmi_sample(value: dict) -> dict:
+    rolling = value.get("rolling", {})
+    if (value.get("output") != "hdmi" or value.get("frame_clock") != "dma-frame-complete" or
+            not value.get("available") or min(value.get("output_width", 0), value.get("output_height", 0)) < 1 or
+            type(rolling.get("frames")) is not int or
+            any(type(rolling.get(key)) is not int or rolling[key] != 0 for key in HDMI_FAULTS)):
+        raise RuntimeError(f"HDMI carrier or DMA fault contract failed: {value}")
+    return value
+
+
+def hdmi_progress(url: str, output: Path, timeout: float = 5) -> dict:
+    """Observe real DMA progress; this is not a physical pixel/colour oracle."""
+    before = hdmi_sample(read_json(url, "/display/status"))
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        if ACTIVE_SESSION is not None:
+            ACTIVE_SESSION.check_boot()
+        after = hdmi_sample(read_json(url, "/display/status"))
+        for key in ("mode", "width", "height", "colors", "output_width", "output_height"):
+            if after[key] != before[key]:
+                raise RuntimeError("HDMI geometry changed during the progress observation")
+        delta = (after["rolling"]["frames"] - before["rolling"]["frames"]) & 0xffffffff
+        if 0 < delta < 0x80000000:
+            record = {"before": before, "after": after, "dma_frames_advanced": delta,
+                      "scope": "committed geometry, DMA progress and zero fault counters; visual review separate"}
+            atomic_json(output, record)
+            return record
+        if delta >= 0x80000000:
+            raise RuntimeError("HDMI frame counter restarted or moved backwards")
+        time.sleep(0.1)
+    raise TimeoutError("HDMI DMA frame-complete counter did not advance")
+
+
+def output_profile(config: dict) -> str:
+    value = config.get("output_profile")
+    if value not in ("browser-video", "native-hdmi"):
+        raise ValueError("select output_profile explicitly: browser-video or native-hdmi")
+    return value
+
+
 def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
     """Exercise the installed P4, EMOS wire, browser assets and reset bridge."""
     output.mkdir(parents=True, exist_ok=False)
     url = config["extender_url"]
-    reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
-             "--config", str(Path(config["reset_config"]).resolve(strict=True))]
     started = time.monotonic()
-    cleanup_error = None
     checks = []
 
     def passed(check_id: str, **evidence) -> None:
@@ -315,7 +342,7 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
         passed("legacy-screen-capture", bytes=len(legacy_text.encode()))
         marker = "P4QUAL" + uuid.uuid4().hex[:8].upper()
         announce("RUN excom-mode-handoff")
-        type_line(url, output / "keyboard-excom.json", "EMOS EXCOM")
+        type_line(url, output / "keyboard-excom.json", "EMOS EXCOM --keep-display")
         excom_text = wait_screen(
             url, lambda text: text != legacy_text,
             "change after EMOS EXCOM", output / "excom-transition")
@@ -343,21 +370,23 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
         passed("display-status-contract", mode=display["mode"], width=display["width"],
                height=display["height"], colors=display["colors"])
 
-        announce("RUN websocket-video-frames")
-        video_dir = output / "video"
-        video_dir.mkdir()
-        video = []
-        with VideoSession(url) as session:
-            for index in range(3):
-                video.append(wait_video_geometry(
-                    session, video_dir, f"frame-{index + 1}",
-                    display["width"], display["height"]))
-        if len({item["sequence"] for item in video}) != len(video):
-            raise RuntimeError("video endpoint returned a stale frame generation")
-        passed("websocket-video-frames", frames=video)
+        if output_profile(config) == "native-hdmi":
+            passed("hdmi-dma-progress", evidence=hdmi_progress(url, output / "hdmi-progress.json"))
+        else:
+            announce("RUN websocket-video-frames")
+            video_dir = output / "video"
+            video_dir.mkdir()
+            video = []
+            with VideoSession(url) as session:
+                for index in range(3):
+                    video.append(wait_video_geometry(
+                        session, video_dir, f"frame-{index + 1}", display["width"], display["height"]))
+            if len({item["sequence"] for item in video}) != len(video):
+                raise RuntimeError("video endpoint returned a stale frame generation")
+            passed("websocket-video-frames", frames=video)
 
         announce("RUN legacy-mode-handoff")
-        type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
+        type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY --keep-display")
         # Completing a capture requested after the handoff gives EMOS/P4 time
         # to consume the mode command before keyboard input is routed to Legacy.
         legacy_handoff = capture_text(url)
@@ -402,7 +431,7 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
         finally:
             cleanup.lock.close()
         announce("RUN final-startup-recovery")
-        final = reset_and_wait(reset, url)
+        final = bridge_reset(config, url, output / "final-reset")
         if not final.get("ready") or not final.get("physical_neutral"):
             raise RuntimeError("final reset did not restore admitted neutral input")
         passed("final-startup-recovery")
@@ -414,24 +443,16 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             "browser_reset": True, "keyboard": True, "excom": True,
             "display_status": display, "screen_marker": marker,
             "sd_round_trip_bytes": len(payload), "sd_cleanup_verified": True,
-            "startup_restored": True, "checks": checks,
+            "startup_unchanged": True, "checks": checks,
         }
     except BaseException:
-        try:
-            reset_and_wait(reset, url)
-        except BaseException as error:
-            cleanup_error = repr(error)
-        if cleanup_error:
-            raise RuntimeError("P4 smoke failed and final startup recovery failed: " + cleanup_error)
         raise
 
 
 def run_rp06_mode_transaction(config: dict, receipt: dict, output: Path) -> dict:
-    """Exercise mode 8/20 commit with zero and active browser demand."""
+    """Exercise common 8/20 commits and the declared output profile oracles."""
     output.mkdir(parents=True, exist_ok=False)
     url = config["extender_url"]
-    reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
-             "--config", str(Path(config["reset_config"]).resolve(strict=True))]
     checks = []
     started = time.monotonic()
 
@@ -442,42 +463,55 @@ def run_rp06_mode_transaction(config: dict, receipt: dict, output: Path) -> dict
 
     def switch(mode: int, width: int, height: int, label: str) -> dict:
         announce(f"Switching the P4 display to mode {mode} ({width}x{height}) for {label}")
-        type_line(url, output / f"keyboard-{label}.json", f"VDU 22 {mode}")
-        return wait_display(url, mode, width, height)
+        return select_mode(url, output / f"keyboard-{label}.json", mode, width, height, 64)
 
     try:
         announce("Resetting the Agon and entering ExCom for RP06 mode qualification")
-        reset_and_wait(reset, url)
+        bridge_reset(config, url, output / "initial-reset")
         legacy_text = capture_text(url)
-        type_line(url, output / "keyboard-excom.json", "EMOS EXCOM")
+        type_line(url, output / "keyboard-excom.json", "EMOS EXCOM --keep-display")
         wait_screen(url, lambda text: text != legacy_text,
                     "change after EMOS EXCOM", output / "excom-transition")
 
-        mode8 = switch(8, 320, 240, "browser-absent-mode8")
-        passed("rp06-browser-absent-mode8", display=mode8)
-        mode20 = switch(20, 512, 384, "browser-absent-mode20")
-        passed("rp06-browser-absent-mode20", display=mode20)
-        returned8 = switch(8, 320, 240, "browser-absent-return-mode8")
-        passed("rp06-browser-absent-return-mode8", display=returned8)
+        for mode, width, height, label in (
+                (8, 320, 240, "browser-absent-mode8"),
+                (20, 512, 384, "browser-absent-mode20"),
+                (8, 320, 240, "browser-absent-return-mode8")):
+            display = switch(mode, width, height, label)
+            evidence = {"display": display}
+            if output_profile(config) == "native-hdmi":
+                evidence["progress"] = hdmi_progress(url, output / f"{label}-dma.json")
+            passed("rp06-" + label, **evidence)
 
-        video_dir = output / "browser-present-video"
-        video_dir.mkdir()
-        announce("Opening one retained browser-video connection for mode transitions")
-        with VideoSession(url) as video:
-            frame8 = wait_video_geometry(
-                video, video_dir, "mode8-before", 320, 240)
-            passed("rp06-browser-present-mode8", frame=frame8)
-            active20 = switch(20, 512, 384, "browser-present-mode20")
-            frame20 = wait_video_geometry(video, video_dir, "mode20", 512, 384)
-            passed("rp06-browser-present-mode20", display=active20, frame=frame20)
-            active8 = switch(8, 320, 240, "browser-present-return-mode8")
-            final_frame = wait_video_geometry(
-                video, video_dir, "mode8-after", 320, 240)
-            passed("rp06-browser-present-return-mode8",
-                   display=active8, frame=final_frame)
+        if output_profile(config) == "native-hdmi":
+            # Explicit native replacement for the unavailable browser observer:
+            # include full-carrier mode96 and fresh rendered text at every edge.
+            for mode, width, height, label in (
+                    (96, 848, 480, "wide96"), (20, 512, 384, "standard20"),
+                    (96, 848, 480, "return-wide96")):
+                display = switch(mode, width, height, label)
+                marker = "HDMI" + uuid.uuid4().hex[:8].upper()
+                type_line(url, output / f"marker-{label}.json", "ECHO " + marker)
+                wait_screen(url, lambda text: marker_followed_by_prompt(text, marker),
+                            "render the fresh mode marker and following prompt", output / label)
+                progress = hdmi_progress(url, output / f"{label}-dma.json")
+                passed("rp06-hdmi-" + label, display=display, progress=progress)
+        else:
+            video_dir = output / "browser-present-video"
+            video_dir.mkdir()
+            announce("Opening one retained browser-video connection for mode transitions")
+            with VideoSession(url) as video:
+                frame8 = wait_video_geometry(video, video_dir, "mode8-before", 320, 240)
+                passed("rp06-browser-present-mode8", frame=frame8)
+                active20 = switch(20, 512, 384, "browser-present-mode20")
+                frame20 = wait_video_geometry(video, video_dir, "mode20", 512, 384)
+                passed("rp06-browser-present-mode20", display=active20, frame=frame20)
+                active8 = switch(8, 320, 240, "browser-present-return-mode8")
+                final_frame = wait_video_geometry(video, video_dir, "mode8-after", 320, 240)
+                passed("rp06-browser-present-return-mode8", display=active8, frame=final_frame)
 
         announce("Resetting the Agon and verifying ordinary startup after RP06 transitions")
-        final = reset_and_wait(reset, url)
+        final = bridge_reset(config, url, output / "final-reset")
         if not final.get("ready") or not final.get("physical_neutral"):
             raise RuntimeError("RP06 final reset did not restore admitted neutral input")
         passed("rp06-final-startup-recovery")
@@ -486,15 +520,16 @@ def run_rp06_mode_transaction(config: dict, receipt: dict, output: Path) -> dict
             "status": "pass", "duration_seconds": time.monotonic() - started,
             "flashed_commit": receipt["component_commit"],
             "flashed_artifact_sha256": receipt["artifact_sha256"],
-            "checks": checks, "startup_restored": True,
+            "checks": checks, "startup_unchanged": True,
         }
     except BaseException:
-        reset_and_wait(reset, url)
         raise
 
 
 def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
+    """Invoke the separately pinned raw-SD app explicitly, never through reset."""
     output.mkdir(parents=True, exist_ok=False)
+    started = time.monotonic()
     checks = []
 
     def passed(check_id: str, **evidence) -> None:
@@ -502,249 +537,122 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         atomic_json(output / "checks.json", checks)
         announce("PASS " + check_id)
 
-    announce("RUN emos-receipt-and-fixture-source")
-    receipt_source = Path(receipt["component_snapshot"]).resolve(strict=True)
-    if resolve_commit(receipt_source, "HEAD") != receipt["component_commit"]:
-        raise RuntimeError("EMOS snapshot no longer matches the flashed commit")
-    if subprocess.check_output(["git", "-C", str(receipt_source), "status", "--porcelain"],
-                               text=True).strip():
-        raise RuntimeError("EMOS snapshot must be clean before fixture build")
-    source = clean_snapshot(receipt_source, receipt["component_commit"],
-                            output / "source-emos-fixture")
-    fixture = source / "projects/fwbug008-physical"
-    if not fixture.is_dir():
-        raise RuntimeError("flashed EMOS commit does not contain the RP04 physical fixture")
-    toolchain = Path(config["builder_repository"]).resolve() / "toolchains/agondev"
-    build_log = output / "fixture-build.log"
-    with build_log.open("x") as log:
-        completed = subprocess.run(
-            ["make", "clean", "all", f"AGONDEV_TOOLCHAIN={toolchain}"],
-            cwd=fixture, stdout=log, stderr=subprocess.STDOUT,
-        )
-    if completed.returncode:
-        raise RuntimeError("RP04 physical fixture failed to build")
-    binary = fixture / "bin/FWBUG008.bin"
-    binary_hash = sha256(binary)
-    passed("emos-receipt-and-fixture-source", fixture_sha256=binary_hash)
+    fixture = config["_fixtures"]["fixtures"]["raw_sd"]
+    binary = Path(fixture["binary"])
+    if sha256(binary) != fixture["sha256"] or b"/autoexec.txt" in binary.read_bytes():
+        raise RuntimeError("raw-SD fixture changed or writes startup")
+    passed("emos-receipt-and-fixture-source", fixture_sha256=fixture["sha256"],
+           source_files=fixture["source_files"], firmware_source=receipt.get("source"))
     url = config["extender_url"]
     completion_token = uuid.uuid4().hex[:16].upper()
-    start_marker = "A10-RP04 START " + completion_token
     completion_marker = "A10-RP04 COMPLETE " + completion_token
+    target = "/extender/.raw-sd-" + completion_token + ".bin"
     atomic_json(output / "completion-contract.json", {
-        "schema": 1, "token": completion_token,
-        "start_marker": start_marker, "completion_marker": completion_marker,
-        "meaning": "START proves this ExCom launch reached RUN; COMPLETE plus a later prompt proves raw I/O ended",
+        "schema": 1, "token": completion_token, "completion_marker": completion_marker,
+        "launch": "explicit CLI RUN; never boot/reset",
+        "meaning": "COMPLETE plus a later prompt proves the app returned; result separately proves restoration",
     })
-    reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
-             "--config", str(Path(config["reset_config"]).resolve(strict=True))]
-
-    # Start from the reviewed default startup, then use the service only long
-    # enough to stage the one-shot startup and fixture.
-    announce("RUN emos-fixture-staging")
-    announce("Resetting the Agon and waiting for Extender keyboard admission before staging")
-    reset_and_wait(reset, url)
-    type_line(url, output / "keyboard-clear.json", "VDU 12")
-    type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
+    type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY --keep-display")
     type_line(url, output / "keyboard-stage-service.json", "EMOS sdserve --fast /")
-    client = wait_sd_service(url, output / "sd-stage.json")
-    original_startup = b""
-    staged = False
-    staging_error = None
-    staging_cleanup_error = None
+    client = wait_sd_service(url, output / "sd-stage.json", require_fast=True)
     try:
         original_startup = client.download("/autoexec.txt")
         require_extender_startup(original_startup)
-        for directory in ("/extender/fixtures", "/agents/extender/results"):
+        for directory in ("/extender", "/agents/extender/results"):
             require_directory(client, directory)
-        target = "/extender/fixtures/FWBUG008.bin"
-        close_retained_backup(client, target, output / "prior-fixture-backup.bin")
-        client.upload(target, binary.read_bytes(), True, fast=True)
-        if client.download(target) != binary.read_bytes():
-            raise RuntimeError("RP04 fixture fast transfer failed independent readback")
-        close_retained_backup(client, target, output / "replaced-fixture-backup.bin")
-        announce("Fixture transfer verified; staging the one-shot startup file")
-        close_retained_backup(client, "/autoexec.txt",
-                              output / "prior-autoexec-backup.txt")
-        startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\n"
-                   b"EMOS EXCOM\r\nVDU 22 3\r\nECHO " +
-                   start_marker.encode("ascii") + b"\r\n"
-                   b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
-                   b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
-                   b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN . " +
-                   completion_token.encode("ascii") + b"\r\n")
-        client.upload("/autoexec.txt", startup, True, fast=True)
-        if client.download("/autoexec.txt") != startup:
-            raise RuntimeError("one-shot startup failed independent readback")
-        close_retained_backup(client, "/autoexec.txt", output / "original-autoexec.txt")
-        staged = True
-        client.rpc(11)
-        passed("emos-fixture-staging")
-    except BaseException as error:
-        staging_error = error
-    finally:
-        if not staged and original_startup:
-            try:
-                announce("Fixture staging failed; restoring and verifying the exact pre-suite startup")
-                restore_startup(client, original_startup, output,
-                                "staging-failure-autoexec-backup.txt")
-            except BaseException as error:
-                staging_cleanup_error = error
-        client.lock.close()
-    if staging_cleanup_error is not None:
-        raise UnsafeMainboardState(
-            f"fixture staging and exact startup restoration failed: "
-            f"staging={staging_error!r}; restoration={staging_cleanup_error!r}"
-        ) from staging_cleanup_error
-    if staging_error is not None:
-        raise staging_error
-
-    announce("RUN emos-raw-sector-write-read-restore")
-    started = time.monotonic()
-    announce("Resetting the Agon to run the one-shot raw-sector fixture")
-    subprocess.run(reset, check=True)
-    announce("Waiting up to 20 seconds for the fixture completion token and returned MOS prompt")
-    try:
-        completion_screen = wait_screen(
-            url, lambda text: marker_followed_by_prompt(text, completion_marker),
-            "show the per-run fixture completion token followed by a MOS prompt",
-            output / "completion-transition", timeout=RP04_COMPLETION_TIMEOUT)
-        (output / "completion-screen.txt").write_text(completion_screen)
-    except BaseException as error:
-        # A bare prompt can be a stale Legacy-era P4 capture and proves nothing.
-        # Only this run's ExCom START marker followed by a later prompt proves
-        # that the launch sequence returned without leaving an app in flight.
-        # Otherwise use only an independently active service and never type or
-        # reset an unknown foreground.
-        prompt_text = ""
+        # Preserve the maintained fixture's preceding evidence before it writes
+        # this owned result name. Per-run tokens reject stale results.
+        from sdcard import RemoteError
         try:
-            prompt_text = capture_text(url)
-            (output / "completion-failure-screen.txt").write_text(prompt_text)
-        except BaseException as capture_error:
-            atomic_json(output / "completion-failure-capture.json", {
-                "status": "failed", "detail": repr(capture_error),
-            })
-        if marker_followed_by_prompt(prompt_text, start_marker):
-            announce("Completion marker absent but this run returned to MOS; restoring the exact startup")
-            prompt_client = None
-            try:
-                type_line(url, output / "keyboard-prompt-recovery-legacy.json",
-                          "EMOS LEGACY")
-                type_line(url, output / "keyboard-prompt-recovery-service.json",
-                          "EMOS sdserve --fast /")
-                prompt_client = wait_sd_service(
-                    url, output / "sd-prompt-recovery.json",
-                    timeout=RP04_COMPLETION_TIMEOUT)
-                restore_startup(prompt_client, original_startup, output,
-                                "prompt-recovery-autoexec.txt")
-            except BaseException as restoration_error:
-                raise UnsafeMainboardState(
-                    "RP04 returned to MOS without its completion marker, but "
-                    f"exact startup restoration failed: {restoration_error!r}"
-                ) from restoration_error
-            finally:
-                if prompt_client is not None:
-                    prompt_client.lock.close()
-            announce("Exact startup restored after fixture launch/completion failure")
-            reset_and_wait(reset, url)
-            raise RuntimeError(
-                "RP04 fixture did not produce its per-run completion marker; "
-                "its START token and later prompt proved the foreground safe and the exact "
-                "pre-suite startup was restored"
-            ) from error
-        announce("Safe-completion observation failed; attempting exact startup restoration without a reset")
-        restored, detail = try_restore_startup_from_active_service(
-            url, original_startup, output)
-        if restored:
-            raise RuntimeError(
-                "RP04 fixture gave no timely safe-completion handoff; " + detail
-            ) from error
+            (output / "previous-physical-result.txt").write_bytes(
+                client.download("/agents/extender/results/a10-rp04.txt"))
+        except RemoteError as error:
+            if error.status != 6:
+                raise
+        stage_new_file(client, target, binary.read_bytes())
+        if ACTIVE_SESSION:
+            ACTIVE_SESSION.owned_paths.append(target)
+        client.rpc(11)
+    finally:
+        client.lock.close()
+    passed("emos-fixture-staging")
+    type_line(url, output / "keyboard-excom.json", "EMOS EXCOM --keep-display")
+    select_mode(url, output / "keyboard-mode.json", 3, 640, 240, 64)
+    type_line(url, output / "keyboard-clear.json", "VDU 12")
+    # The marker is printed by the fixture after every raw operation has ended.
+    # Do not use an ECHO/prompt before RUN as proof of post-RUN handback.
+    type_line(url, output / "keyboard-load.json", "LOAD " + target)
+    type_line(url, output / "keyboard-run.json", "RUN . " + completion_token)
+    try:
+        text = wait_screen(
+            url, lambda text: marker_followed_by_prompt(text, completion_marker),
+            "show the per-run completion token followed by a MOS prompt",
+            output / "completion-transition", timeout=RP04_COMPLETION_TIMEOUT)
+        (output / "completion-screen.txt").write_text(text)
+    except BaseException as error:
+        if ACTIVE_SESSION:
+            ACTIVE_SESSION.unsafe = True
         raise UnsafeMainboardState(
-            "RP04 fixture gave no safe-completion handoff; exact startup "
-            f"restoration was attempted but unavailable ({detail}); Agon was not reset"
+            "RP04 gave no safe-completion handoff; no further input was sent and Agon was not reset"
         ) from error
     passed("emos-fixture-completion-handoff", token=completion_token)
 
     announce("Fixture returned to MOS; starting the host-owned result listener")
+    type_line(url, output / "keyboard-result-legacy.json", "EMOS LEGACY --keep-display")
+    type_line(url, output / "keyboard-result-service.json", "EMOS sdserve --fast /")
     try:
-        type_line(url, output / "keyboard-result-legacy.json", "EMOS LEGACY")
-        type_line(url, output / "keyboard-result-service.json", "EMOS sdserve --fast /")
-        client = wait_sd_service(
-            url, output / "sd-result.json", timeout=RP04_COMPLETION_TIMEOUT)
-    except BaseException as first_error:
-        announce("Result listener did not start; completion was proven, so resetting once for guarded recovery")
-        try:
-            reset_and_wait(reset, url)
-            type_line(url, output / "keyboard-result-recovery-legacy.json", "EMOS LEGACY")
-            type_line(url, output / "keyboard-result-recovery-service.json",
-                      "EMOS sdserve --fast /")
-            client = wait_sd_service(
-                url, output / "sd-result-recovery.json",
-                timeout=RP04_COMPLETION_TIMEOUT)
-        except BaseException as recovery_error:
-            raise UnsafeMainboardState(
-                "fixture completion was proven, but its result service could not "
-                f"be established: first={first_error!r}; recovery={recovery_error!r}"
-            ) from recovery_error
-    result_data = b""
-    result_error = None
-    cleanup_error = None
-    try:
-        result_data = client.download("/agents/extender/results/a10-rp04.txt")
-        (output / "physical-result.txt").write_bytes(result_data)
+        client = wait_sd_service(url, output / "sd-result.json", timeout=RP04_COMPLETION_TIMEOUT,
+                                 require_fast=True)
     except BaseException as error:
-        result_error = error
+        if ACTIVE_SESSION:
+            ACTIVE_SESSION.unsafe = True
+        raise UnsafeMainboardState("RP04 result service handback is uncertain; no reset attempted") from error
     try:
-        announce("Restoring and independently verifying the original startup file")
-        restore_startup(client, original_startup, output, "recovery-autoexec.txt")
-    except BaseException as error:
-        cleanup_error = error
+        data = client.download("/agents/extender/results/a10-rp04.txt")
+        (output / "physical-result.txt").write_bytes(data)
+        unchanged_startup(client, original_startup, output)
+        client.rpc(11)
     finally:
         client.lock.close()
-    if cleanup_error:
-        raise UnsafeMainboardState(
-            f"RP04 collection/startup restoration failed: {cleanup_error}")
-    announce("Resetting the Agon and verifying ordinary startup after result collection")
-    reset_and_wait(reset, url)
-    if result_error:
-        raise RuntimeError(f"RP04 result collection failed after startup restoration: {result_error}")
-    parsed = parse_result(result_data)
+    parsed = parse_result(data)
     if parsed["token"] != completion_token:
-        raise RuntimeError(
-            f"RP04 result token {parsed['token']!r} does not match run token "
-            f"{completion_token!r}")
+        raise RuntimeError("RP04 result token does not match the invocation")
+    restored = parsed["write_attempted"] == "0" or (
+        parsed["restore_rc"] == "0" and parsed["restore_verify_rc"] == "0" and
+        parsed["before_crc32"] == parsed["restored_crc32"])
+    if not restored:
+        if ACTIVE_SESSION:
+            ACTIVE_SESSION.unsafe = True
+        raise UnsafeMainboardState("raw sector restoration was not independently verified")
     if parsed["status"] == "pass":
-        passed("emos-raw-sector-write-read-restore", sector=int(parsed["sector"]),
-               before_crc32=parsed["before_crc32"], pattern_crc32=parsed["pattern_crc32"])
-    announce("RUN emos-startup-restoration")
-    passed("emos-startup-restoration")
-    record = {
-        "id": "a10-rp04-raw-sd-write", "component": "emos",
-        "status": ("infrastructure-error" if parsed["status"] == "infrastructure-error"
-                   else "pass" if parsed["status"] == "pass" else "test-failure"),
-        "duration_seconds": time.monotonic() - started,
-        "flashed_commit": receipt["component_commit"],
-        "flashed_artifact_sha256": receipt["artifact_sha256"],
-        "fixture_sha256": binary_hash, "oracle": parsed,
-        "startup_restored": True, "checks": checks,
-    }
-    if parsed["write_attempted"] == "1" and (
-            parsed["restore_rc"] != "0" or parsed["restore_verify_rc"] != "0" or
-            parsed["before_crc32"] != parsed["restored_crc32"]):
-        record["status"] = "infrastructure-error"
-        record["critical"] = "raw sector restoration was not independently verified"
-    return record
+        if (parsed["sector"] != "2" or parsed["write_attempted"] != "1" or
+                int(parsed["first_partition_lba"]) <= 2 or parsed["test_rc"] != "0" or
+                parsed["pattern_crc32"] != parsed["observed_crc32"]):
+            raise RuntimeError("raw-SD pass result contradicts its test oracles")
+        passed("emos-raw-sector-write-read-restore", oracle=parsed)
+    passed("emos-startup-unchanged")
+    return {"id": "a10-rp04-raw-sd-write", "component": "emos",
+            "status": "pass" if parsed["status"] == "pass" else "test-failure",
+            "duration_seconds": time.monotonic() - started,
+            "flashed_commit": receipt["component_commit"],
+            "flashed_artifact_sha256": receipt["artifact_sha256"],
+            "fixture_sha256": fixture["sha256"], "oracle": parsed,
+            "startup_unchanged": True, "checks": checks}
 
 
 def notify(config: dict, run: Path, success: bool, detail: str) -> dict:
     command = [str(ROOT / ".venv/bin/python"), str(ROOT / "qualification/notify.py"),
                "--url", config["extender_url"], "--job", str(run / "notification"),
                "--suite-output", str(run), "--expected", "success" if success else "failure"]
+    if ACTIVE_SESSION is not None:
+        ACTIVE_SESSION.check_boot()
+        command += ["--expected-boot", str(ACTIVE_SESSION.boot)]
     completed = subprocess.run(command)
     # The alert player runs first; leave the durable detailed failure last.
     if not success:
         try:
             type_line(config["extender_url"], run / "failure-screen.json",
-                      "ECHO FIRMWARE QUALIFICATION FAILED - " + detail[:40])
+                      "ECHO Firmware qualification failed - " + detail[:40])
         except Exception as error:
             return {"status": "failure", "exit_code": completed.returncode,
                     "screen_error": repr(error)}
@@ -753,6 +661,7 @@ def notify(config: dict, run: Path, success: bool, detail: str) -> dict:
 
 
 def main() -> int:
+    global ACTIVE_SESSION
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--flash-receipt", required=True, action="append", type=Path,
                         help="verified receipt; repeat once each for P4 and EMOS")
@@ -763,15 +672,19 @@ def main() -> int:
     parser.add_argument("--case", action="append",
                         help="targeted diagnostic only; default runs the full paired-component suite")
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--fixtures", required=True, type=Path,
+                        help="offline-built fixtures.json from qualification/build_fixtures.py")
+    parser.add_argument("--check-only", action="store_true",
+                        help="validate retained bytes, fixtures and plan offline; never contact boards")
+    parser.add_argument("--bench-ready", action="store_true",
+                        help="operator confirms exclusive bench, Legacy idle CLI, exact installed pair and commissioned reset")
     args = parser.parse_args()
     config = load_config(args.config.resolve(strict=True))
     receipts = {}
     receipt_paths = {}
     for path in args.flash_receipt:
         resolved = path.resolve(strict=True)
-        receipt = json.loads(resolved.read_text())
-        if receipt.get("schema") != 1 or receipt.get("status") != "verified":
-            parser.error(f"{path}: not a verified schema-1 installation")
+        receipt = load_receipt(resolved)
         target = receipt.get("target")
         if target not in ("p4", "emos") or target in receipts:
             parser.error(f"duplicate or unsupported flash-receipt target: {target}")
@@ -779,6 +692,9 @@ def main() -> int:
         receipt_paths[target] = str(resolved)
     manifest = json.loads(args.repair_manifest.resolve(strict=True).read_text())
     validate_repair_manifest(manifest)
+    profile = output_profile(config)
+    fixtures = verify_fixtures(args.fixtures.resolve(strict=True))
+    config["_fixtures"] = fixtures
     selected = [case for case in manifest["cases"]
                 if case["receipt_target"] in receipts]
     if args.case:
@@ -791,6 +707,18 @@ def main() -> int:
         parser.error("full qualification requires verified P4 and EMOS flash receipts")
     if not selected:
         parser.error("firmware acceptance requires at least one applicable installed-hardware case")
+    if args.check_only:
+        print(json.dumps({"status": "offline-preparation-verified", "hardware_contacted": False,
+                          "profile": profile, "cases": [c["id"] for c in selected],
+                          "required_automated_checks": sum(c["required_checks"] for c in selected),
+                          "manual_cases": manifest["output_profiles"][profile]["manual_cases"],
+                          "installed_pair_freshly_verified": False,
+                          "hardware_ready": False,
+                          "remaining": ["exclusive bench and verified idle CLI", "current paired identities",
+                                        "commissioned reset and fixture deployment", "physical execution and Author review"]}, indent=2))
+        return 0
+    if not args.bench_ready:
+        parser.error("hardware execution requires --bench-ready after exclusive bench/CLI/identity/reset preflight")
     run = (args.output or ROOT / "agents/hardware-validation" /
            ("qualification-" + utc_stamp() + "-" +
             "-".join(receipts[key]["component_commit"][:8] for key in sorted(receipts)))).resolve()
@@ -801,10 +729,28 @@ def main() -> int:
     atomic_json(run / "request.json", {
         "flash_receipts": receipt_paths,
         "hardware_cases": [case["id"] for case in selected],
+        "output_profile": profile, "fixtures": str(args.fixtures.resolve()),
+        "operator_preflight_confirmed": True,
     })
     started = time.monotonic()
-    announce(f"FULL INSTALLED-SYSTEM QUALIFICATION START — {len(selected)} hardware case(s)")
+    announce(f"{'Targeted diagnostic' if args.case else 'Complete installed-pair qualification'} start — {len(selected)} hardware case(s)")
 
+    preparation_started = time.monotonic()
+    try:
+        session = Session(config, run, fixtures)
+        ACTIVE_SESSION = session
+        session.prepare()
+        if "emos" in receipts:
+            announce("Verifying the complete current EMOS ROM before physical cases")
+            session.verify_emos_rom(receipts["emos"])
+    except BaseException as error:
+        atomic_json(run / "summary.json", {"status": "preparation-failure", "error": repr(error),
+                    "hardware_cases_invoked": False, "started_at": started_at, "ended_at": utc_stamp(),
+                    "duration_seconds": time.monotonic() - started,
+                    "notification": "not sent; foreground requires reconciliation"})
+        ACTIVE_SESSION = None
+        return 1
+    preparation_seconds = time.monotonic() - preparation_started
     physical = []
     results_by_id = {}
     for case in selected:
@@ -821,6 +767,8 @@ def main() -> int:
             announce("BLOCKED " + case["id"] + " — prerequisite: " + ", ".join(blocked_by))
             continue
         announce("RUN " + case["id"])
+        case_started = time.monotonic()
+        case_started_at = utc_stamp()
         try:
             receipt = receipts[case["receipt_target"]]
             if case["driver"] == "installed-p4-smoke":
@@ -834,8 +782,10 @@ def main() -> int:
         except BaseException as error:
             record = {"id": case["id"], "applies_to": case["applies_to"],
                       "status": "infrastructure-error", "error": repr(error)}
-            if isinstance(error, UnsafeMainboardState):
-                record["foreground_unsafe"] = True
+            # A failed physical driver may leave uncertain command/service
+            # ownership. No dependent test, reset or notification can assume CLI.
+            record["foreground_unsafe"] = True
+            session.unsafe = True
             checks_path = run / case["id"] / "checks.json"
             if checks_path.is_file():
                 record["checks"] = json.loads(checks_path.read_text())
@@ -845,20 +795,39 @@ def main() -> int:
             record["error"] = (f"case reported {len(record.get('checks', ()))} checks; "
                                f"manifest requires {case['required_checks']}")
         physical.append(record)
+        record.update(started_at=case_started_at, ended_at=utc_stamp(),
+                      total_case_seconds=time.monotonic() - case_started)
         results_by_id[case["id"]] = record
         atomic_json(run / (case["id"] + ".json"), record)
         announce(record["status"].upper() + " " + case["id"])
 
-    success = all(item["status"] == "pass" for item in physical)
-    infrastructure_failed = any(item["status"] == "infrastructure-error"
-                                for item in physical)
+    restoration_started = time.monotonic()
+    restoration = {"status": "blocked", "reason": "unsafe foreground"}
+    if not session.unsafe:
+        try:
+            session.restore()
+            restoration = {"status": "verified"}
+        except BaseException as error:
+            restoration = {"status": "failed", "error": repr(error)}
+            session.unsafe = True
+    restoration["duration_seconds"] = time.monotonic() - restoration_started
+    success = all(item["status"] == "pass" for item in physical) and restoration["status"] == "verified"
+    infrastructure_failed = (restoration["status"] != "verified" or
+                             any(item["status"] == "infrastructure-error" for item in physical))
     status = ("success" if success else
               "infrastructure-failure" if infrastructure_failed else "test-failure")
     summary = {
+        "output_profile": profile, "full_suite": not bool(args.case),
+        "qualification_state": "awaiting-author-review" if success and not args.case else "not-qualified",
+        "manual_cases_required": manifest["output_profiles"][profile]["manual_cases"],
+        "restoration": restoration,
+        "preparation_seconds": preparation_seconds,
+        "clock": "host monotonic seconds; operational timing, not independently calibrated",
         "schema": 1, "status": status, "started_at": started_at,
         "duration_seconds": time.monotonic() - started,
         "flashed": {target: {key: receipt.get(key) for key in
-                    ("target", "component_commit", "build_id", "artifact_sha256")}
+                    ("target", "component_commit", "build_id", "artifact_sha256",
+                     "installed_readback_sha256", "source", "verification_scope")}
                     for target, receipt in receipts.items()},
         "physical_cases": physical,
         "counts": {
@@ -876,6 +845,8 @@ def main() -> int:
     detail = next((item["id"] for item in physical if item["status"] != "pass"),
                   "installed-hardware")
     blockers = notification_blockers(physical)
+    if session.unsafe and not blockers:
+        blockers = ["lifecycle-restoration"]
     if blockers:
         summary["notification"] = {
             "status": "skipped", "reason": "unsafe-mainboard-foreground",
@@ -885,9 +856,31 @@ def main() -> int:
         announce("NOTIFICATION SKIPPED — unsafe mainboard foreground: " +
                  ", ".join(blockers))
     else:
+        notification_started = time.monotonic()
         summary["notification"] = notify(config, run, success, detail)
+        summary["notification"]["duration_seconds"] = time.monotonic() - notification_started
+        if summary["notification"]["status"] != "success":
+            summary["status"] = "infrastructure-failure"
+            summary["qualification_state"] = "not-qualified"
+            success = False
+        # Verify without changing modes or clearing the terminal spoken cue.
+        # A player that changes entry modes fails qualification, not a silent
+        # post-notification mode repair.
+        try:
+            session.verify_entry()
+            session.cleanup()
+            type_line(config["extender_url"], run / "terminal-verdict.json",
+                      "ECHO Qualification " + ("automated checks passed; visual review pending" if success else "failed"))
+        except BaseException as error:
+            summary["notification"]["restoration_error"] = repr(error)
+            summary["status"] = "infrastructure-failure"
+            summary["qualification_state"] = "not-qualified"
+            success = False
+    summary["total_duration_seconds"] = time.monotonic() - started
+    summary["ended_at"] = utc_stamp()
     atomic_json(run / "summary.json", summary)
-    announce("FIRMWARE QUALIFICATION " + status.upper())
+    ACTIVE_SESSION = None
+    announce("Firmware automated qualification " + summary["status"])
     print("Summary: " + str(run / "summary.json"))
     return 0 if success else 1
 

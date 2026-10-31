@@ -204,7 +204,7 @@ before future output qualification; do not assume that a current firmware cap
 has been verified. See PLAN-001-N04 in the disposition table. Old experiment
 headings no longer compete with the approved current sequence.
 
-- [ ] **[RELEASE-001 — Combined native P4-PC v0.2.1 promotion](docs/tasks/RELEASE-001.md)** — Source integration and exact r16 update archives verified. Next: offline runner/output-profile and exact paired receipt adaptation, then separately authorized hardware qualification and bounded visual review before current selection/tag. Bench occupied; no hardware access during current preparation. Older standalone v0.2.0 promotion is consolidated into this target.
+- [ ] **[RELEASE-001 — Combined native P4-PC v0.2.1 promotion](docs/tasks/RELEASE-001.md)** — Source integration and exact r16 update archives verified. Offline runner/output-profile and retained paired receipt preparation complete. Next: fresh bench identity/reset/cue preflight and deployment, then stop for invocation readiness; physical qualification and bounded visual review precede selection/tag. Bench occupied; no hardware access during this tranche. Older standalone v0.2.0 promotion is consolidated into this target.
 
 ## Deferred game-renderer experiments
 

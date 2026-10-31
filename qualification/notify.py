@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from keyboard import Client as KeyboardClient, key_usage, text_events  # noqa: E402
 from sdcard import Client as SdClient  # noqa: E402
+EXPECTED_BOOT = None
 
 
 def save(path: Path, value: object) -> None:
@@ -30,13 +31,18 @@ def save(path: Path, value: object) -> None:
 
 def status(url: str) -> dict:
     with urlopen(url.rstrip("/") + "/keyboard/status", timeout=5) as response:
-        return json.load(response)
+        value = json.load(response)
+    if EXPECTED_BOOT is not None and value.get("boot") != EXPECTED_BOOT:
+        raise RuntimeError("Agon reset before notification; no input authorized in the new epoch")
+    return value
 
 
 def send(url: str, journal: Path, events: list[tuple[int, int]]) -> None:
     client = KeyboardClient(url, journal)
     try:
         observed = client.status()
+        if EXPECTED_BOOT is not None and observed.get("boot") != EXPECTED_BOOT:
+            raise RuntimeError("Agon reset before notification event dispatch")
         client.open(observed)
         client.send(events)
         client.cancel()
@@ -53,12 +59,14 @@ def exit_attention_service(url: str, journal: Path, timeout: float = 15) -> None
     deadline = time.monotonic() + timeout
     last: object = "no response"
     while time.monotonic() < deadline:
+        if EXPECTED_BOOT is not None:
+            status(url)
         client = SdClient(url, journal)
         try:
             observed = client.status()
             last = observed
             if observed.get("online"):
-                client.connect()
+                client.connect(require_fast=True)
                 client.rpc(11)
                 return
         except Exception as error:
@@ -70,38 +78,40 @@ def exit_attention_service(url: str, journal: Path, timeout: float = 15) -> None
 
 
 def main() -> int:
+    global EXPECTED_BOOT
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", required=True)
     parser.add_argument("--job", required=True, type=Path)
     parser.add_argument("--suite-output", required=True, type=Path)
     parser.add_argument("--expected", required=True, choices=("success", "failure"))
+    parser.add_argument("--expected-boot", type=int,
+                        help="block all input if the qualification epoch changed")
     args = parser.parse_args()
+    EXPECTED_BOOT = args.expected_boot
     args.job.mkdir(parents=True, exist_ok=True)
     receipt = args.job / "notification.json"
     journal = args.job / "notification-keyboard.json"
     started = time.monotonic()
-    label = "FIRMWARE QUALIFICATION INFRASTRUCTURE FAILURE"
+    label = "Firmware qualification infrastructure failure"
     try:
         summary_path = args.suite_output / "summary.json"
         summary = json.loads(summary_path.read_text()) if summary_path.is_file() else {}
         suite_status = summary.get("status", "missing-summary")
         if args.expected == "success" and suite_status == "success":
-            label = "FIRMWARE QUALIFICATION PASS"
+            label = ("Diagnostic checks passed; full suite pending" if summary.get("full_suite") is False else
+                     "Qualification automated checks passed; visual review pending")
         elif suite_status == "test-failure":
-            label = "FIRMWARE QUALIFICATION TEST FAILURE"
+            label = "Firmware qualification test failure"
         elif suite_status == "timeout":
-            label = "FIRMWARE QUALIFICATION TIMEOUT"
+            label = "Firmware qualification timeout"
         elif suite_status == "infrastructure-failure":
-            label = "FIRMWARE QUALIFICATION INFRASTRUCTURE FAILURE"
+            label = "Firmware qualification infrastructure failure"
         else:
-            label = "FIRMWARE QUALIFICATION FAILURE"
+            label = "Firmware qualification failure"
 
-        # Escape is bounded and harmless at an ordinary prompt. It gives a
-        # failed foreground fixture one chance to return; this hook never resets.
-        if args.expected == "failure":
-            escape = key_usage("escape")
-            send(args.url, journal, [(escape, 1), (escape, 0)])
-        type_line(args.url, journal, "EMOS LEGACY")
+        # The caller must prove a safe CLI before notification. Do not try to
+        # escape an unknown foreground or recover a workload as an alert hook.
+        type_line(args.url, journal, "EMOS LEGACY --keep-display")
         type_line(args.url, journal, "EXEC /extender/attention.txt")
         # The retained player has no completion endpoint. Preserve its proven
         # bounded playback allowance, then restore the durable verdict last.

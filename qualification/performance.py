@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Measure installed P4 application cadence and video delivery on real hardware.
+"""Retained cadence analysis/build helpers; physical entry points are disabled.
 
-The suite never flashes firmware.  It builds commit-pinned, finite fixtures,
-stages them through the admitted EMOS SD service, and selects each video mode
-from a one-shot /autoexec.txt before the fixture starts.  The original startup
-file is restored byte-for-byte on success and whenever an active SD service
-makes failure recovery safe.
+The historical coordinator launched fixtures through rewritten startup. It must
+be migrated to the current test-appliance lifecycle before any hardware reuse.
+Canonical release qualification is qualification/run.py; performance is separate.
 """
 
 from __future__ import annotations
@@ -43,9 +41,7 @@ from analyze import summarize
 from hardware_validation import (atomic_json, clean_snapshot, load_config,
                                  resolve_commit, sha256, type_line, utc_stamp,
                                  wait_sd_service)
-from run import (close_retained_backup, read_json, require_extender_startup,
-                 reset_and_wait, restore_startup,
-                 try_restore_startup_from_active_service)
+from run import read_json
 from video import VideoSession
 
 
@@ -68,7 +64,7 @@ def wait_result_service(url: str, state: Path, case_id: str,
             current = client.status()
             last = current
             if current.get("online"):
-                client.connect()
+                client.connect(require_fast=True)
                 keep = True
                 return client
         except Exception as error:
@@ -365,234 +361,13 @@ def run_case(config: dict, case: dict, client, fixture_path: str,
              result_path: str, output: Path,
              symbols: Path, raw_start: int | None, raw_size: int | None,
              reset: list[str], video_timing_available: bool) -> tuple[dict, object]:
-    output.mkdir(parents=True, exist_ok=False)
-    url = config["extender_url"]
-    next_client = None
-    observer = None
-    try:
-        payload = build_startup(case, fixture_path, result_path, raw_start, raw_size)
-        (output / "autoexec.txt").write_bytes(payload)
-        client.upload("/autoexec.txt", payload, True, fast=True)
-        if client.download("/autoexec.txt") != payload:
-            raise RuntimeError("one-shot startup failed independent readback")
-        close_retained_backup(client, "/autoexec.txt", output / "prior-autoexec.txt")
-        geometry = MODES[case["mode"]]
-        observer = VideoObserver(url, case["video_hz"]) if case["video_hz"] else None
-        if observer:
-            announce(f"Opening one controlled {case['video_hz']}-Hz video consumer before stopping the staging listener")
-            observer.start()
-        before = (read_json(url, "/diagnostics/video-timing")
-                  if video_timing_available and not case["video_hz"] else None)
-        client.rpc(11)
-        client.lock.close()
-
-        announce(f"Pulsing Agon reset; {case['id']} then measures "
-                 f"{PERFORMANCE_SECONDS} seconds of wall time unattended")
-        started = time.monotonic()
-        subprocess.run(reset, check=True)
-        announce("Waiting for the 30-second measurement, boundary frame, result save, and listener")
-        next_client = wait_result_service(
-            url, output / "sd-result.json", case["id"], timeout=240)
-        finished = time.monotonic()
-        video = observer.finish(started, finished, geometry) if observer else None
-        after = (read_json(url, "/diagnostics/video-timing")
-                 if before is not None else None)
-        display = read_json(url, "/display/status")
-        if (display.get("mode"), display.get("width"), display.get("height")) != (
-                case["mode"], geometry[0], geometry[1]):
-            raise RuntimeError(f"fixture ended with unexpected display status: {display}")
-
-        data = next_client.download(result_path)
-        (output / "raw.bin").write_bytes(data)
-        if case["kind"] == "nurples":
-            timing = parse_nurples(data, symbols, output / "combined.csv")
-        else:
-            timing = parse_pacing(data, output / "combined.csv")
-        if before is not None and after is not None:
-            deltas = {name: phase_count(after, name) - phase_count(before, name)
-                      for name in ("snapshot", "socket_send")}
-            if any(deltas.values()):
-                raise RuntimeError(
-                    "video work occurred during a no-video case; close every browser consumer: " +
-                    repr(deltas))
-        else:
-            deltas = None
-        record = {
-            "id": case["id"], "status": "pass", "mode": case["mode"],
-            "geometry": list(geometry), "workload": case["kind"],
-            "video_consumer": bool(case["video_hz"]),
-            "video_request_cap_hz": case["video_hz"],
-            "no_video_counter_check": (
-                "pass" if deltas is not None else
-                "not-applicable" if case["video_hz"] else
-                "optional-endpoint-unavailable; operator browser exclusion required"),
-            "host_fixture_seconds": finished - started,
-            "application": timing, "video": video, "no_video_phase_deltas": deltas,
-            "display": display,
-        }
-        atomic_json(output / "summary.json", record)
-        return record, next_client
-    except BaseException:
-        if observer is not None:
-            observer.stop.set()
-            observer.thread.join(35)
-        # Leave an established result listener online for the caller's exact
-        # startup recovery, but release this process's state-file lock.
-        if next_client is not None:
-            next_client.lock.close()
-        else:
-            client.lock.close()
-        raise
+    raise RuntimeError("Physical cadence runner disabled: migrate startup/CLI lifecycle before reuse")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--flash-receipt", required=True, action="append", type=Path,
-                        help="verified receipt; repeat once each for P4 and EMOS")
-    parser.add_argument("--config", type=Path,
-                        default=ROOT / "agents/hardware-validation.local.json")
-    parser.add_argument("--nurples-source", type=Path,
-                        default=ROOT.parent / "nurples-repair")
-    parser.add_argument("--output", type=Path)
-    args = parser.parse_args()
-    try:
-        receipts, receipt_paths = validate_receipts(args.flash_receipt)
-    except ValueError as error:
-        parser.error(str(error))
-    config = load_config(args.config.resolve(strict=True))
-    nurples_source = args.nurples_source.resolve(strict=True)
-    video_timing_available, _ = video_timing_capability(config["extender_url"])
-    if video_timing_available:
-        announce("Optional P4 video-work counters are available for no-video checks")
-    else:
-        announce("Optional P4 video-work counters are not present in this build; "
-                 "recording operator-enforced browser exclusion")
-    token = uuid.uuid4().hex[:8]
-    run = (args.output or ROOT / "agents/hardware-validation" /
-           ("performance-" + utc_stamp() + "-" + token)).resolve()
-    if run.exists() or run.is_symlink():
-        parser.error("output must be a fresh nonexisting path")
-    run.mkdir(parents=True)
-    atomic_json(run / "request.json", {
-        "flash_receipts": receipt_paths, "nurples_source": str(nurples_source),
-        "nurples_commit": NURPLES_COMMIT,
-        "wall_seconds_per_case": PERFORMANCE_SECONDS,
-        "mos_ticks_per_case": PERFORMANCE_TICKS,
-        "maximum_updates_per_case": PERFORMANCE_CAPACITY,
-        "optional_video_timing_available": video_timing_available,
-        "cases": [item["id"] for item in cases()],
-    })
-    artifacts = build_fixtures(nurples_source, run)
-    reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
-             "--config", str(Path(config["reset_config"]).resolve(strict=True))]
-    url = config["extender_url"]
-    announce("Resetting the Agon and verifying Extender keyboard admission before staging")
-    reset_and_wait(reset, url)
-    type_line(url, run / "keyboard-legacy.json", "EMOS LEGACY")
-    type_line(url, run / "keyboard-service.json", "EMOS sdserve --fast /")
-    client = wait_sd_service(url, run / "sd-stage.json")
-    original = b""
-    results = []
-    failure: BaseException | None = None
-    startup_restored = False
-    try:
-        original = client.download("/autoexec.txt")
-        require_extender_startup(original)
-        (run / "original-autoexec.txt").write_bytes(original)
-        for asset, expected_size in NURPLES_ASSETS.items():
-            size, attributes = client.stat_entry(asset)
-            if attributes & 16 or size != expected_size:
-                raise RuntimeError(f"required isolated Nurples asset is wrong: {asset}")
-        remote = {
-            "empty": f"/extender/fixtures/perf-{token}-empty.bin",
-            "nurples": f"/extender/fixtures/perf-{token}-nurples.bin",
-        }
-        for name in ("empty", "nurples"):
-            announce(f"Staging and independently verifying the {name} fixture")
-            close_retained_backup(client, remote[name], run / f"old-{name}-backup.bin")
-            data = artifacts[name].read_bytes()
-            client.upload(remote[name], data, True, fast=True)
-            if client.download(remote[name]) != data:
-                raise RuntimeError(f"{name} fixture independent readback failed")
-            close_retained_backup(client, remote[name], run / f"replaced-{name}-backup.bin")
-
-        syms = {match.group(1): int(match.group(2), 16) for match in re.finditer(
-            r"^(\w+) \$([0-9a-fA-F]+)", artifacts["symbols"].read_text(), re.M)}
-        raw_start = syms["gt_data"]
-        raw_size = syms["gt_data_end"] - raw_start
-        for case in cases():
-            announce("RUN " + case["id"])
-            suffix = case["id"].replace("-", "")
-            result_path = f"/agents/extender/results/p{token}-{suffix}.raw"
-            active_client = client
-            client = None
-            record, client = run_case(
-                config, case, active_client, remote[case["kind"]], result_path,
-                run / case["id"], artifacts["symbols"],
-                raw_start if case["kind"] == "nurples" else None,
-                raw_size if case["kind"] == "nurples" else None, reset,
-                video_timing_available)
-            results.append(record)
-            app_fps = record["application"]["updates_per_second"]
-            message = f"PASS {case['id']} — application {app_fps:.2f} updates/s"
-            if record["video"]:
-                message += (f", delivered video "
-                            f"{record['video']['delivered_frames_per_second']:.2f} frames/s")
-            announce(message)
-        announce("Restoring and independently verifying the exact pre-suite startup")
-        restore_startup(client, original, run, "final-autoexec-backup.txt")
-        startup_restored = True
-        client.lock.close()
-        client = None
-        reset_and_wait(reset, url)
-    except BaseException as error:
-        failure = error
-        if client is not None:
-            try:
-                if original:
-                    announce("Failure occurred with an active listener; restoring the exact startup")
-                    restore_startup(client, original, run, "failure-autoexec-backup.txt")
-                    startup_restored = True
-            except BaseException as cleanup_error:
-                failure = RuntimeError(
-                    f"performance case failed and exact startup restoration also failed: "
-                    f"case={error!r}; restoration={cleanup_error!r}")
-            finally:
-                client.lock.close()
-                client = None
-        elif original:
-            restored, detail = try_restore_startup_from_active_service(url, original, run)
-            startup_restored = restored
-            announce("Failure startup recovery: " + detail)
-            if not restored:
-                announce("Agon was not reset because fixture foreground safety is unknown")
-
-    summary = {
-        "schema": 1, "status": "success" if failure is None else "infrastructure-failure",
-        "flashed": {target: {key: receipt.get(key) for key in
-                    ("target", "component_commit", "build_id", "artifact_sha256")}
-                    for target, receipt in receipts.items()},
-        "fixtures": {"nurples_source_commit": artifacts["nurples_commit"],
-                     "empty_sha256": sha256(artifacts["empty"]),
-                     "nurples_sha256": sha256(artifacts["nurples"])},
-        "optional_video_timing_available": video_timing_available,
-        "cases": results, "startup_restored": startup_restored,
-    }
-    if failure is not None:
-        summary["error"] = repr(failure)
-    atomic_json(run / "summary.json", summary)
-    print("\nPERFORMANCE QUALIFICATION " + summary["status"].upper().replace("-", " "))
-    print("Summary: " + str(run / "summary.json"))
-    if results:
-        print("\ncase                                  app updates/s   delivered video fps")
-        for record in results:
-            delivered = (f"{record['video']['delivered_frames_per_second']:.2f}"
-                         if record["video"] else "none")
-            print(f"{record['id']:<37}"
-                  f"{record['application']['updates_per_second']:>12.2f}   {delivered:>19}")
-    if failure is not None:
-        raise failure
-    return 0
+    parser.parse_args()
+    parser.error("physical cadence execution disabled; use qualification/run.py for release qualification")
 
 
 if __name__ == "__main__":

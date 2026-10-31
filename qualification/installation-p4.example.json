@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "target": "p4",
+  "component_commit": "FULL_40_HEX_COMMIT",
+  "build_id": "EXACT_TESTED_BUILD",
+  "artifact": {
+    "path": "/absolute/path/to/app.bin",
+    "sha256": "EXPECTED_SHA256"
+  },
+  "readback": {
+    "path": "/absolute/path/to/independent-full-readback.bin",
+    "sha256": "EXPECTED_SHA256"
+  },
+  "preimage": {
+    "path": "/absolute/path/to/preinstall-full-image.bin",
+    "sha256": "EXPECTED_SHA256"
+  },
+  "installation_evidence": {
+    "path": "/absolute/path/to/original-installation-evidence.json",
+    "sha256": "EXPECTED_SHA256"
+  },
+  "flash_offset": 131072,
+  "written_sector_range": [
+    131072,
+    1921024
+  ],
+  "source": {
+    "archive": {
+      "path": "/absolute/path/to/source.tar.gz",
+      "sha256": "EXPECTED_SHA256"
+    },
+    "inventory": {
+      "path": "/absolute/path/to/source-inputs.json",
+      "sha256": "EXPECTED_SHA256"
+    },
+    "build_manifest": {
+      "path": "/absolute/path/to/build-manifest.json",
+      "sha256": "EXPECTED_SHA256"
+    }
+  }
+}
