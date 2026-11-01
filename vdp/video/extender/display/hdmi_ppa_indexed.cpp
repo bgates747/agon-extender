@@ -17,6 +17,11 @@ bool HdmiPpaIndexed::initialize() {
   if(!source_ || !transparent_){reset();return false;}
   if(esp_cache_msync(transparent_,maximumPixels,ESP_CACHE_MSYNC_FLAG_DIR_C2M)!=ESP_OK){reset();return false;}
   ppa_client_config_t config{};config.oper_type=PPA_OPERATION_BLEND;config.max_pending_trans_num=1;
+  // HDMI-002 trial: IDF5.5.5 defaults to128B. Its public client contract
+  // permits smaller bursts to leave bandwidth for other peripherals, at a
+  // PPA throughput cost. Test32B against the real-time strip-copy deadline;
+  // retain identical pixels, ownership and cadence. Physical proof pending.
+  config.data_burst_length=PPA_DATA_BURST_LENGTH_32;
   ppa_client_handle_t client{};
   if(ppa_register_client(&config,&client)!=ESP_OK){reset();return false;}
   client_=client;

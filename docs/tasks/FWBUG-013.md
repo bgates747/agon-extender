@@ -28,8 +28,9 @@ R22 extends task chunking to invalidation and passes build, installation and
 readback, but the third wide clear still aborts1671µs against1600µs. The Author
 restores bench access2026-11-01; standing recovery completes. R23 same-refill
 phases locate1534µs after API submission and only22µs in source cache. R24
-separates driver setup/admission from DMA/IRQ under the linked repair plan.
-Physical cursor/scaler, full qualification and actual visual review remain pending.
+locates1452µs after DMAstart within1839µs total; both phase sums match. R25 trials
+the public32B PPA burst setting, preserving every guard, under the linked repair
+plan. Physical cursor/scaler, full qualification and actual visual review remain pending.
 
 F13-S02 — The renewed Author report and ongoing repair authorization supersede
 the original filing-only boundary for this bounded correction and monitored

@@ -14,6 +14,10 @@ bool HdmiPpaScaler::initialize() {
   source_=static_cast<std::uint8_t *>(heap_caps_aligned_alloc(alignment,320*240*3,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
   if(!source_)return false;
   ppa_client_config_t config{};config.oper_type=PPA_OPERATION_SRM;config.max_pending_trans_num=1;
+  // HDMI-002: use the same experimental32B background-transfer quantum as
+  // indexed expansion. IDF documents the throughput/bus-bandwidth tradeoff;
+  // this does not change filtering, pixels, ownership or frame cadence.
+  config.data_burst_length=PPA_DATA_BURST_LENGTH_32;
   ppa_client_handle_t client{};
   if(ppa_register_client(&config,&client)!=ESP_OK){reset();return false;}
   client_=client;return true;

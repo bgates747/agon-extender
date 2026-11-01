@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r205
-updated_at: 2026-11-01T19:58:57Z
+registry_revision: r206
+updated_at: 2026-11-01T20:23:22Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -43,12 +43,13 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r24
+    latest_identity: indexed-hdmi-r25
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
-      - r24 adds context-filtered hooks to a pinned generated copy-helper derivative to separate descriptor/admission/setup from DMA-and-IRQ time; all operations/priorities/bursts/guards unchanged. Host actual-code/linkage checks pass; native build/physical diagnostic pending.
+      - r25 trials the public32B PPA client burst setting for BLEND/SRM instead of default128B, retaining all other r24 operations/options/probes/guards. Two-file clean source9c393360; native build and physical result pending. Throughput tradeoff must be measured.
+      - r24 finer timing installs/readback verifies and reproduces sixthclear1839us:1452us after DMAstart,36descriptor/45admission/91setup/9handoff. Bothsamejob sums match. Preserve diagnostic/recovery; stablemode96 baseline presents30.03updates/s on60.07Hz scanout, conversionwall20.20ms. No320/raw/fullsuite or optical pass.
       - r23 timing diagnostic installs/readback verifies and reproduces fourthclear1726us: samejob phases6queue/59prepare/22sourcecache/1534submit-to-callback/105finish. Preserve diagnostic and completed recovery; no320/raw/full-suite or optical pass. This is not a timing remedy.
       - r22 task invalidation chunking passes build/application-only readback but fails the third isolated wide clear at1671us. Preserve failure/completed recovery; no320/raw/full-suite or optical pass. Task cache chunking has not removed the fault.
       - r21 C2M chunking alone fails the fifth isolated wide clear at1632us; first4cycles pass. Preserve verified installation/failure and complete recovery; no320/raw/full suite or optical pass.

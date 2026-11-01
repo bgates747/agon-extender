@@ -185,3 +185,38 @@ firmware remain unchanged. No automatic test invocation follows reset.
    unrequested inputs/options before app-only deployment and staged diagnosis.
 6. Stop/preserve/recover the next fault. Choose one bounded timing remedy from
    measured phases; do not change the1600µs guard or claim optical acceptance.
+
+## R24 result and bounded PPA burst trial
+
+1. [The r24 diagnostic record](R24-CLEAR-DIAGNOSTIC.json) preserves the sixth
+   labeled clear fault1839µs. Its five phases sum exactly:
+   queue19, preparation61, source-cache18, API1633, finish108µs. The valid inner
+   split also sums exactly: descriptor36, admission45, channel-setup91,
+   DMA-start-to-driver-callback1452, handoff9µs. This sample does not support
+   a long channel-admission wait or dominant source-cache call. DMA time,
+   IRQ delivery and driver cleanup are still not independently measured.
+2. Preserve the complete failure and standing recovery before another workload.
+   No320/raw/full suite runs. R24 app0c69cd69/source46d46141 and its complete
+   readbacks remain exact evidence, not a fixed-firmware qualification.
+3. Pinned SDK `esp_driver_ppa/include/driver/ppa.h` exposes per-client
+   `data_burst_length`; `hal/include/hal/ppa_types.h` explicitly supports32B.
+   `ppa_core.c` defaults to128B and the BLEND/SRM drivers pass that selection
+   to DMA2D. The shared PSRAM/DMA resources establish a bounded contention
+   hypothesis; these timestamps alone do not prove AXI starvation.
+4. Prepare r25 from exact r24, selecting32B instead of the default128B for the
+   existing BLEND and SRM presentation clients. This applies the same background
+   transfer quantum to both conversion paths. Retain every operation, pixel,
+   ownership rule, cadence, cache policy, probe and1600µs guard. No clock,
+   wiring, memory layout, mainboard, EMOS or startup change. No custom renderer
+   or new SDK arbitration policy. Smaller bursts may affect throughput; do not
+   claim a free performance improvement from source alone.
+5. Preserve a bounded stable-mode96 baseline using existing periodic output
+   telemetry, if a passive capture can be established without reset. Compare
+   the same identified workload on r25; separate scanoutHz, presentation updates,
+   conversion wall time and serial/host time. Stop on a real fault. No optical
+   pass or whole-game throughput claim follows from these counters.
+6. Freeze clean source, require exact two-renderer-file delta and unchanged
+   options/dependencies/SDK/probes, build/verify app-only installation, then
+   stagedwide diagnosis. Stop/preserve/recover failure. Only a passing bounded
+   trial permits preparing the final repair without temporary probes and
+   reassessing cache experiments, before cursor/scaler and canonical checks.
