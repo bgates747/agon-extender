@@ -98,7 +98,7 @@ installation, counters, completed recovery and original evidence hashes.
 
 The [r22 preparation record](R22-PREPARATION.json) verifies clean source72bd4de0,
 native build/compiled validation and independent comparison of5537 inputs.
-Application1789856B/4a7277e7 is retained locally, not installed. Only six owned
+Application1789856B/4a7277e7 was retained locally at that offline boundary. Only six owned
 recipe/metadata files differ from r21; the sole modified SDK source is the
 pinned cache derivative. Twenty-two build tests and actual API/helper sanitizer
 checks pass, including the original whole-plane negative control. Renderer,
@@ -108,8 +108,46 @@ remain identical. Actual cache hardware, deadline and optical proof remain.
 The Author withdrew bench access while r22 built; the offline preparation
 record remains immutable evidence of that boundary. On 2026-11-01 the Author
 reports the bench restored and authorizes resuming testing and independent
-work. Re-establish actual CLI, startup and installed component identities before
-the r22 application-only installation. Then run the declared staged and complete
-checks with first-fault preservation and standing recovery. Preserve normal
-startup, unchanged companion firmware, exact rollback and the separate actual
-Author visual-review gate. No automatic test invocation follows reset.
+work. Fresh actual CLI, startup, complete EMOS ROM and listener identities pass.
+Application-only installation independently verifies the exact app and unchanged
+bytes outside its erase sectors. The third staged wide clear fails; the
+[r22 failure record](R22-CLEAR-FAILURE.json) preserves the result and completed
+standing recovery. No320/raw/full-suite case runs. Normal startup and companion
+firmware remain unchanged. No automatic test invocation follows reset.
+
+## R22 result and bounded phase diagnostic
+
+1. The first two isolated cycles complete. Third96 selection/dwell passes;
+   VDU12 faults1671µs against the unchanged1600µs guard. Copy maximum1551µs,
+   queue maximum489µs, frame1064 stops. These maxima need not describe the same
+   refill. Task writeback/invalidation chunking has not removed the failure.
+2. Agon-only reset restores actual CLI but not stopped scanout. P4 clean
+   initialization followed by Agon reset restores advancing fault-free mode0,
+   USB devices and two actual CLI/listener/read/EXIT exchanges. Startup remains
+   the exact108 bytes. No failed workload is replayed during recovery.
+3. Pinned SDK `components/esp_lcd/src/esp_async_fbcpy.c` synchronizes descriptors,
+   requests a sibling RX/TX pair through DMA2D and calls the user callback at
+   receive EOF. `components/esp_hw_support/dma/dma2d.c` may queue requests when
+   channels are unavailable; it frees channels before the user callback. The
+   PPA BLEND driver also uses DMA2D and PSRAM. This source establishes shared
+   resources, not measured queue, bus or IRQ contention.
+4. `strip_start` performs destination and source cache operations before that
+   API call. Existing copy timing starts before those operations, so it cannot
+   isolate hardware transfer time. Prepare r23 from exact r22 with additive
+   failed-refill phase evidence only: queue, preparation, source cache,
+   API-submit-to-callback and completion work. All five durations must refer
+   to the same failed refill and sum to its retirement-to-ready elapsed time.
+   API-submit-to-callback includes driver setup/admission, DMA and IRQ delivery;
+   do not describe it as measured hardware transfer time.
+5. Retain r22 configuration, renderer, USB/input, cursor/scaler behavior,
+   ownership and all deadline/abort checks. Publish only the first budget
+   failure through the existing read-only status route; no per-refill logging,
+   allocations, new service or extra IRQ exclusion. Use a larger bounded JSON
+   buffer and retain overflow rejection. Phase timing itself has overhead;
+   this is a diagnostic candidate, not a proposed timing fix or visual pass.
+6. Freeze and independently compare that three-file source delta, build and
+   verify an app-only installation. Run the separately identified staged wide
+   diagnostic, stop on its first fault and preserve/recover it. Only passing
+   earlier gates allows cursor/scaler or canonical qualification. Use measured
+   phases to choose the next bounded remedy; do not shrink chunks or increase
+   the guard without evidence.

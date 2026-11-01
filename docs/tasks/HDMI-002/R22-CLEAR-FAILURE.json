@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "status": "rejected-physical-regression",
+  "build_id": "indexed-hdmi-r22-b2026-10-31-20-20-02Z",
+  "source_commit": "72bd4de0e048c6e69e86d94529bcfea70867c876",
+  "app_sha256": "4a7277e735d7d51a7ffebae3f2006099a9ca2681fa5a029c60f96b6a7de64ab4",
+  "app_bytes": 1789856,
+  "installation_verified": true,
+  "flash_after_sha256": "356e748065de4167740559a8eb6c9596d9fd3c19277c9b4929e25558ffc529db",
+  "SDK_selection": "r21 C2M16KiB plus pinned esp_mm task invalidation derivative; ISR/non-yieldable paths unchanged",
+  "refill_guard_us": 1600,
+  "staged_cycles_planned": 8,
+  "staged_cycles_completed": 2,
+  "failed_step": "c2-cleared96",
+  "duration_seconds": 32.46094202902168,
+  "rolling": {
+    "frames": 1064,
+    "faults": 1,
+    "late": 0,
+    "over_budget": 1,
+    "underruns": 1,
+    "refill_max_us": 1671,
+    "free_internal": 55519,
+    "invalid_blocks": 0,
+    "sequence_errors": 0,
+    "cache_errors": 0,
+    "overlap": 0,
+    "first_fault": 2,
+    "first_error": 1671,
+    "queued": 8,
+    "queue_wait_max_us": 489,
+    "blocks": 15962,
+    "refills": 15961,
+    "refill_total_us": 8166217,
+    "copy_total_us": 7801611,
+    "copy_max_us": 1551,
+    "compose_total_us": 78603,
+    "compose_max_us": 58
+  },
+  "unperformed": [
+    "12 cursor/scaler cases including all320-mode cases",
+    "canonical suite",
+    "raw-sector I/O",
+    "Author optical review"
+  ],
+  "recovery": {
+    "Agon_only_actual_CLI_verified_but_HDMI_still_stopped": true,
+    "P4_clean_init_then_Agon_reset_completed": true,
+    "actual_CLI_exchanges": 2,
+    "startup_unchanged": true,
+    "startup_bytes": 108,
+    "mode": 0,
+    "rolling_faults": 0
+  },
+  "clock": "host monotonic seconds, not independently calibrated; P4 microsecond counters are cumulative maxima and cannot identify phases of a single failing operation",
+  "conclusion": "Task cache chunking has not removed the failure. Measure failed-refill phases before another timing remedy.",
+  "preserved": [
+    "EMOSv27",
+    "mainboardVDP",
+    "normalstartup",
+    "allDMAguards",
+    "exact rollback"
+  ],
+  "evidence_sha256": {
+    "wide-isolation-r22/result.json": "b52143d585a2030991bfeb493efaeec6d040552eb1334863f3ac5607ed1f3dd6",
+    "build-review.json": "14172737be5c9ddae50a8d695e77c395b0def2899e1dc065e92436e1429afed2",
+    "install-r22/flash-verification.json": "5d3f887c01263e7d5c0590674ef2d62eacd6d97cbd9f23721eecb3ccbc0d2d74",
+    "recovery-agon-cli/receipt.json": "858a134693fdc6773eb4d23b5fee39961ee59b66da58e0d7d7d01d19e5873843",
+    "recovery-paired-cli/receipt.json": "ad43d62c3215770bf35b7e6a161044a656338bb33308c075d2809ad19123e054"
+  }
+}

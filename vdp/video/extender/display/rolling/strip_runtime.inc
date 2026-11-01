@@ -55,6 +55,13 @@ static esp_async_fbcpy_handle_t strip_copier;
 static dw_gdma_channel_handle_t strip_channel;
 static strip_request strip_job;
 static int64_t strip_copy_begin;
+// HDMI-002: copy_max also includes cache maintenance and DMA2D admission. Keep
+// the phases of the SAME failed refill before choosing another timing remedy.
+// One outstanding job owns these timestamps. Publish only a failed job through
+// atomic counters; no printing, allocation, extra IRQ exclusion or wire traffic.
+static int64_t strip_source_begin, strip_source_end, strip_submit_begin;
+static atomic_uint strip_budget_available, strip_budget_queue, strip_budget_prepare;
+static atomic_uint strip_budget_source, strip_budget_submit, strip_budget_finish;
 
 static void strip_max(atomic_uint *p, unsigned value) {
     if (value > atomic_load(p)) atomic_store(p, value);
@@ -96,7 +103,8 @@ static void strip_release_job(void) {
     if(dispatch)strip_start(next);
 }
 static void strip_finish(void) {
-    unsigned elapsed = esp_timer_get_time() - strip_copy_begin;
+    const int64_t callback_begin = esp_timer_get_time();
+    unsigned elapsed = callback_begin - strip_copy_begin;
     atomic_fetch_add(&strip_copy_us, elapsed);
     strip_max(&strip_copy_max, elapsed);
     if (!atomic_load(&strip_faults) && !atomic_load(&strip_stopping)) {
@@ -119,11 +127,21 @@ static void strip_finish(void) {
     // duration gate must detect it even when it delays the DSI callback itself.
     if (STRIP_INJECT_LATE_TAG && strip_job.tag == STRIP_INJECT_LATE_TAG)
         esp_rom_delay_us(STRIP_REFILL_LIMIT_US + 2000);
-    elapsed = esp_timer_get_time() - strip_job.begin;
+    const int64_t finished = esp_timer_get_time();
+    elapsed = finished - strip_job.begin;
     atomic_fetch_add(&strip_refills, 1);
     atomic_fetch_add(&strip_total_us, elapsed);
     strip_max(&strip_max_us, elapsed);
     if (elapsed > STRIP_REFILL_LIMIT_US) {
+        if (!atomic_load(&strip_budget_available)) {
+            const unsigned source = strip_source_end - strip_source_begin;
+            atomic_store(&strip_budget_queue, strip_copy_begin - strip_job.begin);
+            atomic_store(&strip_budget_prepare, strip_submit_begin - strip_copy_begin - source);
+            atomic_store(&strip_budget_source, source);
+            atomic_store(&strip_budget_submit, callback_begin - strip_submit_begin);
+            atomic_store(&strip_budget_finish, finished - callback_begin);
+            atomic_store(&strip_budget_available, 1);
+        }
         atomic_fetch_add(&strip_over_budget, 1);
         strip_abort(STRIP_FAULT_BUDGET,elapsed);
     }
@@ -161,6 +179,7 @@ static void strip_fill(unsigned slot, unsigned block, unsigned generation) {
 }
 static void strip_start(strip_request request) {
     strip_job=request;strip_copy_begin=esp_timer_get_time();
+    strip_source_begin=strip_source_end=strip_submit_begin=strip_copy_begin;
     unsigned slot=request.slot,block=request.block;
     strip_max(&strip_queue_wait_max,strip_copy_begin-request.begin);
     if(atomic_load(&strip_faults) || atomic_load(&strip_stopping)) {strip_release_job();return;}
@@ -190,13 +209,17 @@ static void strip_start(strip_request request) {
         strip_release_job();
         return;
     }
-    if (!strip_scene.width || bottom <= top) { strip_finish(); return; }
+    if (!strip_scene.width || bottom <= top) {
+        strip_submit_begin=esp_timer_get_time(); strip_finish(); return;
+    }
     // The persistent panel source can be written by the other CPU in single-
     // buffered mode. Clean this aligned source strip before DMA2D reads it.
     // This retains single-buffer scanout tearing semantics, not frame atomicity.
+    strip_source_begin=esp_timer_get_time();
     if(!strip_sync(strip_background+first_y*strip_width*3, strip_bytes, ESP_CACHE_MSYNC_FLAG_DIR_C2M)) {
         strip_release_job();return;
     }
+    strip_source_end=esp_timer_get_time();
     esp_async_fbcpy_trans_desc_t transaction = {
         .src_buffer = strip_background, .dst_buffer = dst,
         .src_buffer_size_x = strip_width, .src_buffer_size_y = strip_height,
@@ -212,6 +235,7 @@ static void strip_start(strip_request request) {
     // Pinned IDF dma2d.c frees the previous RX/TX channels before user EOF.
     // Dispatching one waiting refill from that callback is therefore supported;
     // do not introduce another fbcpy handle sharing its static transaction config.
+    strip_submit_begin=esp_timer_get_time();
     esp_err_t error=esp_async_fbcpy(strip_copier, &transaction, strip_copy_done, NULL);
     if (error != ESP_OK) {
         strip_abort(STRIP_FAULT_SUBMIT,error);
@@ -266,7 +290,9 @@ static esp_err_t strip_configure(uint8_t *background0,uint8_t *background1, size
         &strip_max_us,&strip_over_budget,&strip_copy_us,&strip_copy_max,
         &strip_compose_max,&strip_compose_total,&strip_cache_errors,&strip_late,
         &strip_overlap,&strip_faults,&strip_preflight,&strip_first_fault,&strip_first_error,
-        &strip_queued,&strip_queue_wait_max};
+        &strip_queued,&strip_queue_wait_max,&strip_budget_available,
+        &strip_budget_queue,&strip_budget_prepare,&strip_budget_source,
+        &strip_budget_submit,&strip_budget_finish};
     for(unsigned i=0;i<sizeof(counters)/sizeof(counters[0]);++i)atomic_store(counters[i],0);
     atomic_store(&strip_min_interval,UINT32_MAX);atomic_store(&strip_min_lead,UINT32_MAX);
     atomic_store(&strip_busy,false);
@@ -330,6 +356,16 @@ void strip_fault_read(strip_fault_stats *out) {
     out->first_fault=reason==UINT32_MAX?0:reason;
     out->first_error=out->first_fault?atomic_load(&strip_first_error):0;
     out->queued=atomic_load(&strip_queued);out->queue_wait_max_us=atomic_load(&strip_queue_wait_max);
+}
+void strip_budget_read(strip_budget_stats *out) {
+    *out=(strip_budget_stats){};
+    if (!atomic_load(&strip_budget_available)) return;
+    out->queue_us=atomic_load(&strip_budget_queue);
+    out->prepare_us=atomic_load(&strip_budget_prepare);
+    out->source_cache_us=atomic_load(&strip_budget_source);
+    out->submit_to_callback_us=atomic_load(&strip_budget_submit);
+    out->finish_us=atomic_load(&strip_budget_finish);
+    out->available=1;
 }
 static bool strip_block_done(dw_gdma_channel_handle_t chan,
  const dw_gdma_trans_done_event_data_t *event, void *ctx) {

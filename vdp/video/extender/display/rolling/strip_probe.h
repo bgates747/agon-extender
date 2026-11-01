@@ -13,6 +13,12 @@ enum { STRIP_FAULT_NONE, STRIP_FAULT_CACHE, STRIP_FAULT_BUDGET,
        STRIP_FAULT_INVALID, STRIP_FAULT_UNDERRUN, STRIP_FAULT_SEQUENCE };
 typedef struct { uint32_t first_fault, first_error, queued, queue_wait_max_us; } strip_fault_stats;
 void strip_fault_read(strip_fault_stats *out);
+// Breakdown of the first over-budget refill, not unrelated cumulative maxima.
+// submit_to_callback includes descriptor setup, DMA2D admission, DMA and IRQ
+// delivery; it is deliberately not advertised as hardware transfer time.
+typedef struct { uint32_t available, queue_us, prepare_us, source_cache_us,
+    submit_to_callback_us, finish_us; } strip_budget_stats;
+void strip_budget_read(strip_budget_stats *out);
 // Task-context preflight, after the background is initialized, before panel start.
 int strip_prime_and_check(void);
 
