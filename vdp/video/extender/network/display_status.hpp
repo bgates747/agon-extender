@@ -31,11 +31,12 @@ inline esp_err_t handle(httpd_req_t *request) {
   strip_probe_stats strips{}; strip_async_stats copy{};
   strip_probe_read(&strips); strip_async_read(&copy);
   strip_fault_stats fault{}; strip_fault_read(&fault);
+  strip_budget_stats budget{}; strip_budget_read(&budget);
 #endif
   // Existing scanout counters are cumulative uint32 microseconds, reset on
   // carrier configuration/priming. HTTP only reads them; no hot-path work added.
   // Refill wall time includes copy/compose/cache/queueing, so scopes overlap.
-  char body[1024];
+  char body[1536];
   const int length=snprintf(body,sizeof(body),
       "{\"available\":true,\"mode\":%u,\"width\":%u,\"height\":%u,"
       "\"colors\":%u,\"refresh_hz\":%u,\"double_buffered\":%s"
@@ -52,7 +53,9 @@ inline esp_err_t handle(httpd_req_t *request) {
       "\"invalid_blocks\":%u,\"sequence_errors\":%u,\"cache_errors\":%u,\"overlap\":%u,"
       "\"first_fault\":%u,\"first_error\":%u,\"queued\":%u,\"queue_wait_max_us\":%u,"
       "\"blocks\":%u,\"refills\":%u,\"refill_total_us\":%u,\"copy_total_us\":%u,"
-      "\"copy_max_us\":%u,\"compose_total_us\":%u,\"compose_max_us\":%u}"
+      "\"copy_max_us\":%u,\"compose_total_us\":%u,\"compose_max_us\":%u,"
+      "\"budget_phases\":{\"available\":%u,\"queue_us\":%u,\"prepare_us\":%u,"
+      "\"source_cache_us\":%u,\"submit_to_callback_us\":%u,\"finish_us\":%u}}"
 #endif
       "}",
       value.mode,value.width,value.height,value.colors,value.refresh_hz,
@@ -78,7 +81,9 @@ inline esp_err_t handle(httpd_req_t *request) {
       unsigned(fault.queued),unsigned(fault.queue_wait_max_us),
       unsigned(strips.blocks),unsigned(strips.refills),unsigned(strips.total_us),
       unsigned(strips.copy_us),unsigned(copy.copy_max_us),unsigned(copy.compose_total_us),
-      unsigned(copy.compose_max_us)
+      unsigned(copy.compose_max_us),
+      unsigned(budget.available),unsigned(budget.queue_us),unsigned(budget.prepare_us),
+      unsigned(budget.source_cache_us),unsigned(budget.submit_to_callback_us),unsigned(budget.finish_us)
 #endif
       );
   if (length<0 || length>=int(sizeof(body)))
