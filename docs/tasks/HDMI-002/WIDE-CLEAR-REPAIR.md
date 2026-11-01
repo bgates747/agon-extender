@@ -220,3 +220,65 @@ firmware remain unchanged. No automatic test invocation follows reset.
    stagedwide diagnosis. Stop/preserve/recover failure. Only a passing bounded
    trial permits preparing the final repair without temporary probes and
    reassessing cache experiments, before cursor/scaler and canonical checks.
+
+## R25 result and hardware completion observer
+
+The32B burst trial failed; preserve the exact result in
+[R25-BURST-FAILURE.json](R25-BURST-FAILURE.json). Recovery restored actual CLI
+and fault-free mode0/Legacy. The Author is considering prioritizing parallel
+file transfers. No further bench work proceeds while that scope is discussed.
+Items2–9 below are a future diagnostic plan, not implemented or built code.
+
+1. R25 app eb133427/source9c393360 passes build, two-file comparison and app-only
+   readback, but the first96 selection faults1745µs before a clear. Its API1704µs
+   splits13descriptor,4admission,13setup,1673DMA/IRQ,1handoff; both sums match.
+   Stop/preserve/recover. The gated throughput comparison is not invoked. Reject
+   the32B trial as a remedy; do not try more burst sizes without better evidence.
+2. Use exact r24 as the next source parent, restoring the SDK default128B PPA
+   clients. Physical incoming rollback remains the exact r25 installation.
+   Add a temporary hardware-event observer; retain r24 operations, cache policy,
+   software probes, ownership and1600µs guard. No EMOS/mainboard/startup change.
+3. Research baseline: pinned SDK b774170f, `soc/soc_etm_source.h` names receive
+   success-EOF events224/225. `dma2d_priv.h` SHA256
+   `eb40927d87a8d83fd9449430b018b9a506be49551ec99d86827b57ecbcbe014a`
+   provides the selected RX channel ID inside the isolated copy helper.
+   Public GPTimer/ETM APIs provide1MHz XTAL counters and hardware STOP tasks.
+   `gptimer_get_raw_count` and start/stop use ISR-safe critical sections.
+4. The [Espressif TRM](https://www.espressif.com/sites/default/files/documentation/esp32-p4_technical_reference_manual_en.pdf),
+   pre-release0.7, sections8.5/14.3/17.3.5, supports completion events triggering
+   timer tasks independently of the CPU. DMA ETM-enable bits select task-driven
+   transfer starts: leave them untouched so CPU-started transfers keep working.
+   Clock-domain crossing exists; do not claim an independently calibrated wire
+   timestamp. The retained PDF hash is622fe9625d19cf00bd7aa49e65f0b5dd6ef2197f83cb7a88b4405078d6a957d4.
+5. Allocate two diagnostic GPTimers and two ETM channels in task context, one
+   counter per physical RX success-EOF event. Reset/start only the counter for
+   the rolling job's selected RX just before DMA start. Its own EOF stops it;
+   later EOFs on a reused channel cannot change the stopped count before the
+   one outstanding job retires. No new interrupt, DMA reservation, transfer,
+   pixel change, external wiring or existing clock change is allowed.
+6. Bracket a raw-timer anchor with the existing microsecond clock. At callback
+   and after normal composition read the stopped counter twice. Only frozen,
+   ordered, nonzero counts and bounded anchors qualify a measurement; retain
+   uncertainty, event-path propagation and clock limits. Publish same-failed-job
+   hardware-event elapsed and post-event callback-delay bounds alongside the
+   existing two sums. Do not call the latter pure interrupt latency: it includes
+   driver dispatch/cleanup.
+7. SDK5.5.5 has no DMA2D ETM event constructor/metadata enum. A local adapter
+   initializes exact physical event IDs and its owned destructor; the unused
+   peripheral metadata field stays zero explicitly. Pinned generic
+   `esp_etm.c` routes only event_id and never reads that metadata. Document this
+   version-bound accommodation in code; do not label the event as another
+   physical DMA engine or modify the SDK checkout.
+8. Keep the observer optional to native startup. Resource/API/probe failure
+   marks it unavailable and releases partial owned resources; it must not disable
+   native guards or prevent the normal CLI from booting. Require live hardware
+   calibration before invoking the diagnostic. Join copied work before deleting
+   ETM/timer resources. Extend actual-body host checks for frozen/running clocks,
+   delayed callbacks, channel isolation, cleanup and invalid measurements; host
+   tests do not prove physical event routing. Verify the private-header identity,
+   generated helper, GPTimer archive linkage and actual target compilation.
+9. Freeze r26, verify complete installation and ordinary readiness, then require
+   a calibrated hardware observer before staged diagnosis. Preserve/recover its
+   first fault. Choose the next correction according to event-to-callback timing;
+   retire temporary probes and reassess cache experiments before final targeted,
+   canonical and Author visual qualification.
