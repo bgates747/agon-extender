@@ -55,7 +55,9 @@ inline esp_err_t handle(httpd_req_t *request) {
       "\"blocks\":%u,\"refills\":%u,\"refill_total_us\":%u,\"copy_total_us\":%u,"
       "\"copy_max_us\":%u,\"compose_total_us\":%u,\"compose_max_us\":%u,"
       "\"budget_phases\":{\"available\":%u,\"queue_us\":%u,\"prepare_us\":%u,"
-      "\"source_cache_us\":%u,\"submit_to_callback_us\":%u,\"finish_us\":%u}}"
+      "\"source_cache_us\":%u,\"submit_to_callback_us\":%u,\"finish_us\":%u,"
+      "\"driver_phases_valid\":%u,\"descriptor_us\":%u,\"admission_us\":%u,"
+      "\"channel_setup_us\":%u,\"dma_and_irq_us\":%u,\"handoff_us\":%u}}"
 #endif
       "}",
       value.mode,value.width,value.height,value.colors,value.refresh_hz,
@@ -83,7 +85,9 @@ inline esp_err_t handle(httpd_req_t *request) {
       unsigned(strips.copy_us),unsigned(copy.copy_max_us),unsigned(copy.compose_total_us),
       unsigned(copy.compose_max_us),
       unsigned(budget.available),unsigned(budget.queue_us),unsigned(budget.prepare_us),
-      unsigned(budget.source_cache_us),unsigned(budget.submit_to_callback_us),unsigned(budget.finish_us)
+      unsigned(budget.source_cache_us),unsigned(budget.submit_to_callback_us),unsigned(budget.finish_us),
+      unsigned(budget.driver_phases_valid),unsigned(budget.descriptor_us),unsigned(budget.admission_us),
+      unsigned(budget.channel_setup_us),unsigned(budget.dma_and_irq_us),unsigned(budget.handoff_us)
 #endif
       );
   if (length<0 || length>=int(sizeof(body)))

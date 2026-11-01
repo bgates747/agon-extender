@@ -62,6 +62,17 @@ static int64_t strip_copy_begin;
 static int64_t strip_source_begin, strip_source_end, strip_submit_begin;
 static atomic_uint strip_budget_available, strip_budget_queue, strip_budget_prepare;
 static atomic_uint strip_budget_source, strip_budget_submit, strip_budget_finish;
+static int64_t strip_driver_time[4];
+static unsigned strip_driver_mask;
+static atomic_uint strip_budget_driver_valid, strip_budget_descriptor;
+static atomic_uint strip_budget_admission, strip_budget_channel_setup;
+static atomic_uint strip_budget_dma_irq, strip_budget_handoff;
+
+void agon_scanout_copy_phase(void *context, unsigned phase) {
+    if (context != &strip_job || phase >= 4) return;
+    strip_driver_time[phase] = esp_timer_get_time();
+    strip_driver_mask |= 1U << phase;
+}
 
 static void strip_max(atomic_uint *p, unsigned value) {
     if (value > atomic_load(p)) atomic_store(p, value);
@@ -140,6 +151,18 @@ static void strip_finish(void) {
             atomic_store(&strip_budget_source, source);
             atomic_store(&strip_budget_submit, callback_begin - strip_submit_begin);
             atomic_store(&strip_budget_finish, finished - callback_begin);
+            if (strip_driver_mask == 15 && strip_submit_begin <= strip_driver_time[0] &&
+                strip_driver_time[0] <= strip_driver_time[1] &&
+                strip_driver_time[1] <= strip_driver_time[2] &&
+                strip_driver_time[2] <= strip_driver_time[3] &&
+                strip_driver_time[3] <= callback_begin) {
+                atomic_store(&strip_budget_descriptor, strip_driver_time[0] - strip_submit_begin);
+                atomic_store(&strip_budget_admission, strip_driver_time[1] - strip_driver_time[0]);
+                atomic_store(&strip_budget_channel_setup, strip_driver_time[2] - strip_driver_time[1]);
+                atomic_store(&strip_budget_dma_irq, strip_driver_time[3] - strip_driver_time[2]);
+                atomic_store(&strip_budget_handoff, callback_begin - strip_driver_time[3]);
+                atomic_store(&strip_budget_driver_valid, 1);
+            }
             atomic_store(&strip_budget_available, 1);
         }
         atomic_fetch_add(&strip_over_budget, 1);
@@ -180,6 +203,7 @@ static void strip_fill(unsigned slot, unsigned block, unsigned generation) {
 static void strip_start(strip_request request) {
     strip_job=request;strip_copy_begin=esp_timer_get_time();
     strip_source_begin=strip_source_end=strip_submit_begin=strip_copy_begin;
+    strip_driver_mask=0;
     unsigned slot=request.slot,block=request.block;
     strip_max(&strip_queue_wait_max,strip_copy_begin-request.begin);
     if(atomic_load(&strip_faults) || atomic_load(&strip_stopping)) {strip_release_job();return;}
@@ -236,7 +260,7 @@ static void strip_start(strip_request request) {
     // Dispatching one waiting refill from that callback is therefore supported;
     // do not introduce another fbcpy handle sharing its static transaction config.
     strip_submit_begin=esp_timer_get_time();
-    esp_err_t error=esp_async_fbcpy(strip_copier, &transaction, strip_copy_done, NULL);
+    esp_err_t error=esp_async_fbcpy(strip_copier, &transaction, strip_copy_done, &strip_job);
     if (error != ESP_OK) {
         strip_abort(STRIP_FAULT_SUBMIT,error);
         strip_release_job();
@@ -292,7 +316,9 @@ static esp_err_t strip_configure(uint8_t *background0,uint8_t *background1, size
         &strip_overlap,&strip_faults,&strip_preflight,&strip_first_fault,&strip_first_error,
         &strip_queued,&strip_queue_wait_max,&strip_budget_available,
         &strip_budget_queue,&strip_budget_prepare,&strip_budget_source,
-        &strip_budget_submit,&strip_budget_finish};
+        &strip_budget_submit,&strip_budget_finish,&strip_budget_driver_valid,
+        &strip_budget_descriptor,&strip_budget_admission,&strip_budget_channel_setup,
+        &strip_budget_dma_irq,&strip_budget_handoff};
     for(unsigned i=0;i<sizeof(counters)/sizeof(counters[0]);++i)atomic_store(counters[i],0);
     atomic_store(&strip_min_interval,UINT32_MAX);atomic_store(&strip_min_lead,UINT32_MAX);
     atomic_store(&strip_busy,false);
@@ -365,6 +391,12 @@ void strip_budget_read(strip_budget_stats *out) {
     out->source_cache_us=atomic_load(&strip_budget_source);
     out->submit_to_callback_us=atomic_load(&strip_budget_submit);
     out->finish_us=atomic_load(&strip_budget_finish);
+    out->driver_phases_valid=atomic_load(&strip_budget_driver_valid);
+    out->descriptor_us=atomic_load(&strip_budget_descriptor);
+    out->admission_us=atomic_load(&strip_budget_admission);
+    out->channel_setup_us=atomic_load(&strip_budget_channel_setup);
+    out->dma_and_irq_us=atomic_load(&strip_budget_dma_irq);
+    out->handoff_us=atomic_load(&strip_budget_handoff);
     out->available=1;
 }
 static bool strip_block_done(dw_gdma_channel_handle_t chan,

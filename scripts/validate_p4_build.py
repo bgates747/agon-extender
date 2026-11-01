@@ -142,6 +142,29 @@ def check_usb_dual_linkage(commands: list[dict], ninja: str, build: Path, enable
         fail("USB host derivative archive is absent from ELF link")
 
 
+def check_rolling_fbcpy_linkage(commands: list[dict], ninja: str, build: Path) -> None:
+    """Require the sole complete timestamp-only copy derivative in rolling."""
+    expected = (build / "dsi-strip/esp_async_fbcpy.c").resolve()
+    actions = [c for c in commands if Path(c["file"]).name == "esp_async_fbcpy.c"]
+    if len(actions) != 1 or Path(actions[0]["file"]).resolve() != expected:
+        fail("rolling copy probe lacks exactly one derived compile action")
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        generated = Path(tmp) / "esp_async_fbcpy.c"
+        subprocess.run([sys.executable, str(VDP / "video/extender/display/rolling/patch_fbcpy.py"),
+                        str(IDF / "components/esp_lcd/src/esp_async_fbcpy.c"), str(generated)], check=True)
+        if generated.read_bytes() != expected.read_bytes():
+            fail("rolling copy probe differs from complete pinned derivative")
+    archive = "esp-idf/esp_lcd/libesp_lcd.a"
+    edges = [line for line in ninja.splitlines() if line.startswith(f"build {archive}:")]
+    obj = actions[0].get("output")
+    if len(edges) != 1 or not obj or obj not in edges[0].split():
+        fail("rolling copy probe object is absent from LCD archive")
+    elf = [line for line in ninja.splitlines() if line.startswith("build agon_extender.elf:")]
+    if len(elf) != 1 or archive not in elf[0].split():
+        fail("rolling copy probe archive is absent from ELF link")
+
+
 def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, rolling_scanout: bool = False, build: Path | None = None, hdmi_timing: str = "1280x720") -> None:
     """Prove the selected bridge object reaches the ELF; reject stale copies."""
     bridge = (VDP / HDMI_COMPONENT / "esp_lcd_lt8912b.c").resolve()
@@ -178,6 +201,7 @@ def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, ro
     if len(dpi) != 1 or Path(dpi[0]["file"]).resolve() != expected_dpi:
         fail("HDMI build lacks exactly one pinned DPI scanout compile action")
     if rolling_scanout:
+        check_rolling_fbcpy_linkage(commands, ninja, build)
         argv = dpi[0].get("arguments") or shlex.split(dpi[0]["command"])
         for timing in ("auto", "512x384", "684x384"):
             if (f"-DAGON_EXTENDER_HDMI_{timing.upper()}=1" in argv) != (hdmi_timing == timing):
