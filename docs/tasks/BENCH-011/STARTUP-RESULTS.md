@@ -3,8 +3,8 @@
 All four planned startup attempts passed on the Olimex bench. The Console8
 first-failure/second-success symptom did not reproduce here. Extender restored
 the original mainboard flash byte for byte and verified normal CLI handback;
-P4, EMOS and startup were not written. FSIM has the separate raw evidence for
-independent analysis. These runs do not establish a Console8 fix or explain FPS.
+P4, EMOS and startup were not written. FSIM independently verified the separate raw evidence, mode sequences, pool
+checkpoints and temporary installation comparison. These runs do not establish a Console8 fix or explain FPS.
 
 ## Results
 
@@ -84,8 +84,8 @@ nominally 120 Hz without independent calibration; USB receive timestamps are
 not synchronized source-event timestamps. Diagnostic printing/query overhead
 is separate from an uninstrumented performance control.
 
-FSIM owns independent interpretation and later successful-run stage-cost
-instrumentation. No such performance executable was supplied or run here.
+FSIM independently audited all four attempts and the temporary installation
+readbacks. FSIM owns later successful-run stage-cost instrumentation. No such performance executable was supplied or run here.
 Console8 hardware/stock-MOS results and Olimex/EMOS results remain distinct.
 The isolated SD fixtures remain available for future explicitly selected use;
 their loadable renderer requires rows-r1. The mainboard now runs F060 and

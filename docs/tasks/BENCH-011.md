@@ -10,8 +10,10 @@ ordinary startup and unrelated firmware, apps and assets.
 The bounded startup cohort is complete and the exact incoming mainboard flash
 is restored. [Results and limits](BENCH-011/STARTUP-RESULTS.md) and
 [portable evidence](BENCH-011/STARTUP-RESULTS.json) preserve all four attempts,
-mode packets, pool samples and restoration. FSIM independent interpretation is
-the remaining review boundary. No further bench execution is selected.
+mode packets, pool samples and restoration. FSIM independently verifies the four retained attempts, all mode sequences,
+all seven sets of raw pool samples and the temporary installation comparison.
+The bounded task is complete; performance attribution remains separate
+FSIM-owned work. No further bench execution is selected.
 
 ## Authority and state
 
