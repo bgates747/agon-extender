@@ -105,10 +105,11 @@ checks pass, including the original whole-plane negative control. Renderer,
 USB, cursor/scaler source, flags, effective SDK settings and partition layout
 remain identical. Actual cache hardware, deadline and optical proof remain.
 
-The Author withdraws bench access for several hours while r22 builds. Finish
-the current native build, offline validation, evidence and Git publication only.
-Do not deploy, poll, reset, transfer or invoke hardware tests until the Author
-restores access. R22 has not been installed or physically tested. On return,
-re-establish actual CLI, startup and installed component identities before any
-installation; the last recovered r21 state is historical evidence, not fresh
-readiness. Keep all staged tests stopped and normal startup unchanged.
+The Author withdrew bench access while r22 built; the offline preparation
+record remains immutable evidence of that boundary. On 2026-11-01 the Author
+reports the bench restored and authorizes resuming testing and independent
+work. Re-establish actual CLI, startup and installed component identities before
+the r22 application-only installation. Then run the declared staged and complete
+checks with first-fault preservation and standing recovery. Preserve normal
+startup, unchanged companion firmware, exact rollback and the separate actual
+Author visual-review gate. No automatic test invocation follows reset.
