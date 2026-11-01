@@ -58,6 +58,8 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 
+- [ ] **[BENCH-011 — Remote consumer diagnostics without SD swaps](docs/tasks/BENCH-011.md)** — Four bounded Olimex startup attempts and durable per-attempt capture pass; Console8 failure is not reproduced. Temporary VDP is removed and the complete original4MiB flash restored byte for byte; normal CLI/startup/input verified. FSIM independent evidence review remains; no further bench work or performance claim.
+
 - [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — R05-11: checksum-free P4r13/sdserve-v0.3.0 installed and independently verified; bounded new-service upload/download works, broader qualification/acceptance pending. Legacy bootstrap is closed. Earlier fast evidence remains frozen. Broader file-manager research, transaction migration, interactive sessions and R05-10 procedure refresh remain; production selection is unchanged.
 
 - [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — Delivered tranche closed out; further extraction and broader qualification parked. Revisit for measured ROM pressure or a concrete utility benefit, not routine splitting for its own sake.
