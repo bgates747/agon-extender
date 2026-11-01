@@ -32,6 +32,9 @@ static atomic_uint strip_refills,strip_total_us,strip_max_us,strip_over_budget;
 static atomic_uint strip_ready_tag[3];static int64_t strip_ready_time[3];
 static atomic_uint strip_budget_available,strip_budget_queue,strip_budget_prepare;
 static atomic_uint strip_budget_source,strip_budget_submit,strip_budget_finish;
+static int64_t strip_driver_time[4];static unsigned strip_driver_mask;
+static atomic_uint strip_budget_driver_valid,strip_budget_descriptor,strip_budget_admission;
+static atomic_uint strip_budget_channel_setup,strip_budget_dma_irq,strip_budget_handoff;
 static atomic_bool strip_stopping;
 static int64_t strip_copy_begin,strip_source_begin,strip_source_end,strip_submit_begin;
 static struct {unsigned slot,block,tag;int64_t begin;} strip_job;
@@ -46,10 +49,14 @@ static void strip_release_job(void){++release_count;}
 static void strip_abort(unsigned reason,unsigned error){assert(reason==STRIP_FAULT_BUDGET);++strip_faults;aborted_error=error;}
 static void agon_scanout_compose(void *p,unsigned a,unsigned n){(void)p;(void)a;(void)n;}
 static void esp_rom_delay_us(unsigned n){(void)n;assert(0);}
-'''+body('static void strip_finish(void) {')+'\n'+body('void strip_budget_read(')+r'''
+'''+body('void agon_scanout_copy_phase(')+'\n'+body('static void strip_finish(void) {')+'\n'+body('void strip_budget_read(')+r'''
 static void setup(unsigned finish){
  strip_faults=strip_stopping=0;strip_job.slot=0;strip_job.block=2;strip_job.tag=42;strip_job.begin=0;
  strip_copy_begin=100;strip_source_begin=150;strip_source_end=450;strip_submit_begin=500;
+ strip_driver_mask=0;now_index=0;times[0]=510;times[1]=520;times[2]=560;times[3]=790;
+ agon_scanout_copy_phase(NULL,0);agon_scanout_copy_phase(&strip_job,4);assert(strip_driver_mask==0&&now_index==0);
+ for(unsigned phase=0;phase<4;++phase)agon_scanout_copy_phase(&strip_job,phase);
+ assert(strip_driver_mask==15&&now_index==4);
  now_index=0;times[0]=800;times[1]=840;times[2]=860;times[3]=finish;times[4]=finish+1;
  release_count=aborted_error=sync_calls=0;sync_ok=true;strip_ready_tag[0]=UINT32_MAX;
 }
@@ -61,13 +68,18 @@ int main(void){
  assert(strip_faults==1&&strip_over_budget==1&&aborted_error==1700&&strip_ready_tag[0]==UINT32_MAX&&release_count==1);
  assert(out.available==1&&out.queue_us==100&&out.prepare_us==100&&out.source_cache_us==300);
  assert(out.submit_to_callback_us==300&&out.finish_us==900);
+ assert(out.driver_phases_valid==1&&out.descriptor_us==10&&out.admission_us==10&&out.channel_setup_us==40);
+ assert(out.dma_and_irq_us==230&&out.handoff_us==10);
+ assert(out.descriptor_us+out.admission_us+out.channel_setup_us+out.dma_and_irq_us+out.handoff_us==out.submit_to_callback_us);
  assert(out.queue_us+out.prepare_us+out.source_cache_us+out.submit_to_callback_us+out.finish_us==aborted_error);
  setup(1900);strip_finish();strip_budget_read(&out);assert(out.finish_us==900&&aborted_error==1900);
  strip_budget_available=0;setup(1601);strip_finish();strip_budget_read(&out);
  assert(out.available==1&&out.finish_us==801&&aborted_error==1601);
- strip_budget_available=0;setup(1700);sync_ok=false;strip_finish();strip_budget_read(&out);
+ strip_budget_available=strip_budget_driver_valid=0;setup(1700);strip_driver_time[1]=505;
+ strip_finish();strip_budget_read(&out);assert(out.available==1&&out.driver_phases_valid==0);
+ strip_budget_available=strip_budget_driver_valid=0;setup(1700);sync_ok=false;strip_finish();strip_budget_read(&out);
  assert(out.available==0&&release_count==1&&sync_calls==1&&strip_ready_tag[0]==UINT32_MAX);
- puts("Actual strip_finish: strict1600us boundary, same-job phase sum, first-failure retention, cache-failure nonpublication PASS");
+ puts("Actual strip_finish: strict1600us boundary, same-job phase sum, first-failure retention, context filtering, phase order, both sums, cache-failure nonpublication PASS");
 }
 '''
 with tempfile.TemporaryDirectory(prefix='strip-budget-') as directory:

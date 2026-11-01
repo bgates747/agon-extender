@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "status": "diagnostic-complete-defect-reproduced",
+  "build_id": "indexed-hdmi-r23-b2026-11-01-19-33-06Z",
+  "source_commit": "4a480eebc0dbb0f1cc7ef6c12d35e4eeb06214a2",
+  "parent_source_commit": "72bd4de0e048c6e69e86d94529bcfea70867c876",
+  "source_delta": [
+    "vdp/video/extender/display/rolling/strip_probe.h",
+    "vdp/video/extender/display/rolling/strip_runtime.inc",
+    "vdp/video/extender/network/display_status.hpp"
+  ],
+  "app_sha256": "7f3b810168d861e1e0d1f19642632ac942ad28ad66daf9aee09fabc4bcc25e85",
+  "app_bytes": 1790592,
+  "native_validation": "PASS",
+  "composition_review": "PASS",
+  "installation_verified": true,
+  "flash_after_sha256": "648ae42f112f8a80a309bf46f7ae09d86d056bbd5f1c9c7cf9ed2dab8bff1b3c",
+  "outside_application_sectors_unchanged": true,
+  "staged_cycles_planned": 8,
+  "staged_cycles_completed": 3,
+  "failed_step": "c3-cleared96",
+  "duration_seconds": 47.39725921797799,
+  "refill_guard_us": 1600,
+  "rolling": {
+    "frames": 230,
+    "faults": 1,
+    "late": 0,
+    "over_budget": 1,
+    "underruns": 1,
+    "refill_max_us": 1726,
+    "free_internal": 55503,
+    "invalid_blocks": 0,
+    "sequence_errors": 0,
+    "cache_errors": 0,
+    "overlap": 0,
+    "first_fault": 2,
+    "first_error": 1726,
+    "queued": 2,
+    "queue_wait_max_us": 75,
+    "blocks": 3464,
+    "refills": 3463,
+    "refill_total_us": 1619482,
+    "copy_total_us": 1540696,
+    "copy_max_us": 1615,
+    "compose_total_us": 14673,
+    "compose_max_us": 47,
+    "budget_phases": {
+      "available": 1,
+      "queue_us": 6,
+      "prepare_us": 59,
+      "source_cache_us": 22,
+      "submit_to_callback_us": 1534,
+      "finish_us": 105
+    }
+  },
+  "same_failed_refill_phase_sum_us": 1726,
+  "dominant_phase": "submit_to_callback_us1534, includes SDK descriptor setup/channel admission/DMA/IRQ delivery and cleanup; not hardware flight time alone",
+  "source_cache_us": 22,
+  "conclusion": "The failed refill is dominated by the interval after API submission, not the measured source cache call. Separate driver setup/admission from DMA/IRQ before selecting the next remedy.",
+  "unperformed": [
+    "12cursor/scaler cases",
+    "canonical/raw-sector suite",
+    "Author optical review"
+  ],
+  "recovery": {
+    "Agon_only_actual_CLI_verified_but_HDMI_still_stopped": true,
+    "P4_clean_initialization_then_Agon_reset_completed": true,
+    "actual_CLI_exchanges": 2,
+    "startup_unchanged": true,
+    "startup_bytes": 108,
+    "mode": 0,
+    "rolling_faults": 0
+  },
+  "preserved": [
+    "EMOSv27",
+    "mainboardVDP",
+    "normalstartup",
+    "allDMAguards",
+    "exactrollback"
+  ],
+  "clock": "host monotonic seconds and P4 microsecond counter; no independent calibration or optical proof",
+  "evidence_sha256": {
+    "build-review.json": "189061d94db64ce79b43fb3d503a9367d74f2db4d6aa845b377ea8b4bd9b5085",
+    "build-r23/manifest.json": "36b21833633e5edf271c945053c013243a0cd34dcbf3c958595603d2e8dcb896",
+    "build-r23/validation.json": "8774358627824ae3a3ba99be154edba18af8a63351c6fa49a3c7d075c6b0ba81",
+    "host-phase.json": "ebfbacf0b649a1d87509087037cb01eb3074e2d2004029cba19f3bf72d0f2952",
+    "install-r23/flash-verification.json": "c02fe9f7020163ad33367687ec37f29a5647f0bd8c7620a2f3777c3b91d8c3ed",
+    "wide-isolation-r23/result.json": "ed25973f5c9eba9ab084a9138344479d37d5e413b261b2eeebeaf712e30632d3",
+    "recovery-agon-cli/receipt.json": "65a55f28a1428c067e9c6cee1ad4b15dcf89b4d1abc26bcb174d5e2597038656",
+    "recovery-paired-cli/receipt.json": "da23b5a0a94efc64fbbfc36d395f23ac7cd2f2e3fc3d5b26a88668d2ed680a11"
+  }
+}

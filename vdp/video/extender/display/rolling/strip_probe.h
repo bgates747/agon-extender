@@ -17,8 +17,12 @@ void strip_fault_read(strip_fault_stats *out);
 // submit_to_callback includes descriptor setup, DMA2D admission, DMA and IRQ
 // delivery; it is deliberately not advertised as hardware transfer time.
 typedef struct { uint32_t available, queue_us, prepare_us, source_cache_us,
-    submit_to_callback_us, finish_us; } strip_budget_stats;
+    submit_to_callback_us, finish_us, driver_phases_valid, descriptor_us,
+    admission_us, channel_setup_us, dma_and_irq_us, handoff_us; } strip_budget_stats;
 void strip_budget_read(strip_budget_stats *out);
+// Pinned rolling-only fbcpy derivative. Ignore every other copy client's tag.
+// Stages: descriptors prepared, channels picked, DMA about to start, driver EOF.
+void agon_scanout_copy_phase(void *context, unsigned phase);
 // Task-context preflight, after the background is initialized, before panel start.
 int strip_prime_and_check(void);
 

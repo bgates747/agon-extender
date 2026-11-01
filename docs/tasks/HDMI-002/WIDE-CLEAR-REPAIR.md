@@ -151,3 +151,37 @@ firmware remain unchanged. No automatic test invocation follows reset.
    earlier gates allows cursor/scaler or canonical qualification. Use measured
    phases to choose the next bounded remedy; do not shrink chunks or increase
    the guard without evidence.
+
+## R23 result and driver-phase diagnostic
+
+1. [The r23 diagnostic record](R23-CLEAR-DIAGNOSTIC.json) verifies source4a480eeb,
+   app7f3b8101, native validation, exact three-file delta and complete app-only
+   readback. Fourth isolated clear faults1726µs after three completed cycles.
+   Same-job phases are queue6, preparation59, source-cache22,
+   submit-to-callback1534 and finish105µs; their sum equals1726. No320/raw/full
+   case runs. Agon-first and paired recovery restore actual CLI and mode0.
+2. The source-cache call does not dominate this failed refill. Existing task
+   chunking is not established as a remedy; retain it unchanged for isolation.
+   The1534µs interval includes SDK descriptor synchronization, pool admission,
+   transfer, IRQ delivery and driver cleanup. It cannot identify bus contention
+   or delayed interrupt delivery independently.
+3. Prepare r24 with a hash-pinned derivative of the exact selected SDK
+   `esp_lcd/src/esp_async_fbcpy.c` (SHA256
+   `6174cb19c4630769fe2dc9ed37f3d17abacc2d99d9743f1a35a0eb278e12e702`).
+   Add read-only timestamp hooks after descriptor synchronization, on job
+   selection, before DMA start and at the driver's completion callback. Filter
+   by the one rolling-job context; other users of the copy API remain ignored.
+   Do not change transactions, queues, priorities, bursts or cache operations.
+4. Split the same failed refill's API interval into descriptor preparation,
+   admission, channel setup, DMA-start-to-driver-callback and final callback
+   handoff. Their sum must equal the outer API-to-strip-callback interval.
+   The DMA interval still includes interrupt delivery/driver cleanup; retain
+   that limitation explicitly. No per-transaction logging or new interrupt.
+5. Generate only in the rolling build output. Verify complete derivative
+   bytes, sole copy-source compile action and archive/ELF linkage; reject
+   stale/duplicate/missing source. Keep the SDK pristine. Extend actual-body
+   host checks for context filtering, phase order, both sums, strict deadline
+   boundary and first-failure retention. Freeze clean source and compare all
+   unrequested inputs/options before app-only deployment and staged diagnosis.
+6. Stop/preserve/recover the next fault. Choose one bounded timing remedy from
+   measured phases; do not change the1600µs guard or claim optical acceptance.

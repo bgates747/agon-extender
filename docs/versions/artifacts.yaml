@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r204
-updated_at: 2026-11-01T19:34:09Z
+registry_revision: r205
+updated_at: 2026-11-01T19:58:57Z
 
 artifacts:
   - artifact_id: controller-viewer
@@ -43,12 +43,13 @@ artifacts:
   - artifact_id: indexed-hdmi
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: indexed-hdmi-r23
+    latest_identity: indexed-hdmi-r24
     status: experimental
     variants: []
     description: Linear physicalRGB222 logical drawing with PPA CLUT expansion and ordinary P4-PC rolling HDMI services.
     notes:
-      - r23 adds first-failed-refill phase evidence through existing read-only status, retaining r22 behavior/guards. Actual completion-code sanitizer checks pass; native build and physical diagnostic pending. This is not a timing remedy.
+      - r24 adds context-filtered hooks to a pinned generated copy-helper derivative to separate descriptor/admission/setup from DMA-and-IRQ time; all operations/priorities/bursts/guards unchanged. Host actual-code/linkage checks pass; native build/physical diagnostic pending.
+      - r23 timing diagnostic installs/readback verifies and reproduces fourthclear1726us: samejob phases6queue/59prepare/22sourcecache/1534submit-to-callback/105finish. Preserve diagnostic and completed recovery; no320/raw/full-suite or optical pass. This is not a timing remedy.
       - r22 task invalidation chunking passes build/application-only readback but fails the third isolated wide clear at1671us. Preserve failure/completed recovery; no320/raw/full-suite or optical pass. Task cache chunking has not removed the fault.
       - r21 C2M chunking alone fails the fifth isolated wide clear at1632us; first4cycles pass. Preserve verified installation/failure and complete recovery; no320/raw/full suite or optical pass.
       - r20 classifies F6/F7 control traffic without suppressing the cursor and restores the existing320x240 PPA scaler. Host checks/build/installation pass, but physical regression reproduces a mode96 clear deadline abort before any320-mode case. Retain failures and completed recovery; no full-suite or optical pass.

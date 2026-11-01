@@ -1260,3 +1260,18 @@ unchanged startup. [The bounded wide-clear plan](HDMI-002/WIDE-CLEAR-REPAIR.md)
 selects the pinned SDK's existing interruptible task writeback option for r21;
 it is a source-based hypothesis pending physical validation. Preserve all DMA
 guards, mode3 worker-join repair, r19/r20 evidence and exact rollback bytes.
+
+
+### Task cache changes do not resolve wide clear — 2026-11-01
+
+The Author restores bench access. Exact r22 application-only installation and
+complete readback pass, preserving companion firmware and normal startup.
+The third isolated96 clear faults1671µs against1600µs; no320/raw/full-suite
+case runs. [The r22 record](HDMI-002/R22-CLEAR-FAILURE.json) preserves physical
+failure and completed Agon-first/paired recovery. Mode0 and actual CLI recover.
+
+The [bounded plan](HDMI-002/WIDE-CLEAR-REPAIR.md) now calls for r23 to record
+phases from the same first failed refill. Existing copy timing mixes cache,
+driver admission, transfer and callback delay. The diagnostic preserves r22
+behavior and every guard; it supplies evidence before another timing remedy.
+Cursor/scaler, canonical qualification and actual Author visual review remain.

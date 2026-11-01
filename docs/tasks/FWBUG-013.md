@@ -26,9 +26,10 @@ The combined candidate also restores mode8 scaling. Physical regression exposes
 a separate wide-clear abort; r21 writeback chunking alone fails physical checks.
 R22 extends task chunking to invalidation and passes build, installation and
 readback, but the third wide clear still aborts1671µs against1600µs. The Author
-restores bench access2026-11-01; standing recovery completes. A failed-refill
-phase diagnostic is next under the linked repair plan. Physical cursor/scaler,
-full qualification and actual visual review remain pending.
+restores bench access2026-11-01; standing recovery completes. R23 same-refill
+phases locate1534µs after API submission and only22µs in source cache. R24
+separates driver setup/admission from DMA/IRQ under the linked repair plan.
+Physical cursor/scaler, full qualification and actual visual review remain pending.
 
 F13-S02 — The renewed Author report and ongoing repair authorization supersede
 the original filing-only boundary for this bounded correction and monitored
