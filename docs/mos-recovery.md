@@ -97,6 +97,36 @@ path. It maps GPIO26/27, unlike the P4 mapping below.
 7. Present the exact payload, wiring, replacement P4 image and rollback route
    before destructive execution. This protocol is not blanket flash authority.
 
+## ZDI connector: canonical visual reference
+
+![Jeroen Venema's original ZDI connector diagram, notch at top](mos-recovery/zdi.png)
+
+Use this view to locate the physical connector pins: notch at top, upper row
+5/3/1 and lower row6/4/2, left to right. This is the original WROOM diagram:
+
+| Signal | Diagram color / Author's adopted convention | WROOM GPIO | ZDI pin |
+|---|---|---|---|
+| Clock / TCK | BLUE |26|4|
+| Bidirectional data / TDI | GREEN |27|6|
+| Ground | No wire color prescribed |GND|5 (3 is also ground)|
+
+On2026-10-30 the Author directed matching these colors, superseding the earlier
+local GREEN=clock/BLUE=data convention. Preserve old test records unchanged;
+color alone does not establish the endpoint of historical wiring. The announced
+rewiring is not a completed physical verification. Stop bench operations while
+connections are changing and use the next Author-confirmed setup for testing.
+
+The upstream board-level example shows the same connections:
+
+![Original Console8-to-WROOM wiring, BLUE26/TCK and GREEN27/TDI](mos-recovery/console8_zdi.png)
+
+Both original images are preserved without modification. Use the GPIO labels
+for your WROOM model; the pictured header layout is not universal.
+
+**P4 GPIOs differ:** the maintained programmer uses GPIO46 for clock and GPIO47
+for data, as specified below. Do not apply this image's WROOM GPIO26/27 labels
+to the P4. [Provenance, pinned source, checksum and license](mos-recovery/PROVENANCE.md).
+
 ## P4-to-Agon wiring
 
 This is the recorded **Olimex P4 DevKit / Agon Light2** combination. Verify the
