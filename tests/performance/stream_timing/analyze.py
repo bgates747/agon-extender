@@ -108,7 +108,7 @@ def main():
     for row in comparison:
         u=row['variants']['uart'];v=row['variants']['parallel']
         lines.append(f"| {row['wire_bytes']} | {u['reply_prt']['median_us']:.1f} | {v['reply_prt']['median_us']:.1f} | {row['parallel_elapsed_change_percent']['reply_prt']:+.1f}% | {v['receipt_prt']['median_us']:.1f} |")
-    lines+=['','The reply confirms synchronous buffer processing and includes the seven-byte query and reverse traffic. It is not HDMI FPS, renderer completion, raw bus bandwidth or retired CPU instructions. M03−M02 covers the last block tail/receipt, not all earlier handovers. No dominant-cause claim follows automatically.','']
+    lines+=['','The reply confirms synchronous buffer processing and includes the seven-byte query and reverse traffic. It is not HDMI FPS, renderer completion, raw bus bandwidth or retired CPU instructions. The retained receipt_prt field means local block completion: format4 uses physical cleanup and reciprocal UART return, with no software COMPLETE/ACK. Historical formats also included a serial receipt. M03−M02 covers the last block tail, not all earlier handovers. No dominant-cause claim follows automatically.','']
     (a.output/'RESULTS.md').write_text('\n'.join(lines))
     print(json.dumps(integrity))
 if __name__=='__main__':main()

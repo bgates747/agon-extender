@@ -15,6 +15,9 @@ is read-only; never follow the historical autoexec instruction below. Rebuild
 against the exact new timing ELF/ROM; old P4 partners and private addresses are
 not a current deployment recipe. Use maintained `/extender` support and
 `/agents/extender/results` output paths under the current SD layout.
+The historical CSV column `receipt_prt` remains for analysis compatibility;
+format4 measures native cleanup and reciprocal UART return there, without a
+software COMPLETE/ACK exchange. Do not describe it as a measured serial receipt.
 
 ## Build and correctness checks
 
