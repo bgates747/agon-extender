@@ -25,7 +25,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — P4 worker/SD staging and bulk host client implemented;51 offline checks and native P4 compile/action validation pass. Occupied bench untouched. Physical comparison/deployment pending; per-record UART replies remain, with no measured rate or promotion yet.
+- [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — 51 offline checks pass; matched r27 candidate built/reviewed, uninstalled. Original fast1.1MB baseline verifies: upload283.4s/download507.4s. P4 SD mount times out across fresh boots; physical card access precedes new-path deployment/comparison. Per-record UART replies remain; no staged speedup or promotion claimed.
 
 - [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired and bounded hardware checks pass without firmware changes. Author review/fsim helper adoption and broader USB loss/paired-reset investigation remain; see R02 results.
 

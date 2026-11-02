@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "state": "baseline-passed; candidate-uninstalled; P4-card-access-required",
+  "payload_bytes": 1100000,
+  "payload_sha256": "87d9773ba97729ccd40841042621fa0cf7891b5576f33c14ccc05729a7605050",
+  "baseline": {
+    "P4_reported_build": "indexed-hdmi-r25-b2026-11-01-20-18-04Z",
+    "P4_source": "9c393360f8db0583e56f62c3266a6dad0090dda8",
+    "EMOS_full_ROM_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+    "listener_sha256": "04e7ef596a862b1a6b4f265b6c647e461ef0f65db4851873ac3dd31e4f03f10d",
+    "startup_sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+    "route": "Legacy; foreground checksum-free major2 sdserve; UART1",
+    "upload": {
+      "bytes": 1100000,
+      "seconds": 283.39583010500064,
+      "bytes_per_second": 3881.4967728792635,
+      "records": 5193,
+      "scope": "existing Client.upload fast+activate; payload prepared, connect/preflight excluded; FINISH/ACTIVATE included"
+    },
+    "download": {
+      "bytes": 1100000,
+      "seconds": 507.4451986030035,
+      "bytes_per_second": 2167.7217619327166,
+      "records": 5093,
+      "scope": "existing Client.download; byte comparison/hash outside timer"
+    },
+    "exact_bytes_verified": true,
+    "compiler_and_serial_capture_absent_during_timing": true
+  },
+  "candidate": {
+    "build_id": "indexed-hdmi-r27-b2026-11-02-22-32-18Z",
+    "source_commit": "512d18668e19a278ed6638595cf60fae01787cc2",
+    "app_bytes": 1802736,
+    "app_sha256": "bd5c20aa66bc4ab800f3eca4b97dccccf81d36def76995cde5adbeb44048bfe0",
+    "source_delta": [
+      "vdp/build/p4-profiles.json",
+      "vdp/video/extender/network/wired_network_service.cpp",
+      "vdp/video/extender/storage/fast/engine.hpp",
+      "vdp/video/extender/storage/fast/http.cpp",
+      "vdp/video/extender/storage/fast/http.hpp",
+      "vdp/video/extender/storage/sd_service.hpp",
+      "vdp/video/extender/storage/sd_target.hpp"
+    ],
+    "native_validation": "PASS",
+    "original_composition_preserved": true,
+    "installed": false
+  },
+  "P4_card": {
+    "first": {
+      "mounted": false,
+      "mount_error": "ESP_ERR_TIMEOUT",
+      "capacity_bytes": 0,
+      "filesystem_bytes": null,
+      "free_bytes": null,
+      "format_enabled": false
+    },
+    "after_restart": {
+      "mounted": false,
+      "mount_error": "ESP_ERR_TIMEOUT",
+      "capacity_bytes": 0,
+      "filesystem_bytes": null,
+      "free_bytes": null,
+      "format_enabled": false
+    },
+    "diagnostic": "sdmmc_init_ocr: send_op_cond (1) returned0x107; sdmmc_card_init failed",
+    "format_performed": false
+  },
+  "boundaries": {
+    "mainboard_VDP_not_flashed": true,
+    "mainboard_VDP_hash_not_claimed": true,
+    "EMOS_not_flashed": true,
+    "autoexec_not_modified": true,
+    "P4_not_flashed": true,
+    "staged_speed_not_measured": true
+  },
+  "handback": {
+    "actual_Legacy_CLI_verified": true,
+    "listener_exited": true,
+    "keyboard_ready_neutral": true,
+    "cursor_controls_submitted": true,
+    "USB_ports_ownerless": true,
+    "no_reset_holder": true,
+    "no_active_transfer_or_test": true,
+    "startup_unchanged": true,
+    "optical_cursor_confirmation_not_claimed": true
+  }
+}

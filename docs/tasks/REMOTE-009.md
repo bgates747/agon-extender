@@ -74,5 +74,11 @@ Recorded before implementation. R09-01–05 complete offline:
 validation pass. Staged puts explicitly require activation; the existing RPC
 client retains stage-only transactions and their live session. R09-06 is now
 authorized after Author release from the6502 emulator; preserve fresh incoming
-state before deployment. No measured speed, matched deployment or production
+state before deployment. No staged speed, matched deployment or production
 promotion is claimed yet.
+
+Physical preparation update: [original fast baseline](REMOTE-009/BASELINE-R01.md)
+passes exact1.1MB upload/download. Identified matched r27 candidate is built,
+reviewed and uninstalled. P4 SD initialization times out across fresh boots;
+Author physical card access is required before continuing R09-06. No new-path
+hardware speedup or promotion is claimed.
