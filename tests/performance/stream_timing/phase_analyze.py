@@ -6,7 +6,19 @@ BLOCK=('reserve_begin','reserve_end','offer_begin','coordinate_begin','park_end'
 INTERVALS=tuple(zip(BLOCK,BLOCK[1:]))
 US=256/18.432
 
+# Format4 removed software COMPLETE/ACK. Its live blocks finish at unpark_end;
+# never invent zero-duration completion events to satisfy the historical schema.
+BLOCK_FORMAT4=BLOCK[:-2]
+SCOPES={p+'_'+e for p in ('service','poll','publish') for e in ('begin','end')}
+def block_phases(sites):
+    names=set(sites.values())
+    block=BLOCK if names & set(BLOCK[-2:]) else BLOCK_FORMAT4
+    if not set(block)<=names or names-set(block)-SCOPES:
+        raise ValueError('incomplete or unknown phase schema')
+    return block
+
 def sample(row,records,sites):
+    block=block_phases(sites);intervals_order=tuple(zip(block,block[1:]))
     n=int(row['wire_bytes']);repeat=int(row['repeat']);reply=int(row['reply_prt'])
     if int(row['flags']) or row['route']!='exext' or int(row['divider'])!=256:raise ValueError('fault/route/divider')
     if not 0<int(row['receipt_prt'])<=reply<65535 or not 0<=int(row['submit_prt'])<=int(row['receipt_prt']):raise ValueError('endpoint ordering/saturation')
@@ -23,14 +35,14 @@ def sample(row,records,sites):
     blocks=[];active=[];scopes={};inclusive={k:0 for k in ('service','poll','publish')}
     for e in events:
         name=e['name']
-        if name in BLOCK:
-            if name!=BLOCK[len(active)]:raise ValueError('incomplete/reordered block phases')
+        if name in block:
+            if name!=block[len(active)]:raise ValueError('incomplete/reordered block phases')
             active.append(e)
-            if name==BLOCK[-1]:
+            if name==block[-1]:
                 begin=active[2];length=begin['length'];reverse=begin['reverse']
                 if not 1<=length<=4096 or reverse not in (0,1):raise ValueError('invalid admitted offer')
                 if any(x['length']!=length or x['reverse']!=reverse for x in active[2:]):raise ValueError('offer changes during block')
-                intervals={a+'__'+b:y['ticks']-x['ticks'] for (a,b),x,y in zip(INTERVALS,active,active[1:])}
+                intervals={a+'__'+b:y['ticks']-x['ticks'] for (a,b),x,y in zip(intervals_order,active,active[1:])}
                 blocks.append(dict(length=length,reverse=reverse,begin=active[0]['ticks'],end=e['ticks'],interval_ticks=intervals))
                 active=[]
         else:
@@ -49,9 +61,9 @@ def sample(row,records,sites):
     if not any(b['reverse'] for b in blocks):raise ValueError('missing return block')
     total=sum(b['end']-b['begin'] for b in blocks)
     if total>reply:raise ValueError('overlapping block intervals')
-    return dict(wire_bytes=n,repeat=repeat,blocks=blocks,inclusive_scope_ticks=inclusive,
+    return dict(wire_bytes=n,repeat=repeat,block_schema='format4' if block==BLOCK_FORMAT4 else 'legacy-completion',blocks=blocks,inclusive_scope_ticks=inclusive,
                 block_total_ticks=total,outside_block_ticks=reply-total,reply_ticks=reply,
-                phase_totals_ticks={a+'__'+b:sum(x['interval_ticks'][a+'__'+b] for x in blocks) for a,b in INTERVALS})
+                phase_totals_ticks={a+'__'+b:sum(x['interval_ticks'][a+'__'+b] for x in blocks) for a,b in intervals_order})
 
 def aggregate(samples):
     result=[]

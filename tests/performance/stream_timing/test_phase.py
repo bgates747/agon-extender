@@ -1,5 +1,5 @@
 import unittest
-from phase_analyze import sample,BLOCK
+from phase_analyze import sample,BLOCK,BLOCK_FORMAT4,SCOPES,block_phases
 class PhaseContract(unittest.TestCase):
  def fixture(self):
   sites={str(i+1):n for i,n in enumerate(BLOCK)};records=[]
@@ -27,4 +27,20 @@ class PhaseContract(unittest.TestCase):
   e[4:4]=[begin,end]
   for i,x in enumerate(e):x['index']=i;x['raw_prt']=65535-i-1
   a=sample(r,e,s);self.assertEqual(a['inclusive_scope_ticks']['publish'],1);self.assertEqual(a['block_total_ticks'],29)
+ def test_format4_has_no_fabricated_completion(self):
+  r,e,s=self.fixture();s={k:v for k,v in s.items() if v in BLOCK_FORMAT4}
+  e=[x for x in e if str(x['return_pc']) in s]
+  for i,x in enumerate(e):x['index']=i;x['raw_prt']=65535-i-1
+  a=sample(r,e,s)
+  self.assertEqual(a['block_schema'],'format4')
+  self.assertEqual(a['block_total_ticks'],21)
+  self.assertFalse(any('completion_' in k for k in a['phase_totals_ticks']))
+ def test_partial_completion_and_unknown_schema_refused(self):
+  for dropped in ('completion_begin','completion_end','payload_end','reserve_end'):
+   r,e,s=self.fixture();s={k:v for k,v in s.items() if v!=dropped}
+   with self.assertRaises(ValueError,msg=dropped):sample(r,e,s)
+  with self.assertRaises(ValueError):block_phases({'1':'unknown'})
+ def test_linked_format4_schema(self):
+  names=BLOCK_FORMAT4+tuple(sorted(SCOPES));s={str(i):v for i,v in enumerate(names)}
+  self.assertEqual(len(s),14);self.assertEqual(block_phases(s),BLOCK_FORMAT4)
 if __name__=='__main__':unittest.main()

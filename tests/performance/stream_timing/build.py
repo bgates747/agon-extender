@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tempfile
 from payloads import manifest, stream
+from phase_analyze import block_phases, SCOPES
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
@@ -89,7 +90,8 @@ def main():
     operand=base+int(v[0],16);target=symbols[v[2]]
     if image[operand-1:operand+3]!=bytes([0xcd])+target.to_bytes(3,'little'):p.error('probe relocation does not match final CALL')
     phase_sites[str(operand+3)]=v[2].removeprefix('_emos_phase_')
-  if len(phase_sites)!=16 or len(set(phase_sites.values()))!=16:p.error('expected sixteen unique phase boundaries')
+  expected=set(block_phases(phase_sites))|SCOPES
+  if set(phase_sites.values())!=expected or len(phase_sites)!=len(expected):p.error('missing, duplicate or unexpected linked phase boundaries')
   (a.output/'phase-sites.json').write_text(json.dumps(phase_sites,indent=2)+'\n')
  if len(binary)>=32768 or binary[0x40:0x45]!=b'MOS\x00\x01':p.error('invalid ADL MOSlet header/size')
  for item in manifest():(a.output/f"stream-{item['wire_bytes']}.bin").write_bytes(stream(item['wire_bytes']))
