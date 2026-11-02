@@ -2,6 +2,16 @@
 
 ## Current scope
 
+### Transfer-rate comparison task — 2026-11-02
+
+The Author requests the [harness task write-up](PORT-008/TRANSFER-RATE-COMPARISON.md)
+and explicitly prohibits coding for now. Reuse the existing matched forward
+UART/parallel stream fixture; extend it later for baseline/optimized EMOS on
+both routes with a constant P4 admission-fixed partner. Measure actual rates
+and separate submission, drain, local completion and ordered replies. Reverse
+bulk coverage is a distinct gap, not supplied by the small query reply.
+No coding, build, deployment or test invocation follows from this task record.
+
 ### Speed-first burst and asynchronous requests — 2026-11-02
 
 The Author requires speed to drive the parallel transport design. EMOS and P4
