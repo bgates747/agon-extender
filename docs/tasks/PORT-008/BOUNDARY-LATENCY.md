@@ -78,8 +78,10 @@ BL04 [ ] — If the largest interval still combines P4 readiness/parser work and
 serial response, add a default-off, identified P4 diagnostic composition at the
 same clean source. Record bounded RAM timestamps/event counts at the UART offer
 recognizer, response enqueue/completion, native phase transitions, buffer return/
-retirement and relevant parser/task-wait boundaries. No per-byte instrumentation,
-logging, network requests or timing-dependent actions during measurement. Link
+retirement and relevant parser/task-wait boundaries. No per-byte payload event stream,
+logging, network requests or timing-dependent actions during measurement. The
+BL04 refinement below permits aggregate native-mutex acquisition timing inside
+a bounded adjustment scope; its per-lock observer cost must remain explicit. Link
 records by block sequence/direction/length, using local clock differences; do not
 subtract timestamps from unsynchronized processors. Dump only after completion.
 Retain exact binary differences and clock/probe limits. Reuse existing compiled
@@ -150,3 +152,18 @@ The first 4096-byte case completes and saves its endpoint/phase rows, but its
 sixth USB dump is short. Preserve it as an incomplete acquisition, not transport
 corruption. Agon-first reset plus actual CLI succeeds before independent cases.
 Its capture-absence control remains required.
+
+
+### BL04 instrumentation refinement
+
+The first phase records justify measuring the native mutex candidate. Use the
+existing native-wait pattern to accumulate wait total/max/count around actual
+native mutex acquisitions only while the parser executes a target-buffer
+adjustment. This adds local clock reads per lock (the inline operand loop locks
+per byte), rather than allocating/logging an event per payload byte. Record that
+observer cost and compare the unchanged payload/fences with the preceding P4.
+A large individual wait is elapsed blocking/preemption, not a CPU instruction
+count. Aggregate lock time may include acquisition overhead and preemption;
+subtracting it from the enclosing command does not measure retired CPU work.
+The P4 diagnostic must keep actual lock/unlock semantics unchanged, publish
+bounded completed records safely, and refuse an unfrozen/incomplete readout.
