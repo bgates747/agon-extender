@@ -2,14 +2,18 @@
 
 ## Current scope
 
-### Active block-boundary attribution — 2026-11-01
+### Completed block-boundary attribution — 2026-11-02
 
-The Author authorizes the [latency investigation](PORT-008/BOUNDARY-LATENCY.md)
-after the matched results show variable tens-of-milliseconds waiting beyond the
-first full block. Freeze/push that contract before diagnostic edits. Reuse exact
-EMOS phase recording and add scoped P4 observations only as needed; no fix or
-architecture change is selected. Preserve current sources, byte-proof contract,
-normal startup and exact incoming-pair restoration.
+The authorized [latency investigation](PORT-008/BOUNDARY-LATENCY.md) is complete.
+[Results](PORT-008/BOUNDARY-LATENCY-RESULTS.md) locate the large wait in admission
+serialized behind P4's byte-by-byte buffer adjustment, including 4086 native
+acquisitions; it is not a large electrical setup interval. Five measured P4
+scopes take 48.34–52.53 ms, with 18.92–20.59 ms around acquisitions. The stall also
+reproduces without P4 observations. Retain the complete measurement prefix and
+all short-capture/teardown-overflow limitations; no clean whole-session probe
+pass is claimed. Exact incoming P4 flash/EMOS ROM, startup/listener, modes and
+actual Legacy CLI are restored and verified. No fix or architecture cut follows
+without the next discussion; P08-D02 and warm-reset readiness remain open.
 
 ### Resumed matched format4 work — 2026-11-01
 

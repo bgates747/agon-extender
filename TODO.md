@@ -66,7 +66,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Matched format4 results](docs/tasks/PORT-008/RESUMPTION-RESULTS.md) retain 48 byte-proved records and exact restoration. Author authorizes the [block-boundary latency investigation](docs/tasks/PORT-008/BOUNDARY-LATENCY.md): attribute the 4097-byte stall with exact-bound EMOS phases, then scoped P4 timestamps if needed. Preserve ordinary timing/bytes and restore the incoming pair; no speculative scheduling/control fix or production change. P08-D02 and warm-reset readiness remain open.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Boundary attribution](docs/tasks/PORT-008/BOUNDARY-LATENCY-RESULTS.md) is complete: P4 admission waits behind its per-byte buffer update; electrical setup is small. Baseline byte proofs, bounded P4 prefix, incomplete-acquisition limits and capture-absence controls retained; exact incoming pair restored. Next discuss bounded P4 I/O progress while queued bytes remain; no fix implemented. P08-D02 and warm-reset readiness remain open.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 
