@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "task": "REMOTE-009",
+  "result": "card_mount_and_Legacy_CLI_pass_after_Author_reseat",
+  "operator_report": "P4-PC card jarred loose; reseated, P4 power cycled, mainboard reset",
+  "card": {
+    "mounted": true,
+    "mount_error": "ESP_OK",
+    "capacity_bytes": 31914983424,
+    "filesystem_bytes": 31902400512,
+    "free_bytes": 31899942912,
+    "format_enabled": false
+  },
+  "startup_sha256": "9e97ceae5489e1b6330c6a2f207d95c6566c60cac304d65e7aad54b610a5b423",
+  "startup_unchanged": true,
+  "listener_binary_unchanged": true,
+  "actual_Legacy_CLI_verified": true,
+  "listener_exited": true,
+  "input_ready_neutral": true,
+  "agent_flash_or_reset_issued": false,
+  "staged_job_invoked": false,
+  "last_verified_P4": "indexed-hdmi-r25-b2026-11-01-20-18-04Z",
+  "candidate_uninstalled": true,
+  "bench_boundary": "Yielded after preflight EXIT to Golem next slot; transfer comparison awaits verified restoration/release",
+  "scope_limit": "No staged-file, throughput, local-card write or hotplug qualification; explicit GPIO45 initialization not demonstrated causal."
+}

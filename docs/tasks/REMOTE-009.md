@@ -104,7 +104,13 @@ the staged-transfer qualification. No new-path speedup or promotion is claimed.
    timeout and correct unavailable-media rejection with clean UART/CLI handback.
    Exact incoming full16MiB P4 is restored and verified afterward; normal CLI,
    unchanged startup/listener and released serial/reset resources pass.
-4. [ ] Establish physical P4-PC card presence/seating and successful mount, then
-   run the successful staged-file cases and transfer comparison.
+4. [x] Establish physical P4-PC card presence/seating and successful mount.
+   Author found the card jarred loose, reseated it and rebooted. Fresh original
+   r25 mounts successfully with ESP_OK; ordinary Legacy startup/listener read
+   and EXIT pass. Physical seating explains the observed timeout; the source
+   power-enable omission was not proven causal and original r25 mounts without
+   that correction. No new flash or staged job was invoked in this preflight.
+5. [ ] After Golem's next bench slot is restored/released, deploy the retained
+   matched candidate and run the successful staged-file cases/comparison.
    This prerequisite changes P4 software only; EMOS, native VDP, listener,
    startup, physical wiring and unknown user files remain unchanged.

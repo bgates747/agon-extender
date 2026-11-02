@@ -38,8 +38,11 @@ is disabled on this shared bank. The DevKit retains its SD-only power lifecycle.
 The maintained PC driver also enables the separate active-low GPIO45 card
 power switch, then waits100ms before its first mount. LDO4 alone does not turn
 on the card behind that switch. The temporarily installed, flash-verified
-development build still timed out before card identity; successful PC mounting
-remains unqualified, and the original P4 has been restored.
+development build still timed out before card identity, and the original P4
+was restored. The Author then reseated a loose card; original r25 now mounts
+successfully. This is a bounded mount/CLI check, not local-file throughput or
+hotplug qualification. Explicit GPIO45 initialization was not the demonstrated
+cause of the previous timeout.
 See [the bounded correction results](tasks/REMOTE-009/CARD-POWER-R01.md).
 The [board reference](hardware/esp32-p4-pc/README.md) and
 [physical transfer results](tasks/PORT-008/DIRECTION-ISOLATION-R01.md) describe

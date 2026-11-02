@@ -62,3 +62,18 @@ deliberate reset holders have released and exited. Visible/flashing cursor
 controls are sent; no optical pass is inferred. No test or transfer remains.
 The [portable evidence](CARD-POWER-EVIDENCE.json) records these bounded results.
 The bench reservation is released; further card work awaits the Author's handoff.
+
+## Card reseat follow-up
+
+The Author found the P4-PC card jarred loose, reseated it, power cycled the P4-PC
+and reset mainboard. Fresh original r25 mounts with ESP_OK: raw capacity
+31914983424B, filesystem31902400512B, free31899942912B, formatting disabled.
+Finite Legacy listener/startup/listener-binary read and EXIT verify the normal
+CLI. No flash, reset or staged job is issued by this follow-up.
+
+This success on original r25, without the source power-enable correction,
+identifies physical seating as the observed timeout's cause. The missing
+explicit initialization remains a source finding, not a demonstrated cause of
+the failure. Golem claimed its next bench slot during preflight; Extender yields
+with listener exited. Successful staged-file cases and comparison await that
+slot's verified restoration/release. The prior failed-run evidence stays frozen.

@@ -8,11 +8,12 @@ separates network delays from the eZ80 loop. No per212-byte host HTTP polling or
 host journal fsync remains. Existing per-record UART replies remain; no physical
 throughput result is available. The matched development P4 was temporarily
 installed, but its local card failed initialization; unavailable-media rejection
-and normal UART/CLI handback pass. Successful staged files and speed comparison
-remain blocked. [Installation evidence](tasks/REMOTE-009/CARD-POWER-R01.md)
-defines this limited result. The original P4 is restored after this blocked
-qualification. Production is unchanged; installed builds must not be assumed
-to expose these endpoints.
+and normal UART/CLI handback pass. The Author subsequently reseated the loose
+card, and the restored original P4 now mounts it successfully. Successful staged
+files and speed comparison await the next available bench slot.
+[Installation evidence](tasks/REMOTE-009/CARD-POWER-R01.md) defines this limited
+result. The candidate is uninstalled. Production is unchanged; installed builds
+must not be assumed to expose these endpoints.
 
 After separately authorized matched deployment, it requires a mounted P4 card
 and the already-running `EMOS sdserve --fast /` foreground listener. It adds no
