@@ -4,9 +4,10 @@ An existing matched UART/parallel harness already measures identical ordinary
 VDU uploads, validates received bytes and separates submission, transmission,
 local completion and ordered replies. Refresh that harness to compare the old
 and optimized parallel byte loops against freshly measured UART, with the P4
-admission fix held constant. This task is a documentation-only preparation;
-the Author explicitly prohibits coding for now. Nothing is built, deployed or
-run by writing this plan.
+admission fix held constant. The original task-only hold is superseded by the
+Author's 2026-11-02 instruction to commit/push and proceed, followed by an
+explicit powered, exclusive bench reservation. Software preparation precedes
+the authorized physical comparison and exact incoming restoration.
 
 ## Existing harness and gaps
 
@@ -96,12 +97,15 @@ comparison with the other project's mainboard UART0/onboard-VDP sender.
    not replacements for measured elapsed time. No CPU-headroom claim without
    a separate useful-work measurement.
 
-## Implementation and execution checklist — not started
+## Implementation and execution checklist
 
-1. [ ] TR01 — Inventory the existing fixture/validator and finite Pi collectors;
+1. [x] TR01 — Inventory the existing fixture/validator and finite Pi collectors;
    identify the smallest changes for four-arm reports, rate columns and durable
    start/end durations. Preserve frozen fixtures and evidence. Agree any new
    controlled fixture identity before producing it.
+   Selection: retain the existing r01 source and automatic build timestamps;
+   only exact-ROM bindings change. Add a host-only four-arm analyzer and reuse
+   refreshed finite single-case/batch Pi recipes in the ignored run record.
 2. [ ] TR02 — Prepare matched source/build manifests and rebuild through every
    owner ROM/divisor/link check. Rebind each fixture to its exact ELF/full ROM;
    verify the private ABI bridge and optimized final-clock timing offset.
@@ -139,9 +143,10 @@ comparison with the other project's mainboard UART0/onboard-VDP sender.
 
 ## Gates and completion
 
-The current stop boundary is **task write-up only: no coding, build, deployment
-or test execution**. Later permission to implement does not silently invoke the
-bench. Follow [test lifecycle](../../procedures/test-appliances.md),
+The Author now authorizes implementation and grants the powered bench for this
+task. The four-arm comparison follows successful preparation, exact installation
+verification and CLI readiness; it does not start unrelated experiments. Follow
+[test lifecycle](../../procedures/test-appliances.md),
 [test execution](../../procedures/test-execution.md),
 [capture handling](../../qualification/capture-failure-protocol.md) and the
 current machine-local bench record when that work is authorized. Preserve the

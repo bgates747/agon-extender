@@ -19,6 +19,45 @@ The historical CSV column `receipt_prt` remains for analysis compatibility;
 format4 measures native cleanup and reciprocal UART return there, without a
 software COMPLETE/ACK exchange. Do not describe it as a measured serial receipt.
 
+## Four-arm transfer-rate comparison
+
+The [current comparison task](../../../docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON.md)
+reuses this unchanged fixture with two exact EMOS timing images and one fixed P4
+application. U0/P0 select UART/parallel on the baseline EMOS image; U1/P1 use
+the optimized image. Build a fresh exact-ROM-bound fixture for each image using
+the existing builder. No new MOS API, wire command or per-byte probe is needed.
+
+`compare_rates.py` validates all 96 rows and all 96 complete 8192-byte receiver
+buffer dumps before reporting measured stream/useful-upload bytes per second,
+separate submission/drain/local-completion/ordered-reply times, ranges and
+baseline-relative differences. It refuses phase-only zero-wire timestamps and
+mixed P4/configuration identities. It reads retained files only and never
+accesses the bench:
+
+```sh
+.venv/bin/python tests/performance/stream_timing/compare_rates.py \
+  --campaign PATH_TO_CAMPAIGN_JSON --output FRESH_ANALYSIS_DIRECTORY
+```
+
+The campaign JSON has `schema: 1`, `direction: "ez80-to-p4"`,
+`parallel_format: 4`, and an `arms` object with exactly U0, P0, U1, P1. Each
+arm supplies `route` (`excom` or `exext`), `emos_sha256`, `fixture_sha256`,
+`p4_sha256`, `environment_sha256`, and ordered `results`/`captures` path arrays
+relative to the campaign file. Hashes bind the exact artifacts and fixed
+environment record; verified installation receipts remain separate evidence.
+U0/P0 must share EMOS/fixture identities, as must U1/P1. Both EMOS images must
+differ, while P4 and environment identities remain constant. CSV/dump arrays
+cover lengths 256/4096/4097/8192 in that order, retaining original repeat indices.
+Partial acquisition selection remains an explicit, integrity-only upstream step;
+the analyzer never selects samples by elapsed time.
+
+Run the existing host checks plus the new four-arm controls with
+`-m unittest discover -s tests/performance/stream_timing -p 'test*.py' -v`.
+Synthetic host cases test arithmetic/refusals; they are not performance results.
+The report ranks largest P0 drain time first, then largest stream length on ties.
+Analysis start/end and host duration are retained separately from fixture runtime.
+The small reverse query is not a reverse bulk-rate measurement.
+
 ## Build and correctness checks
 
 1. Build EMOS through its ordinary repository wrapper with the explicit
