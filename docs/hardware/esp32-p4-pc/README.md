@@ -56,7 +56,9 @@ initialization. The maintained PC board profile now records these values and
 the local SD driver enables the switch once before mounting; it retains LDO4
 and never formats or power-cycles after failure. The earlier omission left the
 card supply uncontrolled despite a powered I/O bank. Hardware confirmation belongs
-to [REMOTE-009](../../tasks/REMOTE-009.md); it is not yet a mount-success claim.
+to [REMOTE-009](../../tasks/REMOTE-009.md). Its corrected application is now
+independently flash-verified; card initialization still times out. This is not
+a mount-success claim or proof of a faulty card.
 
 Espressif's [hardware design guide](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32p4/schematic-checklist-esp32p4.html)
 documents GPIO46's VDD_IO_5 bank and the software-controlled LDO output, which

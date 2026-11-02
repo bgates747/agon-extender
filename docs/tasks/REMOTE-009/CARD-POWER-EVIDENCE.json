@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "task": "REMOTE-009",
+  "result": "staged_success_cases_blocked_by_P4_card_initialization",
+  "candidate_build": "indexed-hdmi-r27-b2026-11-02-23-11-45Z",
+  "candidate_source": "f4633a168ee08e6c064d7955e9337862754a73d2",
+  "app_bytes": 1803024,
+  "app_sha256": "12636b9efd715515257b5ca2d3216e11cd456c6f2939e80aef95eac001c991e1",
+  "offline_tests": 56,
+  "native_build_validation": "PASS",
+  "candidate_flash_verification": {
+    "exact_app": true,
+    "app_sha256": "12636b9efd715515257b5ca2d3216e11cd456c6f2939e80aef95eac001c991e1",
+    "before_sha256": "006397a5a8b0f0e47d350e4a63b4f849c4a75635e7f5569a02f2b8a57871f84b",
+    "after_sha256": "44307099526d95a1504c3ef24a5a180ae3162429ea4f02a0e97e20408acc995b",
+    "outside_written_sectors_unchanged": true,
+    "bootloader_partition_NVS_OTA_retained": true,
+    "EMOS_mainboard_VDP_startup_unchanged": true
+  },
+  "P4_card_before": {
+    "mounted": false,
+    "mount_error": "ESP_ERR_TIMEOUT",
+    "capacity_bytes": 0,
+    "filesystem_bytes": null,
+    "free_bytes": null,
+    "format_enabled": false
+  },
+  "P4_card_after_power_enable_correction": {
+    "mounted": false,
+    "mount_error": "ESP_ERR_TIMEOUT",
+    "capacity_bytes": 0,
+    "filesystem_bytes": null,
+    "free_bytes": null,
+    "format_enabled": false
+  },
+  "unavailable_media_admission": {
+    "HTTP_status": 503,
+    "P4_job_remained_idle": true,
+    "UART_RPC_and_EXIT_passed": true,
+    "output_published": false
+  },
+  "post_install_EMOS_ROM_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+  "mainboard_mode": 0,
+  "final_restoration": {
+    "exact_full_incoming_P4_restored": true,
+    "full_P4_bytes": 16777216,
+    "full_P4_sha256": "006397a5a8b0f0e47d350e4a63b4f849c4a75635e7f5569a02f2b8a57871f84b",
+    "EMOS_mainboard_VDP_not_written": true,
+    "startup_listener_unchanged": true,
+    "actual_Legacy_CLI_verified": true,
+    "visible_flashing_cursor_controls_sent": true,
+    "serial_owners": 0,
+    "active_reset_holders": 0,
+    "listener_offline_no_pending": true,
+    "input_ready_neutral": true,
+    "USB_controller_valid": true
+  },
+  "successful_staged_cases_invoked": false,
+  "physical_staged_throughput_measured": false,
+  "production_changed": false,
+  "limitations": [
+    "Physical P4-PC card presence, seating, voltage and card-detect remain unverified.",
+    "The missing power-enable initialization is confirmed in source but is not proven to explain the remaining timeout.",
+    "No optical or input-latency pass is claimed.",
+    "The installed candidate was restored to incoming r25; candidate source and binaries are retained."
+  ]
+}

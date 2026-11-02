@@ -97,7 +97,14 @@ the staged-transfer qualification. No new-path speedup or promotion is claimed.
 2. [x] Express the switch in the PC board profile, validate its fixed mapping,
    and enable it before the first mount. Preserve fixed3.3V LDO4, no automatic
    retries, no unmount/power-cycle/format. DevKit skips the PC switch.
-3. [ ] Build a fresh identified matched candidate, retain the earlier uninstalled
-   r27 unchanged, verify flash, then inspect mount and run the transfer comparison.
+3. [x] Build a fresh identified matched candidate and verify its installed bytes;
+   retain the earlier uninstalled r27 unchanged. The new23:11:45Z build passes
+   full16MiB readback with unchanged bytes outside written application sectors.
+   [Physical evidence](REMOTE-009/CARD-POWER-R01.md) records persistent mount
+   timeout and correct unavailable-media rejection with clean UART/CLI handback.
+   Exact incoming full16MiB P4 is restored and verified afterward; normal CLI,
+   unchanged startup/listener and released serial/reset resources pass.
+4. [ ] Establish physical P4-PC card presence/seating and successful mount, then
+   run the successful staged-file cases and transfer comparison.
    This prerequisite changes P4 software only; EMOS, native VDP, listener,
    startup, physical wiring and unknown user files remain unchanged.

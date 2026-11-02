@@ -37,8 +37,10 @@ D7/GPIO46. PC SDMMC remains four-bit, default 20MHz and 3.3V; UHS voltage switch
 is disabled on this shared bank. The DevKit retains its SD-only power lifecycle.
 The maintained PC driver also enables the separate active-low GPIO45 card
 power switch, then waits100ms before its first mount. LDO4 alone does not turn
-on the card behind that switch. This correction is awaiting physical validation
-under REMOTE-009; earlier PC builds without it can time out before card identity.
+on the card behind that switch. The temporarily installed, flash-verified
+development build still timed out before card identity; successful PC mounting
+remains unqualified, and the original P4 has been restored.
+See [the bounded correction results](tasks/REMOTE-009/CARD-POWER-R01.md).
 The [board reference](hardware/esp32-p4-pc/README.md) and
 [physical transfer results](tasks/PORT-008/DIRECTION-ISOLATION-R01.md) describe
 this correction; they do not qualify P4-PC local-card operation or hotplug.

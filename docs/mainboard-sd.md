@@ -1,13 +1,18 @@
 # Mainboard SD service operating guide
 
-## P4-staged fast files — undeployed development
+## P4-staged fast files — development, card prerequisite unresolved
 
 The new `scripts/sdcard_staged.py` candidate sends/receives a whole file through
 HTTP while a P4 worker owns the local mainboard UART request loop. P4 SD staging
 separates network delays from the eZ80 loop. No per212-byte host HTTP polling or
 host journal fsync remains. Existing per-record UART replies remain; no physical
-throughput result is available. **Do not use this against the occupied bench or
-assume the currently installed P4 has these endpoints.** Production is unchanged.
+throughput result is available. The matched development P4 was temporarily
+installed, but its local card failed initialization; unavailable-media rejection
+and normal UART/CLI handback pass. Successful staged files and speed comparison
+remain blocked. [Installation evidence](tasks/REMOTE-009/CARD-POWER-R01.md)
+defines this limited result. The original P4 is restored after this blocked
+qualification. Production is unchanged; installed builds must not be assumed
+to expose these endpoints.
 
 After separately authorized matched deployment, it requires a mounted P4 card
 and the already-running `EMOS sdserve --fast /` foreground listener. It adds no
