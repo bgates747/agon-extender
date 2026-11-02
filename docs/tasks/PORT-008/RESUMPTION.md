@@ -90,11 +90,16 @@ installation plan. Production selection stays unchanged.
 
 ## State
 
-Preparation started. Safety commit `49c44bbd` preserves the pre-existing MOS
-recovery diagram/documentation changes under the Author's all-dirt instruction.
-The clean matched pair and offline checks now pass; see
-[bounded results](RESUMPTION-RESULTS.md). No parallel firmware has been installed
-or parallel test invoked at that preparation checkpoint.
+Completed bounded build/comparison/control/restoration tranche. Safety commit
+`49c44bbd` preserves pre-existing recovery documentation under the Author's
+all-dirt instruction. The fresh matched builds and offline checks pass; physical
+results retain 48 selected fully byte-proved records and five completed
+capture-absence controls. The complete original P4 flash and EMOS ROM are
+restored byte for byte, normal startup/listener are unchanged and actual CLI
+handback passes. See [results](RESUMPTION-RESULTS.md) and the linked portable
+record for qualifications and retained acquisition/reset failures. This does not
+close PORT-008, promote experimental firmware or resolve P08-D02. Stop before
+another architectural/control/scheduling cut.
 
 ## Acquisition failure controls
 

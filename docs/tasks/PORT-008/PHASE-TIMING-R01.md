@@ -144,13 +144,26 @@ P08-D01 [x] — No CRC in the ExExt transport. Author explicitly rejected the
 agent's recommendation to accelerate the existing CRC routine. Remove the
 transport CRC work instead. Recorded in ADR-0026 and the normative architecture.
 The [CRC-removal tranche](CRC-REMOVAL-R01-RESULTS.md) now passes paired/linked
-offline checks and complete target builds. No physical deployment or timing pass.
+offline checks and complete target builds at that checkpoint. The later matched
+format4 [resumption](RESUMPTION-RESULTS.md) now supplies physical byte/timing proof;
+its acquisition and remaining qualification limits stay explicit.
 
 P08-D02 [ ] — Define the minimum necessary link control and paired deployment
 under D03. Do not assume the existing control envelope, session or version
 exchanges must survive. Explain any remaining link-only framing and how EMOS/P4
 avoid incompatible pairing; remove obsolete CRC fields/checks. Stock VDU/reply
-formats stay unchanged. The first authorized [CRC-removal cut](CRC-REMOVAL-R01.md) uses wire3, keeps the sixteen-byte carrier, sends zero/ignores former CRC bytes14–15, and rejects format2. Later minimum carrier/session/scheduling choices remain open. This does not authorize unrelated changes to ExCom or SD file verification. The completed [completion-removal cut](COMPLETION-REMOVAL-R01-RESULTS.md) uses format4, retires at actual physical return and removes COMPLETE/ACK; formats2/3 cannot admit. Builds/owner/linked checks pass, another 264 ROM bytes reclaimed. No hardware access while fsim uses the bench; later control/scheduling choices and matched-pair deployment remain gated.
+formats stay unchanged. The first authorized [CRC-removal cut](CRC-REMOVAL-R01.md) uses
+wire3, keeps the sixteen-byte carrier, sends zero/ignores former CRC bytes14–15, and
+rejects format2. Later minimum carrier/session/scheduling choices remain open. This does
+not authorize unrelated changes to ExCom or SD file verification. The completed
+[completion-removal cut](COMPLETION-REMOVAL-R01-RESULTS.md) uses format4, retires at
+actual physical return and removes COMPLETE/ACK; formats2/3 cannot admit.
+Builds/owner/linked checks pass, another 264 ROM bytes reclaimed. That checkpoint
+prohibited hardware access while fsim used the bench. The later matched format4
+[resumption](RESUMPTION-RESULTS.md) completes physical comparison, five capture-absence
+controls and exact incoming-pair restoration. It does not resolve the remaining
+carrier/session/scheduling choices or warm-reset defect; stop for discussion before
+another code cut.
 
 P08-D03 [x] — Transport-only first pass. Author clarifies: if stock does not do
 it, this transport must not add it, except for operations demonstrably necessary

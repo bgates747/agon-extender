@@ -4,13 +4,17 @@
 
 ### Resumed matched format4 work — 2026-11-01
 
-The Author releases the bench and authorizes resuming the existing plan after
-committing/pushing pending work. [Resumption contract](PORT-008/RESUMPTION.md)
-owns fresh matched builds, preservation of current USB/display composition,
-current test lifecycle, byte proof, four-length UART comparison and exact
-restoration. Preparation begins before installation. Later P08-D02 architectural
-choices and production promotion remain separate; older bench-busy boundaries
-below are historical.
+The [resumption contract](PORT-008/RESUMPTION.md) completes fresh matched builds
+preserving current USB/display composition, 48 selected byte-proved records,
+five capture-absence controls and exact incoming-pair restoration.
+[Current results](PORT-008/RESUMPTION-RESULTS.md) show 4,096-byte sender wire drain
+18.21 ms versus UART 36.97 ms, but 4,097 bytes takes 65.19 ms versus 36.92 ms.
+Retain incomplete acquisitions and one warm-reset admission failure; no causal
+attribution or general transport acceptance follows. Full P4 flash/EMOS ROM,
+startup/listener and actual Legacy CLI handback are verified. Stop for discussion
+before another P08-D02 control/scheduling cut. Direct transitions, persistent
+UART shutdown, games and production promotion remain separate; older bench-busy
+boundaries below are historical.
 
 ### Paused goal — ordinary ExExt stream, 2026-10-11
 

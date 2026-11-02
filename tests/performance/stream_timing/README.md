@@ -61,7 +61,7 @@ software COMPLETE/ACK exchange. Do not describe it as a measured serial receipt.
    to AgonDev's HL return. Calling that private C symbol through an ordinary
    AgonDev function pointer is incorrect even when its stack arguments match.
 
-## Later bench procedure
+## Historical bench procedure — do not execute
 
 1. Obtain bench release, then follow the local hardware/fixture constraints.
    Preserve the selected working UART pair, mainboard fsim VDP and startup.
@@ -70,8 +70,9 @@ software COMPLETE/ACK exchange. Do not describe it as a measured serial receipt.
    candidate substitutes for that partner. Keep browser video disconnected.
 2. Deploy only this fixture to `/test/extender/stream-timing/r01` through the
    maintained SD transfer path. Do not populate `/bin`, modify games, or start
-   tests from autoexec. Autoexec selects the agreed video mode before the fixture
-   is invoked; the program contains no mode switch.
+   tests from autoexec. The historical autoexec preselection instruction is
+   superseded: the Pi runner must preselect the mode, confirm it and wait at
+   least one second before explicit fixture invocation; startup is read-only.
 3. Start a bounded P4 USB log collector using the current stable device identity
    and no reset-producing line-control changes. Begin collection before each
    explicit invocation. Buffer command &80 logs each byte with an ESP_LOGI prefix;
