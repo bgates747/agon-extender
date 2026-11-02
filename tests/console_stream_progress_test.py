@@ -25,7 +25,7 @@ constexpr int UART_NUM_1 = 1;
 #define pdMS_TO_TICKS(n) (n)
 int uart_read_bytes(int, void *, size_t, unsigned) { assert(false); return 0; }
 struct Session { bool active() const { return true; } };
-struct Owner { bool owned = false; bool pending() const { return owned; } };
+struct Owner { bool owned = false; bool pending() const { return owned; } bool uartTransitionAllowed() const { return !owned; } };
 struct Queue {
  bool live = true; std::vector<uint8_t> bytes;
  bool active() const { return live; }
@@ -41,6 +41,8 @@ struct Reader {
  const char *failure = nullptr;
  Session session; Owner parallel; Queue parallelVdu;
  std::function<void()> progress;
+ static constexpr unsigned progressQuantum=64;
+ unsigned progressRemaining{}; bool progressing{};
  unsigned getTimeout() const { return 40; }
 ''' + body + r'''
 };
@@ -64,7 +66,7 @@ int main(int argc, char **) {
  r = Reader{}; calls = clockNow = sleeps = 0;
  r.setup[0] = 9; r.setup[1] = 8; r.setup[2] = 7; r.setup[3] = 6;
  r.pos = 2; r.cached = 5; r.parallelVdu.bytes = {4}; r.parallel.owned = true;
- r.progress = [&]() { ++calls; r.parallel.owned = false; r.parallelVdu.bytes = {3,2,1}; };
+ r.progress = [&]() { ++calls; r.parallel.owned = false; r.parallelVdu.bytes.insert(r.parallelVdu.bytes.end(), {3,2,1}); };
  assert(r.readBytes(out,7) == 7 && calls == 1 && sleeps == 0);
  assert((std::vector<uint8_t>(out,out+7) == std::vector<uint8_t>{7,6,5,4,3,2,1}));
 
@@ -84,7 +86,7 @@ class ProgressTests(unittest.TestCase):
     def test_owned_progress_idle_split_timeout_and_fault(self):
         resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
         body = method(READ, 'size_t readBytes(uint8_t *p, size_t n) override')
-        body = body.replace(' override', '')
+        body = method(READ, 'bool parallelReadReady()') + body.replace(' override', '')
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp)/'progress.cpp'
             exe = path.with_suffix('')

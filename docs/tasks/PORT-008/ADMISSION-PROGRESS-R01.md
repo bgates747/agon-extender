@@ -65,10 +65,10 @@ qualification. This is experimental development, not production acceptance.
 
 ## Work and gates
 
-AP01 [ ] — Freeze/push task/TODO before implementation. Verify source ownership,
+AP01 [x] — Freeze/push task/TODO before implementation. Verify source ownership,
 reference identities and current bench reservation. Retain all prior evidence.
 
-AP02 [ ] — Add bounded progress and ownership gating in the actual Stream read,
+AP02 [x] — Add bounded progress and ownership gating in the actual Stream read,
 peek and bulk paths; defer nonparallel console transitions during nested I/O.
 Run real-source host checks with SDK boundaries faked, including queued-data
 admission, physical-return gating, exact order, full queues, split/cache/prefix,
@@ -106,7 +106,15 @@ production selection/tag or unrelated parser/locking optimization.
 
 ## State
 
-Task prepared before code changes. Author authorization includes monitored
+Task frozen/pushed as3e5bd59d before implementation. Real-source admission and
+mutation regressions pass under ASan/UBSan, together with split-upload/no-idle-
+sleep, UART-owner/reset, mode lifecycle, actual queue/backpressure, admission,
+physical handover/coordinator and native-build-selection checks. The read/peek/
+bulk paths share a64-byte consumed-queue budget and native/staging gate; nested
+reads cannot reenter. Nested dispatch defers console lease version1 while keeping
+controller version2 and parallel format4 I/O serviceable. No wire/EMOS change.
+
+Author authorization includes monitored
 bench qualification, standing recovery and exact restoration. It does not
 select a production version or accept firmware before review. Use current
 installation/reset/rollback/test/SD procedures and fresh local output identities;

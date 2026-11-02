@@ -458,7 +458,14 @@ void runConsole(VDUStreamProcessor *processor) {
       // the retained parser. A complete temporarily blocked OFFER/STOP stays
       // here while the outer parser consumes its ring; no byte is discarded.
       uint8_t b;
-      if(used==3+CONSOLE_SIZE && consoleControl(processor,incoming+3))used=0;
+      auto dispatchControl=[&]() {
+        // Version1 console lease changes can reset the VDP context. Buffered
+        // reads service only I/O; keep such a packet until the outer parser
+        // boundary. Version2 controller and format4 transport remain serviced.
+        return (parseCommands || incoming[5]!=1) &&
+            consoleControl(processor,incoming+3);
+      };
+      if(used==3+CONSOLE_SIZE && dispatchControl())used=0;
       for(unsigned budget=0;used<3+CONSOLE_SIZE && budget<32 &&
           uart_read_bytes(UART_NUM_1,&b,1,0)==1;++budget) {
         if(!used) {if(b!=23){s.fail("non-control UART in ExExt");break;}partial_at=now;}
@@ -467,7 +474,7 @@ void runConsole(VDUStreamProcessor *processor) {
           s.fail("invalid ExExt control carrier");break;
         }
         if(used==3+CONSOLE_SIZE) {
-          if(consoleControl(processor,incoming+3))used=0;
+          if(dispatchControl())used=0;
           break;
         }
       }

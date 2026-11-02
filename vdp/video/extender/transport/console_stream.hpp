@@ -17,6 +17,26 @@ class ConsoleStream final : public Stream {
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
   agon::extender::transport::ParallelVduStream parallelVdu{parallel};
   std::function<void()> progress;
+  // PORT-008 admission progress: a buffered parameter loop must not starve
+  // the same task's UART offer recognizer. Count consumed bytes, not time or
+  // VDU operations; large command execution is still parser-owned work.
+  static constexpr unsigned progressQuantum=64;
+  unsigned progressRemaining{};
+  bool progressing{};
+  bool parallelReadReady() {
+    if(progressing)return false;
+    if(!progressRemaining || !parallelVdu.available() ||
+       !parallel.uartTransitionAllowed()) {
+      // The callback is I/O-only. It may admit a native block, but queued
+      // bytes must wait until physical return AND staging retirement. A
+      // callback that attempts another Stream read cannot consume/reenter.
+      progressing=true;
+      if(progress)progress();
+      progressing=false;progressRemaining=parallelVdu.active()?progressQuantum:0;
+    }
+    return !failure && session.active() && parallelVdu.active() &&
+        parallel.uartTransitionAllowed();
+  }
 #endif
   uint8_t setup[4]{},output[8192]{};
   unsigned pos{4},read_pos{},count{};
@@ -31,6 +51,9 @@ class ConsoleStream final : public Stream {
     session.cancel();parallel.cancel();pos=4;cached=-1;read_pos=count=0;
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
     parallelVdu.cancel();
+    progressRemaining=0;
+    // Do not clear progressing: recovery can occur inside the I/O callback.
+    // Its caller, not a new epoch, releases that stack's reentrancy guard.
 #endif
     std::memset(setup,0,sizeof(setup));failure=nullptr;
   }
@@ -45,12 +68,17 @@ class ConsoleStream final : public Stream {
     return int(n)+(cached>=0);
   }
   int read() override {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(progressing)return -1;
+    if(parallelVdu.active() && !parallelReadReady())return -1;
+#endif
     if(pos<4) return setup[pos++];
     if(cached>=0) {int b=cached;cached=-1;return b;}
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
     if(parallelVdu.active()) {
-      if(!parallelVdu.available() && progress)progress();
-      return parallelVdu.read();
+      const int b=parallelVdu.read();
+      if(b>=0)--progressRemaining;
+      return b;
     }
 #endif
     uint8_t b;
@@ -66,16 +94,18 @@ class ConsoleStream final : public Stream {
   size_t readBytes(uint8_t *p, size_t n) override {
     if (!p || !n) return 0;
     size_t used = 0;
-    while (pos < 4 && used < n) p[used++] = setup[pos++];
-    if (cached >= 0 && used < n) { p[used++] = uint8_t(cached); cached = -1; }
-    if (used == n || !session.active()) return used;
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(progressing)return 0;
     if(parallelVdu.active()) {
       const auto started=millis();
-      while(used<n && !failure && parallelVdu.active()) {
-        used+=parallelVdu.read(p+used,n-used);
+      while(used<n && !failure && session.active() && parallelVdu.active()) {
+        if(parallelReadReady()) {
+          while(pos<4 && used<n)p[used++]=setup[pos++];
+          if(cached>=0 && used<n){p[used++]=uint8_t(cached);cached=-1;}
+          const auto got=parallelVdu.read(p+used,std::min(n-used,size_t(progressRemaining)));
+          used+=got;progressRemaining-=got;
+        }
         if(used==n || millis()-started>=getTimeout())break;
-        if(progress)progress();
         // EX-C15: a split upload may enter this I/O-only progress loop while
         // EMOS is holding a native handshake level. Match the outer owner's
         // prompt reentry during a pending block; one tick per phase needlessly
@@ -86,6 +116,9 @@ class ConsoleStream final : public Stream {
       return used;
     }
 #endif
+    while (pos < 4 && used < n) p[used++] = setup[pos++];
+    if (cached >= 0 && used < n) { p[used++] = uint8_t(cached); cached = -1; }
+    if (used == n || !session.active()) return used;
     const int got = uart_read_bytes(UART_NUM_1, p + used, n - used,
                                     pdMS_TO_TICKS(getTimeout()));
     if (got > 0) {
@@ -99,7 +132,15 @@ class ConsoleStream final : public Stream {
   size_t readBytes(char *p, size_t n) override {
     return readBytes(reinterpret_cast<uint8_t *>(p), n);
   }
-  int peek() override { if(pos<4)return setup[pos];if(cached<0)cached=read();return cached; }
+  int peek() override {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    if(progressing)return -1;
+    if(parallelVdu.active() && !parallelReadReady())return -1;
+#endif
+    if(pos<4)return setup[pos];
+    if(cached<0)cached=read();
+    return cached;
+  }
   void flush() override { /* Stream flush does not cancel pending UART bytes. */ }
   size_t write(uint8_t b) override {
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
