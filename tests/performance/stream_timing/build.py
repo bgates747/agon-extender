@@ -59,7 +59,10 @@ def main():
   if name=='prt.asm':content=content.replace('ld a,007h','ld a,00fh').replace('/16','/256')
   (a.output/'src'/name).write_text(content)
  (a.output/'include/binding.hpp').write_text('#pragma once\n'+''.join(f'#define {k} 0x{v:06X}UL\n' for k,v in binding.items())+('#define ST_PHASE 1\n#define ST_UART 0UL\n' if a.phase else '')+f'#define ST_ROM_FNV 0x{h:08X}UL\n#define ST_BUILD_ID "{build_id}"\n')
- (a.output/'Makefile').write_text('NAME=stream\nRAM_START=0xB0000\nRAM_SIZE=0x8000\nLDHAS_ARG_PROCESSING=1\nLDHAS_EXIT_HANDLER=0\ninclude $(shell agondev-config --makefile)\nCXXFLAGS += -std=c++17 -fno-delete-null-pointer-checks\nASMFLAGS += -Iinclude\n')
+ # AgonDev clang15's eZ80 backend cannot lower SJLJ exception contexts.
+ # The appliance has no exception runtime; disable unwinding so ordinary
+ # return-path cursor cleanup works. Revisit if the target gains EH support.
+ (a.output/'Makefile').write_text('NAME=stream\nRAM_START=0xB0000\nRAM_SIZE=0x8000\nLDHAS_ARG_PROCESSING=1\nLDHAS_EXIT_HANDLER=0\ninclude $(shell agondev-config --makefile)\nCXXFLAGS += -std=c++17 -fno-exceptions -fno-delete-null-pointer-checks\nASMFLAGS += -Iinclude\n')
  env=dict(os.environ);env['PATH']=str(a.toolchain/'bin')+os.pathsep+env.get('PATH','')
  subprocess.run(['make','-C',str(a.output)],env=env,check=True)
  linked=re.findall(r'^\s+(0x[0-9a-f]+)\s+(_\w+)\s*$',(a.output/'bin/stream.map').read_text(),re.M)
