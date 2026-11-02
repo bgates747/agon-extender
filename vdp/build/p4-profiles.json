@@ -92,6 +92,7 @@
         "video/extender/web/embedded_assets.cpp",
         "vendor/ESP32Time/ESP32Time.cpp",
         "video/extender/storage/local/http.cpp",
+        "video/extender/storage/fast/http.cpp",
         "video/extender/storage/webdav/adapter.cpp",
         "video/extender/storage/webdav/wire_backend.cpp",
         "video/extender/storage/webdav/connection.cpp",

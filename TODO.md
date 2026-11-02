@@ -25,6 +25,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
+- [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — P4 worker/SD staging and bulk host client implemented;51 offline checks and native P4 compile/action validation pass. Occupied bench untouched. Physical comparison/deployment pending; per-record UART replies remain, with no measured rate or promotion yet.
+
 - [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired and bounded hardware checks pass without firmware changes. Author review/fsim helper adoption and broader USB loss/paired-reset investigation remain; see R02 results.
 
 ## Physical keyboard support — active

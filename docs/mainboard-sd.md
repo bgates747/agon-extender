@@ -1,5 +1,42 @@
 # Mainboard SD service operating guide
 
+## P4-staged fast files — undeployed development
+
+The new `scripts/sdcard_staged.py` candidate sends/receives a whole file through
+HTTP while a P4 worker owns the local mainboard UART request loop. P4 SD staging
+separates network delays from the eZ80 loop. No per212-byte host HTTP polling or
+host journal fsync remains. Existing per-record UART replies remain; no physical
+throughput result is available. **Do not use this against the occupied bench or
+assume the currently installed P4 has these endpoints.** Production is unchanged.
+
+After separately authorized matched deployment, it requires a mounted P4 card
+and the already-running `EMOS sdserve --fast /` foreground listener. It adds no
+resident EMOS bytes or listener ABI changes. Candidate commands, from this repo:
+
+```sh
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" put local.bin /destination.bin --activate
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" get /source.bin local-new-file.bin
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" status
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" resume
+```
+
+Use a dedicated job state, separate from the old RPC client. One P4 job owns
+the card and queue. `resume` observes the existing job; it never resubmits an
+uncertain operation. Successful delivery releases P4 staging; failed jobs keep
+their files. Explicit `discard` abandons a terminal failed P4 spool only, leaving
+mainboard journals for existing recovery tools. A P4 restart requires inspection,
+not automatic resubmission. Downloads preserve pre-existing host files.
+Puts require `--activate`; stage-only transactions remain with `sdcard.py`,
+which retains their live session. The worker leaves the listener running;
+use its existing EXIT command before launching an Agon application.
+
+Results separate P4 `stage_us`, `mainboard_us` and host HTTP delivery/total time.
+Counts and close/sync checks remain; no CRC, replacement digest or whole-file
+verification download is performed. See the [candidate wire/lifecycle contract](protocols/mainboard-sd-staged.md)
+and [implementation task](tasks/REMOTE-009.md) for boundaries and validation.
+
+## Existing foreground service
+
 **2026-10-26 development installation:** P4r14 and sdserve-v0.3.0 use checksum-free
 fast major2 throughout, including metadata, directory operations and recovery.
 Exact installation readbacks,128KiB downloads and a551-byte installation-record

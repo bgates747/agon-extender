@@ -55,5 +55,14 @@ static void exercise(bool fast) {
     other[2]=1;other[3]=SD_RESPONSE;assert(!s.receive(other,20,15));
     assert(crcCalls==0);
   } else assert(crcCalls>0);
+  // A listener closes after sending EXIT's reply. The HTTP client must still
+  // be able to collect that completed response after the closing presence.
+  SdService closing;
+  header(other,SD_PRESENCE,21,0,0,0,0);sd_seal(other);assert(closing.receive(other,20,0));
+  header(req,SD_REQUEST,22,1,SD_EXIT,0,0);sd_seal(req);
+  assert(closing.post(req,20,out,n,1)==202);
+  header(other,SD_RESPONSE,22,1,SD_EXIT,0,0);sd_seal(other);assert(closing.receive(other,20,2));
+  header(other,SD_PRESENCE,21,0,1,0,0);sd_seal(other);assert(closing.receive(other,20,3));
+  assert(!closing.online(3)&&closing.post(req,20,out,n,4)==200&&n==20);
 }
 int main() {exercise(false);exercise(true);}

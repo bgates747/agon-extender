@@ -1,6 +1,7 @@
 #include "extender/display/rolling/task_memory.hpp"
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #include "extender/storage/local/http.hpp"
+#include "extender/storage/fast/http.hpp"
 #include "extender/storage/webdav/runtime.hpp"
 #endif
 #include "display_status.hpp"
@@ -410,14 +411,14 @@ bool WiredNetworkService::startHttp() noexcept {
   auto const &assets = web::embeddedBrowserAssets();
   HttpVideoConfig options;
 #if defined(AGON_EXTENDER_CONTROLLER_INPUT)
-  options.max_uri_handlers = 24;
+  options.max_uri_handlers = 28;
   // INPUT-004: the controller status formatter reserves1600B before HTTP/libc
   // calls. A4096B httpd stack overflowed in the dual-host initialization trial.
   // Allow2048B additional PSRAM headroom; retain the panic until bench review
   // identifies the original call site and verifies this bounded mitigation.
   options.stack_bytes = 6144;
 #else
-  options.max_uri_handlers = 18;
+  options.max_uri_handlers = 22;
 #endif
   if (!startServer(assets.data(), assets.size(), options)) return false;
   auto const server = server_.load(std::memory_order_acquire);
@@ -480,6 +481,9 @@ bool WiredNetworkService::startHttp() noexcept {
   sd_rpc.uri="/sd/rpc";sd_rpc.method=HTTP_POST;sd_rpc.handler=&sdRpcHandler;
   if(httpd_register_uri_handler(server,&sd_status)!=ESP_OK ||
      httpd_register_uri_handler(server,&sd_rpc)!=ESP_OK) {
+    http_fault_=true;stopHttp();increment(http_start_failures_);return false;
+  }
+  if(!storage::fast::routes(server)) {
     http_fault_=true;stopHttp();increment(http_start_failures_);return false;
   }
 #endif

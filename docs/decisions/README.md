@@ -63,6 +63,8 @@ When changing an ADR's identity, title, status or completeness, update this inde
 Do not infer a new decision or change qualification status merely to make the
 index look complete.
 
+[Separate HTTP turnaround from mainboard file transfer](ADR-2026-11-02-staged-fast-file-transfers.md): Accepted / Complete; REMOTE-009 owns implementation and physical qualification.
+
 ## Required metadata
 
 Every ADR begins with these fields immediately below its title:

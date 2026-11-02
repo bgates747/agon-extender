@@ -799,6 +799,14 @@ Dual. Other general EDP/EDU service remains inactive. In Dual mode those
 facilities may likewise remain available through ordinary VDU
 to the onboard VDP; they are not implemented by Extender.
 
+For staged fast mainboard file access, P4 owns HTTP turnaround and its local
+SD spool. Uploads stage before the P4-to-EMOS file loop; downloads stage before
+HTTP delivery. Host polling/journaling never gates individual eZ80 payload
+records. EMOS retains transport admission/routing and the SD-loaded foreground
+utility retains filesystem work. The [accepted separation](decisions/ADR-2026-11-02-staged-fast-file-transfers.md)
+does not imply a qualified bulk UART carrier; the current
+[candidate interface](protocols/mainboard-sd-staged.md) reuses local UART replies.
+
 During ExCom, EMOS leaves a static mode/status notice on mainboard VGA and
 hides its text cursor with stock VDP commands. Ordinary CLI echo and application
 VDU output follow the EDP route. The mainboard VDP keeps scanning out the notice

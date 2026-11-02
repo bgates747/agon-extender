@@ -50,6 +50,13 @@ exchanges offline; no clocks or protocol fields are changed. See the experimenta
 
 ## P4-local storage candidate client
 
+[sdcard_staged.py](sdcard_staged.py) is a separate, **undeployed development**
+client for fast files on the **mainboard** card. P4 stages the entire payload on
+its own SD and runs the existing checksum-free UART loop without per-record
+HTTP or host journals. It needs the new P4 worker and an admitted major2
+foreground listener. See [staged mainboard transfers](../docs/mainboard-sd.md#p4-staged-fast-files--undeployed-development).
+It does not replace or silently upgrade `sdcard.py` or a running transfer.
+
 [p4sd.py](p4sd.py) provides sessionless file/directory management of the P4's
 own card over HTTP port8080: transfers, copy/move/delete, recursive trees and
 search. See [P4 SD guide](../docs/p4-sd.md) for syntax, recovery and limits.
