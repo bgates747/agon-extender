@@ -19,7 +19,10 @@
     "d1": 40,
     "d2": 41,
     "d3": 42,
-    "ldo": 4
+    "ldo": 4,
+    "power_enable": 45,
+    "power_on_level": 0,
+    "power_settle_ms": 100
   },
   "reserved_gpios": [
     2,
