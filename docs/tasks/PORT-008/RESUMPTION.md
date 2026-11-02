@@ -92,4 +92,6 @@ installation plan. Production selection stays unchanged.
 
 Preparation started. Safety commit `49c44bbd` preserves the pre-existing MOS
 recovery diagram/documentation changes under the Author's all-dirt instruction.
-No parallel firmware has been installed or parallel test invoked in this tranche.
+The clean matched pair and offline checks now pass; see
+[bounded results](RESUMPTION-RESULTS.md). No parallel firmware has been installed
+or parallel test invoked at that preparation checkpoint.
