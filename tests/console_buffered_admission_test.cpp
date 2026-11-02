@@ -31,12 +31,12 @@ static void physicalReturn(ConsoleStream&s){
  assert(s.parallel.payloadReturned(1));
 }
 static void feed(ConsoleStream&s,const std::vector<uint8_t>&data){offer(s,data);physicalReturn(s);assert(s.parallelVdu.retire());}
-static void queuedAdmission(){
+static void queuedAdmission(bool availableFirst){
  ConsoleStream s;start(s);std::vector<uint8_t> original(256);for(unsigned i=0;i<original.size();++i)original[i]=uint8_t(i);feed(s,original);
  unsigned consumed=0,calls=0,phase=0;bool offered=false,sawUnretired=false;
  s.progress=[&](){
   ++calls;auto available=s.parallelVdu.available();uint8_t scratch[4]{};
-  assert(s.read()==-1&&s.peek()==-1&&s.readBytes(scratch,4)==0);
+  assert(s.available()==0&&s.read()==-1&&s.peek()==-1&&s.readBytes(scratch,4)==0);
   assert(s.parallelVdu.available()==available); // callback cannot recursively parse
   if(!offered&&consumed>=17){assert(consumed<=17+s.progressQuantum);assert(available>0);offer(s,{0xe7});offered=true;phase=1;}
   else if(phase==1){physicalReturn(s);sawUnretired=true;phase=2;assert(!s.parallel.pending()&&!s.parallel.uartTransitionAllowed());}
@@ -44,7 +44,10 @@ static void queuedAdmission(){
  };
  std::vector<uint8_t> got;unsigned blocked=0;
  while(got.size()<257){
-  auto before=s.parallelVdu.available();int b=s.read();
+  auto before=s.parallelVdu.available();
+  const bool readable=!availableFirst || s.available()>0;
+  int b=readable?s.read():-1;
+  if(availableFirst&&readable)assert(b>=0); // stock top-level parser casts directly to uint8_t
   if(b<0){++blocked;assert(s.parallelVdu.available()==before);continue;}
   got.push_back(uint8_t(b));++consumed;
  }
@@ -76,4 +79,4 @@ static void uartUnchanged(){
  ConsoleStream s;unsigned calls=0;s.progress=[&](){++calls;};s.setup[0]=9;s.pos=0;
  assert(s.read()==9&&s.peek()==0&&calls==0);s.transportLost();assert(s.read()==-1&&calls==0);
 }
-int main(){queuedAdmission();bulkAndPeek();pendingAndFailure();uartUnchanged();puts("PASS: actual buffered admission, native/staging gates, byte order, bulk/cache/peek, recursion, reset, fault, timeout and UART separation");}
+int main(){queuedAdmission(false);queuedAdmission(true);bulkAndPeek();pendingAndFailure();uartUnchanged();puts("PASS: actual buffered admission, native/staging gates, byte order, bulk/cache/peek, recursion, reset, fault, timeout and UART separation");}

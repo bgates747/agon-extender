@@ -60,6 +60,13 @@ class ConsoleStream final : public Stream {
   void fail(const char *why) { if (!failure) failure=why; }
   void feed(const uint8_t *p) { std::memcpy(setup,p,4);pos=0; }
   int available() override {
+#if defined(AGON_EXTENDER_EXEXT_STREAM)
+    // The retained parser uses available() before its nonblocking command
+    // read. Admit/progress here too, so a withheld native byte is never
+    // advertised as readable and later converted from -1 into VDU 255.
+    if(progressing)return 0;
+    if(parallelVdu.active() && !parallelReadReady())return 0;
+#endif
     if (pos<4) return 4-pos;
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
     if(parallelVdu.active())return int(parallelVdu.available())+(cached>=0);
