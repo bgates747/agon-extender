@@ -150,6 +150,18 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
 #endif
       ;
 }
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+// Failure-only diagnostics for observer bring-up. No logging/timestamps on the
+// successful native path; preserve the same calls and retained DMA resources.
+static bool traceRxCheck(esp_err_t error,const char *stage){
+ if(error==ESP_OK)return true;
+ std::printf("Parallel native RX failure stage=%s error=%s internal_free=%u dma_largest=%u\n",stage,esp_err_to_name(error),unsigned(heap_caps_get_free_size(payloadCaps)),unsigned(heap_caps_get_largest_free_block(payloadCaps)));
+ return false;
+}
+#define TRACE_RX_CHECK(call,stage) traceRxCheck((call),(stage))
+#else
+#define TRACE_RX_CHECK(call,stage) ((call)==ESP_OK)
+#endif
 bool P4NativePayload::startReceive() noexcept {
   // Fixed-count EOF matches the earlier physical RX prototype. PCNT, not
   // a synthetic EOF or task-level pin sample, rejects short/extra records.
@@ -158,7 +170,12 @@ bool P4NativePayload::startReceive() noexcept {
 #else
   dma_=static_cast<std::uint8_t*>(heap_caps_aligned_alloc(64,length_,payloadCaps));
 #endif
-  if(!dma_)return false;
+  if(!dma_){
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+    traceRxCheck(ESP_ERR_NO_MEM,"payload allocation");
+#endif
+    return false;
+  }
   parlio_rx_unit_config_t config{};
   for(auto& pin:config.data_gpio_nums)pin=GPIO_NUM_NC;
   for(std::size_t i=0;i<pins_.size();++i)config.data_gpio_nums[i]=static_cast<gpio_num_t>(pins_[i]);
@@ -173,22 +190,27 @@ bool P4NativePayload::startReceive() noexcept {
   config.clk_in_gpio_num=static_cast<gpio_num_t>(clock_);config.clk_out_gpio_num=GPIO_NUM_NC;
   config.valid_gpio_num=static_cast<gpio_num_t>(valid_);config.flags.free_clk=true;
   if(!rx_) {
-    if(parlio_new_rx_unit(&config,&rx_)!=ESP_OK)return false;
+    if(!TRACE_RX_CHECK(parlio_new_rx_unit(&config,&rx_),"unit allocation"))return false;
     parlio_rx_event_callbacks_t callbacks{};callbacks.on_receive_done=receiveDone;
-    if(parlio_rx_unit_register_event_callbacks(rx_,&callbacks,this)!=ESP_OK)return false;
+    if(!TRACE_RX_CHECK(parlio_rx_unit_register_event_callbacks(rx_,&callbacks,this),"callback registration"))return false;
   }
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
-  if(!attachDataPins(false))return false;
+  if(!attachDataPins(false)){
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+    traceRxCheck(ESP_FAIL,"attach pins");
+#endif
+    return false;
+  }
 #endif
   parlio_rx_level_delimiter_config_t delimiter{};
   delimiter.valid_sig_line_id=PARLIO_RX_UNIT_MAX_DATA_WIDTH-1;
   delimiter.sample_edge=PARLIO_SAMPLE_EDGE_NEG;delimiter.bit_pack_order=PARLIO_BIT_PACK_ORDER_LSB;
   delimiter.flags.active_low_en=true;delimiter.eof_data_len=length_;
-  if(parlio_new_rx_level_delimiter(&delimiter,&delimiter_)!=ESP_OK)return false;
-  if(parlio_rx_unit_enable(rx_,true)!=ESP_OK)return false;
+  if(!TRACE_RX_CHECK(parlio_new_rx_level_delimiter(&delimiter,&delimiter_),"delimiter allocation"))return false;
+  if(!TRACE_RX_CHECK(parlio_rx_unit_enable(rx_,true),"enable"))return false;
   enabled_=true;
   parlio_receive_config_t receive{};receive.delimiter=delimiter_;
-  return parlio_rx_unit_receive(rx_,dma_,length_,&receive)==ESP_OK
+  return TRACE_RX_CHECK(parlio_rx_unit_receive(rx_,dma_,length_,&receive),"receive")
 #if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
       && clockCounter_.beginClock(clock_,length_) && validCounter_.begin()
 #endif

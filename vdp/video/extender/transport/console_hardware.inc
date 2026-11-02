@@ -235,6 +235,9 @@ void runConsole(VDUStreamProcessor *processor) {
   if(!console_probe->begin())abort();
 #endif
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+  if(!agon_parallel_boundary::prepare())printf("Parallel boundary trace PSRAM allocation failed\n");
+#endif
   if(!console_stream->parallelVdu.begin())abort();
 #endif
   agon::extender::transport::P4BlockCoordinator block(console_stream->parallel,

@@ -12,8 +12,10 @@
 #include <string>
 #ifdef NP_TRACE_HOST
 #include <mutex>
+#include <cstdlib>
 #else
 #include <esp_timer.h>
+#include <esp_heap_caps.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #endif
@@ -36,13 +38,29 @@ struct Snapshot {
  std::array<Adjust,64> adjusts{};std::array<Offer,128> offers{};
  uint32_t adjustment_count{},offer_count{},dropped{},state{},invalid{};
 };
-inline Snapshot saved;
+// Large bounded records belong in PSRAM, not scarce internal DMA-capable RAM.
+// Prepare once before console admission; no allocation in a timed scope.
+inline Snapshot *saved{};
+inline bool prepare(){
+ if(saved)return true;
+#ifdef NP_TRACE_HOST
+ saved=static_cast<Snapshot*>(std::calloc(1,sizeof(Snapshot)));
+#else
+ saved=static_cast<Snapshot*>(heap_caps_calloc(1,sizeof(Snapshot),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
+#endif
+ return saved!=nullptr;
+}
 inline Adjust live;
 inline std::atomic<void*> parser{};
 inline unsigned currentOffer=128;
-inline bool observing(){return parser.load(std::memory_order_relaxed)==task();}
-inline void start(){Guard g;saved={};saved.state=1;currentOffer=128;if(parser.load())saved.invalid=1;}
-inline void stop(){Guard g;if(parser.load())saved.invalid=1;saved.state=3;}
+inline bool observing(){const auto owner=parser.load(std::memory_order_relaxed);return owner && owner==task();}
+inline void start(){Guard g;if(!saved)return;
+ // Reset only metadata; every appended record is fully initialized, and only
+ // published counts are copied. Do not clear 6 KiB under a portMUX.
+ saved->adjustment_count=saved->offer_count=saved->dropped=0;
+ saved->state=1;saved->invalid=parser.load()?1:0;currentOffer=128;
+}
+inline void stop(){Guard g;if(!saved)return;if(parser.load())saved->invalid=1;saved->state=3;}
 class Adjustment {
  bool active_{};
  public:
@@ -50,31 +68,31 @@ class Adjustment {
   Guard g;
   // Fixture's reserved buffer57600 starts collection after CLI/input setup;
   // poison/setup adjustments are retained and distinguished by op/count.
-  if(buffer!=57600 || (saved.state!=1 && saved.state!=2))return;
-  if(parser.load()){saved.invalid=1;return;}
-  saved.state=2;live={};live.buffer=buffer;live.begin=now();
+  if(!saved || buffer!=57600 || (saved->state!=1 && saved->state!=2))return;
+  if(parser.load()){saved->invalid=1;return;}
+  saved->state=2;live={};live.buffer=buffer;live.begin=now();
   parser.store(task(),std::memory_order_release);active_=true;
  }
  void tag(uint32_t op,uint32_t count){if(active_){live.op=op;live.bytes=count;}}
  ~Adjustment(){
   if(!active_)return;
   live.end=now();parser.store(nullptr,std::memory_order_release);Guard g;
-  if(saved.adjustment_count<saved.adjusts.size())saved.adjusts[saved.adjustment_count++]=live;
-  else ++saved.dropped;
+  if(saved->adjustment_count<saved->adjusts.size())saved->adjusts[saved->adjustment_count++]=live;
+  else ++saved->dropped;
  }
 };
 inline void acquired(uint32_t us){live.wait_total+=us;if(us>live.wait_max)live.wait_max=us;++live.calls;}
 inline void offer(const uint8_t *p){
- const auto stamp=now();Guard g;if(saved.state!=2)return;
+ const auto stamp=now();Guard g;if(!saved || saved->state!=2)return;
  const uint32_t sequence=p[8]|uint32_t(p[9])<<8;
- if(currentOffer<saved.offer_count && saved.offers[currentOffer].sequence==sequence){++saved.offers[currentOffer].attempts;return;}
- if(saved.offer_count==saved.offers.size()){++saved.dropped;currentOffer=128;return;}
- currentOffer=saved.offer_count++;auto &r=saved.offers[currentOffer];
+ if(currentOffer<saved->offer_count && saved->offers[currentOffer].sequence==sequence){++saved->offers[currentOffer].attempts;return;}
+ if(saved->offer_count==saved->offers.size()){++saved->dropped;currentOffer=128;return;}
+ currentOffer=saved->offer_count++;auto &r=saved->offers[currentOffer];
  r={sequence,uint32_t(p[10])|uint32_t(p[11])<<8,p[12],stamp,0,0,1};
 }
-inline void accepted(){const auto stamp=now();Guard g;if(saved.state==2 && currentOffer<saved.offer_count)saved.offers[currentOffer].accepted=stamp;}
-inline void retired(){const auto stamp=now();Guard g;if(saved.state==2 && currentOffer<saved.offer_count)saved.offers[currentOffer].retired=stamp;}
-inline bool snapshot(Snapshot &out){Guard g;if(saved.state!=3 || parser.load())return false;out=saved;return true;}
+inline void accepted(){const auto stamp=now();Guard g;if(saved && saved->state==2 && currentOffer<saved->offer_count)saved->offers[currentOffer].accepted=stamp;}
+inline void retired(){const auto stamp=now();Guard g;if(saved && saved->state==2 && currentOffer<saved->offer_count)saved->offers[currentOffer].retired=stamp;}
+inline bool snapshot(Snapshot &out){Guard g;if(!saved || saved->state!=3 || parser.load())return false;out=*saved;return true;}
 inline std::string json(){
  // HTTP stack is small. The bounded snapshot and JSON allocation stay on heap
  // outside measurement; no live record is read without its publication lock.

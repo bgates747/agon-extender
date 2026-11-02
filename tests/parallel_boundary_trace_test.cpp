@@ -6,7 +6,7 @@
 using namespace agon_parallel_boundary;
 int main(){
  auto copy=std::make_unique<Snapshot>();
- assert(!snapshot(*copy));start();assert(!snapshot(*copy));
+ assert(!snapshot(*copy));start();assert(!snapshot(*copy));assert(prepare());assert(prepare());start();assert(!snapshot(*copy));
  {Adjustment wrong(123);assert(!observing());}
  {Adjustment a(57600);a.tag(194,4086);assert(observing());
   acquired(46000);acquired(2);
