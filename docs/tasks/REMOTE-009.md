@@ -80,5 +80,24 @@ promotion is claimed yet.
 Physical preparation update: [original fast baseline](REMOTE-009/BASELINE-R01.md)
 passes exact1.1MB upload/download. Identified matched r27 candidate is built,
 reviewed and uninstalled. P4 SD initialization times out across fresh boots;
-Author physical card access is required before continuing R09-06. No new-path
-hardware speedup or promotion is claimed.
+Author power cycled both devices and authorized continuation. Fresh P4 status
+still times out before filesystem access. Manufacturer-source review identifies
+an omitted active-low GPIO45 card power switch; the local driver enabled LDO4
+but never enabled the card supply. Correct this prerequisite before repeating
+the staged-transfer qualification. No new-path speedup or promotion is claimed.
+
+## P4-PC card power correction — R09-06 prerequisite
+
+1. [x] Compare board schematic/PCB and manufacturer SD test at OLIMEX/ESP32-P4-PC
+   `04032d68e5c727870f9d40beb9e37b7ab3a66916`. Rev C GPIO45 is `SD1_PWR_EN`;
+   FET1 switches card VDD_SD independently of the shared GPIO-bank LDO4.
+   `SOFTWARE/ESP-IDF/p4_production_test/sdkconfig` selects GPIO45, active low,
+   100ms stabilization. Its `components/sd_card_test/src/sd_card_test.c` enables
+   that switch before mounting. Other SD pins match the existing profile.
+2. [x] Express the switch in the PC board profile, validate its fixed mapping,
+   and enable it before the first mount. Preserve fixed3.3V LDO4, no automatic
+   retries, no unmount/power-cycle/format. DevKit skips the PC switch.
+3. [ ] Build a fresh identified matched candidate, retain the earlier uninstalled
+   r27 unchanged, verify flash, then inspect mount and run the transfer comparison.
+   This prerequisite changes P4 software only; EMOS, native VDP, listener,
+   startup, physical wiring and unknown user files remain unchanged.

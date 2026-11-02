@@ -49,6 +49,15 @@ establish the connection. The [direction-isolation results](../../tasks/PORT-008
 record the independently compared physical transfers and current qualification
 boundary. This correction does not establish successful P4-PC SD mounting.
 
+Rev C also has a separate card-supply switch: GPIO45 is `SD1_PWR_EN`, driving
+FET1's active-low gate to connect `VDD_SD`. The manufacturer production-test
+configuration at `04032d68` selects GPIO45=0 and100ms stabilization before SDMMC
+initialization. The maintained PC board profile now records these values and
+the local SD driver enables the switch once before mounting; it retains LDO4
+and never formats or power-cycles after failure. The earlier omission left the
+card supply uncontrolled despite a powered I/O bank. Hardware confirmation belongs
+to [REMOTE-009](../../tasks/REMOTE-009.md); it is not yet a mount-success claim.
+
 Espressif's [hardware design guide](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32p4/schematic-checklist-esp32p4.html)
 documents GPIO46's VDD_IO_5 bank and the software-controlled LDO output, which
 defaults to off. No matching issue appears in the

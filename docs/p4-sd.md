@@ -35,6 +35,10 @@ P4-PC Rev C development console builds keep the shared GPIO/SD bank powered
 at 3.3V from startup. A local-card mount failure does not turn off transport
 D7/GPIO46. PC SDMMC remains four-bit, default 20MHz and 3.3V; UHS voltage switching
 is disabled on this shared bank. The DevKit retains its SD-only power lifecycle.
+The maintained PC driver also enables the separate active-low GPIO45 card
+power switch, then waits100ms before its first mount. LDO4 alone does not turn
+on the card behind that switch. This correction is awaiting physical validation
+under REMOTE-009; earlier PC builds without it can time out before card identity.
 The [board reference](hardware/esp32-p4-pc/README.md) and
 [physical transfer results](tasks/PORT-008/DIRECTION-ISOLATION-R01.md) describe
 this correction; they do not qualify P4-PC local-card operation or hotplug.

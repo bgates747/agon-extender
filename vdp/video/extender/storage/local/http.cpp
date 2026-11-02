@@ -15,6 +15,9 @@
 #include <esp_http_server.h>
 #include <esp_vfs_fat.h>
 #include <driver/sdmmc_host.h>
+#include <driver/gpio.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
 #include <sdmmc_cmd.h>
 #include <sd_pwr_ctrl_by_on_chip_ldo.h>
 #include <esp_ldo_regulator.h>
@@ -57,6 +60,20 @@ bool mount(){
   } else {
     mountError=sd_pwr_ctrl_new_on_chip_ldo(&ldo,&power);if(mountError!=ESP_OK)return false;
   }
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+  // P4-PC Rev C has a separate active-low card supply switch (GPIO45/FET1).
+  // LDO4 alone powers the I/O bank, not the card behind that switch. Match
+  // Olimex 04032d68 production-test GPIO45=0 and 100ms stabilization. Keep
+  // power on after failure; never cycle the shared LDO or retry/format here.
+  // DevKit has no selected card power switch and skips this branch.
+  if constexpr(board::kSdPowerEnable >= 0) {
+    const auto pin=gpio_num_t(board::kSdPowerEnable);
+    mountError=gpio_set_level(pin,board::kSdPowerOnLevel);
+    if(mountError==ESP_OK)mountError=gpio_set_direction(pin,GPIO_MODE_OUTPUT);
+    if(mountError!=ESP_OK)return false;
+    vTaskDelay(pdMS_TO_TICKS(board::kSdPowerSettleMs));
+  }
+#endif
   sdmmc_host_t host=SDMMC_HOST_DEFAULT();host.pwr_ctrl_handle=power;
   sdmmc_slot_config_t slot=SDMMC_SLOT_CONFIG_DEFAULT();slot.width=4;
 #if defined(AGON_EXTENDER_NATIVE_BUILD)

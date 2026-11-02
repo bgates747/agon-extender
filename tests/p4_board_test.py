@@ -31,6 +31,9 @@ class BoardTest(unittest.TestCase):
             lambda b: b["ethernet"].__setitem__("mdc", 17),
             lambda b: b["sdkconfig_overrides"].__setitem__("CONFIG_UNREVIEWED", "y"),
             lambda b: b["transport"]["data"].__setitem__(0, True),
+            lambda b: b["sd"].__setitem__("power_enable", 46),
+            lambda b: b["sd"].__setitem__("power_on_level", 1),
+            lambda b: b["sd"].__setitem__("power_settle_ms", 0),
         ):
             board = deepcopy(original)
             mutate(board)
@@ -58,6 +61,9 @@ class BoardTest(unittest.TestCase):
                 checks = '#include "board.hpp"\nusing namespace agon::extender::board;\n'
                 checks += f"static_assert(kFencePins.size()=={fence_count});\n"
                 checks += f"static_assert(kTransportSharesSdIoSupply=={str(name=='p4-pc').lower()});\n"
+                checks += f"static_assert(kSdPowerEnable=={45 if name=='p4-pc' else -1});\n"
+                checks += "static_assert(kSdPowerOnLevel==0);\n"
+                checks += f"static_assert(kSdPowerSettleMs=={100 if name=='p4-pc' else 0});\n"
                 for key, value in zip(("Tx", "Rx", "Rts", "Cts"), uart):
                     checks += f"static_assert(kUart{key}=={value});\n"
                 for index, value in enumerate(data):

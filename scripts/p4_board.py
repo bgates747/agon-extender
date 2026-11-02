@@ -86,6 +86,14 @@ def validate_board(board: dict, name: str, profile: str) -> None:
     require(all(gpio(sd[k]) for k in ("clk", "cmd", "d0", "d1", "d2", "d3")),
             "invalid SD GPIO")
     require(type(sd["ldo"]) is int and 1 <= sd["ldo"] <= 4, "invalid SD LDO")
+    power_pin = sd.get("power_enable")
+    if name == "p4-pc":
+        require(type(power_pin) is int and power_pin == 45
+                and type(sd.get("power_on_level")) is int and sd["power_on_level"] == 0
+                and type(sd.get("power_settle_ms")) is int and sd["power_settle_ms"] == 100,
+                "SD power differs from reviewed Rev C active-low GPIO45 switch")
+    else:
+        require(power_pin is None, "unreviewed SD power switch")
     usb = board["usb"]
     require(usb["hub_reset"] is None or gpio(usb["hub_reset"]), "invalid hub reset GPIO")
     require(usb["peripheral_map"] == 0, "only the reviewed HS host selection is supported")
@@ -93,6 +101,8 @@ def validate_board(board: dict, name: str, profile: str) -> None:
         require(type(usb[key]) is int and 0 <= usb[key] <= 1000, "invalid USB reset delay")
     peripheral_pins = [eth[k] for k in ("mdc", "mdio", "reset", "clock_input")]
     peripheral_pins += [sd[k] for k in ("clk", "cmd", "d0", "d1", "d2", "d3")]
+    if power_pin is not None:
+        peripheral_pins.append(power_pin)
     if usb["hub_reset"] is not None:
         peripheral_pins.append(usb["hub_reset"])
     require(len(peripheral_pins) == len(set(peripheral_pins)), "duplicate peripheral GPIO")
@@ -121,7 +131,9 @@ def render_header(board: dict) -> str:
               "Clock": t["clock"], "Valid": t["valid"], "Ready": t["ready"],
               "PhyAddress": eth["address"], "EthMdc": eth["mdc"],
               "EthMdio": eth["mdio"], "EthReset": eth["reset"],
-              "SdLdo": sd["ldo"], "UsbHubReset": usb["hub_reset"] if usb["hub_reset"] is not None else -1,
+              "SdLdo": sd["ldo"], "SdPowerEnable": sd.get("power_enable", -1),
+              "SdPowerOnLevel": sd.get("power_on_level", 0), "SdPowerSettleMs": sd.get("power_settle_ms", 0),
+              "UsbHubReset": usb["hub_reset"] if usb["hub_reset"] is not None else -1,
               "UsbResetAssertMs": usb["reset_assert_ms"], "UsbResetRecoveryMs": usb["reset_recovery_ms"],
               "UsbPeripheralMap": usb["peripheral_map"]}
     values.update({"Sd" + k.capitalize(): sd[k] for k in ("clk", "cmd", "d0", "d1", "d2", "d3")})
