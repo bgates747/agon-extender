@@ -68,7 +68,7 @@ qualification. This is experimental development, not production acceptance.
 AP01 [x] — Freeze/push task/TODO before implementation. Verify source ownership,
 reference identities and current bench reservation. Retain all prior evidence.
 
-AP02 [x] — Add bounded progress and ownership gating in the actual Stream read,
+AP02 [x] — Add bounded progress and ownership gating in the actual Stream availability, read,
 peek and bulk paths; defer nonparallel console transitions during nested I/O.
 Run real-source host checks with SDK boundaries faked, including queued-data
 admission, physical-return gating, exact order, full queues, split/cache/prefix,
@@ -80,7 +80,8 @@ exact matched composition. No boundary observer/per-lock timers. Validate full
 native graph/options, changed source closure, ROM/ABI-bound unchanged phase
 fixture and the existing mandatory ownership/coordinator regressions. Record
 source/build/artifact hashes; no uncommitted identified input or generated-source
-edit. Experimental stream r18 identifies this progress change.
+edit. Experimental stream r18 identifies the initial progress change; r19 adds the
+required availability integration gate before the four-case comparison.
 
 AP04 [ ] — Establish fresh actual CLI and unchanged load-only startup, install
 and independently verify the paired candidate with the exact retained phase
@@ -119,3 +120,17 @@ bench qualification, standing recovery and exact restoration. It does not
 select a production version or accept firmware before review. Use current
 installation/reset/rollback/test/SD procedures and fresh local output identities;
 previous task helpers are evidence and must be adapted before any reuse.
+
+## Integration gotcha before larger cases
+
+The retained parser converts its top-level nonblocking read directly to uint8_t
+when available() reported input. Gating only read() could therefore turn a
+pending native transfer's temporary -1 into VDU255. The first r18 256-byte case
+passes six exact buffers, but source review identifies this uncovered edge
+before the larger cases. Add the same owner/progress gate to available(); only
+the owning task can admit a block, so a positive availability result and its
+following nonblocking read stay consistent. The actual-source regression runs
+both caller forms and proves that removing just this gate fails the top-level
+parser assertion. Callback-recursive availability also reports zero. R18's
+bounded result is retained separately; repeat the full four-case comparison on
+r19. EMOS/fixture remain byte-identical. No renderer or wire change is added.
