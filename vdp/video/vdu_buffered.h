@@ -277,33 +277,9 @@ void IRAM_ATTR VDUStreamProcessor::vdu_sys_buffered() {
 			bufferRemoveCallback(bufferId, type);
 		}	break;
 		case BUFFERED_DEBUG_INFO: {
-			// force_debug_log("vdu_sys_buffered: debug info stack highwater %d\n\r",uxTaskGetStackHighWaterMark(nullptr));
-			force_debug_log("vdu_sys_buffered: buffer %d, %d streams stored\n\r", bufferId, buffers[bufferId].size());
-			if (buffers[bufferId].empty()) {
-				return;
-			}
-			auto matrixSize = getMatrixSize(bufferId);
-			if (matrixSize.value != 0) {
-				float transform[matrixSize.size()];
-				if (getMatrixFromBuffer(bufferId, transform, matrixSize)) {
-					force_debug_log("buffer contains a %d x %d matrix with contents:\n\r", matrixSize.rows, matrixSize.columns);
-					for (int i = 0; i < matrixSize.rows; i++) {
-						for (int j = 0; j < matrixSize.columns; j++) {
-							force_debug_log(" %f", transform[i * matrixSize.columns + j]);
-						}
-						force_debug_log("\n\r");
-					}
-					return;
-				}
-			}
-			// output contents of buffer stream 0
-			auto buffer = buffers[bufferId][0];
-			auto bufferLength = buffer->size();
-			for (auto i = 0; i < bufferLength; i++) {
-				auto data = buffer->getBuffer()[i];
-				force_debug_log("%02X ", data);
-			}
-			force_debug_log("\n\r");
+			// PORT-008 admission capture-absence control: compile out the entire
+			// debug read/print body, retaining the unchanged fixture command.
+			// This isolated non-release source is never a product display fix.
 		}	break;
 		default: {
 			debug_log("vdu_sys_buffered: unknown command %d, buffer %d\n\r", command, bufferId);
