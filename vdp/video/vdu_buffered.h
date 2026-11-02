@@ -277,34 +277,13 @@ void IRAM_ATTR VDUStreamProcessor::vdu_sys_buffered() {
 			bufferRemoveCallback(bufferId, type);
 		}	break;
 		case BUFFERED_DEBUG_INFO: {
-			// force_debug_log("vdu_sys_buffered: debug info stack highwater %d\n\r",uxTaskGetStackHighWaterMark(nullptr));
-			force_debug_log("vdu_sys_buffered: buffer %d, %d streams stored\n\r", bufferId, buffers[bufferId].size());
-			if (buffers[bufferId].empty()) {
-				return;
-			}
-			auto matrixSize = getMatrixSize(bufferId);
-			if (matrixSize.value != 0) {
-				float transform[matrixSize.size()];
-				if (getMatrixFromBuffer(bufferId, transform, matrixSize)) {
-					force_debug_log("buffer contains a %d x %d matrix with contents:\n\r", matrixSize.rows, matrixSize.columns);
-					for (int i = 0; i < matrixSize.rows; i++) {
-						for (int j = 0; j < matrixSize.columns; j++) {
-							force_debug_log(" %f", transform[i * matrixSize.columns + j]);
-						}
-						force_debug_log("\n\r");
-					}
-					return;
-				}
-			}
-			// output contents of buffer stream 0
-			auto buffer = buffers[bufferId][0];
-			auto bufferLength = buffer->size();
-			for (auto i = 0; i < bufferLength; i++) {
-				auto data = buffer->getBuffer()[i];
-				force_debug_log("%02X ", data);
-			}
-			force_debug_log("\n\r");
-		}	break;
+            // PORT-008 capture-absence control ONLY. This isolated source
+            // deliberately omits the entire USB buffer-dump routine while
+            // consuming its unchanged opcode. The same frozen fixture and
+            // ordered reply fence can then run without capture instrumentation.
+            // Not a product/API fix: never merge this control into ordinary
+            // firmware. Restore the original case after this bounded control.
+        } break;
 		default: {
 			debug_log("vdu_sys_buffered: unknown command %d, buffer %d\n\r", command, bufferId);
 		}	break;
