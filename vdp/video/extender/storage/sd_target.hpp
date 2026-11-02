@@ -82,4 +82,23 @@ inline void sdStatus(std::uint32_t now,bool &online,bool &pending,std::uint32_t 
   pending=sd_service.pending();boot=sd_service.boot();protocol=sd_service.protocol();
   portEXIT_CRITICAL(&sd_mutex);
 }
+inline unsigned sdFastClaim(std::uint32_t &boot) {
+  portENTER_CRITICAL(&sd_mutex);
+  unsigned token=0;
+#if AGON_EXTENDER_STAGED_WEBDAV
+  if(!sd_peer.owned()&&!sd_application.owned)
+#endif
+    token=sd_service.claim(std::uint32_t(esp_timer_get_time()/1000));
+  boot=token?sd_service.boot():0;
+  portEXIT_CRITICAL(&sd_mutex);return token;
+}
+inline unsigned sdFastPost(unsigned token,const std::uint8_t *p,unsigned n,
+                           std::uint8_t *out,unsigned &size) {
+  portENTER_CRITICAL(&sd_mutex);
+  auto result=sd_service.postOwned(token,p,n,out,size,std::uint32_t(esp_timer_get_time()/1000));
+  portEXIT_CRITICAL(&sd_mutex);return result;
+}
+inline void sdFastRelease(unsigned token) {
+  portENTER_CRITICAL(&sd_mutex);sd_service.release(token);portEXIT_CRITICAL(&sd_mutex);
+}
 }
