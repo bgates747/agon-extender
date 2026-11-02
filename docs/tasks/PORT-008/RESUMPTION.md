@@ -95,3 +95,45 @@ recovery diagram/documentation changes under the Author's all-dirt instruction.
 The clean matched pair and offline checks now pass; see
 [bounded results](RESUMPTION-RESULTS.md). No parallel firmware has been installed
 or parallel test invoked at that preparation checkpoint.
+
+## Acquisition failure controls
+
+The current capture-failure procedure applies to an incomplete USB buffer dump.
+Retain completed rows and partial dumps, recover through the standing Agon-first
+sequence, prove actual CLI and continue independent cases. Never infer a bad
+parallel payload from missing USB log lines. A complete dump with wrong data
+remains a transport/data failure and stops this campaign for diagnosis.
+
+For a marked Extender case, prepare one isolated, clean P4 control source at
+the exact matched candidate commit. Remove only the body of buffered command128
+(BUFFERED_DEBUG_INFO) in that control, consuming the opcode as a no-op. The
+capture routine is then absent from compiled execution; ordinary firmware and
+the maintained product source keep the complete stock command. No renderer,
+transport, USB, timing or mode operation changes. This temporary debug-API
+deviation is solely the capture-absence control required by the standing
+procedure, not a supported product API change or another transport code cut.
+Keep this branch separate; do not merge its disabled debug command into product.
+
+Official Buffered Commands API documents command128 as dumping the complete
+first buffer block to USB. The retained8192-byte allocation does not shrink
+during command5 updates. Thus a short serial record is an incomplete acquisition,
+not proof of a shorter stored buffer. Record exact source/binary differences and
+keep ordinary and capture-absence results separate. The same frozen ROM-bound
+fixture bytes send the same commands and completion fences in both variants.
+
+After the initial capture cases, deliberate repeats of completed marked cases
+may recover complete byte proof using the retained host-tmpfs collection method.
+Retain originals, label repeats and select solely by complete data integrity,
+never elapsed time. Do not replay an uncertain invocation. Uncaptured controls
+do not supply missing byte proof or qualify unseen output.
+
+The capture-absence control observes ordinary serial panic output for60 seconds
+after the one explicit RUN, then requires completed CLI text and all six saved
+CSV rows with zero flags. This is a bounded functional control, not performance
+selection. Its bound covers the unchanged fixture's six240-MOS-unit poisoned
+buffer fences and six240-unit measured reply fences, setup and mode-query
+timeouts, calibration and final SD output, with margin at the observed nominal
+120 MOS units/s. With command128's body absent, its7200-unit diagnostic-dump
+wait has no bulk logging work; the unchanged seven-byte fence must still reply.
+If that bound does not yield positive completion, retain an inconclusive control;
+do not reset or dispatch another case merely because the timer expired.
