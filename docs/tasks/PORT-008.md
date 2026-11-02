@@ -2,15 +2,23 @@
 
 ## Current scope
 
-### Admission-progress fix authorized — 2026-11-02
+### Completed bounded admission-progress fix — 2026-11-02
 
-The Author authorizes the [bounded progress fix](PORT-008/ADMISSION-PROGRESS-R01.md)
-after reviewing the diagnosis. Keep the existing P4 I/O owner and queues; service
-pending offers during buffered reads without consuming provisional bytes or
-reentering the parser. Freeze/push the task, implement/validate the maintained
-transport delta, preserve the matched display composition, run bounded mode0
-comparison and restore the complete incoming pair. No parser/renderer rewrite,
-EMOS growth, new protocol or production promotion is selected.
+The Author-authorized [bounded progress fix](PORT-008/ADMISSION-PROGRESS-R01.md)
+is implemented and qualified on the exact matched display/USB composition.
+[Results](PORT-008/ADMISSION-PROGRESS-RESULTS.md) and
+[portable evidence](PORT-008/ADMISSION-PROGRESS-EVIDENCE.json) retain 24 actual
+byte-proved rows, two failed USB acquisitions and the required no-dump control.
+P4 services the existing I/O owner within 64 consumed queued bytes, gates both
+availability/read paths on physical return/retirement and defers nested console
+transitions. After a full block, following-offer medians fall from 46–47 ms to
+1.6–1.9 ms. EMOS local data completion falls from 83.00 to 38.36 ms at 8192 bytes
+and 66.96 to 22.36 ms at 4097 bytes; ordered replies remain essentially unchanged.
+Native guards, parser operations, wire protocol and EMOS image are unchanged.
+Full incoming P4 flash/EMOS ROM, startup/listener, modes/input/Legacy CLI and
+resource release are independently verified. Bench released. This closes only
+this bounded fix; review before another transport/parser optimization. P08-D02,
+warm-reset readiness, games, all-mode qualification and promotion remain open.
 
 ### Completed block-boundary attribution — 2026-11-02
 
