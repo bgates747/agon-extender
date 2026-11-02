@@ -2,6 +2,16 @@
 
 ## Current scope
 
+### Admission-progress fix authorized — 2026-11-02
+
+The Author authorizes the [bounded progress fix](PORT-008/ADMISSION-PROGRESS-R01.md)
+after reviewing the diagnosis. Keep the existing P4 I/O owner and queues; service
+pending offers during buffered reads without consuming provisional bytes or
+reentering the parser. Freeze/push the task, implement/validate the maintained
+transport delta, preserve the matched display composition, run bounded mode0
+comparison and restore the complete incoming pair. No parser/renderer rewrite,
+EMOS growth, new protocol or production promotion is selected.
+
 ### Completed block-boundary attribution — 2026-11-02
 
 The authorized [latency investigation](PORT-008/BOUNDARY-LATENCY.md) is complete.
