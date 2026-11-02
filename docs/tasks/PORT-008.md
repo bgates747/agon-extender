@@ -2,6 +2,15 @@
 
 ## Current scope
 
+### Active block-boundary attribution — 2026-11-01
+
+The Author authorizes the [latency investigation](PORT-008/BOUNDARY-LATENCY.md)
+after the matched results show variable tens-of-milliseconds waiting beyond the
+first full block. Freeze/push that contract before diagnostic edits. Reuse exact
+EMOS phase recording and add scoped P4 observations only as needed; no fix or
+architecture change is selected. Preserve current sources, byte-proof contract,
+normal startup and exact incoming-pair restoration.
+
 ### Resumed matched format4 work — 2026-11-01
 
 The [resumption contract](PORT-008/RESUMPTION.md) completes fresh matched builds
