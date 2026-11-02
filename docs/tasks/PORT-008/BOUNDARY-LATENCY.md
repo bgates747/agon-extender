@@ -61,7 +61,7 @@ hide it. Production selection remains unchanged.
 BL01 [x] — Freeze this contract, link it from the authoritative task/TODO and
 commit/push before code changes. Current state below records the implementation.
 
-BL02 [ ] — Compose canonical EMOS's existing phase profile with its unchanged
+BL02 [x] — Compose canonical EMOS's existing phase profile with its unchanged
 controller endpoint. Build through all mandatory ROM/link/baud/owner guards.
 Rebuild the exact-bound MOSlet and independently validate the fourteen live
 callsites, ROM match, register/stack/IFF, disabled hooks, timer and overflow.
@@ -104,8 +104,49 @@ architectural change; propose the smallest correction supported by evidence.
 
 ## State and decision boundary
 
-Contract prepared; no diagnostic source edit or bench operation yet. Existing
-capture/restoration bytes are retained locally. The Author's bench authorization
+Contract frozen/pushed as `fcf2dca0` before source edits. Recorder/validator
+source `542b245a` accepts current fourteen-callsite format4 and refuses incomplete
+or unknown schemas while retaining historical sixteen-callsite interpretation.
+Eleven host evidence checks pass. Canonical EMOS `2fc7b26` composes existing phase
+hooks/controller endpoint; build `agon-emos-v0.1.27-b2026-11-02-04-23-34Z` is
+128,881 bytes, 2,191 free, raw SHA256
+`89558bb1aae2ffafe1c916b3ba349e66ba7ebf509f3e5ad856c5b6615b4c722c`.
+All wrapper/link/baud checks pass. Exact-bound fixture
+`port-008-phase-timing-r01-b2026-11-02-04-24-47Z`, SHA256
+`604955cfaba60af4f95b4e8a68850fc4bd5722a65db0211688297c07619b2522`,
+passes fourteen final-CALL bindings, 3,072 ROM/RAM register/IFF/overflow cases and
+actual MOSlet/ZDS ABI checks. Fresh CLI, staging/readback and full incoming ROM
+proof pass. Exact diagnostic EMOS identity is observed after one FLASH; matched
+unchanged P4 application installation/verification is active. No timing case has
+yet run. All work uses Pi/bench; the Author takes Oryx offline for the night.
+Existing capture/restoration bytes remain retained locally. The Author's bench authorization
 continues for this bounded investigation; establish fresh actual CLI/input and
 startup evidence before installation. P08-D02 remains open. No newly selected
 carrier/session/scheduling design, production promotion or version tag follows.
+
+
+## P4 observation gate — first measured case
+
+The first current 4097-byte phase case completes all six zero-flag rows and
+full buffer proof. The next offer-to-admission interval is 46.35–47.15 ms in
+four measured rows; in the fifth it is 1.15 ms and the following seven-byte
+query offer takes 46.53 ms. One-byte native payload is 0.125–0.139 ms.
+The combined offer interval, rather than pin switching or that byte's native
+runner, owns the delay. This satisfies BL04's gate for a P4 observation.
+
+Source review identifies one possible obstruction: `vdu_buffered.h` takes
+`AGON_STOCK_NATIVE_GUARD` separately for every inline operand's target-byte
+write. This is not proof of mutex waiting. The isolated default-off P4 diagnostic
+will measure whole buffer-adjustment elapsed time, native-lock wait total/max/
+count within that scope, and offer recognition/acceptance. Preserve the same
+mutex calls and byte loop. Reuse the existing native-wait observation pattern;
+do not remove/coarsen locks or infer CPU time by subtracting unsynchronized clocks.
+Retain bounded records in RAM and read them only after explicit case completion
+and Legacy handback. No payload-per-byte timestamp stream or USB logging is added.
+P4/eZ80 local intervals and their block/request ordering must explain the wait;
+observational overhead and remaining preemption ambiguity stay explicit.
+
+The first 4096-byte case completes and saves its endpoint/phase rows, but its
+sixth USB dump is short. Preserve it as an incomplete acquisition, not transport
+corruption. Agon-first reset plus actual CLI succeeds before independent cases.
+Its capture-absence control remains required.
