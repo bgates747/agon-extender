@@ -5,6 +5,17 @@ Experimental MOSlet and offline validator for
 The original matched physical comparison is complete; phase attribution below is a separate diagnostic tranche.
 This is not a production utility or permission to acquire an occupied bench.
 
+The [current resumption contract](../../../docs/tasks/PORT-008/RESUMPTION.md)
+supersedes the historical deployment steps below. New builds require a fresh
+mode0 reply from the selected P4 route before acquisition, identify that case
+visibly and restore a flashing text cursor on handled exit. They do not change
+mode. The Pi runner owns earlier route/mode state, explicit preselection,
+confirmation, at least one second of settling and final restoration. Startup
+is read-only; never follow the historical autoexec instruction below. Rebuild
+against the exact new timing ELF/ROM; old P4 partners and private addresses are
+not a current deployment recipe. Use maintained `/extender` support and
+`/agents/extender/results` output paths under the current SD layout.
+
 ## Build and correctness checks
 
 1. Build EMOS through its ordinary repository wrapper with the explicit

@@ -64,6 +64,26 @@ static bool fence(uint24_t timeout_ticks=240){
   if(uint24_t(now()-begin)>=timeout_ticks)return false;
  return true;
 }
+static bool mode_ready(){
+ // The Pi runner owns preselection/restoration. This bounded appliance never
+ // changes mode: require a fresh reply for the safe single-buffered mode0.
+ // Do not trust sysvars left by a different display route or a prior run.
+ static const uint8_t query[]={23,0,0x86};
+ sv[sysvar_vdp_pflags]&=uint8_t(~vdp_pflag_mode);
+ if(!sent(query,sizeof query)||!drain())return false;
+ const auto begin=now();
+ while(!(sv[sysvar_vdp_pflags]&vdp_pflag_mode))
+  if(uint24_t(now()-begin)>=240)return false;
+ return sv[sysvar_scrMode]==0;
+}
+struct RestoreCursor {
+ ~RestoreCursor(){
+  // Includes all handled exits after ROM/route admission. No mode changed,
+  // and no display clear or startup modification is required for cleanup.
+  static const uint8_t cursor[]={4,23,1,1,23,1,3};
+  if(sent(cursor,sizeof cursor))(void)drain();
+ }
+};
 static bool prepare(){
  // Allocate just once outside all measured intervals. Command 0 appends a
  // block, so clear first; do not pretend it overwrites an existing block.
@@ -114,8 +134,13 @@ int main(int argc,char **argv){
 #endif
  if(!rom_matches()||*(volatile uint8_t*)ST_BACKEND!=(parallel?2:1)||
     *(volatile uint8_t*)ST_FAULT||(parallel&&!*(volatile uint8_t*)ST_OWNED)){
-  printf("Timing refused: ROM or route does not match binding\n");return 2;
+ printf("Timing refused: ROM or route does not match binding\n");return 2;
  }
+ RestoreCursor cursor;
+ if(!mode_ready()){
+  printf("Timing refused: fresh mode0 required; preselect and allow one second\n");return 2;
+ }
+ printf("Transport timing: EMOS %s to P4 EDP, mode0\n",argv[1]);
  if(!gt_prt_init()){printf("Timing refused: PRT1 unavailable\n");return 3;}
 #ifdef ST_PHASE
  arm(false);
@@ -136,8 +161,9 @@ int main(int argc,char **argv){
  const unsigned vblank_prt=gt_prt_read();const auto vblank_mos=uint24_t(now()-cal_begin);
  if(vblank_prt==65535)ok=false;
  for(unsigned length:lengths){
-  if(selected&&selected!=length)continue;
-  if(!ok)break;
+ if(selected&&selected!=length)continue;
+ if(!ok)break;
+  printf("Payload %u bytes: one warm-up and five samples\n",length);
   payload(length);
   for(unsigned repeat=0;repeat<6;++repeat){
    if(!poison()){ok=false;break;}
