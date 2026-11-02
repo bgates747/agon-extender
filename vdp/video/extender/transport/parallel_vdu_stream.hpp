@@ -5,6 +5,9 @@
 #include <array>
 #include <algorithm>
 #include "parallel_control.hpp"
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+#include "../diagnostics/parallel_boundary_trace.hpp"
+#endif
 namespace agon::extender::transport {
 class ParallelVduStream final {
  public:
@@ -77,6 +80,9 @@ class ParallelVduStream final {
       for(std::size_t i=0;i<n;++i)rx_[(rxAt_+rxCount_+i)%rx_.size()]=p[i];
       rxCount_+=n;
     }
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+    agon_parallel_boundary::retired();
+#endif
     return true;
   }
   void cancel() {active_=waiting_=false;rxAt_=rxCount_=txAt_=txCount_=0;}

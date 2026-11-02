@@ -155,7 +155,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False, sw_visible_snapshot: bool = False, indexed_output_cache_once: bool = False, indexed_snapshot_pie: bool = False, graphics_timing: bool = False, controller_input: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False, sw_visible_snapshot: bool = False, indexed_output_cache_once: bool = False, indexed_snapshot_pie: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_boundary_trace: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -164,6 +164,10 @@ def select_display_profile(document: dict, name: str, board: str,
     if hdmi_timing not in HDMI_GEOMETRIES or (hdmi_timing != "1280x720" and display_output != "hdmi"):
         raise SystemExit("custom HDMI timing requires HDMI output")
     profile = deepcopy(document["profiles"][name])
+    if parallel_boundary_trace:
+        if not exext_stream or not parallel_boot_candidate or (name,board,display_output)!=("p4-console","p4-pc","hdmi"):
+            raise SystemExit("boundary trace requires the identified native P4-PC ExExt diagnostic")
+        profile["definitions"].append("AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE=1")
     if controller_input:
         if name != "p4-console":
             raise SystemExit("controller input requires p4-console")
@@ -638,6 +642,7 @@ def main() -> None:
     parser.add_argument("--usb-direct-fs", action="store_true",
                         help="INPUT-004 keyboard-only P4-PC GPIO26/27 USB controller")
     parser.add_argument("--parallel-data-check", action="store_true", help="comparison-only native roundtrip; excludes PCNT and probe logging")
+    parser.add_argument("--parallel-boundary-trace", action="store_true", help="PORT-008 default-off RAM observation only")
     parser.add_argument("--exext-stream", action="store_true", help="experimental ordinary bidirectional ExExt VDU stream")
     parser.add_argument("--parallel-probe-candidate", action="store_true", help="private PORT-008 qualification storage/receipts")
     parser.add_argument("--parallel-boot-candidate", action="store_true", help="private PORT-008 startup; no ExExt payload")
@@ -714,7 +719,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing, args.controller_input)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing, args.controller_input, args.parallel_boundary_trace)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -880,6 +885,8 @@ def main() -> None:
         validation.append("--parallel-data-check")
     if args.exext_stream:
         validation.append("--exext-stream")
+    if args.parallel_boundary_trace:
+        validation.append("--parallel-boundary-trace")
     if args.parallel_boot_candidate:
         validation.append("--parallel-boot-candidate")
     if args.parallel_probe_candidate:
@@ -998,6 +1005,7 @@ def main() -> None:
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,
         "exext_stream": args.exext_stream,
+        "parallel_boundary_trace": args.parallel_boundary_trace,
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,
         "usb_direct_fs": args.usb_direct_fs,

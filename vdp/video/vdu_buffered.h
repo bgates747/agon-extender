@@ -8,6 +8,9 @@
 #endif
 #ifndef VDU_BUFFERED_H
 #define VDU_BUFFERED_H
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+#include "extender/diagnostics/parallel_boundary_trace.hpp"
+#endif
 
 // P4 output binding: guard existing bitmap-buffer writes and user retirement
 // against native readers. Consume UART operands before entering write guards;
@@ -865,6 +868,9 @@ public:
 // - whether to use a single operand or multiple operands
 //
 void VDUStreamProcessor::bufferAdjust(uint16_t adjustBufferId) {
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+ agon_parallel_boundary::Adjustment boundary_adjustment(adjustBufferId);
+#endif
 	static constexpr AdjustFuncTable<AdjustSingle> adjustSingleFuncs;
 	static constexpr AdjustFuncTable<AdjustMultiSingle> adjustMultiSingleFuncs;
 	static constexpr AdjustFuncTable<AdjustSingleMulti> adjustSingleMultiFuncs;
@@ -921,6 +927,9 @@ void VDUStreamProcessor::bufferAdjust(uint16_t adjustBufferId) {
 		return;
 	}
 
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+ boundary_adjustment.tag(command,count);
+#endif
 	MultiBufferStream * instream = nullptr;
 	tcb::span<uint8_t> targetSpan;
 	uint_fast8_t sourceValue = 0;

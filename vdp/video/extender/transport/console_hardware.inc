@@ -1,4 +1,7 @@
 #include "extender/network/screen_text.hpp"
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+#include "../diagnostics/parallel_boundary_trace.hpp"
+#endif
 #if defined(AGON_EXTENDER_TELEMETRY)
 #include "../telemetry/target.hpp"
 #endif
@@ -92,8 +95,15 @@ bool consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
     if(p[3]==PARALLEL_STREAM_START || p[3]==PARALLEL_STREAM_POLL || p[3]==PARALLEL_STREAM_STOP) {
       if(!console_stream->parallelVdu.request(p,reply,console_stream->session.active()))return false;
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+      if(p[3]==PARALLEL_STREAM_START)agon_parallel_boundary::start();
+      if(p[3]==PARALLEL_STREAM_STOP && !console_stream->parallelVdu.active())agon_parallel_boundary::stop();
+#endif
       console_stream->controlReply(reply,sizeof(reply));return true;
     }
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+    if(p[3]==PARALLEL_OFFER)agon_parallel_boundary::offer(p);
+#endif
     // Backpressure leaves a complete control envelope with the UART owner;
     // do not admit a physical transfer before storage is available.
     if(p[3]==PARALLEL_OFFER && !console_stream->parallelVdu.canOffer(p))return false;
@@ -104,6 +114,9 @@ bool consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
     if(p[3]==PARALLEL_OFFER && !console_stream->parallelVdu.acceptedOffer()) {
       console_stream->parallel.cancel();console_stream->fail("parallel stream storage");return false;
     }
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+    if(p[3]==PARALLEL_OFFER)agon_parallel_boundary::accepted();
+#endif
 #endif
 #if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
     if(p[3]==PARALLEL_OFFER && (!console_data_check || !console_data_check->acceptedOffer())) {

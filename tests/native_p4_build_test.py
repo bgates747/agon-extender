@@ -16,6 +16,18 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_boundary_trace_is_default_off_and_preserves_profile(self):
+        from build_p4 import select_display_profile
+        args=dict(parallel_boot_candidate=True,exext_stream=True,controller_input=True)
+        ordinary=select_display_profile(self.document,'p4-console','p4-pc','hdmi',**args)
+        observed=select_display_profile(self.document,'p4-console','p4-pc','hdmi',parallel_boundary_trace=True,**args)
+        self.assertNotIn('AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE=1',ordinary['definitions'])
+        observed['definitions'].remove('AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE=1')
+        self.assertEqual(observed,ordinary)
+        for args in ({},{'parallel_boot_candidate':True},{'exext_stream':True}):
+            with self.assertRaises(SystemExit):
+                select_display_profile(self.document,'p4-console','p4-pc','hdmi',parallel_boundary_trace=True,**args)
+
     def test_indexed_exext_retains_display_and_requires_clean_stream_pair(self):
         from build_p4 import check_indexed_identity, select_display_profile
         stream='port-008-stream-r17-b2026-11-02-00-00-00Z'

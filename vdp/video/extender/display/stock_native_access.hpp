@@ -9,6 +9,9 @@
 #include <cstdint>
 #include <mutex>
 #include "../diagnostics/owner_trace.hpp"
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+#include "../diagnostics/parallel_boundary_trace.hpp"
+#endif
 #ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
 #include "../diagnostics/native_wait_trace.hpp"
 #endif
@@ -70,6 +73,22 @@ class StockNativeGuard {
   mutex_.lock();ticket_.acquired();
  }
  ~StockNativeGuard(){mutex_.unlock();ticket_.released();}
+ StockNativeGuard(const StockNativeGuard&)=delete;
+ StockNativeGuard& operator=(const StockNativeGuard&)=delete;
+};
+#elif defined(AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE)
+// Temporary PORT-008 attribution: preserve every existing lock/unlock. Only
+// the adjustment parser accumulates native acquisition elapsed (not CPU time).
+class StockNativeGuard {
+ std::recursive_mutex &mutex_;
+ public:
+ explicit StockNativeGuard(std::recursive_mutex &mutex):mutex_(mutex){
+  const bool measure=&mutex==&stockNativeMutex() && agon_parallel_boundary::observing();
+  const auto start=measure ? agon_parallel_boundary::now() : 0;
+  mutex_.lock();
+  if(measure)agon_parallel_boundary::acquired(agon_parallel_boundary::now()-start);
+ }
+ ~StockNativeGuard(){mutex_.unlock();}
  StockNativeGuard(const StockNativeGuard&)=delete;
  StockNativeGuard& operator=(const StockNativeGuard&)=delete;
 };

@@ -4,6 +4,9 @@
 #include "extender/storage/webdav/runtime.hpp"
 #endif
 #include "display_status.hpp"
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+#include "extender/diagnostics/parallel_boundary_trace.hpp"
+#endif
 #include "screen_text.hpp"
 #include "pair_rle.hpp"
 #include "packed_frame.hpp"
@@ -419,6 +422,9 @@ bool WiredNetworkService::startHttp() noexcept {
 #else
   options.max_uri_handlers = 18;
 #endif
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+  ++options.max_uri_handlers; // One isolated diagnostic readout; product capacity unchanged.
+#endif
   if (!startServer(assets.data(), assets.size(), options)) return false;
   auto const server = server_.load(std::memory_order_acquire);
 #if defined(AGON_EXTENDER_CONTROLLER_INPUT)
@@ -426,6 +432,17 @@ bool WiredNetworkService::startHttp() noexcept {
     controller::runtime.stop();
     ESP_LOGW(kTag,"Controller routes unavailable; existing services retained");
   }
+#endif
+#ifdef AGON_EXTENDER_PARALLEL_BOUNDARY_TRACE
+  httpd_uri_t boundary{};
+  boundary.uri="/diagnostics/parallel-boundary";boundary.method=HTTP_GET;
+  boundary.handler=[](httpd_req_t *req)->esp_err_t{
+    const auto body=agon_parallel_boundary::json();
+    httpd_resp_set_hdr(req,"Cache-Control","no-store");httpd_resp_set_type(req,"application/json");
+    if(body.empty()){httpd_resp_set_status(req,"409 Conflict");return httpd_resp_sendstr(req,"{\"error\":\"Trace is not frozen after STOP\"}");}
+    return httpd_resp_send(req,body.data(),body.size());
+  };
+  if(httpd_register_uri_handler(server,&boundary)!=ESP_OK){http_fault_=true;stopHttp();return false;}
 #endif
   httpd_uri_t screen{};
   screen.uri="/screen/text";screen.method=HTTP_GET;screen.handler=&screen_text::handle;
