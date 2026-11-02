@@ -2,17 +2,20 @@
 
 ## Current scope
 
-### Transfer-rate comparison task — 2026-11-02
+### Forward transfer-rate comparison complete — 2026-11-02
 
-The Author requests the [harness task](PORT-008/TRANSFER-RATE-COMPARISON.md),
-then authorizes commit/push and implementation and grants a powered exclusive
-bench reservation. Reuse the existing matched forward
-UART/parallel stream fixture; extend it later for baseline/optimized EMOS on
-both routes with a constant P4 admission-fixed partner. Measure actual rates
-and separate submission, drain, local completion and ordered replies. Reverse
-bulk coverage is a distinct gap, not supplied by the small query reply.
-The four-arm analyzer passes host checks; clean matched builds and exact-ROM
-fixture bindings precede the authorized physical comparison and restoration.
+The [matched four-arm results](PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md)
+complete the authorized forward comparison. Optimized parallel reaches 340.35 kB/s
+at 8192 command bytes: 54.13% above baseline parallel and 3.383× matched UART.
+UART retains the 256-byte lead. All 96 selected samples have full 8192-byte proof;
+seven short acquisitions remain retained failures and six matched no-dump
+controls pass. Exact incoming firmware/startup/listener and usable Legacy CLI
+are restored, with the bench released. Fifteen host checks and full owner/ABI
+guards precede the physical evidence. The [task](PORT-008/TRANSFER-RATE-COMPARISON.md)
+and [portable evidence](PORT-008/TRANSFER-RATE-EVIDENCE.json) preserve scopes,
+ranges, acquisition/control limits, actual order and verified archive identity.
+Reverse bulk needs a matched producer/receive fixture; generalized async
+admission, whole-request burst capacity, P08-D02/warm-reset and production remain.
 
 ### Speed-first burst and asynchronous requests — 2026-11-02
 

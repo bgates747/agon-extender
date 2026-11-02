@@ -66,7 +66,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Transfer-rate harness](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON.md) implemented; 15 host checks pass. Author grants the powered exclusive bench for the matched UART/parallel before/after comparison; clean builds, exact bindings and incoming preservation precede invocation. Reverse bulk, async admission, P08-D02/warm-reset and production remain open.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) complete: optimized parallel 340.35 kB/s at 8192 bytes, +54.13% vs old parallel and 3.383× matched UART; UART wins 256 bytes. 96 full-buffer proofs, retained capture failures/controls and exact incoming restoration pass. Reverse bulk, async/whole-request admission, P08-D02/warm-reset and production remain open.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 

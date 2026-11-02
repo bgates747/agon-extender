@@ -58,6 +58,13 @@ The report ranks largest P0 drain time first, then largest stream length on ties
 Analysis start/end and host duration are retained separately from fixture runtime.
 The small reverse query is not a reverse bulk-rate measurement.
 
+The [2026-11-02 physical comparison](../../../docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md)
+uses this analyzer unchanged: 96 full-buffer-proved rows, a fixed admission-corrected
+P4 and old/optimized exact-ROM fixtures. At 8192 bytes optimized parallel is 3.383×
+matched UART and 54.13% faster than baseline parallel; UART still wins 256 bytes.
+Acquisition failures, matching no-dump controls, timing scopes and exact incoming
+restoration are retained separately. This is forward throughput evidence only.
+
 ## Build and correctness checks
 
 1. Build EMOS through its ordinary repository wrapper with the explicit

@@ -1,0 +1,10 @@
+{
+  "run_id": "PORT-008-2026-11-02-16-40-52Z",
+  "archive": "dist/qualification/PORT-008-2026-11-02-16-40-52Z/evidence.tar.gz",
+  "bytes": 17146947,
+  "sha256": "3e624f1d4b7360e4f9a5b7155815eb907aae682bcfa20edf05270aef8b01605a",
+  "files": 1484,
+  "every_member_independently_read_and_verified": true,
+  "local_only_private_configured_firmware": true,
+  "public_distribution_authorized": false
+}
