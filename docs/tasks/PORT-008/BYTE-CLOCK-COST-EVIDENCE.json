@@ -1,0 +1,214 @@
+{
+  "scope": "offline linked eZ80 instructions and complete owner-wrapper builds; no physical cycle/time/throughput or async-admission claim",
+  "baseline_emos_source_commit": "2fc7b269d57f95ead9ba3a6748852cb84e311186",
+  "builder_commit": "49dc33fee817cb184572351ee71dae7da9a139c4",
+  "shared_contract": "../../../../agon-dev-env/cross-agent/parallel_uart_async/contract.md",
+  "agreement_message": "2026-11-02_10-35-07_agon-mos_parallel-shared-semantics-accepted-four",
+  "measurements": [
+    {
+      "entry_interrupts_enabled": true,
+      "direction": "eZ80 to P4",
+      "bytes": 4096,
+      "baseline_instructions": 103084,
+      "optimized_instructions": 62164,
+      "difference_pct_of_baseline": -39.69578208063327
+    },
+    {
+      "entry_interrupts_enabled": true,
+      "direction": "P4 to eZ80",
+      "bytes": 4096,
+      "baseline_instructions": 102820,
+      "optimized_instructions": 61900,
+      "difference_pct_of_baseline": -39.79770472670687
+    },
+    {
+      "entry_interrupts_enabled": false,
+      "direction": "eZ80 to P4",
+      "bytes": 4096,
+      "baseline_instructions": 98954,
+      "optimized_instructions": 53937,
+      "difference_pct_of_baseline": -45.49285526608323
+    },
+    {
+      "entry_interrupts_enabled": false,
+      "direction": "P4 to eZ80",
+      "bytes": 4096,
+      "baseline_instructions": 98706,
+      "optimized_instructions": 53689,
+      "difference_pct_of_baseline": -45.607156606487955
+    }
+  ],
+  "builds": {
+    "baseline-r02": {
+      "variant": "baseline-r02",
+      "elapsed_host_seconds": 29.718918800354004,
+      "raw_bytes": 128871,
+      "free": 2201,
+      "sha256": "4c0973fe0f1e1eabfceb936f87bd8e03e66f1785972fc875ec4d7a4ecb282be3",
+      "status": "Offline timestamped build; no hardware qualification; do not deploy",
+      "label_correction": "2026-11-02: helper status corrected from unversioned; embedded ID and bytes unchanged.",
+      "build_id": "agon-emos-v0.1.27-b2026-11-02-15-38-40Z",
+      "profile": "exext-controller-timing.mk",
+      "sections_bytes": {
+        ".reset": 107,
+        ".reset_fill": 149,
+        ".ivecs": 288,
+        ".startup": 7931,
+        ".text": 109029,
+        ".rodata": 10615,
+        ".data": 752,
+        ".bss": 7837,
+        ".ivjmptbl": 192
+      },
+      "static_data_bss_bytes": 8589
+    },
+    "optimized-r01": {
+      "variant": "optimized-r01",
+      "elapsed_host_seconds": 32.40279769897461,
+      "raw_bytes": 128999,
+      "free": 2073,
+      "sha256": "17f1444d946d2e66f84e3e014f8069ba9099911d99a277fb64900bc3958e68c4",
+      "status": "Offline timestamped build; no hardware qualification; do not deploy",
+      "label_correction": "2026-11-02: helper status corrected from unversioned; embedded ID and bytes unchanged.",
+      "build_id": "agon-emos-v0.1.27-b2026-11-02-15-42-04Z",
+      "profile": "exext-controller-timing.mk",
+      "sections_bytes": {
+        ".reset": 107,
+        ".reset_fill": 149,
+        ".ivecs": 288,
+        ".startup": 8059,
+        ".text": 109029,
+        ".rodata": 10615,
+        ".data": 752,
+        ".bss": 7837,
+        ".ivjmptbl": 192
+      },
+      "static_data_bss_bytes": 8589
+    },
+    "baseline-native-r01": {
+      "variant": "baseline-native-r01",
+      "elapsed_host_seconds": 29.82882332801819,
+      "raw_bytes": 127234,
+      "free": 3838,
+      "sha256": "79ab3f2a5ebcf5e595ff842f854129e101baf05bf23818db1553adfc2f16eac6",
+      "status": "Offline timestamped build; no hardware qualification; do not deploy",
+      "label_correction": "2026-11-02: helper status corrected from unversioned; embedded ID and bytes unchanged.",
+      "build_id": "agon-emos-v0.1.27-b2026-11-02-15-42-53Z",
+      "profile": "parallel-native-candidate.mk",
+      "sections_bytes": {
+        ".reset": 107,
+        ".reset_fill": 149,
+        ".ivecs": 288,
+        ".startup": 7852,
+        ".text": 107489,
+        ".rodata": 10597,
+        ".data": 752,
+        ".bss": 3120,
+        ".ivjmptbl": 192
+      },
+      "static_data_bss_bytes": 3872
+    },
+    "optimized-native-r01": {
+      "variant": "optimized-native-r01",
+      "elapsed_host_seconds": 29.555935859680176,
+      "raw_bytes": 127362,
+      "free": 3710,
+      "sha256": "53fab68da81a520ec36367a2bef7d3fb1cc90b640870d93f6cee800de37596d4",
+      "status": "Offline timestamped build; no hardware qualification; do not deploy",
+      "label_correction": "2026-11-02: helper status corrected from unversioned; embedded ID and bytes unchanged.",
+      "build_id": "agon-emos-v0.1.27-b2026-11-02-15-45-13Z",
+      "profile": "parallel-native-candidate.mk",
+      "sections_bytes": {
+        ".reset": 107,
+        ".reset_fill": 149,
+        ".ivecs": 288,
+        ".startup": 7980,
+        ".text": 107489,
+        ".rodata": 10597,
+        ".data": 752,
+        ".bss": 3120,
+        ".ivjmptbl": 192
+      },
+      "static_data_bss_bytes": 3872
+    },
+    "ordinary-r01": {
+      "variant": "ordinary-r01",
+      "elapsed_host_seconds": 29.95658254623413,
+      "raw_bytes": 125558,
+      "free": 5514,
+      "sha256": "514dd590f24f01bf5fd230db452ce7c1c2c1609fe6298b92a459b008259823cd",
+      "status": "Offline timestamped build; no hardware qualification; do not deploy",
+      "label_correction": "2026-11-02: helper status corrected from unversioned; embedded ID and bytes unchanged.",
+      "build_id": "agon-emos-v0.1.27-b2026-11-02-15-46-36Z",
+      "profile": "mos-agondev.mk",
+      "sections_bytes": {
+        ".reset": 107,
+        ".reset_fill": 149,
+        ".ivecs": 288,
+        ".startup": 7672,
+        ".text": 105993,
+        ".rodata": 10597,
+        ".data": 752,
+        ".bss": 3114,
+        ".ivjmptbl": 192
+      },
+      "static_data_bss_bytes": 3866
+    }
+  },
+  "maintained_source_sha256": {
+    "src/emos_parallel_native_body.inc": "95419838f252f172280f47509986d093de2d00ece82ff4007dcf13e090cc5434",
+    "projects/emos/verify_parallel.py": "4429f42382c7e71f1d64fd43534a0c8ed6c03ed99ae3e97ffbe31f6416d47d77",
+    "projects/emos/verify_parallel_native.py": "07e1ce000bf0761e853987d91367e8d5df3e98d0cc0f287898186638f9958fb1",
+    "tests/uart_put_cpu/src/bin/parallel_native.rs": "841ed4f8286e6ce34e7313ae3efb144aef584dda6ce15725cb89f7b6a035d693",
+    "tests/check_parallel_native_link.py": "e7155c44740447609617b1afed83cb2ef7694ebb64f65c43166ba9018be94dfe"
+  },
+  "logs": {
+    "baseline-cpu.log": {
+      "text": "   Compiling ez80 v0.4.3 (https://github.com/tomm/ez80.git?rev=13c151e89f520b3bae3343bea9d67d06e8037cfa#13c151e8)\n   Compiling emos-uart-put-check v0.1.0 (${EMOS_SOURCE}/tests/uart_put_cpu)\n    Finished `release` profile [optimized] target(s) in 6.96s\n     Running `agents/burst-async/cpu-target/release/parallel_native ${ARTIFACTS}/baseline-r02/image`\nMEASURE linked-byte-kernel iff=false reverse=false bytes=4096 instructions=98954\nMEASURE linked-byte-kernel iff=false reverse=true bytes=4096 instructions=98706\nMEASURE linked-byte-kernel iff=true reverse=false bytes=4096 instructions=103084\nMEASURE linked-byte-kernel iff=true reverse=true bytes=4096 instructions=102820\nPASS 124 linked native eZ80 cases: actual C guard/assembly, both directions, bytes/edges, forward-only16-clock preamble and16-clock tail, bounds, READY loss, Port D ISR interleavings, IX/SP/IFF and raw BC/DE/HL/IY; no bench timing\n",
+      "raw_local_sha256": "669f3d77522b11b8471a526f194d9bcd33f172ab980a32761e8fa57b552bf566",
+      "normalized_text_sha256": "c62aad19201a5113b98bfb6efbd64505ddf2c4f4acd8a056671b03e61122781f"
+    },
+    "baseline-extended-cpu.log": {
+      "text": "MEASURE linked-byte-kernel iff=false reverse=false bytes=4096 instructions=98954\nMEASURE linked-byte-kernel iff=false reverse=true bytes=4096 instructions=98706\nMEASURE linked-byte-kernel iff=true reverse=false bytes=4096 instructions=103084\nMEASURE linked-byte-kernel iff=true reverse=true bytes=4096 instructions=102820\nPASS 148 linked native eZ80 cases: actual C guard/assembly, both directions, bytes/edges, forward-only16-clock preamble and16-clock tail, bounds, READY loss, Port D ISR interleavings, IX/SP/IFF and raw BC/DE/HL/IY; no bench timing\n",
+      "raw_local_sha256": "b5a0bbc6b77c538be6e0ac941c6f88636ac7a93d337cbda9dee29dfdb371d144",
+      "normalized_text_sha256": "b5a0bbc6b77c538be6e0ac941c6f88636ac7a93d337cbda9dee29dfdb371d144"
+    },
+    "optimized-cpu-r02.log": {
+      "text": "   Compiling emos-uart-put-check v0.1.0 (${EMOS_SOURCE}/tests/uart_put_cpu)\n    Finished `release` profile [optimized] target(s) in 1.74s\n     Running `agents/burst-async/cpu-target/release/parallel_native ${ARTIFACTS}/optimized-r01/image --exhaustive`\nMEASURE linked-byte-kernel iff=false reverse=false bytes=4096 instructions=53937\nMEASURE linked-byte-kernel iff=false reverse=true bytes=4096 instructions=53689\nMEASURE linked-byte-kernel iff=true reverse=false bytes=4096 instructions=62164\nMEASURE linked-byte-kernel iff=true reverse=true bytes=4096 instructions=61900\nPASS 16492 linked native eZ80 cases: actual C guard/assembly, both directions, bytes/edges, forward-only16-clock preamble and16-clock tail, bounds, READY loss, Port D ISR interleavings, IX/SP/IFF and raw BC/DE/HL/IY; no bench timing\n",
+      "raw_local_sha256": "5a30904895f26f4fde568bbcef929e29912d2ceba1ec6d44b58abdb6e0d63363",
+      "normalized_text_sha256": "10e61c27b1414a8625fa97351df76a507b3f8560855c67bae97a868ab444d148"
+    },
+    "optimized-native-cpu.log": {
+      "text": "MEASURE linked-byte-kernel iff=false reverse=false bytes=4096 instructions=53933\nMEASURE linked-byte-kernel iff=false reverse=true bytes=4096 instructions=53689\nMEASURE linked-byte-kernel iff=true reverse=false bytes=4096 instructions=62160\nMEASURE linked-byte-kernel iff=true reverse=true bytes=4096 instructions=61900\nPASS 148 linked native eZ80 cases: actual C guard/assembly, both directions, bytes/edges, forward-only16-clock preamble and16-clock tail, bounds, READY loss, Port D ISR interleavings, IX/SP/IFF and raw BC/DE/HL/IY; no bench timing\n",
+      "raw_local_sha256": "ee747656e37a142fdf97fff3b06d548923b62ee171e3ce83c4a31ba272d866bc",
+      "normalized_text_sha256": "ee747656e37a142fdf97fff3b06d548923b62ee171e3ce83c4a31ba272d866bc"
+    },
+    "native-negative-controls.log": {
+      "text": "PASS verify_parallel_native.py: EMOS private native linked checks passed: ordinary checks retained, exact Port C owners, guarded raw caller, private unactivated coordinator, atomic Port D helper; no electrical/performance claim\nPASS verify_parallel.py: EMOS production parallel linked-image entry points and instruction shapes verified, including semantic dispatch, bounded-block argument/epilogue, and UART1-guard reachability; object origin, target execution, and electrical behavior are not claimed\nREFUSED verify_parallel.py: EMOS parallel verification failed: ordinary image links private native payload symbols\nREFUSED verify_parallel_native.py: EMOS native verification failed: linked Port C writer set changed; missing=native_finish,native_send,native_send_masked,native_start_clocks unexpected=\nREFUSED verify_parallel_native.py: EMOS native verification failed: native_control does not contain one exact IFF2 save/DI/restore sequence\nREFUSED verify_parallel_native.py: EMOS native verification failed: native_pulse does not contain one exact IFF2 save/DI/restore sequence\nREFUSED verify_parallel_native.py: EMOS native verification failed: native inline IFF/count/clock sequence changed: native_send\nREFUSED verify_parallel_native.py: EMOS native verification failed: native inline IFF/count/clock sequence changed: native_send\nREFUSED verify_parallel_native.py: EMOS native verification failed: native inline IFF/count/clock sequence changed: native_receive\nREFUSED verify_parallel_native.py: EMOS native verification failed: native inline IFF/count/clock sequence changed: native_receive\nREFUSED verify_parallel_native.py: EMOS native verification failed: linked UART1 RTS register-write inventory changed\nREFUSED verify_parallel_native.py: EMOS native verification failed: native raw leaf is not called solely by its guard\nREFUSED verify_parallel_native.py: EMOS native verification failed: private coordinator acquired an unreviewed activation caller\nREFUSED verify_parallel_native.py: EMOS native verification failed: native guard is not called solely by the coordinator\nPASS actual-ELF profile/negative controls including inline IFF/page counts; no hardware claims\n{\"start_utc\": \"2026-11-02T15:47:18.376022+00:00\", \"end_utc\": \"2026-11-02T15:48:01.183963+00:00\", \"elapsed_host_seconds\": 42.808, \"scope\": \"host link checks, not target performance\"}\n",
+      "raw_local_sha256": "9ffaad03e8271b5c465544a518c2ede80c39c3e201ed9b04b52a8c787b3cb9ec",
+      "normalized_text_sha256": "9ffaad03e8271b5c465544a518c2ede80c39c3e201ed9b04b52a8c787b3cb9ec"
+    },
+    "emos-parallel-host.log": {
+      "text": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.930s\n\nOK\n",
+      "raw_local_sha256": "03256fa549f8b2d1dffc8d660fd4d7167fd9150a706291ba0e2f6cc269ff7ce8",
+      "normalized_text_sha256": "03256fa549f8b2d1dffc8d660fd4d7167fd9150a706291ba0e2f6cc269ff7ce8"
+    },
+    "optimized-cpu-final.log": {
+      "raw_local_sha256": "7b02fd6fb467d4273ff38453082a6dc043433b994c89af4244a4f0e0c009be03",
+      "normalized_text_sha256": "51196d6ab017477394da1a7c7cf3f08549016cbfd98ffbaed6b739b62a8c6330",
+      "text": "   Compiling emos-uart-put-check v0.1.0 (${EMOS_SOURCE}/tests/uart_put_cpu)\n    Finished `release` profile [optimized] target(s) in 3.73s\n     Running `agents/burst-async/cpu-target/release/parallel_native ${ARTIFACTS}/optimized-r01/image --exhaustive`\nSTART host_unix_ms=1793634757815 scope=linked_instruction_model\nMEASURE linked-byte-kernel iff=false reverse=false bytes=4096 instructions=53937\nMEASURE linked-byte-kernel iff=false reverse=true bytes=4096 instructions=53689\nMEASURE linked-byte-kernel iff=true reverse=false bytes=4096 instructions=62164\nMEASURE linked-byte-kernel iff=true reverse=true bytes=4096 instructions=61900\nPASS 16492 linked native eZ80 cases: actual C guard/assembly, both directions, bytes/edges, forward-only16-clock preamble and16-clock tail, bounds, READY loss, Port D ISR interleavings, IX/SP/IFF and raw BC/DE/HL/IY; no bench timing\nEND host_unix_ms=1793634795353 elapsed_host_ms=37538 scope=linked_instruction_model\n"
+    }
+  },
+  "limits": [
+    "eZ80/P4 electrical timings and actual interrupt-delivery effects untested",
+    "physical firmware/startup/wiring untouched",
+    "generalized nonblocking admission and public callback API unimplemented",
+    "both directions remain eZ80-clocked CPU work",
+    "exactly once callback contract applies only to live registered successful writes; not a claim about current transport callbacks"
+  ],
+  "log_path_normalization": "Absolute machine-local source/artifact prefixes replaced with ${EMOS_SOURCE}/${ARTIFACTS}; raw local hashes remain for retained logs.",
+  "exhaustive_host_runtime_ms": 37538,
+  "implemented_emos_source_commit": "08301e6d28f5cdd6a8bb01aa6806b6d4ddaf816c",
+  "shared_contract_commit": "46be75c1f6294b25dcb2217033375662ba7bbf5b",
+  "build_freeze_limit": "Offline images were built before the source checkpoint; exact source hashes and compiled provenance are retained. No clean-commit hardware candidate or deployment is claimed."
+}

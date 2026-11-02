@@ -2,6 +2,161 @@
 
 ## Current scope
 
+### Speed-first burst and asynchronous requests — 2026-11-02
+
+The Author requires speed to drive the parallel transport design. EMOS and P4
+should negotiate a transfer once and then move its bytes continuously, without
+per-byte acknowledgements unless evidence proves them necessary. An application
+whose request cannot start should be able to do useful work and receive a later
+notification. This section records requirements and proposals for review;
+implementation, hardware research/experiments and deployment are not started by
+the initial documentation request. The Author separately authorizes sending these
+details to the Interrupt-based UART0 transmission project through its mailbox,
+with a short immediate steering chat notification.
+
+The Author subsequently authorizes Extender implementation once UART and
+Extender agree a contract. UART accepts the seven shared semantic points, with
+explicit live-session callback and readiness-feature limits, in
+`2026-11-02_10-35-07_agon-mos_parallel-shared-semantics-accepted-four`.
+The [shared contract](../../../agon-dev-env/cross-agent/parallel_uart_async/contract.md)
+now owns that agreement; it allocates no binary ABI or hardware authority.
+The [first native byte-cost increment](PORT-008/BYTE-CLOCK-COST.md) starts under
+that authorization, before introducing a generalized async API.
+
+Its [offline results](PORT-008/BYTE-CLOCK-COST-RESULTS.md) now pass: the actual
+guarded 4096-byte leaf executes about 40% fewer instructions with interrupts
+enabled, for 128 extra ROM bytes and unchanged RAM. All 1..4096 lengths, both
+directions/IFF states and exact linked owner/negative controls pass. Native and
+timing full builds fit. No physical speedup, new async admission API or whole-
+request admission claim; hardware is untouched.
+
+#### Requirements
+
+1. **P08-BR01 — Speed first.** Extender developers must justify coordination,
+   copying and resident EMOS code by a demonstrated requirement and measured
+   cost. Do not add per-byte round trips as default robustness. No CRC or
+   substitute software checksum may enter EMOS–P4 traffic without explicit
+   Author request.
+2. **P08-BR02 — Transfer-level admission.** Aim for one admission handshake
+   per requested transfer, followed by uninterrupted payload movement at the
+   agreed rate. Distinguish an application request from today's internal
+   4096-byte transport blocks: repeating admission for every internal block
+   does not satisfy the whole-request objective merely by renaming a block a
+   transfer. Determine feasible lengths and receiver capacity before promising
+   this behavior. Smaller admission units require evidence and Author review.
+3. **P08-BR03 — Clocking is distinct from acknowledgement.** A sender may
+   supply a per-byte clock/strobe needed by the receiver hardware; that alone
+   is not a per-byte handshake. Establish the actual eZ80→P4 and P4→eZ80 paths
+   separately before attributing their cost to acknowledgements. The preceding
+   chat assertion that the pipe necessarily handshakes every byte was not a
+   verified diagnosis. Existing forward PD5-clock/P4 PARLIO evidence must be
+   reconciled, not ignored.
+4. **P08-BR04 — Busy requests yield.** When EMOS owns an occupied pipe, an
+   application requesting another transfer should be able to receive pending/
+   busy status promptly, continue useful work and obtain a later callback or
+   notification that lets it proceed. Avoid a mandatory spin/wait for its turn.
+   Define whether EMOS accepts and queues the request or leaves retry ownership
+   with the application; do not imply acceptance through an ambiguous busy code.
+5. **P08-BR05 — Preserve ownership and byte order.** EMOS alone authorizes
+   ordinary VDU routing, committed modes and eZ80 shared-pin use. P4 owns its
+   matching receiver/transmitter and parser boundary. Applications submit through
+   EMOS; they do not acquire a supported direct GPIO/UART bypass. Async producers
+   must not interleave bytes inside another producer's VDU command.
+6. **P08-BR06 — Keep the eZ80 application useful and EMOS small.** Prefer
+   application-side policy/callback dispatch where practical. Report EMOS flash,
+   RAM, submission cost and actual eZ80 CPU availability, as well as wire rate.
+   Async admission alone must not be advertised as autonomous eZ80 transmission.
+7. **P08-BR07 — Coordinate the common model.** Compare notes with the
+   Interrupt-based UART0 transmission project, which owns the mainboard async
+   MOS↔VDP UART work. Reuse compatible request/completion concepts and proven
+   functionality where useful, without assuming UART and parallel share physical
+   mechanisms or importing a peer's experimental ABI without agreement.
+
+#### Proposed mechanism — not an adopted wire protocol or ABI
+
+1. The eZ80 application submits a buffer and length through EMOS. If the pipe
+   is occupied, EMOS returns promptly according to the agreed pending/busy
+   contract; the application remains responsible for its buffer's lifetime.
+2. EMOS requests a transfer of N bytes from P4. P4 reserves enough receiving
+   capacity and grants the burst only when its receiver is ready. EMOS drives
+   the eZ80→P4 payload with no receiver-acknowledgement wait between bytes;
+   P4 preferably captures through hardware at a demonstrably sustainable rate.
+   Reverse traffic needs its own eZ80 receive-capacity and clocking analysis.
+3. EMOS reports when the sender buffer may be reused. If the caller needs a
+   remote receipt, define that separately from local submission/drain and from
+   P4 command execution or rendering. Reuse sufficient existing physical
+   completion evidence; do not automatically restore the removed software
+   COMPLETE/ACK exchange or add another handshake at the end of each burst.
+4. Proposed application callbacks run through foreground/cooperative dispatch
+   after EMOS records readiness/completion, rather than arbitrary application
+   execution inside an ISR. Availability notification, request acceptance,
+   buffer release and remote operation completion are different events. The
+   callback context, race handling and exact interface remain open.
+
+#### Decision register and dependencies
+
+| ID | Question | Recommendation and alternative | State / effect |
+|---|---|---|---|
+| P08-BD01 | How can the receiver sustain an unacknowledged burst? | First examine existing clocked hardware capture and a reserved whole-transfer buffer; consider fixed-rate pacing or justified smaller bursts only if actual capacity/timing limits require them. | Open; review both directions, actual pins/peripherals and worst-case service gaps before code or throughput claims. No new wiring selected. |
+| P08-BD02 | What happens when another producer finds EMOS's pipe busy? | Prefer nonblocking submission plus foreground notification; compare bounded accepted-request queuing against busy-with-readiness-notification and caller retry. | Open; define ordering, notification registration/races, fairness, buffer ownership, cancellation and reset outcome with the UART owner before selecting an ABI. |
+| P08-BD03 | Which completion events does a caller need? | Separate accepted, ready-to-start, sender-buffer-released and remote-execution events; expose only needed events using existing completion proof where sufficient. | Open; avoid extra wire exchanges, unnecessary resident state and conflating transport with rendering. |
+
+These are proposals under the Author's speed-first requirements, not accepted
+architecture changes. Existing P08-D02 and warm-reset obligations remain open.
+No protocol/version change, firmware selection, new circuitry or production
+promotion is implied. Preserve all completed admission-progress evidence.
+
+#### Work items and coordination questions
+
+1. [ ] **P08-B01 — Audit actual byte-cycle cost when authorized.** Trace the
+   maintained and exact measured native paths for each direction; distinguish
+   GPIO writes/clocking, receiver acknowledgements, polling, guard checks,
+   interrupt/preemption and block setup. Check source and generated eZ80 code
+   before proposing hardware changes. Existing 8192-byte native payload routines
+   total 31.4028 ms (about 3.83 µs/byte); that elapsed scope is not a count of
+   handshake time or a fresh matched UART result.
+2. [x] **P08-B02 — Contact and coordinate with the UART owner.** Send the full
+   requirements/proposals and retained measurement limits to the Interrupt-based
+   UART0 transmission project (`agon-mos` mailbox). Notify its chat immediately
+   through steering, with substantive discussion confined to mail. Request its
+   current source/task/API references, submission/busy/queue semantics, callback
+   context and registration races, buffer-release/drain/remote-completion
+   boundaries, ISR work and interrupt-disabled behavior, command ordering,
+   cancellation/reset handling, resident cost, and reuse opportunities. Compare
+   UART0/onboard-VDP ownership with EMOS's UART1/shared-Port-C/P4 ownership;
+   account for UART/parallel pin exclusion already established since
+   extender-legacy. Ask for existing evidence on FIFO refill/batching rather
+   than assuming per-byte UART software work equals a wire handshake. Record
+   replies and specific agreements here; peer replies grant no hardware or
+   implementation authorization. Initial full-detail mail delivered as
+   `2026-11-02_10-28-47_linux-extender_parallel-burst-async-coordination-20261102-one`
+   to `agon-mos`; its existing project chat received the short mail alert.
+   UART's acceptance and scope clarifications are incorporated in the shared
+   contract, whose finalized path is sent in
+   `2026-11-02_10-36-39_linux-extender_parallel-shared-contract-recorded-five`.
+   The chat alert contains only the mail notification.
+3. [ ] **P08-B03 — Present a bounded feasibility recommendation.** After source
+   research and peer coordination are authorized/completed, recommend a burst
+   mechanism and async request model, with alternatives and concrete costs.
+   Identify how the eZ80 application can make progress during busy periods and
+   actual transmission, and any need to divide a requested transfer. State
+   unsupported directions or hardware constraints explicitly. Obtain the
+   remaining design decisions before implementing the new transport/API.
+
+Evidence for any later authorized implementation must separate transfer
+admission, payload transmission, sender-buffer release, CPU availability and
+ordered remote processing. Compare matched payloads and endpoints against the
+current parallel and UART baselines, show explicit units and baseline-relative
+percentages, and preserve actual byte/order proof. A theoretical UART wire-rate
+calculation is not a measured end-to-end UART comparison. Fixture/bench design
+and execution remain subject to their controlling procedures and authorization.
+
+References: [current format4 contract](../protocols/exext-stream.md),
+[eight-bit signal reconciliation](PORT-008/EIGHT-BIT-HANDSHAKE.md),
+[forward reuse evidence](PORT-008/FORWARD-PROTOTYPE-REUSE.md),
+[admission-progress results](PORT-008/ADMISSION-PROGRESS-RESULTS.md),
+[removed software completion](PORT-008/COMPLETION-REMOVAL-R01-RESULTS.md).
+
 ### Completed bounded admission-progress fix — 2026-11-02
 
 The Author-authorized [bounded progress fix](PORT-008/ADMISSION-PROGRESS-R01.md)
