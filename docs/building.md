@@ -672,6 +672,13 @@ component wrapper and all profile-owned link/ROM checks. The experimental
 composition now selects CRC-free parallel wire4 on both processors, without
 software COMPLETE/ACK. Match EMOS and P4; wire2/3 images are not compatible. The sixteen-byte
 carrier remains temporarily, with former CRC slots sent zero and ignored.
+The resumed format4 comparison may retain indexed PPA output with this same
+explicit stream identity and native owner. That composition requires clean
+committed inputs even though the legacy selection flag is named
+`--allow-dirty-parallel-qualification`. Private probe/data endpoints, dirty
+inputs and ordinary release identities remain rejected. Preserve the current
+USB options and exact display source; this is an experimental transport build,
+not qualification of indexed video or a production selection.
 Ordinary version1 console activation retains its CRC. See the
 [completion-removal contract](tasks/PORT-008/COMPLETION-REMOVAL-R01.md) for
 the offline boundary; native completion/cleanup and reciprocal pad release remain.

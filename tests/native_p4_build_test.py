@@ -16,6 +16,44 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_indexed_exext_retains_display_and_requires_clean_stream_pair(self):
+        from build_p4 import check_indexed_identity, select_display_profile
+        stream='port-008-stream-r17-b2026-11-02-00-00-00Z'
+        indexed='indexed-hdmi-r25-b2026-11-01-20-18-04Z'
+        check_indexed_identity(stream,False,False,True,True,False,False,True)
+        check_indexed_identity(indexed,False,False,False,False,False,False,False)
+        # A valid identity must not permit dirty inputs, unowned native pins,
+        # a private endpoint, or a release/unrelated indexed build identity.
+        for args in (
+            (stream,True,False,True,True,False,False,True),
+            (stream,False,True,True,True,False,False,True),
+            (stream,False,False,False,True,False,False,True),
+            (stream,False,False,True,False,False,False,True),
+            (stream,False,False,True,True,True,False,True),
+            (stream,False,False,True,True,False,True,True),
+            (stream,False,False,True,True,False,False,False),
+            (indexed,False,False,False,True,False,False,False),
+            (indexed,False,False,True,True,False,False,True),
+            ('extender-vdp-v1.0.0',False,False,True,True,False,False,True),
+        ):
+            with self.subTest(args=args),self.assertRaises(SystemExit):
+                check_indexed_identity(*args)
+        base=dict(render_benchmark_output='normal',direct_rgb888=True,
+                  hdmi_timing='auto',rolling_scanout=True,ppa_scale_320=True,
+                  indexed_ppa=True,controller_input=True)
+        ordinary=select_display_profile(self.document,'p4-console','p4-pc','hdmi',**base)
+        parallel=select_display_profile(self.document,'p4-console','p4-pc','hdmi',
+                  parallel_boot_candidate=True,exext_stream=True,**base)
+        extra={'video/extender/transport/p4_native_payload.cpp',
+               'video/extender/transport/p4_block_coordinator.cpp'}
+        self.assertEqual(set(parallel['sources'])-set(ordinary['sources']),extra)
+        self.assertFalse(set(ordinary['sources'])-set(parallel['sources']))
+        self.assertIn('AGON_EXTENDER_INDEXED_PPA=1',parallel['definitions'])
+        self.assertIn('AGON_EXTENDER_CONTROLLER_INPUT=1',parallel['definitions'])
+        self.assertIn('AGON_EXTENDER_EXEXT_STREAM=1',parallel['definitions'])
+        self.assertIn('esp_driver_parlio',parallel['requires'])
+        self.assertNotIn('esp_driver_pcnt',parallel['requires'])
+
     def test_scroll_timing_is_explicit_and_preserves_normal_worker(self):
         from build_p4 import select_display_profile
         ordinary=select_display_profile(self.document,'p4-console','p4-pc','browser')

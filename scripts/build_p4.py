@@ -75,6 +75,32 @@ def check_parallel_qualification_identity(build_id: str, selected: bool,
     return True
 
 
+def check_indexed_identity(build_id: str, source_dirty: bool,
+        allow_dirty_experimental: bool, parallel_qualification: bool,
+        parallel_boot: bool, parallel_probe: bool, parallel_data: bool,
+        exext_stream: bool) -> None:
+    """PORT-008 resumption: keep the current display in a clean stream trial.
+
+    The legacy parallel flag permits dirty exploratory inputs elsewhere, but
+    never for this composition. This exception is limited to the ordinary
+    format4 stream; it does not admit private probe/data display families.
+    Remove it when a maintained, qualified ordinary transport profile replaces
+    the experimental selection. Renderer and USB policies are unchanged.
+    """
+    if source_dirty or allow_dirty_experimental or parallel_probe or parallel_data:
+        raise SystemExit("indexed PPA requires clean committed inputs without private parallel diagnostics")
+    if exext_stream:
+        if not parallel_qualification or not parallel_boot:
+            raise SystemExit("indexed ExExt requires the explicit PORT-008 stream identity and native owner")
+        # The caller has already validated this identity's timestamp and board.
+        if not re.fullmatch(r"port-008-stream-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z", build_id):
+            raise SystemExit("indexed ExExt requires a PORT-008 stream revision/build identity")
+    elif parallel_qualification or parallel_boot:
+        raise SystemExit("indexed parallel selection requires the ordinary ExExt stream")
+    elif not re.fullmatch(r"indexed-hdmi-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z", build_id):
+        raise SystemExit("indexed PPA requires an indexed-hdmi revision/build identity")
+
+
 def check_build_identity(build_id: str, source_dirty: bool,
                          allow_dirty_experimental: bool, profile: str,
                          board: str, display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False) -> None:
@@ -636,10 +662,10 @@ def main() -> None:
     if args.direct_rgb888 and not (args.indexed_ppa or args.allow_dirty_experimental or (parallel_qualification and (args.parallel_data_check or args.exext_stream))):
         parser.error("direct RGB888 requires an explicitly frozen experimental build")
     if args.indexed_ppa:
-        if source_dirty or args.allow_dirty_experimental or args.allow_dirty_parallel_qualification or args.exext_stream or args.parallel_probe_candidate or args.parallel_data_check:
-            parser.error("indexed PPA requires clean committed inputs and excludes parallel tests")
-        if not re.fullmatch(r"indexed-hdmi-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z",args.build_id):
-            parser.error("indexed PPA requires an indexed-hdmi revision/build identity")
+        check_indexed_identity(args.build_id, source_dirty, args.allow_dirty_experimental,
+                               parallel_qualification, args.parallel_boot_candidate,
+                               args.parallel_probe_candidate, args.parallel_data_check,
+                               args.exext_stream)
     if not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification:
         parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
