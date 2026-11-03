@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "identity": "remote009-fast-transfer-pin-r01",
+  "status": "tested development candidate; Author requests Golem use; not production promotion",
+  "build_id": "indexed-hdmi-r27-b2026-11-03-00-02-51Z",
+  "firmware_source": "67dfc55bedae6655ed0b6bd5d9bae4905153de9d",
+  "host_tools_commit": "b5482a2b34d52a1b09c795b8dc259d848780310e",
+  "local_archive": "agents/remote009/fast-transfer-pin-r01",
+  "files": [
+    {
+      "file": "agon_extender.bin",
+      "bytes": 1803024,
+      "sha256": "fb8283f7f57abb6b86e936ed41936b7cd545fc3f768a8a50590ab35095e0733d"
+    },
+    {
+      "file": "sdcard_staged.py",
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    },
+    {
+      "file": "sdcard.py",
+      "bytes": 19583,
+      "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa"
+    },
+    {
+      "file": "build-manifest.json",
+      "bytes": 35470,
+      "sha256": "f4cfc2b22724f07f14e43b0bf6b4666c9de93a891d1b511801d3304800471514"
+    }
+  ],
+  "installation": "P4-PC application-only update; preserve bootloader, partitions, NVS and OTA. Existing EMOSv27 and sdserve-v0.3.0 fast major2 unchanged. Verify installed bytes before staged client use. Original r25 lacks these endpoints.",
+  "evidence": "STAGED-EVIDENCE.json",
+  "operations": "../mainboard-sd.md; never change autoexec; explicit listener startup and EXIT before application; no automatic uncertain replay"
+}
