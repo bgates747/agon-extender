@@ -119,3 +119,38 @@ neutral input and idle/free resources pass. The generation6 grant uses raw
 application-scoped component hashes plus separate provenance; the consumer
 owns its later genuine entry checks. No application/discovery/RUN or mode/
 firmware/startup/callback write occurs during scheduler preparation.
+
+## R02 — Shared host temporary-storage recovery, self-assigned
+
+BBC BASIC and Golem report the shared host temporary filesystem exhausted,
+blocking sandbox startup. Eight historical Extender source copies occupy about
+3.5 GiB. This bounded host maintenance supports the Author-authorized ongoing
+consumer coordination; FSIM retains its physical lease without interruption.
+
+1. Inspect only the named Extender source trees and process references; preserve
+   every tracked, untracked, ignored and Git file, including historical builds.
+2. Copy each inactive tree to ignored project-owned SSD storage, compare complete
+   content manifests, then replace its old path with a compatibility symlink.
+   Leave registered Git worktree paths valid through that alias; do not prune,
+   reset, rebuild or change source revisions. Abort on changed source content.
+3. Retain before/after byte manifests, source revisions, process-check limits
+   and capacity evidence. Verify Git identity and clean tracked status through
+   each old path after relocation. No other owner's files or hardware access.
+4. Report recovered capacity through durable mail and immediate steering.
+   Prefer project-owned SSD temporary storage for future large source copies.
+
+State: complete. All eight source trees were copied to ignored SSD storage;
+complete before/copy/source content manifests match, including Git metadata,
+untracked and ignored files, symlink targets and permissions. Original paths
+remain compatibility symlinks, with unchanged Git HEAD and clean tracked status.
+Registered worktree paths remain valid without registry edits. Shared temporary
+availability increased from142098432 to3878944768 bytes, recovering3736846336
+bytes (3.48 GiB). No unique content or other owner files were removed.
+
+Process inspection found no accessible open references; its namespace/access
+limits prevent a global process-exclusion claim. Historical source identities,
+unchanged content and compatibility aliases bound the relocation. Detailed
+manifests, revision/path mappings and receipt remain in ignored
+`agents/tmp-storage-r01/`. Maintained build guidance now directs large temporary
+inputs to project-owned SSD storage. FSIM's bench custody and all devices,
+firmware, startup and active consumer work remain untouched.

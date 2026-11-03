@@ -8,6 +8,16 @@ or permission to deploy. Read the
 a replacement for an installed image, and the [operation entry point](using-extender.md)
 before using an existing bench.
 
+## Host storage for builds
+
+Keep large source snapshots, Git worktrees, SDK caches and build output in an
+ignored project-owned directory on SSD, such as `agents/builds/`. The host's
+shared temporary filesystem has limited capacity; repeated source copies there
+can prevent other agents' commands from starting. When a tool needs substantial
+temporary space, give that invocation a project-owned SSD `TMPDIR`. Preserve
+historical evidence and path aliases when relocating old trees; never blanket
+clean shared temporary storage or move another owner's active files.
+
 ## Building the P4 firmware
 
 Native ESP-IDF/CMake is the sole maintained outer build authority. Arduino-ESP32
