@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "candidate": "indexed-hdmi-r27-b2026-11-02-23-11-45Z",
+  "source": "f4633a168ee08e6c064d7955e9337862754a73d2",
+  "app_sha256": "12636b9efd715515257b5ca2d3216e11cd456c6f2939e80aef95eac001c991e1",
+  "worker_priority": 1,
+  "suite_elapsed_s": 683.769971801,
+  "clock": "host monotonic; no independent oscillator calibration",
+  "rows": [
+    {
+      "bytes": 257,
+      "sha256": "621bdecc21fa5a641152855407593c7e684188550ef2fef945f5c7c23c176eaa",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 2.1694520259916317,
+        "bytes_per_second": 118.46309433025063
+      },
+      "download": {
+        "host_seconds": 2.148006434988929,
+        "bytes_per_second": 119.64582405979831
+      },
+      "P4_upload_worker_us": 1055838,
+      "P4_download_worker_us": 1051607
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 2.37819515899173,
+        "bytes_per_second": 0
+      },
+      "download": {
+        "host_seconds": 1.3715165820030961,
+        "bytes_per_second": 0
+      },
+      "P4_upload_worker_us": 1003042,
+      "P4_download_worker_us": 368691
+    },
+    {
+      "bytes": 65537,
+      "sha256": "9cc69e9aee5712137ea455b500c49dc9baaaf20e1dc2ceb8bab9295b90345f40",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 20.16964579798514,
+        "bytes_per_second": 3249.2885921946563
+      },
+      "download": {
+        "host_seconds": 20.116069221985526,
+        "bytes_per_second": 3257.94265652916
+      },
+      "P4_upload_worker_us": 18843322,
+      "P4_download_worker_us": 18740239
+    },
+    {
+      "bytes": 1100000,
+      "sha256": "87d9773ba97729ccd40841042621fa0cf7891b5576f33c14ccc05729a7605050",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 301.92990567800007,
+        "bytes_per_second": 3643.229701045645
+      },
+      "download": {
+        "host_seconds": 308.9088002979988,
+        "bytes_per_second": 3560.9215371619375
+      },
+      "P4_upload_worker_us": 298503626,
+      "P4_download_worker_us": 306410126
+    }
+  ],
+  "missing_source_failed_and_explicitly_discarded": true,
+  "startup_unchanged": true,
+  "foreground_listener_exited": true,
+  "P4_job_idle": true,
+  "post_EMOS_ROM_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+  "comparison": [
+    {
+      "direction": "upload",
+      "old_seconds": 283.39583010500064,
+      "staged_seconds": 301.92990567800007,
+      "elapsed_change_percent": 6.539995865899795,
+      "speedup_old_over_staged": 0.9386146412645672,
+      "P4_worker_seconds": 298.503626
+    },
+    {
+      "direction": "download",
+      "old_seconds": 507.4451986030035,
+      "staged_seconds": 308.9088002979988,
+      "elapsed_change_percent": -39.12469737650003,
+      "speedup_old_over_staged": 1.6427023060316837,
+      "P4_worker_seconds": 306.410126
+    }
+  ],
+  "production_promoted": false,
+  "scope": "one matched file per direction/size; no durability/fault-injection/all-mode claim"
+}
