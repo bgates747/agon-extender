@@ -5,6 +5,10 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
+## Agent development turnaround — approved first tranche
+
+- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Coordinate staged files, both parallel directions and reliable launch/completion around total bench turnaround. Priorities approved; first tranche adopts the tested faster listener. Extender retains bench custody until an Author-agreed handoff; other agents may queue.
+
 ## Current corrective work — HDMI aspect
 
 - [ ] **[HDMI-004 — Interactive mode preview](docs/tasks/HDMI-004.md)** — Build and stage the approved labelled pattern with a numeric mode menu; Author visual review pending.
