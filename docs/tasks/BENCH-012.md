@@ -53,3 +53,17 @@ publication receipts remain in ignored agents/bench012. Oryx code/state unchange
 Central source/instructions are committed and pushed as agon-dev-env `fa77f0c`
 on its maintained deployment branch. The Extender adoption links and task
 record are committed separately; unrelated environment changes are preserved.
+
+## First prepared consumer admission
+
+The 6502 owner has frozen its finite, already-authorized plan and reserved the
+physical bench. Extender reconciles BBC BASIC's intended priority first, then
+obtains a fresh scheduler observation while the registry has no active owner.
+This admission starts only the accepted foreground SD listener, reads unchanged
+startup/listener bytes through the pinned staged client, and exits to the CLI.
+Extender observes neutral input, idle jobs and ownerless serial endpoints; it
+does not invoke a diagnostic, reset, reflash or change mode/startup. Component
+identities not freshly read from flash are explicitly retained historical pins,
+which the consumer must independently verify where its frozen plan requires.
+The registry grant and durable handoff retain the exact observation/lease;
+consumer first-failure and exact native-VDP restoration boundaries remain intact.

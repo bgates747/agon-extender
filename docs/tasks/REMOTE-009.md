@@ -179,3 +179,57 @@ originalr25 remains rollback, rather than the requested end state. EMOS, native
 mainboard VDP, startup and wiring stay unchanged. This bounded deployment is not
 production selection or complete canonical qualification. Local evidence and
 custody are indexed in the machine-local bench record.
+
+
+## R09-DL01 — Self-assigned download throughput improvement
+
+The Author directs Extender to work on download speed while other agents prepare
+and explicitly permits reserving its own finite test slots (2026-11-03). Track
+this as a self-assigned implementation/verification tranche. Consumer leases
+remain exclusive; BBC BASIC and the separately authorized6502 work receive
+coordinated slots when ready. Source work does not occupy the bench.
+
+1. [x] Review the exact accepted listener READ path and P4 worker call sequence,
+   relevant official MOS file APIs and existing tests. Pin matched inputs and
+   bound a short research précis before implementation. Attribute filesystem,
+   packet/scheduling and final HTTP costs separately; no per-byte logging.
+2. [x] Select the smallest measured/removable remedy, preferring reuse of the
+   foreground listener's existing file APIs and state. Keep resident EMOS
+   unchanged if the foreground utility can own it. Do not add checksums or a
+   new bulk wire protocol merely to optimize this path.
+3. [x] Implement in component-owner sources on pinned isolated inputs; test
+   file-handle lifetime, sequential/random offsets, EOF/errors, writes/renames,
+   session changes and EXIT as appropriate. Preserve the accepted listener and
+   deployed P4r27; stage a separately identified utility/candidate when needed.
+4. [ ] Reserve/assert a finite own bench slot through the central scheduler after
+   independent preparation and current consumer coordination. Compare matched
+   baseline/candidate file cases with exact host byte proof outside timing,
+   separate stage/worker/HTTP/end-to-end units and ordinary CLI cleanup. Gate
+   another1.1MB comparison on a useful short-file result; no full suite, PCM,
+   startup change or uncertain replay. Existing measured baseline243.20s for
+   1.1MB is contextual, not a fresh controlled baseline on a different file.
+5. [ ] Preserve raw passing/informative failing evidence, restore accepted
+   components/normal CLI/input/idle resources, release promptly to next ready
+   agent, report achieved speed and remaining costs, and update this record.
+   Production promotion/version selection remains a separate acceptance gate.
+
+Initial source observation: `projects/sdserve/src/service.c` READ opens, seeks,
+reads and closes the source on every<=216B request. A retained sequential file
+handle is a hypothesis worth checking; source review must bound invalidation,
+filesystem ownership and cleanup before changing behavior. P4 worker timers
+combine local-file I/O, UART and eZ80 service work, so current counters alone
+cannot prove this is the whole download bottleneck.
+
+
+[Bounded download research and candidate contract](REMOTE-009/DOWNLOAD-R01.md)
+pins the accepted listener and P4 session behavior before implementation.
+
+The isolated EMOS-owned fast reader passes61 instrumented engine checks (three
+skips: two independent-checkout codec lookups and the checked-only absence of a
+persistent handle) and seven application-helper checks. Direct comparison of
+the owner codec to Extender's codec passes. For a1000-byte/five-request read,
+actual fast filesystem calls fall from five opens/sizes/seeks/closes to one
+open, one size, zero seeks and one close; all five reads and original wire
+records remain. Fast CRC invocation count remains zero. This establishes the
+removed call cost, not a physical throughput improvement. The6502 consumer owns
+the bench; candidate build and host preparation continue without target access.
