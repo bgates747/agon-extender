@@ -66,34 +66,68 @@ speed, scarce EMOS space and one admission per requested payload remain central.
 
 ## Work and gates
 
-1. RU01 — Verify exact source/SDK limits, current reverse cores and relevant
+1. [x] RU01 — Verify exact source/SDK limits, current reverse cores and relevant
    host failure/bounds checks. Retain no fabricated hardware rate or headroom
    claim. Quantify how many4096-byte admissions representative files need and
    the source-storage lower bound for a whole-file P4 DMA source.
-2. RU02 — Resolve BENCH-013 B13-D02 with a concrete recommendation before new
+2. [ ] RU02 — Resolve BENCH-013 B13-D02 with a concrete recommendation before new
    carrier code: keep the existing host/staging/file semantics and choose the
    bounded whole-payload implementation below. Record an accepted material
    decision in its ADR/architecture owners. Allocate no new global MOS ABI or
    wire identifier until that contract is explicit.
-3. RU03 — After RU02, implement the selected carrier in the owning source
+3. [ ] RU03 — After RU02, implement the selected carrier in the owning source
    checkouts. Keep P4 file I/O and EMOS utility file policy outside resident
    loops where practical. Bind logical payload length, buffer lifetime, busy
    refusal, exact finish, failure fencing and non-replay behavior. Report ROM,
    RAM, P4 storage and eZ80 CPU costs.
-4. RU04 — Exercise actual retained cores/SDK boundaries and linked eZ80 code:
+4. [ ] RU04 — Exercise actual retained cores/SDK boundaries and linked eZ80 code:
    exact first/last bytes, short/tail lengths, filesystem pauses, DMA cleanup,
    owner/busy/refusal and partial failure. Then build identified matched
    candidates through owner wrappers and all mandatory link/ABI checks.
-5. RU05 — Prepare a finite physical comparison only after required protocol,
+5. [ ] RU05 — Prepare a finite physical comparison only after required protocol,
    deployment, reset/rollback, SD-layout and test-lifecycle review. Preserve and
    verify incoming components. Prove the reverse source and full received file
    bytes outside timing. Keep payload, admission, SD/HTTP and total deployment
    elapsed separate; compare matched UART and parallel variants.
-6. RU06 — Restore exact incoming components unless the Author explicitly adopts
+6. [ ] RU06 — Restore exact incoming components unless the Author explicitly adopts
    the tested change, restore normal CLI/cursor/input and idle services, and
    retain Extender checkout. Publish scoped results/limits; raise the requested
    attention dialog. No full suite, peer notification or bench release follows
    automatically from completing this tranche.
+
+## RU01 assessment results — 2026-11-03
+
+| Upload size, bytes | Existing4096-byte admissions | Minimum whole-source P4 storage, bytes |
+|---:|---:|---:|
+| 1,100,000 | 269 | 1,100,000 |
+| 65,537 | 17 | 65,537 |
+| 4,096 | 1 | 4,096 |
+| 256 | 1 | 256 |
+
+Rows rank by largest existing admission count. Source-storage figures exclude
+DMA descriptors, alignment and other live resources; they are not free-memory
+measurements. The old two-second physical block deadline and single-block
+completion cannot simply be relabelled as a large-file contract.
+
+Unchanged maintained-source host checks pass:
+
+| Check | Result | Limit |
+|---|---|---|
+| Paired reverse cores |48 cases pass|Modeled wires; no physical speed claim|
+| Actual P4 adapter/handover/egress |213 cases pass|Fake SDK/peripheral boundary|
+| Retained ExExt internal DMA payload |246 cases pass|Existing4096-byte behavior, not PSRAM or larger transfers|
+| Paired block ownership/control |183 cases pass|Modeled physical lifecycle, no GPIO timing|
+
+Native runs preserve AddressSanitizer/UndefinedBehaviorSanitizer checks. Initial
+sandbox runs encountered LeakSanitizer's documented ptrace incompatibility;
+unchanged native reruns pass without source or sanitizer suppression. This is
+an execution-environment correction, not an Extender hardware fault.
+
+The SDK source is pinned at `b774170ff46c393eeb5e495ea37936038d3f4f4f`.
+Source hashes, resource arithmetic and complete logs are retained in ignored
+`agents/port008-reverse-upload-r01/`. No firmware, listener, startup, mode or
+other target state is changed by this assessment. Extender retains generation9.
+RU02 is the next gate; no new file carrier is implemented or qualified yet.
 
 ## Pending carrier decision — B13-D02
 
