@@ -12,9 +12,11 @@ pass in both directions, with error/CLI handback. The final priority4 worker
 measures43.24s upload and243.20s download for1.1MB, versus283.40/507.45s for the
 old client. [Measured scope and exact builds](tasks/REMOTE-009/STAGED-RESULTS.md)
 separate host, worker and HTTP time. This is not a continuous bulk UART carrier
-or all-mode/durability qualification. Production is unchanged; the bench's
-original P4 is restored after qualification, and does not expose these new
-endpoints. Select and verify the matched candidate before using this client.
+or all-mode/durability qualification. Production is unchanged. Qualification restored the original P4, which lacks
+these endpoints; the Author subsequently approved installing and retaining the
+[exact pinned candidate](tasks/REMOTE-009/FAST-TRANSFER-PIN.json) for Golem.
+Consult the machine-local bench record for current installed state, and verify
+the matched candidate before using this client.
 
 After separately authorized matched deployment, it requires a mounted P4 card
 and the already-running `EMOS sdserve --fast /` foreground listener. It adds no

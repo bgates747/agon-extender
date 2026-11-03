@@ -160,3 +160,22 @@ and appfb8283f7 are frozen; incoming P4 full006397a5 and EMOS84da2c5a remain the
 handback authority. Remaining download costs are not independently attributed
 by these combined worker timers. [Portable evidence](REMOTE-009/STAGED-EVIDENCE.json)
 records both variants, the gate and final restoration; no production/tag change.
+
+
+## Author-approved installed fast-transfer handoff
+
+After the earlier exact restoration, the Author requests Golem use the new fast
+transfers, authorizes pinning and explicitly approves installing the pinned P4
+image and leaving it installed for Golem. The
+[exact firmware/client pin](REMOTE-009/FAST-TRANSFER-PIN.json) is committed;
+retained local binaries match its sizes and hashes. Fresh pre-reset CLI reads
+verify unchanged startup and listener. Whole incoming flash verification precedes
+the application-only write; independent full16MiB readback verifies appfb8283f7
+and unchanged bytes outside its sectors. Clean boot, actual Legacy CLI, mounted
+P4 card and one exact257B staged upload/download pass. The listener exits,
+staged job is idle, input/controller are ready and all USB/reset owners release.
+No larger suite or PCM test is invoked. Golem receives the installedr27 baseline;
+originalr25 remains rollback, rather than the requested end state. EMOS, native
+mainboard VDP, startup and wiring stay unchanged. This bounded deployment is not
+production selection or complete canonical qualification. Local evidence and
+custody are indexed in the machine-local bench record.
