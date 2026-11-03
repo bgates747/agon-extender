@@ -830,6 +830,7 @@ def main() -> None:
                f"-DAGON_VDP_ROOT={VDP}",
                f"-DAGON_ROLLING_SCANOUT={'ON' if args.rolling_scanout else 'OFF'}",
                f"-DAGON_EXEXT_STREAM={'ON' if args.exext_stream else 'OFF'}",
+               f"-DAGON_PARALLEL_UPLOAD={'ON' if args.parallel_upload_candidate else 'OFF'}",
                f"-DAGON_HDMI_TIMING={args.hdmi_timing}",
                f"-DSDKCONFIG={sdkconfig}",
                f"-DAGON_DSP_LIFETIME_FIX={'ON' if profile.get('dsp_lifetime_fix') else 'OFF'}",
@@ -917,6 +918,10 @@ def main() -> None:
                               for item in cache_component["files"])
     if args.exext_stream:
         artifact_paths.append(build/"exext-parlio/parlio_rx.c")
+    if args.parallel_upload_candidate:
+        artifact_paths.extend([build/"upload-parlio/parlio_tx.c",
+                               VDP/"video/extender/transport/patch_parlio_upload.py",
+                               VDP/"video/extender/transport/parlio_upload_driver.cmake"])
     if args.usb_fsls_only and not args.usb_dual_host:
         artifact_paths.extend([VDP / "native/usb_fsls_only.cmake",
                                build / "agon-extender-usb/hcd_dwc.c",

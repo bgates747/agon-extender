@@ -81,7 +81,7 @@ speed, scarce EMOS space and one admission per requested payload remain central.
    loops where practical. Bind logical payload length, buffer lifetime, busy
    refusal, exact finish, failure fencing and non-replay behavior. Report ROM,
    RAM, P4 storage and eZ80 CPU costs.
-4. [ ] RU04 — Exercise actual retained cores/SDK boundaries and linked eZ80 code:
+4. [x] RU04 — Exercise actual retained cores/SDK boundaries and linked eZ80 code:
    exact first/last bytes, short/tail lengths, filesystem pauses, DMA cleanup,
    owner/busy/refusal and partial failure. Then build identified matched
    candidates through owner wrappers and all mandatory link/ABI checks.
@@ -271,3 +271,61 @@ leaving3068 bytes shared by heap and stack before the0xB8000 limit. This is
 linker headroom, not measured maximum runtime stack usage. Both builds retain
 experimental task scope; the inherited utility manifest's draft label and
 production selection are unchanged.
+
+Final P4 experimental build `port-008-upload-r01-b2026-11-03-22-16-31Z` uses
+clean source `18b81835748e9f148537371e9dfd7cb510a81487`. Full native build and
+validation pass. The1850816-byte application is
+`8d507a2ccd44f372ea34ef431df4fcd159f16dea1d61cde02a73ab7e01bb2518`.
+Its partition bytes and selected display/input/power/reset configuration match
+incoming r27, apart from the declared parallel boot/upload selection and omitted
+graphics-timing diagnostic. Source differences within video are confined to
+the carrier, console integration and SD service; display source is unchanged.
+
+## Physical execution state
+
+Fresh entry preservation and complete staging/readbacks pass. Startup and the
+canonical accepted listener remain unchanged. Candidate EMOS FLASH completes
+with its exact new identity observed through the proven passive printer mirror.
+Matched P4 installation and complete flash verification pass; non-application
+sectors are unchanged. Agon is released and full installed EMOS, actual CLI,
+startup/canonical utility and neutral input pass. The first finite comparison
+stops at the preparation refusal recorded below. Both known failed preparations
+are reconciled; the listener is stopped and the candidate pair remains at an
+idle CLI while the bounded fix builds. Detailed operations and private journals
+remain in the ignored tranche directory; no whole-matrix acceptance is claimed.
+
+### RU05-F01 — Large-source preparation refusal
+
+The first finite cohort stops after the1.1MB parallel upload returns local
+preparation error5. P4 reports one completed HELLO record, zero admitted/written
+bytes and no active physical carrier; the foreground service and neutral input
+remain live. All UART cases and parallel0/1/257/65537-byte complete readbacks pass.
+This is a preparation failure, not a proved length/VALID or filesystem fault.
+
+1. Preserve the terminal job and raw cohort. Verify the destination was never
+   created, then deliberately discard that known failed P4 job without replay.
+2. Inspect the pinned source and capture P4's actual driver error during one
+   separately recorded preparation diagnostic using a new job/destination. A
+   passive USB open must preserve the current boot; stop if it does not.
+3. Correct only the demonstrated source/resource limit, add a meaningful
+   regression at its actual boundary, and rebuild through the native wrapper.
+   Keep all ownership, exact-count, startup and rollback checks.
+4. Resume physical checks with new case identities only after reconciling the
+   failure. Do not overwrite the first cohort or claim its whole matrix passed.
+
+The separately named diagnostic confirms `gdma_new_link_list: no mem for link
+list items`, reached from PARLIO TX DMA setup. It preserves the P4 boot and
+again stops before BEGIN/admission; both known failed jobs are deliberately
+reconciled and the listener exits normally. PSRAM still has over26MB available.
+The carrier source allocation is not the exhausted resource.
+
+The pinned SDK deliberately allocates both complete TX descriptor arrays from
+internal DMA SRAM by default. P4 PARLIO uses AXI-GDMA, and that same SDK's
+`components/esp_hw_support/test_apps/dma/main/test_gdma.c` explicitly exercises
+AXI descriptor lists in external memory. The local remedy selects the existing
+`items_in_ext_mem` flag in a hash-bound generated TX derivative for the explicit
+upload profile only. SDK source, RX, DMA alignment/cache/encryption handling,
+wire timing and ownership remain unchanged. Removal condition: a selected
+upstream driver exposes equivalent storage selection, or this carrier is retired.
+The native validator requires the exact derived bytes, sole compile action,
+PARLIO archive membership and final ELF link; ordinary profiles reject it.
