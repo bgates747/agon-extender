@@ -76,6 +76,14 @@ reservation, remote tools, and deployment safety. Machine access is owned
 by the canonical network instructions linked below. Do not duplicate those machine-specific values in
 tracked source or documentation.
 
+Physical bench time is scheduled by Extender through the single central
+`../agon-dev-env/cross-agent/olimex-bench/README.md` workflow. Check its live
+registry and assert the current lease before target access; an old local bench
+header or Oryx emulator reservation is not a physical checkout. Coordinate
+Extender-related defects with Extender, preserving evidence and arranging
+exclusive repair custody. The Author authorizes debugging as needed, with
+self-assigned task/action/validation records and a clean consumer handback.
+
 Before preparing or running any eZ80 bench fixture, also read
 `docs/qualification/bench-constraints.md`. Active constraints there govern
 fixture invocation and evidence even when the owning task predates them.

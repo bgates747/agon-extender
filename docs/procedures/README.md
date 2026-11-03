@@ -23,6 +23,7 @@ Historical scripts and task recipes cannot override these protocols.
 | OP-07 | Recover MOS that cannot boot or accept installation | [MOS recovery](../mos-recovery.md); ordinary input recovery starts with OP-02 |
 | OP-08 | Promote accepted work or tag a release | [Production](../../production/README.md), [versioning](../versions/README.md) and AGENTS.md's acceptance/promotion rules |
 | OP-09 | Build firmware or prepare a candidate | [Building](../building.md), component-owner instructions and active task contract |
+| OP-10 | Request, grant, assert, release or transfer physical bench custody | [Central physical checkout](../../../agon-dev-env/cross-agent/olimex-bench/README.md); Extender schedules, Oryx remains separate |
 
 ## Execution and correction rules
 

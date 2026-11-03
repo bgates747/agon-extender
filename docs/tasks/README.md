@@ -119,7 +119,8 @@ The Author assigns physical bench scheduling to Extender while leaving the bench
 powered for other agents (2026-11-02). Extender consults Golem and adopts its
 existing checkout system, including current ownership and waiting requests;
 Extender does not invent a competing queue or use Oryx emulator leases as
-physical bench authority. The adopted shared checkout record owns leases;
+physical bench authority. The [maintained central checkout instructions](../../../agon-dev-env/cross-agent/olimex-bench/README.md)
+and shared `state/current.json` own leases;
 private host/device state remains in the machine-local bench record. A time
 lease covers an agent's existing authorized work, not new test/flash scope.
 
