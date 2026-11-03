@@ -70,7 +70,7 @@ speed, scarce EMOS space and one admission per requested payload remain central.
    host failure/bounds checks. Retain no fabricated hardware rate or headroom
    claim. Quantify how many4096-byte admissions representative files need and
    the source-storage lower bound for a whole-file P4 DMA source.
-2. [ ] RU02 — Resolve BENCH-013 B13-D02 with a concrete recommendation before new
+2. [x] RU02 — Resolve BENCH-013 B13-D02 with a concrete recommendation before new
    carrier code: keep the existing host/staging/file semantics and choose the
    bounded whole-payload implementation below. Record an accepted material
    decision in its ADR/architecture owners. Allocate no new global MOS ABI or
@@ -127,11 +127,11 @@ The SDK source is pinned at `b774170ff46c393eeb5e495ea37936038d3f4f4f`.
 Source hashes, resource arithmetic and complete logs are retained in ignored
 `agents/port008-reverse-upload-r01/`. No firmware, listener, startup, mode or
 other target state is changed by this assessment. Extender retains generation9.
-RU02 is the next gate; no new file carrier is implemented or qualified yet.
+The Author subsequently accepts RU02: whole-file P4 PSRAM source. No new file carrier is physically qualified yet.
 
-## Pending carrier decision — B13-D02
+## Accepted carrier decision — B13-D02, 2026-11-03
 
-Recommended first prototype: P4 retains one complete admitted upload in aligned
+The Author selects the first prototype: P4 retains one complete admitted upload in aligned
 PSRAM for DMA, while the eZ80 file utility receives small slices and writes them
 to Agon SD between clocking intervals. One payload admission covers the file;
 there is no per-slice UART negotiation or acknowledgement. The P4 validates
@@ -140,13 +140,11 @@ retained source capacity. This spends P4 PSRAM to keep the first implementation
 small and avoid streaming refill races. The exact-length loop-DMA stop, source
 release and buffer lifetime require explicit implementation/qualification.
 
-Alternative: P4 fills/recycles bounded source buffers from its SD spool during
+Deferred alternative: P4 fills/recycles bounded source buffers from its SD spool during
 the same admitted file transfer. This saves whole-file PSRAM and handles larger
 uploads, but needs a proved pause/refill protocol and protection against TX idle
 data being clocked while a refill is late. Existing abort-only READY semantics
 do not already implement that behavior. Do not silently use repeated4096-byte
 OFFERs as the production alternative to the Author's whole-request requirement.
 
-This decision selects storage/physical-completion behavior, not merely a C++
-interface name. Preserve the shared UART/parallel semantic contract, and present
-this one concrete choice before starting dependent implementation.
+The [accepted decision](../../decisions/ADR-2026-11-03-whole-file-parallel-uploads.md) owns source storage and clock/SD policy. Preserve the shared UART/parallel semantic contract. RU03 now proceeds; exact private wire operations, length/VALID completion, progress bounds and cleanup are implementation obligations to prove before hardware use.

@@ -14,7 +14,7 @@ download listener. The Author assigns Extender the physical bench and requires
 it to retain custody until the Author and Extender decide another project needs
 a slot; other agents may continue to reserve through the existing queue.
 Completing a subtask does not release this checkout. Changes to a file-service
-ABI/carrier architecture remain separate decisions; B13-D02 and B13-D03 are open.
+ABI/carrier architecture remain separate decisions; B13-D02 selects whole-file P4 PSRAM for the upload prototype; B13-D03 remains open.
 
 ## First tranche result
 
@@ -23,7 +23,7 @@ installed and readback-verified, rollback is retained,65537-byte paired file
 checks pass, and maintained selection/guidance and verified archives are in
 place. See [adoption evidence](REMOTE-009/DOWNLOAD-ADOPTION-R01.md). Full paired
 production release qualification/version closeout remains separate. Extender
-retains the checkout as instructed; priorities2–5 are not started by this result.
+retains the checkout as instructed. Priority2 now proceeds under the separately accepted whole-file PSRAM carrier decision; priorities3–5 remain queued.
 
 ## Four traffic quadrants
 
@@ -101,7 +101,7 @@ this draft changes neither accepted contracts nor production selection.
 | ID | Decision and recommendation | Alternative, prerequisite and effect | State |
 |---|---|---|---|
 | B13-D01 | Adopt this bounded objective and proposed priority order; treat deployment uploads as the first parallel file target. | Integrate forward downloads first if retained workload share and lower implementation cost justify it. Requires direction/capacity and development-cycle cost assessment, not a presumed symmetric pipe. Determines which owner prepares the first implementation tranche. | Accepted 2026-11-03 — commit/push and first tranche authorized |
-| B13-D02 | Reuse the maintained file service and staging/client machinery through a minimal carrier seam. The completed [reverse assessment](PORT-008/REVERSE-UPLOAD-R01.md) recommends a whole-file P4 PSRAM DMA source and small eZ80 SD-write slices for the first prototype. | Bounded P4 SD-refill buffers save whole-file PSRAM but require a new pause/refill contract. Existing4096-byte admission and non-loop TX limits do not supply whole-file operation; completion and capacity must be explicitly qualified. | Open — concrete carrier choice ready for Author review |
+| B13-D02 | Reuse the maintained file service and staging/client machinery through a minimal carrier seam. The completed [reverse assessment](PORT-008/REVERSE-UPLOAD-R01.md) recommends a whole-file P4 PSRAM DMA source and small eZ80 SD-write slices for the first prototype. | Bounded P4 SD-refill buffers save whole-file PSRAM but require a new pause/refill contract. Existing4096-byte admission and non-loop TX limits do not supply whole-file operation; completion and capacity must be explicitly qualified. | Accepted 2026-11-03 — whole-file P4 PSRAM prototype; physical qualification pending |
 | B13-D03 | Choose one bounded reliable launch/completion improvement under QUAL-006. | Retain current CLI/listener observation temporarily if transport integration yields more immediate benefit. Requires measured orchestration cost and an EMOS resident-size budget; does not authorize the full control-plane migration. | Open — after initial file integration assessment |
 
 ## Evidence and validation requirements

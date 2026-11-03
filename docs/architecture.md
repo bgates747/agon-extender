@@ -35,6 +35,16 @@ computer. The [accepted policy](decisions/ADR-2026-10-25-processor-link-crc-poli
 broadens the existing ExExt prohibition; installed experimental CRC-bearing
 components are not thereby corrected or qualified.
 
+## Parallel upload source ownership
+
+For the accepted upload prototype, P4 retains the complete staged file in
+aligned PSRAM before one payload admission. EMOS owns shared-pin admission and
+the eZ80 clock; the foreground utility receives small slices and writes Agon SD
+while clocking pauses. P4 retains source storage until loop DMA stops and pads
+release. Capacity refusal precedes admission; no per-slice UART negotiation or
+silent refill fallback is introduced. The [accepted source decision](decisions/ADR-2026-11-03-whole-file-parallel-uploads.md)
+does not establish physical qualification or change production selection.
+
 ## Analog controller ownership
 
 The Author's [application-controller decision](decisions/ADR-2026-10-30-application-controller-api.md)

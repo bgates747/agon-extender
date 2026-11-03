@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — First listener-adoption tranche complete. Reverse-upload source/SDK assessment and existing host checks pass; whole-file P4 PSRAM versus bounded SD-refill carrier choice is ready for review before implementation. Extender retains bench custody until an Author-agreed handoff; requests may queue, peer updates wait until access opens.
+- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — First listener-adoption tranche complete. Reverse-upload source/SDK assessment and existing host checks pass; the Author selects whole-file P4 PSRAM with small eZ80 SD-write slices; implementation and physical qualification follow. Extender retains bench custody until an Author-agreed handoff; requests may queue, peer updates wait until access opens.
 
 ## Current corrective work — HDMI aspect
 
