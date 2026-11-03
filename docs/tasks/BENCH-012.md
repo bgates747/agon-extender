@@ -93,3 +93,10 @@ grant/legacy-release compatibility and rejected malformed records without queue
 mutation. Published in the central owner repository as `d0f33db`. Current6502
 generation5 and every historical observation remain untouched; no live proof
 was manufactured, normalized or refreshed by the source correction.
+
+Future field scopes are explicit: P4/native VDP identify application-image bytes,
+EMOS identifies complete ROM including declared padding, and startup/listener
+identify complete files. Native full-flash restoration hashes belong in separate
+provenance/evidence. Older full-flash-labelled observations retain their original
+scope. Observation freshness is evaluated on use, not as lease expiry; a later
+owner-entry check requires new actual evidence, never a restamped original grant.
