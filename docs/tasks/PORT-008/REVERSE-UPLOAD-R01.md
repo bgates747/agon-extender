@@ -85,12 +85,12 @@ speed, scarce EMOS space and one admission per requested payload remain central.
    exact first/last bytes, short/tail lengths, filesystem pauses, DMA cleanup,
    owner/busy/refusal and partial failure. Then build identified matched
    candidates through owner wrappers and all mandatory link/ABI checks.
-5. [ ] RU05 — Prepare a finite physical comparison only after required protocol,
+5. [x] RU05 — Prepare a finite physical comparison only after required protocol,
    deployment, reset/rollback, SD-layout and test-lifecycle review. Preserve and
    verify incoming components. Prove the reverse source and full received file
    bytes outside timing. Keep payload, admission, SD/HTTP and total deployment
    elapsed separate; compare matched UART and parallel variants.
-6. [ ] RU06 — Restore exact incoming components unless the Author explicitly adopts
+6. [x] RU06 — Restore exact incoming components unless the Author explicitly adopts
    the tested change, restore normal CLI/cursor/input and idle services, and
    retain Extender checkout. Publish scoped results/limits; raise the requested
    attention message in chat. No full suite, peer notification or bench release follows
@@ -366,3 +366,84 @@ leaf cases,15 paired coordinator cases and the retained counter/HTTP checks.
 P4 job status also retains its physical outcome and the last count values used
 by the proof after resource retirement, without extra peripheral reads or eZ80
 traffic. Physical confirmation of the corrected large-file completion remains.
+
+The next fresh cohort runs the previously failing parallel1.1MB case first,
+followed by its smaller cases and all UART baselines on the same final P4 image.
+Each nonempty parallel result must retain outcome complete, CLOCK count equal
+to its requested bytes and VALID count2, in addition to independent full-file
+readback. This changes diagnostic order, not the workload set or success gates.
+
+## Final finite comparison — 2026-11-03
+
+All ten upload/independent-download pairs pass full byte comparison. Every
+nonempty parallel job reports complete, exactly its requested CLOCK count and
+VALID count2 after resource retirement. Zero bytes exercises empty-file policy
+without starting parallel DMA. There is one bulk operation per nonempty file,
+not one per512-byte SD-write slice.
+
+The exact experimental pair is P4
+`port-008-upload-r01-b2026-11-03-23-15-49Z`, source
+`b1a64b209e496f2b148f49989756d7581f684e74`,1851168-byte application
+`429cd4cd3993ed16816daa8c7574e723d4959461ea7a51ef4dd4129647d3b348`,
+with the identified EMOS/utility above. Native build, exact driver derivative,
+compile/archive/ELF agreement and independent installation checks pass.
+
+### Complete P4-to-mainboard job
+
+Rows rank by lowest elapsed reduction first, excluding the empty-file control.
+Positive reduction means less time:100*(UART-parallel)/UART. P4 job time includes
+file/control operations, PSRAM preparation, receive/SD writes and UART return;
+it excludes preceding HTTP staging and independent GET verification.
+
+| Payload, bytes | UART job, seconds | Parallel job, seconds | Time reduction |
+|---:|---:|---:|---:|
+| 1 |1.782485|1.785766|−0.184%|
+| 257 |1.787077|1.787267|−0.011%|
+| 65537 |4.182436|2.361719|43.532%|
+| 1100000 |42.199940|11.515378|72.712%|
+
+Empty-file control:1.759897/1.756518 seconds UART/parallel-selected; neither uses
+the physical parallel payload path. The tiny-file differences are single
+observations, not evidence of a meaningful performance ranking.
+
+### Host deployment elapsed
+
+These include HTTP staging, the complete P4/mainboard job, client observation
+and release. Independent GET/byte verification follows outside these intervals.
+Rows rank by lowest host-time reduction first.
+
+| Payload, bytes | UART host, seconds | Parallel host, seconds | Time reduction |
+|---:|---:|---:|---:|
+| 257 |2.132438|2.130480|0.092%|
+| 1 |2.146112|2.129796|0.760%|
+| 65537 |4.566449|2.763881|39.474%|
+| 1100000 |44.630342|14.345858|67.856%|
+
+The1.1MB host upload is3.111× faster. Its parallel preparation is233.031ms,
+armed receive/SD-write interval9519ms and physical handover2ms. Across nonempty
+cases handover is1..3ms. The active interval includes SD-write pauses; it is not
+pure wire time and cannot be compared directly with retained forward VDU drain
+rates. The large-file UART/parallel jobs use5193/5 protocol records respectively.
+Download payloads still use UART; this tranche does not speed that direction.
+
+The complete ten-case cohort takes189.220 wall seconds, including independent
+GET verification (roughly45.4 seconds per1.1MB GET). Preparation/build/flash and
+restoration are separate. P4 job/preparation use `esp_timer` microseconds;
+physical subintervals use millisecond ticks; host individual jobs use the Pi's
+monotonic seconds and250ms observation cadence. Overall start/end are Unix wall
+seconds. No external clock calibration, latency distribution or optical pass
+is claimed. Original failures, exact payload-copy proof, final rows and all
+component receipts remain in the ignored tranche evidence directory.
+
+This completes the bounded transfer experiment, not production acceptance,
+canonical paired qualification, ExCom coverage or the broader PORT-008 task.
+Exact incoming restoration passes. P4 application sectors are independently
+read back and its complete expected flash image is freshly verified against
+the preserved incoming image; full EMOS ROM is saved/read back byte-for-byte.
+Canonical listener and complete startup are unchanged. The stopped owned
+temporary MOSlet is removed; supporting payloads and informative evidence remain.
+Actual Legacy CLI, entry mode0 on both displays, visible/flashing cursor controls,
+neutral admitted input, idle job/listener and free serial ports pass. Cursor
+controls are not an optical observation. No reset holder remains; SD stays
+mounted and Extender retains its central checkout. No peer progress notification,
+production selection/tag or downstream task follows automatically.

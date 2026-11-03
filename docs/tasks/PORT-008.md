@@ -4,14 +4,16 @@
 
 ### Current authorized tranche — parallel uploads, 2026-11-03
 
-The Author directs continuation of BENCH-013 priority2: assess the reverse
-P4→eZ80 path and integrate the existing staged file service through the smallest
-qualified carrier seam. [Reverse-upload r01](PORT-008/REVERSE-UPLOAD-R01.md)
-owns the bounded research, outstanding carrier decision and implementation/
-qualification gates. Existing4096-byte blocks are not whole-file admission.
-Extender retains the bench and sends no peer progress/instruction notifications
-until the Author opens access. Use the requested question dialog for completion
-or a concrete review decision; no automatic checkout release.
+The Author selects whole-file P4 PSRAM with small foreground eZ80 SD-write
+slices for BENCH-013 priority2. [Reverse-upload r01](PORT-008/REVERSE-UPLOAD-R01.md)
+completes its bounded implementation and ten matched Legacy file proofs through
+1.1MB, with one payload admission per nonempty file and exact incoming restoration.
+The1.1MB host upload drops44.630→14.346s; raw transport and complete-file timings
+have different scopes. Author result review/adoption, canonical qualification
+and broader transport work remain. Extender retains custody and sends no peer
+progress/instruction notifications until the Author opens access. Completion
+or review questions use ordinary chat under the current standing instruction;
+there is no automatic checkout release.
 
 ### Forward transfer-rate comparison complete — 2026-11-02
 

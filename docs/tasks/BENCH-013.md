@@ -101,7 +101,7 @@ this draft changes neither accepted contracts nor production selection.
 | ID | Decision and recommendation | Alternative, prerequisite and effect | State |
 |---|---|---|---|
 | B13-D01 | Adopt this bounded objective and proposed priority order; treat deployment uploads as the first parallel file target. | Integrate forward downloads first if retained workload share and lower implementation cost justify it. Requires direction/capacity and development-cycle cost assessment, not a presumed symmetric pipe. Determines which owner prepares the first implementation tranche. | Accepted 2026-11-03 — commit/push and first tranche authorized |
-| B13-D02 | Reuse the maintained file service and staging/client machinery through a minimal carrier seam. The completed [reverse assessment](PORT-008/REVERSE-UPLOAD-R01.md) recommends a whole-file P4 PSRAM DMA source and small eZ80 SD-write slices for the first prototype. | Bounded P4 SD-refill buffers save whole-file PSRAM but require a new pause/refill contract. Existing4096-byte admission and non-loop TX limits do not supply whole-file operation; completion and capacity must be explicitly qualified. | Accepted 2026-11-03 — whole-file P4 PSRAM prototype; physical qualification pending |
+| B13-D02 | Reuse the maintained file service and staging/client machinery through a minimal carrier seam. The completed [reverse assessment and prototype](PORT-008/REVERSE-UPLOAD-R01.md) use a whole-file P4 PSRAM DMA source and small eZ80 SD-write slices. | Bounded P4 SD-refill buffers save whole-file PSRAM but require a new pause/refill contract. Existing4096-byte admission and non-loop TX limits do not supply whole-file operation; completion and capacity require explicit proof. | Accepted 2026-11-03 — ten finite Legacy file proofs and exact incoming restoration pass; Author result review/adoption and canonical qualification remain |
 | B13-D03 | Choose one bounded reliable launch/completion improvement under QUAL-006. | Retain current CLI/listener observation temporarily if transport integration yields more immediate benefit. Requires measured orchestration cost and an EMOS resident-size budget; does not authorize the full control-plane migration. | Open — after initial file integration assessment |
 
 ## Evidence and validation requirements
@@ -131,6 +131,17 @@ this draft changes neither accepted contracts nor production selection.
    coordination task invokes no tests or firmware operations.
 
 ## Tranche completion
+
+The first upload prototype completes its bounded experiment on2026-11-03:
+ten matched full-file proofs,0..1.1MB, with one payload admission per nonempty
+parallel upload and no CRC/byte ACK. The1.1MB host deployment drops44.630→14.346s
+(67.856% less time); its P4/mainboard job drops42.200→11.515s. Independent
+retrieval follows outside upload timing and remains UART. P4 handover is1..3ms;
+active receive timing includes SD pauses. Descriptor SRAM exhaustion and a
+terminal sampling race are corrected with source regressions and fresh physical
+evidence. Exact incoming components/CLI/input are restored and custody retained.
+This is not adoption, a raw-port comparison, broader qualification or authority
+to begin the next priority. The linked owner task retains detailed results.
 
 1. The Author has selected the coordination priorities and owners have recorded
    dependencies and bounded implementation contracts in their existing tasks.

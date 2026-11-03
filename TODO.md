@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — First listener-adoption tranche complete. Reverse-upload source/SDK assessment and existing host checks pass; the Author selects whole-file P4 PSRAM with small eZ80 SD-write slices; implementation and physical qualification follow. Extender retains bench custody until an Author-agreed handoff; requests may queue, peer updates wait until access opens.
+- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Author review/adoption and subsequent priorities remain. Extender retains custody until an Author-agreed handoff; requests may queue, peer updates wait until access opens.
 
 ## Current corrective work — HDMI aspect
 
@@ -72,7 +72,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) complete: optimized parallel 340.35 kB/s at 8192 bytes, +54.13% vs old parallel and 3.383× matched UART; UART wins 256 bytes. 96 full-buffer proofs, retained capture failures/controls and exact incoming restoration pass. Reverse bulk, async/whole-request admission, P08-D02/warm-reset and production remain open.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) complete:340.35kB/s at8192B; UART wins256B. [Reverse file prototype](docs/tasks/PORT-008/REVERSE-UPLOAD-R01.md) passes ten matched Legacy proofs and exact restoration;1.1MB host upload3.111× faster. Raw drain and file timings differ in scope. Adoption, forward file integration, broader async admission, P08-D02/warm-reset and production remain open.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 
