@@ -201,14 +201,14 @@ coordinated slots when ready. Source work does not occupy the bench.
    file-handle lifetime, sequential/random offsets, EOF/errors, writes/renames,
    session changes and EXIT as appropriate. Preserve the accepted listener and
    deployed P4r27; stage a separately identified utility/candidate when needed.
-4. [ ] Reserve/assert a finite own bench slot through the central scheduler after
+4. [x] Reserve/assert a finite own bench slot through the central scheduler after
    independent preparation and current consumer coordination. Compare matched
    baseline/candidate file cases with exact host byte proof outside timing,
    separate stage/worker/HTTP/end-to-end units and ordinary CLI cleanup. Gate
    another1.1MB comparison on a useful short-file result; no full suite, PCM,
    startup change or uncertain replay. Existing measured baseline243.20s for
    1.1MB is contextual, not a fresh controlled baseline on a different file.
-5. [ ] Preserve raw passing/informative failing evidence, restore accepted
+5. [x] Preserve raw passing/informative failing evidence, restore accepted
    components/normal CLI/input/idle resources, release promptly to next ready
    agent, report achieved speed and remaining costs, and update this record.
    Production promotion/version selection remains a separate acceptance gate.
@@ -233,3 +233,13 @@ open, one size, zero seeks and one close; all five reads and original wire
 records remain. Fast CRC invocation count remains zero. This establishes the
 removed call cost, not a physical throughput improvement. The6502 consumer owns
 the bench; candidate build and host preparation continue without target access.
+
+The finite physical tranche now passes and releases central custody. Matched
+65537B host elapsed falls13.728→3.029s;1.1MB falls250.920→43.573s (5.759×,
+82.63percent less elapsed). All four downloads match exact source bytes; record
+counts stay identical. The accepted listener/startup and all firmware remain
+unchanged, temporary aliases are removed, and actual CLI/input/idle resources
+pass. [Download results](REMOTE-009/DOWNLOAD-RESULTS.md) and
+[exact evidence](REMOTE-009/DOWNLOAD-EVIDENCE.json) retain scope and identities.
+Author acceptance, naming/promotion and any broader qualification remain open;
+the installed fast-transfer pin still selects its original listener.

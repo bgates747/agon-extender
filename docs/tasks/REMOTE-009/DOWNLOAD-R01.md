@@ -66,8 +66,10 @@ for causal timing. Temporarily place the control/candidate under distinct
 accepted listener. Compare the same65537B source through both utilities and the
 unchanged P4 worker. Run the1.1MB pair only if candidate short-file worker time
 is at least10percent lower. Preserve raw timings and host bytes separately.
-This preparation does not reserve, deploy, invoke or establish hardware readiness;
-the6502 consumer currently has exclusive physical custody.
+At completion of this offline preparation the6502 consumer held exclusive
+physical custody; no target operation occurred until its verified release and
+a fresh Extender-owned grant. The completed finite comparison and its handback
+are recorded in [download results](DOWNLOAD-RESULTS.md).
 
 The exact accepted-source control is
 `sdserve-v0.3.0-b2026-11-03-08-08-38Z`,22968B,

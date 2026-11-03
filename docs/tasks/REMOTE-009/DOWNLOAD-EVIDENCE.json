@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "bounded physical pass; not installed or accepted production",
+  "run_started_utc": "2026-11-03T08:31:04.462442+00:00",
+  "run_receipt_utc": "2026-11-03T08:38:40.558617+00:00",
+  "preparation_and_finite_execution_s": 456.09617471694946,
+  "units": "SI bytes; host monotonic seconds; P4 inclusive stage/worker microseconds converted to seconds, oscillator uncalibrated",
+  "ranking": "descending control host elapsed; percentage reduction=100*(control-candidate)/control",
+  "emos_owner_source": "b8e72c91c17f474e3d07ecfac970371ad2d04963",
+  "control_source": "9a92d811df0a597c6369409f316a95e9ca7e7d70",
+  "control_build": "sdserve-v0.3.0-b2026-11-03-08-08-38Z",
+  "candidate_build": "sdserve-v0.3.0-b2026-11-03-08-07-19Z",
+  "rows": [
+    {
+      "bytes": 1100000,
+      "scope": "one matched sequential download; baseline before candidate",
+      "control_host_s": 250.91989054204896,
+      "candidate_host_s": 43.572564842994325,
+      "host_speedup": 5.758666983368832,
+      "host_elapsed_reduction_percent": 82.63487013768945,
+      "control_worker_s": 249.276775,
+      "candidate_worker_s": 42.099531,
+      "worker_speedup": 5.921129501418911,
+      "worker_elapsed_reduction_percent": 83.11133036762048,
+      "control_stage_s": 0.013027,
+      "candidate_stage_s": 0.013303,
+      "control_http_delivery_s": 1.2867371650063433,
+      "candidate_http_delivery_s": 1.2835951229790226,
+      "control_records": 5095,
+      "candidate_records": 5095,
+      "exact_bytes_outside_timing": true,
+      "host_artifacts_sha256": {
+        "control": "87d9773ba97729ccd40841042621fa0cf7891b5576f33c14ccc05729a7605050",
+        "candidate": "87d9773ba97729ccd40841042621fa0cf7891b5576f33c14ccc05729a7605050"
+      }
+    },
+    {
+      "bytes": 65537,
+      "scope": "one matched sequential download; baseline before candidate",
+      "control_host_s": 13.728146417997777,
+      "candidate_host_s": 3.029097276972607,
+      "host_speedup": 4.5320916308499015,
+      "host_elapsed_reduction_percent": 77.93513279402804,
+      "control_worker_s": 13.531183,
+      "candidate_worker_s": 2.594596,
+      "worker_speedup": 5.215140623048829,
+      "worker_elapsed_reduction_percent": 80.8250616372567,
+      "control_stage_s": 0.013265,
+      "candidate_stage_s": 0.013231,
+      "control_http_delivery_s": 0.08907091896981001,
+      "candidate_http_delivery_s": 0.09655042900703847,
+      "control_records": 306,
+      "candidate_records": 306,
+      "exact_bytes_outside_timing": true,
+      "host_artifacts_sha256": {
+        "control": "9cc69e9aee5712137ea455b500c49dc9baaaf20e1dc2ceb8bab9295b90345f40",
+        "candidate": "9cc69e9aee5712137ea455b500c49dc9baaaf20e1dc2ceb8bab9295b90345f40"
+      }
+    }
+  ],
+  "raw_sha256": {
+    "started.json": "30e7507431874c53b6412a7626b29bc2d80990de3dc3a10ba65d9c85bd5f85a3",
+    "receipt.json": "62666726fab229f5845dc537d9302d7a8de21d9aed5248002e34f5d41f4b6101",
+    "release-observation.json": "2489574d8614fc63338299722b0ac9e1e2cf7fdb518407739673ab736710474d",
+    "release-result.json": "bd46c73b27b2e8051b18090a40f6737508ab51f239814de2f97b78d3d731698c",
+    "control-short-result.json": "af458f6465551c0b0638df89d9328b78f8f2f7075bd2a4517ed35de549c98584",
+    "candidate-short-result.json": "b6282d55a28752c7697d29c625a946eb5d41afb81946e8983767f767e0f48e3f",
+    "control-large-result.json": "d3d14bebc89066fcc8a934a3e0f39b0297bbbc891668f1eefbfe3508c0a4688b",
+    "candidate-large-result.json": "96d0be3a859ba02bcd8130af2bc4ee8c7ba85a4ac1575b5a77aa881760358873"
+  },
+  "preservation": {
+    "accepted_listener_startup_unchanged": true,
+    "temporary_aliases_removed": true,
+    "firmware_reset_mode_changes": false,
+    "actual_cli_input_idle_resources_verified": true,
+    "central_lease_released": true,
+    "next_request": null
+  },
+  "limits": [
+    "One ordered matched pair per file size; no timing variance estimate.",
+    "Worker scope combines P4 local spool/UART and eZ80 service; not eZ80-exclusive time.",
+    "No full suite, interruption/durability, checked-mode hardware or optical/sound qualification.",
+    "Installed accepted listener remains previous bytes; candidate requires Author acceptance and identity/promotion closeout."
+  ]
+}
