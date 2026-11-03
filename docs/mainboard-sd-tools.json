@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "role": "accepted development mainboard SD tools",
+  "selection_scope": "Working development component; whole-installation production remains production/current.yaml",
+  "bundle": "../production/bundles/sdserve-v0.3.0-b2026-11-03-08-07-19Z/bundle.yaml",
+  "bundle_sha256": "630d515e2ec0c822a622ca0f64e98dcbd33cef67b4e051cad6e446eb0552bf96",
+  "listener": {
+    "build_id": "sdserve-v0.3.0-b2026-11-03-08-07-19Z",
+    "software_identity": "sdserve-v0.3.0",
+    "source_commit": "b8e72c91c17f474e3d07ecfac970371ad2d04963",
+    "path": "/emos/sdserve.bin",
+    "bytes": 24753,
+    "sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+  },
+  "host_tools": [
+    {
+      "path": "tools/sdcard.py",
+      "bytes": 19583,
+      "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa"
+    },
+    {
+      "path": "tools/sdcard_staged.py",
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    }
+  ],
+  "p4_worker": {
+    "build_id": "indexed-hdmi-r27-b2026-11-03-00-02-51Z",
+    "application_sha256": "fb8283f7f57abb6b86e936ed41936b7cd545fc3f768a8a50590ab35095e0733d",
+    "original_pin": "tasks/REMOTE-009/FAST-TRANSFER-PIN.json"
+  },
+  "operations": "mainboard-sd.md",
+  "rollback": {
+    "listener_bytes": 22968,
+    "listener_sha256": "04e7ef596a862b1a6b4f265b6c647e461ef0f65db4851873ac3dd31e4f03f10d",
+    "location": "Retained host and mainboard backup paths are in HARDWARE.local.md; inspect current state before rollback."
+  }
+}

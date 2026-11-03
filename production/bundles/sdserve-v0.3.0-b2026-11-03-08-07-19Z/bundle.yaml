@@ -1,0 +1,76 @@
+schema_version: 1
+kind: accepted-sd-utility-component
+build_id: sdserve-v0.3.0-b2026-11-03-08-07-19Z
+source_commit: b8e72c91c17f474e3d07ecfac970371ad2d04963
+software_identity: sdserve-v0.3.0
+acceptance:
+  date: '2026-11-03'
+  scope: 'BENCH-013 first tranche: exact sequential-reader SD utility adopted on working
+    bench after matched download qualification'
+  authority: Author approves coordination plan and directs first tranche
+  evidence: docs/tasks/REMOTE-009/DOWNLOAD-ADOPTION-R01.md
+selection: Accepted working utility component; not a replacement for production/current.yaml
+  or a paired firmware release
+archive_directory: dist/production/sdserve-v0.3.0-b2026-11-03-08-07-19Z
+archives:
+- filename: sdserve-v0.3.0-b2026-11-03-08-07-19Z.tar.gz
+  bytes: 25544
+  sha256: 084f901333306e6cfb3913fd5ad01faebaae86e4ae4fad106d7b07ea049ad6bc
+- filename: sdserve-v0.3.0-b2026-11-03-08-07-19Z-sources.tar.gz
+  bytes: 1864347
+  sha256: 179938217b4a743b94ca38946b83b713084a8da35cfe1d661ed1065d2cb4e6bd
+runtime_files:
+- path: README.txt
+  bytes: 586
+  sha256: 3594cb8173ad4e80eb6124bc4e135504902bd643856df10dcba7512fedfb10c0
+- path: SHA256SUMS
+  bytes: 334
+  sha256: 4ff850515b947d9cccc881d9d269725882146ec497dc7fcede9aaa182f389912
+- path: sd/emos/sdserve.bin
+  bytes: 24753
+  sha256: 0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2
+- path: tools/sdcard.py
+  bytes: 19583
+  sha256: f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa
+- path: tools/sdcard_staged.py
+  bytes: 12231
+  sha256: f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef
+source_support_files:
+- path: DOWNLOAD-EVIDENCE.json
+  bytes: 4233
+  sha256: 55e39e5b5a8ec6d972504050daea48c14ff5161fac2d2d5278e8f0b5f53596e1
+- path: DOWNLOAD-R01.md
+  bytes: 8530
+  sha256: f1154fef4344f312524300d86c26981cb0160c460050cb26f78c27714c9326f0
+- path: DOWNLOAD-RESULTS.md
+  bytes: 4324
+  sha256: 2e076ebf45d70eedeeefe62cd57e9dfec43e6b4144c5f3e999dbfaadde7167b8
+- path: SHA256SUMS
+  bytes: 661
+  sha256: a7b27d2aeb8e630903ca7be9394305e6f2080959bac3dcd7ab46a8b4b4c7d833
+- path: SOURCE.txt
+  bytes: 668
+  sha256: ccc31c60b6b728c647501c5c44818c046931988036151a0f8cbcca982dae9089
+- path: agon-emos-source.tar
+  bytes: 5939200
+  sha256: 95ff3b23d2d39e441adad23b358594a3dfe85fe46d48bc9e5bfca730c2206114
+- path: build-manifest.yaml
+  bytes: 58650
+  sha256: e4e64cc03a65c8d40dcb7b1206ae491521eb96de4c6893e657433a3486a05240
+- path: build.log
+  bytes: 186
+  sha256: 96595377577d819d41c97afd7c52586c9fe0326fd06854d77bb3ed5ff9f6d81d
+- path: sdserve.map
+  bytes: 47703
+  sha256: 760cb3a6e8074d9092f96341ddf9ac38a0acff5a26a9ebad520c83caf46347c8
+compatibility:
+  layout: MOSlet at0x0B0000,below32KiB
+  transport: checksum-free fast major2, existing UART1 carrier
+  p4_app_sha256: fb8283f7f57abb6b86e936ed41936b7cd545fc3f768a8a50590ab35095e0733d
+  emos_rom_sha256: 84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79
+limits:
+- No resident firmware or P4 build changes
+- No new paired canonical firmware qualification or production-version selection
+- Historical matched timing is one pair per size; installed check is not a new controlled
+  speed comparison
+- No optical pass or interruption/durability qualification

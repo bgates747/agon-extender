@@ -16,6 +16,15 @@ a slot; other agents may continue to reserve through the existing queue.
 Completing a subtask does not release this checkout. Changes to a file-service
 ABI/carrier architecture remain separate decisions; B13-D02 and B13-D03 are open.
 
+## First tranche result
+
+Priority1 bench adoption is complete: the exact tested faster listener is
+installed and readback-verified, rollback is retained,65537-byte paired file
+checks pass, and maintained selection/guidance and verified archives are in
+place. See [adoption evidence](REMOTE-009/DOWNLOAD-ADOPTION-R01.md). Full paired
+production release qualification/version closeout remains separate. Extender
+retains the checkout as instructed; priorities2–5 are not started by this result.
+
 ## Four traffic quadrants
 
 Directions below are between the mainboard eZ80 running EMOS and the Extender

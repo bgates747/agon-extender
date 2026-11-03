@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Coordinate staged files, both parallel directions and reliable launch/completion around total bench turnaround. Priorities approved; first tranche adopts the tested faster listener. Extender retains bench custody until an Author-agreed handoff; other agents may queue.
+- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Coordinate staged files, both parallel directions and reliable launch/completion around total bench turnaround. First tranche complete: tested faster listener installed, verified and archived with current tool guidance. Next parallel integration priority remains; Extender retains bench custody until an Author-agreed handoff, with requests allowed to queue.
 
 ## Current corrective work — HDMI aspect
 
@@ -29,7 +29,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — Bounded staged transfer and sequential-reader passes:1.1MB upload43.24s; new download43.57s versus250.92s matched control (5.759×), exact bytes and clean CLI/released custody. Source/build/evidence published; installed listener preserved. Author acceptance/version/production closeout and broader qualification remain; per-record UART replies remain explicit.
+- [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — Bounded staged transfer and sequential-reader passes:1.1MB upload43.24s; new download43.57s versus250.92s matched control (5.759×), exact bytes and clean CLI/released custody. Faster listener accepted/installed with verified rollback, immutable archives and current tool selection. Paired production/version closeout and broader qualification remain; per-record UART replies remain explicit.
 
 - [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired and bounded hardware checks pass without firmware changes. Author review/fsim helper adoption and broader USB loss/paired-reset investigation remain; see R02 results.
 

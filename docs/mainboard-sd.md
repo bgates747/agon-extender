@@ -2,21 +2,31 @@
 
 ## P4-staged fast files
 
+The Author accepts the sequential-reader listener for the working bench on
+2026-11-03. Use the maintained [component/tool selection](mainboard-sd-tools.json)
+for exact listener/client identities and its verified immutable archive. The
+listener is24753 bytes, build `sdserve-v0.3.0-b2026-11-03-08-07-19Z`, installed as
+`/emos/sdserve.bin`; the P4r27 worker and resident EMOS remain unchanged. This
+component acceptance does not replace the whole-installation production selection.
+Machine-local current custody and installation/rollback receipts remain in
+`HARDWARE.local.md`; an accepted artifact does not identify an occupied bench.
+
 The new `scripts/sdcard_staged.py` candidate sends/receives a whole file through
 HTTP while a P4 worker owns the local mainboard UART request loop. P4 SD staging
 separates network delays from the eZ80 loop. No per212-byte host HTTP polling or
 host journal fsync remains. Existing per-record UART replies remain.
 
-**Development; bounded Legacy hardware pass.** Empty,257B,65537B and1.1MB files
-pass in both directions, with error/CLI handback. The final priority4 worker
-measures43.24s upload and243.20s download for1.1MB, versus283.40/507.45s for the
-old client. [Measured scope and exact builds](tasks/REMOTE-009/STAGED-RESULTS.md)
-separate host, worker and HTTP time. This is not a continuous bulk UART carrier
-or all-mode/durability qualification. Production is unchanged. Qualification restored the original P4, which lacks
-these endpoints; the Author subsequently approved installing and retaining the
-[exact pinned candidate](tasks/REMOTE-009/FAST-TRANSFER-PIN.json) for Golem.
-Consult the machine-local bench record for current installed state, and verify
-the matched candidate before using this client.
+**Bounded Legacy hardware evidence.** The P4 staging comparison covers empty,
+257B,65537B and1.1MB files in both directions, with error/CLI handback. Its
+priority4 worker measures43.24s upload and243.20s download for1.1MB, versus
+283.40/507.45s for the old client, using the previous listener.
+[Staging scope and exact builds](tasks/REMOTE-009/STAGED-RESULTS.md) separate
+host, worker and HTTP time. The accepted sequential-reader utility subsequently
+reduces a matched1.1MB download from250.92s to43.57s, with exact bytes;
+[reader comparison](tasks/REMOTE-009/DOWNLOAD-RESULTS.md) is a separate experiment.
+Installed adoption also passes a65537-byte upload/download and complete utility/
+backup/startup readbacks. No continuous bulk UART carrier, all-mode/durability
+qualification or new paired production release follows from these checks.
 
 After separately authorized matched deployment, it requires a mounted P4 card
 and the already-running `EMOS sdserve --fast /` foreground listener. It adds no

@@ -1,5 +1,21 @@
 # REMOTE-009 — Remove HTTP turnaround from mainboard file transfers
 
+## Current authorized increment — 2026-11-03
+
+The Author accepts BENCH-013's coordination priorities and authorizes the first
+tranche: adopt the exact physically tested faster download listener through
+[download adoption r01](REMOTE-009/DOWNLOAD-ADOPTION-R01.md). Extender retains
+bench custody until an Author-agreed handoff; other projects may queue. This
+changes the SD utility only, preserving resident firmware, startup and modes.
+The original download comparisons and installed-baseline pins stay immutable;
+production version/qualification closeout remains a separate explicit boundary.
+
+Adoption is complete: canonical24753-byte sequential reader and old-file backup
+both verify;65537-byte paired transfer is exact; startup/CLI/idle resources pass.
+[Maintained development tool selection](../mainboard-sd-tools.json) points to the
+accepted immutable bundle. Original firmware/tool pins remain historical evidence,
+not the current listener selection. Extender retains the Author-directed checkout.
+
 The current host client serializes every 212-byte upload through HTTP, fsyncs
 host state twice per record and waits 40 ms after a pending response. Move that
 loop to a P4 worker, using P4 SD staging between network and mainboard traffic.

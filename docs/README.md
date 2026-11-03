@@ -15,6 +15,12 @@ preserves tested bytes and current EMOS. The Author selects
 accepted HDMI work already present in that source. Production selection/tagging
 await canonical paired qualification and final closeout.
 
+The Author also accepts the sequential-reader SD utility for working development
+use. [Current SD tool identities](mainboard-sd-tools.json) select its immutable
+component archive and unchanged staged clients. Its matched1.1MB download takes
+43.57s versus250.92s with the earlier utility; this scoped component acceptance
+and installation do not select a new complete production release.
+
 ## Before operational work
 
 Agents must use the [operation-protocol index](procedures/README.md) to select
