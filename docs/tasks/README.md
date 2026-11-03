@@ -83,3 +83,29 @@ bundle and documentation; push the commit and tag under the Author's repository
 publication authorization. Existing tags and archived bundles are not rewritten.
 See [versioning policy](../versions/README.md). This does not start unrelated
 work or authorize public distribution of private/local-only archives.
+
+
+## Self-assigned repairs during consumer bench work
+
+The Author authorizes Extender to repair bugs encountered by Golem, verify the
+correction, and return bench custody to Golem (2026-11-02). Extender records each
+repair as a **self-assigned task before implementation**, using an existing
+owning task's bounded subtask when appropriate, or a new linked task detail and
+TODO entry for a separate defect. Firmware defects use the register identity
+above. The task states the assignment, Author authorization, Golem report,
+observed symptom and exact affected identities, scope and owning component,
+implementation, validation, retained evidence, and resulting handback state.
+
+Golem's active bench custody persists until an explicit coordinated handoff.
+Extender does not poll, inject input, capture, reset or flash alongside Golem.
+Extender takes custody only for the evidenced repair and verification, then
+sends Golem a durable mailbox handoff and immediate steering alert with installed
+identities and a clean terminal state. This repair authority does not authorize
+unrelated consumer changes, test replays, startup edits or production promotion.
+Golem exercises Extender through useful consumer work specifically to uncover
+bugs. A reported failure is sufficient to open a self-assigned investigation;
+Extender does not require a proven cause or a separate qualification suite first.
+Record uncertain causes as hypotheses while diagnosing them. Prefer Golem
+resuming the useful work after a bounded correction over replacing that work
+with an unrelated test campaign. A recovered incident can still warrant a task
+when the failure or recurring recovery cost remains unexplained.
