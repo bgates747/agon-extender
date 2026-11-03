@@ -245,7 +245,7 @@ bench record. No new failure is inferred in the PCM controls themselves.
    Golem's wrong root `/status` observer and initially invalid `RUN --test`
    invocation are separately explained host setup defects; do not count them as
    P4 initialization failure or an executed PCM replay.
-3. [ ] Reconcile the saved command submission, SAVE completion, listener state,
+3. [x] Reconcile the saved command submission, SAVE completion, listener state,
    reset identities and input epochs into one bounded event timeline. Identify
    which evidence can discriminate failure to execute MOS startup/commands,
    native-VDP timing and P4 UART admission; record missing evidence explicitly.
@@ -262,3 +262,32 @@ bench record. No new failure is inferred in the PCM controls themselves.
 6. [ ] Send Golem a durable mailbox and steering handoff after resolution with
    clean CLI/input/service state and restoration boundary so useful work resumes.
    Record unresolved limitations without claiming production acceptance.
+
+
+### R03 bounded sequencing validation contract
+
+Extender owns one useful current-ROM retrieval after Golem's verified release,
+under the Author's bug-investigation/verification authorization. Preserve installed
+P4r27, EMOSv27, native mainboard image, startup, mode and wiring. First prove
+actual CLI with explicit listener/read/EXIT. Stage a uniquely named standalone
+MOS command file containing SAVE to a new evidence path followed by explicit
+`EMOS sdserve --fast /`; never use autoexec. This reuses the sequencing already
+implemented by `scripts/flash_firmware_commit.py`, not that installer's flashing
+or reset behavior. Use the pinned staged client for file payloads. Invoke that
+EXEC once, wait for listener online, retrieve and compare full128KiB ROM84da2c5a,
+then fresh-session EXIT. A maintained joined-control mainboard USB capture records
+printer-mirrored CLI output; no P4 USB opener. Verify the mirror sentinel before
+relying on it, disable mirroring afterward, restore visible/flashing cursor and
+leave listener/job/input/serial idle. No forced failing control, firmware write,
+mode switch, PCM, startup change or automatic replay. If readiness is uncertain,
+retain journals/capture and inspect before the separately standing recovery order.
+This verifies sequential handback only; it cannot close the separate warm-reset
+admission cause without discriminating evidence.
+
+
+R03 result: [source findings and bounded validation](BENCH-010/ADMISSION-R03.md)
+record the host sequencing hazard, successful standalone EXEC ROM/listener
+handback and historical status-reason limitation. No firmware patch, reset,
+mode/startup change or PCM replay. Golem receives the consumer-helper correction
+through mailbox; its owner implements it. The independent warm-reset admission
+cause remains open; one successful sequence does not close that issue.

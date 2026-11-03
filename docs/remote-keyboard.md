@@ -20,6 +20,27 @@ and conflicting duplicates are rejected. Layout/admission loss invalidates the
 session. The host reports the difference between request acceptance, UART
 emission and separately observed eZ80 command/application completion.
 
+## Sequencing foreground commands
+
+A drained keyboard request confirms P4 event emission, not MOS command completion.
+MOS keeps latest key state rather than queuing whole future CLI lines. The host
+must not immediately type a dependent command while SAVE, LOAD or another
+foreground operation may still be running. When commands can be sequenced by MOS,
+stage a separate command file and invoke it once with `EXEC /path/to/file.txt`.
+For example, SAVE followed by `EMOS sdserve --fast /` lets MOS finish saving
+before starting the listener; the host then verifies listener admission and the
+expected result. This pattern already exists in
+[the maintained firmware installer](../scripts/flash_firmware_commit.py), whose
+flash/reset actions remain separately authorized operations. Never use autoexec
+as the command file. Check command-specific success and preserve uncertain
+journals rather than retyping after a timeout.
+
+The keyboard status `boot` is an input epoch, which can change without a P4
+reboot. `reason` records a session's first cancellation reason; reason1 from an
+explicit cancellation may persist across later admission/transport boundaries.
+It does not independently report the latest UART fault. Use actual readiness,
+CLI/service handback and correlated diagnostics to assess recovery.
+
 ## Accepted P4-PC direct keyboard/controller combination
 
 The Author accepts native r16 P4-PC input with a keyboard on the separately
