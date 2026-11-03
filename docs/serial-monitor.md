@@ -63,7 +63,7 @@ observer, firmware replacement or display-route change.
    Ready keys into an unknown foreground state.
 4. After collection, at a verified CLI, the owner sends `VDU 3` to end the
    diagnostic mirror and closes the reader. Exclude the extra serial output
-from claims about uninstrumented performance or input latency.
+   from claims about uninstrumented performance or input latency.
 
 Native VDP diagnostic output can interleave with printer-mirrored MOS text. A
 recorded capture contains a fresh sentinel and the normal MOS prompt immediately
