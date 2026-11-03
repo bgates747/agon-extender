@@ -2,6 +2,17 @@
 
 ## Current scope
 
+### Current authorized tranche — parallel uploads, 2026-11-03
+
+The Author directs continuation of BENCH-013 priority2: assess the reverse
+P4→eZ80 path and integrate the existing staged file service through the smallest
+qualified carrier seam. [Reverse-upload r01](PORT-008/REVERSE-UPLOAD-R01.md)
+owns the bounded research, outstanding carrier decision and implementation/
+qualification gates. Existing4096-byte blocks are not whole-file admission.
+Extender retains the bench and sends no peer progress/instruction notifications
+until the Author opens access. Use the requested question dialog for completion
+or a concrete review decision; no automatic checkout release.
+
 ### Forward transfer-rate comparison complete — 2026-11-02
 
 The [matched four-arm results](PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md)
