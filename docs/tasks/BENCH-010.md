@@ -199,3 +199,66 @@ and offline idle SD service. No gameplay acceptance or production promotion.
 Local receipts: agents/bench010/nonparallel-restore-r01; installed-current records
 updated. This restores an exact historical working baseline, not newer PPA-indexed
 or browser features first integrated alongside subsequent parallel development.
+
+
+## B10-R03 — Self-assigned: consumer-discovered admission failures
+
+**Assignment:** Extender self-assigned, 2026-11-02, under the Author's explicit
+permission to diagnose/repair bugs encountered by Golem, verify fixes and return
+bench custody. The Author requires self-assigned task records and intends useful
+consumer work to uncover defects. **State:** saved-evidence/source investigation
+opened; cause unresolved, no fix selected or physical reproduction invoked.
+
+### Reported failures and baseline
+
+Golem's PCM work uses installed P4
+`indexed-hdmi-r27-b2026-11-03-00-02-51Z`, app SHA256
+`fb8283f7f57abb6b86e936ed41936b7cd545fc3f768a8a50590ab35095e0733d`,
+and EMOSv27 ROM84da2c5a. Golem reports one uncertain listener transition after
+successful staged startup/listener retrieval and a SAVE command. One ordinary
+Agon reset advances the input epoch without restoring readiness; the standing
+P4-initialization/Agon-reset sequence restores actual CLI and full ROM retrieval.
+After Golem's temporary mainboard application installation, fresh input again
+needs one ordinary Agon reset. This second recovery succeeds without another
+P4 reset. These are reported reliability failures even though useful work
+ultimately completes; repeated recovery is not a proven permanent remedy.
+
+Golem's messages395–397 retain provenance in the standard mailbox. Its
+[physical result](../../../agon-vdplet/docs/tasks/VDPL-008/olimex/PHYSICAL-RESULT.md)
+records a passing sole PCM run and exact full incoming-mainboard restoration.
+Final P4r27 remains installed; actual CLI, controller, idle file service and
+released serial/reset resources pass. Analog sound/optical cursor remain outside
+that result. Raw receipts and private setup paths belong in the machine-local
+bench record. No new failure is inferred in the PCM controls themselves.
+
+### Investigation and correction gates
+
+1. [x] Preserve the consumer report and read the actual pinned P4 source snapshot,
+   not root HEAD. Confirm layout boundary increments the input epoch and clears
+   readiness; valid locale plus ordered poll and drained TX gate re-admission.
+   Distinguish the recoverable five-second TX-stall branch from the latched
+   UART-worker fault branch. Neither is diagnosed without matching markers.
+2. [x] Inspect saved entry/recovery receipts. The initial saved pre-recovery
+   keyboard snapshot is ready/neutral while the listener is offline; therefore
+   admitted input is not evidence of actual MOS command execution. The later
+   captured ordinary reset admits input in9.792s with97 captured mainboard bytes.
+   Golem's wrong root `/status` observer and initially invalid `RUN --test`
+   invocation are separately explained host setup defects; do not count them as
+   P4 initialization failure or an executed PCM replay.
+3. [ ] Reconcile the saved command submission, SAVE completion, listener state,
+   reset identities and input epochs into one bounded event timeline. Identify
+   which evidence can discriminate failure to execute MOS startup/commands,
+   native-VDP timing and P4 UART admission; record missing evidence explicitly.
+4. [ ] If saved evidence cannot identify the failing owner, prepare the smallest
+   next useful-consumer reproduction with correlated P4 markers and actual
+   CLI/service checks. Coordinate custody before any live access; inspect startup
+   first and preserve all incoming images. Do not rerun PCM or a large suite
+   merely to exercise reset, poll during a consumer run, or add per-byte tracing.
+5. [ ] Implement the smallest correction in its owning component after evidence
+   supports it; promote a proved firmware defect to its stable FWBUG identity
+   when applicable. No speculative firmware patch, new checksum, startup edit
+   or unrelated consumer change. Test the observed failure and normal handback
+   proportionately, preserve journals and exact candidate/readback identities.
+6. [ ] Send Golem a durable mailbox and steering handoff after resolution with
+   clean CLI/input/service state and restoration boundary so useful work resumes.
+   Record unresolved limitations without claiming production acceptance.
