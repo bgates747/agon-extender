@@ -35,6 +35,10 @@ if(AGON_EXEXT_STREAM)
   include("${AGON_VDP_ROOT}/video/extender/transport/parlio_rx_driver.cmake")
 endif()
 
+if(AGON_PARALLEL_UPLOAD)
+  include("${AGON_VDP_ROOT}/video/extender/transport/parlio_upload_driver.cmake")
+endif()
+
 if(AGON_DSP_LIFETIME_FIX)
   include("${AGON_VDP_ROOT}/pio/dsp_matrix_lifetime.cmake")
 endif()

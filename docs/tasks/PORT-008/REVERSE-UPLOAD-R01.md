@@ -76,12 +76,12 @@ speed, scarce EMOS space and one admission per requested payload remain central.
    bounded whole-payload implementation below. Record an accepted material
    decision in its ADR/architecture owners. Allocate no new global MOS ABI or
    wire identifier until that contract is explicit.
-3. [ ] RU03 — After RU02, implement the selected carrier in the owning source
+3. [x] RU03 — After RU02, implement the selected carrier in the owning source
    checkouts. Keep P4 file I/O and EMOS utility file policy outside resident
    loops where practical. Bind logical payload length, buffer lifetime, busy
    refusal, exact finish, failure fencing and non-replay behavior. Report ROM,
    RAM, P4 storage and eZ80 CPU costs.
-4. [ ] RU04 — Exercise actual retained cores/SDK boundaries and linked eZ80 code:
+4. [x] RU04 — Exercise actual retained cores/SDK boundaries and linked eZ80 code:
    exact first/last bytes, short/tail lengths, filesystem pauses, DMA cleanup,
    owner/busy/refusal and partial failure. Then build identified matched
    candidates through owner wrappers and all mandatory link/ABI checks.
@@ -216,3 +216,116 @@ The [accepted decision](../../decisions/ADR-2026-11-03-whole-file-parallel-uploa
 6. No target firmware, utility, startup file or physical mode has changed during
    these offline checks. Identified matched builds and finite physical comparison
    remain required before claiming throughput or working hardware.
+
+## Finite physical comparison plan
+
+1. Extender asserts its retained central lease before each target access. The
+   Pi records fresh input/service/port state, invokes the canonical listener
+   explicitly, reads startup and canonical utility, then uses a separate
+   read-only SAVE batch to preserve full EMOS and entry mode bytes. Startup
+   must contain no RUN/EXEC before any authorized reset/flash reboot.
+2. The Pi stages and completely reads back candidate and rollback EMOS images
+   under a fresh `/extender/install` directory. The private candidate MOSlet
+   uses a distinct `/emos` name solely for comparison, leaving canonical
+   sdserve unchanged; the Pi never writes/removes that renamed utility while
+   it executes, because its inherited self-write guard protects sdserve.bin.
+3. The Pi observes explicit FLASH of candidate EMOS through its automatic
+   reboot, then holds Agon through the independently commissioned reset line.
+   P4 installation first preserves fresh complete flash, verifies its incoming
+   application identity, writes only the candidate application sectors and
+   independently reads the complete flash back. Bytes outside those sectors
+   must match. No native mainboard VDP flash or wiring change is permitted.
+4. The Pi verifies P4 initialization before releasing Agon, then verifies fresh
+   input admission, actual CLI/listener execution and complete candidate EMOS
+   readback. Any uncertain flash, boot, job or ownership transition stops
+   dispatch; standing recovery does not replay the uncertain operation.
+5. Compare the same candidate utility using `--fast /` and `--fast --parallel /`
+   with distinct scratch files, in ascending sizes0,1,257,65537,1100000 bytes.
+   Host compares every returned byte outside upload timing. Zero bytes exercise
+   the empty-file policy, not physical parallel throughput. Stop the cohort at
+   its first unexplained defect and retain raw evidence for bounded repair.
+6. Report complete mainboard-job microseconds and host elapsed seconds side by
+   side; separately report HTTP staging, PSRAM preparation, active receive/SD
+   writes and handover scopes. Rank results by worst parallel speedup first;
+   percentage time reduction is100*(UART-parallel)/UART. No pure wire rate or
+   optical pass follows from these counters.
+7. Unless the Author explicitly adopts the result, restore exact incoming EMOS
+   and P4 application sectors, independently read back and compare them, and
+   verify unchanged canonical listener/startup. Restore entry route/modes,
+   visible flashing CLI and neutral input, close readers/holds/jobs and retain
+   the central checkout. No peer progress notification or automatic release.
+
+## Identified owner build
+
+EMOS source `6ececd56` produces experimental
+`agon-emos-v0.1.27-b2026-11-03-22-15-34Z`:128918 ROM bytes,2154 free. Its full
+128KiB padded ROM is
+`855aa732ee9bd5def7cb92b52a1521d696330a6f260ad11288f7aeab7fe7dc57`.
+All owner-wrapper link checks and1034 instruction-model cases pass against this
+identified image. The extra38 bytes versus the earlier unversioned measurement
+are identity strings, not another receive implementation.
+
+The same owner commit produces private MOSlet
+`sdserve-v0.3.0-b2026-11-03-22-15-36Z`,26449 bytes. Its BSS ends at0xB7404,
+leaving3068 bytes shared by heap and stack before the0xB8000 limit. This is
+linker headroom, not measured maximum runtime stack usage. Both builds retain
+experimental task scope; the inherited utility manifest's draft label and
+production selection are unchanged.
+
+Final P4 experimental build `port-008-upload-r01-b2026-11-03-22-16-31Z` uses
+clean source `18b81835748e9f148537371e9dfd7cb510a81487`. Full native build and
+validation pass. The1850816-byte application is
+`8d507a2ccd44f372ea34ef431df4fcd159f16dea1d61cde02a73ab7e01bb2518`.
+Its partition bytes and selected display/input/power/reset configuration match
+incoming r27, apart from the declared parallel boot/upload selection and omitted
+graphics-timing diagnostic. Source differences within video are confined to
+the carrier, console integration and SD service; display source is unchanged.
+
+## Physical execution state
+
+Fresh entry preservation and complete staging/readbacks pass. Startup and the
+canonical accepted listener remain unchanged. Candidate EMOS FLASH completes
+with its exact new identity observed through the proven passive printer mirror.
+Matched P4 installation and complete flash verification pass; non-application
+sectors are unchanged. Agon is released and full installed EMOS, actual CLI,
+startup/canonical utility and neutral input pass. The first finite comparison
+stops at the preparation refusal recorded below. Both known failed preparations
+are reconciled; the listener is stopped and the candidate pair remains at an
+idle CLI while the bounded fix builds. Detailed operations and private journals
+remain in the ignored tranche directory; no whole-matrix acceptance is claimed.
+
+### RU05-F01 — Large-source preparation refusal
+
+The first finite cohort stops after the1.1MB parallel upload returns local
+preparation error5. P4 reports one completed HELLO record, zero admitted/written
+bytes and no active physical carrier; the foreground service and neutral input
+remain live. All UART cases and parallel0/1/257/65537-byte complete readbacks pass.
+This is a preparation failure, not a proved length/VALID or filesystem fault.
+
+1. Preserve the terminal job and raw cohort. Verify the destination was never
+   created, then deliberately discard that known failed P4 job without replay.
+2. Inspect the pinned source and capture P4's actual driver error during one
+   separately recorded preparation diagnostic using a new job/destination. A
+   passive USB open must preserve the current boot; stop if it does not.
+3. Correct only the demonstrated source/resource limit, add a meaningful
+   regression at its actual boundary, and rebuild through the native wrapper.
+   Keep all ownership, exact-count, startup and rollback checks.
+4. Resume physical checks with new case identities only after reconciling the
+   failure. Do not overwrite the first cohort or claim its whole matrix passed.
+
+The separately named diagnostic confirms `gdma_new_link_list: no mem for link
+list items`, reached from PARLIO TX DMA setup. It preserves the P4 boot and
+again stops before BEGIN/admission; both known failed jobs are deliberately
+reconciled and the listener exits normally. PSRAM still has over26MB available.
+The carrier source allocation is not the exhausted resource.
+
+The pinned SDK deliberately allocates both complete TX descriptor arrays from
+internal DMA SRAM by default. P4 PARLIO uses AXI-GDMA, and that same SDK's
+`components/esp_hw_support/test_apps/dma/main/test_gdma.c` explicitly exercises
+AXI descriptor lists in external memory. The local remedy selects the existing
+`items_in_ext_mem` flag in a hash-bound generated TX derivative for the explicit
+upload profile only. SDK source, RX, DMA alignment/cache/encryption handling,
+wire timing and ownership remain unchanged. Removal condition: a selected
+upstream driver exposes equivalent storage selection, or this carrier is retired.
+The native validator requires the exact derived bytes, sole compile action,
+PARLIO archive membership and final ELF link; ordinary profiles reject it.
