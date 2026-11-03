@@ -62,11 +62,11 @@ the Author's bench is occupied; do not disturb Wolf3DOrig's active transfer.
    or full media, protocol/sequence errors and reset. Compile native sources.
 5. [x] R09-05 Document candidate requirements/invocation, separate staging,
    mainboard and HTTP timings, and remaining per-record UART overhead.
-6. [ ] R09-06 After Author releases bench: preserve exact incoming pair,
+6. [x] R09-06 After Author releases bench: preserve exact incoming pair,
    deploy identified candidate, compare matched >1MiB files against old fast
    client, verify actual bytes outside timing and normal CLI/startup behavior.
    Author acceptance/version/qualification gates precede promotion.
-7. [ ] R09-07 Attribute the slow P4-owned record loop observed in the first
+7. [x] R09-07 Attribute the slow P4-owned record loop observed in the first
    mounted-card run. Preserve its complete measured result before changing
    the candidate. Compare a worker-priority-only correction with the same
    small/large byte proofs; keep UART/framing/listener/renderer unchanged.
@@ -78,16 +78,23 @@ the Author's bench is occupied; do not disturb Wolf3DOrig's active transfer.
    counterpart. Otherwise retain the negative/unchanged result without another
    ten-minute large repeat. This selects further work, never a preferred timing
    sample; all measured cases remain evidence and no reset/replay is implied.
+8. [ ] R09-08 Author review and production closeout: obtain acceptance and an
+   agreed version, finish required canonical release qualification and package
+   the exact tested component/tools through the production protocol. The
+   bounded file result does not authorize broader unrelated qualification or
+   imply that the canonical release suite has run.
 
 ## State
 
-Recorded before implementation. R09-01–05 complete offline:
-[results](REMOTE-009/OFFLINE-RESULTS.md), 51 checks and native P4 compile/action
-validation pass. Staged puts explicitly require activation; the existing RPC
-client retains stage-only transactions and their live session. R09-06 is now
-authorized after Author release from the6502 emulator; preserve fresh incoming
-state before deployment. No staged speed, matched deployment or production
-promotion is claimed yet.
+R09-01–07 are complete.56 offline checks, matched native builds and the bounded
+Legacy file comparison pass. [Final measured results](REMOTE-009/STAGED-RESULTS.md)
+record1.1MB upload43.24s/download243.20s,6.554x/2.087x the original client.
+Empty/257/65537/1100000B pairs and missing-source/CLI handback pass in both
+physical variants. Raising the blocked file worker from priority1 to4 resolves
+a major scheduling cost; no renderer, UART, resident EMOS or listener change.
+Exact incoming full16MiB P4 is restored and verified, startup/listener/CLI pass,
+and serial/reset resources are released. The candidate remains uninstalled;
+Author acceptance, versioning and canonical production gates remain open.
 
 Physical preparation update: [original fast baseline](REMOTE-009/BASELINE-R01.md)
 passes exact1.1MB upload/download. Identified matched r27 candidate is built,
@@ -122,7 +129,7 @@ the staged-transfer qualification. No new-path speedup or promotion is claimed.
    and EXIT pass. Physical seating explains the observed timeout; the source
    power-enable omission was not proven causal and original r25 mounts without
    that correction. No new flash or staged job was invoked in this preflight.
-5. [ ] After Golem's next bench slot is restored/released, deploy the retained
+5. [x] After Golem yields and the Author returns the bench, deploy the retained
    matched candidate and run the successful staged-file cases/comparison.
    This prerequisite changes P4 software only; EMOS, native VDP, listener,
    startup, physical wiring and unknown user files remain unchanged.
@@ -145,3 +152,11 @@ the proposed single-variable control. Existing1000Hz FreeRTOS ticks rule out
 a10ms tick assumption. Worker timing also includes local-file I/O, so the current
 timer does not independently attribute CPU wait, UART wire or eZ80 filesystem
 time. No per-record logging or new integrity work is proposed.
+
+Outcome: priority4 passes the predeclared short-file gate and full1.1MB
+confirmation. Compared with priority1, upload301.930→43.240s and download
+308.909→243.200s. Every byte pair and error handback passes. Final source67dfc55b
+and appfb8283f7 are frozen; incoming P4 full006397a5 and EMOS84da2c5a remain the
+handback authority. Remaining download costs are not independently attributed
+by these combined worker timers. [Portable evidence](REMOTE-009/STAGED-EVIDENCE.json)
+records both variants, the gate and final restoration; no production/tag change.

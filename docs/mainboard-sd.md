@@ -1,19 +1,20 @@
 # Mainboard SD service operating guide
 
-## P4-staged fast files — development, card prerequisite unresolved
+## P4-staged fast files
 
 The new `scripts/sdcard_staged.py` candidate sends/receives a whole file through
 HTTP while a P4 worker owns the local mainboard UART request loop. P4 SD staging
 separates network delays from the eZ80 loop. No per212-byte host HTTP polling or
-host journal fsync remains. Existing per-record UART replies remain; no physical
-throughput result is available. The matched development P4 was temporarily
-installed, but its local card failed initialization; unavailable-media rejection
-and normal UART/CLI handback pass. The Author subsequently reseated the loose
-card, and the restored original P4 now mounts it successfully. Successful staged
-files and speed comparison await the next available bench slot.
-[Installation evidence](tasks/REMOTE-009/CARD-POWER-R01.md) defines this limited
-result. The candidate is uninstalled. Production is unchanged; installed builds
-must not be assumed to expose these endpoints.
+host journal fsync remains. Existing per-record UART replies remain.
+
+**Development; bounded Legacy hardware pass.** Empty,257B,65537B and1.1MB files
+pass in both directions, with error/CLI handback. The final priority4 worker
+measures43.24s upload and243.20s download for1.1MB, versus283.40/507.45s for the
+old client. [Measured scope and exact builds](tasks/REMOTE-009/STAGED-RESULTS.md)
+separate host, worker and HTTP time. This is not a continuous bulk UART carrier
+or all-mode/durability qualification. Production is unchanged; the bench's
+original P4 is restored after qualification, and does not expose these new
+endpoints. Select and verify the matched candidate before using this client.
 
 After separately authorized matched deployment, it requires a mounted P4 card
 and the already-running `EMOS sdserve --fast /` foreground listener. It adds no

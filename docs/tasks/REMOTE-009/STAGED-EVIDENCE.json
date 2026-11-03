@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "task": "REMOTE-009",
+  "result": "bounded_Legacy_file_qualification_pass",
+  "candidate": {
+    "build_id": "indexed-hdmi-r27-b2026-11-03-00-02-51Z",
+    "candidate_source": "67dfc55bedae6655ed0b6bd5d9bae4905153de9d",
+    "app_bytes": 1803024,
+    "app_sha256": "fb8283f7f57abb6b86e936ed41936b7cd545fc3f768a8a50590ab35095e0733d"
+  },
+  "worker_priority": 4,
+  "native_build": "PASS",
+  "offline_checks": 56,
+  "single_variable_source_proof": {
+    "single_code_change": "sd-fast worker priority1 ->4",
+    "other_source_files_unchanged": true,
+    "comment_whitespace_ignored": true,
+    "baseline_source": "f4633a168ee08e6c064d7955e9337862754a73d2",
+    "control_source": "67dfc55bedae6655ed0b6bd5d9bae4905153de9d"
+  },
+  "comparison": {
+    "rows": [
+      {
+        "direction": "download",
+        "bytes": 1100000,
+        "old_s": 507.4451986030035,
+        "staged_priority1_s": 308.9088002979988,
+        "staged_priority4_s": 243.19967530100257,
+        "speedup_old_over_priority4": 2.0865373194884014,
+        "elapsed_change_percent": -52.07370648682238,
+        "payload_bytes_per_second": 4523.032354539765,
+        "P4_worker_s": 241.7092,
+        "http_upload_s": 0.03516443201806396,
+        "http_download_s": 1.2693925439962186,
+        "P4_stage_s": 0.012902
+      },
+      {
+        "direction": "upload",
+        "bytes": 1100000,
+        "old_s": 283.39583010500064,
+        "staged_priority1_s": 301.92990567800007,
+        "staged_priority4_s": 43.2397764249763,
+        "speedup_old_over_priority4": 6.554054010818257,
+        "elapsed_change_percent": -84.74226794058488,
+        "payload_bytes_per_second": 25439.53949226746,
+        "P4_worker_s": 40.814495,
+        "http_upload_s": 2.287401980982395,
+        "http_download_s": null,
+        "P4_stage_s": 2.264099
+      }
+    ],
+    "first_suite_s": 683.769971801,
+    "control_suite_s": 328.606078817,
+    "large_gate": {
+      "control_over_first_short_elapsed": {
+        "upload": 0.1622092043039352,
+        "download": 0.7457133179680875
+      },
+      "run_large_if_either_direction_at_least_10_percent_shorter": true,
+      "large_case_executed": true
+    },
+    "all_byte_pairs_passed": true,
+    "missing_source_error_handback_passed": true
+  },
+  "rows": [
+    {
+      "bytes": 257,
+      "sha256": "621bdecc21fa5a641152855407593c7e684188550ef2fef945f5c7c23c176eaa",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 0.8562683750060387,
+        "bytes_per_second": 300.1395444485353,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "download": {
+        "host_seconds": 0.3456766869931016,
+        "bytes_per_second": 743.4692869673585,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "P4_upload": {
+        "records": 6,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 20251,
+        "mainboard_us": 592205,
+        "http_upload_s": 0.04519310302566737
+      },
+      "P4_download": {
+        "records": 4,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 13097,
+        "mainboard_us": 144720,
+        "http_upload_s": 0.035437395999906585,
+        "http_download_s": 0.011662668985081837
+      }
+    },
+    {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 0.8429965190007351,
+        "bytes_per_second": 0,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "download": {
+        "host_seconds": 0.34210935299051926,
+        "bytes_per_second": 0,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "P4_upload": {
+        "records": 4,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 13142,
+        "mainboard_us": 559641,
+        "http_upload_s": 0.03696695200051181
+      },
+      "P4_download": {
+        "records": 2,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 13184,
+        "mainboard_us": 48808,
+        "http_upload_s": 0.03624791500624269,
+        "http_download_s": 0.010540556977503002
+      }
+    },
+    {
+      "bytes": 65537,
+      "sha256": "9cc69e9aee5712137ea455b500c49dc9baaaf20e1dc2ceb8bab9295b90345f40",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 3.27170219598338,
+        "bytes_per_second": 20031.468658870846,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "download": {
+        "host_seconds": 15.000820724002551,
+        "bytes_per_second": 4368.894289572796,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "P4_upload": {
+        "records": 314,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 136063,
+        "mainboard_us": 2980207,
+        "http_upload_s": 0.15969318299903534
+      },
+      "P4_download": {
+        "records": 306,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 13153,
+        "mainboard_us": 14697493,
+        "http_upload_s": 0.035977747989818454,
+        "http_download_s": 0.09703916797298007
+      }
+    },
+    {
+      "bytes": 1100000,
+      "sha256": "87d9773ba97729ccd40841042621fa0cf7891b5576f33c14ccc05729a7605050",
+      "exact_bytes_verified_outside_timing": true,
+      "upload": {
+        "host_seconds": 43.2397764249763,
+        "bytes_per_second": 25439.53949226746,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "download": {
+        "host_seconds": 243.19967530100257,
+        "bytes_per_second": 4523.032354539765,
+        "scope": "whole staged client call including job journals, bulk HTTP, background UART, status observation and cleanup"
+      },
+      "P4_upload": {
+        "records": 5193,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 2264099,
+        "mainboard_us": 40814495,
+        "http_upload_s": 2.287401980982395
+      },
+      "P4_download": {
+        "records": 5095,
+        "error": 0,
+        "remote_status": 0,
+        "filesystem": 0,
+        "stage_us": 12902,
+        "mainboard_us": 241709200,
+        "http_upload_s": 0.03516443201806396,
+        "http_download_s": 1.2693925439962186
+      }
+    }
+  ],
+  "missing_source_failed_and_explicitly_discarded": true,
+  "foreground_listener_exited": true,
+  "P4_job_idle": true,
+  "installed_flash_proof": {
+    "exact_app": true,
+    "app_sha256": "fb8283f7f57abb6b86e936ed41936b7cd545fc3f768a8a50590ab35095e0733d",
+    "before_sha256": "44307099526d95a1504c3ef24a5a180ae3162429ea4f02a0e97e20408acc995b",
+    "after_sha256": "fd5fa4108841468e518176d6b4d6f655021f09b537d0d1f1856ed6c8de6d89ae",
+    "outside_written_sectors_unchanged": true,
+    "bootloader_partition_NVS_OTA_retained": true,
+    "EMOS_mainboard_VDP_startup_unchanged": true
+  },
+  "preserved_EMOS_ROM_sha256": "84da2c5ac3cebb1c470bab201f797a936296a6bfc33b6ebdbcf5d1dd3a1d1d79",
+  "final_restoration": {
+    "full_P4_sha256": "006397a5a8b0f0e47d350e4a63b4f849c4a75635e7f5569a02f2b8a57871f84b",
+    "full_P4_bytes": 16777216,
+    "exact_incoming_P4_restored": true,
+    "EMOS_native_VDP_not_written": true,
+    "startup_listener_unchanged": true,
+    "actual_Legacy_CLI_verified": true,
+    "input_ready_neutral": true,
+    "listener_offline_no_pending": true,
+    "USB_devices_ownerless": true,
+    "reset_holders_released_exited": true,
+    "P4_card_mounted": true,
+    "USB_controller_valid": true,
+    "visible_flashing_cursor_controls_sent": true,
+    "no_optical_pass_claimed": true
+  },
+  "production_promoted": false,
+  "canonical_release_suite_run": false,
+  "limits": [
+    "One measured file per size/direction in each variant; no sustained-rate guarantee.",
+    "P4 worker time includes UART and both ends file work; no complete wire/eZ80 CPU attribution.",
+    "Per-record UART replies remain; this is not a continuous bulk UART carrier.",
+    "No all-mode, fault-injection, power-loss or interactive-input latency qualification."
+  ]
+}

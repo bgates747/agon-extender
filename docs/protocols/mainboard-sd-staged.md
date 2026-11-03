@@ -94,4 +94,7 @@ tools remain available after the worker relinquishes its queue claim.
 The old RPC tool remains supported separately; it cannot interleave with an
 active worker. Remaining212/216-byte UART replies, sdserve's per-READ open/seek/
 close and local task scheduling still impose costs. The implementation and
-pending hardware comparison are tracked in [REMOTE-009](../tasks/REMOTE-009.md).
+bounded hardware comparison are tracked in [REMOTE-009](../tasks/REMOTE-009.md).
+The [measured result](../tasks/REMOTE-009/STAGED-RESULTS.md) passes Legacy files
+through1.1MB and error/CLI handback with a priority4 worker. Production remains
+unchanged; this does not qualify every mode, failure or power-loss boundary.

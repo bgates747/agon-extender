@@ -25,7 +25,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** —56 offline checks pass; matched r27 flash-verified then original P4 restored. Author reseated loose P4 card; original r25 now mounts successfully, CLI/startup/listener pass. Await Golem bench-slot restoration/release before staged cases/comparison. Original fast1.1MB baseline: upload283.4s/download507.4s; per-record UART replies remain, no staged speedup or promotion claimed.
+- [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — Implementation and bounded Legacy qualification pass:1.1MB upload43.24s/download243.20s,6.554x/2.087x original rates, exact bytes and error/CLI handback.56 offline checks; exact incoming firmware restored. Author review/version/canonical production closeout remain; per-record UART replies and remaining read costs are explicit.
 
 - [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired and bounded hardware checks pass without firmware changes. Author review/fsim helper adoption and broader USB loss/paired-reset investigation remain; see R02 results.
 
