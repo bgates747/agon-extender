@@ -16,7 +16,7 @@ class P4UploadMailbox final {
   bool load(FILE *file,std::size_t length,std::uint32_t id) noexcept {
     unsigned expected=free;
     if(!state.compare_exchange_strong(expected,loading))return false;
-    job=id;activeMs=handoverMs=0;cancel.store(false);outcome.store(unsigned(P4ParallelUpload::Result::idle));
+    job=id;activeMs=handoverMs=0;clockCount=validCount=-1;cancel.store(false);outcome.store(unsigned(P4ParallelUpload::Result::idle));
     if(!source.load(file,length)){state.store(free,std::memory_order_release);return false;}
     state.store(queued,std::memory_order_release);return true;
   }
@@ -31,6 +31,7 @@ class P4UploadMailbox final {
   P4UploadSource source;
   std::atomic<std::uint32_t> job{};
   std::uint32_t activeMs{},handoverMs{};
+  int clockCount{-1},validCount{-1};
 };
 inline P4UploadMailbox uploadMailbox;
 

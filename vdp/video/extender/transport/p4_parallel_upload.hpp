@@ -53,6 +53,8 @@ class P4ParallelUpload final {
   Result poll(std::uint32_t now) noexcept;
   Result cancel() noexcept;
   Result result() const noexcept { return result_; }
+  int observedClocks() const noexcept { return observedClocks_; }
+  int observedValid() const noexcept { return observedValid_; }
  private:
   Result finish(Result outcome) noexcept;
   bool stop() noexcept;
@@ -66,5 +68,6 @@ class P4ParallelUpload final {
   std::uint32_t began_{},timeout_{};
   bool enabled_{},filterEnabled_{},padsTouched_{},admitted_{},deleteFailed_{};
   Result result_{Result::idle};
+  int observedClocks_{-1},observedValid_{-1};
 };
 }

@@ -107,6 +107,7 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
       // A known short/error file is still allowed the reciprocal UART return.
       // The worker separately checks physical outcome and the SD terminal reply.
       m.activeMs=std::uint32_t(now-payloadAt_);
+      m.clockCount=payload_->observedClocks();m.validCount=payload_->observedValid();
       m.outcome.store(unsigned(r));released_=true;done|=H::done;
     }
   }
