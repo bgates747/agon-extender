@@ -67,3 +67,29 @@ identities not freshly read from flash are explicitly retained historical pins,
 which the consumer must independently verify where its frozen plan requires.
 The registry grant and durable handoff retain the exact observation/lease;
 consumer first-failure and exact native-VDP restoration boundaries remain intact.
+
+## R01 — Machine-readable component identities, self-assigned
+
+Golem's future consumer admission compares component SHA256 fields as exact
+64hex strings. Earlier observations combine those hashes with human provenance
+inside each value, preventing direct identity comparison. Separate the two for
+future observations without rewriting history or disturbing active custody.
+
+1. Define future `components` values as raw lowercase64hex SHA256, with matching
+   nonempty human descriptions under `component_provenance`. Distinguish fresh
+   reads from retained verified bytes; formatting is not new live verification.
+2. Add opt-in validation when `component_provenance` is supplied. Keep legacy
+   observations accepted so the active consumer can assert/release normally.
+   Preserve past entry/release observations and all live state; no migration.
+3. Check raw identity/provenance preservation, rejected descriptive/bad/missing
+   fields without queue mutation, and a new-format grant followed by a legacy
+   release. Use only isolated temporary state/evidence, never the live queue.
+4. Publish the central helper/tests/protocol and report the future format to
+   Golem. Prepare the next actual observation in that format only at authorized
+   fresh admission. No device read, firmware change or redundant flash backup.
+
+State: implemented; all ten isolated host checks pass, including new-format
+grant/legacy-release compatibility and rejected malformed records without queue
+mutation. Published in the central owner repository as `d0f33db`. Current6502
+generation5 and every historical observation remain untouched; no live proof
+was manufactured, normalized or refreshed by the source correction.
