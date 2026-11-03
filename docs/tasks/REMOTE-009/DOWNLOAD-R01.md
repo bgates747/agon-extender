@@ -74,6 +74,11 @@ The exact accepted-source control is
 SHA256`03738afc179955b9212eb29a0848777862e04e5cc22e044b7fa9fcd20b573310`.
 Both manifests pin the same compiler SHA256
 `b26b8b361834c7af13d272408efafd350cf8d6493c89e50cecd73f9d9e70a220`.
+An offline byte comparison also proves the rebuilt control equals the freshly
+retrieved installed22968B listener except for its single UTC build-ID string.
+Retained linker maps place BSS end at0xB63C4 for control and0xB6B63 for candidate,
+leaving7228B and5277B respectively for shared heap/stack below0xB8000. This
+static layout check does not measure runtime stack high water.
 
 ## Finite physical comparison plan
 
