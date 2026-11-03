@@ -73,6 +73,11 @@ the Author's bench is occupied; do not disturb Wolf3DOrig's active transfer.
    Record whether the hypothesis is supported rather than declaring scheduling
    causal from priority inspection alone. The worker must remain blocked while
    waiting, preserve USB/video service, and leave normal CLI/input intact.
+   Predeclared control gate: compare the65,537B pairs first. Repeat1.1MB only
+   if either direction's control call is at least10% shorter than its first-run
+   counterpart. Otherwise retain the negative/unchanged result without another
+   ten-minute large repeat. This selects further work, never a preferred timing
+   sample; all measured cases remain evidence and no reset/replay is implied.
 
 ## State
 
