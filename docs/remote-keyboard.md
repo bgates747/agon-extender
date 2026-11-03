@@ -35,6 +35,16 @@ flash/reset actions remain separately authorized operations. Never use autoexec
 as the command file. Check command-specific success and preserve uncertain
 journals rather than retyping after a timeout.
 
+MOS stops `EXEC` at the first command that returns an error, including a nonzero
+application result from `RUN`. A following SAVE, cleanup or listener-start line
+therefore runs only after successful preceding commands. For an application
+that leaves a diagnostic record in RAM on failure, the host needs a separate
+SAVE-only path after it observes that exact invocation's failed RUN and actual
+CLI return, before loading other code. It must distinguish an unissued SAVE
+from a failed or uncertain SAVE; never repeat the application or overwrite an
+uncertain result to obtain a cleaner run. Missing output or elapsed time alone
+does not establish that this fallback may execute.
+
 The keyboard status `boot` is an input epoch, which can change without a P4
 reboot. `reason` records a session's first cancellation reason; reason1 from an
 explicit cancellation may persist across later admission/transport boundaries.
