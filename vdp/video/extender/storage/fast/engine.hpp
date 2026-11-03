@@ -20,6 +20,8 @@ enum Error : unsigned { Ok, Invalid, Transport, Protocol, Remote, Local, TooLarg
 struct Progress {
   std::uint32_t bytes = 0, size = 0, records = 0;
   unsigned error = Ok, remoteStatus = 0, filesystem = 0;
+  std::uint64_t parallelPrepareUs = 0;
+  std::uint32_t parallelActiveMs = 0, parallelHandoverMs = 0;
 };
 struct Link {
   virtual ~Link() = default;
@@ -31,7 +33,7 @@ struct Link {
   // a partly executed parallel upload through UART.
   virtual bool parallelUploads() const { return false; }
   virtual bool prepareUpload(FILE *,std::uint32_t,std::uint32_t) { return false; }
-  virtual bool uploadReturned() const { return false; }
+  virtual bool uploadReturned(Progress &) const { return false; }
 };
 inline bool valid(const Plan &p) {
   if (!p.id || !p.boot || p.size > Quota || p.path.empty() || p.path[0] != '/' ||
@@ -105,7 +107,7 @@ public:
       if(parallel) {
         sd_put32(args.data(),plan.id);sd_put32(args.data()+4,plan.size);
         if(!rpc(SD_PARALLEL_WRITE,args.data(),8))return p_;
-        if(!identity(plan.id,plan.size) || !link_.uploadReturned()){fail(Protocol);return p_;}
+        if(!identity(plan.id,plan.size) || !link_.uploadReturned(p_)){fail(Protocol);return p_;}
         p_.bytes=plan.size;link_.progress(p_);
       }
       while (!parallel && p_.bytes < p_.size) {

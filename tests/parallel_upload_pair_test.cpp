@@ -140,6 +140,7 @@ int main(){unsigned cases=0;
   assert(uploadMailbox.outcome.load()==unsigned(R::complete));
   assert(peer.phase()==P4ParallelHandover::uart&&local.phase==EPH_UART);
   assert(rawCalls==(n+511)/512&&clocked==n&&parks==1);
+  assert(uploadMailbox.activeMs>=17*rawCalls&&uploadMailbox.handoverMs>0);
   sd_header_mode(reply,SD_RESPONSE,111,1,SD_PARALLEL_WRITE,0,8,1);
   sd_put32(reply+20,73);sd_put32(reply+24,n);sd_seal(reply);
   assert(queue.receive(reply,28,now)&&queue.postOwned(token,request,28,wire,out,now)==200);

@@ -1,0 +1,218 @@
+# Parallel uploads — reverse bulk and file-service integration r01
+
+Improve host-to-mainboard deployment by reusing the staged upload service and
+replacing its P4→eZ80 UART payload leg with a qualified eight-bit parallel path.
+The Author authorizes this tranche on2026-11-03 after accepting BENCH-013's first
+listener-adoption tranche. Keep the existing host workflow and UART baseline;
+speed, scarce EMOS space and one admission per requested payload remain central.
+
+## Authority and boundaries
+
+1. Extender retains the Author-assigned physical checkout; other projects may
+   queue but receive no automatic slot. Send no peer progress/instruction
+   notifications until the Author opens the bench for their use. The Author
+   receives completion/review questions directly in chat, following the current
+   standing instruction against question-dialog tools.
+2. Preserve the installed accepted sequential-reader utility and exact incoming
+   firmware/startup/modes. Source assessment and host checks may proceed now.
+   A new wire/admission or DMA-completion design must resolve the remaining
+   architectural decision before dependent firmware implementation or flash.
+3. Implementation owners remain Extender/P4 and agon-emos/eZ80. The public MOS
+   API, ordinary VDU routing and native mainboard VDP are not replaced. EMOS
+   retains all shared-pin/admission ownership. No raw application GPIO bypass,
+   software CRC/checksum, per-byte acknowledgement or uncertain replay.
+
+## Bounded research précis
+
+1. Official read-only baseline: documentation
+   `f9806bd3cbff6ed5d1c08bef1d51fed11764b86b`, MOSv3.0.2
+   `8336409351ee5314e02801a7b72a4f1bb5282519`, VDPv2.16.0
+   `c7ac293d2aa81ddfa693390549bcd909069c8fc3`. MOS/VDP references are clean at
+   those tags. [GPIO](../../../../../agon-docs/docs/GPIO.md) establishes physical
+   sharing; [ffs_fwrite](../../../../../agon-docs/docs/mos/API.md#0x83-ffs_fwrite)
+   supplies filesystem result and byte count. Do not replace this with a new
+   resident filesystem implementation.
+2. Source assessment starts from Extender `8aa3245d39f62202719226db64b67e305c91688b`
+   and EMOS `08301e6d28f5cdd6a8bb01aa6806b6d4ddaf816c`, not an assumption that
+   either HEAD equals installed firmware. Installed artifact identities and
+   rollback evidence remain in the ignored bench record.
+3. EMOS [native byte loop](../../../../agon-emos/src/emos_parallel_native_body.inc)
+   generates CLOCK in both directions; reverse samples Port C after the edge
+   pair. READY is sampled as an abort level, not a per-byte acknowledgement.
+   The guard/coordinator bounds a call to4096 bytes and returns ownership to
+   UART after each admitted block. It cannot be called repeatedly while
+   claiming only one whole-file admission.
+4. P4 [native adapter](../../../vdp/video/extender/transport/p4_native_payload.cpp)
+   uses external-clock eight-bit PARLIO TX, one queued transaction and internal
+   DMA payload storage. Its guard/egress cap is4096; ordinary return buffering
+   and the current EMOS256-byte fetch policy are not a bulk-file contract.
+   Preserve byte/VALID completion and pad-release distinctions.
+5. The pinned ESP-IDF5.5.5 TX driver explicitly supports external PSRAM buffers
+   in `components/esp_driver_parlio/src/parlio_tx.c`. Ordinary non-loop TX uses
+   a0x7FFFF-bit frame limit on P4, so raising4096 alone cannot admit a65536-byte
+   non-loop transaction. Loop TX can link the payload circularly and does not
+   produce ordinary transaction-done completion. It requires a different,
+   justified exact-length/VALID stop contract. Software support is not physical
+   qualification; the earlier project PSRAM experiment remains unqualified.
+6. [Official TX documentation](https://docs.espressif.com/projects/esp-idf/en/v5.5/esp32p4/api-reference/peripherals/parlio/parlio_tx.html)
+   defines borrowed source lifetime through completion and loop-buffer behavior.
+   Local pinned driver, P4 HAL and SoC capability files own exact implementation
+   details; keep their hashes and excerpts in the ignored research receipt.
+7. The accepted file utility has5277 bytes between BSS end and its MOSlet limit
+   for shared heap/stack. A4096-byte extra buffer leaves1181 bytes before new
+   code/runtime costs; a full upload cannot live there. The utility can write
+   bounded slices through existing FatFS calls. Because EMOS generates CLOCK,
+   it can stop clocking while the utility writes a slice without demanding a
+   per-byte P4 acknowledgement; this requires a new retained transfer owner.
+
+## Work and gates
+
+1. [x] RU01 — Verify exact source/SDK limits, current reverse cores and relevant
+   host failure/bounds checks. Retain no fabricated hardware rate or headroom
+   claim. Quantify how many4096-byte admissions representative files need and
+   the source-storage lower bound for a whole-file P4 DMA source.
+2. [x] RU02 — Resolve BENCH-013 B13-D02 with a concrete recommendation before new
+   carrier code: keep the existing host/staging/file semantics and choose the
+   bounded whole-payload implementation below. Record an accepted material
+   decision in its ADR/architecture owners. Allocate no new global MOS ABI or
+   wire identifier until that contract is explicit.
+3. [ ] RU03 — After RU02, implement the selected carrier in the owning source
+   checkouts. Keep P4 file I/O and EMOS utility file policy outside resident
+   loops where practical. Bind logical payload length, buffer lifetime, busy
+   refusal, exact finish, failure fencing and non-replay behavior. Report ROM,
+   RAM, P4 storage and eZ80 CPU costs.
+4. [ ] RU04 — Exercise actual retained cores/SDK boundaries and linked eZ80 code:
+   exact first/last bytes, short/tail lengths, filesystem pauses, DMA cleanup,
+   owner/busy/refusal and partial failure. Then build identified matched
+   candidates through owner wrappers and all mandatory link/ABI checks.
+5. [ ] RU05 — Prepare a finite physical comparison only after required protocol,
+   deployment, reset/rollback, SD-layout and test-lifecycle review. Preserve and
+   verify incoming components. Prove the reverse source and full received file
+   bytes outside timing. Keep payload, admission, SD/HTTP and total deployment
+   elapsed separate; compare matched UART and parallel variants.
+6. [ ] RU06 — Restore exact incoming components unless the Author explicitly adopts
+   the tested change, restore normal CLI/cursor/input and idle services, and
+   retain Extender checkout. Publish scoped results/limits; raise the requested
+   attention message in chat. No full suite, peer notification or bench release follows
+   automatically from completing this tranche.
+
+## RU01 assessment results — 2026-11-03
+
+| Upload size, bytes | Existing4096-byte admissions | Minimum whole-source P4 storage, bytes |
+|---:|---:|---:|
+| 1,100,000 | 269 | 1,100,000 |
+| 65,537 | 17 | 65,537 |
+| 4,096 | 1 | 4,096 |
+| 256 | 1 | 256 |
+
+Rows rank by largest existing admission count. Source-storage figures exclude
+DMA descriptors, alignment and other live resources; they are not free-memory
+measurements. The old two-second physical block deadline and single-block
+completion cannot simply be relabelled as a large-file contract.
+
+Unchanged maintained-source host checks pass:
+
+| Check | Result | Limit |
+|---|---|---|
+| Paired reverse cores |48 cases pass|Modeled wires; no physical speed claim|
+| Actual P4 adapter/handover/egress |213 cases pass|Fake SDK/peripheral boundary|
+| Retained ExExt internal DMA payload |246 cases pass|Existing4096-byte behavior, not PSRAM or larger transfers|
+| Paired block ownership/control |183 cases pass|Modeled physical lifecycle, no GPIO timing|
+
+Native runs preserve AddressSanitizer/UndefinedBehaviorSanitizer checks. Initial
+sandbox runs encountered LeakSanitizer's documented ptrace incompatibility;
+unchanged native reruns pass without source or sanitizer suppression. This is
+an execution-environment correction, not an Extender hardware fault.
+
+The SDK source is pinned at `b774170ff46c393eeb5e495ea37936038d3f4f4f`.
+Source hashes, resource arithmetic and complete logs are retained in ignored
+`agents/port008-reverse-upload-r01/`. No firmware, listener, startup, mode or
+other target state is changed by this assessment. Extender retains generation9.
+The Author subsequently accepts RU02: whole-file P4 PSRAM source. No new file carrier is physically qualified yet.
+
+## Accepted carrier decision — B13-D02, 2026-11-03
+
+The Author selects the first prototype: P4 retains one complete admitted upload in aligned
+PSRAM for DMA, while the eZ80 file utility receives small slices and writes them
+to Agon SD between clocking intervals. One payload admission covers the file;
+there is no per-slice UART negotiation or acknowledgement. The P4 validates
+capacity before admission and never promises a file larger than its actual
+retained source capacity. This spends P4 PSRAM to keep the first implementation
+small and avoid streaming refill races. The exact-length loop-DMA stop, source
+release and buffer lifetime require explicit implementation/qualification.
+
+Deferred alternative: P4 fills/recycles bounded source buffers from its SD spool during
+the same admitted file transfer. This saves whole-file PSRAM and handles larger
+uploads, but needs a proved pause/refill protocol and protection against TX idle
+data being clocked while a refill is late. Existing abort-only READY semantics
+do not already implement that behavior. Do not silently use repeated4096-byte
+OFFERs as the production alternative to the Author's whole-request requirement.
+
+The [accepted decision](../../decisions/ADR-2026-11-03-whole-file-parallel-uploads.md) owns source storage and clock/SD policy. Preserve the shared UART/parallel semantic contract. RU03 now proceeds; exact private wire operations, length/VALID completion, progress bounds and cleanup are implementation obligations to prove before hardware use.
+
+## RU03 implementation contract
+
+1. The candidate utility explicitly selects `--fast --parallel`; omitting
+   `--parallel` keeps the same binary on UART for matched comparison. A zero-
+   length private begin query checks EMOS support before advertising presence.
+   Candidate SD fast-v2 HELLO bit0x80 advertises SD_PARALLEL_WRITE(operation15).
+   P4 retains the existing BEGIN/FINISH/ACTIVATE file policy. One operation15
+   request binds the active upload ID and complete32-bit size; its one terminal
+   response follows physical return and all utility SD writes. No per-slice
+   UART request, ACK or automatic replay of that operation is permitted.
+2. Candidate-only ext.sdlink operations7/8/9 let the admitted manual Legacy
+   listener begin(total32), read(at most512 bytes) and end(abort flag). EMOS
+   reserves its existing serializer and actual shared-pin parking across calls.
+   The utility owns FatFS and suppresses UART presence while the pipe is parked.
+3. P4 reserves whole-source PSRAM and loop-DMA resources before offering capacity.
+   DMA source length rounds up to64 bytes for the pinned SDK; EMOS clocks only
+   the logical file length. Padding never becomes received file data.
+4. The existing reciprocal physical handover remains. During payload, P4 uses
+   hardware CLOCK counting gated by VALID, plus the complete VALID pulse, to
+   establish exact length before stopping loop DMA and releasing data pads.
+   EMOS emits no inactive preamble/tail clocks for this reverse payload. Known
+   partial-file failure never activates the stage; uncertain cleanup retains
+   ownership/source and fences further admission until recovery.
+5. P4's console core owns all driver/parking operations; its file worker owns
+   PSRAM staging and the existing file queue. A private retained mailbox joins
+   these owners. P4 suppresses the ordinary five-second presence expiry only
+   for the physically admitted bounded bulk request, without manufacturing
+   heartbeats. Ordinary traffic and the UART baseline preserve their policy.
+6. P4 reports PSRAM/DMA preparation in microseconds and physical admission/return
+   overhead in milliseconds. Its active interval includes eZ80 clocking and
+   foreground SD-write pauses; it is not pure wire time. Existing staging and
+   complete mainboard-job microseconds remain separate. Status exposes the
+   retained carrier phase/outcome without adding per-byte eZ80 instrumentation.
+
+## Implementation evidence — 2026-11-03
+
+1. The experimental P4 carrier is committed at `f1d10e46`. Its physical-build
+   source starts from the incoming r27 display/input revision `67dfc55b`, with
+   the carrier applied at `336a17f3`; building the older root display branch
+   would not preserve the incoming display implementation. The first full
+   native P4 build and validation pass. The graphics-timing diagnostic is
+   omitted because the existing parallel boot profile excludes it.
+2. Linked eZ80 instruction checks pass1034 cases, covering lengths1..512,
+   initial interrupt states, exact bytes/edges, READY abort and register/stack
+   preservation. They are CPU models, not physical GPIO timing measurements.
+3. The isolated EMOS profile passes the owner firmware wrapper and its complete
+   linked ABI, UART divisor, pad and ROM checks. Its unversioned image uses
+   128880 ROM bytes, leaving2192 bytes, with3230 BSS bytes. Against the retained
+   older native-payload/controller profile this is250 additional ROM bytes and
+   eight BSS bytes; these are different payload implementations, not an estimate
+   of the entire parallel feature versus ordinary production. Excluding the
+   unused older native payload/coordinator saves1270 ROM bytes compared with
+   the first duplicate-kernel composition.
+4. Preserve the source lifetime across all DMA cleanup. ESP-IDF5.5.5's TX-unit
+   destructor can partially free resources before a later deletion fails;
+   retrying that destructive call risks double free. The carrier fences a failed
+   delete and retains its borrowed source until recovery. This is a pinned SDK
+   cleanup constraint, not ordinary successful-transfer overhead.
+5. Boot recovery intentionally reaches UART with a historical failed flag set.
+   The existing handover begin operation clears it. Admission therefore checks
+   actual UART phase and current ownership, rather than rejecting the historical
+   flag before begin; active transfer failures and unrecovered phases still
+   fence. Paired coordinator checks cover fresh boot and unrecovered refusal.
+6. No target firmware, utility, startup file or physical mode has changed during
+   these offline checks. Identified matched builds and finite physical comparison
+   remain required before claiming throughput or working hardware.
