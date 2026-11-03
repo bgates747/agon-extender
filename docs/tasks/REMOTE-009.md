@@ -66,6 +66,13 @@ the Author's bench is occupied; do not disturb Wolf3DOrig's active transfer.
    deploy identified candidate, compare matched >1MiB files against old fast
    client, verify actual bytes outside timing and normal CLI/startup behavior.
    Author acceptance/version/qualification gates precede promotion.
+7. [ ] R09-07 Attribute the slow P4-owned record loop observed in the first
+   mounted-card run. Preserve its complete measured result before changing
+   the candidate. Compare a worker-priority-only correction with the same
+   small/large byte proofs; keep UART/framing/listener/renderer unchanged.
+   Record whether the hypothesis is supported rather than declaring scheduling
+   causal from priority inspection alone. The worker must remain blocked while
+   waiting, preserve USB/video service, and leave normal CLI/input intact.
 
 ## State
 
@@ -114,3 +121,22 @@ the staged-transfer qualification. No new-path speedup or promotion is claimed.
    matched candidate and run the successful staged-file cases/comparison.
    This prerequisite changes P4 software only; EMOS, native VDP, listener,
    startup, physical wiring and unknown user files remain unchanged.
+
+## Mounted-card performance attribution
+
+Author explicitly gives Extender the bench after Golem yields. Candidate r27
+is installed with exact whole-flash verification before the write and independent
+readback afterward. Card mount and actual CLI pass. First mounted-card cases
+verify empty,257B and65537B files, but65537B takes about20.1s in either direction.
+The recorded P4 worker phase takes18.7–18.8s; bulk HTTP takes less than0.2s.
+The1.1MB cases must complete before this run is treated as the comparison.
+
+Bounded scheduling hypothesis: `storage/fast/http.cpp` starts `sd-fast` at
+priority1, while `video.ino` starts the continuously serviced `processLoop`
+UART owner at priority3 on core0. The existing rolling drawing task is priority5;
+this matched build's rolling output is priority6 on core1 (confirmed compiled
+definitions). A blocked worker at priority4 is
+the proposed single-variable control. Existing1000Hz FreeRTOS ticks rule out
+a10ms tick assumption. Worker timing also includes local-file I/O, so the current
+timer does not independently attribute CPU wait, UART wire or eZ80 filesystem
+time. No per-record logging or new integrity work is proposed.

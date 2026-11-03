@@ -193,7 +193,12 @@ esp_err_t admit(httpd_req_t *r) {
   if(!metadataOwned||!metadata(s)){s.phase=Failed;s.progress.error=Local;}
   publish(s);
   if(s.phase==Failed){lease.reset();return reply(r,"500 Internal Server Error","Staging failed; inspect retained job");}
-  if(createVideoWorker(worker,"sd-fast",8192,nullptr,1,nullptr,tskNO_AFFINITY)!=pdPASS){
+  // Scheduling control (REMOTE-009): the continuously runnable UART parser
+  // owns core0 at priority3; a priority1 worker can only use core1's gaps.
+  // Run the blocked file worker above that parser, below drawing/USB/output.
+  // QueueLink still sleeps while awaiting replies; no busy loop or new wire
+  // behavior. Physical A/B results must establish whether this changes rate.
+  if(createVideoWorker(worker,"sd-fast",8192,nullptr,4,nullptr,tskNO_AFFINITY)!=pdPASS){
     s.phase=Failed;s.progress.error=Local;(void)metadata(s);lease.reset();publish(s);
     return reply(r,"503 Service Unavailable","Worker unavailable; job retained");
   }
