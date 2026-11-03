@@ -291,3 +291,15 @@ handback and historical status-reason limitation. No firmware patch, reset,
 mode/startup change or PCM replay. Golem receives the consumer-helper correction
 through mailbox; its owner implements it. The independent warm-reset admission
 cause remains open; one successful sequence does not close that issue.
+
+
+Consumer correction follow-through: Golem403 reports its future
+`serialized_rom_entry.py` helper now stages and verifies unique SAVE/listener
+command/output names, releases old RPC state, invokes one EXEC and checks actual
+listener/ROM before fresh EXIT. Its four host fake-endpoint cases cover order,
+existing output refusal, uncertain upload without invocation/replay and wrong-ROM
+retention. This owner-reported host result is separate from Extender's one
+physical pattern validation; the complete new consumer helper has not been run
+on hardware. Historical executed sources/captures remain unchanged. No new live
+operation or custody claim follows; the independent reset-admission issue stays
+open under B10-R03.
