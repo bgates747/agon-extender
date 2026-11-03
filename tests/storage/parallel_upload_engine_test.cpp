@@ -46,7 +46,7 @@ struct Peer final : Link {
     retained.resize(size);
     return fread(retained.data(),1,size,f)==size && fgetc(f)==EOF && !ferror(f);
   }
-  bool uploadReturned() const override {return !physicalFailure;}
+  bool uploadReturned(Progress &) const override {return !physicalFailure;}
   bool exchange(const std::uint8_t *p,unsigned n,std::uint8_t *out,unsigned &size) override {
     operations.push_back(p[12]);if(operations.size()==failAt)return false;
     assert(queue.postOwned(token,p,n,out,size,ticks)==202);

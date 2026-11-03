@@ -16,6 +16,7 @@ bool P4UploadCoordinator::releasePads() noexcept {
 P4UploadCoordinator::Result P4UploadCoordinator::fence() noexcept {
   handover_.cancel();fenced_=true;
   if(payload_ && payload_->cancel()==U::Result::cleanupFault){
+    uploadMailbox.outcome.store(unsigned(U::Result::cleanupFault));
     uploadMailbox.state.store(M::cleanupFault,std::memory_order_release);
     return Result::cleanupFault;
   }
@@ -36,6 +37,7 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
     // unit. Even a refused request retires through this same console owner.
     if(m.cancel.load(std::memory_order_acquire) && state!=M::free && state!=M::loading){
       if(payload_ && payload_->cancel()==U::Result::cleanupFault){
+        m.outcome.store(unsigned(U::Result::cleanupFault));
         m.state.store(M::cleanupFault,std::memory_order_release);return Result::cleanupFault;
       }
       payload_.reset();parking_.reset();
@@ -67,7 +69,7 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
     if(!admit_ || !admit_(now,m.job,std::uint32_t(m.source.size())) || !h.begin())return fence();
     parking_.emplace(tx_,rx_,rts_,cts_,core_);
     physical_=true;parked_=released_=restored_=fenced_=false;
-    phase_=h.phase();phaseAt_=now;m.state.store(M::active,std::memory_order_release);
+    startedAt_=now;phase_=h.phase();phaseAt_=now;m.state.store(M::active,std::memory_order_release);
   }
   if(fenced_)return fence();
   if(h.failed())return fence();
@@ -92,8 +94,10 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
     released_=true;done|=H::released;
   }
   if(h.phase()==H::localArm){
-    if(payload_->result()==U::Result::prepared &&
-        payload_->arm(parked_,m.source.size(),now,600000)!=U::Result::pending)return fence();
+    if(payload_->result()==U::Result::prepared) {
+      payloadAt_=now;
+      if(payload_->arm(parked_,m.source.size(),now,600000)!=U::Result::pending)return fence();
+    }
     done|=H::armed;released_=false;
   }
   if(h.phase()==H::block){
@@ -102,6 +106,7 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
     if(r!=U::Result::pending){
       // A known short/error file is still allowed the reciprocal UART return.
       // The worker separately checks physical outcome and the SD terminal reply.
+      m.activeMs=std::uint32_t(now-payloadAt_);
       m.outcome.store(unsigned(r));released_=true;done|=H::done;
     }
   }
@@ -118,6 +123,7 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
   if(gpio_set_level(gpio_num_t(ready_),h.readyN())!=ESP_OK)return fence();
   if(h.phase()==H::uart){
     if(!restored_)return fence();
+    m.handoverMs=std::uint32_t(now-startedAt_)-m.activeMs;
     physical_=false;m.state.store(M::returned,std::memory_order_release);
     return Result::uart;
   }

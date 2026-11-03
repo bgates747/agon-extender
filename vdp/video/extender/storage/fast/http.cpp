@@ -89,19 +89,31 @@ bool identified(httpd_req_t *r) {
     i==snapshot().id && b==serverBoot && occupied.load();
 }
 esp_err_t status(httpd_req_t *r) {
-  auto s=snapshot();char body[420];
+  auto s=snapshot();char body[640];unsigned nativePhase=0,nativeOutcome=0;
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+  auto &m=transport::uploadMailbox;
+  if(m.job.load()==s.id) {
+    nativePhase=m.status();
+    if(nativePhase>=transport::P4UploadMailbox::returned)nativeOutcome=m.outcome.load();
+  }
+#endif
   int n=std::snprintf(body,sizeof(body),
     "{\"protocol\":1,\"boot\":%lu,\"id\":%lu,\"phase\":%u,\"bytes\":%lu,\"size\":%lu,"
     "\"records\":%lu,\"error\":%u,\"remote_status\":%u,\"filesystem\":%u,"
-    "\"stage_us\":%llu,\"mainboard_us\":%llu}",
+    "\"stage_us\":%llu,\"mainboard_us\":%llu,\"parallel_prepare_us\":%llu,"
+    "\"parallel_active_ms\":%lu,\"parallel_handover_ms\":%lu,\"parallel_phase\":%u,\"parallel_outcome\":%u}",
     (unsigned long)serverBoot,(unsigned long)s.id,s.phase,(unsigned long)s.progress.bytes,
     (unsigned long)s.progress.size,(unsigned long)s.progress.records,s.progress.error,
     s.progress.remoteStatus,s.progress.filesystem,(unsigned long long)s.stageUs,
-    (unsigned long long)s.mainboardUs);
+    (unsigned long long)s.mainboardUs,(unsigned long long)s.progress.parallelPrepareUs,
+    (unsigned long)s.progress.parallelActiveMs,(unsigned long)s.progress.parallelHandoverMs,nativePhase,nativeOutcome);
   httpd_resp_set_type(r,"application/json");httpd_resp_set_hdr(r,"Cache-Control","no-store");
   return httpd_resp_send(r,body,n);
 }
 class QueueLink final : public Link {
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+  std::uint64_t prepareUs_{};
+#endif
 public:
   bool exchange(const std::uint8_t *p,unsigned n,std::uint8_t *out,unsigned &size) override {
     const auto start=esp_timer_get_time();
@@ -125,17 +137,22 @@ public:
   bool parallelUploads() const override { return true; }
   bool prepareUpload(FILE *file,std::uint32_t length,std::uint32_t id) override {
     auto &m=transport::uploadMailbox;
+    const auto started=esp_timer_get_time();
     if(!m.load(file,length,id))return false;
     const auto began=esp_timer_get_time();
     while(esp_timer_get_time()-began<5000000) {
       auto phase=m.status();
-      if(phase==transport::P4UploadMailbox::prepared)return true;
+      if(phase==transport::P4UploadMailbox::prepared){prepareUs_=esp_timer_get_time()-started;return true;}
       if(phase==transport::P4UploadMailbox::refused || phase==transport::P4UploadMailbox::cleanupFault)return false;
       vTaskDelay(1);
     }
     return false;
   }
-  bool uploadReturned() const override {
+  bool uploadReturned(Progress &p) const override {
+    if(transport::uploadMailbox.status()!=transport::P4UploadMailbox::returned)return false;
+    p.parallelPrepareUs=prepareUs_;
+    p.parallelActiveMs=transport::uploadMailbox.activeMs;
+    p.parallelHandoverMs=transport::uploadMailbox.handoverMs;
     return transport::uploadMailbox.status()==transport::P4UploadMailbox::returned &&
         transport::uploadMailbox.outcome.load()==unsigned(transport::P4ParallelUpload::Result::complete);
   }
@@ -169,6 +186,7 @@ void worker(void *) {
   else {
     QueueLink link;Engine engine(link,esp_random()|1U);s.progress=engine.run(plan,f);
 #if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+    (void)link.uploadReturned(s.progress);
     if(!link.finishUpload())s.progress.error=Transport;
 #endif
   }
