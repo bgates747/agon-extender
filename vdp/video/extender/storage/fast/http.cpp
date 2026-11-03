@@ -89,7 +89,7 @@ bool identified(httpd_req_t *r) {
     i==snapshot().id && b==serverBoot && occupied.load();
 }
 esp_err_t status(httpd_req_t *r) {
-  auto s=snapshot();char body[640];unsigned nativePhase=0,nativeOutcome=0;
+  auto s=snapshot();char body[640];unsigned nativePhase=0,nativeOutcome=s.progress.parallelOutcome;
 #if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
   auto &m=transport::uploadMailbox;
   if(m.job.load()==s.id) {
@@ -101,12 +101,14 @@ esp_err_t status(httpd_req_t *r) {
     "{\"protocol\":1,\"boot\":%lu,\"id\":%lu,\"phase\":%u,\"bytes\":%lu,\"size\":%lu,"
     "\"records\":%lu,\"error\":%u,\"remote_status\":%u,\"filesystem\":%u,"
     "\"stage_us\":%llu,\"mainboard_us\":%llu,\"parallel_prepare_us\":%llu,"
-    "\"parallel_active_ms\":%lu,\"parallel_handover_ms\":%lu,\"parallel_phase\":%u,\"parallel_outcome\":%u}",
+    "\"parallel_active_ms\":%lu,\"parallel_handover_ms\":%lu,\"parallel_phase\":%u,\"parallel_outcome\":%u,"
+    "\"parallel_clock_count\":%ld,\"parallel_valid_count\":%ld}",
     (unsigned long)serverBoot,(unsigned long)s.id,s.phase,(unsigned long)s.progress.bytes,
     (unsigned long)s.progress.size,(unsigned long)s.progress.records,s.progress.error,
     s.progress.remoteStatus,s.progress.filesystem,(unsigned long long)s.stageUs,
     (unsigned long long)s.mainboardUs,(unsigned long long)s.progress.parallelPrepareUs,
-    (unsigned long)s.progress.parallelActiveMs,(unsigned long)s.progress.parallelHandoverMs,nativePhase,nativeOutcome);
+    (unsigned long)s.progress.parallelActiveMs,(unsigned long)s.progress.parallelHandoverMs,nativePhase,nativeOutcome,
+    (long)s.progress.parallelClockCount,(long)s.progress.parallelValidCount);
   httpd_resp_set_type(r,"application/json");httpd_resp_set_hdr(r,"Cache-Control","no-store");
   return httpd_resp_send(r,body,n);
 }
@@ -153,6 +155,9 @@ public:
     p.parallelPrepareUs=prepareUs_;
     p.parallelActiveMs=transport::uploadMailbox.activeMs;
     p.parallelHandoverMs=transport::uploadMailbox.handoverMs;
+    p.parallelOutcome=transport::uploadMailbox.outcome.load();
+    p.parallelClockCount=transport::uploadMailbox.clockCount;
+    p.parallelValidCount=transport::uploadMailbox.validCount;
     return transport::uploadMailbox.status()==transport::P4UploadMailbox::returned &&
         transport::uploadMailbox.outcome.load()==unsigned(transport::P4ParallelUpload::Result::complete);
   }

@@ -87,9 +87,15 @@ P4ParallelUpload::Result P4ParallelUpload::poll(std::uint32_t now) noexcept {
   if(std::uint32_t(now-began_)>=timeout_)return finish(Result::timeout);
   // Freeze CLOCK first while VALID's counter still observes a late new pulse.
   // Hardware counts bytes; there is no ISR or software round trip per byte.
-  const auto clock=clocks_->sample(true);
+  // RU05-F02: snapshot physical closure BEFORE either counter read. The last
+  // CLOCK/VALID edges can occur between those reads. Passing true to both
+  // unconditionally can call an ordinary in-flight final byte "short".
+  // Defer both freezes to a poll that began with VALID high, retaining strict
+  // CLOCK-first then VALID freeze and all extra-edge/short-count checks.
+  const bool closed=gpio_get_level(gpio_num_t(valid_));
+  const auto clock=clocks_->sample(closed);
   if(clock.failed)return finish(Result::fault);
-  const auto valid=validEdges_->sample(true);
+  const auto valid=validEdges_->sample(closed);
   if(valid.failed)return finish(Result::fault);
   if(valid.ended && !clock.ended)return finish(Result::shortPayload);
   if(clock.ended && valid.ended)return finish(Result::complete);
@@ -134,6 +140,8 @@ bool P4ParallelUpload::releasePads() noexcept {
   return okay;
 }
 P4ParallelUpload::Result P4ParallelUpload::finish(Result outcome) noexcept {
+  if(clocks_)observedClocks_=clocks_->observedCount();
+  if(validEdges_)observedValid_=validEdges_->observedCount();
   const bool stopped=stop(),released=releasePads();
   // Never advertise reusable pins or release borrowed PSRAM after any failed
   // DMA/counter/filter/pad cleanup. The owning coordinator must retain us.

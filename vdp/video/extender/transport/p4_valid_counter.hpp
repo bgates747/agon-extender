@@ -42,7 +42,8 @@ class P4ValidCounter final {
     if(xPortGetCoreID()!=core_ || failed_ || !unit_)return {true,false,false};
     if(frozen_)return {false,true,true};
     int count=-1;
-    if(pcnt_unit_get_count(unit_,&count)!=ESP_OK || count<0 || count>targetCount_){fail();return {true,false,false};}
+    auto error=pcnt_unit_get_count(unit_,&count);observedCount_=count;
+    if(error!=ESP_OK || count<0 || count>targetCount_){fail();return {true,false,false};}
     if(count<targetCount_ || !exactDmaComplete)return {false,count!=0,false};
     if(!gpio_get_level(gpio_num_t(pin_))) {
       // Exact CLOCK length is often reached before EMOS releases VALID.
@@ -52,11 +53,14 @@ class P4ValidCounter final {
     if(pcnt_unit_stop(unit_)!=ESP_OK){fail();return {true,true,false};}
     started_=false;
     // Freeze before the final read so a late extra edge cannot race acceptance.
-    if(pcnt_unit_get_count(unit_,&count)!=ESP_OK || count!=targetCount_ || !gpio_get_level(gpio_num_t(pin_))) {
+    error=pcnt_unit_get_count(unit_,&count);observedCount_=count;
+    if(error!=ESP_OK || count!=targetCount_ || !gpio_get_level(gpio_num_t(pin_))) {
       fail();return {true,true,false};
     }
     frozen_=true;return {false,true,true};
   }
+  // Last value used by the proof, retained without another peripheral read.
+  int observedCount() const noexcept { return observedCount_; }
 #if defined(AGON_EXTENDER_PARALLEL_PROBE)
   // Private failure receipt only; never substitutes for sample/freeze proof.
   int diagnosticCount() noexcept {
@@ -110,7 +114,7 @@ class P4ValidCounter final {
     return true;
   }
   bool fail() noexcept {failed_=true;return false;}
-  int pin_,core_,targetCount_{2};
+  int pin_,core_,targetCount_{2},observedCount_{-1};
   pcnt_unit_handle_t unit_{};
   pcnt_channel_handle_t channel_{};
   bool enabled_{},started_{},frozen_{},failed_{},deleteFailed_{},gated_{};

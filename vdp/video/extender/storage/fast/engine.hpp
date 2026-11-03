@@ -22,6 +22,8 @@ struct Progress {
   unsigned error = Ok, remoteStatus = 0, filesystem = 0;
   std::uint64_t parallelPrepareUs = 0;
   std::uint32_t parallelActiveMs = 0, parallelHandoverMs = 0;
+  unsigned parallelOutcome = 0;
+  int parallelClockCount = -1, parallelValidCount = -1;
 };
 struct Link {
   virtual ~Link() = default;

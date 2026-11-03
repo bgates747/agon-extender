@@ -17,6 +17,7 @@ static int core,op,fail=-1,valid=1,clockLevel=1,ready=1;
 static bool unitLive,enabled,outputs,filterLive,filterEnabled,mutationBeforePark;
 static bool parked;
 static bool deleteFails;
+static bool closeDuringClockRead;
 static unsigned deletes;
 static void *allocation;
 static std::size_t allocated,logical,cycle,clocked;
@@ -85,7 +86,17 @@ int pcnt_unit_add_watch_point(void*,int n){assert(n==32767);return fails()?ESP_F
 int pcnt_unit_enable(void *p){if(fails())return ESP_FAIL;counter(p).enabled=true;return ESP_OK;}
 int pcnt_unit_clear_count(void *p){if(fails())return ESP_FAIL;counter(p).count=0;counter(p).cleared=true;return ESP_OK;}
 int pcnt_unit_start(void *p){assert(counter(p).cleared);if(fails())return ESP_FAIL;counter(p).running=true;return ESP_OK;}
-int pcnt_unit_get_count(void *p,int *out){if(fails())return ESP_FAIL;*out=counter(p).count;return ESP_OK;}
+int pcnt_unit_get_count(void *p,int *out){
+ if(fails())return ESP_FAIL;
+ auto &x=counter(p);*out=x.count;
+ if(closeDuringClockRead&&x.gated){
+  // The last CLOCK and VALID closure can occur after this sampled CLOCK value
+  // but before the caller reads its separate VALID counter.
+  closeDuringClockRead=false;++x.count;++clocked;valid=1;
+  for(auto &c:counters)if(c.running&&!c.gated)++c.count;
+ }
+ return ESP_OK;
+}
 int pcnt_unit_stop(void *p){if(fails())return ESP_FAIL;counter(p).running=false;return ESP_OK;}
 int pcnt_unit_disable(void *p){assert(!counter(p).running);if(fails())return ESP_FAIL;counter(p).enabled=false;return ESP_OK;}
 int pcnt_del_channel(void *p){assert(!counter(p).enabled);if(fails())return ESP_FAIL;counter(p).channel=false;return ESP_OK;}
@@ -116,6 +127,7 @@ static void reset(){
  core=op=0;fail=-1;valid=clockLevel=ready=1;parked=mutationBeforePark=false;
  logical=cycle=clocked=allocated=0;dma=nullptr;
  deleteFails=false;deletes=0;
+ closeDuringClockRead=false;
 }
 int main(){unsigned cases=0;byteChecks=0;
  for(std::size_t n:{1U,63U,64U,65U,4095U,4096U,65535U,65536U,65537U,1100000U}){
@@ -136,6 +148,16 @@ int main(){unsigned cases=0;byteChecks=0;
   assert(u.poll(3)==R::pending&&enabled); // N clocks alone cannot release pins
   signal(true);assert(u.poll(4)==R::complete&&!outputs&&!enabled&&ready==1);
   assert(!source.borrowed()&&source.release());++cases;
+ }
+ // Closure between the two counter reads must wait for the next coherent poll.
+ for(std::size_t n:{1U,65537U,1100000U}){
+  reset();logical=n;auto file=spool(n);P4UploadSource s;
+  assert(s.load(file,n));std::fclose(file);U u(pins,14,16,15,0);
+  assert(u.prepare(s)==R::prepared);parked=true;
+  assert(u.arm(true,n,0,100)==R::pending);signal(false);clocks(n-1);
+  closeDuringClockRead=true;
+  assert(u.poll(1)==R::pending&&enabled&&s.borrowed());
+  assert(u.poll(2)==R::complete&&!outputs&&!enabled&&s.release());++cases;
  }
  // Maximum capacity and its last byte without a giant per-byte model loop.
  reset();logical=P4UploadSource::maximumBytes;auto f=spool(logical);P4UploadSource max;

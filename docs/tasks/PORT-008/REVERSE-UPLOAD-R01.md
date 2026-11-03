@@ -329,3 +329,40 @@ wire timing and ownership remain unchanged. Removal condition: a selected
 upstream driver exposes equivalent storage selection, or this carrier is retired.
 The native validator requires the exact derived bytes, sole compile action,
 PARLIO archive membership and final ELF link; ordinary profiles reject it.
+
+### RU05-F02 — Large-payload terminal proof disagreement
+
+The descriptor-corrected image passes build/link validation and independent
+installation verification. Its fresh cohort again passes UART all sizes and
+parallel through65537 bytes. The1.1MB bulk now runs: EMOS returns success for
+operation15 after roughly9.45s of receive/SD activity, but P4 rejects its terminal
+proof with protocol error3. No FINISH/ACTIVATE follows. UART and input remain
+healthy; the cohort stops. Do not label this a data or counter defect yet.
+
+1. Preserve the failed job/status and independently copy/download the closed
+   scratch stage through an explicitly invoked MOS batch, without activating
+   its destination. Compare every byte outside timing.
+2. Retain physical outcome and final CLOCK/VALID observations in P4 job status
+   after resource retirement. Add no eZ80 diagnostic, wire checksum or byte ACK.
+3. Exercise the actual polling race where VALID closes between CLOCK and VALID
+   samples. Keep CLOCK freeze before VALID freeze and exact counts; fix only
+   source-proved sequencing errors without weakening acceptance.
+4. Build/verify the bounded correction, then use new paths for subsequent
+   physical observations. Original cohorts and stages remain diagnostic evidence.
+
+Normal Escape closes the utility's active stage; a new HELLO cannot take over
+an active transaction. The subsequent explicit COPY/GET proof matches all
+1100000 original bytes. No failed destination is activated. P4's disagreement
+is therefore a false completion rejection in this observed case, not corrupted
+payload bytes.
+
+The host regression reproduces a real poll-order defect: the final CLOCK and
+VALID closure can occur after the first CLOCK count read but before the VALID
+count read, which the old code immediately labels short. Snapshotting physical
+VALID closure before both reads defers freezing to a coherent poll. CLOCK still
+freezes before VALID; exact counts and malformed/extra-pulse refusals remain.
+The original fails the new deterministic regression; the correction passes154
+leaf cases,15 paired coordinator cases and the retained counter/HTTP checks.
+P4 job status also retains its physical outcome and the last count values used
+by the proof after resource retirement, without extra peripheral reads or eZ80
+traffic. Physical confirmation of the corrected large-file completion remains.
