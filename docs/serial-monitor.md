@@ -63,7 +63,17 @@ observer, firmware replacement or display-route change.
    Ready keys into an unknown foreground state.
 4. After collection, at a verified CLI, the owner sends `VDU 3` to end the
    diagnostic mirror and closes the reader. Exclude the extra serial output
-   from claims about uninstrumented performance or input latency.
+from claims about uninstrumented performance or input latency.
+
+Native VDP diagnostic output can interleave with printer-mirrored MOS text. A
+recorded capture contains a fresh sentinel and the normal MOS prompt immediately
+followed by native mode diagnostics, without a newline after the prompt. A host
+parser that requires the prompt to be the final capture bytes can therefore
+refuse a working CLI, depending on where serial reads split the stream. Preserve
+raw bytes and correlate fresh command/sentinel/prompt evidence separately from
+recognized diagnostic records. Do not discard arbitrary messages or infer CLI
+readiness from silence; unrecognized output and uncertain foreground state still
+stop dispatch. A port-open marker alone is not CLI evidence.
 
 A missing mirrored prompt does not by itself establish failed keyboard input.
 At an independently established idle MOS prompt, an authorized finite listener
