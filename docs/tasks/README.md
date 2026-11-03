@@ -87,8 +87,10 @@ work or authorize public distribution of private/local-only archives.
 
 ## Self-assigned repairs during consumer bench work
 
-The Author authorizes Extender to repair bugs encountered by Golem, verify the
-correction, and return bench custody to Golem (2026-11-02). Extender records each
+The Author authorizes Extender to debug and repair Extender-related bugs
+encountered by Golem and other bench users, verify the correction, and return
+bench custody to the consumer agent (2026-11-02). Agents continue to report bugs
+to Extender during their useful bench work. Extender records each
 repair as a **self-assigned task before implementation**, using an existing
 owning task's bounded subtask when appropriate, or a new linked task detail and
 TODO entry for a separate defect. Firmware defects use the register identity
@@ -109,3 +111,21 @@ Record uncertain causes as hypotheses while diagnosing them. Prefer Golem
 resuming the useful work after a bounded correction over replacing that work
 with an unrelated test campaign. A recovered incident can still warrant a task
 when the failure or recurring recovery cost remains unexplained.
+
+
+## Physical bench scheduling ownership
+
+The Author assigns physical bench scheduling to Extender while leaving the bench
+powered for other agents (2026-11-02). Extender consults Golem and adopts its
+existing checkout system, including current ownership and waiting requests;
+Extender does not invent a competing queue or use Oryx emulator leases as
+physical bench authority. The adopted shared checkout record owns leases;
+private host/device state remains in the machine-local bench record. A time
+lease covers an agent's existing authorized work, not new test/flash scope.
+
+Bench users coordinate Extender-related defects with Extender. Extender may
+debug as required, keeping the self-assigned task, evidence, commands, resets,
+firmware/source changes, validation and final handback state recorded. Extender
+coordinates exclusive custody before debugging and returns the bench after
+bounded verification. A repair does not authorize concurrent access or erase
+an existing stop/no-monitoring boundary.
