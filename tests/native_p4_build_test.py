@@ -16,6 +16,27 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_upload_requires_distinct_clean_identity_and_excludes_other_endpoints(self):
+        from build_p4 import check_indexed_identity, check_parallel_qualification_identity, select_display_profile
+        identity = 'port-008-upload-r01-b2026-11-03-20-00-00Z'
+        self.assertTrue(check_parallel_qualification_identity(
+            identity, True, True, False, 'p4-console', 'p4-pc', 'hdmi', False, False, True))
+        check_indexed_identity(identity, False, False, True, True, False, False, False, True)
+        with self.assertRaises(SystemExit):
+            check_parallel_qualification_identity(identity, True, True, False,
+                'p4-console', 'p4-devkit', 'browser', False, False, True)
+        with self.assertRaises(SystemExit):
+            check_indexed_identity(identity, True, False, True, True, False, False, False, True)
+        base = dict(parallel_boot_candidate=True, parallel_upload=True)
+        selected = select_display_profile(self.document, 'p4-console', 'p4-pc', 'hdmi', **base)
+        self.assertIn('AGON_EXTENDER_PARALLEL_UPLOAD=1', selected['definitions'])
+        self.assertIn('video/extender/transport/p4_parallel_upload.cpp', selected['sources'])
+        self.assertIn('video/extender/transport/p4_upload_coordinator.cpp', selected['sources'])
+        self.assertIn('esp_driver_pcnt', selected['requires'])
+        for extra in (dict(exext_stream=True), dict(parallel_probe_candidate=True), dict(parallel_data_check=True)):
+            with self.assertRaises(SystemExit):
+                select_display_profile(self.document, 'p4-console', 'p4-pc', 'hdmi', **base, **extra)
+
     def test_indexed_exext_retains_display_and_requires_clean_stream_pair(self):
         from build_p4 import check_indexed_identity, select_display_profile
         stream='port-008-stream-r17-b2026-11-02-00-00-00Z'

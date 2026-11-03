@@ -27,6 +27,11 @@ struct Link {
   // caller must not submit a replacement operation to another session.
   virtual bool exchange(const std::uint8_t *, unsigned, std::uint8_t *, unsigned &) = 0;
   virtual void progress(const Progress &) {}
+  // Candidate selection occurs before payload admission; failure never retries
+  // a partly executed parallel upload through UART.
+  virtual bool parallelUploads() const { return false; }
+  virtual bool prepareUpload(FILE *,std::uint32_t,std::uint32_t) { return false; }
+  virtual bool uploadReturned() const { return false; }
 };
 inline bool valid(const Plan &p) {
   if (!p.id || !p.boot || p.size > Quota || p.path.empty() || p.path[0] != '/' ||
@@ -91,11 +96,19 @@ public:
       return unsigned(at+1+plan.path.size());
     };
     if (plan.upload) {
+      const bool parallel=plan.size && (sd_u16(reply_.data()+26)&128) && link_.parallelUploads();
+      if(parallel && !link_.prepareUpload(spool,plan.size,plan.id)){fail(Local);return p_;}
       sd_put32(args.data(), plan.id); sd_put32(args.data()+4, plan.size);
       // bytes8..11 reserved zero; no digest on either processor.
       if (!rpc(SD_BEGIN, args.data(), path(12))) return p_;
       if (!identity(plan.id, 0)) { fail(Protocol); return p_; }
-      while (p_.bytes < p_.size) {
+      if(parallel) {
+        sd_put32(args.data(),plan.id);sd_put32(args.data()+4,plan.size);
+        if(!rpc(SD_PARALLEL_WRITE,args.data(),8))return p_;
+        if(!identity(plan.id,plan.size) || !link_.uploadReturned()){fail(Protocol);return p_;}
+        p_.bytes=plan.size;link_.progress(p_);
+      }
+      while (!parallel && p_.bytes < p_.size) {
         auto n = std::min<std::uint32_t>(212, p_.size-p_.bytes);
         sd_put32(args.data(), plan.id); sd_put32(args.data()+4, p_.bytes);
         if (std::fread(args.data()+8, 1, n, spool) != n) { fail(Local); return p_; }
@@ -103,7 +116,7 @@ public:
         if (!identity(plan.id, p_.bytes+n)) { fail(Protocol); return p_; }
         p_.bytes += n; link_.progress(p_);
       }
-      if (std::fgetc(spool) != EOF || std::ferror(spool)) { fail(Local); return p_; }
+      if (!parallel && (std::fgetc(spool) != EOF || std::ferror(spool))) { fail(Local); return p_; }
       sd_put32(args.data(), plan.id);
       if (!rpc(SD_FINISH, args.data(), 4)) return p_;
       if (!identity(plan.size, 0)) { fail(Protocol); return p_; }

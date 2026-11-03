@@ -13,6 +13,9 @@
 #include "p4_boot_startup.hpp"
 #include "p4_uart_reset.hpp"
 #include "p4_block_coordinator.hpp"
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+#include "p4_upload_coordinator.hpp"
+#endif
 #if defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
 #include "p4_parallel_data_check.hpp"
 #endif
@@ -229,6 +232,17 @@ void runConsole(VDUStreamProcessor *processor) {
       console_board::kReady,console_board::kUartTx,console_board::kUartRx,
       console_board::kUartRts,console_board::kUartCts,xPortGetCoreID());
 #endif
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+  agon::extender::transport::P4UploadCoordinator upload(console_stream->parallel.handover,
+      console_board::kDataPins,console_board::kClock,console_board::kValid,
+      console_board::kReady,console_board::kUartTx,console_board::kUartRx,
+      console_board::kUartRts,console_board::kUartCts,xPortGetCoreID(),
+      [](std::uint32_t now,std::uint32_t job,std::uint32_t length) {
+        using namespace agon::extender::storage;
+        portENTER_CRITICAL(&sd_mutex);bool okay=sd_service.admitBulk(now,job,length);
+        portEXIT_CRITICAL(&sd_mutex);return okay;
+      });
+#endif
   printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
   printf("Board %s UART1 TX=%d RX=%d RTS=%d CTS=%d\n",console_board::kIdentity,
          console_board::kUartTx,console_board::kUartRx,console_board::kUartRts,console_board::kUartCts);
@@ -301,6 +315,23 @@ void runConsole(VDUStreamProcessor *processor) {
       if(!failureReported)printf("Console transport fault: %s\n",s.failure);
       failureReported=true;s.parallel.cancel();
     }
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+    const auto bulk=upload.poll(now,!used&&!discard&&s.cached<0&&s.pos>=4,
+                                !s.count&&!transmitting);
+    // Both owners share the SAME reciprocal handover, but only one may advance
+    // it. Upload awaiting/refusal remains normal UART; physical upload excludes
+    // the ordinary block coordinator until real DMA/pad/UART return.
+    BlockResult blockResult;
+    using UploadResult=agon::extender::transport::P4UploadCoordinator::Result;
+    switch(bulk) {
+      case UploadResult::uart:
+        blockResult=block.poll(now,!used&&!discard&&s.cached<0&&s.pos>=4,!s.count&&!transmitting);break;
+      case UploadResult::drain:blockResult=BlockResult::drain;break;
+      case UploadResult::exclusive:blockResult=BlockResult::exclusive;break;
+      case UploadResult::recovery:blockResult=BlockResult::recovery;break;
+      case UploadResult::cleanupFault:blockResult=BlockResult::cleanupFault;break;
+    }
+#else
     const auto blockResult=block.poll(now,!used&&!discard&&
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
                                      (s.parallelVdu.active() || (s.cached<0&&s.pos>=4)),
@@ -308,6 +339,7 @@ void runConsole(VDUStreamProcessor *processor) {
                                      s.cached<0&&s.pos>=4,
 #endif
                                      !s.count&&!transmitting);
+#endif
 #if defined(AGON_EXTENDER_PARALLEL_PROBE)
     // LC03-B physical phase diagnosis: USB only, on phase/result changes.
     // Observations never advance the owner or stand in for peer evidence.
@@ -384,7 +416,11 @@ void runConsole(VDUStreamProcessor *processor) {
 #endif
     // Only complete, already queued packets may drain. Do not pump USB,
     // pop keys, tick repeat, parse another VDU or enqueue a service response.
-    if(!s.parallel.pending()) {
+    if(!s.parallel.pending()
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+       && !upload.ownsPhysical()
+#endif
+      ) {
 #endif
     s.session.expire(now);s.parallel.expire(now);
     agon::extender::input::usbhost::pump(

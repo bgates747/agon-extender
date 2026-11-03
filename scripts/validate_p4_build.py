@@ -236,6 +236,7 @@ def main() -> None:
     parser.add_argument("--display-output", choices=("browser", "hdmi"), default="browser")
     parser.add_argument("--hdmi-timing", choices=tuple(HDMI_GEOMETRIES), default="1280x720")
     parser.add_argument("--parallel-data-check", action="store_true")
+    parser.add_argument("--parallel-upload-candidate", action="store_true")
     parser.add_argument("--exext-stream", action="store_true")
     parser.add_argument("--parallel-probe-candidate", action="store_true")
     parser.add_argument("--parallel-boot-candidate", action="store_true")
@@ -264,7 +265,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -325,7 +326,7 @@ def main() -> None:
             pie_arch = "-march=rv32imafc_zicsr_zifencei_xesppie"
             if (pie_arch in argv) != args.scroll_fast:
                 fail("scroll PIE ISA selection differs from actual compile action")
-        for definition, benchmark_selected in (("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
+        for definition, benchmark_selected in (("AGON_EXTENDER_PARALLEL_UPLOAD",args.parallel_upload_candidate),("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
                                      ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
                                      ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
                                      ("AGON_EXTENDER_BENCH_OFF",args.render_benchmark_output in ("off","convert-off")),
@@ -493,6 +494,7 @@ def main() -> None:
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,
         "exext_stream": args.exext_stream,
+        "parallel_upload_candidate": args.parallel_upload_candidate,
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,
         "usb_direct_fs": args.usb_direct_fs,

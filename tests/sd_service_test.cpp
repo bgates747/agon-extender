@@ -65,4 +65,28 @@ static void exercise(bool fast) {
   header(other,SD_PRESENCE,21,0,1,0,0);sd_seal(other);assert(closing.receive(other,20,3));
   assert(!closing.online(3)&&closing.post(req,20,out,n,4)==200&&n==20);
 }
-int main() {exercise(false);exercise(true);}
+static void bulk() {
+  crcCalls=0;
+  SdService s;unsigned char presence[20],req[28],out[240],reply[28];unsigned n=0;
+  sd_header_mode(presence,SD_PRESENCE,101,0,0,0,0,1);sd_seal(presence);
+  assert(s.receive(presence,20,0));auto token=s.claim(0);assert(token);
+  sd_header_mode(req,SD_REQUEST,111,1,SD_PARALLEL_WRITE,0,8,1);
+  sd_put32(req+20,73);sd_put32(req+24,65537);sd_seal(req);
+  assert(!s.admitBulk(0,73,65537)); // no pending/sent request
+  assert(s.postOwned(token,req,28,out,n,0)==202);
+  assert(!s.admitBulk(0,73,65537)); // a queue entry is not physical admission
+  assert(s.take(out,0)==28);
+  assert(!s.admitBulk(1,74,65537)&&!s.admitBulk(1,73,65536));
+  assert(s.take(out,401)==0); // no timer replay of a whole-file payload request
+  assert(!s.admitBulk(5000,73,65537)); // stale request cannot acquire grace
+  assert(s.admitBulk(1,73,65537));
+  assert(!s.admitBulk(2,73,65537)); // no repeated admission extends its deadline
+  assert(s.postOwned(token,req,28,out,n,600000)==202);
+  assert(s.postOwned(token,req,28,out,n,600001)==503); // bounded grace
+  sd_header_mode(reply,SD_RESPONSE,111,1,SD_PARALLEL_WRITE,0,8,1);
+  sd_put32(reply+20,73);sd_put32(reply+24,65537);sd_seal(reply);
+  assert(s.receive(reply,28,600002)&&s.postOwned(token,req,28,out,n,600002)==200);
+  s.release(token);s.transportLost();assert(!s.admitBulk(600003,73,65537));
+  assert(crcCalls==0);
+}
+int main() {exercise(false);exercise(true);bulk();}

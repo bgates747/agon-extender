@@ -5,6 +5,9 @@
 // after reset. Failed files remain private for deliberate recovery.
 #include "engine.hpp"
 #include "http.hpp"
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+#include "../../transport/p4_upload_coordinator.hpp"
+#endif
 #if defined(AGON_EXTENDER_NATIVE_BUILD)
 // All native storage units retain the profile's selected-board provenance.
 // Physical SD/power initialization remains owned by local/media.hpp.
@@ -102,15 +105,53 @@ class QueueLink final : public Link {
 public:
   bool exchange(const std::uint8_t *p,unsigned n,std::uint8_t *out,unsigned &size) override {
     const auto start=esp_timer_get_time();
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+    const bool bulk=n==SD_HEADER+8 && p[12]==SD_PARALLEL_WRITE;
+    if(bulk && !transport::uploadMailbox.offer())return false;
+    const std::int64_t deadline=bulk?610000000LL:30000000LL;
+#else
+    const std::int64_t deadline=30000000LL;
+#endif
     do {
       auto code=sdFastPost(token,p,n,out,size);
       if(code==200)return true;
       if(code!=202)return false;
       // Local task scheduling only. No HTTP polling, disk journal or host wait.
       vTaskDelay(1);
-    } while(esp_timer_get_time()-start<30000000);
+    } while(esp_timer_get_time()-start<deadline);
     return false;
   }
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+  bool parallelUploads() const override { return true; }
+  bool prepareUpload(FILE *file,std::uint32_t length,std::uint32_t id) override {
+    auto &m=transport::uploadMailbox;
+    if(!m.load(file,length,id))return false;
+    const auto began=esp_timer_get_time();
+    while(esp_timer_get_time()-began<5000000) {
+      auto phase=m.status();
+      if(phase==transport::P4UploadMailbox::prepared)return true;
+      if(phase==transport::P4UploadMailbox::refused || phase==transport::P4UploadMailbox::cleanupFault)return false;
+      vTaskDelay(1);
+    }
+    return false;
+  }
+  bool uploadReturned() const override {
+    return transport::uploadMailbox.status()==transport::P4UploadMailbox::returned &&
+        transport::uploadMailbox.outcome.load()==unsigned(transport::P4ParallelUpload::Result::complete);
+  }
+  bool finishUpload() {
+    auto &m=transport::uploadMailbox;
+    if(m.status()==transport::P4UploadMailbox::free)return true;
+    m.retire();const auto began=esp_timer_get_time();
+    while(esp_timer_get_time()-began<10000000) {
+      auto phase=m.status();
+      if(phase==transport::P4UploadMailbox::free)return true;
+      if(phase==transport::P4UploadMailbox::cleanupFault)return false;
+      vTaskDelay(1);
+    }
+    return false;
+  }
+#endif
   void progress(const Progress &p) override {
     portENTER_CRITICAL(&mutex);state.progress=p;portEXIT_CRITICAL(&mutex);
   }
@@ -125,7 +166,12 @@ void worker(void *) {
   std::uint32_t boot=0;
   if(!f||!buffer)s.progress.error=Local;
   else if(!(token=sdFastClaim(boot)) || boot!=plan.boot)s.progress.error=Transport;
-  else {QueueLink link;Engine engine(link,esp_random()|1U);s.progress=engine.run(plan,f);}
+  else {
+    QueueLink link;Engine engine(link,esp_random()|1U);s.progress=engine.run(plan,f);
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+    if(!link.finishUpload())s.progress.error=Transport;
+#endif
+  }
   if(f){
     if(!plan.upload && (std::fflush(f)||fsync(fileno(f))))s.progress.error=Local;
     if(std::fclose(f))s.progress.error=Local;
