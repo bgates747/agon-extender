@@ -100,3 +100,22 @@ identify complete files. Native full-flash restoration hashes belong in separate
 provenance/evidence. Older full-flash-labelled observations retain their original
 scope. Observation freshness is evaluated on use, not as lease expiry; a later
 owner-entry check requires new actual evidence, never a restamped original grant.
+
+## R02 — Prepared FSIM callback handoff
+
+The prepared one-control consumer requests a fresh zero-hook handoff on exact
+EMOS84da before its own lease-bound admission. Extend normal scheduler readiness
+with an existing MOS-ordered SAVE3/canonical-listener command file, using fresh
+support/result names. The installed-ROM-bound callback address0x0BC362 and
+three-byte width come from the verified INTEG-015 mapping. No application,
+discovery utility, mode switch, callback write, reset or firmware change occurs.
+Preserve the actual command/result/journals; stop on nonzero or uncertain data.
+The consumer still owns its genuine fresh entry/admission and single Q1 run
+after the grant; this preparation is not an invocation or functional pass.
+
+Completed: fresh canonical staged reads and MOS-ordered SAVE/return deliver
+exact000000, with actual command/result/journals retained. Final fresh EXIT,
+neutral input and idle/free resources pass. The generation6 grant uses raw
+application-scoped component hashes plus separate provenance; the consumer
+owns its later genuine entry checks. No application/discovery/RUN or mode/
+firmware/startup/callback write occurs during scheduler preparation.
