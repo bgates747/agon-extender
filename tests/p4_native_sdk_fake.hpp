@@ -27,7 +27,7 @@ struct parlio_tx_unit_config_t {
  std::size_t data_width,trans_queue_depth,max_transfer_size;
  int shift_edge,bit_pack_order;
 };
-struct parlio_transmit_config_t {std::uint32_t idle_value;struct{bool queue_nonblocking;}flags;};
+struct parlio_transmit_config_t {std::uint32_t idle_value;struct{bool queue_nonblocking,loop_transmission;}flags;};
 struct parlio_rx_unit_config_t {
  int data_gpio_nums[16],clk_src,clk_in_gpio_num,clk_out_gpio_num,valid_gpio_num;
  std::uint32_t ext_clk_freq_hz,exp_clk_freq_hz;
@@ -66,11 +66,11 @@ int pcnt_unit_add_watch_point(void*,int);int pcnt_unit_enable(void*);int pcnt_un
 int pcnt_unit_start(void*);int pcnt_unit_stop(void*);int pcnt_unit_get_count(void*,int*);
 int pcnt_unit_disable(void*);int pcnt_del_channel(void*);int pcnt_del_unit(void*);
 
-#ifdef AGON_EXTENDER_EXEXT_STREAM
+#if defined(AGON_EXTENDER_EXEXT_STREAM) || defined(AGON_EXTENDER_UPLOAD_TEST)
 constexpr int SOC_PARLIO_GROUPS=1,SOC_PARLIO_TX_UNITS_PER_GROUP=1,SOC_PARLIO_RX_UNITS_PER_GROUP=1,PIN_FUNC_GPIO=1;
 struct NativeParlioSignals {struct {struct {int data_sigs[16],clk_in_sig;} tx_units[1],rx_units[1];} groups[1];};
 extern NativeParlioSignals parlio_periph_signals;
-void gpio_func_sel(int,int);int gpio_input_enable(int);
+int gpio_func_sel(int,int);int gpio_input_enable(int);
 void esp_rom_gpio_connect_in_signal(int,int,bool);
 void esp_rom_gpio_connect_out_signal(int,int,bool,bool);
 #endif

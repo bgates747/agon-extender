@@ -54,7 +54,7 @@ ROLLING_SDK_OVERRIDES = {
 
 
 def check_parallel_qualification_identity(build_id: str, selected: bool,
-        boot: bool, probe: bool, profile: str, board: str, output: str, data_check: bool = False, exext_stream: bool = False) -> bool:
+        boot: bool, probe: bool, profile: str, board: str, output: str, data_check: bool = False, exext_stream: bool = False, parallel_upload: bool = False) -> bool:
     """PORT-008 LC03-B: frozen, nonrelease physical-probe identity only."""
     if not selected:
         return False
@@ -63,9 +63,12 @@ def check_parallel_qualification_identity(build_id: str, selected: bool,
     # Keep its own data identity and native boot owner; DevKit has no HDMI bridge.
     devkit_data = (profile, board, output) == ("p4-console", "p4-devkit", "browser") and not probe and data_check
     stream = exext_stream and not probe and not data_check and (profile,board,output)==("p4-console","p4-pc","hdmi")
-    lineage = "stream" if exext_stream else "devkit" if devkit_control else "data" if data_check else "probe"
+    if parallel_upload and (exext_stream or probe or data_check):
+        raise SystemExit("parallel upload excludes stream/probe/data endpoints")
+    upload = parallel_upload and (profile,board,output)==("p4-console","p4-pc","hdmi")
+    lineage = "upload" if parallel_upload else "stream" if exext_stream else "devkit" if devkit_control else "data" if data_check else "probe"
     match = re.fullmatch(r"port-008-"+lineage+r"-r[0-9]{2,}-b(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z", build_id)
-    composition = stream or (not exext_stream and (devkit_control or devkit_data or ((profile,board)==("p4-console","p4-pc") and ((data_check and not probe and output=="hdmi") or (not data_check and probe and output=="browser")))))
+    composition = upload if parallel_upload else stream or (not exext_stream and (devkit_control or devkit_data or ((profile,board)==("p4-console","p4-pc") and ((data_check and not probe and output=="hdmi") or (not data_check and probe and output=="browser")))))
     if not match or not boot or not composition:
         raise SystemExit("parallel qualification requires a matching PORT-008 identity and bounded board composition")
     try:
@@ -73,6 +76,36 @@ def check_parallel_qualification_identity(build_id: str, selected: bool,
     except ValueError as error:
         raise SystemExit("parallel qualification ID has an invalid UTC timestamp") from error
     return True
+
+
+def check_indexed_identity(build_id: str, source_dirty: bool,
+        allow_dirty_experimental: bool, parallel_qualification: bool,
+        parallel_boot: bool, parallel_probe: bool, parallel_data: bool,
+        exext_stream: bool, parallel_upload: bool = False) -> None:
+    """PORT-008 resumption: keep the current display in a clean stream trial.
+
+    The legacy parallel flag permits dirty exploratory inputs elsewhere, but
+    never for this composition. This exception is limited to the ordinary
+    format4 stream; it does not admit private probe/data display families.
+    Remove it when a maintained, qualified ordinary transport profile replaces
+    the experimental selection. Renderer and USB policies are unchanged.
+    """
+    if source_dirty or allow_dirty_experimental or parallel_probe or parallel_data:
+        raise SystemExit("indexed PPA requires clean committed inputs without private parallel diagnostics")
+    if parallel_upload:
+        if exext_stream or not parallel_qualification or not parallel_boot or not re.fullmatch(
+                r"port-008-upload-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z",build_id):
+            raise SystemExit("indexed upload requires its explicit PORT-008 upload identity and native owner")
+    elif exext_stream:
+        if not parallel_qualification or not parallel_boot:
+            raise SystemExit("indexed ExExt requires the explicit PORT-008 stream identity and native owner")
+        # The caller has already validated this identity's timestamp and board.
+        if not re.fullmatch(r"port-008-stream-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z", build_id):
+            raise SystemExit("indexed ExExt requires a PORT-008 stream revision/build identity")
+    elif parallel_qualification or parallel_boot:
+        raise SystemExit("indexed parallel selection requires the ordinary ExExt stream")
+    elif not re.fullmatch(r"indexed-hdmi-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z", build_id):
+        raise SystemExit("indexed PPA requires an indexed-hdmi revision/build identity")
 
 
 def check_build_identity(build_id: str, source_dirty: bool,
@@ -129,7 +162,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False, sw_visible_snapshot: bool = False, indexed_output_cache_once: bool = False, indexed_snapshot_pie: bool = False, graphics_timing: bool = False, controller_input: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, overlay_bgr: bool = False, sw_visible_snapshot: bool = False, indexed_output_cache_once: bool = False, indexed_snapshot_pie: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_upload: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -278,6 +311,12 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["sources"].append("video/extender/transport/p4_native_payload.cpp")
         profile["sources"].append("video/extender/transport/p4_block_coordinator.cpp")
         profile.setdefault("requires", []).extend(["esp_driver_parlio"]+([] if parallel_data_check or exext_stream else ["esp_driver_pcnt"]))
+    if parallel_upload:
+        if (name,board,display_output)!=("p4-console","p4-pc","hdmi") or not parallel_boot_candidate or exext_stream or parallel_probe_candidate or parallel_data_check:
+            raise SystemExit("parallel upload requires P4-PC HDMI native owner without other parallel endpoints")
+        profile["definitions"].append("AGON_EXTENDER_PARALLEL_UPLOAD=1")
+        profile["sources"].extend(["video/extender/transport/p4_parallel_upload.cpp",
+                                   "video/extender/transport/p4_upload_coordinator.cpp"])
     if exext_stream:
         if not parallel_boot_candidate or parallel_probe_candidate or parallel_data_check:
             raise SystemExit("ordinary ExExt requires native owner and excludes private diagnostic endpoints")
@@ -612,6 +651,7 @@ def main() -> None:
     parser.add_argument("--usb-direct-fs", action="store_true",
                         help="INPUT-004 keyboard-only P4-PC GPIO26/27 USB controller")
     parser.add_argument("--parallel-data-check", action="store_true", help="comparison-only native roundtrip; excludes PCNT and probe logging")
+    parser.add_argument("--parallel-upload-candidate", action="store_true", help="private whole-file PSRAM upload carrier; matched EMOS required")
     parser.add_argument("--exext-stream", action="store_true", help="experimental ordinary bidirectional ExExt VDU stream")
     parser.add_argument("--parallel-probe-candidate", action="store_true", help="private PORT-008 qualification storage/receipts")
     parser.add_argument("--parallel-boot-candidate", action="store_true", help="private PORT-008 startup; no ExExt payload")
@@ -666,19 +706,19 @@ def main() -> None:
     ).strip())
     parallel_qualification = check_parallel_qualification_identity(args.build_id,
         args.allow_dirty_parallel_qualification, args.parallel_boot_candidate,
-        args.parallel_probe_candidate, args.profile, args.board, args.display_output, args.parallel_data_check, args.exext_stream)
+        args.parallel_probe_candidate, args.profile, args.board, args.display_output, args.parallel_data_check, args.exext_stream, args.parallel_upload_candidate)
     if parallel_qualification and args.allow_dirty_experimental:
         parser.error("parallel and HDMI experimental identity exceptions are mutually exclusive")
     if not parallel_qualification:
         check_build_identity(args.build_id, source_dirty, args.allow_dirty_experimental,
                              args.profile, args.board, args.display_output, args.render_benchmark_output, args.direct_rgb888)
-    if args.direct_rgb888 and not (args.indexed_ppa or args.allow_dirty_experimental or (parallel_qualification and (args.parallel_data_check or args.exext_stream))):
+    if args.direct_rgb888 and not (args.indexed_ppa or args.allow_dirty_experimental or (parallel_qualification and (args.parallel_data_check or args.exext_stream or args.parallel_upload_candidate))):
         parser.error("direct RGB888 requires an explicitly frozen experimental build")
     if args.indexed_ppa:
-        if source_dirty or args.allow_dirty_experimental or args.allow_dirty_parallel_qualification or args.exext_stream or args.parallel_probe_candidate or args.parallel_data_check:
-            parser.error("indexed PPA requires clean committed inputs and excludes parallel tests")
-        if not re.fullmatch(r"indexed-hdmi-r[0-9]{2,}-b[0-9]{4}(?:-[0-9]{2}){5}Z",args.build_id):
-            parser.error("indexed PPA requires an indexed-hdmi revision/build identity")
+        check_indexed_identity(args.build_id, source_dirty, args.allow_dirty_experimental,
+                               parallel_qualification, args.parallel_boot_candidate,
+                               args.parallel_probe_candidate, args.parallel_data_check,
+                               args.exext_stream, args.parallel_upload_candidate)
     if not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification:
         parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
@@ -688,7 +728,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing, args.controller_input)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.overlay_bgr, args.sw_visible_snapshot, args.indexed_output_cache_once, args.indexed_snapshot_pie, args.graphics_timing, args.controller_input, args.parallel_upload_candidate)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -850,6 +890,8 @@ def main() -> None:
                   "--profile", args.profile, "--board", args.board,
                   "--display-output", args.display_output, "--hdmi-timing", args.hdmi_timing,
         *(["--render-benchmark-output", args.render_benchmark_output] if args.render_benchmark_output else []), "--output", str(output)]
+    if args.parallel_upload_candidate:
+        validation.append("--parallel-upload-candidate")
     if args.parallel_data_check:
         validation.append("--parallel-data-check")
     if args.exext_stream:
@@ -972,6 +1014,7 @@ def main() -> None:
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,
         "exext_stream": args.exext_stream,
+        "parallel_upload_candidate": args.parallel_upload_candidate,
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,
         "usb_direct_fs": args.usb_direct_fs,

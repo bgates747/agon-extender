@@ -31,6 +31,13 @@ class P4ValidCounter final {
     if(clock<0 || clock==pin_ || !expected || expected>4096)return false;
     return beginCounter(clock,true,expected);
   }
+  // Whole-file upload only: the owning task polls throughout the admission
+  // and rejects overruns before signed counter wrap. Ordinary block limits
+  // and their <=2000 ms timing contract remain unchanged.
+  bool beginUploadClock(int clock,std::size_t expected) noexcept {
+    if(clock<0 || clock==pin_ || !expected || expected>32U*1024U*1024U)return false;
+    return beginCounter(clock,true,expected);
+  }
   Proof sample(bool exactDmaComplete) noexcept {
     if(xPortGetCoreID()!=core_ || failed_ || !unit_)return {true,false,false};
     if(frozen_)return {false,true,true};

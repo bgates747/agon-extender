@@ -130,7 +130,7 @@ int pcnt_del_unit(void*u){auto&x=unit(u);assert(x.live&&!x.channel&&!x.enabled);
 
 #ifdef AGON_EXTENDER_EXEXT_STREAM
 NativeParlioSignals parlio_periph_signals={{{{{{},100}},{{{},200}}}}};
-void gpio_func_sel(int p,int f){assert(f==PIN_FUNC_GPIO&&p!=14&&p!=16);}
+int gpio_func_sel(int p,int f){assert(f==PIN_FUNC_GPIO&&p!=14&&p!=16);return ESP_OK;}
 int gpio_input_enable(int){return fails()?ESP_FAIL:ESP_OK;}
 void esp_rom_gpio_connect_out_signal(int p,int,bool invert,bool enable){
  assert(p!=14&&p!=16&&!invert&&!enable&&!enabled);outputs=true;
