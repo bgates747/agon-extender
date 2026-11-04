@@ -67,6 +67,16 @@ P4ParallelUpload::Result P4ParallelUpload::arm(bool parked,
   if(gpio_new_pin_glitch_filter(&filter,&filter_)!=ESP_OK ||
       gpio_glitch_filter_enable(filter_)!=ESP_OK)return finish(Result::fault);
   filterEnabled_=true;
+  // Consumer repair r01: sustained uploads observed extra VALID edges while
+  // the received prefix stayed exact. CLOCK was filtered, VALID was not.
+  // Apply IDF5.5.5's same two-IO_MUX-cycle hardware filter to VALID before
+  // either PCNT route is started. This rejects only sub-two-cycle pulses;
+  // real premature closures/extra VALID intervals still fail exact proof.
+  // This is a bounded electrical-noise experiment, not proof of its origin.
+  filter.gpio_num=gpio_num_t(valid_);
+  if(gpio_new_pin_glitch_filter(&filter,&validFilter_)!=ESP_OK ||
+      gpio_glitch_filter_enable(validFilter_)!=ESP_OK)return finish(Result::fault);
+  validFilterEnabled_=true;
   clocks_.emplace(valid_,core_);validEdges_.emplace(valid_,core_);
   if(!clocks_->beginUploadClock(clock_,source_->length_) ||
       !validEdges_->begin())return finish(Result::fault);
@@ -124,7 +134,13 @@ bool P4ParallelUpload::stop() noexcept {
   if(!enabled_ && !filterEnabled_ && filter_){
     if(gpio_del_glitch_filter(filter_)==ESP_OK)filter_=nullptr;else okay=false;
   }
-  return okay && !enabled_ && !tx_ && !clocks_ && !validEdges_ && !filter_;
+  if(!enabled_ && validFilterEnabled_){
+    if(gpio_glitch_filter_disable(validFilter_)==ESP_OK)validFilterEnabled_=false;else okay=false;
+  }
+  if(!enabled_ && !validFilterEnabled_ && validFilter_){
+    if(gpio_del_glitch_filter(validFilter_)==ESP_OK)validFilter_=nullptr;else okay=false;
+  }
+  return okay && !enabled_ && !tx_ && !clocks_ && !validEdges_ && !filter_ && !validFilter_;
 }
 bool P4ParallelUpload::releasePads() noexcept {
   if(!padsTouched_)return true;

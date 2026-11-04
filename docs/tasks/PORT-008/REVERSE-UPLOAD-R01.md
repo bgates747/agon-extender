@@ -497,3 +497,10 @@ component manifest provide invocation and rollback without reconstructing task
 history. Whole-installation production selection, qualification and version/tag
 remain unchanged. Extender retains generation9; Wolf remains queued and receives
 no grant/mail/progress notification. Golem's resumed request is behind Wolf.
+
+## First consumer fault
+
+Wolf's2625992-byte asset exceeds the previous1.1MB proof and fails before
+activation with physical outcome6/CLOCK704598/VALID3. No uncertain replay follows.
+[Bounded repair](UPLOAD-REPAIR-R01.md) owns diagnosis and clean consumer handback
+under the Author's standing defect-repair authorization.
