@@ -9,6 +9,10 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests.
 
+## Application networking — authorized framework preparation
+
+- [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Publish plan first, then build the bounded generic message core and host validation; consult MechAgon on interface questions. EMOS retains routing/admission; game protocols remain consumer-owned. No physical deployment or production selection.
+
 ## EMOS foundation — migration
 
 - [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Corrected r02 installed/full-ROM verified;2913B ROM free. [Reused tests](docs/tasks/EMOS-001/TEST-REUSE-RESULTS-R01.md) pass nine host methods and three physical UART cases. [Full paired attempt](docs/tasks/EMOS-001/QUALIFICATION-RESULT-R01.md) passes14/25, blocked by the existing P4 HDMI mode8→20 deadline fault; raw-SD uninvoked. Healthy Legacy services restored for FSIM priority. Complete HDMI repair, a new full run, manual review and acceptance/promotion later.
