@@ -315,7 +315,11 @@ This standing Author instruction supplements the voice requirement.
 
 ## Author recovery and questions — 2026-10-13
 
-Ask questions directly in chat; do not use question-dialogue tools. During
+Ask ordinary questions directly in chat; do not use question-dialogue tools.
+Author exception, 2026-11-04: high-priority blocked recovery requests that need
+physical access or approval warrant the app's “agent has a question” notification
+as well as a clear chat explanation. Do not repeat an attention alert once the
+Author is present. During
 authorized monitored bench work, attempt one Agon reset first. If recovery
 fails, reset P4, wait for initialization, then reset Agon. Ask the Author for
 hardware reset only when both attempts fail. Follow the startup checks,

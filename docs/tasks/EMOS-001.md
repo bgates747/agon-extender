@@ -7,14 +7,23 @@ asynchronous UART and OTIRX improvements. Plan a migration that preserves the
 working Extender interfaces and scarce eZ80 flash/RAM rather than replacing the
 installed firmware with an unrelated Eirene release. The Author subsequently authorizes isolated development and offline verification.
 Keep all implementation in dedicated task branches/worktrees and task-local
-artifacts. Hardware deployment and production selection remain outside this tranche.
+artifacts. The Author subsequently requests the first experimental hardware installation.
+The [installation and recovery record](EMOS-001/FLASH-R01.md) owns that added
+scope; production promotion remains separate.
 
 Offline result: [first isolated build and mandatory linked checks](EMOS-001/R01-RESULTS.md).
 Source-port provenance: [integration checkpoint](EMOS-001/R01-SOURCE-PORT.md).
 
 ## State and scope
 
-Planning task recorded 2026-11-04; task-siloed development then authorized. Extender owns integration planning; the EMOS
+Planning task recorded 2026-11-04; task-siloed development then authorized.
+Corrected r02 experimental installation is complete: full131072-byte ROM
+readback, normal boot, actual keyboard/CLI and canonical listener pass. The
+inherited IRQ/BSS initialization defect and recovery are retained in the
+installation record. Temporary boot recovery is retired; original startup,
+P4/native firmware and listeners are preserved. Full functional/async
+qualification and Author acceptance/promotion remain pending. Extender retains
+custody for review; no queued consumer has been granted access. Extender owns integration planning; the EMOS
 owner checkout owns the eventual complete firmware. Coordinate the UART/Eirene
 owner's exact contracts before integration. P4 changes require a separately
 identified compatibility need and bounded implementation tranche.
