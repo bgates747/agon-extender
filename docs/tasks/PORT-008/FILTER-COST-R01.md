@@ -46,6 +46,11 @@ If entry components differ, reconcile compatibility before invoking any case.
    assert the eventual current lease before every target operation. Finish host
    preparation first. Coordinate conflicting Pi workloads with Pi5 manager;
    light preparation does not reserve an idle physical bench or authorize a build.
+   Pi5 manager requires a separate finite `test` reservation near physical
+   readiness, coordinated before either resource is held waiting on the other.
+   Start timing only with both grants. The quiet window excludes other heavy
+   builds/tests/emulators and substantial scans; ordinary host services remain.
+   Record actual host observations; neither grant promises zero host noise.
 2. Extender records the actual entry firmware, startup, route/modes, directory,
    listener/job state, attached devices and powered speakers. Preserve wiring,
    speaker state, both SD mounts, native VDP, EMOS and startup. Never edit
