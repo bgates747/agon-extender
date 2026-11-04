@@ -3,8 +3,9 @@
 The development P4 worker removes HTTP request/reply turnaround and host journal
 writes from the mainboard's per-record transfer loop. It stages complete files
 on the P4 card in both directions. Existing EMOS/sdserve major2 UART records
-remain unchanged; this interface does not implement continuous UART streaming
-or establish a measured transfer rate. No hardware deployment is qualified yet.
+remain the base carrier. The optional matched parallel-upload trial below
+replaces only upload payload movement. Bounded hardware results exist; neither
+that trial nor the staged interface selects a new complete production release.
 
 ## Ownership and requirements
 
@@ -24,8 +25,44 @@ or establish a measured transfer rate. No hardware deployment is qualified yet.
    the claim. A stale worker cannot release or submit through a later claim.
    Failure cancels any unsent pending queue item; it does not replay a job.
 5. The installed SD utility retains target-adjacent journals/backup semantics
-   and its write/sync/close error checks. No new resident EMOS bytes, CRCs,
-   substitute checksums, whole-file verification reads or raw UART bypass.
+   and its write/sync/close error checks. The base UART staging integration adds
+   no resident EMOS bytes; the optional parallel pair below has its own matched
+   gateway. Neither adds CRCs, substitute checksums, whole-file verification
+   reads or a supported raw UART bypass.
+
+## Optional parallel upload payload
+
+The [trial manifest](../mainboard-sd-parallel-trial.json) pins the matched P4,
+EMOS and private foreground MOSlet. Explicit `--fast --parallel` selection
+advertises HELLO capability0x80. After HTTP/P4-SD staging, P4 allocates and
+loads one complete PSRAM source before admitting the payload. P4 then sends
+SD operation15 with little-endian transfer-ID32 and declared-size32; the utility
+requires the existing unfinished BEGIN at offset0 with the same nonzero size.
+The successful reply returns transfer-ID32 and final-offset32. Existing FINISH
+and ACTIVATE follow only after successful physical and file-service results.
+
+EMOS owns UART parking, shared Port C pins and reciprocal restoration. P4 drives
+eight data lines through externally clocked PARLIO loop DMA; eZ80 owns CLOCK
+and holds VALID active across the payload. The utility writes at most512 bytes
+per FatFS slice while CLOCK is paused. There is no per-slice or per-byte UART
+acknowledgement. P4 requires exact declared CLOCK count and one VALID interval
+(two edges), then stops DMA and releases data pads before freeing the source.
+Whole-file PSRAM capacity is required; source preparation/admission failure
+never silently switches carriers or replays a request. Empty files retain their
+existing control-only path. Downloads remain UART.
+
+The original upload trial filters CLOCK. The consumer-repair trial also filters
+VALID using the pinned SDK's fixed two-IO_MUX-sample hardware filter; strict
+counts and rejection of sustained extra pulses remain. Filtering does not
+establish the electrical origin of the observed extra edges.
+
+Optional HTTP status fields preserve `parallel_prepare_us` (P4 monotonic source
+loading/allocation), `parallel_active_ms` (armed receive including SD pauses),
+`parallel_handover_ms` (remaining physical coordination), `parallel_phase` and
+`parallel_outcome`. Retained signed `parallel_clock_count` and
+`parallel_valid_count` report the actual proof samples; -1 means unavailable.
+These are not calibrated wire rates. The original ten-file comparison and the
+[consumer repair record](../tasks/PORT-008/UPLOAD-REPAIR-R01.md) bound evidence.
 
 ## HTTP contract, interface version 1
 
@@ -92,8 +129,9 @@ Only explicit discard removes a failed P4 spool. Existing mainboard recovery
 tools remain available after the worker relinquishes its queue claim.
 
 The old RPC tool remains supported separately; it cannot interleave with an
-active worker. Remaining212/216-byte UART replies, sdserve's per-READ open/seek/
-close and local task scheduling still impose costs. The implementation and
+active worker. Remaining212/216-byte UART replies and local task scheduling
+still impose costs. The accepted sequential-reader utility removes the earlier
+per-READ open/seek/close cycle; its identities are in the current SD guide. The implementation and
 bounded hardware comparison are tracked in [REMOTE-009](../tasks/REMOTE-009.md).
 The [measured result](../tasks/REMOTE-009/STAGED-RESULTS.md) passes Legacy files
 through1.1MB and error/CLI handback with a priority4 worker. Production remains

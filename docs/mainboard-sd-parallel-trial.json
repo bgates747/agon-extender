@@ -3,10 +3,10 @@
   "status": "experimental",
   "scope": "Author-reviewed working development trial; consumer checkout requires central bench grant; not production selection",
   "p4": {
-    "build_id": "port-008-upload-r01-b2026-11-03-23-15-49Z",
-    "source_commit": "b1a64b209e496f2b148f49989756d7581f684e74",
-    "bytes": 1851168,
-    "sha256": "429cd4cd3993ed16816daa8c7574e723d4959461ea7a51ef4dd4129647d3b348"
+    "build_id": "port-008-upload-r02-b2026-11-04-01-42-41Z",
+    "source_commit": "9897b1d152f9df5a96e9292312bad6cc71bd5451",
+    "bytes": 1851248,
+    "sha256": "5db0c0a0c378ca80a7947150501f9b2a0fa44b12544873a691c4de94f2d8c527"
   },
   "emos": {
     "build_id": "agon-emos-v0.1.27-b2026-11-03-22-15-34Z",
@@ -29,7 +29,8 @@
     "Legacy only for this measured trial",
     "Whole-file P4 PSRAM allocation required; allocation refusal is an error, not automatic UART replay",
     "Uploads use parallel only with the matched listener --parallel option; downloads remain UART",
-    "No canonical paired qualification, production promotion, optical or durability claim"
+    "No canonical paired qualification, production promotion, optical or durability claim",
+    "Two largest-asset2625992-byte uploads and65537-byte control pass exact full GETs with VALID filtering; electrical pulse origin remains unproven"
   ],
   "host_tools": [
     {
@@ -42,5 +43,6 @@
       "bytes": 19583,
       "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa"
     }
-  ]
+  ],
+  "repair": "tasks/PORT-008/UPLOAD-REPAIR-R01.md"
 }

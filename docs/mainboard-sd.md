@@ -33,7 +33,12 @@ Host monotonic elapsed includes HTTP staging and activation; independent full
 GET/byte comparison is outside those times. All ten UART/parallel-selected cases
 through1.1MB compare exactly. These are single observations, not calibrated wire
 rates; tiny files show no useful speed difference. Full-file PSRAM capacity is
-required and larger files are unqualified. Allocation/admission failures do not
+required. A subsequent consumer repair adds fixed hardware VALID filtering
+to the matched P4 build: two2625992-byte asset uploads and a65537-byte control
+pass full readbacks after two unfiltered failures on extra VALID edges. The
+[repair record](tasks/PORT-008/UPLOAD-REPAIR-R01.md) preserves failure scope;
+the electrical pulse source remains unproven and larger files are unqualified.
+Allocation/admission failures do not
 authorize automatic fallback, retry, reset or deletion of recovery files.
 
 For a matched UART baseline, stop the idle trial listener through EXIT first,
