@@ -11,7 +11,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Application networking — authorized framework preparation
 
-- [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Publish plan first, then build the bounded generic message core and host validation; consult MechAgon on interface questions. EMOS retains routing/admission; game protocols remain consumer-owned. No physical deployment or production selection.
+- [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Plan published before code; bounded core and stopped outbound TCP adapter pass host sanitizer/loopback and actual P4 object compilation. Author accepts outbound TCP to Pi; payload/EMOS envelope/app library and worker integration remain. No firmware deployment or production selection.
 
 ## EMOS foundation — migration
 

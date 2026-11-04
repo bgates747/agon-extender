@@ -33,6 +33,22 @@ is a planned migration, not the currently installed or selected production base.
 The [accepted direction](decisions/ADR-2026-11-04-eirene-emos-base.md) and
 [planning task](tasks/EMOS-001.md) define its integration boundary.
 
+## Application network messages
+
+The Author selects one admitted application session with an ordered full-duplex
+opaque-message channel: P4 opens a persistent outbound TCP connection to a
+configured Pi bridge/listener using length-delimited binary records. P4 owns
+socket lifecycle and bounded network buffering; EMOS owns application admission,
+shared physical transport and ordinary VDU routing. Network waits must not block
+the console parser or hold display locks. The application uses an admitted
+library interface; no raw UART/GPIO bypass is supported.
+
+Consumer-owned Pi software handles game-specific WebSocket/JSON conversion;
+generic Extender code does not interpret game records. The [accepted connection
+direction](decisions/ADR-2026-11-04-application-network-messages.md) is a development
+contract, not an implemented/installed general application networking API.
+[NET-003](tasks/NET-003.md) owns interface, resource and integration work.
+
 ## Processor communication cost
 
 EMOS and Extender VDP must not compute or require CRCs for their communications
