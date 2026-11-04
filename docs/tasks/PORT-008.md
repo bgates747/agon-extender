@@ -11,9 +11,9 @@ completes its bounded implementation and ten matched Legacy file proofs through
 The1.1MB host upload drops44.630→14.346s; raw transport and complete-file timings
 have different scopes. The Author now authorizes reinstalling that exact pair
 for working-trial review, with the private parallel listener and updated current
-SD instructions. Stop before granting Wolf access. Canonical qualification
-and broader transport work remain. Extender retains custody and sends no peer
-progress/instruction notifications until the Author opens access. Completion
+SD instructions. The Author subsequently reviews that installation and releases
+the bench to Wolf; the fresh grant includes the matched faster-transfer recipe.
+Canonical qualification and broader transport work remain. Completion
 or review questions use ordinary chat under the current standing instruction;
 there is no automatic checkout release.
 

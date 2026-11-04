@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "experimental",
-  "scope": "Author-authorized working development trial; review required before consumer checkout; not production selection",
+  "scope": "Author-reviewed working development trial; consumer checkout requires central bench grant; not production selection",
   "p4": {
     "build_id": "port-008-upload-r01-b2026-11-03-23-15-49Z",
     "source_commit": "b1a64b209e496f2b148f49989756d7581f684e74",

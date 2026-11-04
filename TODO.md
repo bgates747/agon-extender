@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Await Author review before any Wolf grant. Subsequent priorities remain. Extender retains custody until an Author-agreed handoff; requests may queue, peer updates wait until access opens.
+- [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests.
 
 ## Current corrective work — HDMI aspect
 
