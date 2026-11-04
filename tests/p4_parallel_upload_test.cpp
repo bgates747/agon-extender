@@ -16,6 +16,7 @@ NativeParlioSignals parlio_periph_signals={{{{{{},100}},{{{},200}}}}};
 static int core,op,fail=-1,valid=1,clockLevel=1,ready=1;
 static bool unitLive,enabled,outputs,filterLive,filterEnabled,mutationBeforePark;
 static bool parked;
+static bool validFilterLive,validFilterEnabled;
 static bool deleteFails;
 static bool closeDuringClockRead;
 static unsigned deletes;
@@ -64,13 +65,18 @@ int parlio_tx_unit_transmit(void*,void const *p,std::size_t bits,parlio_transmit
  if(fails())return ESP_FAIL;
  dma=static_cast<std::uint8_t const*>(p);cycle=bits/8;return ESP_OK;
 }
-int gpio_new_pin_glitch_filter(gpio_pin_glitch_filter_config_t const *c,void **p){
- assert(c->gpio_num==14&&!filterLive);if(fails())return ESP_FAIL;
- filterLive=true;*p=reinterpret_cast<void*>(3);return ESP_OK;
+static bool &filterState(void *p,bool active){
+ bool isValid=reinterpret_cast<std::uintptr_t>(p)==4;
+ return active?(isValid?validFilterEnabled:filterEnabled):(isValid?validFilterLive:filterLive);
 }
-int gpio_glitch_filter_enable(void*){assert(filterLive&&!filterEnabled);if(fails())return ESP_FAIL;filterEnabled=true;return ESP_OK;}
-int gpio_glitch_filter_disable(void*){assert(filterEnabled&&!enabled);if(fails())return ESP_FAIL;filterEnabled=false;return ESP_OK;}
-int gpio_del_glitch_filter(void*){assert(filterLive&&!filterEnabled&&!enabled);if(fails())return ESP_FAIL;filterLive=false;return ESP_OK;}
+int gpio_new_pin_glitch_filter(gpio_pin_glitch_filter_config_t const *c,void **p){
+ assert(c->gpio_num==14||c->gpio_num==16);*p=reinterpret_cast<void*>(c->gpio_num==16?4:3);
+ auto &live=filterState(*p,false);assert(!live);if(fails()){*p=nullptr;return ESP_FAIL;}
+ live=true;return ESP_OK;
+}
+int gpio_glitch_filter_enable(void *p){auto &e=filterState(p,true);assert(filterState(p,false)&&!e);if(fails())return ESP_FAIL;e=true;return ESP_OK;}
+int gpio_glitch_filter_disable(void *p){auto &e=filterState(p,true);assert(e&&!enabled);if(fails())return ESP_FAIL;e=false;return ESP_OK;}
+int gpio_del_glitch_filter(void *p){auto &l=filterState(p,false);assert(l&&!filterState(p,true)&&!enabled);if(fails())return ESP_FAIL;l=false;return ESP_OK;}
 int pcnt_new_unit(pcnt_unit_config_t const *c,void **p){
  assert(c->high_limit==32767&&c->flags.accum_count);if(fails())return ESP_FAIL;
  unsigned i=0;while(i<2&&counters[i].live)++i;assert(i<2);counters[i]={};counters[i].live=true;
@@ -122,7 +128,7 @@ static void clocks(std::size_t n,bool check=true){
  clocked+=n;
 }
 static void reset(){
- assert(!allocation&&!unitLive&&!enabled&&!filterLive&&!filterEnabled&&!outputs);
+ assert(!allocation&&!unitLive&&!enabled&&!filterLive&&!filterEnabled&&!validFilterLive&&!validFilterEnabled&&!outputs);
  for(auto &x:counters){assert(!x.live);x={};}
  core=op=0;fail=-1;valid=clockLevel=ready=1;parked=mutationBeforePark=false;
  logical=cycle=clocked=allocated=0;dma=nullptr;
@@ -130,7 +136,7 @@ static void reset(){
  closeDuringClockRead=false;
 }
 int main(){unsigned cases=0;byteChecks=0;
- for(std::size_t n:{1U,63U,64U,65U,4095U,4096U,65535U,65536U,65537U,1100000U}){
+ for(std::size_t n:{1U,63U,64U,65U,4095U,4096U,65535U,65536U,65537U,1100000U,2625992U}){
   reset();logical=n;auto f=spool(n);P4UploadSource source;
   assert(source.load(f,n));std::fclose(f);assert(source.allocated()==((n+63)&~std::size_t(63)));
   U u(pins,14,16,15,0);assert(u.prepare(source)==R::prepared&&!outputs&&!mutationBeforePark);
@@ -140,6 +146,11 @@ int main(){unsigned cases=0;byteChecks=0;
   assert(u.arm(true,n,UINT32_MAX-10,30000)==R::pending&&outputs&&ready==0);
   assert(u.poll(UINT32_MAX-9)==R::pending); // initial VALID high is not completion
   signal(false);
+  // A sub-two-sample VALID pulse is discarded by the configured pin filter.
+  // Sustained extra VALID pulses below still execute through signal() and fail.
+  assert(validFilterLive&&validFilterEnabled);
+  if(!validFilterEnabled)for(auto &x:counters)if(x.running&&!x.gated)x.count+=2;
+  assert(u.poll(0)==R::pending);
   for(std::size_t at=0;at<n;){auto count=std::min(std::size_t(512),n-at);
    clocks(count);at+=count;
    assert(u.poll(1)==R::pending); // arbitrarily many paused SD-write intervals
@@ -150,7 +161,7 @@ int main(){unsigned cases=0;byteChecks=0;
   assert(!source.borrowed()&&source.release());++cases;
  }
  // Closure between the two counter reads must wait for the next coherent poll.
- for(std::size_t n:{1U,65537U,1100000U}){
+ for(std::size_t n:{1U,65537U,1100000U,2625992U}){
   reset();logical=n;auto file=spool(n);P4UploadSource s;
   assert(s.load(file,n));std::fclose(file);U u(pins,14,16,15,0);
   assert(u.prepare(s)==R::prepared);parked=true;

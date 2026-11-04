@@ -63,10 +63,10 @@ class P4ParallelUpload final {
   int clock_,valid_,ready_,core_;
   P4UploadSource *source_{};
   parlio_tx_unit_handle_t tx_{};
-  gpio_glitch_filter_handle_t filter_{};
+  gpio_glitch_filter_handle_t filter_{},validFilter_{};
   std::optional<P4ValidCounter> clocks_,validEdges_;
   std::uint32_t began_{},timeout_{};
-  bool enabled_{},filterEnabled_{},padsTouched_{},admitted_{},deleteFailed_{};
+  bool enabled_{},filterEnabled_{},validFilterEnabled_{},padsTouched_{},admitted_{},deleteFailed_{};
   Result result_{Result::idle};
   int observedClocks_{-1},observedValid_{-1};
 };
