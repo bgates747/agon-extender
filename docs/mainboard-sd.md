@@ -38,7 +38,11 @@ to the matched P4 build: two2625992-byte asset uploads and a65537-byte control
 pass full readbacks after two unfiltered failures on extra VALID edges. The
 [repair record](tasks/PORT-008/UPLOAD-REPAIR-R01.md) preserves failure scope;
 the electrical pulse source remains unproven and larger files are unqualified.
-Allocation/admission failures do not
+A later admission/session-loss incident recovered with one Agon reset; twenty
+captured tile controls passed without reproducing it. Its cause remains open;
+zero/-1 retained timing/counter fields are not proof that preparation never ran.
+Follow the [recovery record](tasks/PORT-008/UPLOAD-REPAIR-R02.md) and preserve
+failed jobs instead of automatically retrying. Allocation/admission failures do not
 authorize automatic fallback, retry, reset or deletion of recovery files.
 
 For a matched UART baseline, stop the idle trial listener through EXIT first,

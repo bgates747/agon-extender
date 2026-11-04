@@ -15,7 +15,9 @@ SD instructions. The Author subsequently reviews that installation and releases
 the bench to Wolf; the fresh grant includes the matched faster-transfer recipe.
 A [consumer repair](PORT-008/UPLOAD-REPAIR-R01.md) adds fixed P4 VALID filtering
 after repeated extra-edge failures; two2625992B files and a65537B control pass
-exact full readbacks. Wolf receives fresh returned custody. Canonical
+exact full readbacks. Wolf receives fresh returned custody. A [second incident](PORT-008/UPLOAD-REPAIR-R02.md)
+loses EMOS admission during the upload request; one Agon reset recovers it and
+20 captured tile controls pass. Cause remains unreproduced/open. Canonical
 qualification and broader transport work remain. Completion
 or review questions use ordinary chat under the current standing instruction;
 there is no automatic checkout release.
