@@ -9,7 +9,8 @@ installed firmware with an unrelated Eirene release. The Author subsequently aut
 Keep all implementation in dedicated task branches/worktrees and task-local
 artifacts. Hardware deployment and production selection remain outside this tranche.
 
-Source preparation checkpoint: [isolated native port](EMOS-001/R01-SOURCE-PORT.md).
+Offline result: [first isolated build and mandatory linked checks](EMOS-001/R01-RESULTS.md).
+Source-port provenance: [integration checkpoint](EMOS-001/R01-SOURCE-PORT.md).
 
 ## State and scope
 
@@ -135,3 +136,10 @@ RST-hook experiments remain separate until assigned.
 6. Author acceptance, complete applicable qualification, updated current guides,
    immutable bundle and agreed release version/tag precede production selection.
    Retain a verified rollback to the exact incoming installation throughout.
+
+## Current offline checkpoint
+
+The isolated composition compiles/links and all four mandatory linked checks
+pass. See the result for128098B ROM,4284B total static RAM and exact hashes.
+No emulator/hardware invocation, merge, deployment or promotion occurs. All Pi
+leases are released. Compatibility execution and integration review remain.

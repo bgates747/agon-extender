@@ -11,7 +11,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## EMOS foundation — planning
 
-- [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Author selects the future base. Inventory current EMOS deltas, audit RC2 ABI/ownership and ROM/RAM costs, then present a bounded migration plan. Isolated native source port prepared; offline builds await Pi admission. No merge, firmware selection or bench changes.
+- [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Author selects the future base. Inventory current EMOS deltas, audit RC2 ABI/ownership and ROM/RAM costs, then present a bounded migration plan. [Isolated candidate](docs/tasks/EMOS-001/R01-RESULTS.md) compiles/links and passes all four mandatory product checks;128098B ROM/2974B free. Runtime compatibility and integration review remain. No merge, firmware selection or bench changes.
 
 ## Current corrective work — HDMI aspect
 
