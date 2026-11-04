@@ -45,3 +45,12 @@ The experiment retains exact VALID2/CLOCKN proof and failure on sustained extra
 pulses. No eZ80 change, traffic, checksum, byte ACK or software settling delay.
 Its electrical source remains unproven; do not claim a root cause from filtering
 alone. Actual leaf tests cover both filter lifecycles/failures and the new size.
+
+Actual leaf sanitizer checks pass156 cases/7722510 modeled payload bytes,
+including2625992-byte and32MiB source bounds, real extra-pulse failures and
+one-shot SDK setup/cleanup faults. Physical filter effectiveness remains pending.
+LeakSanitizer cannot run inside the local ptrace sandbox; the successful check
+runs outside that restriction with address/undefined/leak checks retained.
+The first build request was rejected before compilation for an identity outside
+the upload-wrapper grammar; refreshed upload-r02 identity is used without
+weakening the wrapper. No target operation follows a refused build.
