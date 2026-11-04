@@ -3019,3 +3019,10 @@ Exactly 1,024 source clocks, zero mismatches on five observed source data bits.
 Returning flash speed alone does not fix correctness. Exact full EDP/startup
 restored; actual remote commands/input verified, listener exited, bench idle.
 No EMOS/wiring/production change. Paused before any further experiment.
+
+## Hardware filter cost comparison
+
+[Finite A/B/A benchmark](PORT-008/FILTER-COST-R01.md) records the Author-authorized
+comparison of the added VALID filter against the retained CLOCK-only image,
+with unchanged strict checks and exact restoration. Physical FIFO admission
+precedes execution; no preemption of current consumers.

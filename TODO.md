@@ -72,7 +72,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) complete:340.35kB/s at8192B; UART wins256B. [Reverse file prototype](docs/tasks/PORT-008/REVERSE-UPLOAD-R01.md) passes ten matched Legacy proofs and exact restoration;1.1MB host upload3.111× faster. Raw drain and file timings differ in scope. Adoption, forward file integration, broader async admission, P08-D02/warm-reset and production remain open.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — [Forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) complete:340.35kB/s at8192B; UART wins256B. [Reverse file prototype](docs/tasks/PORT-008/REVERSE-UPLOAD-R01.md) passes ten matched Legacy proofs and exact restoration;1.1MB host upload3.111× faster. Raw drain and file timings differ in scope. [VALID filter cost benchmark](docs/tasks/PORT-008/FILTER-COST-R01.md) authorized and awaiting FIFO admission. Adoption, forward file integration, broader async admission, P08-D02/warm-reset and production remain open.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 
