@@ -21,6 +21,12 @@ component archive and unchanged staged clients. Its matched1.1MB download takes
 43.57s versus250.92s with the earlier utility; this scoped component acceptance
 and installation do not select a new complete production release.
 
+The Author authorizes the tested parallel-upload pair as a working development
+trial for review. The [current SD guide](mainboard-sd.md#parallel-uploads--working-development-trial)
+provides its explicit private-listener invocation, exact matched component pins,
+measured improvements and rollback boundary. Consumer bench access remains
+blocked pending Author review; this does not select a production release.
+
 ## Before operational work
 
 Agents must use the [operation-protocol index](procedures/README.md) to select

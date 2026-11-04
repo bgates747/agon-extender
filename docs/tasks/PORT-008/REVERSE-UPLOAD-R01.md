@@ -447,3 +447,53 @@ neutral admitted input, idle job/listener and free serial ports pass. Cursor
 controls are not an optical observation. No reset holder remains; SD stays
 mounted and Extender retains its central checkout. No peer progress notification,
 production selection/tag or downstream task follows automatically.
+
+## Author-directed working trial installation and review gate
+
+After reviewing the passing comparison, the Author authorizes installing the
+exact tested P4/EMOS/private-listener combination and updating current operation
+documentation. Extender must stop for Author review before granting Wolf time.
+This changes the previous restoration endpoint; it does not select a production
+release, authorize broader qualification, or authorize consumer execution.
+
+1. Preserve and freshly verify the incoming component/startup identities; stage
+   the exact identified experimental ROM and private MOSlet under fresh owned
+   paths. Keep the accepted canonical UART listener unchanged.
+2. Install only the matched experimental EMOS and P4 application, verify full
+   ROM and P4 application independently, and verify preserved surrounding flash.
+3. Perform one bounded parallel upload/readback readiness exchange; return to
+   Legacy CLI with visible/flashing cursor controls and idle resources.
+4. Update the current SD guide, handbook and machine-local installation record
+   with precise invocation, limitations and rollback. Retain Extender custody;
+   no mail/grant/consumer launch until the Author reviews the installed result.
+
+## Parallel-upload trial installed; stopped for Author review
+
+The Author authorizes installing the exact tested experimental pair and current
+operation documentation, then explicitly requires a stop before Wolf receives
+access. Installation is complete: full131072B EMOS ROM independently SAVE/GET
+compares to855aa732; P4 app1851168B429cd4cd independently reads back and the
+complete expected16MiB image61f50472 verifies, preserving all other sectors.
+This complete-image verification is not a new whole-device host read. Exact
+incoming P4r27/EMOS84da rollback is retained. Native VDP is not written.
+
+Private `/emos/sdpu01.bin`26449Bf60f244f is independently read back. Canonical
+`/emos/sdserve.bin`0566 and startup9e97 remain byte-exact. One fresh65537B
+parallel upload completes with outcome3/CLOCK65537/VALID2 and an exact full GET;
+host upload takes2.511s (a readiness observation, not a new matched ranking).
+Actual CLI/listener/EXIT, Legacy mode0, neutral input, idle worker, offline
+listener and both ownerless USB endpoints pass. Cursor/text/flash controls are
+sent; no optical/sound qualification is claimed. No reset holder remains.
+
+After EMOS-first flashing, old-P4 keyboard admission dropped while submitting
+the pre-install listener command; P4 flash had not started and no listener/job
+was active. The incomplete command was not replayed. The reviewed continuation
+used freshly preserved safe startup and independent Agon hold to install P4,
+then proved matched boot/input and CLI. This setup transition is documented in
+the current installation guide; it is not a new controller-feature pass.
+
+Current handbook, SD guide, installation guide, host-tool index and exact trial
+component manifest provide invocation and rollback without reconstructing task
+history. Whole-installation production selection, qualification and version/tag
+remain unchanged. Extender retains generation9; Wolf remains queued and receives
+no grant/mail/progress notification. Golem's resumed request is behind Wolf.

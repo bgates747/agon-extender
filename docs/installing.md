@@ -175,6 +175,26 @@ optional bridge is deliberately configured. Browser fullscreen Escape remains
 host-controlled; no FPS guarantee is made. Record passes, failures and omissions
 against these exact identities before asking the Author to accept the bundle.
 
+## Parallel-upload development trial
+
+The [trial component manifest](mainboard-sd-parallel-trial.json) identifies the
+separately authorized tested P4/EMOS/private-listener combination. It is not a
+replacement production bundle. Install only with a fresh bench grant and exact
+verified incoming rollback. Preserve native VDP, startup, mutable P4 partitions
+and the accepted canonical `/emos/sdserve.bin`; deploy the stopped private
+MOSlet as `/emos/sdpu01.bin` and independently read it back.
+
+During EMOS-first installation, old-P4 input admission may disappear before the
+matched P4 application is installed. Do not rely on the mismatched input path
+for further CLI setup or replay partial commands. Preserve startup and stage
+all EMOS payloads before changing EMOS. Use the commissioned independent Agon
+reset hold for P4 flashing; verify the P4's boot-pad release marker before
+releasing Agon, then verify reciprocal console boot, input and actual CLI.
+Application-sector readback and complete expected-flash verification are separate
+from startup readiness. Save/read the complete installed EMOS ROM afterward.
+Use the [SD guide](mainboard-sd.md#parallel-uploads--working-development-trial)
+for explicit parallel invocation and error/rollback limits.
+
 ## Optional reset bridge
 
 The templates under `reset/` are deliberately unconfigured. An operator installs

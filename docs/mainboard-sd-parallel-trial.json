@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "experimental",
+  "scope": "Author-authorized working development trial; review required before consumer checkout; not production selection",
+  "p4": {
+    "build_id": "port-008-upload-r01-b2026-11-03-23-15-49Z",
+    "source_commit": "b1a64b209e496f2b148f49989756d7581f684e74",
+    "bytes": 1851168,
+    "sha256": "429cd4cd3993ed16816daa8c7574e723d4959461ea7a51ef4dd4129647d3b348"
+  },
+  "emos": {
+    "build_id": "agon-emos-v0.1.27-b2026-11-03-22-15-34Z",
+    "source_commit": "6ececd56ff80029523464a5027633a7b74e84cf6",
+    "bytes": 131072,
+    "sha256": "855aa732ee9bd5def7cb92b52a1521d696330a6f260ad11288f7aeab7fe7dc57"
+  },
+  "listener": {
+    "build_id": "sdserve-v0.3.0-b2026-11-03-22-15-36Z",
+    "source_commit": "6ececd56ff80029523464a5027633a7b74e84cf6",
+    "bytes": 26449,
+    "sha256": "f60f244fa4e0404792b7f91ac84fb23adbabd27a40b6f362ee5859f1716ffcf2",
+    "sd_path": "/emos/sdpu01.bin",
+    "parallel_command": "EMOS sdpu01 --fast --parallel /",
+    "uart_command": "EMOS sdpu01 --fast /"
+  },
+  "host_client": "scripts/sdcard_staged.py",
+  "rollback": "Exact incoming P4r27 and EMOS build2026-10-26; verified images/receipts in machine-local bench record. Canonical /emos/sdserve.bin remains unchanged.",
+  "limits": [
+    "Legacy only for this measured trial",
+    "Whole-file P4 PSRAM allocation required; allocation refusal is an error, not automatic UART replay",
+    "Uploads use parallel only with the matched listener --parallel option; downloads remain UART",
+    "No canonical paired qualification, production promotion, optical or durability claim"
+  ],
+  "host_tools": [
+    {
+      "path": "scripts/sdcard_staged.py",
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    },
+    {
+      "path": "scripts/sdcard.py",
+      "bytes": 19583,
+      "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa"
+    }
+  ]
+}

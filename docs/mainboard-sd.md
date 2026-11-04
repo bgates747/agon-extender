@@ -1,5 +1,50 @@
 # Mainboard SD service operating guide
 
+## Parallel uploads — working development trial
+
+The Author authorizes installation of the tested parallel-upload pair for review.
+[Exact trial identities](mainboard-sd-parallel-trial.json) pin P4, EMOS and the
+private listener; all three must match. The bench owner supplies the actual
+installation receipt and access grant. Production selection and the accepted
+[UART tool selection](mainboard-sd-tools.json) remain unchanged.
+
+At a verified Legacy MOS prompt, invoke the separately installed MOSlet:
+
+```text
+EMOS sdpu01 --fast --parallel /
+```
+
+Use the same `scripts/sdcard_staged.py` put/get commands shown below, with fresh
+job-state and destination paths. For uploads, the host stages the file on P4 SD;
+P4 loads the entire file into PSRAM, EMOS admits the parallel transfer, P4 drives
+the eight data lines, and the eZ80 clocks bounded slices into the utility's
+SD-write buffer. The utility pauses CLOCK during SD writes. UART carries control
+records; there is one payload admission, no per-byte acknowledgement or software
+checksum. Downloads retain UART and the sequential-reader improvement.
+
+Matched measured uploads, ranked by longest UART baseline first:
+
+| File bytes | UART host seconds | Parallel host seconds | Elapsed reduction from UART |
+|---|---:|---:|---:|
+| 1100000 | 44.630 | 14.346 | 67.86% |
+| 65537 | 4.566 | 2.764 | 39.47% |
+
+Host monotonic elapsed includes HTTP staging and activation; independent full
+GET/byte comparison is outside those times. All ten UART/parallel-selected cases
+through1.1MB compare exactly. These are single observations, not calibrated wire
+rates; tiny files show no useful speed difference. Full-file PSRAM capacity is
+required and larger files are unqualified. Allocation/admission failures do not
+authorize automatic fallback, retry, reset or deletion of recovery files.
+
+For a matched UART baseline, stop the idle trial listener through EXIT first,
+then start `EMOS sdpu01 --fast /`. The unchanged canonical
+`EMOS sdserve --fast /` also remains available. Neither command selects the
+parallel carrier without `--parallel`. Stop the listener before launching an
+Agon application; the service is foreground. Never overwrite the running trial
+MOSlet: exit it first and use a different stopped listener for replacement.
+Keep startup unchanged. Component rollback uses the exact incoming P4r27/EMOS
+images and installation procedure recorded by the bench owner, not Git HEAD.
+
 ## P4-staged fast files
 
 The Author accepts the sequential-reader listener for the working bench on

@@ -140,8 +140,11 @@ retrieval follows outside upload timing and remains UART. P4 handover is1..3ms;
 active receive timing includes SD pauses. Descriptor SRAM exhaustion and a
 terminal sampling race are corrected with source regressions and fresh physical
 evidence. Exact incoming components/CLI/input are restored and custody retained.
-This is not adoption, a raw-port comparison, broader qualification or authority
-to begin the next priority. The linked owner task retains detailed results.
+The Author subsequently authorizes installing the exact tested pair for a
+working-trial review, updating operation documentation, then stopping before any
+Wolf grant. This is not production promotion, a raw-port comparison, broader
+qualification or authority to begin the next priority. The linked owner task
+retains detailed results and the installation boundary.
 
 1. The Author has selected the coordination priorities and owners have recorded
    dependencies and bounded implementation contracts in their existing tasks.

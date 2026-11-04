@@ -9,7 +9,9 @@ slices for BENCH-013 priority2. [Reverse-upload r01](PORT-008/REVERSE-UPLOAD-R01
 completes its bounded implementation and ten matched Legacy file proofs through
 1.1MB, with one payload admission per nonempty file and exact incoming restoration.
 The1.1MB host upload drops44.630→14.346s; raw transport and complete-file timings
-have different scopes. Author result review/adoption, canonical qualification
+have different scopes. The Author now authorizes reinstalling that exact pair
+for working-trial review, with the private parallel listener and updated current
+SD instructions. Stop before granting Wolf access. Canonical qualification
 and broader transport work remain. Extender retains custody and sends no peer
 progress/instruction notifications until the Author opens access. Completion
 or review questions use ordinary chat under the current standing instruction;

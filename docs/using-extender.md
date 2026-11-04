@@ -49,6 +49,11 @@ unreliable reset admission; use the verified Legacy/ExCom pair for ordinary
 operation. Ordinary production instructions must not assume ExExt support. The [architecture](architecture.md) owns the
 full mode/API distinction.
 
+For the separately installed parallel-upload working trial, use the
+[trial-specific listener and matched component pins](mainboard-sd.md#parallel-uploads--working-development-trial).
+Ordinary `EMOS sdserve --fast /` uses UART; it does not enable the parallel gain.
+A consumer still requires an explicit bench grant.
+
 ## Choose the job
 
 | Job | Procedure and boundary |
