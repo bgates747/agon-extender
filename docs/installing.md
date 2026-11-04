@@ -78,6 +78,14 @@ verified P4 readback/rollback, the full 128 KiB EMOS ROM, `/emos/sdserve.bin`,
 A factory image is a flash prefix, not a full-device backup. Do not reset an
 unknown application to make inspection convenient. Preserve user files.
 
+An existing exact full-flash backup may be reused after rehashing its retained
+bytes and obtaining a fresh complete device verification against those bytes.
+Keep the original read provenance and new verification receipt distinct; this
+is not a new host read. A mismatch, partial verification or unestablished mutable
+region stops replacement until reconciled. A failed read before any write does
+not require automatically repeating the same bulk operation; lower-speed
+read-only verification can establish the applicable retained rollback.
+
 I02 — Establish input independently. The current bench's mainboard keyboard port
 is unavailable. Browser/agent input cannot type its own admission command while
 that path is disabled. If admission is already healthy, use it at a verified MOS
