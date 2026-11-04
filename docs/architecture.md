@@ -24,6 +24,15 @@ The remaining sections state design obligations unless an implemented subset is
 identified explicitly. Full fault recovery, generalized EDU APIs and compatibility
 coverage must not be inferred from the working console or diagnostic services.
 
+## Future EMOS foundation
+
+The Author selects Eirene as the future EMOS base, including asynchronous UART
+and OTIRX improvements. EMOS retains routing, transport, activation and committed
+mode ownership; unaware applications retain synchronous output semantics. This
+is a planned migration, not the currently installed or selected production base.
+The [accepted direction](decisions/ADR-2026-11-04-eirene-emos-base.md) and
+[planning task](tasks/EMOS-001.md) define its integration boundary.
+
 ## Processor communication cost
 
 EMOS and Extender VDP must not compute or require CRCs for their communications

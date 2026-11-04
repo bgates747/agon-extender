@@ -9,6 +9,10 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests.
 
+## EMOS foundation — planning
+
+- [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Author selects the future base. Inventory current EMOS deltas, audit RC2 ABI/ownership and ROM/RAM costs, then present a bounded migration plan. Isolated native source port prepared; offline builds await Pi admission. No merge, firmware selection or bench changes.
+
 ## Current corrective work — HDMI aspect
 
 - [ ] **[HDMI-004 — Interactive mode preview](docs/tasks/HDMI-004.md)** — Build and stage the approved labelled pattern with a numeric mode menu; Author visual review pending.

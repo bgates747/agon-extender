@@ -129,3 +129,5 @@ authorities. An audit is evidence and a correction map, never a competing
 architecture specification or task list.
 
 [Whole-file P4 PSRAM source for parallel uploads](ADR-2026-11-03-whole-file-parallel-uploads.md): Accepted / Complete within source-storage and clock/SD ownership scope; PORT-008 owns implementation and qualification.
+
+[Use Eirene as the future EMOS foundation](ADR-2026-11-04-eirene-emos-base.md): Accepted / Partial; EMOS-001 owns the planned rebase, async ABI mapping and migration gates.
