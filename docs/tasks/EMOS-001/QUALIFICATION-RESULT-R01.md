@@ -92,6 +92,16 @@ installation receipts, independent dumps, lifecycle/transfer journals, timing,
 failed-job phases, recovery and clean handback records. Preparation and retrieval
 are included in operational durations; no UART/rendering performance comparison
 is inferred. All clocks are Pi monotonic seconds, not independently calibrated.
+[The portable attempt record](test-reuse/paired-attempt-r01.json) binds the
+individual case counts/timing and retained evidence hashes.
+
+Actual FSIM priority handoff completes2026-11-04T10:15:16Z through the central
+registry after fresh physical checks. The durable grant message includes exact
+Eirene/P4/native identities, established fast UART/staged SD workflow, reset and
+native application-only preservation/restoration instructions, and the failed
+HDMI qualification limit. Outgoing app steering failed; the Author explicitly
+takes responsibility for notifying FSIM. Extender performs no further target
+access after the grant and retains scheduling/owned-defect repair responsibility.
 
 ## Remaining work
 
