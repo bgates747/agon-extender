@@ -8,6 +8,15 @@ or permission to deploy. Read the
 a replacement for an installed image, and the [operation entry point](using-extender.md)
 before using an existing bench.
 
+## Pi workload scheduling
+
+Before a substantial Pi build/link/test tranche or native emulator run, use the
+[canonical Pi workload queue](../../agon-dev-env/cross-agent/pi5-workloads/README.md).
+Pi5 manager owns grants, resource reconciliation and current scope rules. Light
+editing, mailbox/status work and short bench-control clients remain compatible
+under that procedure. A physical bench or Oryx lease does not grant a Pi heavy
+workload slot; preserve those separate reservations.
+
 ## Host storage for builds
 
 Keep large source snapshots, Git worktrees, SDK caches and build output in an
