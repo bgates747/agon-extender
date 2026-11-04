@@ -11,7 +11,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## EMOS foundation — migration
 
-- [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Corrected r02 installed/full-ROM verified;2913B ROM free. [Reused tests](docs/tasks/EMOS-001/TEST-REUSE-RESULTS-R01.md) pass nine host methods and three physical UART cases. Complete paired-suite preparation, then stop at readiness before invocation; performance, broader compatibility and acceptance/promotion remain.
+- [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Corrected r02 installed/full-ROM verified;2913B ROM free. [Reused tests](docs/tasks/EMOS-001/TEST-REUSE-RESULTS-R01.md) pass nine host methods and three physical UART cases. [Full paired attempt](docs/tasks/EMOS-001/QUALIFICATION-RESULT-R01.md) passes14/25, blocked by the existing P4 HDMI mode8→20 deadline fault; raw-SD uninvoked. Healthy Legacy services restored for FSIM priority. Complete HDMI repair, a new full run, manual review and acceptance/promotion later.
 
 ## Current corrective work — HDMI aspect
 

@@ -1,0 +1,46 @@
+{
+  "schema": "emos001-paired-attempt-v1",
+  "status": "failed-P4-HDMI-budget",
+  "check_counts": {
+    "pass": 14,
+    "required": 25
+  },
+  "full_suite": true,
+  "started_at": "2026-11-04-09-48-11Z",
+  "ended_at": "2026-11-04-09-56-48Z",
+  "total_host_seconds": 516.4212072599985,
+  "preparation_seconds": 278.36993160499696,
+  "cases": [
+    {
+      "id": "installed-p4-integrated-smoke",
+      "status": "pass",
+      "total_case_seconds": 173.51654452900402
+    },
+    {
+      "id": "a10-rp06-mode-transaction",
+      "status": "infrastructure-error",
+      "total_case_seconds": 64.52691605099972
+    },
+    {
+      "id": "a10-rp04-raw-sd-write",
+      "status": "blocked"
+    }
+  ],
+  "raw_SD_invoked": false,
+  "firmware_or_startup_written": false,
+  "recovery": "one Agon reset failed; P4 clean initialization then Agon reset passed; modes0/Legacy restored",
+  "qualification_acceptance": false,
+  "evidence_sha256": {
+    "source-and-authorization.json": "735e9367f8665b2602142a20555132af90bd0035dcbd7e511a9fd77bd32ee007",
+    "check-only.json": "28035721d621e5f84afdfff9a310290a7c2acc717f66ebe8678e1cd800465e84",
+    "emos-retained-installation.json": "91d2a7123b4b3a6531de4f81246766fa9f4b24d7a25a7b9f318c94cd362c04be",
+    "p4-retained-installation.json": "21d6e492209088e5f40905e06042b5098b88cb4091b9852fb3668a8ad637a834",
+    "preflight/receipt.json": "f9759f8e10099940b876fdbd5aa8b0c212100a62871b648c4a91c4ac0f0d8c8e",
+    "p4-full-read/receipt.json": "1623ec8bddd06aa73c073e8a9dee60097146ff8165ca4c7c38d3fce973192ba6",
+    "full-r01/summary.json": "cc5d45160695694d9bc363019421b4f9052f281731d2a82dfeb8e0d858053175",
+    "mode-failure-observation/status.json": "5098c081f6428003928964094d15f4796b0762d8ca69432ae33ee2e2b0d958f0",
+    "recovery-agon-r01/failure.json": "f153481d5abc0127779213acc283f4d68497b9437f00565b30ecc1ef1956277d",
+    "recovery-pair-r01/receipt.json": "c378dc9badfa3fd7d5a987d281d894090dab11210096d92cc8e782c94bb531b5",
+    "failure-cleanup-r01/receipt.json": "dc9f55b1a734a0d5cedf630e02b542996ab97d217b7186299418018055e0ca7c"
+  }
+}

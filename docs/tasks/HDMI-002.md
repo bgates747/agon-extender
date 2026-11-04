@@ -1275,3 +1275,17 @@ phases from the same first failed refill. Existing copy timing mixes cache,
 driver admission, transfer and callback delay. The diagnostic preserves r22
 behavior and every guard; it supplies evidence before another timing remedy.
 Cursor/scaler, canonical qualification and actual Author visual review remain.
+
+### Recurrence during Eirene EMOS qualification — 2026-11-04
+
+The installed P4 upload-r02 build retains the earlier output composition. A
+complete EMOS migration qualification passes13 integrated checks and mode8, then
+8→20 stops the684×384 carrier at6frames: first budget fault1641us versus the
+unchanged1600us guard. Queue427us and DMA/IRQ1149us dominate the same failed
+refill. Raw-SD is uninvoked. [The owning qualification result](EMOS-001/QUALIFICATION-RESULT-R01.md)
+retains exact installed bytes, phases, failure, Agon-first/paired recovery and
+healthy Legacy cleanup. No firmware or startup change occurred. This recurrence
+does not prove a new Eirene defect or resolve the previously open HDMI cause.
+Retain the existing hardware-event observer plan rather than repeat rejected
+burst guesses or weaken the deadline. FSIM's Author-priority native-mainboard
+work uses recovered Legacy services while this independent P4 output work waits.

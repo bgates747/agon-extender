@@ -157,3 +157,17 @@ The [bounded reuse result](EMOS-001/TEST-REUSE-RESULTS-R01.md) passes nine
 existing host methods and three physical UART0/native-VDP cases. No broad
 compatibility, performance, full-pair qualification or production acceptance is
 implied. Canonical fixture/installation-provenance preparation remains next.
+
+## Full paired qualification authorization
+
+On2026-11-04 the Author explicitly authorizes preparation and full invocation
+without another readiness notification. This supersedes the earlier stop before
+invocation for this task. [Paired qualification plan](EMOS-001/QUALIFICATION-R01.md)
+owns the finite preparation, existing runner, evidence and restoration scope.
+
+The [first full attempt](EMOS-001/QUALIFICATION-RESULT-R01.md) completes14/25
+checks: all13 integrated services and mode8. Existing P4 HDMI budget failure
+blocks the remaining mode checks and raw-SD. No firmware/startup changes occur.
+Standing recovery and explicit cleanup restore healthy mode0/Legacy for the
+Author-priority FSIM mainboard work. Qualification remains failed/open; this is
+not an EMOS regression diagnosis or acceptance/promotion.
