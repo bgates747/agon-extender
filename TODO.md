@@ -9,9 +9,9 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests.
 
-## EMOS foundation — planning
+## EMOS foundation — migration
 
-- [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Author selects the future base. Inventory current EMOS deltas, audit RC2 ABI/ownership and ROM/RAM costs, then present a bounded migration plan. [Isolated candidate](docs/tasks/EMOS-001/R01-RESULTS.md) compiles/links and passes all four mandatory product checks;128098B ROM/2974B free. Runtime compatibility and integration review remain. No merge, firmware selection or bench changes.
+- [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Corrected r02 installed/full-ROM verified;2913B ROM free. [Reused tests](docs/tasks/EMOS-001/TEST-REUSE-RESULTS-R01.md) pass nine host methods and three physical UART cases. Complete paired-suite preparation, then stop at readiness before invocation; performance, broader compatibility and acceptance/promotion remain.
 
 ## Current corrective work — HDMI aspect
 

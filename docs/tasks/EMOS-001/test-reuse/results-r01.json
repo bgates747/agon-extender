@@ -1,0 +1,98 @@
+{
+  "schema": "emos001-reused-test-results-v1",
+  "status": "focused-compatibility-pass",
+  "installed_source_commit": "16ec1f78c7ead1f38378c5ee9bee4633bcb62c1d",
+  "installed_EMOS_build": "agon-emos-eirene-r02-b2026-11-04-08-17-43Z",
+  "installed_EMOS_full_ROM_sha256": "f62eed7f6bab8c164dcfe5e700132d289d52352f19d955acccbe1cff81b5e893",
+  "UART_source_commit": "825eaf77176247f5b5ba2f940ae73fcace34e7e5",
+  "UART_package_sha256": "48d2fefa319f174ab4368287e40743c7610a3aeac61c0e32653fa26858166cd4",
+  "host_selected_unittest_methods_passed": 9,
+  "host_selected_tests": "eight selections, console selection contains two methods",
+  "physical_cases": [
+    {
+      "case": "case-1",
+      "kind": "functional",
+      "passed": true,
+      "RUN_submission_to_returned_prompt_seconds": 9.933099173998926,
+      "retrieval_and_listener_handback_seconds": 6.444434384997294,
+      "proof": {
+        "original_UART_markers_verified": true,
+        "receiver_bytes_compared": 8192,
+        "callback_and_boundary_tests": true,
+        "keyboard_events_injected": false
+      }
+    },
+    {
+      "case": "case-2",
+      "kind": "functional",
+      "passed": true,
+      "RUN_submission_to_returned_prompt_seconds": 9.924316376003844,
+      "retrieval_and_listener_handback_seconds": 6.2966350150018116,
+      "proof": {
+        "original_UART_markers_verified": true,
+        "receiver_bytes_compared": 8192,
+        "callback_and_boundary_tests": true,
+        "keyboard_events_injected": false
+      }
+    },
+    {
+      "case": "case-3",
+      "kind": "example",
+      "passed": true,
+      "RUN_submission_to_returned_prompt_seconds": 3.6160576999973273,
+      "retrieval_and_listener_handback_seconds": 3.6914149340009317,
+      "proof": {
+        "original_C_example_PASS": true,
+        "work_count": 8,
+        "reported_xorshift_verified_with_UART_metrics": true
+      }
+    }
+  ],
+  "physical_start_utc": "2026-11-04T09:24:36.100506+00:00",
+  "physical_end_utc": "2026-11-04T09:25:57.729203+00:00",
+  "physical_total_host_seconds": 81.6287209660004,
+  "clock": "Pi monotonic seconds; includes CLI delivery/polling, no cross-processor calibration or performance inference",
+  "fixture_binaries": [
+    {
+      "kind": "functional",
+      "bytes": 28526,
+      "sha256": "26ca48652c4be4442003faffcba2f23c79a06c75defcd1b88435be1204606f45",
+      "fixture_identity": "emos001-r02-functional-277cda758801"
+    },
+    {
+      "kind": "example",
+      "bytes": 12573,
+      "sha256": "544a7f4245b798bc982f736498b547b548310ab4bb8db0567b8739aa9722d279",
+      "fixture_identity": "emos001-r02-example-aeff38fb5107"
+    }
+  ],
+  "evidence_sha256": {
+    "case-1/R0001.log": "0fc695181fde7be8b5cacebe8fa7dbff026ca21e223b30a1ddcbcfa79441e170",
+    "case-1/case-wire.bin": "8521a6106a35e3ebebabec6a31f27661cfd79e5f51abec8df51fdf7487deef1a",
+    "case-1/completion.bin": "eea1eb8cf020f9892830dc447d8c4bce63c5215d7da2a0a4baaff5dc1d7f7486",
+    "case-1/completion.json": "d6ac8809ffa51e8239925ecd43adb0185dfde95dc1395492e0de406c474bbfc6",
+    "case-1/next.txt": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+    "case-1/result.json": "864d7fb8d656dc329bf7dc722b8dafdc9adf532258dcec17d4b3bf5ce9c49bce",
+    "case-1/runs.log": "31308d7d0f76ed2a7d063886d95ba33ab25bb203f634ddf46e870f8174f6ec1d",
+    "case-2/R0001.log": "0fc695181fde7be8b5cacebe8fa7dbff026ca21e223b30a1ddcbcfa79441e170",
+    "case-2/case-wire.bin": "58136436eab3b2e11e06dc0bb3a5a9904790f27bcb77960d0a8139363ed9b109",
+    "case-2/completion.bin": "b7aa442de5c54ee5a35e4981535ef52d6c60a0773b6072957157439c17cb8109",
+    "case-2/completion.json": "d73ab5531970e0274317b9328c3d73840930fea640bee40c4716eaed55c13df9",
+    "case-2/next.txt": "df4e26a04a444901b95afef44e4a96cfae34690fff2ad2c66389c70079cdff2b",
+    "case-2/result.json": "dca8124173a75346209fad0312bd227807c071e8e26d83f706ebd3160df194fe",
+    "case-2/runs.log": "31308d7d0f76ed2a7d063886d95ba33ab25bb203f634ddf46e870f8174f6ec1d",
+    "case-3/case-wire.bin": "fc461e57b71fd9e8329792f265c76223bd3124c6500ab79d518dcfa6b30a0da3",
+    "case-3/completion.bin": "30aa5d60ceaa68fd27b3cefd7775e5015cbe44dbc87172a4564f4e42d7a04e0b",
+    "case-3/completion.json": "6ba7c7e03e51c6b50cab205418c162f8abdafbcb195f089c8efbcdb30ee67add",
+    "case-3/result.json": "542000cf2129e91dfcb9c511a408b912eb531fc5cae55e4419a42ec488c0a1bf",
+    "final-idle.json": "d22fed41d2082c24fbb28ef581016ef41bec85493e647a6afe09e3a125353368",
+    "final-staged-status.json": "39e6dd2143455dd3ef3a9cb6d4a1172d06561b2164ba8e53d389df4aa9c35153",
+    "mainboard.bin": "a938d2cfa8af2bdb0635b7aa8421b1b103ee73862c99de4aea974d855af2a1b2",
+    "oracle-source.json": "a61eef8f9a4a47937e97266adca361b6a5efb66a688f61afdcd26a010e189ee6",
+    "summary.json": "316f51fa66b4ab10de55a298124c78571792b02d234b215250bc2832bc554c32"
+  },
+  "full_paired_qualification_invoked": false,
+  "PERF2_invoked": false,
+  "firmware_or_startup_changed": false,
+  "Author_visual_acceptance_claimed": false
+}

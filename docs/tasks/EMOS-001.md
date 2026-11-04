@@ -146,9 +146,14 @@ RST-hook experiments remain separate until assigned.
    immutable bundle and agreed release version/tag precede production selection.
    Retain a verified rollback to the exact incoming installation throughout.
 
-## Current offline checkpoint
+## Current execution checkpoint
 
-The isolated composition compiles/links and all four mandatory linked checks
-pass. See the result for128098B ROM,4284B total static RAM and exact hashes.
-No emulator/hardware invocation, merge, deployment or promotion occurs. All Pi
-leases are released. Compatibility execution and integration review remain.
+Corrected experimental r02 is installed and fully read back; normal boot, input
+and foreground SD service pass. All five linked validators pass. The Author
+now authorizes the next tranche, explicitly reusing both Extender and UART's
+existing tests. [Reuse/readiness tranche](EMOS-001/TEST-REUSE-R01.md) owns the
+selected coverage, adapters, resource limits and full-suite readiness stop.
+The [bounded reuse result](EMOS-001/TEST-REUSE-RESULTS-R01.md) passes nine
+existing host methods and three physical UART0/native-VDP cases. No broad
+compatibility, performance, full-pair qualification or production acceptance is
+implied. Canonical fixture/installation-provenance preparation remains next.
