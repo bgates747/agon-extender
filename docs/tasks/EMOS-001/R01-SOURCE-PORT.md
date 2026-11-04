@@ -40,9 +40,12 @@ not a new regeneration layer. No prepared/generated builder tree was edited.
 
 ## Remaining limits and next evidence
 
-Pi request f75c7d98ee77 waits behind existing reservations. UART contract review
-and Pi request are delivered durably; both steering alerts fail because the
-chat notification transport is unavailable. No lease is inferred from silence.
+Pi request f75c7d98ee77 is transferred by Author instruction to Oryx request
+ea58b0bf482e, preserving order behind existing work. Native x86 compiler LLVM
+revision and runtime-library hash match the Pi tools. All631 prepared input
+files are independently hashed after staging, with a fresh native interpreter.
+The original chat-alert failures are historical; notification now works. No
+lease is inferred from silence, and no compilation starts before FIFO checkout.
 
 The next admitted build compares pristine RC2 and this exact composition,
 then runs mandatory linked checks and records ROM/static RAM costs. A build
