@@ -6,6 +6,7 @@
 #include <string.h>
 #include "build_identity.h"
 #include "mode_lifecycle.hpp"
+#include "endpoint.hpp"
 extern "C" uint24_t bench_clock(const volatile uint8_t*);
 extern "C" uint24_t bench_count(const uint8_t*,uint24_t);
 static volatile uint8_t*sysvars;
@@ -73,16 +74,10 @@ static uint8_t wait_reply(){
 static uint8_t request(uint8_t kind,const uint8_t*p=nullptr,uint8_t n=0){
     auto r=agon_net_submit(&client,kind,p,n);return r?r:wait_reply();
 }
-static bool parse(const char*s,uint8_t*address){
-    unsigned a,b,c,d,port;char tail;
-    if(sscanf(s,"%u.%u.%u.%u:%u%c",&a,&b,&c,&d,&port,&tail)!=5||
-       a>255||b>255||c>255||d>255||!port||port>65535)return false;
-    address[0]=a;address[1]=b;address[2]=c;address[3]=d;address[4]=port;address[5]=port>>8;return true;
-}
 int main(int argc,char**argv){
     puts(NETPROBE_BUILD_ID " [experimental]");
     if(argc!=3){puts("Usage: netprobe IPv4:port /agents/extender/results/FRESH.txt");return 19;}
-    uint8_t address[6];if(!parse(argv[1],address)){puts("Invalid numeric IPv4:port");return 19;}
+    uint8_t address[6];if(!parse_endpoint(argv[1],address)){puts("Invalid numeric IPv4:port");return 19;}
     // Restrict result writes to the reserved evidence subtree, never card root.
     if(strncmp(argv[2],"/agents/extender/results/",25)||strstr(argv[2],".."))return 19;
     FILE*prior=fopen(argv[2],"rb");if(prior){fclose(prior);puts("Result already exists");return 19;}

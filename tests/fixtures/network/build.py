@@ -29,6 +29,7 @@ def main():
     (source/'agon').mkdir(parents=True)
     inputs = {
         'main.cpp':'tests/fixtures/network/main.cpp',
+        'endpoint.hpp':'tests/fixtures/network/endpoint.hpp',
         'mode_lifecycle.hpp':'tests/fixtures/scroll/mode_lifecycle.hpp',
         'mos_io.asm':'tests/fixtures/controller/mos_io.asm',
         'net_callback.asm':'include/agon/net_callback.asm',

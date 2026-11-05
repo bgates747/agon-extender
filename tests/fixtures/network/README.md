@@ -41,3 +41,11 @@ source353c0ae5; physical invocation is still pending. Earlier binaries remain
 preserved and are not selected for deployment.
 NET-003 owns matched component qualification and custody; no standalone demo
 readiness or production acceptance is claimed.
+
+The first r02 invocation returned cleanly at argument validation, before mode or
+network activity. Its inherited AgonDev `sscanf` treats a string NUL as a
+successful trailing `%c`; the fixture now uses `endpoint.hpp` for exact decimal
+IPv4/port parsing. Preserve that failed build as evidence. Build the corrected
+source with a fresh UTC timestamp under the same approved r02 identity. The
+host controller must recognize early diagnostic plus actual CLI return and
+close its own passive reader before checking for free USB ports.
