@@ -19,5 +19,7 @@ unsigned net003_example_open(void){
 }
 unsigned net003_example_close(void){
     unsigned r=agon_net_release(&client); /* Disable NM delivery first. */
-    mos_setkbvector(agon_net_callback_previous,0);return r;
+    if(r)return r; /* Caller must retain this live router/static state on refusal.
+                      No automatic retry or safe-exit guarantee for bad callers. */
+    mos_setkbvector(agon_net_callback_previous,0);return 0;
 }

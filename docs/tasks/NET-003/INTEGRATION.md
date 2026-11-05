@@ -72,14 +72,14 @@ code or allocate a game decoder. Keep official MOS/VDP references read-only.
 Official MOS API baseline remains agon-docsf9806bd3, existing product gateway
 contract and native Eirene source/linked UART-divisor checks control this work.
 
-N03-MATCH-006 [ ] Under Pi compile FIFO, run actual P4 peer + actual EMOS C +
+N03-MATCH-006 [x] Under Pi compile FIFO, run actual P4 peer + actual EMOS C +
 actual application-client host pipeline with fake transport, unsafe-buffer,
 backpressure, empty/full-binary, stale/wrong-query, failure and exit cases.
 Compile native C application binding and full EMOS wrapper mandatory checks;
 compile P4 source with actual SDK, then identified matched full build separately.
 Record start/end, source/build pins, ROM/RAM and exact qualification limits.
 
-N03-MATCH-007 [ ] Publish logical checked source checkpoints. Preserve previous
+N03-MATCH-007 [x] Publish logical checked source checkpoints. Preserve previous
 accepted/installed bytes, task evidence and unrelated dirty work. Report the
 actual usable interface and unsupported boundary to MechAgon immediately.
 
@@ -156,7 +156,7 @@ explicit: application input remains stable through the foreground serializer
 call; no application pointer survives it. App callback copies borrowed reply
 bytes before ISR return and invokes no blocking service.
 
-N03-MATCH-012 [ ] Repeat actual endpoint/client pipeline and mandatory native
+N03-MATCH-012 [x] Repeat actual endpoint/client pipeline and mandatory native
 linked gates, preserving existing controller and keyboard behavior. Measure ROM
 against both starting corrected Eirene and rejected-cost candidate. Publish the
 replacement C header and exact changed EMOS identity before consumer linkage.
@@ -188,7 +188,7 @@ saving is1092B (53.93% of the initial added ROM). All five linked gates pass.
 The generic native echo fixture compiles/links23819B, with exact source/tool
 manifest retained; no application/peer has been invoked on hardware.
 
-N03-MATCH-013 [ ] Finish the interrupted P4 native build using its existing,
+N03-MATCH-013 [x] Finish the interrupted P4 native build using its existing,
 unchanged generated ESP-IDF/Ninja project and exact frozen source17388d7f.
 The wrapper's external watchdog expired after linking, before packaging; do not
 pretend the original wrapper completed. Under a new finite compile reservation,
@@ -197,3 +197,25 @@ canonical factory assembler and full action validator with the original flags.
 Retain separate completion journal and exact output hashes, documenting this
 one-time build recovery rather than creating a second editable source builder.
 No hardware write follows merely from producing an ELF or action report.
+
+P4 completion succeeds under fresh compile generation127:44.41s for serial
+native resume plus canonical factory assembly/action validation. Frozen source,
+SDK configuration, dependency lock, board inputs and identity remain unchanged;
+source17388d7f, app1711424B. Original outer wrapper remains honestly recorded as
+interrupted; its completion journal is separate. Owned build children joined
+and both compute leases released. A byte-verified matched development package
+retains P4 app/factory/proof, identified r04 EMOS, native fixture and public SDK.
+This is software readiness only; no current bench component, installation,
+physical API, input coexistence or game runtime is inferred.
+
+RELEASE success proves NM disabled synchronously, independent of link/mode/fault.
+A nonzero caller/gateway refusal does not prove disable. App-exit independently
+resets admission, after app cleanup; do not claim an earlier callback restoration
+is atomic with it. The consumer is given this precise limit and owns any selected
+injected-refusal cleanup policy before testing that case. No hidden retry or new
+resident fallback is added for hypothetical unsupported callers.
+
+N03-MATCH-014 [ ] Before selecting a RELEASE-refusal hardware case, agree the
+application-owned terminal cleanup path with its consumer. Normal in-contract
+close remains independent of physical failures. The shared close example keeps
+its live router on refusal; no unconditional prior-vector restoration is taught.

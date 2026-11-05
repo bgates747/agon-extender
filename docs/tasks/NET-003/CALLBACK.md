@@ -36,3 +36,21 @@ The existing MOS callback is reused, with no new resident application pointer.
 9. Actual composed host checks, native C/assembly compilation and required EMOS
    linked gates must pass for the corrected checkpoint. Software checks do not
    establish physical timing or current installed compatibility.
+
+## Release error boundary
+
+A successful valid foreground RELEASE clears NM admission before returning,
+including UART/link failure, route change and already-released state. No P4
+response is needed. A nonzero gateway/caller refusal is NOT disable evidence;
+report uncertain cleanup rather than asserting otherwise. Normal app-exit also
+clears NM, but occurs after app cleanup and does not make earlier vector restore
+atomic. In-contract foreground calls with static ordinary buffers and enabled
+IRQs do not receive a hardware-related RELEASE error. A selected refusal/fault
+injection needs an explicit app-owned terminal policy; no hidden retry is implied.
+
+The maintained close example restores the previous vector only on zero RELEASE.
+On refusal it returns the error while retaining its live router/static state;
+its caller must resolve the refusal before exiting/freeing that state. This is
+an explicit API failure boundary, not a claim that returning from a failed close
+has completed application cleanup. No refusal test is admitted by the normal
+finite hardware echo proof.
