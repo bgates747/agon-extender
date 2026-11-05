@@ -35,8 +35,9 @@ schema. Source preparation does not authorize deployment or invocation.
    They are not synchronized latency measurements. The finite socket/run bounds
    are failure gates, not estimated time or permission for resets/replays.
 
-Current state: original native compile/link passes; corrected close-refusal
-source awaits native rebuild and approval of proposed fixture revision r02.
+Current state: original and corrected close-refusal native compile/link pass;
+the corrected source-check build is explicitly unversioned. Approval of proposed
+fixture revision r02 and an identified build remain pending before deployment.
 The earlier binary remains preserved and is not selected for deployment.
 NET-003 owns matched component qualification and custody; no standalone demo
 readiness or production acceptance is claimed.

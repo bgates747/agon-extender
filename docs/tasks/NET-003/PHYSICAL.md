@@ -5,9 +5,13 @@ The Author's resident-cost correction is a dependency: never deploy the earlier
 large resident candidate merely because its build passed. No target action is
 selected by this preparation document alone.
 
-N03-PHYS-001 [ ] Finish corrected EMOS/public callback host/native checks and
+N03-PHYS-001 [x] Finish corrected EMOS/public callback host/native checks and
 freeze exact source/build identities. P4's explicit matched composition retains
 normal HDMI and dual USB/controller input. Preserve all mandatory linked gates.
+The reset-configured P4 completion and identified EMOS r04 are frozen in a
+local-only verified development pair. This is software preparation, not a current
+installed identity or physical qualification. Corrected generic probe source
+also compiles; its proposed revision/identified deployment remains pending.
 
 N03-PHYS-002 [ ] Reconcile Smith's manual6502 exit from retained owner records and
 fresh scheduler observation. Mainboard VDP, card presence, active app, entry mode,

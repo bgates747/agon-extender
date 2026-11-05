@@ -215,12 +215,12 @@ is atomic with it. The consumer is given this precise limit and owns any selecte
 injected-refusal cleanup policy before testing that case. No hidden retry or new
 resident fallback is added for hypothetical unsupported callers.
 
-N03-MATCH-014 [ ] Before selecting a RELEASE-refusal hardware case, agree the
+N03-MATCH-014 [x] Before selecting a RELEASE-refusal hardware case, agree the
 application-owned terminal cleanup path with its consumer. Normal in-contract
 close remains independent of physical failures. The shared close example keeps
 its live router on refusal; no unconditional prior-vector restoration is taught.
 
-N03-MATCH-015 [ ] Preserve the existing browser reset controls in the candidate
+N03-MATCH-015 [x] Preserve the existing browser reset controls in the candidate
 before deployment. The first checked P4 composition omitted the private reset
 URL metadata required by the browser; retain that build as software evidence,
 but do not select it for installation. Use the maintained builder's existing
@@ -243,7 +243,7 @@ compile/link the corrected source under the serial build lease and preserve the
 previous fixture bytes. Proposed fixture revision r02 awaits Author naming
 approval before identified deployment; do not silently advance the registry.
 
-N03-MATCH-017 [ ] Finish the unchanged reset-configured P4 project after its
+N03-MATCH-017 [x] Finish the unchanged reset-configured P4 project after its
 outer guard receives external SIGTERM at435.29 seconds, before canonical build
 completion. The sender/cause is unknown; no thermal/RAM limit or hardware fault
 is inferred. Native child-tree/start-identity inspection confirms no remaining
@@ -253,3 +253,29 @@ journal, release its compile slot, and use a fresh finite reservation for exact
 serial Ninja completion plus canonical assembly/action validation as in
 N03-MATCH-013. Retain separate completion proof and reset-metadata verification;
 never claim that the interrupted outer wrapper produced a complete manifest.
+
+## Reset-configured completion and probe correction — 2026-11-05 UTC
+
+Fresh compile generation130 completes the exact retained native project,
+canonical factory assembly/action validation and corrected native probe check
+in512.95s. Source17388d7f remains clean; P4 build
+net-003-r01-b2026-11-05-01-16-07Z produces1711456B. Embedded reset metadata and
+actual application bytes contain the unchanged private configured endpoint.
+The observer follows742 actual child/start identities across process groups;
+all children are stopped before release, next request null. The interrupted
+generation129 wrapper remains failed evidence; no complete outer manifest is
+fabricated. A separate verified local-only package retains completion proof,
+P4 app/factory, unchanged identified EMOS r04 and unchanged public SDK.
+
+The corrected probe compiles/links24093B with an explicit unversioned banner
+and result identity. It is source-check evidence only and must not be deployed.
+N03-MATCH-016 remains open for proposed r02 naming approval and an identified
+build. No refused-close case is injected or hardware behavior claimed. MechAgon
+accepts retaining its live app callback/static RAM in a reported terminal wait
+on refusal, with IRQs enabled, no further requests and admitted owner recovery;
+its corrected native r03 is separately built by its owner.
+
+Driver questions about bounded post-manual reconciliation and the probe name
+remain unanswered. No physical grant, reset, install, card access or application
+invocation follows from these software passes. Current installed component and
+foreground identities remain unknown; production selection is unchanged.
