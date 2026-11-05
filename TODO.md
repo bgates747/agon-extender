@@ -13,6 +13,8 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Plan published before code; bounded core and stopped outbound TCP adapter pass host sanitizer/loopback and actual P4 object compilation. Author accepts outbound TCP to Pi; payload/EMOS envelope/app library and worker integration remain. No firmware deployment or production selection.
 
+- [ ] **[NET-004 — Parallel application network carrier](docs/tasks/NET-004.md)** — Author requires bidirectional parallel payload with Legacy UART0 graphics; ABI delegated to Extender/MechAgon. Plan first, then narrow owner implementation and normal qualification; no UART payload fallback.
+
 ## EMOS foundation — migration
 
 - [ ] **[EMOS-001 — Rebase EMOS onto Eirene with asynchronous UART and OTIRX](docs/tasks/EMOS-001.md)** — Corrected r02 installed/full-ROM verified;2913B ROM free. [Reused tests](docs/tasks/EMOS-001/TEST-REUSE-RESULTS-R01.md) pass nine host methods and three physical UART cases. [Full paired attempt](docs/tasks/EMOS-001/QUALIFICATION-RESULT-R01.md) passes14/25, blocked by the existing P4 HDMI mode8→20 deadline fault; raw-SD uninvoked. Healthy Legacy services restored for FSIM priority. Complete HDMI repair, a new full run, manual review and acceptance/promotion later.
