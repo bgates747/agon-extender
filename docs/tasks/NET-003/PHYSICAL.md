@@ -5,6 +5,31 @@ The Author's resident-cost correction is a dependency: never deploy the earlier
 large resident candidate merely because its build passed. No target action is
 selected by this preparation document alone.
 
+## Author clarification — 2026-11-05
+
+Smith explicitly approves the normal reset-to-MOS reconciliation and the
+network-echo-probe-r02 name, and clarifies that routine resets almost never
+need separate approval. The original human reply is independently verified;
+its source identifiers are retained in the ignored authorization record.
+This later instruction controls the earlier overly broad unknown-state stop.
+Do not repeat that permission question for ordinary authorized reconciliation.
+
+N03-PHYS-009 [ ] Under exclusive Extender scheduler admission (registry vacant,
+own existing request first; assert that condition before each action), perform
+the approved one normal Agon reset, then establish actual CLI/card/startup and
+preserve component identities/backups before granting installation custody.
+Do not claim old hashes are current or invent an idle grant to obtain them.
+This bounded pre-grant reconciliation supplies the evidence required by the
+central normal grant; it is not a consumer test or firmware installation lease.
+Leave startup unchanged. If boot launches unexpected work, stop dependent
+commands and record it. Preserve the initial observation and actual reset result;
+apply ordinary monitored recovery only if that first reset fails.
+
+N03-PHYS-010 [ ] Register the approved r02 fixture, commit its source/identity
+before a fresh identified build from a clean checkout, retain exact binary/tool
+pins, and deploy only under the eventual installation lease. The prior unversioned
+check remains evidence; it is not renamed or deployed.
+
 N03-PHYS-001 [x] Finish corrected EMOS/public callback host/native checks and
 freeze exact source/build identities. P4's explicit matched composition retains
 normal HDMI and dual USB/controller input. Preserve all mandatory linked gates.
