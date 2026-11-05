@@ -117,7 +117,7 @@ and joined reader/free USB checks pass. This is ordinary successful TCP/message
 proof; Escape, fault injection, controller exercise and optical quality are not
 claimed. Production is unchanged; no game is invoked by this result.
 
-N03-PHYS-011 [ ] Review and incorporate MechAgon's selected existing-protocol
+N03-PHYS-011 [x] Review and incorporate MechAgon's selected existing-protocol
 feature2 snapshot leaf under retained actual Extender custody. Validate exact
 owner source/build and unchanged donor pins before staging its13713B application.
 Admit disposable buffer58670 across resource users from the known clean startup
@@ -148,7 +148,7 @@ until the selected game has actually run and cleaned up. Exact selected native
 application is staged/compared without invocation; driver must supply its actual
 final plan, fresh Pi resource admission and explicit readiness before RUN.
 
-N03-PHYS-012 [ ] Remove asynchronous agent-turn delay from the selected one-shot
+N03-PHYS-012 [x] Remove asynchronous agent-turn delay from the selected one-shot
 consumer admission without changing firmware, the game or its deadlines.
 Source preparation first: implement a small reusable finite host marker gate,
 with an Extender-owned adapter validating the exact selected plan/request,
@@ -174,3 +174,59 @@ for fresh valid dispatch, stale/wrong identities, notification failure, timeout,
 cancellation, duplicate arm and invocation exception (never a second RUN).
 Host checks must execute the real gate with injected observation/invocation;
 no real marker watcher, service, target or arena is armed by those checks.
+
+## First actual consumer run and fault cleanup — 2026-11-05
+
+The finite R04 receiver validates actual Pi generation140, all selected inputs,
+accepted START/GO and the original registration deadline before issuing exactly
+one native RUN. The receiver dispatches about2.18s after original readiness;
+there is no competing manual invocation or deadline extension. Earlier admissions
+137/138/139 execute no native game; they remain separate evidence.
+
+The mainboard application makes508 decisions and returns result4 with an ordered
+fault teardown receipt, actual CLI, raw callbackzero and unchanged startup.
+MechAgon reports one official match and is investigating terminal negative-energy
+encoding on Pi; this is not a normal game-exit or complete consumer pass.
+The owner invocation leaf preserves failure and does not replay. Its failure
+path closes the capture but skips the later success-only ports receipt; a fresh
+owner observation independently confirms stopped actors and free ports before
+any cleanup action. Do not infer device activity from that missing success file.
+
+The selected post getter is admitted from actual ordered teardown/CLI/callback
+proof, rather than requiring a successful game result. This narrow cleanup gate
+preserves the original failure. One invocation returns snapshot-ok/status0,
+raw words0/65535, presence0/value0, ordered clear1, callback restoration1 and
+retainedbuffer0: exact pre-state agreement. Runner restores earlier mode0 with
+more than one second settling; independent raw mode0/callbackzero, startup,
+actual CLI/read/EXIT, neutral input, idle worker and joined readers/free ports
+pass. No reset, game replay, firmware replacement or startup edit occurs.
+
+Actual bench custody remains with Extender; the installed development pair is
+retained pending the selected next qualification/handoff disposition. Consumer
+success and N03-PHYS-008 remain open. A new consumer attempt requires a fresh
+source-reviewed plan and owner output/GO/preparation records; old R04 evidence
+and the failed result must remain immutable. R05 source/data preparation alone
+permits no receiver arm, native invocation or live demonstration.
+
+N03-PHYS-013: Prepare the separately reviewed R05 attempt with fresh owner-local
+GO, conditional output, native invocation, loaded-state and graphics evidence.
+Reuse the source-selected one-RUN leaf and finite180/235/280s admission/native/
+child bounds. Preserve R04 source and every original journal. Before reusing the
+unchanged application's fixed SD receipt filenames, independently compare the
+three known R04 receipts, move them to new retained archival paths through the
+listener, compare their archived bytes and require the original names absent.
+Never delete unknown files or accept a stale receipt as fresh. Stage/compare
+fresh R05 SAVE batches, and retain startup and all installed components.
+
+After publishing this source preparation, the driver selects ordinary fresh
+physical preparation under retained custody: mode20 plus at least one second
+settling, raw entry-mode/callback proof, one fresh pre getter on58670, exact
+featureabsence, native binary readback and LOAD at actual CLI. Do not claim the
+current getter RAM is the native application. Refresh graphics provenance from
+source-bound ordered teardown, exact post readback, mode restoration and the
+exclusive command history; do not invent per-slot optical/runtime queries.
+Return fresh source/runtime/loaded/graphics pins before final plan/descriptor
+review. No ARM/RUN, arena, demonstration, reset or firmware change belongs to
+this preparation. A different long-duration demo needs its own finite leaf,
+deadlines, actual custody/cleanup contract and selected source; no235s leaf
+reuse or unrecorded running handoff. [ ]
