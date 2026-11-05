@@ -7,6 +7,9 @@ schema. Source preparation does not authorize deployment or invocation.
 1. Build `main.cpp` with the public `include/agon/net.h`, application router
    `include/agon/net_callback.asm`, existing controller fixture `mos_io.asm`
    and existing scroll `mode_lifecycle.hpp`. Preserve exact source pins.
+   Pass the approved fixture identity and actual UTC timestamp with `--build-id`;
+   the builder embeds it in the start banner, durable result and build manifest.
+   The default unversioned build is for source checking and must not be deployed.
 2. The fixture queries/saves entry mode, conditionally selects mode20, waits at
    least one monitor-settling second after switches and restores entry/CLI.
    Double-buffered entry is explicitly refused by the reused lifecycle helper.

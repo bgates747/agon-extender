@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include "build_identity.h"
 #include "mode_lifecycle.hpp"
 extern "C" uint24_t bench_clock(const volatile uint8_t*);
 extern "C" uint24_t bench_count(const uint8_t*,uint24_t);
@@ -79,6 +80,7 @@ static bool parse(const char*s,uint8_t*address){
     address[0]=a;address[1]=b;address[2]=c;address[3]=d;address[4]=port;address[5]=port>>8;return true;
 }
 int main(int argc,char**argv){
+    puts(NETPROBE_BUILD_ID " [experimental]");
     if(argc!=3){puts("Usage: netprobe IPv4:port /agents/extender/results/FRESH.txt");return 19;}
     uint8_t address[6];if(!parse(argv[1],address)){puts("Invalid numeric IPv4:port");return 19;}
     // Restrict result writes to the reserved evidence subtree, never card root.
@@ -89,7 +91,7 @@ int main(int argc,char**argv){
     bool ok=mode.begin({20,512,384,64});uint8_t error=0;unsigned passed=0;bool callback=false;
     const auto start=ticks();
     if(ok){const uint8_t text[]={4,17,15,17,128,12};ok=write_bytes(text,sizeof(text));}
-    puts("Network echo probe r01 - mainboard mode20");
+    puts("Network echo probe - mainboard mode20");
     puts("Four binary lengths; Escape cancels. No automatic replay.");
     if(ok){
         error=agon_net_begin(&client);ok=!error;
@@ -124,16 +126,16 @@ int main(int argc,char**argv){
         // into unloaded app RAM. Retain this router/static state for admitted
         // owner recovery, with no replay or automatic reset. Normal in-contract
         // foreground RELEASE is local and independent of physical link health.
-        fprintf(result,"netprobe close refused release=%u passed=%u/4 terminal_wait=1\n",
-                unsigned(released),passed);
+        fprintf(result,"%s close refused release=%u passed=%u/4 terminal_wait=1\n",
+                NETPROBE_BUILD_ID,unsigned(released),passed);
         fclose(result);
         puts("Network echo probe: close refused; owner recovery required.");
         for(;;)__asm__ volatile("ei\n\thalt" ::: "memory");
     }
     if(callback)mos_setkbvector(agon_net_callback_previous,0);
     bool restored=mode.restore();
-    fprintf(result,"netprobe-r01 passed=%u/4 result=%s error=%u release=%u restore=%u elapsed_ticks=%lu tick_hz_nominal=120\n",
-            passed,ok&&restored?"PASS":"FAIL",unsigned(error),unsigned(released),unsigned(restored),(unsigned long)elapsed);
+    fprintf(result,"%s passed=%u/4 result=%s error=%u release=%u restore=%u elapsed_ticks=%lu tick_hz_nominal=120\n",
+            NETPROBE_BUILD_ID,passed,ok&&restored?"PASS":"FAIL",unsigned(error),unsigned(released),unsigned(restored),(unsigned long)elapsed);
     const bool saved=fclose(result)==0;
     puts(ok&&restored&&saved?"Network echo probe PASS":"Network echo probe FAIL");
     printf("Result: %s; %lu nominal120Hz ticks\r\n",argv[2],(unsigned long)elapsed);
