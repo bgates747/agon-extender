@@ -127,3 +127,10 @@ runs finite jobs at an eligible idle CLI in Legacy/negotiated ExCom. See the
 [mainboard SD guide](../docs/mainboard-sd.md) for setup, commands and bounded
 qualification. `p4sd.py` on port 8080 manages the separate P4-local card. Neither
 new service is in selected production v0.1.0.
+
+[conditional_go.py](conditional_go.py) and
+[bench_conditional_go.py](bench_conditional_go.py) provide an experimental finite
+host admission gate and owner adapter. They are not ordinary launchers or bench
+grants. The [bounded receiver contract](../docs/tasks/NET-003/CONDITIONAL-GO.md)
+requires a frozen executable plan, actual separate leases, an explicitly selected
+owner arm descriptor and a single peer marker; source tests do not arm it.
