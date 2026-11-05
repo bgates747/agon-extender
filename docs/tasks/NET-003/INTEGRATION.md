@@ -242,3 +242,14 @@ Normal successful close still restores the prior callback and entry mode. Native
 compile/link the corrected source under the serial build lease and preserve the
 previous fixture bytes. Proposed fixture revision r02 awaits Author naming
 approval before identified deployment; do not silently advance the registry.
+
+N03-MATCH-017 [ ] Finish the unchanged reset-configured P4 project after its
+outer guard receives external SIGTERM at435.29 seconds, before canonical build
+completion. The sender/cause is unknown; no thermal/RAM limit or hardware fault
+is inferred. Native child-tree/start-identity inspection confirms no remaining
+owned compiler after interruption. Ninja creates child process groups, so group
+membership alone is insufficient cleanup evidence. Preserve the failed wrapper
+journal, release its compile slot, and use a fresh finite reservation for exact
+serial Ninja completion plus canonical assembly/action validation as in
+N03-MATCH-013. Retain separate completion proof and reset-metadata verification;
+never claim that the interrupted outer wrapper produced a complete manifest.
