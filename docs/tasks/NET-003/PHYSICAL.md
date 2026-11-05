@@ -68,7 +68,7 @@ callback/visible flashing CLI. Record peer/app bytes and durations, then finite
 ordinary keyboard/controller coexistence within its own selected proof. Host
 compilation alone is not input, socket or mainboard rendering qualification.
 
-N03-PHYS-007 [ ] On generic success coordinate exact MechAgon binary readiness and
+N03-PHYS-007 [x] On generic success coordinate exact MechAgon binary readiness and
 Pi driver's separate resource admission. Proposed arrangement retains Extender
 physical operating custody for one exact reviewed consumer invocation, while
 MechAgon owns arena/controller/game evidence. No arena starts from this task or
@@ -253,3 +253,32 @@ one-arm instruction remain required; there is no active receiver or consumer.
 The runner owns final restoration to earlier mode0 after the next admitted run
 or cancellation. Long-duration demonstration source and custody selection remain
 separate from this stopped preparation and cannot reuse its235s native leaf.
+
+
+## Normal consumer exit, exact cleanup and safe stop
+
+R05 uses a fresh final plan and one finite receiver arm after the two owners'
+source/data review. Actual Pi generation144 and the original deadline validate;
+the receiver dispatches the single native RUN about2.06s after readiness. The
+mainboard records600 decisions, result0 and ordered game-end teardown, actual
+CLI, raw callbackzero/mode20 and unchanged startup. MechAgon reports600 observer
+ticks and599 received/submitted intents: the terminal STATE/GAME_END arrives
+before the final intent is read. Preserve that distinction; no claim of600
+correlated or executed intents, no hidden rerun and no optical acceptance.
+
+One fresh post getter matches exact pre featureabsence, words0/65535/value0,
+ordered clear, restored callback and no retained temporary buffer. Runner
+restores earlier mode0 with settling; independent raw mode/callback, startup,
+actual CLI/read/EXIT, neutral input, offline listener, idle worker and joined
+readers/free USB pass. All these selected hardware steps finish under physical
+custody before actual generation36 release. Pi release is separate and owned
+by MechAgon. Exact R04 failure and R05 success/limits remain retained.
+
+At the Author's requested safe stocktake stop, Extender releases the idle bench
+with explicit current installed-development-pair provenance, unchanged native
+VDP/startup/listener and exact incoming rollback backups retained. This handback
+is not component production acceptance, a firmware rollback or full NET-003
+qualification. Broader fault/Escape/input checks and final component adoption/
+rollback disposition remain open. No new native game, receiver arm or demo
+implementation proceeds from this checkpoint. The queued successor requires a
+fresh scheduler grant; the former Extender token is invalid after release.
