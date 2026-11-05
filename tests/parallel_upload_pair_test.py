@@ -15,11 +15,15 @@ class UploadPairTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             directory = Path(temporary)
             prepare_sdk(directory)
-            includes = [f"-I{directory}", f"-I{EMOS / 'tests/host'}",
+            (directory / "ez80f92.h").write_text('#include "eZ80.h"\n')
+            (directory / "ff.h").write_text("enum {FR_OK=0,FR_TIMEOUT=15,FR_INVALID_PARAMETER=19};\n")
+            includes = [f"-I{directory}", f"-I{ROOT.parent / 'agon-emos/tests/host'}",
                         f"-I{EMOS / 'src'}", f"-I{EMOS / 'src_fatfs'}", f"-I{ROOT / 'vdp/video'}"]
             flags = ["-Wall", "-Wextra", "-Werror", "-Wno-endif-labels",
-                     "-ffunction-sections", "-fdata-sections", "-DMOS_DEFINES_H=1", "-DEMOS_BUSY=31", "-DEMOS_UNAVAILABLE=35",
+                     "-ffunction-sections", "-fdata-sections", "-DMOS_DEFINES_H=1", "-DMOS_AGONDEV_LOWERCASE_EZ80_H=1", "-DEMOS_BUSY=31", "-DEMOS_UNAVAILABLE=35",
                      "-fsanitize=address,undefined", "-fno-sanitize-recover=all"]
+            if os.environ.get("AGON_NETWORK_PARALLEL"):
+                flags += ["-DEMOS_NETWORK_PARALLEL=1"]
             objects = []
             for name in ("emos_parallel_upload", "emos_parallel_handover"):
                 target = directory / (name + ".o")

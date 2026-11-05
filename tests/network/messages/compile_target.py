@@ -38,6 +38,9 @@ def main():
         i += 1
     if args.compiler:
         command[0] = str(args.compiler.resolve())
+    # Retained builds may reference a frozen worktree. Probe the maintained
+    # implementation first, rather than silently compiling that old copy.
+    command[1:1] = ['-I'+str(root/'vdp/video')]
     start = time.monotonic_ns()
     report = {'started_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
               'scope': 'objects only, retained build headers/config; no firmware link or execution',

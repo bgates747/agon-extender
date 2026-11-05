@@ -1,6 +1,15 @@
 #if defined(AGON_EXTENDER_NETWORK_MESSAGES)
 #include "extender/network/messages/api.hpp"
 #endif
+#if defined(AGON_EXTENDER_NETWORK_PARALLEL)
+#if !defined(AGON_EXTENDER_NETWORK_MESSAGES) || !defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE) || defined(AGON_EXTENDER_EXEXT_STREAM) || defined(AGON_EXTENDER_PARALLEL_PROBE) || defined(AGON_EXTENDER_PARALLEL_DATA_CHECK)
+#error "netp requires the ordinary network/parallel boot owners and excludes stream/probe consumers"
+#endif
+#include "extender/network/messages/runtime.hpp"
+#include "extender/network/messages/parallel_service.hpp"
+#include <optional>
+static std::optional<agon::extender::network::messages::ParallelService<agon::extender::network::messages::Runtime>> console_netp;
+#endif
 #include "extender/network/screen_text.hpp"
 #if defined(AGON_EXTENDER_TELEMETRY)
 #include "../telemetry/target.hpp"
@@ -97,7 +106,16 @@ bool consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   if(agon::extender::controller::applianceRequest(p))return true;
 #endif
   uint8_t reply[CONSOLE_SIZE];
+#if defined(AGON_EXTENDER_NETWORK_PARALLEL)
+  if(console_netp->ownsControl(p)) {
+    if(!console_netp->request(p,reply,!console_stream->session.active(),millis()))return false;
+    console_stream->controlReply(reply,sizeof(reply));return true;
+  }
+#endif
   if (p[2]==PARALLEL_WIRE_VERSION) {
+#if defined(AGON_EXTENDER_NETWORK_PARALLEL)
+    if(p[3]==PARALLEL_OFFER && console_netp->active())return false;
+#endif
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
     if(p[3]==PARALLEL_STREAM_START || p[3]==PARALLEL_STREAM_POLL || p[3]==PARALLEL_STREAM_STOP) {
       if(!console_stream->parallelVdu.request(p,reply,console_stream->session.active()))return false;
@@ -125,6 +143,9 @@ bool consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
     }
 #endif
   } else {
+#if defined(AGON_EXTENDER_NETWORK_PARALLEL)
+    if(console_netp->active())return false; // No display activation steals service-owned pads.
+#endif
 #if defined(AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE)
     if(!console_stream->parallel.uartTransitionAllowed())return false;
 #endif
@@ -178,6 +199,9 @@ ConsoleStream *beginConsole() {
                              console_board::kUartRts,console_board::kUartCts));
 #endif
   console_stream=new ConsoleStream;
+#if defined(AGON_EXTENDER_NETWORK_PARALLEL)
+  console_netp.emplace(console_stream->parallel,agon::extender::network::messages::runtime);
+#endif
   console_stream->setTimeout(COMMS_TIMEOUT); // match stock setupVDPProtocol (200 ms)
   if(!agon::extender::input::usbhost::begin()) console_stream->fail("USB host startup");
   return console_stream;
@@ -378,6 +402,9 @@ void runConsole(VDUStreamProcessor *processor) {
       vTaskDelay(pdMS_TO_TICKS(1));return;
     }
     if(!blockDrain)block.recovered();
+#if defined(AGON_EXTENDER_NETWORK_PARALLEL)
+    if(!console_netp->retire())s.fail("parallel network completion");
+#endif
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
     if(!s.parallelVdu.retire())s.fail("parallel stream completion");
 #endif

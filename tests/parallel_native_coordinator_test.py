@@ -11,6 +11,8 @@ ROOT=Path(__file__).resolve().parents[1]
 EMOS=Path(os.environ.get('AGON_EMOS_ROOT',ROOT.parent/'agon-emos'))
 class NativePairTest(unittest.TestCase):
  def test_pair(self):
+  if os.environ.get("AGON_NETWORK_PARALLEL"):
+   self.skipTest("NETP uses NP admission; exercise retained EX donor in the probe pairing")
   self.run_pair(False)
  def test_qualification_pair(self):
   self.run_pair(True)
@@ -18,13 +20,20 @@ class NativePairTest(unittest.TestCase):
   clock=monotonic()
   with tempfile.TemporaryDirectory() as tmp:
    d=Path(tmp);prepare_sdk(d)
+   (d/'ez80f92.h').write_text('#include "eZ80.h"\n')
+   (d/'ff.h').write_text('enum {FR_OK=0,FR_TIMEOUT=15,FR_INVALID_PARAMETER=19};\n')
    flags=['-Wall','-Wextra','-Werror','-Wno-endif-labels','-ffunction-sections','-fdata-sections',
-    '-fsanitize=address,undefined','-fno-sanitize-recover=all']
+    '-fsanitize=address,undefined','-fno-sanitize-recover=all',
+    '-DMOS_DEFINES_H=1','-DMOS_AGONDEV_LOWERCASE_EZ80_H=1','-DEMOS_BUSY=31','-DEMOS_UNAVAILABLE=35']
    if probe:flags+=['-DEMOS_PARALLEL_PROBE=1']
-   inc=[f'-I{d}',f'-I{EMOS/"tests/host"}',f'-I{EMOS/"src"}',f'-I{ROOT/"vdp/video"}']
+   netp=bool(os.environ.get('AGON_NETWORK_PARALLEL'))
+   if netp:flags+=['-DEMOS_NETWORK_PARALLEL=1']
+   inc=[f'-I{d}',f'-I{ROOT.parent/"agon-emos/tests/host"}',f'-I{EMOS/"src"}',f'-I{ROOT/"vdp/video"}']
    objects=[]
-   for name in ('emos_console','emos_parallel_handover','emos_parallel_boot','emos_parallel_startup',
-                'emos_parallel_native','emos_parallel_coordinator'):
+   units=['emos_console','emos_parallel_handover','emos_parallel_boot','emos_parallel_startup',
+          'emos_parallel_native','emos_parallel_coordinator']
+   if netp:units+=['emos_parallel_upload']
+   for name in units:
     obj=d/(name+'.o');objects.append(str(obj))
     subprocess.run(['cc','-std=c17',*flags,*inc,'-include','eZ80.h',
      '-DEMOS_PARALLEL_NATIVE_COORDINATOR=1','-c',str(EMOS/'src'/(name+'.c')),'-o',str(obj)],check=True)

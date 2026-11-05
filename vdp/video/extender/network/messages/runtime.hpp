@@ -3,6 +3,7 @@
 #pragma once
 #include "api.hpp"
 #include "peer.hpp"
+#include "mailbox.hpp"
 #include <atomic>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
@@ -10,10 +11,7 @@
 namespace agon::extender::network::messages {
 class Runtime {
     portMUX_TYPE mutex_=portMUX_INITIALIZER_UNLOCKED;
-    uint8_t command_[AGON_NET_BODY]{},reply_[AGON_NET_BODY]{};
-    unsigned commandLength_{},replyLength_{};
-    uint32_t generation_{};
-    bool processing_{};
+    Mailbox mailbox_;
     std::atomic<bool> stopping_{false},lost_{true};
     std::atomic<TaskHandle_t> worker_{nullptr};
     Peer peer_;
@@ -24,16 +22,17 @@ class Runtime {
         while(!stopping_.load()){
             uint8_t command[AGON_NET_BODY],reply[AGON_NET_BODY];unsigned n;uint32_t generation;
             portENTER_CRITICAL(&mutex_);
-            n=commandLength_;generation=generation_;
-            if(n){std::memcpy(command,command_,n);commandLength_=0;processing_=true;}
+            const bool close=mailbox_.takeCloseRequest();
+            mailbox_.beginWork(command,n,generation);
             portEXIT_CRITICAL(&mutex_);
+            if(close){
+                peer_.stop(socket);
+                portENTER_CRITICAL(&mutex_);mailbox_.completeClose();portEXIT_CRITICAL(&mutex_);
+            }
             if(n){
                 const auto length=peer_.request(command,n,reply,socket,now(),!lost_.load());
                 portENTER_CRITICAL(&mutex_);
-                if(generation==generation_){
-                    if(length)std::memcpy(reply_,reply,length);
-                    replyLength_=length;processing_=false;
-                }
+                mailbox_.completeWork(generation,reply,length);
                 portEXIT_CRITICAL(&mutex_);
             }
             peer_.tick(socket,now(),!lost_.load());
@@ -53,26 +52,49 @@ public:
         lost_=true;stopping_=true;
         while(worker_.load())vTaskDelay(1);
         portENTER_CRITICAL(&mutex_);
-        commandLength_=replyLength_=0;processing_=false;++generation_;
+        mailbox_.workerStopped();
         portEXIT_CRITICAL(&mutex_);
     }
     bool submit(const uint8_t*p,unsigned n) noexcept {
         if(!p||n<AGON_NET_HEADER||n>AGON_NET_BODY||!worker_.load()||stopping_.load())return false;
         portENTER_CRITICAL(&mutex_);
-        // Explicit CONNECT supersedes prior local completion. Generation binds
-        // publication so an old worker result cannot overwrite the new reply.
-        const bool replace=p[3]==AGON_NET_CONNECT;
-        const bool accept=replace||(!commandLength_&&!replyLength_&&!processing_);
-        if(accept){
-            if(replace){++generation_;replyLength_=0;processing_=false;}
-            std::memcpy(command_,p,n);commandLength_=n;
-        }
+        const bool accept=mailbox_.submitUart(p,n);
         portEXIT_CRITICAL(&mutex_);return accept;
     }
     unsigned take(uint8_t*out) noexcept {
         portENTER_CRITICAL(&mutex_);
-        const auto n=replyLength_;if(n)std::memcpy(out,reply_,n);replyLength_=0;
+        const auto n=mailbox_.takeUart(out);
         portEXIT_CRITICAL(&mutex_);return n;
+    }
+    // Console-owner-only netp hooks. These do not acquire pads or select a
+    // display route. A physical coordinator must own the epoch around offers.
+    MailboxResult openParallel(uint32_t&token) noexcept {
+        token=0;if(!worker_.load()||stopping_.load())return MailboxResult::fault;
+        portENTER_CRITICAL(&mutex_);const auto r=mailbox_.openParallel(token);
+        portEXIT_CRITICAL(&mutex_);return r;
+    }
+    MailboxResult submitParallel(uint32_t token,const uint8_t*p,unsigned n) noexcept {
+        if(!worker_.load()||stopping_.load())return MailboxResult::fault;
+        portENTER_CRITICAL(&mutex_);const auto r=mailbox_.submitParallel(token,p,n);
+        portEXIT_CRITICAL(&mutex_);return r;
+    }
+    MailboxResult canSubmitParallel(uint32_t token) noexcept {
+        portENTER_CRITICAL(&mutex_);const auto r=mailbox_.canSubmitParallel(token);
+        portEXIT_CRITICAL(&mutex_);return r;
+    }
+    MailboxResult offerParallel(uint32_t token,unsigned capacity,const uint8_t*&p,unsigned&n) noexcept {
+        portENTER_CRITICAL(&mutex_);const auto r=mailbox_.offerParallel(token,capacity,p,n);
+        portEXIT_CRITICAL(&mutex_);return r;
+    }
+    MailboxResult finishParallel(uint32_t token,bool complete,bool padsReleased) noexcept {
+        portENTER_CRITICAL(&mutex_);const auto r=mailbox_.finishParallel(token,complete,padsReleased);
+        portEXIT_CRITICAL(&mutex_);return r;
+    }
+    MailboxResult releaseParallel(uint32_t token) noexcept {
+        portENTER_CRITICAL(&mutex_);
+        if(!worker_.load())mailbox_.completeStoppedClose();
+        const auto r=mailbox_.releaseParallel(token);
+        portEXIT_CRITICAL(&mutex_);return r;
     }
 };
 inline Runtime runtime;

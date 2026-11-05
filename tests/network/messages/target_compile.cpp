@@ -1,9 +1,16 @@
 // Compile-only target probe: no firmware composition, flash or execution.
 #include "extender/network/messages/tcp_client.hpp"
+#include "extender/network/messages/runtime.hpp"
+#include "extender/network/messages/parallel_service.hpp"
 using namespace agon::extender::network::messages;
 extern "C" {
 unsigned char net003_small_size[sizeof(Channel<256,2>)];
 unsigned char net003_large_size[sizeof(Channel<1024,4>)];
+unsigned char net004_mailbox_size[sizeof(Mailbox)];
+}
+bool net004_compile_probe(agon::extender::transport::ParallelControl&pipe,const uint8_t*p,uint8_t*out){
+    ParallelService<Runtime> service(pipe,runtime);
+    return service.request(p,out,true,0)&&service.retire();
 }
 void net003_compile_probe(Io& io) {
     Channel<256,2> channel;std::uint32_t token;

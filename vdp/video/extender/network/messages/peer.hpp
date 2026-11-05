@@ -38,7 +38,7 @@ public:
     template<class Socket> unsigned request(const std::uint8_t*p,unsigned n,std::uint8_t*out,
                                             Socket&socket,std::uint32_t now,bool link){
         if(n<AGON_NET_HEADER||n>AGON_NET_BODY||std::memcmp(p,"NM\001",3)||
-           p[3]<1||p[3]>3||!agon_net_u32(p+4)||p[7]||!agon_net_u32(p+8)||
+           p[3]<1||p[3]>3||!agon_net_u32(p+4)||!agon_net_u32(p+8)||
            p[12]!=n-AGON_NET_HEADER||p[13]||
            (p[3]==1?p[12]!=6:p[3]==2?p[12]!=0:p[12]>AGON_NET_PAYLOAD))return 0;
         std::memcpy(out,p,AGON_NET_HEADER);out[3]|=0x80;out[12]=0;out[13]=AGON_NET_INVALID;

@@ -184,7 +184,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_upload: bool = False, network_messages: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_upload: bool = False, network_messages: bool = False, network_parallel: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -198,6 +198,10 @@ def select_display_profile(document: dict, name: str, board: str,
             raise SystemExit("application messages require p4-console")
         profile["definitions"].append("AGON_EXTENDER_NETWORK_MESSAGES=1")
         profile["sources"].append("video/extender/network/messages/tcp_client.cpp")
+    if network_parallel:
+        if not network_messages or not parallel_boot_candidate or any((exext_stream, parallel_probe_candidate, parallel_data_check)):
+            raise SystemExit("parallel messages require network messages and boot owner; exclude other parallel consumers")
+        profile["definitions"].append("AGON_EXTENDER_NETWORK_PARALLEL=1")
     if controller_input:
         if name != "p4-console":
             raise SystemExit("controller input requires p4-console")
@@ -663,6 +667,7 @@ def main() -> None:
     parser.add_argument("--direct-rgb888", action="store_true", help="RGB-001 experimental CPU pixel storage; never production")
     parser.add_argument("--render-benchmark-output", choices=("normal", "hold", "off", "convert-off"),
                         help="BENCH-009 diagnostic windows and output controls")
+    parser.add_argument("--network-parallel", action="store_true", help="NET-004 explicit foreground parallel network carrier; matched EMOS required")
     parser.add_argument("--network-messages", action="store_true", help="Compile experimental admitted application TCP endpoint")
     parser.add_argument("--controller-input", action="store_true", help="Compile candidate controller UDP/admission service; no EMOS delivery")
     parser.add_argument("--graphics-timing", action="store_true",
@@ -726,7 +731,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -916,6 +921,8 @@ def main() -> None:
         validation.append("--bitmap-lut")
     if args.network_messages:
         validation.append("--network-messages")
+    if args.network_parallel:
+        validation.append("--network-parallel")
     if args.controller_input:
         validation.append("--controller-input")
     if args.graphics_timing:
@@ -1013,6 +1020,7 @@ def main() -> None:
         "parallel_probe_candidate": args.parallel_probe_candidate,
         "parallel_data_check": args.parallel_data_check,
         "exext_stream": args.exext_stream,
+        "network_parallel": args.network_parallel,
         "parallel_upload_candidate": args.parallel_upload_candidate,
         "usb_fsls_only": args.usb_fsls_only,
         "usb_ep0_task_logging": args.usb_fsls_only,

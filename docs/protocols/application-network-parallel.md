@@ -54,3 +54,21 @@ rendering/network transfer or bounded IRQ latency. EMOS/P4 implementations must
 preserve unrelated UART0 ISR state and measure service gaps before such claims.
 RELEASE is foreground polling, not a cancellation/replay service. A failed
 release must not be reported as clean disable.
+
+
+## C application caller
+
+The experimental `include/agon/net_parallel.h` implements this foreground ABI.
+Keep a zero-initialized `agon_netp_client` in application RAM (223 bytes on native
+eZ80), and supply separate whole-record input/output buffers up to142 bytes.
+`agon_netp_open`, `agon_netp_submit`, `agon_netp_take` and `agon_netp_release`
+return the gateway result. SUBMIT accepts a complete NM record with the admitted
+32-bit token and an increasing query. TAKE supplies actual/required length;
+undersized output retains the record. A positive RELEASE clears local ownership;
+BUSY/fault retains it. The include does not install or restore a callback.
+
+This explicit EMOS composition excludes the prior resident UART NM endpoint;
+`ext.net` returns unavailable. There is no automatic carrier fallback. The
+separate historical UART SDK/installed firmware remain identified by their own
+records. A checked header does not establish an installed matching service or
+an RFC25-enabled callback map; use the eventual matched component manifest.
