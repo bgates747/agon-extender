@@ -136,3 +136,14 @@ separate fresh Pi readiness. After separately admitted game cleanup, invoke
 one post snapshot and compare full presence/value. Runner restores earlier
 mode0/settling/visible flashing CLI on final consumer handback; never call a
 running native application idle or release custody merely because a host exits.
+
+The selected pre getter completes once with `snapshot-ok`: raw words0/65535,
+presence0/value0 (feature argument `absent`), unchanged mode20, ordered clear,
+callback restoration1 and retained buffer0. Independent raw callback is zero;
+actual CLI/read/EXIT/startup/neutralidle/free USB checks pass. The runner retains
+mode20 for the pending separately admitted consumer and owns final restoration
+to its earlier mode0. This qualifies this exact getter combination, not optical
+sprite behavior or every feature-state value. Post snapshot remains pending
+until the selected game has actually run and cleaned up. Exact selected native
+application is staged/compared without invocation; driver must supply its actual
+final plan, fresh Pi resource admission and explicit readiness before RUN.
