@@ -71,20 +71,28 @@ package. The operator sequence below owns those separate deployment checks.
 
 ## Operator sequence after deployment approval
 
-I01 — Preserve the incoming state. Identify both boards, firmware, active
-application, startup and SD contents. Stop active transfers cleanly. Retain
-verified P4 readback/rollback, the full 128 KiB EMOS ROM, `/emos/sdserve.bin`,
-`/autoexec.txt` and any local reset service/configuration before overwriting them.
-A factory image is a flash prefix, not a full-device backup. Do not reset an
-unknown application to make inspection convenient. Preserve user files.
+I01 — Identify the incoming state. Record both boards, exact installed firmware,
+active application, startup and SD contents; stop active transfers cleanly.
+Component owners retain exact compiled binaries bound to versioned source,
+configuration and hashes. Use those artifacts as rollback when the installation
+record establishes the incoming identity. Rehash the retained bytes locally;
+another device backup or full-device verification is not required before every
+replacement. A source commit alone does not substitute for retained rollback
+bytes. Keep the original installation/verification provenance.
 
-An existing exact full-flash backup may be reused after rehashing its retained
-bytes and obtaining a fresh complete device verification against those bytes.
-Keep the original read provenance and new verification receipt distinct; this
-is not a new host read. A mismatch, partial verification or unestablished mutable
-region stops replacement until reconciled. A failed read before any write does
-not require automatically repeating the same bulk operation; lower-speed
-read-only verification can establish the applicable retained rollback.
+Back up device contents only when firmware is unidentified, rollback bytes are
+missing, or the proposed write would overwrite mutable state not otherwise
+preserved. Limit the read to unresolved regions; a full-device read is warranted
+only when those regions require it. Preserve startup, listener and configuration
+if changing them; unchanged components require no redundant copies. Generated
+binaries/backups need not be committed to Git; versioned manifests identify the
+owner-retained artifacts. Do not reset an unknown application for inspection.
+Preserve user files and useful existing backups without duplicating them.
+
+Prefer application-only updates that leave bootloader, partition tables and
+unrelated mutable storage untouched. Independently verify the newly written
+bytes and record the installed identity. This post-write verification is distinct
+from an incoming backup, and does not require rereading unchanged device regions.
 
 I02 — Establish input independently. The current bench's mainboard keyboard port
 is unavailable. Browser/agent input cannot type its own admission command while
@@ -106,8 +114,9 @@ and offsets: bootloader `0x2000`, partitions `0x8000`, OTA initializer `0xf000`,
 application `0x20000`. The supplied `p4/firmware.factory.bin` is the matching
 combined prefix and is written at **0x0**. Do not write the standalone application
 at zero or perform a blanket erase. The combined prefix also overwrites any
-mutable data lying within its address range (including NVS/OTA metadata); retain
-a full readback and resolve any settings that must survive before proceeding.
+mutable data lying within its address range (including NVS/OTA metadata); preserve
+any such settings that must survive before proceeding. Prefer a reviewed
+application-only update when it avoids replacing those regions.
 Example commands, only after preflight:
 
 ```sh

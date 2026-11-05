@@ -62,6 +62,24 @@ before use; do not run it and repair the consequences afterward.
 
 ## Local hardware and deployment environment
 
+### Firmware retention and rollback — Author instruction, 2026-11-05
+
+Component owners retain their exact compiled firmware binaries, tied to versioned
+source, build configuration and hashes. Extender records the exact installed
+identity and uses that retained artifact for rollback. Source commits and
+manifests belong in Git; generated binaries and device backups need not be added
+to Git merely to satisfy rollback.
+
+Do not download another firmware backup or verify the entire unchanged device
+before each replacement when the installed identity and retained rollback bytes
+are already established. Rehash the retained artifact locally and preserve its
+installation provenance. Obtain device backups only for unidentified firmware,
+missing rollback bytes, or mutable state that the proposed write would overwrite;
+limit preservation to those unresolved regions. Application-only updates preserve
+bootloader, partition tables and unrelated mutable storage. Independently verify
+the newly written bytes; distinguish that installation check from backing up the
+incoming device. Preserve existing useful backups without duplicating them.
+
 For MOS startup failure and bare-metal recovery, use the maintained
 `docs/mos-recovery.md` protocol. Do not retire that capability when a task
 ends, or mistake the unexecuted WROOM contingency for the successful P4/ZDI

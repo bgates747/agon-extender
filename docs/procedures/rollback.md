@@ -13,7 +13,14 @@ implicit replacement of every component on the bench.
 2. Record current installed components and startup separately. Preserve unknown
    user files, mainboard VDP, wiring and all unnamed components. Use retained
    verified rollback artifacts where available; do not make redundant firmware
-   backups merely by habit.
+   backups merely by habit. Component owners retain exact compiled binaries
+   tied to versioned source/configuration/hashes; an established installed
+   identity plus locally rehashed retained bytes supplies rollback without a
+   fresh incoming-device read or whole-device verification. Back up only
+   unidentified firmware, missing rollback bytes, or mutable regions the proposed
+   write would overwrite. Generated binaries/backups need not be stored in Git.
+   Verify newly written bytes independently; do not confuse that check with
+   backing up unchanged device contents. See installation step I01.
 3. Keep mode boundaries explicit. Legacy/ExCom use ordinary UART behavior;
    ExExt parallel activation must not be a prerequisite for their operation.
    Do not call an implementation's unwanted cross-mode coupling a legitimate
