@@ -78,6 +78,28 @@ def check_parallel_qualification_identity(build_id: str, selected: bool,
     return True
 
 
+def network_boot_identity(build_id: str, profile: str, board: str,
+                          output: str, network_messages: bool, boot: bool) -> bool:
+    """NET-003: inherit EMOS's existing reciprocal boot fence, not payload tests.
+
+    The native Eirene product still gates UART admission on this handshake.
+    Remove this task-specific selector when an ordinary matched boot profile
+    replaces the private boot-release composition; never disable EMOS ownership.
+    """
+    if not network_messages or (profile, board, output) != ("p4-console", "p4-pc", "hdmi"):
+        return False
+    match = re.fullmatch(r"net-003-r[0-9]{2,}-b(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z", build_id)
+    if not match:
+        return False
+    try:
+        datetime.strptime(match.group(1), "%Y-%m-%d-%H-%M-%S")
+    except ValueError as error:
+        raise SystemExit("network boot build ID has an invalid UTC timestamp") from error
+    if not boot:
+        raise SystemExit("identified NET-003 network composition requires the reciprocal EMOS boot fence")
+    return True
+
+
 def check_indexed_identity(build_id: str, source_dirty: bool,
         allow_dirty_experimental: bool, parallel_qualification: bool,
         parallel_boot: bool, parallel_probe: bool, parallel_data: bool,
@@ -686,7 +708,16 @@ def main() -> None:
                                parallel_qualification, args.parallel_boot_candidate,
                                args.parallel_probe_candidate, args.parallel_data_check,
                                args.exext_stream, args.parallel_upload_candidate)
-    if not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification:
+    # N03-MATCH-018: a clean named network candidate must retain the exact boot
+    # release owner required by its EMOS peer. This exception admits no payload,
+    # probe/data endpoint or alternate renderer. Earlier boot-less candidates
+    # build successfully but are incompatible with that native EMOS composition.
+    network_boot = network_boot_identity(args.build_id, args.profile, args.board,
+        args.display_output, args.network_messages, args.parallel_boot_candidate) and not any((
+        args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream,
+        args.parallel_upload_candidate, args.indexed_ppa, args.direct_rgb888,
+        args.rolling_scanout, args.render_benchmark_output))
+    if not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification and not network_boot:
         parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():

@@ -16,6 +16,28 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 
 class NativeP4ProfilesTest(unittest.TestCase):
+    def test_named_network_pair_requires_existing_boot_release_owner(self):
+        from build_p4 import network_boot_identity, select_display_profile
+        identity = 'net-003-r01-b2026-11-05-15-00-00Z'
+        self.assertTrue(network_boot_identity(identity, 'p4-console', 'p4-pc', 'hdmi', True, True))
+        with self.assertRaisesRegex(SystemExit, 'reciprocal EMOS boot fence'):
+            network_boot_identity(identity, 'p4-console', 'p4-pc', 'hdmi', True, False)
+        for profile, board, output, enabled in (
+                ('p4-console', 'p4-devkit', 'hdmi', True),
+                ('p4-mos-recovery', 'p4-pc', 'hdmi', True),
+                ('p4-console', 'p4-pc', 'browser', True),
+                ('p4-console', 'p4-pc', 'hdmi', False)):
+            self.assertFalse(network_boot_identity(identity, profile, board, output, enabled, True))
+        with self.assertRaisesRegex(SystemExit, 'invalid UTC'):
+            network_boot_identity('net-003-r01-b2026-13-05-15-00-00Z', 'p4-console', 'p4-pc', 'hdmi', True, True)
+        profile = select_display_profile(self.document, 'p4-console', 'p4-pc', 'hdmi',
+                                         parallel_boot_candidate=True, network_messages=True)
+        self.assertIn('AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1', profile['definitions'])
+        self.assertIn('AGON_EXTENDER_NETWORK_MESSAGES=1', profile['definitions'])
+        for extra in ('AGON_EXTENDER_PARALLEL_UPLOAD=1', 'AGON_EXTENDER_EXEXT_STREAM=1',
+                      'AGON_EXTENDER_PARALLEL_DATA_CHECK=1', 'AGON_EXTENDER_PARALLEL_PROBE=1'):
+            self.assertNotIn(extra, profile['definitions'])
+
     def test_upload_requires_distinct_clean_identity_and_excludes_other_endpoints(self):
         from build_p4 import check_indexed_identity, check_parallel_qualification_identity, select_display_profile
         identity = 'port-008-upload-r01-b2026-11-03-20-00-00Z'
