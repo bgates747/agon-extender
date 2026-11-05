@@ -313,7 +313,7 @@ fresh input and actual CLI/read/EXIT pass. Current startup and native text96
 remain unchanged. Generic network invocation has not yet occurred at this
 checkpoint; source/build/install proof is not end-to-end networking proof.
 
-N03-MATCH-019 [ ] Correct the generic probe's numeric endpoint parser after its
+N03-MATCH-019 [x] Correct the generic probe's numeric endpoint parser after its
 first actual invocation returns `Invalid numeric IPv4:port` at the MOS prompt,
 before mode selection, OPEN or TCP connection. AgonDev's inherited libc scanner
 consumes the terminating string NUL as a successful `%c`, unlike the host libc

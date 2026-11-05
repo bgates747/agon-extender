@@ -104,3 +104,35 @@ connectivity companion hash mismatch. Artifact registry, templates and source
 identity checks pass independently; no wiring artifact is edited or claimed
 requalified. This unrelated metadata discrepancy does not change the actual
 bench wiring/device checks or the frozen native fixture bytes.
+
+## Generic four-record proof and selected consumer snapshot — 2026-11-05
+
+The initial r02 build returns cleanly at argument validation before mode/OPEN;
+N03-MATCH-019 corrects the inherited scanner assumption. Fresh clean source
+74bb87c4 builds16207B under the same approved r02 with a new timestamp. Its
+single explicit invocation passes exact lengths0,1,56,128 at both Pi and Agon.
+Durable app result confirms4/4, RELEASE0 and restore1. Independent raw mode0,
+callbackzero, unchanged startup, actual CLI/read/EXIT, neutral input/idle worker
+and joined reader/free USB checks pass. This is ordinary successful TCP/message
+proof; Escape, fault injection, controller exercise and optical quality are not
+claimed. Production is unchanged; no game is invoked by this result.
+
+N03-PHYS-011 [ ] Review and incorporate MechAgon's selected existing-protocol
+feature2 snapshot leaf under retained actual Extender custody. Validate exact
+owner source/build and unchanged donor pins before staging its13713B application.
+Admit disposable buffer58670 across resource users from the known clean startup
+and uninterrupted exclusive session: setup-only startup and generic mode/network
+probe allocate no sprite/bitmap/sample/buffer resources. No other application
+has run in between. Preserve the normal root startup and unknown files. Stage
+only the exact owned `/MechAgon/vdpstate.bin`, and require absent fresh pre/post
+receipts before invocation. Runner owns earlier native mode0: preselect/verify
+mode20 and wait at least one second before the getter. Invoke once with
+`58670 pre`, with50s STOP/UNKNOWN observation (not a termination guarantee).
+Accept only actual CLI return, snapshot-ok, valid raw words/presence/value,
+ordered buffer clear, zero retained buffer and restored callbackzero/mode20.
+On uncertainty stop dependent dispatch with actual custody retained; no replay.
+Return exact evidence and feature argument to MechAgon before asking for its
+separate fresh Pi readiness. After separately admitted game cleanup, invoke
+one post snapshot and compare full presence/value. Runner restores earlier
+mode0/settling/visible flashing CLI on final consumer handback; never call a
+running native application idle or release custody merely because a host exits.
