@@ -829,7 +829,10 @@ def main() -> None:
     rom_dirs = list(tools.glob("tools/esp-rom-elfs/*"))
     if len(rom_dirs) == 1:
         env["ESP_ROM_ELF_DIR"] = str(rom_dirs[0])
-    tool_bins = [str(path) for path in tools.glob("tools/**/bin") if path.is_dir()]
+    # Path.glob("**") does not descend through a directory symlink. Explicit
+    # --tools-path may reference the verified native compiler through one;
+    # always expose that compiler's actual bin directory to IDF/CMake.
+    tool_bins = [str(compiler.parent), *[str(path) for path in tools.glob("tools/**/bin") if path.is_dir()]]
     env["PATH"] = os.pathsep.join([str(python_env / "bin"), *tool_bins, env["PATH"]])
     command = [str(python_env / "bin/python"), str(IDF / "tools/idf.py"),
                "-C", str(project), "-B", str(build),
