@@ -229,4 +229,27 @@ Return fresh source/runtime/loaded/graphics pins before final plan/descriptor
 review. No ARM/RUN, arena, demonstration, reset or firmware change belongs to
 this preparation. A different long-duration demo needs its own finite leaf,
 deadlines, actual custody/cleanup contract and selected source; no235s leaf
-reuse or unrecorded running handoff. [ ]
+reuse or unrecorded running handoff. [x]
+
+
+## Fresh consumer preparation checkpoint
+
+The source-published R05 preparation finishes under the retained physical lease.
+The unchanged getter and native application are independently compared. The
+three known fixed SD receipt files from R04 are compared, moved to a retained
+archive and compared again before their names become available for new results;
+all original host run/GO/failure evidence remains unchanged. New control and raw
+result paths are separate. A fresh pre getter returns the same exact absence,
+ordered clear and callback restoration, with no retained buffer. The native
+application is then LOADed at an actual mode20 CLI without RUN. Its fresh owner
+leaf preserves one-shot behavior and original budgets, and now records reader
+closure/free ports after completed fault collection before propagating failure.
+
+New loaded-state and graphics records bind actual preparation to the source-
+proven ordered previous teardown, exact pre/post getter results and uninterrupted
+exclusive command history. No reset, new per-slot getter or optical claim is
+introduced. Final matching plan/input/descriptor review, Pi admission and explicit
+one-arm instruction remain required; there is no active receiver or consumer.
+The runner owns final restoration to earlier mode0 after the next admitted run
+or cancellation. Long-duration demonstration source and custody selection remain
+separate from this stopped preparation and cannot reuse its235s native leaf.
