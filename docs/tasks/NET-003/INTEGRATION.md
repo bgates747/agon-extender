@@ -187,3 +187,13 @@ identified network candidate used130184B, an addition of2025B. Like-for-like
 saving is1092B (53.93% of the initial added ROM). All five linked gates pass.
 The generic native echo fixture compiles/links23819B, with exact source/tool
 manifest retained; no application/peer has been invoked on hardware.
+
+N03-MATCH-013 [ ] Finish the interrupted P4 native build using its existing,
+unchanged generated ESP-IDF/Ninja project and exact frozen source17388d7f.
+The wrapper's external watchdog expired after linking, before packaging; do not
+pretend the original wrapper completed. Under a new finite compile reservation,
+assert source/config/profile pins, resume serial Ninja only, then call the
+canonical factory assembler and full action validator with the original flags.
+Retain separate completion journal and exact output hashes, documenting this
+one-time build recovery rather than creating a second editable source builder.
+No hardware write follows merely from producing an ELF or action report.
