@@ -12,7 +12,10 @@ schema. Source preparation does not authorize deployment or invocation.
    Double-buffered entry is explicitly refused by the reused lifecycle helper.
 3. OPEN snapshots the previous MOS callback, then the fixture installs its router.
    Only NM is consumed; all ordinary callback events chain. Release precedes
-   previous-vector restoration on completion, cancellation and failure.
+   previous-vector restoration on completion, cancellation and failure. A refused
+   release retains the live router/static memory, records the failure and waits
+   with interrupts enabled for admitted owner recovery; it never returns or
+   automatically resets/replays. No refused-release injection is selected.
 4. Deploy only beneath `/extender/network` with results beneath
    `/agents/extender/results`. Never change startup. The result path must be fresh.
 5. The Pi echo peer starts explicitly with an admitted numeric LAN bind/port and
@@ -29,6 +32,8 @@ schema. Source preparation does not authorize deployment or invocation.
    They are not synchronized latency measurements. The finite socket/run bounds
    are failure gates, not estimated time or permission for resets/replays.
 
-Current state: native compile/link passes; not deployed or physically invoked.
+Current state: original native compile/link passes; corrected close-refusal
+source awaits native rebuild and approval of proposed fixture revision r02.
+The earlier binary remains preserved and is not selected for deployment.
 NET-003 owns matched component qualification and custody; no standalone demo
 readiness or production acceptance is claimed.

@@ -118,6 +118,18 @@ int main(int argc,char**argv){
     }
     const auto elapsed=uint24_t(ticks()-start);
     auto released=agon_net_release(&client);ok=!released&&ok;
+    if(released&&callback){
+        // RELEASE refusal does not prove NM delivery disabled. Returning or
+        // restoring a keyboard-only callback here could leave a live vector
+        // into unloaded app RAM. Retain this router/static state for admitted
+        // owner recovery, with no replay or automatic reset. Normal in-contract
+        // foreground RELEASE is local and independent of physical link health.
+        fprintf(result,"netprobe close refused release=%u passed=%u/4 terminal_wait=1\n",
+                unsigned(released),passed);
+        fclose(result);
+        puts("Network echo probe: close refused; owner recovery required.");
+        for(;;)__asm__ volatile("ei\n\thalt" ::: "memory");
+    }
     if(callback)mos_setkbvector(agon_net_callback_previous,0);
     bool restored=mode.restore();
     fprintf(result,"netprobe-r01 passed=%u/4 result=%s error=%u release=%u restore=%u elapsed_ticks=%lu tick_hz_nominal=120\n",
