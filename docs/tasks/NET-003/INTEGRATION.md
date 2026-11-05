@@ -279,3 +279,18 @@ Driver questions about bounded post-manual reconciliation and the probe name
 remain unanswered. No physical grant, reset, install, card access or application
 invocation follows from these software passes. Current installed component and
 foreground identities remain unknown; production selection is unchanged.
+
+N03-MATCH-018 [ ] Correct the discovered candidate composition mismatch before
+installation. Native identified EMOS r04 links the existing parallel-pin startup
+release owner, which gates all extender UART admission. The ordinary P4 candidate
+omits that owner and cannot provide its reciprocal handshake. No flash has
+occurred. Preserve the checked outputs as incompatible composition evidence;
+do not deploy them or disable the EMOS owner to make admission appear successful.
+Keep the933B EMOS endpoint and public SDK unchanged. Select the existing P4 boot
+release implementation explicitly, without payload/probe/data/renderer experiments.
+Extend the maintained clean identified NET-003 build selection narrowly for that
+composition, verify the allowed/rejected selectors and canonical action closure,
+then produce a fresh identified P4 build from clean committed inputs. Preserve
+private reset metadata and dual USB/input selections. This source/configuration
+correction grants no game invocation or production promotion. Notify the driver
+of the concrete dependency and corrected component pins; no consumer ABI change.
