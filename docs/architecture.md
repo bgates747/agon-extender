@@ -48,6 +48,12 @@ generic Extender code does not interpret game records. The [accepted connection
 direction](decisions/ADR-2026-11-04-application-network-messages.md) is a development
 contract, not an implemented/installed general application networking API.
 [NET-003](tasks/NET-003.md) owns interface, resource and integration work.
+The first development endpoint keeps reply storage, correlation and deadlines
+in the application library, as the Author requests to conserve EMOS flash.
+The app copies a borrowed complete packet during its owned MOS callback and
+chains/restores prior callback ownership; EMOS retains minimal carrier admission
+and transport forwarding. Source checks do not establish installed availability.
+See the [experimental interface](network-messages.md).
 
 ## Processor communication cost
 

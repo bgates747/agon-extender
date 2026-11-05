@@ -25,3 +25,14 @@ The Author accepts this connection direction through MechAgon on2026-11-04.
 Implementation is developmental: the decision does not establish an installed
 application socket API, a hardware capacity/deadline, or production acceptance.
 Remaining decisions and implementation gates belong only in the linked task.
+
+The Author requests on2026-11-04 that the first implementation move reply
+storage, correlation and timeout policy into application space rather than
+spending approximately2KiB of additional EMOS flash. The application library
+therefore owns a static reply mailbox and a bounded copy during its existing
+MOS callback. EMOS retains minimal caller/carrier admission, boot-local identity,
+ordinary transport ownership and synchronous forwarding. Callback entry borrows
+the complete receive owner's packet only until return; applications preserve
+and restore prior callback ownership. No separate resident pointer registry or
+game semantics is introduced. This is a source architecture decision, not a
+physical timing or release-acceptance claim.
