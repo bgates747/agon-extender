@@ -2,8 +2,9 @@
 
 The source implementation lets an admitted Agon application exchange opaque
 binary records through P4 to a numeric IPv4 TCP peer. It is a matched development
-interface: installation and hardware qualification are pending. It is not in the
-selected production bundle. MechAgon is the first consumer; its game protocol,
+interface. One installed matched pair passes four physical opaque echoes and
+ordinary mode/callback/CLI cleanup; broader qualification remains pending. It is
+not in the selected production bundle. MechAgon is the first consumer; its game protocol,
 JSON/WebSocket bridge and drawing remain outside Extender.
 
 ## Application ownership
@@ -90,3 +91,14 @@ P4 selection requires explicit `scripts/build_p4.py --network-messages` with
 the fixed provider to the corrected Eirene composition. NET-003 owns the matched
 integration and deployment gates. Source/host checks, native compilation and
 real device qualification are distinct; none selects production automatically.
+
+## Bounded hardware evidence
+
+On2026-11-05, the installed experimental EMOS r04/P4 boot-network pair and
+identified generic r02 application pass exact messages of0,1,56,128 bytes in
+both directions with a finite Pi echo peer. The application reports release0
+and restore1; independent mode0/callbackzero, unchanged startup, actual CLI,
+idle services and stopped host reader/peer are checked. See the retained
+[physical qualification record](tasks/NET-003/PHYSICAL.md) for composition and
+limits. This is successful-path evidence, not calibrated latency, failure/timeout
+injection, controller exercise, visual acceptance or a production release.

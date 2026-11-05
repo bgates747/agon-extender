@@ -63,7 +63,7 @@ for precise limits rather than assuming support from a research or example file.
 | Need | Current authority |
 |---|---|
 | Discover host clients versus retained development helpers | [Host tool index](../scripts/README.md) |
-| Experimental opaque application TCP messages; source interface, physical qualification pending | [Application network messages](network-messages.md) |
+| Experimental opaque application TCP messages; four-record physical proof, broader qualification pending | [Application network messages](network-messages.md) |
 | Common P4 service boundaries for other projects | [Shared services](shared-p4-services.md), development interface and consumer obligations |
 | Normalized controller input in applications | [Controller API](controller-api.md), development include and matched EMOS gateway |
 | Linux emulator setup and review boundaries | [Emulator setup](emulator-setup.md) |
