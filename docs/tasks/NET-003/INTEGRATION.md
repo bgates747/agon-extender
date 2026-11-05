@@ -232,3 +232,13 @@ and freeze a new matched development package. Keep the endpoint out of tracked
 documents and preserve prior outputs. Allow a finite30-minute build watchdog
 with owned process-group cleanup, rather than the insufficient15-minute wrapper
 watchdog. This build does not grant physical reconciliation or deployment.
+
+N03-MATCH-016 [ ] Correct the generic echo appliance's inherited unconditional
+callback restoration. On a nonzero RELEASE with an installed router, retain
+that router and its static application memory, close the failure receipt, stop
+network requests and wait with interrupts enabled for admitted owner recovery.
+Do not return through unloaded application memory or automatically reset/replay.
+Normal successful close still restores the prior callback and entry mode. Native
+compile/link the corrected source under the serial build lease and preserve the
+previous fixture bytes. Proposed fixture revision r02 awaits Author naming
+approval before identified deployment; do not silently advance the registry.
