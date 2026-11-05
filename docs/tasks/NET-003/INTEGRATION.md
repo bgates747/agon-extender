@@ -135,3 +135,30 @@ old rendering or parallel experiment flags by implication. This is a new
 composition requiring fresh input/network qualification, not byte-identical
 reproduction of the earlier installed PORT-008 derivative. Review the exact
 manifest and coordinate matched deployment before any firmware write.
+
+## Author correction — resident cost, 2026-11-04
+
+The Author challenges the1964B resident increment and authorizes continuing
+with offloading. The identified candidate is NOT deployed. Keep its frozen
+bytes/source as comparison; do not broaden its qualification or overwrite it.
+The linked symbol breakdown puts1707B in the new gateway alone, mainly duplicated
+safe-copy/admission/session logic. P4 wire/TCP stays unchanged during reduction.
+
+N03-MATCH-010 [ ] Consult the consumer on reusing its existing MOS KBvector
+callback for a bounded private NM reply, alongside native VDPL/keyboard work.
+No second callback installation, direct UART/GPIO or hidden consumer change.
+
+N03-MATCH-011 [ ] Move reply storage, correlation, READY state, expiry and response
+validation into the application include. Reuse the existing UART receive owner
+and MOS callback; minimal resident code retains caller/buffer/carrier admission,
+boot-local incarnation and serializer ownership. Snapshot/copy policy must be
+explicit: application input remains stable through the foreground serializer
+call; no application pointer survives it. App callback copies borrowed reply
+bytes before ISR return and invokes no blocking service.
+
+N03-MATCH-012 [ ] Repeat actual endpoint/client pipeline and mandatory native
+linked gates, preserving existing controller and keyboard behavior. Measure ROM
+against both starting corrected Eirene and rejected-cost candidate. Publish the
+replacement C header and exact changed EMOS identity before consumer linkage.
+The full P4 build can continue because its wire format is unchanged. Actual
+matched qualification and central custody remain separate.
