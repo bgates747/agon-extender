@@ -147,3 +147,30 @@ sprite behavior or every feature-state value. Post snapshot remains pending
 until the selected game has actually run and cleaned up. Exact selected native
 application is staged/compared without invocation; driver must supply its actual
 final plan, fresh Pi resource admission and explicit readiness before RUN.
+
+N03-PHYS-012 [ ] Remove asynchronous agent-turn delay from the selected one-shot
+consumer admission without changing firmware, the game or its deadlines.
+Source preparation first: implement a small reusable finite host marker gate,
+with an Extender-owned adapter validating the exact selected plan/request,
+actual Pi/bench leases, original readiness/deadline, accepted notification
+receipts, live producer identity, native/graphics pins and loaded-state evidence.
+MechAgon alone owns the sender and its atomic marker publication. Require an
+explicit conditional one-RUN disposition before arming the receiver; do not infer
+it from silence or a ready file. A receiver waits at most180 seconds with zero
+USB/network target commands, and records one durable exclusive arm/dispatch
+claim. Only its admitted owner invocation leaf can issue RUN. No competing
+manual RUN while armed, automatic retry, successor selection, clock restart,
+reset, new match, daemon or firmware/startup change. Receiver cancellation or
+validation failure is terminal for that arm and leaves honest retained custody.
+Stop/join its own invocation child before declaring receiver completion; uncertain
+native state remains owner recovery, not idle. Preserve the existing selected
+post-getter, original mode0/CLI restoration and separate Pi cleanup/release/END.
+
+Coordinate two concrete evidence details before final arm: expose the actual
+controller registration deadline (its start+90s, not ready+90s), and select exact
+accepted START/GO delivery receipt paths. A delivery ID string alone is not an
+accepted receipt. Keep full plan/source/input pins and independent host checks
+for fresh valid dispatch, stale/wrong identities, notification failure, timeout,
+cancellation, duplicate arm and invocation exception (never a second RUN).
+Host checks must execute the real gate with injected observation/invocation;
+no real marker watcher, service, target or arena is armed by those checks.
