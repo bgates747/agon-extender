@@ -312,3 +312,18 @@ other region. This is not a second whole-device host read. Reciprocal startup,
 fresh input and actual CLI/read/EXIT pass. Current startup and native text96
 remain unchanged. Generic network invocation has not yet occurred at this
 checkpoint; source/build/install proof is not end-to-end networking proof.
+
+N03-MATCH-019 [ ] Correct the generic probe's numeric endpoint parser after its
+first actual invocation returns `Invalid numeric IPv4:port` at the MOS prompt,
+before mode selection, OPEN or TCP connection. AgonDev's inherited libc scanner
+consumes the terminating string NUL as a successful `%c`, unlike the host libc
+assumption behind the trailing-character check. Keep the toolchain read-only;
+use a bounded fixture-local decimal parser with explicit delimiters, octet/port
+ranges, nonzero port and end-of-string check, covered by actual host C++ cases.
+Build a fresh timestamped r02 from clean committed source under the Pi compile
+lease; preserve the previous binary/capture as informative failure evidence.
+Do not change EMOS/P4/SDK or advance the approved fixture revision for this
+compatible correction. The host controller must recognize early application
+error plus actual CLI return, close its own reader before asserting free ports,
+and use fresh results/journals for the corrected explicit invocation. No replay
+of the previous execution or reset is needed: actual CLI return is captured.
