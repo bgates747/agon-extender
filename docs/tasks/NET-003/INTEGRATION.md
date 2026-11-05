@@ -219,3 +219,16 @@ N03-MATCH-014 [ ] Before selecting a RELEASE-refusal hardware case, agree the
 application-owned terminal cleanup path with its consumer. Normal in-contract
 close remains independent of physical failures. The shared close example keeps
 its live router on refusal; no unconditional prior-vector restoration is taught.
+
+N03-MATCH-015 [ ] Preserve the existing browser reset controls in the candidate
+before deployment. The first checked P4 composition omitted the private reset
+URL metadata required by the browser; retain that build as software evidence,
+but do not select it for installation. Use the maintained builder's existing
+reset-URL argument, the machine-local configuration and a fresh identified output
+from the same clean source. No transport or application ABI changes are needed.
+Under a fresh serial compile reservation, retain the canonical complete build
+and validator results, verify the embedded metadata against the private input,
+and freeze a new matched development package. Keep the endpoint out of tracked
+documents and preserve prior outputs. Allow a finite30-minute build watchdog
+with owned process-group cleanup, rather than the insufficient15-minute wrapper
+watchdog. This build does not grant physical reconciliation or deployment.
