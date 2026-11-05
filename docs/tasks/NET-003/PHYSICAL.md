@@ -14,7 +14,7 @@ its source identifiers are retained in the ignored authorization record.
 This later instruction controls the earlier overly broad unknown-state stop.
 Do not repeat that permission question for ordinary authorized reconciliation.
 
-N03-PHYS-009 [ ] Under exclusive Extender scheduler admission (registry vacant,
+N03-PHYS-009 [x] Under exclusive Extender scheduler admission (registry vacant,
 own existing request first; assert that condition before each action), perform
 the approved one normal Agon reset, then establish actual CLI/card/startup and
 preserve component identities/backups before granting installation custody.
@@ -25,7 +25,7 @@ Leave startup unchanged. If boot launches unexpected work, stop dependent
 commands and record it. Preserve the initial observation and actual reset result;
 apply ordinary monitored recovery only if that first reset fails.
 
-N03-PHYS-010 [ ] Register the approved r02 fixture, commit its source/identity
+N03-PHYS-010 [x] Register the approved r02 fixture, commit its source/identity
 before a fresh identified build from a clean checkout, retain exact binary/tool
 pins, and deploy only under the eventual installation lease. The prior unversioned
 check remains evidence; it is not renamed or deployed.
@@ -38,26 +38,26 @@ local-only verified development pair. This is software preparation, not a curren
 installed identity or physical qualification. Corrected generic probe source
 also compiles; its proposed revision/identified deployment remains pending.
 
-N03-PHYS-002 [ ] Reconcile Smith's manual6502 exit from retained owner records and
+N03-PHYS-002 [x] Reconcile Smith's manual6502 exit from retained owner records and
 fresh scheduler observation. Mainboard VDP, card presence, active app, entry mode,
 startup, P4 and EMOS identities are currently unknown. Registry vacancy is not
 CLI handback. Never assume old native8ade/full17caa or callback zero is current.
 Read operation index, installation/reset/SD/serial protocols and current hardware
 record before actual observation. Preserve unknown files and normal startup.
 
-N03-PHYS-003 [ ] Prepare compiled generic echo appliance with reused mode lifecycle,
+N03-PHYS-003 [x] Prepare compiled generic echo appliance with reused mode lifecycle,
 C/assembly app callback and counted-output leaf. Give a unique revision/manifest,
 source/tool hashes, result destinations and explicit CLI command. The Pi peer
 binds an admitted configured IPv4/port, one connection/four known records only.
 No arena, emulator, user sound cue, startup autorun or invocation during staging.
 
-N03-PHYS-004 [ ] Reserve central physical time, obtain fresh actual CLI/read/EXIT,
+N03-PHYS-004 [x] Reserve central physical time, obtain fresh actual CLI/read/EXIT,
 neutral ready input, idle listener/worker and free readers before granting.
 Freeze incoming component/backups and exact matched selective install/readback.
 A mainboard VDP replacement requires its own explicit reviewed scope; none is
 implied by EMOS/P4 work. No unknown feature/sprite state restoration claim.
 
-N03-PHYS-005 [ ] Install and independently verify only the frozen matched component
+N03-PHYS-005 [x] Install and independently verify only the frozen matched component
 pair within actual custody. Leave mainboard native bytes, normal startup and
 unknown files unchanged. A running manual app is not a CLI; preserve it and
 reconcile before commands. No uncertain replay or resetting into a test.
@@ -79,3 +79,28 @@ N03-PHYS-008 [ ] Restore exact incoming components, files, mode, callback, CLI a
 services, or record a separately selected live matched handoff. Preserve current
 residual startup/content rather than restoring an older historical assumption.
 Central release follows fresh true idle proof and joined owned readers only.
+
+## Installed preparation checkpoint — 2026-11-05
+
+First normal Agon reset establishes actual CLI/card. New full incoming EMOS,
+native4MiB and P4 16MiB backups identify current components. Native text96 is
+the exact20029942 application in active OTA0 at0x10000, not the previously used
+OTA1 offset; retain the complete current OTA/partition state. Startup is now
+45B of keyboard setup only, and remains byte-identical throughout this work.
+No boot obey is present. No native firmware write or startup change occurs.
+
+Generation36 supplies actual exclusive qualification custody after reconciliation.
+Checked r04 EMOS and the corrected startup/network P4 application are installed
+and independently verified, with normal reciprocal boot/input/CLI handback.
+The approved named r02 probe and explicit readback batch are staged/compared;
+use explicit `RUN &040000 IPv4:port result-path` after LOAD. The fixture owns
+its entry-mode/monitor-settling/cleanup; no runner preselection or test-on-reset.
+Only the separately invoked generic echo remains at this checkpoint. Consumer
+getter/arena/application invocation still requires its owner's exact preparation
+and separate Pi admission. No optical, timing or game pass follows yet.
+
+The whole version-record checker encounters an inherited light2-harness-r02
+connectivity companion hash mismatch. Artifact registry, templates and source
+identity checks pass independently; no wiring artifact is edited or claimed
+requalified. This unrelated metadata discrepancy does not change the actual
+bench wiring/device checks or the frozen native fixture bytes.

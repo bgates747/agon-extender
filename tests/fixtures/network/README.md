@@ -25,7 +25,7 @@ schema. Source preparation does not authorize deployment or invocation.
    new output directory. It accepts one client and exactly four independent byte
    fixtures of length0,1,56,128. No game, emulator or automatic app invocation.
 6. Explicit MOS invocation is `LOAD /extender/network/netprobe.bin`, then
-   `RUN IPv4:port /agents/extender/results/FRESH.txt` through the admitted CLI.
+   `RUN &040000 IPv4:port /agents/extender/results/FRESH.txt` through the admitted CLI.
    The fixture owns conditional mode lifecycle; runner preselection instead owns
    earlier restoration and its own minimum one-second delay.
 7. Escape cancels all foreground waits. An uncertain SEND is never retried.
@@ -35,9 +35,9 @@ schema. Source preparation does not authorize deployment or invocation.
    They are not synchronized latency measurements. The finite socket/run bounds
    are failure gates, not estimated time or permission for resets/replays.
 
-Current state: original and corrected close-refusal native compile/link pass;
-the corrected source-check build is explicitly unversioned. Approval of proposed
-fixture revision r02 and an identified build remain pending before deployment.
-The earlier binary remains preserved and is not selected for deployment.
+Current state: Author approves r02 on2026-11-05. Its identified native build
+network-echo-probe-r02-b2026-11-05-14-53-00Z compiles/links24131B from clean
+source353c0ae5; physical invocation is still pending. Earlier binaries remain
+preserved and are not selected for deployment.
 NET-003 owns matched component qualification and custody; no standalone demo
 readiness or production acceptance is claimed.

@@ -233,7 +233,7 @@ documents and preserve prior outputs. Allow a finite30-minute build watchdog
 with owned process-group cleanup, rather than the insufficient15-minute wrapper
 watchdog. This build does not grant physical reconciliation or deployment.
 
-N03-MATCH-016 [ ] Correct the generic echo appliance's inherited unconditional
+N03-MATCH-016 [x] Correct the generic echo appliance's inherited unconditional
 callback restoration. On a nonzero RELEASE with an installed router, retain
 that router and its static application memory, close the failure receipt, stop
 network requests and wait with interrupts enabled for admitted owner recovery.
@@ -280,7 +280,7 @@ remain unanswered. No physical grant, reset, install, card access or application
 invocation follows from these software passes. Current installed component and
 foreground identities remain unknown; production selection is unchanged.
 
-N03-MATCH-018 [ ] Correct the discovered candidate composition mismatch before
+N03-MATCH-018 [x] Correct the discovered candidate composition mismatch before
 installation. Native identified EMOS r04 links the existing parallel-pin startup
 release owner, which gates all extender UART admission. The ordinary P4 candidate
 omits that owner and cannot provide its reciprocal handshake. No flash has
@@ -294,3 +294,21 @@ then produce a fresh identified P4 build from clean committed inputs. Preserve
 private reset metadata and dual USB/input selections. This source/configuration
 correction grants no game invocation or production promotion. Notify the driver
 of the concrete dependency and corrected component pins; no consumer ABI change.
+
+The Author approves r02 and normal reset reconciliation on2026-11-05; no repeated
+routine-reset approval gate applies. Identified probe source353c0ae5 builds24131B
+and is independently staged/read back. Source7bbe2d59 adds a narrow clean build
+selector for the required existing startup fence and rejects the boot-less named
+network composition. All43 native/profile selector checks pass. Canonical full
+P4 build net-003-r01-b2026-11-05-15-03-50Z completes in953.64s and its complete
+action closure passes; application1759744B. Compile132 releases all child/start
+identities and immediately hands the automatic133 grant to its actual owner.
+The new verified local-only pair replaces the earlier incompatible selection.
+
+Under actual bench generation36, full installed EMOS ROM equals checked r04,
+and selective P4 application sectors are independently read/compared. Whole
+expected P4 flash verification passes, preserving old sector tails and every
+other region. This is not a second whole-device host read. Reciprocal startup,
+fresh input and actual CLI/read/EXIT pass. Current startup and native text96
+remain unchanged. Generic network invocation has not yet occurred at this
+checkpoint; source/build/install proof is not end-to-end networking proof.
