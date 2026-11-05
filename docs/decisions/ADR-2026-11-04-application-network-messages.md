@@ -36,3 +36,15 @@ the complete receive owner's packet only until return; applications preserve
 and restore prior callback ownership. No separate resident pointer registry or
 game semantics is introduced. This is a source architecture decision, not a
 physical timing or release-acceptance claim.
+
+On2026-11-05 Smith requires parallel carriage of application network payloads
+in both directions and delegates ABI agreement to Extender and MechAgon. Their
+agreed explicit `ext.netp` service preserves outbound TCP/NM semantics and Legacy
+mainboard UART0 graphics. Foreground TAKE replaces the NM interrupt callback for
+this carrier; EMOS owns admission and shared-pin control, while application RAM
+owns messages and correlation. UART1 retains keyboard and carrier control only,
+with no payload fallback. The prior UART `ext.net` path remains separately
+identified historical/development behavior. The experimental
+[parallel contract](../protocols/application-network-parallel.md) records the ABI;
+NET-004 owns implementation and remaining qualification. No installed parallel
+network service or hardware performance is claimed by this decision.

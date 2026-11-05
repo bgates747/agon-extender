@@ -43,6 +43,14 @@ shared physical transport and ordinary VDU routing. Network waits must not block
 the console parser or hold display locks. The application uses an admitted
 library interface; no raw UART/GPIO bypass is supported.
 
+The Author now requires parallel network payload in both directions, preserving
+Legacy mainboard UART0 graphics. The agreed experimental `ext.netp` foreground
+interface uses application-owned buffers and no NM interrupt callback; UART1
+retains keyboard and carrier control only. The [parallel message contract](protocols/application-network-parallel.md)
+and NET-004 distinguish this required carrier from the previously exercised
+UART1 `ext.net` implementation. Parallel networking is not yet installed or
+hardware-qualified.
+
 Consumer-owned Pi software handles game-specific WebSocket/JSON conversion;
 generic Extender code does not interpret game records. The [accepted connection
 direction](decisions/ADR-2026-11-04-application-network-messages.md) is a development
