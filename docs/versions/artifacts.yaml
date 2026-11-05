@@ -1,10 +1,20 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r208
+registry_revision: r209
 updated_at: 2026-11-05T00:33:58Z
 
 artifacts:
+  - artifact_id: network-echo-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: network-echo-probe-r01
+    status: experimental
+    variants: []
+    description: Finite opaque-message mainboard mode20 echo appliance with app-owned MOS callback and mode lifecycle.
+    notes:
+      - Native compile/link only; no hardware invocation or timing qualification.
+
   - artifact_id: net-003
     kind: experimental_firmware
     identity_scheme: revision
@@ -19,12 +29,14 @@ artifacts:
   - artifact_id: agon-emos-eirene
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: agon-emos-eirene-r03
+    latest_identity: agon-emos-eirene-r04
     status: experimental
     variants: []
     description: Corrected native Eirene-based EMOS with minimal application message admission.
     notes:
-      - r03 adds ext.net to corrected r02 source16ec1f78; mandatory native linked checks pass before identified build.
+      - r04 moves reply/session state into application RAM and reuses the existing MOS callback; qualification pending.
+      - r03 checked development candidate was never deployed; Author requested resident-cost reduction before installation.
+      - Both revisions derive from corrected r02 source16ec1f78; preserve every mandatory native linked check.
       - Preserve prior exact installed r02 ROM and independent component rollback. No production selection or hardware pass implied.
 
   - artifact_id: controller-viewer

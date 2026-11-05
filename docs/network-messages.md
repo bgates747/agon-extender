@@ -9,12 +9,15 @@ JSON/WebSocket bridge and drawing remain outside Extender.
 ## Application ownership
 
 Use `include/agon/net.h` from native C or the documented gateway from assembly.
-Keep one zero-initialized `static agon_net_client` in ordinary application RAM
+Keep one zero-initialized `static agon_net_client` and its ISR reply storage in ordinary application RAM
 (address range0x40000 through0xAFFFF). All calls run in foreground with IRQs
 enabled. Complete graphics/asset uploads before connecting. The application
 owns its bounded polling loop, decisions, deadlines and exit cleanup.
+The [callback correction](tasks/NET-003/CALLBACK.md) specifies the app-owned MOS
+callback and reusable C/assembly router; it supersedes the resident-mailbox draft.
 
-1. `agon_net_begin(&client)` obtains local admission. It does not connect TCP.
+1. `agon_net_begin(&client)` obtains local admission and snapshots the previous
+   MOS callback. Install the app router through MOS0x1D before CONNECT.
 2. `agon_net_submit(&client, AGON_NET_CONNECT, address, 6)` asks P4 to connect;
    address is four IPv4 octets followed by a little-endian16-bit port.
 3. `agon_net_take(&client)` polls the one pending exchange;31 means not ready.
@@ -24,7 +27,8 @@ owns its bounded polling loop, decisions, deadlines and exit cleanup.
 5. POLL returns CONNECTING, CONNECTED or one complete RECEIVED record, including
    an empty record. A received record cannot exceed128 bytes.
 6. Release on completion, cancellation and fault with `agon_net_release`.
-   Release revokes resident admission without waiting on TCP. EMOS application
+   Release revokes resident admission without waiting on TCP; then restore the
+   saved prior MOS callback through MOS0x1D. EMOS application
    exit/fault cleanup also revokes local state. P4 closes an abandoned connection
    after2000ms without a valid request; there is no reconnect or replay.
 
@@ -33,7 +37,7 @@ unavailable; ordinary MOS errors retain their meaning.128 reports malformed
 peer response and129 query exhaustion. Treat an uncertain timeout as terminal
 for that session; do not silently retry a SEND. Explicitly starting a new
 connection discards old uncertain queues. A valid request refreshes the P4 lease;
-the accepted experimental connect deadline is1500ms and resident exchange deadline
+the accepted experimental connect deadline is1500ms and application exchange deadline
 is250ms. These are software bounds pending physical qualification.
 
 ## Transport and gateway
@@ -67,15 +71,17 @@ unused/reserved bytes remain zero. Input byte0 selects the local operation:
 
 | Local operation | Input bytes | Output capacity | Result on success |
 |---|---:|---:|---|
-| 0 OPEN | 1 | 4 | Token32LE |
-| 1 TAKE | 1 | 142 | Complete14..142-byte response |
+| 0 OPEN | 1 | 7 | Token32LE plus prior callback24LE |
+| 1, retired resident TAKE | — | — | Refused; TAKE is now app-local |
 | 2 SUBMIT | 19..147 | 0 | Input after operation contains full forward VDU carrier |
 | 3 RELEASE | 1 | 0 | Admission revoked |
 
-EMOS validates ordinary application buffers, fixed framing and correlation;
-application code validates and interprets response semantics. No application
-pointer survives a call and no application callback is installed. The public
-header holds request/reply storage and codec logic outside resident firmware.
+EMOS validates ordinary application buffers and allowed carrier framing. The
+app keeps SUBMIT input immutable for the synchronous call. No new application
+pointer survives it; the already-existing MOS callback is reused for a bounded
+borrowed reply. Application code copies/correlates it in ISR, then validates and
+interprets it in foreground. Public header storage/codec/deadlines stay outside
+resident firmware. Prior published resident-TAKE clients require rebuilding.
 
 ## Build and evidence scope
 

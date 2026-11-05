@@ -144,11 +144,11 @@ bytes/source as comparison; do not broaden its qualification or overwrite it.
 The linked symbol breakdown puts1707B in the new gateway alone, mainly duplicated
 safe-copy/admission/session logic. P4 wire/TCP stays unchanged during reduction.
 
-N03-MATCH-010 [ ] Consult the consumer on reusing its existing MOS KBvector
+N03-MATCH-010 [x] Consult the consumer on reusing its existing MOS KBvector
 callback for a bounded private NM reply, alongside native VDPL/keyboard work.
 No second callback installation, direct UART/GPIO or hidden consumer change.
 
-N03-MATCH-011 [ ] Move reply storage, correlation, READY state, expiry and response
+N03-MATCH-011 [x] Move reply storage, correlation, READY state, expiry and response
 validation into the application include. Reuse the existing UART receive owner
 and MOS callback; minimal resident code retains caller/buffer/carrier admission,
 boot-local incarnation and serializer ownership. Snapshot/copy policy must be
@@ -162,3 +162,28 @@ against both starting corrected Eirene and rejected-cost candidate. Publish the
 replacement C header and exact changed EMOS identity before consumer linkage.
 The full P4 build can continue because its wire format is unchanged. Actual
 matched qualification and central custody remain separate.
+
+MechAgon confirms its minimal client had no KBvector handler; the earlier
+assumption that it owned VDPL callbacks was incorrect. It accepts owning one
+bounded application handler, with previous-vector snapshot/chaining/restoration.
+The maintained C/assembly pattern is specified in CALLBACK.md. OPEN output7
+includes prior vector24LE alongside token32LE. Generic forwarding stays dormant
+until first SUBMIT, after callback installation; no private vector address is
+exported. The old-header unstarted native link reservation is cancelled.
+
+Reduced source passes the actual peer/EMOS/app sanitizer pipeline, native C and
+application router assembly compilation, and all five native linked gates.
+The keyboard gate now also binds the new borrowed-payload callback bridge bytes.
+Cold unidentified ROM129031B versus prior unidentified130123B:1092B saved.
+Static network state is4B versus148B. Final identified r04 measurement follows;
+compare like identity-string configurations before reporting baseline overhead.
+The P4 cold build reaches final link but its15-minute outer watchdog expires;
+owned IDF/Ninja descendants are confirmed stopped. Preserve its incomplete output
+and frozen source; no full-build pass or candidate deployment is claimed yet.
+
+Final identified r04 from native source5735812 uses129092B/free1980B. Against
+installed identified r02 baseline128159B, the addition is933B; the first
+identified network candidate used130184B, an addition of2025B. Like-for-like
+saving is1092B (53.93% of the initial added ROM). All five linked gates pass.
+The generic native echo fixture compiles/links23819B, with exact source/tool
+manifest retained; no application/peer has been invoked on hardware.
