@@ -1,3 +1,6 @@
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+#include "extender/network/messages/api.hpp"
+#endif
 #include "extender/network/screen_text.hpp"
 #if defined(AGON_EXTENDER_TELEMETRY)
 #include "../telemetry/target.hpp"
@@ -560,6 +563,9 @@ void runConsole(VDUStreamProcessor *processor) {
           if(used==2 && b!=0){used=0;continue;}
           if(used==3) {
             if(b==CONSOLE_OPCODE)need=3+CONSOLE_SIZE;
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+            else if(b==AGON_NET_VDU)need=4;
+#endif
 #if defined(AGON_EXTENDER_SD_SERVICE)
             else if(b==0xF6)need=4;
 #endif
@@ -581,8 +587,18 @@ void runConsole(VDUStreamProcessor *processor) {
             need=4+b;
           }
 #endif
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+          if(used==4 && incoming[2]==AGON_NET_VDU) {
+            if(b<AGON_NET_HEADER || b>AGON_NET_BODY){discard=b;used=0;continue;}
+            need=4+b;
+          }
+#endif
           if(used==need) {
             if(incoming[2]==CONSOLE_OPCODE)consoleControl(processor,incoming+3);
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+            else if(incoming[2]==AGON_NET_VDU)
+              agon::extender::network::messages::submit(incoming+4,incoming[3]);
+#endif
 #if defined(AGON_EXTENDER_SD_SERVICE)
             else if(incoming[2]==0xF6)
               agon::extender::storage::sdReceive(incoming+4,incoming[3],now);
@@ -604,6 +620,9 @@ void runConsole(VDUStreamProcessor *processor) {
 #if defined(AGON_EXTENDER_TELEMETRY)
           if(discard || (used>=3 && incoming[2]==0xF5))s.fail("incomplete telemetry envelope");
 #endif
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+          if(discard || (used>=3 && incoming[2]==AGON_NET_VDU))s.fail("incomplete network envelope");
+#endif
           used=discard=0;
         }
         // Cursor/event housekeeping still belongs to the retained processor.
@@ -620,6 +639,13 @@ void runConsole(VDUStreamProcessor *processor) {
     keyboard.repeat_delay=kbRepeatDelay;keyboard.repeat_rate=kbRepeatRate;
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
     agon::extender::input::remoteLocked([&](auto &r){r.repeat(kbRepeatDelay,kbRepeatRate);return 0;});
+#endif
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+    if(!used && !discard && console_keys.empty() && !s.count && !transmitting && !console_admit_pending){
+      uint8_t reply[AGON_NET_BODY];
+      const auto n=agon::extender::network::messages::take(reply);
+      if(n){s.write(AGON_NET_REPLY);s.write(uint8_t(n));s.write(reply,n);}
+    }
 #endif
     keyboard.tick(now,emit);
     agon::extender::input::usbhost::setLeds(keyboard.ledState());

@@ -12,19 +12,19 @@ MechAgon7681255 with plansb4ef6a2, exact contract hash retained privately.
 The Author's verified driver/assistant mandate allows matched component work,
 but physical/compute grants and existing policies remain separate.
 
-N03-MATCH-002 [ ] Publish this owner scope before code. Use maintained P4 source
+N03-MATCH-002 [x] Publish this owner scope before code. Use maintained P4 source
 and a separate agon-emos-owned Git worktree based on corrected Eirene16ec1f78.
 Keep old branches, production selections, historical fixtures and private data.
 The component task INTEG-019 owns EMOS implementation and mandatory link checks.
 
-N03-MATCH-003 [ ] Negotiate the concrete application/wire proposal with MechAgon
+N03-MATCH-003 [x] Negotiate the concrete application/wire proposal with MechAgon
 before dependent consumer code. Initial requested profile:128-byte opaque record,
 two queued complete records per direction, normally10 per second each direction
 with bounded lifecycle bursts; numeric IPv4/port supplied by the application.
 Pi port7670 is consumer configuration, not a firmware constant. No observer JSON,
 CRC/checksum, automatic replay or takeover of SD/controller identities.
 
-## Proposed endpoint, pending peer disposition
+## Accepted endpoint, implementation pending qualification
 
 1. Existing MOS0x51/getfunction0x20 gateway, namespace ext, new provider net.
    A small C application include and documented raw gateway layout support both
@@ -42,7 +42,7 @@ CRC/checksum, automatic replay or takeover of SD/controller identities.
 4. A separate private variable-length VDU carrier and reply packet identify the
    new endpoint. Application library owns encoding/result validation. EMOS only
    checks fixed endpoint/version/length/caller/token/query and safely copies.
-   Proposed header12 bytes: NM, version1, kind, token32LE, query16LE,
+   Accepted header14 bytes: NM, version1, kind, token32LE, query32LE,
    payload length8, request reserved0/response status. Reply kind has bit7 set.
    CONNECT payload6 bytes (IPv4 octets, port16LE); POLL0; SEND0..128.
    P4 TCP framing remains length32LE plus opaque payload; no per-byte handshake.
@@ -51,7 +51,7 @@ CRC/checksum, automatic replay or takeover of SD/controller identities.
    it never waits on socket I/O. Only the console owner emits UART packets.
    Worker owns connect deadline/cancel/link loss and per-pump operation budgets.
    No automatic reconnect. Experimental idle lease bounds abandoned sessions;
-   exact timeout/configuration and renewed-session behavior require peer agreement.
+   accepted experimental connect1500ms, resident exchange250ms and abandoned lease2000ms.
 6. Explicit local release or application exit must remain possible after fault.
    P4 worker revokes abandoned socket/session on its bounded lease; a new admitted
    CONNECT explicitly replaces prior incarnation without replaying queued work.
@@ -60,12 +60,12 @@ CRC/checksum, automatic replay or takeover of SD/controller identities.
 
 ## Implementation and evidence
 
-N03-MATCH-004 [ ] Implement shared constants, platform-neutral P4 appliance and
+N03-MATCH-004 [x] Implement shared constants, platform-neutral P4 appliance and
 nonblocking worker integration behind an explicit default-off build option.
 Preserve the current Ethernet owner, keyboard/VDU packet ordering and Legacy
 mainboard routing. Never change monitor modes merely to initialize networking.
 
-N03-MATCH-005 [ ] Implement EMOS fixed endpoint and app-owned C codec/gateway
+N03-MATCH-005 [x] Implement EMOS fixed endpoint and app-owned C codec/gateway
 include. Reuse existing caller admission, serializer, ISR buffer, exit/fault
 cleanup and controller-shaped host pipeline tests; do not import its semantic
 code or allocate a game decoder. Keep official MOS/VDP references read-only.
@@ -101,3 +101,37 @@ Publish the scope and negotiate the interface, then implement and verify softwar
 No actual device/network target, firmware write, reset, demo or heavy arena is
 admitted by this document alone. Escalate only unresolved dependent choices;
 continue independent authorized source preparation.
+
+## First software checks — 2026-11-04
+
+The actual P4 Peer, native EMOS C endpoint and public C client pass one composed
+ASan/UBSan pipeline:128B binary and empty messages, two-slot backpressure,
+wrong-query suppression,250ms expiry, explicit release, query65536 and exhaustion,
+IRQ exclusion and an unsafe request pointer. Existing core and ephemeral IPv4
+loopback checks also pass. Source tests do not establish physical timing.
+
+The public C header compiles with ARM64-hosted AgonDev; disassembly confirms the
+MOS0x51 leaf preserving IX/IY. Full native EMOS root firmware-check passes all
+five existing linked gates, including both UART divisors. Unidentified native
+ROM is130123B/free949B versus starting128159B/free2913B:1964B additional ROM.
+The endpoint reserves148B native static RAM; no application pointer is retained.
+Actual P4 console and network-service translation units compile with the pinned
+native GCC/SDK headers and newly generated P4-PC board inputs. A full identified
+P4 composition and physical qualification remain outstanding.
+
+The local retained matched-host/build records preserve actual start/end and
+commands. Migrated x86 host tools are not usable on Pi: an isolated native ARM64
+compiler and Python environment are prepared without modifying the old cache.
+Temporary setup compiler failures are not protocol or device failures.
+
+## Candidate composition
+
+Use a clean task-owned Git worktree of the checked Extender commit for an
+identified P4 build, because unrelated scheduler documentation remains dirty
+in the maintained checkout. Reuse pinned SDK inputs read-only; generated output
+belongs only to this task. Explicit P4-PC/p4-console, ordinary stock-shaped HDMI,
+controller input and dual USB host preserve input capabilities; do not enable
+old rendering or parallel experiment flags by implication. This is a new
+composition requiring fresh input/network qualification, not byte-identical
+reproduction of the earlier installed PORT-008 derivative. Review the exact
+manifest and coordinate matched deployment before any firmware write.

@@ -1,10 +1,32 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r207
-updated_at: 2026-11-01T20:55:47Z
+registry_revision: r208
+updated_at: 2026-11-05T00:33:58Z
 
 artifacts:
+  - artifact_id: net-003
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: net-003-r01
+    status: experimental
+    variants: []
+    description: Matched generic application message endpoint on ordinary P4-PC console input/network composition.
+    notes:
+      - Explicit default-off networking selection; full identified build and physical qualification pending.
+      - Mainboard VDP owns consumer graphics; this identity does not select production or preserve old experimental display composition by implication.
+
+  - artifact_id: agon-emos-eirene
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: agon-emos-eirene-r03
+    status: experimental
+    variants: []
+    description: Corrected native Eirene-based EMOS with minimal application message admission.
+    notes:
+      - r03 adds ext.net to corrected r02 source16ec1f78; mandatory native linked checks pass before identified build.
+      - Preserve prior exact installed r02 ROM and independent component rollback. No production selection or hardware pass implied.
+
   - artifact_id: controller-viewer
     kind: test_fixture
     identity_scheme: revision

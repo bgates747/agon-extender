@@ -1,3 +1,6 @@
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+#include "extender/network/messages/api.hpp"
+#endif
 #ifdef AGON_GRAPHICS_TIMING
 #include "extender/diagnostics/graphics_timing.hpp"
 #endif
@@ -179,6 +182,9 @@ void VDUStreamProcessor::vdu_sys_video() {
 	// Suppressing the cursor here starves its three-frame idle restoration.
 #ifdef AGON_EXTENDER_CONSOLE
 	if (mode != CONSOLE_OPCODE
+#ifdef AGON_EXTENDER_NETWORK_MESSAGES
+        && mode != AGON_NET_VDU
+#endif
 #ifdef AGON_EXTENDER_SD_SERVICE
 		&& mode != 0xF6
 #endif
@@ -214,6 +220,15 @@ void VDUStreamProcessor::vdu_sys_video() {
                 [&](){return readByte_t();},
                 [](const uint8_t *p,unsigned n){consoleSdReceive(p,n);}))
                 consoleSdIncomplete();
+        } break;
+#endif
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+        case AGON_NET_VDU: {
+            const auto n=readByte_t();
+            uint8_t message[AGON_NET_BODY];
+            if(n>=AGON_NET_HEADER && n<=AGON_NET_BODY){
+                if(readIntoBuffer(message,n)==0)agon::extender::network::messages::submit(message,n);
+            }else if(n>0){for(int i=0;i<n;++i)if(readByte_t()<0)break;}
         } break;
 #endif
         case CONSOLE_OPCODE: {

@@ -49,6 +49,14 @@ bool applianceTake(std::uint8_t*out){return runtime.applianceTake(out);}
 }
 #endif
 
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+#include "extender/network/messages/runtime.hpp"
+namespace agon::extender::network::messages {
+bool submit(const uint8_t*p,unsigned n) noexcept {return runtime.submit(p,n);}
+unsigned take(uint8_t*out) noexcept {return runtime.take(out);}
+}
+#endif
+
 #include "extender/web/embedded_assets.hpp"
 
 #if !CONFIG_HTTPD_WS_SUPPORT
@@ -178,6 +186,10 @@ void WiredNetworkService::onNetworkEvent(DevkitEthernet::Event event) noexcept {
   if(event==DevkitEthernet::Event::LostIp||event==DevkitEthernet::Event::Disconnected||event==DevkitEthernet::Event::Stopped)
     controller::runtime.linkLost(); // Atomic notification; no network I/O on event task.
 #endif
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+  if(event==DevkitEthernet::Event::LostIp||event==DevkitEthernet::Event::Disconnected||event==DevkitEthernet::Event::Stopped)
+    messages::runtime.linkLost();
+#endif
   pending_events_.fetch_or(bit, std::memory_order_release);
   notifyWorker();
 }
@@ -200,6 +212,9 @@ void WiredNetworkService::worker() noexcept {
 }
 
 void WiredNetworkService::processEvents(std::uint32_t events) noexcept {
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+  if(events&(EthernetLostIp|EthernetDisconnected|EthernetStopped))messages::runtime.stop();
+#endif
 #if defined(AGON_EXTENDER_CONTROLLER_INPUT)
   if(events&(EthernetLostIp|EthernetDisconnected|EthernetStopped))controller::runtime.stop();
 #endif
@@ -391,6 +406,9 @@ esp_err_t telemetryHandler(httpd_req_t *request) {
 #endif
 
 bool WiredNetworkService::startHttp() noexcept {
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+  if(!messages::runtime.start())ESP_LOGW(kTag,"Application TCP worker unavailable");
+#endif
 
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #if AGON_EXTENDER_STAGED_WEBDAV
@@ -514,6 +532,9 @@ bool WiredNetworkService::startHttp() noexcept {
 }
 
 void WiredNetworkService::stopHttp() noexcept {
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+  messages::runtime.stop();
+#endif
 #if defined(AGON_EXTENDER_CONTROLLER_INPUT)
   controller::runtime.stop();
 #endif

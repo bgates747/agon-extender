@@ -274,6 +274,7 @@ def main() -> None:
     parser.add_argument("--scroll-fast", action="store_true")
     parser.add_argument("--bitmap-fast", action="store_true")
     parser.add_argument("--bitmap-lut", action="store_true")
+    parser.add_argument("--network-messages", action="store_true")
     parser.add_argument("--controller-input", action="store_true")
     parser.add_argument("--graphics-timing", action="store_true")
     parser.add_argument("--hdmi-link-watch", action="store_true")
@@ -294,7 +295,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -375,6 +376,8 @@ def main() -> None:
             fail("Dual-host USB selection differs from compile action")
         if ("-DAGON_EXTENDER_USB_DIRECT_FS=1" in argv) != args.usb_direct_fs:
             fail("Direct FS USB controller selection differs from compile action")
+        if not selected_definition(argv, "AGON_EXTENDER_NETWORK_MESSAGES", args.network_messages):
+            fail("application message selection differs from compile action")
         if not selected_definition(argv, "AGON_EXTENDER_CONTROLLER_INPUT", args.controller_input):
             fail("controller service selection differs from compile action")
         missing = [item for item in required_definitions
@@ -482,8 +485,18 @@ def main() -> None:
             compiled_config = (output / "build/config/sdkconfig.h").read_text().splitlines()
             if args.rolling_scanout:
                 check_rolling_cache_config(compiled_config)
+            if args.network_messages:
+                if "#define CONFIG_LWIP_MAX_SOCKETS 17" not in compiled_config:
+                    fail("application messages require the recorded 17-socket ceiling")
+                network = next(c for c in selected_commands
+                               if Path(c["file"]).name == "wired_network_service.cpp")
+                deps = subprocess.check_output(
+                    ["ninja", "-C", str(output / "build"), "-t", "deps", network["output"]], text=True)
+                for name in ("wire.h", "peer.hpp", "runtime.hpp"):
+                    if str(VDP / "video/extender/network/messages" / name) not in deps:
+                        fail("message endpoint absent from actual compiler dependencies: " + name)
             if args.controller_input:
-                if "#define CONFIG_LWIP_MAX_SOCKETS 16" not in compiled_config:
+                if f"#define CONFIG_LWIP_MAX_SOCKETS {17 if args.network_messages else 16}" not in compiled_config:
                     fail("controller composition requires the recorded 16-socket ceiling")
                 network = next(c for c in selected_commands
                                if Path(c["file"]).name == "wired_network_service.cpp")
