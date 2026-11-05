@@ -228,7 +228,9 @@ void VDUStreamProcessor::vdu_sys_video() {
             uint8_t message[AGON_NET_BODY];
             if(n>=AGON_NET_HEADER && n<=AGON_NET_BODY){
                 if(readIntoBuffer(message,n)==0)agon::extender::network::messages::submit(message,n);
-            }else if(n>0){for(int i=0;i<n;++i)if(readByte_t()<0)break;}
+                else consoleNetIncomplete();
+            }else if(n>0){for(int i=0;i<n;++i)if(readByte_t()<0){consoleNetIncomplete();break;}}
+            else if(n<0)consoleNetIncomplete();
         } break;
 #endif
         case CONSOLE_OPCODE: {

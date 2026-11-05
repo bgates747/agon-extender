@@ -174,6 +174,9 @@ void runConsole(VDUStreamProcessor *);
 bool consoleControl(VDUStreamProcessor *, const uint8_t *p);
 void consoleSdReceive(const uint8_t *p,unsigned n);
 void consoleSdIncomplete();
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+void consoleNetIncomplete();
+#endif
 void consoleLayout(int region);
 void consolePoll();
 inline void setVDPProtocolDuplex(bool) { /* UART1 is full duplex for this composition. */ }

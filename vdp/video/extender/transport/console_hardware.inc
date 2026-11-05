@@ -79,6 +79,9 @@ void consoleSdReceive(const uint8_t *p,unsigned n) {
 }
 void consoleSdIncomplete() { console_stream->fail("incomplete SD envelope"); }
 #endif
+#if defined(AGON_EXTENDER_NETWORK_MESSAGES)
+void consoleNetIncomplete(){console_stream->fail("incomplete network envelope");}
+#endif
 void consoleLayout(int region) {
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
   agon::extender::input::remoteLocked([](auto &r){r.boundary();return 0;});
