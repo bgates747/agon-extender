@@ -54,3 +54,24 @@ mainboard profile8 is preserved; temporary unfiltered02addd/8270 and exact incom
 UART pair/full touched-span restoration use normal owner procedures. All selected
 cleanup precedes normal release. This is not Wolf's mainboard VDPL integration
 or a substitute for closing that endpoint contract.
+
+## Source/native result
+
+[Exact build/check record](REPEAT-BUILD-R01.json) retains the separate fixture,
+peer and matrix source identities. Eight actual socket/byte controls pass,
+including cross-language comparison of all176 native matrix records, four
+positive peer closes, corrupt/short/extra records and original whole deadline.
+Default UART and default parallel/RFC25 native links also pass; original main
+source is unchanged. One repeated-link attempt exposed an unused shared cleanup
+hook, corrected before fresh266 builds; all owned children joined and both
+compiler slots released. No firmware or hardware change by these checks.
+
+| New native fixture | Bytes | SHA256 |
+|---|---:|---|
+| Repeated plain parallel |16799|`3ae08d0f574e86472f04b4c37119460bc6bfe108f2a99ae6f8993533bde21e5e`|
+| Repeated guarded RFC25 |17886|`d343dd13171d13058daa44dcff1dbb160f2e779e2b9504f6d26af14b0dcc9df8`|
+
+Both use source d59c796d and actual build timestamp2026-11-06-21-16-00Z.
+These are compiled candidates only; finite owner physical runners/current input
+freeze and actual fresh admission remain unprepared. The current consumer60
+replay and its exact incoming UART restoration remain separate and first.

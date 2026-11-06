@@ -1,0 +1,111 @@
+{
+  "schema": "extender-repeat-fixture-build-v1",
+  "source_commit": "d59c796d",
+  "status": "source-and-native-checked-not-physically-run",
+  "scope": "Four sessions/176 byte-exact records; plain and guarded67B UART0 variants; no game/module/emulator or device",
+  "matrix": {
+    "sessions": 4,
+    "rounds_per_session": 4,
+    "records_per_session": 44,
+    "total_records": 176,
+    "sizes": [
+      0,
+      1,
+      2,
+      17,
+      63,
+      64,
+      65,
+      75,
+      79,
+      127,
+      128
+    ]
+  },
+  "host_checks": {
+    "compiler_generation": 265,
+    "tests": 8,
+    "seconds": 0.045,
+    "actual_peer_and_native_matrix_passed": true,
+    "source_header": "tests/fixtures/network/repeat_matrix.hpp",
+    "source_peer": "tests/fixtures/network/repeat_peer.py",
+    "no_physical_inference": true
+  },
+  "original_native_controls": {
+    "compiler_generation": 265,
+    "uart_default_link": true,
+    "parallel_rfc25_default_link": true,
+    "original_main_source_unchanged": true
+  },
+  "fresh_native_generation": 266,
+  "native_build_seconds": 2.1031624159950297,
+  "all_owned_children_joined": true,
+  "compiler_released": true,
+  "physical_run": false,
+  "outputs": {
+    "repeat-plain": {
+      "build_id": "parallel-repeat-repeat-plain-r02-b2026-11-06-21-16-00Z",
+      "binary": {
+        "bytes": 16799,
+        "sha256": "3ae08d0f574e86472f04b4c37119460bc6bfe108f2a99ae6f8993533bde21e5e"
+      },
+      "source_commit": "d59c796d5766611454bb7aef68eb5ed3038be786",
+      "inputs": {
+        "tests/fixtures/network/repeat.cpp": "8c4b5c5b7d288ad5a5c8ea4b579453b0254463e869c9f519f86b5ca2ddb1c9d8",
+        "tests/fixtures/network/endpoint.hpp": "8e777a51ef00face5600e4c2e93f279582e2c2fd09212f26232dc0a0bee8db5a",
+        "tests/fixtures/network/carrier.hpp": "d4e117cfc30b595d73f0be4182b8590d4d790334bc1b26ffb3bb7dfa2d930c53",
+        "tests/fixtures/scroll/mode_lifecycle.hpp": "18e3389062fbd5a7db7b239317f1d60f4efbe29fef9822e39fd46a3c04b59b22",
+        "tests/fixtures/controller/mos_io.asm": "831bb311f42b513bd0c4d2c016e70097e4360b830ff22ef2143122a1d8886fd4",
+        "include/agon/net.h": "b3f71cf3b84209cfebe700aae0b65fa240d7a5e2e2d56d1ec9ed7196d593a4d7",
+        "tests/fixtures/network/repeat_matrix.hpp": "e12a8b5ea6fce234fbc50352c485d267f0e8c4d4a8bf5c149a78522d6add894c",
+        "include/agon/net_parallel.h": "e0504f1e9e33a8ae8dcb034bc91d84cb82270fd7f38279abfc88a3a5e054f011"
+      }
+    },
+    "repeat-rfc25": {
+      "build_id": "parallel-repeat-repeat-rfc25-r02-b2026-11-06-21-16-00Z",
+      "binary": {
+        "bytes": 17886,
+        "sha256": "d343dd13171d13058daa44dcff1dbb160f2e779e2b9504f6d26af14b0dcc9df8"
+      },
+      "source_commit": "d59c796d5766611454bb7aef68eb5ed3038be786",
+      "inputs": {
+        "tests/fixtures/network/repeat.cpp": "8c4b5c5b7d288ad5a5c8ea4b579453b0254463e869c9f519f86b5ca2ddb1c9d8",
+        "tests/fixtures/network/endpoint.hpp": "8e777a51ef00face5600e4c2e93f279582e2c2fd09212f26232dc0a0bee8db5a",
+        "tests/fixtures/network/carrier.hpp": "d4e117cfc30b595d73f0be4182b8590d4d790334bc1b26ffb3bb7dfa2d930c53",
+        "tests/fixtures/scroll/mode_lifecycle.hpp": "18e3389062fbd5a7db7b239317f1d60f4efbe29fef9822e39fd46a3c04b59b22",
+        "tests/fixtures/controller/mos_io.asm": "831bb311f42b513bd0c4d2c016e70097e4360b830ff22ef2143122a1d8886fd4",
+        "include/agon/net.h": "b3f71cf3b84209cfebe700aae0b65fa240d7a5e2e2d56d1ec9ed7196d593a4d7",
+        "tests/fixtures/network/repeat_matrix.hpp": "e12a8b5ea6fce234fbc50352c485d267f0e8c4d4a8bf5c149a78522d6add894c",
+        "include/agon/net_parallel.h": "e0504f1e9e33a8ae8dcb034bc91d84cb82270fd7f38279abfc88a3a5e054f011",
+        "tests/fixtures/network/rfc25_cycle.hpp": "fc1d8748a573c6e0cf2fca5c600bd11aa75c5a0565ec4793775fa05af179f638",
+        "tests/fixtures/network/rfc25.asm": "2c8a27b8ec97048ef29a07eebfb8a8252d6e64c7277cfea1debafc91f16d0df3"
+      }
+    }
+  },
+  "inputs": {
+    "tests/fixtures/network/repeat.cpp": {
+      "bytes": 10241,
+      "sha256": "8c4b5c5b7d288ad5a5c8ea4b579453b0254463e869c9f519f86b5ca2ddb1c9d8"
+    },
+    "tests/fixtures/network/repeat_matrix.hpp": {
+      "bytes": 804,
+      "sha256": "e12a8b5ea6fce234fbc50352c485d267f0e8c4d4a8bf5c149a78522d6add894c"
+    },
+    "tests/fixtures/network/repeat_peer.py": {
+      "bytes": 3406,
+      "sha256": "7015bbdd263d8b5587ebe8d624d4cf5c8ab8fb123d7bc904309a29af819ef954"
+    },
+    "tests/fixtures/network/build.py": {
+      "bytes": 5436,
+      "sha256": "67d81ae0492cc5f02ee5cff7ec5708385a178129e4bfc11515daaddfad58c8d0"
+    },
+    "tests/network/repeat/test_peer.py": {
+      "bytes": 4638,
+      "sha256": "ee8e063f5e387bb5aa2cc3aaa3225ea23607bb1027c78d60e99060add39a0d33"
+    },
+    "tests/network/repeat/matrix_dump.cpp": {
+      "bytes": 636,
+      "sha256": "e782da28419ce2bffe863c10cd47c42bc1cedb887552c30c515ead9a34665b78"
+    }
+  }
+}
