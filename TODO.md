@@ -60,7 +60,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Manual Console8 Wi-Fi fixture
 
-- [ ] **[NET-006 — Console8 Wi-Fi setup utility](docs/tasks/NET-006.md)** — Author selects private configuration, DHCP/MAC reservation, English progress/timeouts, Escape, redacted logs and visible BBS requests/replies; native implementation and manual C8 qualification pending.
+- [ ] **[NET-006 — Console8 Wi-Fi setup utility](docs/tasks/NET-006.md)** — Native utility and verified manual package built; core/native-adapter checks pass. Private cfg, DHCP/MAC reservation, English waits, Escape, redacted logs and visible BBS requests/replies implemented; Smith's manual C8 qualification and future public-release closure remain.
 
 - [ ] **[NET-005 — Interactive Wi-Fi BBS fixture](docs/tasks/NET-005.md)** — Pi BBS implemented and running; eight host TCP checks pass and the exact unchanged Radiotux terminal package is verified. Smith's manual Console8/ESP8266 AT, Wi-Fi and terminal review remains; no remote Console8 access or async/OTIRX changes.
 
