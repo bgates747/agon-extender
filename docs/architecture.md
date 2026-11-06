@@ -6,6 +6,14 @@ implementation remains deferred. It is not a claim of complete compatibility.
 tasks own incomplete implementation and decisions. No new architecture is
 established by a successful experiment or by this documentation reconciliation.
 
+For the current MechAgon integration, Smith selects one final parallel attempt,
+then an explicit supported UART1 application binding if that attempt fails.
+Extender continues independent parallel-fixture qualification during normally
+admitted bench intervals between consumer coding phases. EMOS still owns every
+transport; `ext.netp` has no silent fallback or uncertain-transfer replay. The
+[accepted separation decision](decisions/ADR-2026-11-06-independent-parallel-qualification.md)
+records this application-progress boundary without claiming a new installed pair.
+
 ## Implementation boundary
 
 | Area | Current boundary | Authority |

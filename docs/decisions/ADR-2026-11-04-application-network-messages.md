@@ -48,3 +48,10 @@ identified historical/development behavior. The experimental
 [parallel contract](../protocols/application-network-parallel.md) records the ABI;
 NET-004 owns implementation and remaining qualification. No installed parallel
 network service or hardware performance is claimed by this decision.
+
+Smith's2026-11-06 amendment selects one final MechAgon parallel attempt, then
+an explicit supported UART1 application binding on failure, while Extender
+continues separate fixture-based parallel qualification. The
+[separation decision](ADR-2026-11-06-independent-parallel-qualification.md)
+supersedes the earlier application-level parallel-only requirement. `ext.netp`
+itself still has no automatic payload fallback or uncertain-message replay.

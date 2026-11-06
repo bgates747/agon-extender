@@ -7,6 +7,12 @@ under Smith's ABI delegation on2026-11-05. It specifies development work, not an
 installed or hardware-qualified service. [NET-004](../tasks/NET-004.md) owns the
 remaining implementation and qualification work.
 
+Smith's2026-11-06 application decision permits MechAgon to explicitly select a
+matched UART1 `ext.net` binding after its one final parallel attempt fails.
+Extender qualifies parallel separately with its own fixtures. That selection
+does not change this service: `ext.netp` still refuses failures and never
+silently retransmits accepted/uncertain payload through UART1.
+
 ## Ownership and calls
 
 The foreground ADL/MBASE0 application calls with interrupts enabled, static
