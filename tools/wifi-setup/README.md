@@ -19,11 +19,13 @@ Smith's manual Console8 test; it is not a qualified public release.
 3. From an ordinary C8 MOS prompt, after exiting any other UART1 application:
 
    ```text
-   LOAD /extender/network/wifi-setup/wifi-setup.bin
-   RUN . /extender/network/wifi-setup/wifi-setup.cfg /extender/network/wifi-setup/progress.log
+   CD /extender/network/wifi-setup
+   LOAD wifi-setup.bin
+   RUN . wifi-setup.cfg progress.log
    ```
 
-   `RUN .` uses the default address `&040000`. If installed in `/bin`, use
+   Change directory once; the program, config and log names then refer to that
+   directory. `RUN .` uses the default address `&040000`. If installed in `/bin`, use
    `wifi-setup <private.cfg> [progress.log]`. Default log is `wifi-setup.log` in
    the current directory. Start with `wifi-setup --help` if needed.
 4. Expect firmware identification, station mode/DHCP, Wi-Fi association, address

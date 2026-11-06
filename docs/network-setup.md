@@ -5,6 +5,14 @@ checks a small TCP BBS, with private configuration, English progress, Escape and
 redacted progress/error logs. It is for a manually operated Console8 with MOS3.0
 or later; it does not borrow UART1 from an active Extender installation.
 
+At the MOS prompt, change to the utility directory once and use local filenames:
+
+```text
+CD /extender/network/wifi-setup
+LOAD wifi-setup.bin
+RUN . wifi-setup.cfg progress.log
+```
+
 [Usage, configuration and build instructions](../tools/wifi-setup/README.md)
 include the secret-free example, clock-rate setting and timeout/cancellation
 limits. [NET-006](tasks/NET-006.md) records preparation, validation and the pending
