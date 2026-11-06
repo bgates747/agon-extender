@@ -134,3 +134,12 @@ host admission gate and owner adapter. They are not ordinary launchers or bench
 grants. The [bounded receiver contract](../docs/tasks/NET-003/CONDITIONAL-GO.md)
 requires a frozen executable plan, actual separate leases, an explicitly selected
 owner arm descriptor and a single peer marker; source tests do not arm it.
+
+## Experimental manual Console8 Wi-Fi fixture
+
+`wifi_bbs.py` is an explicitly started Pi TCP board with time, uptime and
+persistent notes. `build_wifi_bbs_package.py` packages it with Radiotux's unchanged
+terminal after verifying committed source and exact client bytes. See the
+[manual fixture guide](../docs/tasks/NET-005/USING.md) and
+[owning task](../docs/tasks/NET-005.md). Host checks do not qualify Console8 or
+ESP-AT; no firmware, remote Console8 access or boot service is selected.
