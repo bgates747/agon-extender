@@ -9,34 +9,40 @@ is selected by this source plan.
 N04-018.03.5 Retain the existing plain and ordinary graphics builds/evidence.
   Add an explicit parallel-only RFC25 variant; no default workload change,
   application callback-vector replacement, raw UART/GPIO access or new syscall.
-  Use the guarded25 contract of the exact EMOS8270 comparison composition. [ ]
+  Use the guarded25 contract of the exact EMOS8270 comparison composition. [x]
 
 N04-018.03.6 The eZ80 application owns one static67B immutable packet: four
   ordinary GCOL/PLOT line sequences and one trailing pixel query23,0,84h,x;y;.
   Prearm its source-release flag and pixel-reply flag before the one submission.
   EMOS owns UART0 transmission and the flag-only ISR callback. Mainboard VDP
   executes the packet and returns its pixel reply through ordinary MOS RX.
-  Wait for both events before the next network operation. [ ]
+  Wait for both events before the next network operation. [x]
 
 N04-018.03.7 Keep admission, source release and receiver reply distinct. A0
   admits;19/31/32/35 refuse without publication. Unknown results retain uncertain
   ownership. Callback may precede syscall return and means source release,
   not TEMT. A point reply is an ordered receiver witness, not a public UART
   drain API or optical proof. There is only one point query outstanding; this
-  fixture sends no palette query or other point-packet producer. [ ]
+  fixture sends no palette query or other point-packet producer. [x]
 
 N04-018.03.8 Preserve foreground ADL1/MB0/EI. The callback only stores a flag
   and returns; no C/MOS/output/EI in ISR. Foreground Escape requests cancellation
   but cannot release borrowed storage. An uncertain outstanding source stops
   all further output/network/cleanup dispatch and retains static RAM/code with
   interrupts enabled for owner recovery. No payload resubmission or timeout
-  return that leaves a callback pointing into unloaded application RAM. [ ]
+  return that leaves a callback pointing into unloaded application RAM. [x]
 
 N04-018.03.9 Check the actual leaf with source-release-before-return, reply-first,
   source-first, all named refusals, unknown result, source-stall, reply-timeout,
   cancellation, packet content and one-submit assertions. Compile unchanged
   defaults plus the explicit variant through normal compiler FIFO; record exact
   sources and a fresh build timestamp. No hardware during preparation. [ ]
+
+  The finite compile tranche uses one compiler at a time, expected under two
+  minutes and a three-minute whole-tranche stop including owned cleanup.
+  Each native build and sanitizer step is bounded to30s; require512MiB available
+  RAM, temperature below80C and actual owned-descendant retirement before the
+  normal compiler release/next-owner handoff. No emulator or target operation.
 
 N04-018.03.10 Only a later complete owner source/current-component/rollback
   freeze may select one finite physical case with the existing echo peer and

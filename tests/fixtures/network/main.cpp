@@ -54,11 +54,41 @@ struct ModeIO {
 };
 
 static bool escaped(){return sysvars[sysvar_vkeydown]&&sysvars[sysvar_keyascii]==27;}
-#ifdef NETPROBE_GRAPHICS_CYCLE
+#if defined(NETPROBE_GRAPHICS_CYCLE) || defined(NETPROBE_RFC25_CYCLE)
+static uint24_t graphics_ticks[4];
+#endif
+#ifdef NETPROBE_RFC25_CYCLE
+#include "rfc25_cycle.hpp"
+extern "C" uint8_t netprobe_rfc_context();
+extern "C" uint8_t netprobe_rfc_submit(const uint8_t*,uint24_t,volatile uint8_t*);
+static ProbeRfc25Cycle rfc_cycle;
+struct RfcIO {
+    bool escaped(){return ::escaped();}
+    uint8_t context(){return netprobe_rfc_context();}
+    uint24_t ticks(){return ::ticks();}
+    uint24_t elapsed(uint24_t start){return uint24_t(::ticks()-start);}
+    void clear_point(){sysvars[sysvar_vdp_pflags]&=uint8_t(~vdp_pflag_point);}
+    bool point_ready(){return sysvars[sysvar_vdp_pflags]&vdp_pflag_point;}
+    void poll(){} // Native interrupts update the flags, never a polling syscall.
+    uint8_t submit(const uint8_t*p,unsigned n,volatile uint8_t*done){
+        return netprobe_rfc_submit(p,n,done);
+    }
+};
+static uint8_t graphics_cycle(unsigned index){
+    RfcIO io;const auto error=rfc_cycle.run(index,io);
+    graphics_ticks[index]=uint24_t(rfc_cycle.elapsed);
+    if(rfc_cycle.uncertain){
+        // Preserve the first fault/static packet/callback in application RAM.
+        // No output, SD/MOS call, network RELEASE or return while ownership is
+        // uncertain. Host recovery preserves RAM before any subsequent LOAD.
+        for(;;)__asm__ volatile("ei\n\thalt" ::: "memory");
+    }
+    return error;
+}
+#elif defined(NETPROBE_GRAPHICS_CYCLE)
 // Independent owner control: ordinary UART0 VDU, not a game/module/RFC25 test.
 // Each query follows its draw in the same stream; no network request is pending.
 // A mode response establishes a bounded ordering witness, not optical timing.
-static uint24_t graphics_ticks[4];
 static uint8_t graphics_cycle(unsigned index){
     if(escaped())return 130;
     const uint8_t y=uint8_t(32+index*32);
@@ -103,8 +133,12 @@ int main(int argc,char**argv){
     if(ok){const uint8_t text[]={4,17,15,17,128,12};ok=write_bytes(text,sizeof(text));}
     printf("Network echo probe - mainboard mode20; carrier=%s\r\n",probe_carrier);
     puts("Four binary lengths; Escape cancels. No automatic replay.");
-#ifdef NETPROBE_GRAPHICS_CYCLE
+#if defined(NETPROBE_GRAPHICS_CYCLE) || defined(NETPROBE_RFC25_CYCLE)
+#ifdef NETPROBE_RFC25_CYCLE
+    puts("Independent guarded RFC25 draw/point reply after each echo; no raw UART or module.");
+#else
     puts("Independent ordinary mainboard draw/query after each echo; no game or module.");
+#endif
     unsigned graphics_passed=0;
 #endif
     if(ok){error=probe_begin();ok=!error;opened=ok;}
@@ -113,7 +147,7 @@ int main(int argc,char**argv){
     while(ok&&probe_status()==AGON_NET_CONNECTING&&
           uint24_t(ticks()-connecting)<240&&--connect_fuse){error=request(AGON_NET_POLL);ok=!error;}
     ok=ok&&connect_fuse&&probe_status()==AGON_NET_CONNECTED;
-#if defined(NETPROBE_PARALLEL) || defined(NETPROBE_GRAPHICS_CYCLE)
+#if defined(NETPROBE_PARALLEL) || defined(NETPROBE_GRAPHICS_CYCLE) || defined(NETPROBE_RFC25_CYCLE)
     const unsigned sizes[]={0,1,127,128};
 #else
     const unsigned sizes[]={0,1,56,128};
@@ -131,7 +165,7 @@ int main(int argc,char**argv){
             }else if(ok)ok=probe_status()==AGON_NET_CONNECTED;
         }
         ok=ok&&received&&receive_fuse;
-#ifdef NETPROBE_GRAPHICS_CYCLE
+#if defined(NETPROBE_GRAPHICS_CYCLE) || defined(NETPROBE_RFC25_CYCLE)
         if(ok){error=graphics_cycle(i);ok=!error;if(ok)++graphics_passed;}
 #endif
         if(ok)++passed;
@@ -160,7 +194,11 @@ int main(int argc,char**argv){
     bool restored=mode.restore();
     fprintf(result,"%s passed=%u/4 result=%s error=%u release=%u restore=%u elapsed_ticks=%lu tick_hz_nominal=120 carrier=%s size_checks=%u\n",
             NETPROBE_BUILD_ID,passed,ok&&restored?"PASS":"FAIL",unsigned(error),unsigned(released),unsigned(restored),(unsigned long)elapsed,probe_carrier,probe_size_checks);
-#ifdef NETPROBE_GRAPHICS_CYCLE
+#ifdef NETPROBE_RFC25_CYCLE
+    fprintf(result,"rfc25_cycles=%u/4 source_releases=%u/4 point_replies=%u/4 query_ticks=%lu,%lu,%lu,%lu calibrated=0 ordinary_graphics_test=0\n",
+        graphics_passed,rfc_cycle.releases,rfc_cycle.replies,(unsigned long)graphics_ticks[0],
+        (unsigned long)graphics_ticks[1],(unsigned long)graphics_ticks[2],(unsigned long)graphics_ticks[3]);
+#elif defined(NETPROBE_GRAPHICS_CYCLE)
     fprintf(result,"ordinary_graphics_cycles=%u/4 query_ticks=%lu,%lu,%lu,%lu calibrated=0 rfc25_test=0\n",
         graphics_passed,(unsigned long)graphics_ticks[0],(unsigned long)graphics_ticks[1],
         (unsigned long)graphics_ticks[2],(unsigned long)graphics_ticks[3]);

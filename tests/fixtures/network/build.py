@@ -21,7 +21,11 @@ def main():
     parser.add_argument('--carrier', choices=('uart','parallel'), default='uart')
     parser.add_argument('--graphics-cycle', action='store_true',
                         help='Independent ordinary mainboard draw/query between echo records')
+    parser.add_argument('--rfc25-cycle', action='store_true',
+                        help='Independent guarded RFC25 drawing/point reply; parallel only')
     args = parser.parse_args()
+    if args.rfc25_cycle and (args.graphics_cycle or args.carrier!='parallel'):
+        parser.error('RFC25 cycle requires parallel carrier and excludes ordinary graphics cycle')
     if not re.fullmatch(r'[A-Za-z0-9-]+', args.build_id):
         parser.error('build ID contains unsupported characters')
     root = Path(__file__).resolve().parents[3]
@@ -42,6 +46,9 @@ def main():
     if args.carrier == 'parallel':
         del inputs['net_callback.asm']
         inputs['agon/net_parallel.h']='include/agon/net_parallel.h'
+    if args.rfc25_cycle:
+        inputs['rfc25_cycle.hpp']='tests/fixtures/network/rfc25_cycle.hpp'
+        inputs['rfc25.asm']='tests/fixtures/network/rfc25.asm'
     for name, path in inputs.items():
         shutil.copyfile(root/path, source/name)
     (source/'build_identity.h').write_text(
@@ -54,11 +61,15 @@ def main():
     if args.graphics_cycle:
         with (work/'Makefile').open('a') as file:
             file.write('CXXFLAGS += -DNETPROBE_GRAPHICS_CYCLE=1\n')
+    if args.rfc25_cycle:
+        with (work/'Makefile').open('a') as file:
+            file.write('CXXFLAGS += -DNETPROBE_RFC25_CYCLE=1\n')
     env = dict(os.environ, PATH=str(args.toolchain_bin.resolve())+os.pathsep+os.environ['PATH'])
     start = time.monotonic_ns()
     report = dict(started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   build_id=args.build_id, status='experimental', carrier=args.carrier,
                   graphics_cycle=args.graphics_cycle,
+                  rfc25_cycle=args.rfc25_cycle,
                   source_commit=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip(),
                   scope='native Agon compile/link only; no invocation',
                   inputs={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in inputs.values()})

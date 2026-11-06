@@ -58,6 +58,18 @@ on2026-11-06; NET-004/INDEPENDENT-RESULT-R01.md records exact scope and restorat
 This does not clear the renderer defect. No module, sprite, raw peripheral access,
 automatic replay or new callback is added by the option.
 
+The separate explicit `--rfc25-cycle --carrier parallel` variant uses one
+static67B packet containing four ordinary line sequences and a trailing point
+query. It prearms the source-release and point flags before one guarded25 call,
+and waits for both before another network operation. The ISR only stores the
+source-release flag; it is not a drain or optical completion API. Unknown
+admission or an outstanding source at timeout retains application RAM/code with
+interrupts enabled, without further MOS/output/network cleanup or a return.
+The host must preserve that original invocation and recover normally; no replay.
+The builder excludes combining this option with the ordinary-graphics option
+or UART carrier. Its source/build and later physical boundaries are in
+`docs/tasks/NET-004/CARRIER-RFC25-CYCLE-R01.md`; no hardware result is inherited.
+
 The first r02 invocation returned cleanly at argument validation, before mode or
 network activity. Its inherited AgonDev `sscanf` treats a string NUL as a
 successful trailing `%c`; the fixture now uses `endpoint.hpp` for exact decimal
