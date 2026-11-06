@@ -284,3 +284,11 @@ The separately published [finite live assistance plan](PARALLEL-001/LIVE-ASSIST-
 selects source preparation of request-bound install/handoff/rollback leaves
 while Wolf65 owns hardware. Fresh actual predecessor handback, immutable owner
 freeze and normal admission remain required before this next consumer case.
+
+
+Live assistance source preparation is frozen at94 owner/consumer/image/runtime
+inputs in [LIVE-ASSIST-FREEZE-R01](PARALLEL-001/LIVE-ASSIST-FREEZE-R01.json).
+Nine actual delegated-owner gate cases and syntax checks pass in2.115s under
+compiler273; all owned children joined and the slot released. Source manifest
+20627cba binds consumer40inputs/kit8a94365c, separate fresh namespaces and
+exact UART rollback. No physical readiness or grant is claimed during Wolf65.
