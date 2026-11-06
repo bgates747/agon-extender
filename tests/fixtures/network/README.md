@@ -51,7 +51,7 @@ host controller must recognize early diagnostic plus actual CLI return and
 close its own passive reader before checking for free USB ports.
 
 
-## Prepared r03 carrier selection
+## Built r03 carrier selection
 
 The builder's explicit `--carrier parallel` selects the public netp include,
 application-owned whole-record buffers and no NM callback/router object. The
@@ -67,3 +67,6 @@ BUSY within the finite close bound; a refused/uncertain payload is never replaye
 A failed close retains storage for owner recovery. NET-004/QUALIFICATION-R01.md
 owns preparation and the later selected component/bench handoff. Preserve r02
 accepted binaries/results; r03 has no inherited physical acceptance.
+
+Both variants compile from clean dd933691. The parallel00:34:43Z build is16567
+bytes; no hardware r03 run occurred. Exact identities are retained by NET-004.

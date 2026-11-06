@@ -12,24 +12,24 @@ operation handoff. No new bench authority is created by this plan.
 NQ-001 Extend the current network fixture builder with an explicit carrier
   option. Preserve the default UART fixture, mode lifecycle, endpoint parser,
   fresh result path, independent invocation and existing echo peer. Parallel
-  compilation excludes the NM callback router; no app callback is installed. [ ]
+  compilation excludes the NM callback router; no app callback is installed. [x]
 
 NQ-002 Parallel adapter uses the checked public netp include with application
   record/reply storage. Exercise0/1/127/128 opaque bytes, binary patterns from the
   existing deterministic generator, matching query/status and whole-record
   echo. Probe a13-byte TAKE buffer before each complete reply to prove required
-  size and no-consume without altering an admitted payload. [ ]
+  size and no-consume without altering an admitted payload. [x]
 
 NQ-003 Distinguish local SUBMIT busy/refusal from an accepted outstanding
   request. Do not resubmit an admitted/uncertain payload. Polling TAKE and
   worker-close RELEASE is bounded by existing foreground clock/fuse contracts.
   Escape cancels waits but does not bypass ownership cleanup. Refused release
-  retains app storage and stops for normal owner recovery. [ ]
+  retains app storage and stops for normal owner recovery. [x]
 
 NQ-004 Compile both default and parallel adapters under normal serial compiler
   admission, retaining source/SDK/tool/binary hashes and start/end duration.
   Keep a separately identified experimental parallel fixture. No emulator or
-  hardware invocation occurs during this preparation. [ ]
+  hardware invocation occurs during this preparation. [x]
 
 ## Physical operation handoff to select after preparation
 
@@ -54,3 +54,16 @@ NQ-004 Compile both default and parallel adapters under normal serial compiler
    sequence and existing UART fixtures where compatible. This generic echo is
    not a claim that IRQ gaps, CTS timing or renderer throughput are qualified.
    Finish selected checks before releasing or explicitly handing off custody.
+
+## Prepared native result — 2026-11-05
+
+Clean source dd933691 builds both r03 variants under compiler180; all compiler
+children completed and the lease was released. Parallel build
+network-echo-probe-r03-b2026-11-06-00-34-43Z is16567 bytes, SHA256
+354288dbce551864ed1b3968fb3c69e6fdc6aca1617d80f4cd33145f41a4dfaa.
+Its generated source inventory and actual map exclude the NM callback router.
+The default UART build is separate at00:34:42Z; it requires its matching UART
+firmware and is not a fallback on the new parallel-only pair. Both variants
+retain exact input hashes and host-monotonic build duration in owner manifests.
+This is compile/preparation evidence; no new fixture was staged or invoked.
+Wolf42 currently owns the physical bench.

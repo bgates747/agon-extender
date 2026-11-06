@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r211
-updated_at: 2026-11-06T00:30:28Z
+registry_revision: r212
+updated_at: 2026-11-06T00:36:19Z
 
 artifacts:
   - artifact_id: network-echo-probe
@@ -13,7 +13,7 @@ artifacts:
     variants: [uart, parallel]
     description: Finite opaque-message mainboard mode20 echo appliance with explicit carrier and shared mode lifecycle.
     notes:
-      - r03 preparation adds an explicit foreground parallel adapter with no NM callback; default UART remains separate. Native checks and hardware qualification are pending.
+      - r03 compiles default UART and explicit foreground parallel adapters; parallel has no NM callback. Hardware qualification is pending.
       - Preserve accepted r02 four-record physical evidence and exact bytes; r03 is not a new hardware pass.
 
   - artifact_id: net-004
