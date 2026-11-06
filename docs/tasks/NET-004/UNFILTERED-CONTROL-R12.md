@@ -32,6 +32,13 @@ N04-017.03 Once independently ready, reserve normally and reconcile the actual
   Use supported feature getter, full fixture readback and native LOAD only for
   preparation, with actual CLI, input, mode/callback and resource admission. [ ]
 
+  Each selected native write/readback is followed by one deliberately selected
+  clean current P4 initialization, then one commissioned Agon USB-RTS reset and
+  actual CLI proof. This reuses the verified52 recovery ordering before RUN;
+  it does not first repeat the failed warm bootstrap, alter P4 firmware, change
+  a test deadline or claim the admission cause repaired. Failure stops this
+  final attempt; cleanup recovery never authorizes another native RUN.
+
 N04-017.04 Perform exactly one24MHz/720000000-sample/30s acquisition, maximum
   768MiB raw output and original45s external stop. Reuse verified physical-bit
   output mapping. Current probe evidence maps D2 blue READY, D4 purple VALID,

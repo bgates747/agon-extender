@@ -18,7 +18,8 @@ N04-018.02 Prepare the smallest supported UART1 consumer binding from existing
   and RFC25 coexistence/ROM fit with component owners; do not assume installed
   netp-only ROM8270 exposes `ext.net`. Return concrete source/artifact facts to
   MechAgon. Deployment follows the actual final-case failure and a separately
-  matched prepared combination, never an uncertain session fallback. [ ]
+  matched prepared combination, never an uncertain session fallback. Detailed
+  compile selection: [UART1/RFC25 preparation](UART1-RFC25-R01.md). [ ]
 
 N04-018.03 Reuse the independent four-record echo appliance as the baseline
   and prepare a separate generic carrier/graphics-cycle fixture. Exercise
