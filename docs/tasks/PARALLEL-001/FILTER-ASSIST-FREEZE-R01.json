@@ -1,0 +1,318 @@
+{
+  "schema": "extender-owner-source-freeze-v1",
+  "scope": "ONE37ba fixedVALID SAME24turn comparison; freshadmission afterWolf61; owner install/independentverify/stoppedhandoff/delegatedUARTfullrestore/cleanup/release; no target duringpreparation",
+  "source_manifest_sha256": "76adf0c6e205e3a68afa1a729cdc862f6a0777dbc1b8cd25cd63bce4450ece95",
+  "inputs": {
+    "agents/parallel001/filter-assist-r01/final.py": {
+      "bytes": 2696,
+      "sha256": "b676ba71d96f3f51eaeafa7b1e2656def1a844e130e3daaea0a4084dfb4e63b1"
+    },
+    "agents/parallel001/filter-assist-r01/release.py": {
+      "bytes": 2198,
+      "sha256": "4df96a97fd09519c5b9e266f8a45e5cb93306c659d66cfebd51f8a30dadb968a"
+    },
+    "agents/parallel001/filter-assist-r01/flash_rom.py": {
+      "bytes": 2988,
+      "sha256": "59ef05ca5dbd55a198aa23108da5af95141cbafdd6cc6fe4a9c0d8d401692ebc"
+    },
+    "agents/parallel001/filter-assist-r01/handoff.py": {
+      "bytes": 2605,
+      "sha256": "2e14bded48550060dcdb6e726e28f9f97654fe3684aa175e1c934253079578eb"
+    },
+    "agents/parallel001/filter-assist-r01/workflow.py": {
+      "bytes": 3557,
+      "sha256": "1f9f4e98efe38742e431322e460e05632985facca7843cce998962bf7e7744aa"
+    },
+    "agents/parallel001/filter-assist-r01/stage_rom.py": {
+      "bytes": 3192,
+      "sha256": "1680ecfbf2c319e2081306afbb4faea938acaf39f7ecc728cb50c9bb68eeb49c"
+    },
+    "agents/parallel001/filter-assist-r01/ops.py": {
+      "bytes": 1512,
+      "sha256": "5ee17a179820715ecdbcbada4d65d523fc9c2ef2958fc02bbcdb97cda26c9e9a"
+    },
+    "agents/parallel001/filter-assist-r01/verify_rom.py": {
+      "bytes": 1661,
+      "sha256": "d18feb71e6fd865c2d60a323b14131abdff9732d109229d2591b24e4d09601d4"
+    },
+    "agents/parallel001/filter-assist-r01/install_p4.py": {
+      "bytes": 9729,
+      "sha256": "52d3c81787e055aab108c20e070e4d0f913eae433203c08f8bafe39cbb09ddac"
+    },
+    "agents/bench-scheduler/mechagon-filter-r01/admit.py": {
+      "bytes": 7120,
+      "sha256": "6989df84e51dd5d981a11cb97d52190c9f3069356ead9ebedd2b6c0f76e6c96b"
+    },
+    "docs/tasks/PARALLEL-001/FILTER-ASSIST-R01.md": {
+      "bytes": 3224,
+      "sha256": "41d51d637806303761a67ef701de5cb603c66a83b7fb9c0b1d8232cc3ce973f8"
+    },
+    "owner:MechAgon/docs/tasks/PIPE-001/physical-inputs-r03-filter.json": {
+      "bytes": 5816,
+      "sha256": "be8ef20b21b5eac9824afec21a206ba7d6b8470b063959f63e182327d8201b12"
+    },
+    "owner:MechAgon/.runtime/pipe001/build-r01/diagnostic/native/renderer/bin/mechrender.bin": {
+      "bytes": 32011,
+      "sha256": "dcd737c8cd59722fd17dcd216e7861ac8eea41f7e36d95e9a14075ee5c650314"
+    },
+    "owner:MechAgon/.runtime/render001/vis001/build-r01/module/mechagon.vdpl": {
+      "bytes": 12832,
+      "sha256": "f79719ac16b6610b576d2ca901d466fc25fd9d14417e3d3509631b6b26197dc9"
+    },
+    "owner:MechAgon/.runtime/render001/shoot001/build-r02/assets.bin": {
+      "bytes": 150507,
+      "sha256": "3cdf68391925b7ecc29d93313ea8425eea5f070cfc3c10fe13e5e7eb66da46f0"
+    },
+    "owner:MechAgon/native/readback/bin/vdpstate.bin": {
+      "bytes": 13713,
+      "sha256": "5ab2dd6307d5abe6446f6ff6c75db374ac252b5f068f12ce888211a5c06642e5"
+    },
+    "owner:MechAgon/docs/tasks/PIPE-001/run.py": {
+      "bytes": 7929,
+      "sha256": "a3086b7acafcb0e53833aff925031c0fd1f6387c279721449e65bc3e70a162be"
+    },
+    "owner:MechAgon/docs/tasks/PIPE-001/replay.py": {
+      "bytes": 6656,
+      "sha256": "4251f19480ba13599b4692fe8fbe74b5052a64a74c9e6b0219114a17f97419ea"
+    },
+    "owner:MechAgon/docs/tasks/PIPE-001/replay-corpus.json": {
+      "bytes": 9012,
+      "sha256": "ca052f1f08ec3fdb099d064698beb8cc5bb85094049d5cd63fe49176141a7418"
+    },
+    "owner:MechAgon/docs/tasks/PIPE-001/replay-module-result.json": {
+      "bytes": 2067,
+      "sha256": "57450f69fc7100db22542fc24e20291fec99a88c56c4b2b800b5d9401d9ce2fd"
+    },
+    "owner:MechAgon/docs/tasks/PIPE-001/build-result-r01.json": {
+      "bytes": 25200,
+      "sha256": "97032dbb654a00b56987e72b32f249afa71e01623a18fc43f0de0640eded3a0c"
+    },
+    "owner:MechAgon/scripts/render_hardware.py": {
+      "bytes": 33316,
+      "sha256": "1c2a8f168fcc746902f1a74c8fa9a6db51d7dce1d6a140aa0e4686dda9684b9e"
+    },
+    "owner:MechAgon/docs/tasks/RENDER-001/scripts/uart1_physical.py": {
+      "bytes": 9948,
+      "sha256": "cceeede4a69109af630ff41ef60d3b8798ba5ae86bea7058087c2f459f21aff8"
+    },
+    "owner:MechAgon/docs/tasks/RENDER-001/component-build-pins.json": {
+      "bytes": 4814,
+      "sha256": "0fccf8e94a7ed4d132b39388a4a5774515495bf2ff2fb8113dd4656a255347bf"
+    },
+    "owner:MechAgon/mechagon/bridge.py": {
+      "bytes": 15718,
+      "sha256": "2810face4289b5ddf939a7dc07da52a444e49ae41bf2db5b38757e96c2febc8b"
+    },
+    "owner:MechAgon/mechagon/wire.py": {
+      "bytes": 6004,
+      "sha256": "a2fb676eb99056ce94e2b20e173bfd2d9a2fd53c592f800691b5b9e064bd3066"
+    },
+    "owner:MechAgon/mechagon/presentation.py": {
+      "bytes": 9034,
+      "sha256": "7d7bed8bd1e339ad37487ff5bac13f911d14b22082e111b051605c151b0e41b4"
+    },
+    "owner:MechAgon/mechagon/presentation_relay.py": {
+      "bytes": 3047,
+      "sha256": "7c9cfa425d88c34460e3ef4064ac6ca2d88a027d542cf69cfafbd9740350087f"
+    },
+    "scripts/serial_monitor.py": {
+      "bytes": 2142,
+      "sha256": "ea779fd8564d8f431192e38d63f659f489d8fcc73510f782fe31632f6edcdf74"
+    },
+    "scripts/passive_serial.py": {
+      "bytes": 2069,
+      "sha256": "b665826da471b786582bb4dd24214f7c4bc925fe7018d07106e661fc5e4a3543"
+    },
+    "owner:MechAgon/docs/tasks/PIPE-001/filtered-r01.md": {
+      "bytes": 3701,
+      "sha256": "3c11c73993d05d7eb2187b837d352ab2d03bbe359844b47927e227407983ce2d"
+    },
+    "agents/net004/p4-valid-filter-r02/manifest.json": {
+      "bytes": 16120,
+      "sha256": "f0c135beb9bd120dd8abcd0f86d9301da43b993436c28f0f1bfdc49370d3bf1b"
+    },
+    "agents/net004/p4-valid-filter-r02/validation.json": {
+      "bytes": 2567,
+      "sha256": "382d18cc1e5bfa79a8cae3be41d7a3d03327b6a371d1fcf5f0f1389a6064fea8"
+    },
+    "agents/net004/p4-valid-filter-r02/build/agon_extender.bin": {
+      "bytes": 1764368,
+      "sha256": "37ba69e3648ea2e7663d071149acc057fab64f8546af3d784afa711505f8e38e"
+    },
+    "docs/tasks/PARALLEL-001/VALID-FILTER-COMPARISON-R01.md": {
+      "bytes": 4078,
+      "sha256": "112b9dd3d6d495a5a7bfcc13ce7685a818e2390a3fea818b05fc95554cafca9a"
+    },
+    "agents/parallel001/filter-assist-r01/images-r01/images.json": {
+      "bytes": 1944,
+      "sha256": "e884a50a904e6cf2d21ed8cbd0a8bc66a33b967c6aa8a103134201e3dca53950"
+    },
+    "agents/parallel001/filter-assist-r01/images-r01/baseline-sectors.bin": {
+      "bytes": 1765376,
+      "sha256": "bfb8962872bd832c5627a49cbf68d8a82bd3774b09aa30bf0eee5b2b9bcf2cbf"
+    },
+    "agents/parallel001/filter-assist-r01/images-r01/incoming-uart-full-span.bin": {
+      "bytes": 1765376,
+      "sha256": "629aab118e03e7b42b3235d7eed633b6103931273d524f097ef446e92fc3d17f"
+    },
+    "agents/net004/p4-return-edge-r03/manifest.json": {
+      "bytes": 15995,
+      "sha256": "4990ba106ec434b621a2000a595440d7f2ec41de4db83327d0a10a42818f8bc7"
+    },
+    "agents/net004/p4-return-edge-r03/validation.json": {
+      "bytes": 2545,
+      "sha256": "39c70eb0bbf1ca4586b8195f9108f672b5b24a8d35299cfd6bd3d74082e8a21f"
+    },
+    "agents/net004/p4-return-edge-r03/sdkconfig": {
+      "bytes": 92568,
+      "sha256": "726a3daf16e5fccd9387f8c73e078802a4fdb5f9feeb51ab3dd0fbb8df5422e2"
+    },
+    "agents/net004/p4-return-edge-r03/build/agon_extender.bin": {
+      "bytes": 1764176,
+      "sha256": "02addd547f3af3a00cf4fb975ef9d259f2e48d0ded64ef80a053f9b4de10ccf9"
+    },
+    "agents/net004/p4-return-edge-r03/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "agents/net004/p4-uart1-r01/manifest.json": {
+      "bytes": 15508,
+      "sha256": "0c7f7bdd49e89a9845f3d7a4539c62c5485a7fe728e07c0eb8c6697fc9836581"
+    },
+    "agents/net004/p4-uart1-r01/validation.json": {
+      "bytes": 2551,
+      "sha256": "05a22375f28c221b8f8c0b03715c6c1730822bdef5bae0c3e3d8bda5722cdaed"
+    },
+    "agents/net004/p4-uart1-r01/sdkconfig": {
+      "bytes": 92574,
+      "sha256": "5a698ba686a54e6869f0665c1e29f5efcfa71395c68401f092eba4a723c9eef6"
+    },
+    "agents/net004/p4-uart1-r01/build/agon_extender.bin": {
+      "bytes": 1760160,
+      "sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e"
+    },
+    "agents/net004/p4-uart1-r01/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "agents/net004/emos-control-tx-diag-r01/ROM.bin": {
+      "bytes": 131072,
+      "sha256": "8270ecd709138fe5ae617a91d5d365eeede0738025d5043fc790541b19b8f281"
+    },
+    "agents/net004/emos-control-tx-diag-r01/manifest.json": {
+      "bytes": 1117,
+      "sha256": "3af95c9d4479f032cc2971b0cace43987425d4fd47a6d516452474f9de77094f"
+    },
+    "agents/net004/emos-control-tx-diag-r01/mos.elf.map": {
+      "bytes": 95361,
+      "sha256": "3b9c439d41b8543b05efe252e5f1e6a5ae3b1d7d7cc91e8e4c379f7051672519"
+    },
+    "agents/net004/emos-uart-rfc25-r02/ROM.bin": {
+      "bytes": 131072,
+      "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca"
+    },
+    "agents/net004/emos-uart-rfc25-r02/manifest.json": {
+      "bytes": 1121,
+      "sha256": "d5d8d3b96f9cd5ba42a0dad8bd63e1272c06d3605c5f34576f13e79469a399d4"
+    },
+    "agents/net004/emos-uart-rfc25-r02/mos.elf.map": {
+      "bytes": 93469,
+      "sha256": "55b830f8978dd7269cf2c900c33bc2a0b24a7c24be543f3194d3d62f6ff68430"
+    },
+    "agents/net003/physical_ops.py": {
+      "bytes": 3560,
+      "sha256": "568ff8f567d17796cee445d2a8457f7a8d7534b3012d1b8ffa5d9c688413a4d3"
+    },
+    "agents/remote009/bench-r01/hold_reset.py": {
+      "bytes": 2210,
+      "sha256": "2f6bb9a51b4a07530eb44dc7556c29dce3b83389310463da633dd7b617942a9e"
+    },
+    "agents/release001/live-preparation-r01/config.json": {
+      "bytes": 706,
+      "sha256": "9948c07193eb0d993725c12648aecce5fa4c666f29c5c1f8b48eceff97613dd5"
+    },
+    "agents/bench-reset/usb-reset.local.json": {
+      "bytes": 193,
+      "sha256": "9917c14b8ea439e5db10c747ea53017b3041afe14af582b042e040e25b8aa5ca"
+    },
+    "agents/remote009/fast-transfer-pin-r01/sdcard_staged.py": {
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    },
+    "scripts/sdcard.py": {
+      "bytes": 19583,
+      "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa"
+    },
+    "scripts/sdcard_staged.py": {
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    },
+    "scripts/keyboard.py": {
+      "bytes": 8822,
+      "sha256": "2bd907921d80315f9d83761213e8125527a07f849ff488e128188b0f114c6525"
+    },
+    "scripts/p4_boot_guard.py": {
+      "bytes": 891,
+      "sha256": "8c8efb4c825029adb64758b35f6424b04b952af46233cf888dab5cc2fe3e90a5"
+    },
+    "scripts/reset_agon_usb.py": {
+      "bytes": 3632,
+      "sha256": "19fd4577cdca0e1dc8000ba3a1904f21f544cc597becd96e2592671c7f72406f"
+    },
+    "scripts/controller_udp.py": {
+      "bytes": 9979,
+      "sha256": "98d4bb85296e180c892ba704db242874e26b6cc7c63461b2ae1fcdf423f64f7c"
+    },
+    "include/agon/net_parallel.h": {
+      "bytes": 3839,
+      "sha256": "e0504f1e9e33a8ae8dcb034bc91d84cb82270fd7f38279abfc88a3a5e054f011"
+    },
+    "include/agon/net.h": {
+      "bytes": 7617,
+      "sha256": "b3f71cf3b84209cfebe700aae0b65fa240d7a5e2e2d56d1ec9ed7196d593a4d7"
+    },
+    "include/agon/net_callback.asm": {
+      "bytes": 1138,
+      "sha256": "10fdde5cc800d54bb9f6caae795f802e6422149c4513e8446521bb5dd9ec6459"
+    },
+    "agents/net004/p4-full-r02/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "agents/net004/p4-valid-filter-r02/build/agon_extender.elf": {
+      "bytes": 36436040,
+      "sha256": "f25a1d48c704f418b71baccd19ae4eacff7af16c11db354c90226d692db4cd64"
+    },
+    "agents/net004/p4-valid-filter-r02/build/agon_extender.map": {
+      "bytes": 12380647,
+      "sha256": "8645f1a8306ff617ce892a4d11d6dddf3c4dbe7d9c21959efe8cee647beea64b"
+    },
+    "agents/net004/p4-valid-filter-r02/build/config/sdkconfig.h": {
+      "bytes": 61144,
+      "sha256": "53b554dd535f5f4bc9cc175226b528d73938b024f416b4f0832e07a1df4e2071"
+    },
+    "agents/net004/p4-valid-filter-r02/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    }
+  },
+  "preflight_validation": {
+    "python_leaves_syntax_checked": 10,
+    "actual_operator_gate_checks_passed": 11,
+    "actual_gate_sha256": "5ee17a179820715ecdbcbada4d65d523fc9c2ef2958fc02bbcdb97cda26c9e9a",
+    "checks": [
+      "valid install asserts canonical owner",
+      "stale generation60 refused",
+      "old request refused",
+      "wrong central owner refused",
+      "consumer operator refused",
+      "consumer phase refused",
+      "token/context mismatch refused",
+      "changed frozen source refused",
+      "released record refused",
+      "restore without actual stopped return refused",
+      "valid stopped restore asserts canonical owner"
+    ],
+    "target_access": false
+  }
+}
