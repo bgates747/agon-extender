@@ -24,13 +24,16 @@ normal mode/input/services and exact installed component rollback/restoration.
 Oryx is excluded; Pi compiler FIFO and Olimex reservations remain separate.
 
 Current checkpoint: filtered37ba/8270 passed one matched24-turn real-module
-comparison on62, followed by exact incoming UART restoration/full independent
-readback and clean release. Wolf now holds63 exclusively for its unchanged
-ordinary-carrier fill comparison. Extender's repeated176-record plain/guarded
-RFC25 package is frozen at78 inputs and queued normally behind it; no repeated
-hardware invocation has occurred. Actual cleanup/release and a new current-tuple
-admission remain mandatory before Extender touches the target again. Retained
-hashes are provenance, not a fresh read of occupied hardware.
+comparison on62 and both repeated176-record boundary cases on64. All352 records,
+eight positive closes and176 guarded UART0 source releases/ordered point replies
+passed. Both tranches ended with exact incoming UART restoration/independent
+readback and clean release. [Repeated result](PARALLEL-001/REPEAT-RESULT-R01.md)
+records timing scopes and limits. Wolf's separate ordinary-carrier63 cohort
+passed; its new bytewise-span comparison received fresh sole-operator65 custody
+after full64 cleanup. Extender target access is stopped during that cohort.
+MechAgon's finite live case is separately frozen and queued. Final64 selection
+was R03; unexecuted R01/R02 and host admission corrections remain preserved.
+No long-reliability, electrical-cause, production or Wolf-parallel claim follows.
 
 ## Ownership and decision register
 
@@ -41,7 +44,7 @@ hashes are provenance, not a fresh read of occupied hardware.
 | P01-D03 | Existing normative contract | EMOS owns Port C/UART1/parallel admission, mode/route and handover. P4 owns its DMA/GPIO/counter lifecycle; applications use supported owner interfaces. |
 | P01-D04 | Existing normative contract | No interprocessor CRC/checksum, per-byte acknowledgement, uncertain replay, speculative fallback or count/deadline relaxation to conceal failure. |
 | P01-D05 | Author endpoint clarification pending | Wolf returned its actual mainboard-only graphics contract and confirms no existing assignment selects a P4 VDPL provider, ext.netp sidecar or other eight-bit endpoint. Clarify which Wolf operation must use parallel before consumer-specific implementation; independent transport work continues. |
-| P01-D06 | Evidence driven | Choose the smallest fixture/change separating observed failure causes. The fixed VALID filter passed one matched24-turn case; it remains a candidate pending repeated controls, not an attributed electrical repair or default deployment. |
+| P01-D06 | Evidence driven | Choose the smallest fixture/change separating observed failure causes. The fixed VALID filter passed one matched24-turn case and both176-record repeated controls; it remains an experimental candidate, not an attributed electrical repair or default deployment. |
 
 ## Bounded evidence and research précis
 
@@ -77,10 +80,11 @@ hashes are provenance, not a fresh read of occupied hardware.
    [Filtered62 comparison](PARALLEL-001/FILTER-RESULT-R01.md) then passed24
    decisions/native+moduleframes/hostintents with positive cleanup; no electrical
    cause claim follows. Wolf63 owns its separate ordinary-carrier comparison.
-8. [Repeated physical freeze](PARALLEL-001/REPEAT-PHYSICAL-FREEZE-R01.json)
+8. [Repeated physical freeze](PARALLEL-001/REPEAT-PHYSICAL-FREEZE-R03.json)
    pins78 owner/component/native/rollback inputs. Fourteen actual owner-control
    checks and the existing16 runner/peer checks pass; nativeplain3ae0/RFC25d343
-   remain unchanged. Actual repeated hardware and Wolf integration are pending.
+   remain unchanged. Both repeated cases pass on64; the exact result and complete
+   restoration are recorded separately. Wolf integration remains pending.
 
 ## Work
 
@@ -101,12 +105,12 @@ P01-04 Qualify the smallest independent data/ownership controls on fresh
   Olimex checkout; select declared legal boundary lengths, byte patterns,
   repeated epochs and idle/graphics coexistence as needed by the contract.
   Separate source release, physical completion, receiver acceptance and render
-  completion. Record exact bytes/errors/edge counts/partial progress. [ ]
+  completion. Record exact bytes/errors/edge counts/partial progress. [x]
 
 P01-05 Implement and check only supported owner corrections justified by
   failures; use actual-code host regressions and normal FIFO identified native
   builds. Preserve failed controls and exact incoming rollback. No spontaneous
-  electrical rewiring, relaxed protocol or consumer takeover. [ ]
+  electrical rewiring, relaxed protocol or consumer takeover. [x]
 
 P01-06 Run fresh matched controls and Wolf-owned integration through normal
   stopped operator handoffs. Establish repeatability over a published bounded
@@ -258,3 +262,19 @@ UART0 coexistence. Source/owner-helper checks and request freeze precede fresh
 normal admission; first unexpected result stops successors. This is a separate
 tranche, not another62 run. P01-D05 still awaits the Author's Wolf endpoint choice;
 no sidecar/staging/graphics substitute is silently selected as goal completion.
+
+## Repeated64 result and next bounded consumer case
+
+Both selected176-record cases pass with independently checked peer bytes and
+four positive closes each. Guarded operation also passes176 source releases
+and176 ordered point replies. Source/strict proof/deadlines are unchanged; no
+extra test or replay. Full UART restoration, independent new-write readback,
+post-getter/raw state/files/CLI/input/resources pass before actual64 release
+23:09:34UTC. Current durable network guides now distinguish the UART callback
+caller from the foreground parallel provider and link the exact bounded result.
+
+Wolf's new PERF005 ordinary-carrier span comparison now holds fresh65 custody
+through its tests and full cleanup. Extender target access is stopped. MechAgon's separately frozen one finite30TPS Native/Walls
+case follows FIFO and requires new owner-local install/rollback leaves and
+stopped handoff; no64 token or temporary pair survives as authority. P01-D05
+and Wolf parallel integration remain open. No production promotion is selected.

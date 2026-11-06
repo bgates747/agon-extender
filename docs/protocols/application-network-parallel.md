@@ -3,9 +3,11 @@
 The application explicitly selects `ext.netp` through the existing MOS0x51
 gateway. All NM command/reply bytes cross the parallel pipe; UART1 carries only
 keyboard and bounded carrier coordination. This contract is agreed with MechAgon
-under Smith's ABI delegation on2026-11-05. It specifies development work, not an
-installed or hardware-qualified service. [NET-004](../tasks/NET-004.md) owns the
-remaining implementation and qualification work.
+under Smith's ABI delegation on2026-11-05. The matched experimental pair has
+bounded physical evidence, including a24-turn real-module comparison and
+repeated plain/guarded records; it remains outside selected production.
+[PARALLEL-001](../tasks/PARALLEL-001.md) records exact selections, remaining
+qualification and the unresolved Wolf endpoint.
 
 Smith's2026-11-06 application decision permits MechAgon to explicitly select a
 matched UART1 `ext.net` binding after its one final parallel attempt fails.
@@ -77,7 +79,8 @@ This explicit EMOS composition excludes the prior resident UART NM endpoint;
 `ext.net` returns unavailable. There is no automatic carrier fallback. The
 separate historical UART SDK/installed firmware remain identified by their own
 records. A checked header does not establish an installed matching service or
-an RFC25-enabled callback map; use the eventual matched component manifest.
+an RFC25-enabled callback map; use the exact matched component/result record,
+not the latest source or another occupied bench's retained installation.
 
 
 ## Matched UART0 admission
@@ -95,4 +98,8 @@ and alternate registers if it uses them. No MOS call, wait or reentrant submit
 belongs there. EMOS retires the FIFO tail through a bounded foreground IER/TEMT
 read before another physical epoch. A logical netp session remains open across
 ordinary Legacy UART0 batches. Caller serialization still includes required
-receiver DONE. These checked source contracts do not establish a physical pass.
+receiver DONE. The [repeated physical result](../tasks/PARALLEL-001/REPEAT-RESULT-R01.md)
+records176 guarded byte-exact records with176 source releases and176 ordered
+point replies, plus a separate176-record plain control. That bounded success
+does not establish arbitrary receiver DONE semantics, concurrent overlap,
+bounded IRQ latency or general hardware qualification.

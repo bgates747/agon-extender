@@ -2,12 +2,13 @@
 
 The source implementation lets an admitted Agon application exchange opaque
 binary records through P4 to a numeric IPv4 TCP peer. It is a matched development
-interface. One installed matched pair passes four physical opaque echoes and
-ordinary mode/callback/CLI cleanup; broader qualification remains pending. It is
+interface. UART1 has bounded physical echo and consumer evidence; a separate
+parallel binding passes repeated byte-exact records and serialized guarded
+UART0 coexistence checks. Broader qualification remains pending. It is
 not in the selected production bundle. MechAgon is the first consumer; its game protocol,
 JSON/WebSocket bridge and drawing remain outside Extender.
 
-## Application ownership
+## UART1 application ownership
 
 Use `include/agon/net.h` from native C or the documented gateway from assembly.
 Keep one zero-initialized `static agon_net_client` and its ISR reply storage in ordinary application RAM
@@ -41,7 +42,7 @@ connection discards old uncertain queues. A valid request refreshes the P4 lease
 the accepted experimental connect deadline is1500ms and application exchange deadline
 is250ms. These are software bounds pending physical qualification.
 
-## Transport and gateway
+## UART1 transport and gateway
 
 EMOS retains ordinary VDU routing, physical UART serialization and packet
 reception. The app library never accesses UART/GPIO. P4 console copies complete
@@ -127,4 +128,26 @@ pass0,1,127,128B both with and without ordinary mainboard draw/query cycles on
 the identified unfiltered development pair. They do not exercise guarded RFC25
 or reproduce/clear the consumer failure. The working UART pair was restored
 with independent readback and full clean bench handback afterward; the filter
-candidate remains untested and production selection unchanged.
+candidate subsequently passes the separate bounded comparisons below.
+Production selection remains unchanged.
+
+## Foreground parallel development binding
+
+Use the separate [parallel message contract](protocols/application-network-parallel.md)
+and `include/agon/net_parallel.h` with its exact matched EMOS/P4 composition.
+`agon_netp_open`, `agon_netp_submit`, `agon_netp_take` and `agon_netp_release`
+use a static223-byte client on native eZ80. EMOS owns physical admission and
+pin restoration; the application installs no NM callback. `ext.netp` explicitly
+selects parallel payloads and refuses faults without a UART payload fallback.
+The UART1 caller and callback instructions above do not apply to this provider.
+
+The fixed VALID-filter P4 candidate with EMOS8270 passes one matched24-turn
+[real-module comparison](tasks/PARALLEL-001/FILTER-RESULT-R01.md), then the
+[repeated boundary matrix](tasks/PARALLEL-001/REPEAT-RESULT-R01.md):176 byte-exact
+records/four positively closed sessions in each of plain and guarded variants.
+The guarded variant records176 UART0 source releases and176 ordered point
+replies before subsequent parallel epochs. This is serialized coexistence,
+not concurrent overlap, bounded IRQ latency, a long reliability result or
+an electrical-cause diagnosis. Wolf's current ordinary-carrier rendering
+results do not qualify a Wolf parallel endpoint. Use the result records for
+exact component selection, restoration and custody; none promotes production.
