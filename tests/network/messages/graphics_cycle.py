@@ -5,7 +5,10 @@ import os, subprocess, tempfile
 
 ROOT=Path(__file__).resolve().parents[3]
 s=(ROOT/'tests/fixtures/network/main.cpp').read_text()
-begin=s.index('static uint8_t graphics_cycle(');brace=s.index('{',begin);end=brace+1;depth=1
+# Both compile-selected variants name this leaf. Exercise the ordinary-output
+# branch explicitly; selecting the first occurrence now extracts RFC25 instead.
+branch=s.index('#elif defined(NETPROBE_GRAPHICS_CYCLE)')
+begin=s.index('static uint8_t graphics_cycle(',branch);brace=s.index('{',begin);end=brace+1;depth=1
 while depth:
     if s[end]=='{':depth+=1
     elif s[end]=='}':depth-=1

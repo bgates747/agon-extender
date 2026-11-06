@@ -74,3 +74,10 @@ not a general library. Only its established ABI facts inform the independent
 small application bridge; no consumer implementation is imported. UART's raw
 RC3 examples have different A semantics and are not reused. The actual installed
 comparison and eventual rollback must be reconciled afresh before physical work.
+
+The first compile tranche242 passes the actual RFC25 state/packet leaf under
+ASan/UBSan. The existing ordinary-graphics extractor then selects the new first
+function with the same name and fails compilation before any native build.
+Its selection is corrected to the explicit ordinary branch; original logs and
+retired children are retained,242 released, and a fresh source/build follows.
+This is a test-harness correction, with no hardware or firmware result.
