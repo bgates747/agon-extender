@@ -189,3 +189,14 @@ P01-04 and P01-06 remain open: prepare repeated/boundary controls independently,
 interpret the real-module workload discrimination, and close the explicit Wolf
 carrier/endpoint contract before consumer adaptation. The persistent goal stays
 active; production acceptance is not implied by this isolated pass.
+
+## Next consumer workload isolation
+
+[Owner-assisted semantic replay](PARALLEL-001/REPLAY-ASSIST-R01.md) selects
+Extender's request-local install/stopped-handoff/return-restoration work for
+MechAgon's existing finite24turn real-module test. Wolf voluntarily requeues
+while its matched fill cohort is prepared; normal fresh FIFO still governs.
+Publish/freeze owner leaves before admission, preserve current mainboard5d657,
+restore the exact incoming UART pair after consumer teardown, and make no
+Extender target calls during MechAgon's sole-operator phase. No extra generic
+echo/filter/game or consumer takeover is selected.
