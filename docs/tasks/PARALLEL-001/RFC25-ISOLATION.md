@@ -58,7 +58,7 @@ No filter flash is selected even if this case fails: interpret original evidence
 first and publish the next finite comparison. This tranche is not the goal's
 repeatability or Wolf integration acceptance by itself.
 
-P01-T01 Source-review and prepare exact wrapper/current handback/rollback freeze. [ ]
+P01-T01 Source-review and prepare exact wrapper/current handback/rollback freeze. [x]
 
 P01-T02 Normal checkout/selective install/readback, one case, collect/restore/release. [ ]
 
@@ -74,3 +74,11 @@ joined actors. Nine original compile inputs and the unchanged17953B/d04442f1
 fixture rehash exactly. No target, serial reader, TCP peer or fixture ran here.
 The complete install/stage/collection/restoration wrapper/current binding is
 still PREPARING; these checks are not physical readiness or a reservation.
+
+The [owner freeze](RFC25-OWNER-FREEZE.json) now records64 local source/artifact
+inputs including the complete13-leaf install/stage/collect/recover/restore/release
+workflow, scheduler admission, original native fixture and known exact rollback
+images. Source paths were refreshed for the new sole-owner task and namespace;
+no filter selector remains. The incoming native identity is taken from actual58
+handback, with no native firmware write. These checks finish offline readiness;
+actual admission/state/readback/invocation remain separately observed operations.
