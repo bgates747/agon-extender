@@ -51,7 +51,8 @@ N04-019.01 Record Smith's placement/ownership decision and send substantive
   Actual durable delegation `uart1-app-async-driver-author-delegation-one` and
   accepted immediate chat delivery are retained in the ignored owner inventory.
   UART's confirmed owning project is the Author's generic MOS fork. Its actual
-  task ID/ABI response remains pending; no implementation or test pass is claimed.
+  task is now U1-001 in the UART-owned project (task-first commit cc8d090);
+  ABI/admission integration remains pending. No implementation or test pass is claimed.
 
 N04-019.02 Record UART's actual owning task/source location and proposed ABI,
   interrupt lifecycle, EMOS dependencies and qualification plan when returned.
@@ -81,3 +82,13 @@ per-byte UART1 OUT0 and CTS/FIFO checks. Its UART1 RX ISR owns keyboard and NM
 packet reception. UART0 guarded RFC25 uses IRQ-driven FIFO fills with OTIRX.
 Exact maintained source/artifact paths remain in the ignored owner handoff;
 canonical upstream checkouts remain read-only.
+
+## UART owner return —2026-11-06
+
+UART publishes `docs/tasks/U1-001/README.md` in its generic MOS project,
+branch `codex/uart1-app-async`, commit `cc8d090`; source belongs in its
+`experiments/uart1-async`. A normal CALL ABI is sufficient; no RST number is
+selected. Its bounded application TX core can proceed independently. EMOS
+RX/vector/LSR ownership and a supported optional TX dispatch/CTS retry seam
+remain source-contract questions; no direct-register or vector takeover is
+admitted and no resident engine/build/bench change follows from this return.

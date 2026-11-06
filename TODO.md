@@ -11,6 +11,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Application networking — authorized framework preparation
 
+- [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility, private automatic-connect setting, DHCP and genuine optional ping; task first, manual C8 review pending. Radiotux sources stay unchanged.
+
 - [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Plan published before code; bounded core and stopped outbound TCP adapter pass host sanitizer/loopback and actual P4 object compilation. Author accepts outbound TCP to Pi; payload/EMOS envelope/app library and worker integration remain. No firmware deployment or production selection.
 
 - [ ] **[NET-004 — Parallel application network carrier](docs/tasks/NET-004.md)** — Final consumer parallel attempt failed; explicit matched UART1 renderer passes while Extender continues independent parallel diagnosis. Plain and ordinary-graphics controls pass without reproducing the fault; guarded RFC25 control remains separate. Prepare during consumer bench use, then normal fresh checkout and full restoration; no implicit carrier fallback.
