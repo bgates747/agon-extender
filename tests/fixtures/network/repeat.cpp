@@ -188,6 +188,7 @@ int main(int argc,char**argv){
         }
         ++closed_sessions;
     }
+    probe_restore_callback(); // Parallel binding is a no-op; preserve shared cleanup shape.
     const auto elapsed=uint24_t(ticks()-began);const bool restored=mode.restore();
     fprintf(result,"%s result=%s first_error=%u records=%u/176 opened=%u/4 closed=%u/4 release=%u restore=%u elapsed_ticks=%lu tick_hz_nominal=120 carrier=parallel size_checks=%u\n",
         NETPROBE_BUILD_ID,ok&&restored?"PASS":"FAIL",unsigned(error),passed,opened_sessions,
