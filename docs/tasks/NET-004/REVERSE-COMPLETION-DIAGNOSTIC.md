@@ -30,19 +30,19 @@ Do not weaken those checks based on this observation.
 
 ## Finite source tranche
 
-N04-012.01 Publish this plan before changing code. [ ]
+N04-012.01 Publish this plan before changing code. [x]
 
 N04-012.02 Append the cached VALID count to the existing task-context TX failure
 log only. Preserve the original fields and all successful-path behavior.
-No new MMIO reads, ISR logging, checksums or recovery changes. [ ]
+No new MMIO reads, ISR logging, checksums or recovery changes. [x]
 
 N04-012.03 Reserve the normal Pi compiler FIFO for the existing native payload
 and counter sanitizer checks. One compiler at a time, at most 120 seconds total;
-join owned children and release before reporting. Preserve exact output. [ ]
+join owned children and release before reporting. Preserve exact output. [x]
 
 N04-012.04 Publish checked source and an honest diagnostic handoff. A full
 identified P4 rebuild and installation are separate subsequent preparation;
-this tranche produces no deployable firmware or physical qualification. [ ]
+this tranche produces no deployable firmware or physical qualification. [x]
 
 ## Custody and installed disposition
 
@@ -53,3 +53,27 @@ separately selected rollback, not an obligatory flash before release. Record
 actual installed identities for the next owner. Future owner reproduction
 requires fresh normal admission and stopped operator handoff; never reuse the
 old lease or rerun an uncertain transfer.
+
+
+## Checked source checkpoint
+
+Plan c1aa8401 preceded code. Owner branch `codex/net004-valid-trace` commits
+source e14e0b8a, adding `valid_edges` only to the existing TX failure line.
+Strict compositions report the cached proof count; other compositions report
+-1 because they have no strict counter. No MMIO inventory, successful-path
+transport behavior, state transition, deadline or guard changes.
+
+The initial existing ExExt compile check caught an unguarded reference to the
+optional counter member. The corrected conditional-owner selection passes all
+three existing test methods: 246 retained ExExt DMA cases, 213 native payload
+cases and 70 counter cases, with address/undefined-behavior sanitizers. Final
+check wall duration is 4.072 seconds on the host, not transport timing. Compiler
+212 was released after all owned checks/children joined, with no successor.
+
+This publishes checked source only. No new P4 firmware image was built or
+installed. The physical cause remains unresolved; `valid_edges` may narrow a
+later admitted capture but does not itself prove why the backend rejected it.
+MechAgon subsequently restored its exact incoming mainboard application/tail
+and cleanly released generation43; Wolf is first awaiting its current-binding
+readiness. Retained diagnostic EMOS and existing P4 identities are explicit in
+the private release record. Original r08 evidence remains unchanged.
