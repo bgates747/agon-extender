@@ -92,3 +92,10 @@ selected. Its bounded application TX core can proceed independently. EMOS
 RX/vector/LSR ownership and a supported optional TX dispatch/CTS retry seam
 remain source-contract questions; no direct-register or vector takeover is
 admitted and no resident engine/build/bench change follows from this return.
+
+UART core checkpoint `45332e1` reports537B core text plus a30B OTIRX leaf
+in application space. Host sanitizer/byte-event checks and native link pass;
+there is no operational adapter or physical UART result. MechAgon146B wire
+lifetime/writer exclusion is incorporated. Owner admission/IRQ/CTS retry/LSR
+and positive tail retirement remain the concrete integration boundary, not a
+new resident engine or an assumed public hook.

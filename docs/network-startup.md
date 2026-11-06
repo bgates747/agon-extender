@@ -43,3 +43,9 @@ and the manual/public-release boundary. The accepted full
 Radiotux sources are untouched; our bounded support is project-owned and kept
 outside his checkout. The new utility has no dependency on the proposed async
 UART1 application driver.
+
+The retained candidate is `wifi-start-b2026-11-06-17-51-28Z` (31856bytes),
+with [exact manifest](tasks/NET-007/BUILD.json). Its generated manual package is
+`dist/wifi-start/wifi-start-b2026-11-06-17-51-28Z.zip` in the build owner's
+checkout. Cloning Git alone does not obtain generated binaries. This is a
+manual-review candidate, not a selected public release.

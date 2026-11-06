@@ -1,0 +1,60 @@
+{
+  "build_id": "wifi-start-b2026-11-06-17-51-28Z",
+  "status": "experimental",
+  "source_commit": "869795c20877cc957684731659e4e358f79f3353",
+  "inputs": {
+    "tools/wifi-setup/Makefile": "8fb5cb00e3d8c2bf5de285dbf6468c8f4f3b8f32c2fe47ab2f9aa1fb4adb157b",
+    "tools/wifi-setup/README.md": "452225ff709b34008984c5a2599c69aa79f768b02baa7270969c4c44967edd81",
+    "tools/wifi-setup/NOTICES.md": "b86ecabe9e0ffc61e1a455339f454229b473ee2fcb97d4ed278092b7724570c1",
+    "tools/wifi-setup/wifi-setup.cfg.example": "4e1d8d8504940d636c06d5e9369ce4e8750472d177fd187e506201f4c29ae932",
+    "tools/wifi-setup/include/setup.h": "b2b2f3338af279adfab07d6321f3afdce69e16e7e100fd97053d1077277cdfd0",
+    "tools/wifi-setup/src/config.c": "ad8ab83065a6ec76de6bc6f42400bb0a5e6bdb51f08071afe613bd8868c76876",
+    "tools/wifi-setup/src/setup.c": "a2c0a28c7bdee1cfc2a0f8b63e7a744a2e897493a5d7cf0b802fccf46ab52f39",
+    "tools/wifi-setup/src/main.c": "1aa8b71d0a1dc4a68f58b29ee288834b301f6bb11928d31f552615f7421a910c",
+    "tools/wifi-setup/src/uart.src": "b77ebe35b1dd6d35936baadd07b1453d2b1a28fb5c07c957274a9e3523b0e72c",
+    "tests/wifi-setup/test_core.c": "24f3a9898fec6488748672438dbb6c539417fe2d9d250872d7c054d41b1e8c0d",
+    "tests/wifi-setup/test_platform.c": "8eb53de044b62501676b6ea768d24f8a5542643528cc2d20e23981b46c4e9130",
+    "tests/wifi-setup/include/agon/mos.h": "5975d9fa1168fa98ab50677eea34ee35fad7fa5c99af97f7da0452a9d3928071",
+    "scripts/build_wifi_start_package.py": "19caf3c48e939d2682fef56333b53abddc7770e789bcc7001c07230b8f4b498c",
+    "tools/wifi-start/Makefile": "964ed5f2403613022679a8dba47007b536ada09d498850514af324d336065b38",
+    "tools/wifi-start/README.md": "28752f739ea889dc4e1fd343e5be9bea9ddeb05fe89077f1a635cbf2a20f1b22",
+    "tools/wifi-start/NOTICES.md": "b86ecabe9e0ffc61e1a455339f454229b473ee2fcb97d4ed278092b7724570c1",
+    "tools/wifi-start/wifi-start.cfg.example": "e9361ce0c7cba6cc093c5bda6ccbd6c173d7d31949e038d9bbf0e6b6bd4f2217",
+    "tools/wifi-start/src/main.c": "9d9bd06da47860c91ec7fe5925a2ae2841574d3bce63273f7988655bf345e88d",
+    "tests/wifi-start/test_start.c": "6c69ec95fc1cee0e686940f28473206bf9afdaea7a2a7b65420306545b73adb6",
+    "tests/wifi-start/test_platform.c": "519076a70647ad11153859959b34123df82b6702f64cdd12c5403d8105d6d15f",
+    "scripts/check_wifi_start.py": "9a7c181a65ed4295161ad6702c8cbb584597ae3d683fcf99aa061fe053d040e9"
+  },
+  "binary": {
+    "bytes": 31856,
+    "sha256": "557fb5787f880b9960910dd1a3267244021e8d5cc70483dadc3a7022756ac896"
+  },
+  "map_sha256": "57eeb875a0b889d2ad372f257ff98bf0b4ab60fe92ee3977bf8fc38d3f21094e",
+  "toolchain": {
+    "files": {
+      "bin/ez80-none-elf-clang": "b26b8b361834c7af13d272408efafd350cf8d6493c89e50cecd73f9d9e70a220",
+      "bin/ez80-none-elf-as": "1ee23e5551998d5fe0d2e7dcdf0fa6916342fc2d2c973b467e174ba679509097",
+      "bin/ez80-none-elf-ld": "8941596adea72c999d20c94938cc61c969731367367110a1c1f6cb9826ba0e23",
+      "bin/agondev-setname": "bbd44ff30e8543768148fd1b6c218fe3ca89f00925a9bf70f234400160c05e38",
+      "lib/libagon.a": "163ac7b26e485fec0b98e58b2097045aef2a4b275047b795d4971efdfee1a952",
+      "include/agon/mos.h": "2dbcf8c081b81149188f00bbe00e2dc288c62ae74e659d40de05d947fa606949",
+      "include/agon/mos.inc": "5cda2d733abad3d7c71ff7e15ab6f820154d3fa784e769c270fde6d575e14ab0",
+      "include/ez80f92.inc": "ee6122c4c9b249310d992e19b6439682e34677db763a14dc62dd0b1cf7be3314",
+      "config/makefile.inc": "a42cbc9fba68e95029f4d0733ae6112e782b9a31d2136f040bef2b3da41f8f7d",
+      "config/linker.conf": "35e642f4e17a8293b4653d927aca81bc1d82f42052a91f47578048918c3e3b73"
+    }
+  },
+  "started_epoch": 1793987488.2113092,
+  "elapsed_seconds": 0.5957777500152588,
+  "hardware_tested": false,
+  "public_release": false,
+  "upstream": {
+    "commit": "e265db1de57c49142420324945c666049dc1ec53",
+    "files_modified": false,
+    "source_included": false,
+    "role": "read-only prior art; project-owned adapter required for cancellation"
+  },
+  "validation": "agents/net007/check-03/host-checks.log; both actual cores and adapters ASan/UBSan",
+  "clock_counts_per_second_default": 120,
+  "clock_alternative": 100
+}
