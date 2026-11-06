@@ -72,3 +72,15 @@ joined all observed compiler descendants and released the compiler slot. It
 produced no deployable P4 image. No hardware was accessed and no filtering repair
 is claimed. A new identified build tranche is still required; this independent
 work does not block the final application case or its explicit UART1 alternative.
+
+## Fresh complete-image tranche
+
+After the expired first attempt is fully stopped and released, a new full-build
+tranche selects the same clean source f3a102d5 and a fresh output/identity. The
+matched UART build measured934 seconds; allow an expected twenty minutes and
+a fresh thirty-minute whole stop including owned cleanup. No old watchdog or
+output is resumed. Reconcile raw SDK-config hashes by verifying that any two
+partition-path differences reference identical source and identical compiled
+partition-table bytes. Keep all other composition checks exact. This candidate
+is independent of MechAgon's final unfiltered attempt and explicit UART path;
+no installation or additional application test is authorized by this build.
