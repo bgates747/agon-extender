@@ -40,6 +40,11 @@ def main():
                      ('tcp', ['tests/network/messages/tcp_test.cpp',
                               'vdp/video/extender/network/messages/tcp_client.cpp'])]
             if args.parallel_emos_source:
+                route = [str(root/'.venv/bin/python'),str(root/'tests/network/messages/gateway_route.py'),
+                         '--emos-source',str(args.parallel_emos_source.resolve()),
+                         '--output',str(output/'public-gateway')]
+                with (output/'public-gateway.log').open('w') as log:
+                    subprocess.run(route,cwd=root,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=200)
                 emos = args.parallel_emos_source.resolve()
                 fake = Path(temp)
                 (fake/'ff.h').write_text('enum {FR_OK=0,FR_TIMEOUT=15,FR_INVALID_PARAMETER=19};\n')

@@ -23,7 +23,7 @@ typedef struct agon_netp_client {
 static inline uint8_t agon_netp_call(agon_netp_client*c,unsigned n,
                                    uint8_t*out,unsigned capacity,unsigned*length){
     uint8_t*r=c->request;memset(r,0,66);
-    r[0]=66;r[2]=1;r[4]=3;r[5]=3;r[6]=2;
+    r[0]=66;r[2]=1;r[4]=3;r[5]=4;r[6]=2;
     memcpy(r+25,"ext",3);memcpy(r+41,"netp",4);
     agon_net_pointer(r+10,c->input);r[13]=(uint8_t)n;
     if(capacity){agon_net_pointer(r+16,out);r[19]=(uint8_t)capacity;}
