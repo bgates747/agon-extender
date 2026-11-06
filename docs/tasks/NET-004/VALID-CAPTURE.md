@@ -30,30 +30,26 @@ rainbow order or change probe connections remotely.
 ## Work
 
 N04-015-A Record the confirmed probe map, current component handback, fresh
-  operation paths and exact reproduction/harness selection. [ ]
+  operation paths and exact reproduction/harness selection. Preserve the
+  reported map separately from subsequent measured attribution. [x]
 
 N04-015-B Reconcile normal FIFO and fresh CLI/resource admission; assert the
-  actual new lease before analyzer discovery or any target access. [ ]
+  actual new lease before analyzer discovery or any target access. [x]
 
-N04-015-C Discover the retained analyzer, prepare an untriggered nominal24MHz
-  thirty-second capture (720000000 one-byte samples,720MB raw), and require
-  delivered samples before the sole selected invocation. Selected channels
-  retain their physical D2/D4/D6 bit positions. An untriggered capture retains
-  pre-invocation levels and proves actual sample delivery before launch.
-  No reset-triggered tests, automatic replay or checksum addition. Publish the
-  final sample count, storage ceiling and external stop before dispatch. Capture
-  has a45-second external process bound and768MiB raw-file ceiling; the native
-  workload keeps its independently selected original bounds.
-  Retain the original full trace and partial acquisition on failure. [ ]
+N04-015-C Prepare the original untriggered24MHz30second acquisition with
+  delivered-sample and idle-level guards. Retain its short prefix when the idle
+  check refuses RUN. Dispose the uninvoked renderer path through Smith's latest
+  correction; perform the single retained100kHz60second pinwalk instead. [x]
 
-N04-015-D Correlate VALID/CLOCK/READY transitions with the existing P4 cached
-  count, native receipt and host timestamps. Separate acquisition completeness,
-  fixture completion and sampled-wire findings. A negative capture is not proof
-  that no shorter pulse occurred or that adding probes had no effect. [ ]
+N04-015-D Report measured probe attribution, acquisition completeness and
+  fixture completion separately. No handshake/cached-count correlation can be
+  claimed from the actual data-wire probes. A negative digital capture is not
+  proof that no shorter pulse occurred or that probes had no effect. [x]
 
 N04-015-E Preserve failure/RAM before LOAD, finish the selected postgetter,
   restore incoming mainboard application if changed, mode/callback/CLI/startup/
-  input and idle resources; stop/join capture and host actors before release. [ ]
+  input and idle resources; stop/join capture and host actors before release.
+  No failed renderer RAM existed because RUN was never issued. [x]
 
 ## Preparation stop
 
@@ -87,3 +83,42 @@ preparation to the exact incoming application/tail, verify incoming feature
 state, mode/callback/CLI/files/input and idle resources, then release normally
 for the waiting Wolf request. These are completion/restoration operations, not
 permission to launch another diagnostic or renderer test.
+
+## Result — one pinwalk, measured data-wire probes
+
+The retained eleven-pin walk completed once. All eleven P4 pad low/high
+readbacks matched, outputs were independently released, and the full6000000
+samples at nominal100kHz were retained. These are three observed connections,
+not proof of all eleven end-to-end wires or analog signal integrity.
+
+| Analyzer channel | Recorded lead color | Deliberate low pulses | Measured signal | P4 GPIO | Agon header pin |
+|---|---|---:|---|---:|---:|
+| D2 | Blue | 6 | Data5 / PC5 | 33 | 22 |
+| D4 | Purple | 4 | Data3 / PC3 | 20 | 20 |
+| D6 | Gray | 2 | Data1 / PC1 | 18 | 18 |
+
+The observed pulse counts agree with the older matching-color data-wire map.
+No READY/CLOCK/VALID pattern appeared on a captured channel. This explains the
+earlier UART-like activity on D6 and low D4, without attributing the original
+five-edge fault. Preserve the Author-reported intended control hookups as a
+separate record rather than editing that history to fit this result.
+
+The preceding idle guard retained720384 samples at24MHz before refusing the
+renderer RUN; no native connection or match occurred. The finite Pi harness
+cancelled and joined cleanly. An earlier unprivileged analyzer discovery met an
+OS USB permission error before any acquisition/server/RUN; the existing sudo
+route was then used for analyzer access only. No udev policy change was made.
+
+Normal P4 pad-release/startup and Agon input recovered after the walk. The exact
+incoming mainboard application plus touched tail were restored once and all
+1105920 written bytes independently compared at115200baud. Exact feature
+absence, mode0/callbackzero/actual CLI, preserved startup/listener, neutral input,
+idle services and free serial ports passed. The P4/EMOS pair remained unchanged.
+The borrowed final-state receipt omitted a timestamp, so a genuinely new
+CLI/file/raw-state observation was acquired for release; no mtime or restamped
+receipt was substituted. Actual46 released and prepared Wolf received fresh47
+with an explicit stopped operator handoff. SD remains mounted.
+
+Machine-local raw traces, immutable input hashes, measured probe map and actual
+release/grant receipts are retained under `agents/net004/valid-sniffer-r01/` and
+the scheduler's corresponding local records. Production selection is unchanged.
