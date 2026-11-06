@@ -146,7 +146,11 @@ The fixed VALID-filter P4 candidate with EMOS8270 passes one matched24-turn
 [repeated boundary matrix](tasks/PARALLEL-001/REPEAT-RESULT-R01.md):176 byte-exact
 records/four positively closed sessions in each of plain and guarded variants.
 The guarded variant records176 UART0 source releases and176 ordered point
-replies before subsequent parallel epochs. This is serialized coexistence,
+replies before subsequent parallel epochs. A subsequent
+[finite live case](tasks/PARALLEL-001/LIVE-RESULT-R01.md) completes 663 matching
+native/module/host frames and decisions/intents, positive ordered shutdown and
+post-feature cleanup. Exact incoming UART restoration and clean release follow
+each tranche. This is serialized coexistence,
 not concurrent overlap, bounded IRQ latency, a long reliability result or
 an electrical-cause diagnosis. Wolf's current ordinary-carrier rendering
 results do not qualify a Wolf parallel endpoint. Use the result records for

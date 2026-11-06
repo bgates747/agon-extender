@@ -23,17 +23,19 @@ CRC/checksum, fabricated ABI, relaxed proof or unmeasured speed claim. Preserve
 normal mode/input/services and exact installed component rollback/restoration.
 Oryx is excluded; Pi compiler FIFO and Olimex reservations remain separate.
 
-Current checkpoint: filtered37ba/8270 passed one matched24-turn real-module
-comparison on62 and both repeated176-record boundary cases on64. All352 records,
-eight positive closes and176 guarded UART0 source releases/ordered point replies
-passed. Both tranches ended with exact incoming UART restoration/independent
+Current checkpoint: filtered37ba/8270 passed the matched24-turn replay on62,
+both 176-record repeated boundary cases on 64, and one 663-decision/frame/intent
+live Native/Walls case on 66 with positive terminal cleanup and gameplay
+coverage. All tranches ended with exact incoming UART restoration, independent
 readback and clean release. [Repeated result](PARALLEL-001/REPEAT-RESULT-R01.md)
-records timing scopes and limits. Wolf's separate ordinary-carrier63 cohort
-passed; its new bytewise-span comparison received fresh sole-operator65 custody
-after full64 cleanup. Extender target access is stopped during that cohort.
-MechAgon's finite live case is separately frozen and queued. Final64 selection
-was R03; unexecuted R01/R02 and host admission corrections remain preserved.
-No long-reliability, electrical-cause, production or Wolf-parallel claim follows.
+and [live result](PARALLEL-001/LIVE-RESULT-R01.md) give exact scope and timing
+limits. Wolf's ordinary-carrier65 cohort stopped on its producer/package size
+mismatch, preserved RAM/restored/released; the owner corrected that binding
+and now holds fresh 67 sole custody for its separate finite cohort. Extender
+makes no target calls during 67. Wolf's selected parallel endpoint remains
+unresolved; ordinary-carrier results cannot substitute for this goal's
+integration requirement. No electrical-cause, long-reliability, optical,
+production or universal hardware claim follows.
 
 ## Ownership and decision register
 
@@ -44,7 +46,7 @@ No long-reliability, electrical-cause, production or Wolf-parallel claim follows
 | P01-D03 | Existing normative contract | EMOS owns Port C/UART1/parallel admission, mode/route and handover. P4 owns its DMA/GPIO/counter lifecycle; applications use supported owner interfaces. |
 | P01-D04 | Existing normative contract | No interprocessor CRC/checksum, per-byte acknowledgement, uncertain replay, speculative fallback or count/deadline relaxation to conceal failure. |
 | P01-D05 | Author endpoint clarification pending | Wolf returned its actual mainboard-only graphics contract and confirms no existing assignment selects a P4 VDPL provider, ext.netp sidecar or other eight-bit endpoint. Clarify which Wolf operation must use parallel before consumer-specific implementation; independent transport work continues. |
-| P01-D06 | Evidence driven | Choose the smallest fixture/change separating observed failure causes. The fixed VALID filter passed one matched24-turn case and both176-record repeated controls; it remains an experimental candidate, not an attributed electrical repair or default deployment. |
+| P01-D06 | Evidence driven | Choose the smallest fixture/change separating observed failure causes. The fixed VALID filter passed one matched24-turn case, both176-record repeated controls and one663-frame live case; it remains an experimental candidate, not an attributed electrical repair or default deployment. |
 
 ## Bounded evidence and research précis
 
@@ -118,7 +120,7 @@ P01-06 Run fresh matched controls and Wolf-owned integration through normal
 
 P01-07 Update routine transport/SDK/operating documentation and record honest
   remaining limits. Production promotion/version/tag follows explicit tested
-  acceptance under existing policy; no implied whole-system qualification. [ ]
+  acceptance under existing policy; no implied whole-system qualification. [x]
 
 ## Success and failure handling
 
@@ -292,3 +294,24 @@ Nine actual delegated-owner gate cases and syntax checks pass in2.115s under
 compiler273; all owned children joined and the slot released. Source manifest
 20627cba binds consumer40inputs/kit8a94365c, separate fresh namespaces and
 exact UART rollback. No physical readiness or grant is claimed during Wolf65.
+
+
+## Live66 result and remaining completion boundary
+
+[One live66 case](PARALLEL-001/LIVE-RESULT-R01.md) passes663 matching frames/
+decisions/intents, positive ordered release/cleanup/end, native15 shots, both
+participants moving/firing and1326 role-colour state checks. All original actors
+joined before actual stopped return. Owner exact UART restoration/full new-write
+readback/final feature/state/files/CLI/input/resources checks pass; actual66
+release23:48:59UTC, followed by fresh sole Wolf67 custody. No extra test or replay.
+The host internal180s bound/record differs from the150s parent CLI observation
+and subsequent bounded join; actual host61.459s stays within both. Keep scopes
+explicit rather than reusing the plan's shorthand whole-host150s claim.
+
+P01-04/P01-05/P01-07 are satisfied for the published bounded engine correction
+and operating guidance. P01-06 remains open: Wolf's direct assignment still
+selects mainboard native7593/VDPL over UART0. No P4 VDPL provider, network
+sidecar or other specific parallel workload has been selected. Existing source
+returns and the Author question remain P01-D05; no invented substitute or
+MechAgon result closes Wolf integration. Preserve ordinary Wolf work unchanged
+while that missing endpoint is resolved. The persistent goal is not complete.
