@@ -32,7 +32,7 @@ N04-017.03 Once independently ready, reserve normally and reconcile the actual
   selected mainboard profile8 application span may be installed/read back;
   retain exact incoming native application/tail and feature presence/full value.
   Use supported feature getter, full fixture readback and native LOAD only for
-  preparation, with actual CLI, input, mode/callback and resource admission. [ ]
+  preparation, with actual CLI, input, mode/callback and resource admission. [x]
 
   Each selected native write/readback is followed by one deliberately selected
   clean current P4 initialization, then one commissioned Agon USB-RTS reset and
@@ -46,20 +46,20 @@ N04-017.04 Perform exactly one24MHz/720000000-sample/30s acquisition, maximum
   output mapping. Current probe evidence maps D2 blue READY, D4 purple VALID,
   D6 gray CLOCK; require delivered samples and expected idle levels before RUN.
   Mismatch means zero RUN and no rearm/pinwalk. No hardware discovery or arm
-  before actual custody. Store/stream bounded raw bytes, not an unbounded buffer. [ ]
+  before actual custody. Store/stream bounded raw bytes, not an unbounded buffer. [x]
 
 N04-017.05 The single parent validates actual host ready PID/identity/original
   registration deadline plus analyzer readiness, then invokes unchanged native
   once. Native90s/serial150s/host180s/active85s, one30TPS round. Preserve host
   memory/thermal/output limits. No chat-latency dispatch gate, parallel operator,
-  retry, deadline extension, additional game or filter installation. [ ]
+  retry, deadline extension, additional game or filter installation. [x]
 
 N04-017.06 Join original host, serial and analyzer actors before collection or
   recovery. On an unreturned native, apply standard monitored recovery without
   replay and SAVE64KiB RAM before any getter LOAD. Retrieve first-error/native
   receipts and full/partial wire evidence separately. Restore exact incoming
   mainboard span/feature, mode/callback/CLI/files/input/offlineidle/freeUSB and
-  release normally before offline analysis. Keep SD mounted. [ ]
+  release normally before offline analysis. Keep SD mounted. [x]
 
 Digital sample completeness and interval correlation are not analog pulse-width
 qualification or proof of electrical origin. Keep native decisions/frames, host
@@ -77,3 +77,35 @@ independent privileged45-second stop plus three-second final termination bound.
 No hardware readiness or acquisition is claimed. The fresh final-case request
 is queued normally behind the current Wolf session; actual grant, current
 components and selected physical preparation remain prerequisites.
+
+## Actual final-case result
+
+Exactly one unfiltered native invocation and one720000000-sample nominal24MHz
+acquisition completed under Extender55. The application did not produce an
+observed CLI return within its original150s window. All original actors joined
+before recovery. One ordinary Agon reset failed; one selected paired recovery
+passed. The full65536B application RAM,16B first-fault record and749B native
+result were retrieved before any getter LOAD. No workload was replayed.
+
+| Evidence source | Actual result |
+|---|---|
+| Native durable result | result6; two decisions; two view-frame counter increments; module counter0; POLL SUBMIT132; cleanup phase2/close refused |
+| Pi harness | four ticks, native decision overrun; owned children joined, no cleanup errors |
+| P4 diagnostic | requested93, completion1, bytes93, callback fault0, VALID edges4 against required2 |
+| Analyzer |720000000B, complete; nominal30s at24MHz; raw image retained |
+
+These counters have different scopes. Neither two native view-frame increments
+nor four host ticks establish completed module presentation. The digital trace
+contains1452 READY edges,1455 VALID edges and19875 CLOCK edges. The smallest
+complete sampled VALID interval is574samples, about23.917us nominal. READY-low
+intervals span both transport directions/control phases; their aggregate edge
+counts must not be labelled as the exact PCNT-native proof window. Digital
+samples do not exclude narrower transients or establish analog/electrical cause.
+
+Candidate postgetter and final restored getter both report exact feature2
+absence, with callback restored and owned buffer cleared. Original native
+application20029942 and its entire1105920B touched span were independently
+restored/read back. Final mode0/callback0/Legacy0, full startup/listener, actual
+CLI/cursor commands, neutral input, offline listener, idle worker, free USB
+ports and joined actors pass. Bench55 was normally released, SD mounted.
+The new matched UART continuation follows Smith's explicit failure condition.
