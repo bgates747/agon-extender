@@ -1041,6 +1041,15 @@ must be selected and qualified separately. The dormant vendored vdp-gl ICMP
 helper is excluded from the P4 build: it assumes a local Arduino WiFi/raw-lwIP
 interface and is not an adapter for a separate ESP8266 network processor.
 
+Smith separately selects a temporary development aid on2026-11-06: a second
+P4 UART connects the real ESP8266 while the existing mainboard/P4 link and
+Extender deployment/debug tools remain available. EMOS retains service and
+transport ownership. This [temporary decision](decisions/ADR-2026-11-06-temporary-esp8266-development-uart.md)
+is secondary work, not permanent wireless-backend adoption or an implemented
+mode. The final ESP8266-only application has no Extender runtime dependency;
+raw-register UART code requires an explicit development adaptation. NET-008
+tracks the bounded implementation and qualification.
+
 The initial build pins pioarduino platform release `55.03.311`, which combines
 Arduino-ESP32 3.3.11 with ESP-IDF 5.5.5. A moving release alias or development
 branch is not an acceptable reproducible baseline. See

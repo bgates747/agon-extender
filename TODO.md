@@ -14,6 +14,8 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[PARALLEL-001 — Reliable eight-bit parallel for Wolf](docs/tasks/PARALLEL-001.md)** — Active persistent goal: Extender owns pipe diagnosis/fixtures/fixes, Wolf owns the assigned consumer test. Oryx unavailable; prepare offline and share Olimex through normal fresh reservations with UART/VDPlet.
 
 
+- [ ] **[NET-008 — Temporary ESP8266 development adapter](docs/tasks/NET-008.md)** — Frozen secondary task: separate P4 UART to the real modem while Extender tools support iterative development for ESP8266-only Agons. No mux, permanent backend, hardware access or pin allocation assumed; higher-priority parallel/agent work first.
+
 - [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility passes manual C8 connection/DHCP/two-ping path; private automatic-connect option and host fault checks retained. Public license/version closure and broader physical cases remain. Radiotux sources stay unchanged.
 
 - [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Plan published before code; bounded core and stopped outbound TCP adapter pass host sanitizer/loopback and actual P4 object compilation. Author accepts outbound TCP to Pi; payload/EMOS envelope/app library and worker integration remain. No firmware deployment or production selection.

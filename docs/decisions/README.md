@@ -14,6 +14,7 @@ attention instructions are not continuing execution authorization.
 
 | Decision | Recorded authority / completeness |
 |---|---|
+| [Temporary ESP8266 development with a separate P4 UART](ADR-2026-11-06-temporary-esp8266-development-uart.md) | Accepted / Partial; NET-008 owns pins, adapter and qualification; secondary temporary work |
 | [Application messages through outbound P4 TCP](ADR-2026-11-04-application-network-messages.md) | Accepted / Partial; NET-003 owns remaining interface and integration decisions |
 | [Separate app progress from parallel qualification](ADR-2026-11-06-independent-parallel-qualification.md) | Accepted / Complete; one final MechAgon parallel attempt, explicit UART1 on failure, independent Extender fixtures |
 | [Application-owned asynchronous UART1 driver](ADR-2026-11-06-application-uart1-async-driver.md) | Accepted / Partial; UART owns generic application driver; NET-004 tracks EMOS integration decisions |

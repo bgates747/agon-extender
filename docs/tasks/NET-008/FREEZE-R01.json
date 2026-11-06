@@ -1,0 +1,23 @@
+{
+  "schema": "extender-task-plan-freeze-v1",
+  "revision": "r01",
+  "scope": "Temporary separate-P4-UART ESP8266 development aid; secondary to parallel and current agent support; no hardware action",
+  "source_research": {
+    "agon_docs": "f9806bd3cbff6ed5d1c08bef1d51fed11764b86b",
+    "official_mos_tag": "v3.0.2",
+    "official_vdp_tag": "v2.16.0",
+    "references_clean": true
+  },
+  "inputs": {
+    "docs/tasks/NET-008.md": {
+      "bytes": 10231,
+      "sha256": "7c453a0a5d30b0be30b4fd1d1fd64ecaf6a5cc262611450abf74afc9a923bf40"
+    },
+    "docs/decisions/ADR-2026-11-06-temporary-esp8266-development-uart.md": {
+      "bytes": 1120,
+      "sha256": "155e135dcab855a0653f6605bc778aef4f02ea797b85ad7f3049a6117ff3d201"
+    }
+  },
+  "superseded_option": "Single-chip UART mux was exploratory; separate P4 UART explicitly selected by Smith",
+  "implementation_started": false
+}
