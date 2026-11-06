@@ -6,12 +6,12 @@ compatibility. The native image and manual package are separate build evidence.
 
 ## Core scenarios
 
-1. Twenty scripted AT scenarios include complete setup/BBS exchange, no AT
+1. Twenty-one scripted AT scenarios include complete setup/BBS exchange, no AT
    response, delayed replies and heartbeat breadcrumbs, unsupported DHCP,
    association timeout/refusal, delayed/missing lease, refused TCP, oversized
    `+IPD`, permanently/temporarily blocked TX, failed logging, frozen clock,
    refused/missing send prompt, send failure, truncated payload, `ERROR`/`OK`
-   inside BBS data and byte-fragmented responses.
+   inside BBS data byte-fragmented responses and overlapping SSID/password redaction.
 2. Escape is injected at eleven stages including setup commands, association,
    address query, connection, send prompt and payload transmission. No automatic
    cleanup command, reconnect or retry is emitted into uncertain module state.

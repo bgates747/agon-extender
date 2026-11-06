@@ -62,6 +62,7 @@ static int tx(void *v,unsigned char c) {
    if(p->scenario==16)enqueue(p,"SEND FAIL\r\n",0);
    else if(p->scenario==17)enqueue(p,"SEND OK\r\n+IPD,20:truncated",0);
    else if(!strcmp(p->payload,"quit\r\n"))frame(p,"Goodbye.\r\n",1);
+   else if(p->scenario==20)frame(p,"secret-long and secret must be redacted.\r\nbbs> ",0);
    else if(p->scenario==18)frame(p,"ERROR is just BBS text; OK too.\r\nbbs> ",0);
    else frame(p,"Useful BBS data.\r\nbbs> ",0);
   }
@@ -94,10 +95,12 @@ static int run(int scenario,int escape_phase,uint32_t clock,unsigned hz) {
  static struct peer p;static struct ws_state s;struct ws_config c;struct ws_io io;int result;
  memset(&p,0,sizeof(p));p.scenario=scenario;p.escape_phase=escape_phase;p.clock=clock;
  ws_defaults(&c);strcpy(c.ssid,"private-home");strcpy(c.password,password);strcpy(c.host,"bbs.example.invalid");c.tick_hz=hz;c.join_seconds=8;
+ if(scenario==20) {strcpy(c.ssid,"secret");strcpy(c.password,"secret-long");}
  io.ctx=&p;io.now=now;io.escape=esc;io.receive=rx;io.transmit=tx;io.idle=idle;io.message=msg;
  result=ws_run(&s,&c,&io);
  assert(!strstr(p.log,password)&&!strstr(p.log,"private-home")&&!strstr(p.log,"s3c\\,\\\"ret\\\\phrase"));
  assert(!s.cfg.password[0]&&!s.cfg.ssid[0]);
+ if(scenario==20)assert(!strstr(p.log,"secret-long")&&!strstr(p.log,"-long"));
  if(scenario==1||scenario==2||scenario==4||scenario==6||scenario==10||scenario==13)assert(strstr(p.log,"Still waiting"));
  if(escape_phase) {assert(result==WS_CANCEL);assert(strstr(p.log,"Escape pressed"));}
  else {
@@ -115,8 +118,8 @@ static int run(int scenario,int escape_phase,uint32_t clock,unsigned hz) {
 }
 int main(void) {
  config_tests();
- for(int i=0;i<=19;i++)run(i,0,0,120);
+ for(int i=0;i<=20;i++)run(i,0,0,120);
  for(int i=1;i<=11;i++)run(0,i,0,120);
  run(0,0,0xfffffff0UL,120);run(0,0,0,100);
- puts("PASS: config cases,20 AT scenarios,11 cancellation phases, clock wrap and100Hz.");return 0;
+ puts("PASS: config cases,21 AT scenarios,11 cancellation phases, clock wrap and100Hz.");return 0;
 }

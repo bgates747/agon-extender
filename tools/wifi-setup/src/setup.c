@@ -15,16 +15,20 @@ static void escaped(const char *src,char *dst) {
  while(*src) {if(*src=='"'||*src=='\\'||*src==',')*dst++='\\';*dst++=*src++;}*dst=0;
 }
 static void say(struct ws_state *s,const char *text) {
- char out[WS_REPLY+160],a[130],b[130];
- snprintf(out,sizeof(out),"%s",text);
+ char out[WS_REPLY+160],a[130],b[130];unsigned char mask[WS_REPLY+160];
+ size_t length;
+ snprintf(out,sizeof(out),"%s",text);length=strlen(out);memset(mask,0,sizeof(mask));
  escaped(s->cfg.ssid,a);escaped(s->cfg.password,b);
- /* Replacing a literal all-asterisk secret with itself must not loop. */
- for(size_t i=0;i<strlen(out);i++) {
+ /* Find every match in the original text before changing it. A shorter SSID
+  * that prefixes the password must not hide the remaining password suffix. */
+ for(size_t i=0;i<length;i++) {
   const char *keys[4]={s->cfg.ssid,s->cfg.password,a,b};
   for(unsigned k=0;k<4;k++) {
-   size_t n=strlen(keys[k]);if(n&&!strncmp(out+i,keys[k],n)) {memset(out+i,'*',n);i+=n-1;break;}
+   size_t n=strlen(keys[k]);
+   if(n&&i+n<=length&&!memcmp(out+i,keys[k],n))memset(mask+i,1,n);
   }
  }
+ for(size_t i=0;i<length;i++)if(mask[i])out[i]='*';
  if(!s->io.message(s->io.ctx,out)&&!s->failed)s->failed=WS_LOG;
 }
 static int check(struct ws_state *s) {
