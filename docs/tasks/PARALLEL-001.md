@@ -70,7 +70,7 @@ Unknown current state is reconciled at handoff; no target polling before that.
 ## Work
 
 P01-01 Publish this task/TODO and commit/push before new implementation;
-  retain the active persistent goal and current evidence baseline. [ ]
+  retain the active persistent goal and current evidence baseline. [x]
 
 P01-02 Coordinate Wolf's existing assignment and exact carrier/acceptance
   contract. Notify UART/VDPlet of scheduling/resource boundaries and MechAgon of
@@ -129,3 +129,11 @@ controls and identify one smallest discriminating physical plan. No build or
 hardware invocation has started under this goal yet. A subsequent published
 tranche selects its precise operations and duration; this persistent goal has no
 arbitrary completion budget or automatic bench reservation expiry.
+
+## First finite isolation selected
+
+[Guarded UART0 coexistence isolation](PARALLEL-001/RFC25-ISOLATION.md) prepares
+the compiled generic RFC25 control, after MechAgon58 actual release. It preserves
+the now-current profile8 mainboard and restores the incoming working UART pair.
+The full owner freeze/current component binding remains preparation; no hardware
+reservation, grant, installation or RUN has occurred under this goal yet.
