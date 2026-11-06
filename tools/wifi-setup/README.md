@@ -2,8 +2,11 @@
 
 Configure an ESP8266 over stock MOS3.0-or-later UART1, then read a small TCP BBS. The utility
 shows English progress and two-second wait breadcrumbs, and appends the same
-redacted messages to a log. Escape cancels. This first experimental build needs
-Smith's manual Console8 test; it is not a qualified public release.
+redacted messages to a log. Escape cancels. Smith reports the corrected manual
+Console8 setup/BBS test passes; individual physical Escape/fault cases are not
+separately confirmed. Public release/license/version closure remains pending.
+The current exact accepted package is selected in `docs/network-setup-tool.json`;
+frozen archives retain their original build-time documentation.
 
 ## Run manually
 
@@ -117,7 +120,7 @@ named license. Preserve that notice/attribution; clarify upstream terms before
 public binary redistribution. Do not invent an upstream license.
 
 The 2016 Espressif AT reference v1.5.4 documents the selected commands. The
-observed module reports AT1.3.0.0/SDK2.0.0; physical command/latency acceptance
-remains a manual test. Unsupported `_CUR` commands fail explicitly rather than
+observed module reports AT1.3.0.0/SDK2.0.0; Smith reports the corrected
+manual setup/BBS test passes on that specimen. Unsupported `_CUR` commands fail explicitly rather than
 silently writing persistent settings. The log/protocol caps make this a setup
 and small-text diagnostic utility, not a general high-volume serial driver.

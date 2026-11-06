@@ -1,6 +1,6 @@
 # Console8 Wi-Fi setup utility
 
-The experimental native `wifi-setup` utility configures a four-wire ESP8266 and
+The native `wifi-setup` utility configures a four-wire ESP8266 and
 checks a small TCP BBS, with private configuration, English progress, Escape and
 redacted progress/error logs. It is for a manually operated Console8 with MOS3.0
 or later; it does not borrow UART1 from an active Extender installation.
@@ -15,9 +15,10 @@ RUN . wifi-setup.cfg progress.log
 
 [Usage, configuration and build instructions](../tools/wifi-setup/README.md)
 include the secret-free example, clock-rate setting and timeout/cancellation
-limits. [NET-006](tasks/NET-006.md) records preparation, validation and the pending
-manual hardware review. Do not mistake a native build/host peer simulation for
-an ESP8266 or C8 pass. Firmware and normal startup are preserved; no automatic
+limits. Smith reports the corrected setup/BBS test passes on Console8. The
+[accepted component selection](network-setup-tool.json) pins its exact package;
+[NET-006](tasks/NET-006.md) records evidence and remaining public-release work.
+Individual physical Escape/fault cases are not separately confirmed. Firmware and normal startup are preserved; no automatic
 boot service, async/OTIRX driver or public-release tag is selected.
 
 The private `.cfg` holds SSID/password and the BBS endpoint. The router owns the
@@ -32,4 +33,4 @@ timeout as a missing file or path. EXEC/autoexec still stops at a failed RUN;
 the named script line identifies that invocation, not a missing log. The first
 manual build returned overlapping MOS error numbers; the corrected candidate
 also collects complete BBS replies before printing or synchronizing its log.
-Its host checks pass; the corrected C8 exchange still requires manual review.
+Its host checks and Smith's corrected manual C8 exchange pass.

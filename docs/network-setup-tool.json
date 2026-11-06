@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "role": "accepted manual Console8 Wi-Fi utility",
+  "bundle": "../production/bundles/wifi-setup-b2026-11-06-07-36-09Z/bundle.yaml",
+  "bundle_sha256": "87188c6e3d0ec3c4d8456228510671b967c99caef1a9677df49af4e862bbabff",
+  "build_id": "wifi-setup-b2026-11-06-07-36-09Z",
+  "binary_sha256": "a70a716134483ea589d311636d04e56803c6ea47065dea495ab851ef82f83d94",
+  "operations": "network-setup.md",
+  "public_release": false,
+  "version_and_tag": "Pending Author-agreed utility version and distribution closure"
+}

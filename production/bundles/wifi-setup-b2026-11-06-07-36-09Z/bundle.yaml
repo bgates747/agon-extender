@@ -1,0 +1,35 @@
+schema_version: 1
+kind: accepted-console8-utility-component
+build_id: wifi-setup-b2026-11-06-07-36-09Z
+source_commit: a29d1e22d32385811bf0d52158f5c07985b583aa
+acceptance:
+  date: '2026-11-06'
+  authority: 'Smith: 8266 tests passed. card not on oryx, c8 is resuming jukebox duties.'
+  scope: Manual Console8 ESP8266 setup and BBS diagnostic pass on the corrected selected
+    build
+  evidence: docs/tasks/NET-006.md#manual-c8-pass
+selection: Accepted local standalone utility; public release/version/tag pending;
+  no whole-installation firmware selection
+archive_directory: dist/production/wifi-setup-b2026-11-06-07-36-09Z
+archives:
+- filename: wifi-setup-b2026-11-06-07-36-09Z.zip
+  bytes: 56882
+  sha256: 446e9d457140c63ded6410bc55f7cce5a44c53e1f69d6eedd5c8623963b53cf1
+  verified_members: 20
+runtime:
+  path: wifi-setup.bin
+  bytes: 26053
+  sha256: a70a716134483ea589d311636d04e56803c6ea47065dea495ab851ef82f83d94
+compatibility:
+  mos: MOS3.0 or later; manual Console8 UART1
+  esp8266: Tested specimen reports AT1.3.0.0/SDK2.0.0
+  serial: 1152008N1, polling, four wires/no RTS/CTS
+  clock: Default120 MOS counts/second at60Hz;100 at50Hz is host-tested only
+limits:
+- Human reports overall test pass; no new log retrieval or independent per-step Escape/fault
+  qualification
+- Public binary redistribution remains pending attribution/license closure, agreed
+  utility version and release review
+- No async/OTIRX/high-volume serial qualification or firmware change
+- Previously generated build manifests retain their original experimental status as
+  historical evidence

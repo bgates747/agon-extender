@@ -88,3 +88,14 @@ This component acceptance does not replace `current.yaml` or complete the
 combined v0.2.1 paired qualification/version closeout. No new whole-installation
 version/tag is inferred from the utility build timestamp; the prior tested build
 identity is preserved. Historical pins and production archives remain immutable.
+
+## Accepted standalone Console8 Wi-Fi utility
+
+Smith reports the corrected manual ESP8266 setup/BBS test passes on2026-11-06.
+The [utility selection](../docs/network-setup-tool.json) pins the exact accepted
+26053-byte executable and verified20-member runtime/source archive. This is a
+standalone Console8 utility, with no change to the installed Extender pair.
+The [operating guide](../docs/network-setup.md) records the manual scope.
+Public redistribution/license closure, an agreed utility version and annotated
+release tag remain pending; this component record does not select a new
+whole-installation production version.
