@@ -36,7 +36,7 @@ Unknown current state is reconciled at handoff; no target polling before that.
 | P01-D02 | Author selected | Oryx unavailable. Pi normal FIFO compiles and finite host checks; Olimex normal reservation for target work, sharing UART/VDPlet fairly. |
 | P01-D03 | Existing normative contract | EMOS owns Port C/UART1/parallel admission, mode/route and handover. P4 owns its DMA/GPIO/counter lifecycle; applications use supported owner interfaces. |
 | P01-D04 | Existing normative contract | No interprocessor CRC/checksum, per-byte acknowledgement, uncertain replay, speculative fallback or count/deadline relaxation to conceal failure. |
-| P01-D05 | Owner contract pending | Wolf returns the already-selected byte directions, APIs, record/asset sizes, completion witnesses and current test plan/pins. Confirm before consumer-specific implementation; do not assign duplicate work. |
+| P01-D05 | Author endpoint clarification pending | Wolf returned its actual mainboard-only graphics contract and confirms no existing assignment selects a P4 VDPL provider, ext.netp sidecar or other eight-bit endpoint. Clarify which Wolf operation must use parallel before consumer-specific implementation; independent transport work continues. |
 | P01-D06 | Evidence driven | Choose the smallest fixture/change separating observed failure causes. The untested fixed VALID filter is a candidate, not an attributed electrical repair or default deployment. |
 
 ## Bounded evidence and research précis
@@ -160,6 +160,26 @@ routes VDU/replies to P4's parser and is not the currently selected mainboard
 worker path. P01-D05 remains an explicit owner interface/endpoint gap; no consumer
 workaround or raw port bypass is implemented. Extender can still qualify the
 shared physical transport independently while that integration is resolved.
+
+Wolf's subsequent source-only return `wolf-endpoint-unresolved-source-eleven`
+confirms that its direct Author-selected assignment is mainboard native7593,
+an Xtensa VDPlet and ordinary UART0/route0, with65B frame/17B READ16 requests
+and indexed completed-pose witnesses. Wolf records the Author's explicit point
+that P4 VDPlets do not yet exist. Neither an admitted P4 module provider nor an
+ext.netp sidecar/data workload is selected in that assignment. A sidecar echo
+cannot be relabelled parallel graphics integration.
+
+P01-D05 therefore needs one Author clarification: **which Wolf operation must
+use the parallel link?** Recommendation: preserve the existing fill comparison
+as the ordinary-carrier control and obtain that endpoint choice before changing
+Wolf's consumer; continue the already-authorized transport diagnosis meanwhile.
+Graphics on P4 requires an actual compatible P4 runtime/module and its owner
+work; parallel asset staging requires the matched file-provider/listener and
+byte-complete staging witnesses; network/data traffic requires an explicitly
+selected Wolf payload through ext.netp and receiver/application completion.
+These alternatives have different actors and evidence. None is silently chosen
+as an easier substitute for the full goal. Record the selected endpoint and
+owner contract here before claiming matched Wolf integration.
 
 MechAgon58 actually released20:25:41UTC; its profile8/5d657 mainboard is current
 and intentionally retained. Extender read the release/observation only; no target
