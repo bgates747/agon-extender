@@ -3,7 +3,7 @@
   "case": "r12",
   "state": "source-prepared-not-invoked",
   "kit_sha256": "7014a341fe754a242eb2962c94b4c5b6a76f2e48e18a93765bb5cb127c7fba4d",
-  "source_manifest_sha256": "002101712d5ca20fdf8f76e883025e230992adf4d046b1b4dc6b76cfd12da90f",
+  "source_manifest_sha256": "6c9c191c7088365c8eedcb6af32277d0ff65e437190f389c28b30ffde9e5b49e",
   "input_count": 46,
   "checks": {
     "identity_and_ready": 4,
@@ -52,8 +52,8 @@
       "sha256": "f87005d9fbc17a86915f852cf5b7cc9233e33dad24368059819933fbc76622f8"
     },
     "bench.py": {
-      "bytes": 7157,
-      "sha256": "723a047593f817a869d6bd06015dc928dbf3ef107212a559e1bc138cbeb220c6"
+      "bytes": 7571,
+      "sha256": "daa1597c9d9c6080e8cbc34e82821edc1895cb3ac75228144e889ae66418d411"
     },
     "freeze.py": {
       "bytes": 1684,
@@ -64,5 +64,6 @@
       "sha256": "44c8d748981e3c01a2af8ea6ab1b7de80d6540a2f47fafc9347b905072717b15"
     }
   },
-  "source_scope": "No hardware/readiness/capture claim. New actual request, fresh current-component admission and full selected preparation remain."
+  "source_scope": "No hardware/readiness/capture claim. New actual request, fresh current-component admission and full selected preparation remain.",
+  "correction": "Before any target action, add mandatory SAVE-only callback/mode/Legacy proof before post-getter LOAD; source-r01 manifest and prior bench leaf preserved. No input/native/test limit change."
 }
