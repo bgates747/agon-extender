@@ -15,7 +15,7 @@ NQ-001 Extend the current network fixture builder with an explicit carrier
   compilation excludes the NM callback router; no app callback is installed. [ ]
 
 NQ-002 Parallel adapter uses the checked public netp include with application
-  record/reply storage. Exercise0/1/127/128 opaque bytes, all byte values by the
+  record/reply storage. Exercise0/1/127/128 opaque bytes, binary patterns from the
   existing deterministic generator, matching query/status and whole-record
   echo. Probe a13-byte TAKE buffer before each complete reply to prove required
   size and no-consume without altering an admitted payload. [ ]

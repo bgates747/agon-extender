@@ -18,6 +18,7 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--build-id', default='UNVERSIONED-DO-NOT-DEPLOY',
                         help='Approved fixture identity plus actual UTC build timestamp')
+    parser.add_argument('--carrier', choices=('uart','parallel'), default='uart')
     args = parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9-]+', args.build_id):
         parser.error('build ID contains unsupported characters')
@@ -30,11 +31,15 @@ def main():
     inputs = {
         'main.cpp':'tests/fixtures/network/main.cpp',
         'endpoint.hpp':'tests/fixtures/network/endpoint.hpp',
+        'carrier.hpp':'tests/fixtures/network/carrier.hpp',
         'mode_lifecycle.hpp':'tests/fixtures/scroll/mode_lifecycle.hpp',
         'mos_io.asm':'tests/fixtures/controller/mos_io.asm',
         'net_callback.asm':'include/agon/net_callback.asm',
         'agon/net.h':'include/agon/net.h',
     }
+    if args.carrier == 'parallel':
+        del inputs['net_callback.asm']
+        inputs['agon/net_parallel.h']='include/agon/net_parallel.h'
     for name, path in inputs.items():
         shutil.copyfile(root/path, source/name)
     (source/'build_identity.h').write_text(
@@ -42,11 +47,12 @@ def main():
         '#define NETPROBE_BUILD_ID "'+args.build_id+'"\n')
     (work/'Makefile').write_text('NAME=netprobe\nLDHAS_ARG_PROCESSING=1\nLDHAS_EXIT_HANDLER=0\n'
                                'include $(shell agondev-config --makefile)\n'
-                               'CXXFLAGS += -Isrc -std=c++17 -fno-exceptions -fno-rtti -Wall -Wextra -Werror\n')
+                               'CXXFLAGS += -Isrc -std=c++17 -fno-exceptions -fno-rtti -Wall -Wextra -Werror\n'+
+                               ('CXXFLAGS += -DNETPROBE_PARALLEL=1\n' if args.carrier=='parallel' else ''))
     env = dict(os.environ, PATH=str(args.toolchain_bin.resolve())+os.pathsep+os.environ['PATH'])
     start = time.monotonic_ns()
     report = dict(started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
-                  build_id=args.build_id, status='experimental',
+                  build_id=args.build_id, status='experimental', carrier=args.carrier,
                   source_commit=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip(),
                   scope='native Agon compile/link only; no invocation',
                   inputs={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in inputs.values()})

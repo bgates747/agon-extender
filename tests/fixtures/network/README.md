@@ -49,3 +49,21 @@ IPv4/port parsing. Preserve that failed build as evidence. Build the corrected
 source with a fresh UTC timestamp under the same approved r02 identity. The
 host controller must recognize early diagnostic plus actual CLI return and
 close its own passive reader before checking for free USB ports.
+
+
+## Prepared r03 carrier selection
+
+The builder's explicit `--carrier parallel` selects the public netp include,
+application-owned whole-record buffers and no NM callback/router object. The
+default `--carrier uart` retains the UART callback adapter. Both variants share
+the existing endpoint parser, mode20 lifecycle, Escape, fresh result paths and
+explicit invocation. Source preparation is not a physical pass or deployment.
+
+The parallel variant uses0/1/127/128-byte payloads; start the same finite echo
+peer with `--sizes 0,1,127,128`. Before consuming each pending reply it requests
+a13-byte output, checks required size/no-consume, then takes the whole reply.
+The durable record identifies carrier and size-check count. RELEASE polls only
+BUSY within the finite close bound; a refused/uncertain payload is never replayed.
+A failed close retains storage for owner recovery. NET-004/QUALIFICATION-R01.md
+owns preparation and the later selected component/bench handoff. Preserve r02
+accepted binaries/results; r03 has no inherited physical acceptance.

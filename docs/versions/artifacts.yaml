@@ -1,20 +1,31 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r210
-updated_at: 2026-11-05T14:50:42Z
+registry_revision: r211
+updated_at: 2026-11-06T00:30:28Z
 
 artifacts:
   - artifact_id: network-echo-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: network-echo-probe-r02
+    latest_identity: network-echo-probe-r03
+    status: experimental
+    variants: [uart, parallel]
+    description: Finite opaque-message mainboard mode20 echo appliance with explicit carrier and shared mode lifecycle.
+    notes:
+      - r03 preparation adds an explicit foreground parallel adapter with no NM callback; default UART remains separate. Native checks and hardware qualification are pending.
+      - Preserve accepted r02 four-record physical evidence and exact bytes; r03 is not a new hardware pass.
+
+  - artifact_id: net-004
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: net-004-r01
     status: experimental
     variants: []
-    description: Finite opaque-message mainboard mode20 echo appliance with app-owned MOS callback and mode lifecycle.
+    description: Matched P4 parallel application message carrier, preserving Legacy graphics and keyboard control.
     notes:
-      - Native compile/link only; no hardware invocation or timing qualification.
-      - Author approves r02 on 2026-11-05; refused close retains app callback RAM and build identity is explicit.
+      - Identified P4 and matched RFC25/netp EMOS builds pass source and linked checks; no installation or physical qualification yet.
+      - NET-004 BUILD-R01 records owner-retained binaries, exact source/configuration and hashes; production remains unchanged.
 
   - artifact_id: net-003
     kind: experimental_firmware
