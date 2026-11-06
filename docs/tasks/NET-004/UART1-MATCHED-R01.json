@@ -1,0 +1,74 @@
+{
+  "schema": "extender-matched-network-uart-v1",
+  "status": "source-linked-build-pass;not-installed-or-hardware-qualified",
+  "p4": {
+    "build_id": "net-003-r02-b2026-11-06-09-03-07Z",
+    "source_commit": "e14e0b8a5c3c52f87b34bbeb03f9aa463816c8c5",
+    "app": {
+      "bytes": 1760160,
+      "sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e"
+    },
+    "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+    "sdkconfig_sha256": "5a698ba686a54e6869f0665c1e29f5efcfa71395c68401f092eba4a723c9eef6",
+    "dependencies_lock_sha256": "a02df352a446db976bf1375db3de3eb7c6cdfd9603169c62ba84d30bccea78fc",
+    "network_messages": true,
+    "network_parallel": false,
+    "board": "p4-pc",
+    "display_output": "hdmi",
+    "usb_dual_host": true,
+    "controller_input": true,
+    "reset_url_private_configured": true
+  },
+  "emos": {
+    "build_id": "agon-emos-eirene-r04-b2026-11-06-09-02-21Z",
+    "source_identity": "agon-emos-eirene-r04",
+    "status": "experimental",
+    "source_commit": "2c79c6006d6bcb0c2b3f9d8d6aae3ef4b36c730a",
+    "composition": {
+      "network_parallel": false,
+      "uart0_rfc25": true,
+      "control_tx_diagnostic": false
+    },
+    "rom_used": 129108,
+    "rom_free": 1964,
+    "scope": "identified native wrapper/all selected mandatory linked checks; no installation",
+    "outputs": {
+      "mos.bin": {
+        "bytes": 129108,
+        "sha256": "670f29e5fbf382fb9754f28951476e6452897b156d549e8303ae59fd73070981"
+      },
+      "mos.elf": {
+        "bytes": 346208,
+        "sha256": "fc5a2bb9f7a663594abe409df2d9aba3ec7c401bc73097fb6e21068fb5c68304"
+      },
+      "mos.map": {
+        "bytes": 91148,
+        "sha256": "11a296f09e1d2b7125e1a40ce0aea62042f299e93ea85afc6a6459a351866d20"
+      },
+      "mos.elf.map": {
+        "bytes": 93469,
+        "sha256": "55b830f8978dd7269cf2c900c33bc2a0b24a7c24be543f3194d3d62f6ff68430"
+      },
+      "ROM.bin": {
+        "bytes": 131072,
+        "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca"
+      }
+    }
+  },
+  "sdk": {
+    "header_sha256": "b3f71cf3b84209cfebe700aae0b65fa240d7a5e2e2d56d1ec9ed7196d593a4d7",
+    "callback_asm_sha256": "10fdde5cc800d54bb9f6caae795f802e6422149c4513e8446521bb5dd9ec6459"
+  },
+  "map": {
+    "sysvars": "0xBC322",
+    "keyboard_callback_vector": "0xBC38E",
+    "legacy_backend": "0xBCB25",
+    "rfc25_submit": "0x1A9F5"
+  },
+  "configuration_difference": "Only two sdkconfig partition source paths differ between worktrees. Both referenced files and compiled partition tables match exactly.",
+  "rollback": {
+    "p4_app_sha256": "02addd547f3af3a00cf4fb975ef9d259f2e48d0ded64ef80a053f9b4de10ccf9",
+    "emos_rom_sha256": "8270ecd709138fe5ae617a91d5d365eeede0738025d5043fc790541b19b8f281"
+  },
+  "deployment_gate": "Only after final parallel outcome/failure, complete original cleanup, normal new admission, exact selective installation/readback/generic/stopped handoff. No implicit replay/fallback."
+}

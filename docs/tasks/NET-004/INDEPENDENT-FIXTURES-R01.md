@@ -26,7 +26,9 @@ N04-018.03 Reuse the independent four-record echo appliance as the baseline
   one-byte and boundary-length records, repeated entry/return, foreground
   UART0 graphics between admitted blocks, first-error preservation and positive
   release. Keep game schema, renderer and consumer runtime out of this fixture.
-  Static buffers, finite iteration/time caps and delayed result logging preserve
+  The [first ordinary graphics variant](CARRIER-GRAPHICS-CYCLE-R01.md) now
+  compiles and passes its actual-leaf checks; repeated entry and guarded RFC25
+  variants remain separate qualification. Static buffers, finite iteration/time caps and delayed result logging preserve
   useful evidence. Check mode/route/callback/cursor restoration. [ ]
 
 N04-018.04 Finish the existing fixed VALID-filter candidate source/check/build

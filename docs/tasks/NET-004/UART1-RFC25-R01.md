@@ -20,14 +20,14 @@ N04-018.02.3 Use one fresh Pi compile reservation: identified EMOS build plus
   bound and produced no deployable image; it is not resumed or extended.
   Require at least512MiB available RAM, temperature below80C, owned descendant
   identity tracking and no surviving children before release. No emulator,
-  firmware install, device capture or network test in this compile tranche. [ ]
+  firmware install, device capture or network test in this compile tranche. [x]
 
 N04-018.02.4 Select the retained P4 source e14e0b8a with application networking
   enabled and parallel networking disabled. Keep board, display, controller,
   SD, USB and reset composition matched to the current full-feature candidate.
   Require clean identified source, build-wrapper validation and exact BIN/ELF/
   map/configuration/dependency hashes. EMOS source2c79c600 retains guarded RFC25
-  and UART-NM; prove complete ROM fit and actual callback/sysvars map. [ ]
+  and UART-NM; prove complete ROM fit and actual callback/sysvars map. [x]
 
 N04-018.02.5 Return exact matched artifacts and callback-chain contract to
   MechAgon. Deploy only after the one final parallel attempt actually fails,
@@ -43,7 +43,8 @@ of the131072B ROM, leaving1964B. ROM SHA256 is
 All mandatory linked checks pass, including UART-NM callback routing and guarded
 RFC25. The new linked map retains sysvarsBC322, callbackBC38E and Legacybackend
 BCB25. Initial source-only prototype/checker mistakes and the corrected build
-remain distinguished; no hardware was accessed. The P4 build is still pending.
+remain distinguished; no hardware was accessed. The matched P4 build also passes; the [matched artifact record](UART1-MATCHED-R01.json)
+retains exact source/BIN/ELF/map/configuration and SDK facts.
 
 If the final parallel case fails, Extender first completes its selected original
 native/feature/file/state restoration and normal release. MechAgon then uses a
@@ -58,3 +59,10 @@ stop and all generic checks finish, publish an explicit stopped handoff to
 MechAgon for its separately prepared UART1 consumer. No concurrent operator,
 old token, implicit retry or extra parallel case. Installation readiness still
 requires the complete matched P4 artifact and actual final-case disposition.
+
+The P4 build completed934.08 seconds after its dispatch. The original strict
+SDK-config-hash comparison refused a successful build; inspection established
+that only the two worktree paths naming the same partition file differed. The
+referenced files and compiled partition-table bytes match exactly. The corrected
+postcheck retains that original failure and every actual raw hash. Compiler239
+released after all descendants joined; no firmware was installed.
