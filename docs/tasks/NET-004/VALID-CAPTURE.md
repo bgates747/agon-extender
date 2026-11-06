@@ -137,4 +137,16 @@ Wolf reservation normally before taking custody, and return a clean stopped
 handoff afterward. Preserve both old maps as history.
 
 N04-015-F Attribute the moved probes with exactly one fresh retained pinwalk,
-  report actual channels/signals, complete normal cleanup and release. [ ]
+  report actual channels/signals, complete normal cleanup and release. [x]
+
+## Moved-probe result
+
+The one fresh pinwalk after relocation confirms blue D2 as READY (nine low
+pulses), purple D4 as VALID (eleven), and gray D6 as CLOCK (ten). All eleven
+P4 pad checks and the complete sixty-second, nominal100kHz capture passed.
+Output release and normal boot recovery passed. No firmware was written and
+no renderer, getter or application RUN was issued. Fresh CLI/files/readEXIT,
+mode0/callbackzero, cursor/input and idle/free-port cleanup passed before actual48
+release and the normal fresh Wolf49 grant. Both captures remain immutable;
+this attribution does not qualify analog signal integrity or fix the original
+excess-VALID fault. No further test is selected.
