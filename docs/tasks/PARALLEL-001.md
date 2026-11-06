@@ -66,6 +66,12 @@ Unknown current state is reconciled at handoff; no target polling before that.
    bench constraints, SD layout, machine-local bench record and central lease
    protocol. Read applicable installation/reset/rollback procedures anew when
    a tranche selects those operations. Retained scripts require source refresh.
+7. [Real-module replay result](PARALLEL-001/REPLAY-RESULT-R01.md): actual60
+   rejects strict VALID3 versus2 despite full118B/DMA completion, after two
+   native FRAME returns. Exact RAM/first control-prefix deadline retained;
+   working UART pair/full touched span independently restored and released.
+   Wolf61 now owns its ordinary-carrier comparison. The next fixed-filter
+   comparison is source preparation behind Wolf, not an electrical-cause claim.
 
 ## Work
 
