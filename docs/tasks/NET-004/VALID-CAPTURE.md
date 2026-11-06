@@ -61,3 +61,29 @@ Do not invoke a historical renderer or generic test merely to create activity.
 The new matched workload and exact bounds must be selected before launch. An
 idle capture alone does not reproduce the reported completion fault. Normal
 monitored recovery follows the reset protocol, without replaying the workload.
+
+## Author correction — one ordinary pinwalk only
+
+After the passive idle sample disagreed with the recorded probe assignments,
+Smith selected one regular pinwalk instead of the renderer reproduction. The
+renderer RUN was never issued; the Pi harness and all observers are stopped.
+Do not resume that renderer, repeat its acquisition, install a filter, or build
+reusable interfaces in this step. Smith wants eventual MOSlet and callable EDP
+forms, explicitly deferred by the current single-test instruction.
+
+Reuse the retained P4-PC reverse pinwalk in PORT-008/fixtures with its original
+eleven-pin sequence: data0..7 emit1..8 pulses, READY emits9, CLOCK10 and VALID11.
+Only refresh the existing independent Agon USB reset hold, current lease guard,
+privileged analyzer access and current P4 startup fence. Agon remains held while
+P4 USB ROM drives one known pin at a time; independently verify each driven
+low/high and output release before restarting P4 and releasing Agon. No firmware
+write or arbitrary GPIO search belongs to the pinwalk. Normal startup is checked
+before reset and never changed. Capture all8channels at100kHz for6000000samples,
+requiring delivered samples before output enable. Retain the original capture
+even if pulse attribution disagrees with nominal colors. No replay.
+
+After this single test, restore the temporary mainboard image left by earlier
+preparation to the exact incoming application/tail, verify incoming feature
+state, mode/callback/CLI/files/input and idle resources, then release normally
+for the waiting Wolf request. These are completion/restoration operations, not
+permission to launch another diagnostic or renderer test.
