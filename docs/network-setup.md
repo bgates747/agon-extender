@@ -25,3 +25,11 @@ MAC-based DHCP reservation; the utility never assigns a static IP or changes
 MAC. Its BBS check displays `help`, `time`, `uptime`, `quit` requests and replies.
 Progress logs remain private operator records. Keep real configs/logs out of
 source control and generated distribution packages.
+
+If a run fails, read the application result and the last progress-log entries.
+Nonzero MOS exits use128 plus that result, so MOS does not label an application
+timeout as a missing file or path. EXEC/autoexec still stops at a failed RUN;
+the named script line identifies that invocation, not a missing log. The first
+manual build returned overlapping MOS error numbers; the corrected candidate
+also collects complete BBS replies before printing or synchronizing its log.
+Its host checks pass; the corrected C8 exchange still requires manual review.
