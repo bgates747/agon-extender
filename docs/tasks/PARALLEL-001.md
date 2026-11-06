@@ -278,3 +278,9 @@ through its tests and full cleanup. Extender target access is stopped. MechAgon'
 case follows FIFO and requires new owner-local install/rollback leaves and
 stopped handoff; no64 token or temporary pair survives as authority. P01-D05
 and Wolf parallel integration remain open. No production promotion is selected.
+
+
+The separately published [finite live assistance plan](PARALLEL-001/LIVE-ASSIST-R01.md)
+selects source preparation of request-bound install/handoff/rollback leaves
+while Wolf65 owns hardware. Fresh actual predecessor handback, immutable owner
+freeze and normal admission remain required before this next consumer case.
