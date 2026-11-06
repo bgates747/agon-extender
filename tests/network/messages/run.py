@@ -59,7 +59,11 @@ def main():
                 report['steps'].append({'name':'netp','phase':'compile','command':command,
                                         'returncode':result.returncode,'duration_ns':time.monotonic_ns()-started})
                 if result.returncode: raise RuntimeError('Actual EMOS netp endpoint compile failed')
-                cases.append(('parallel-pipeline',['tests/network/messages/parallel_pipeline_test.cpp',str(fake/'netp.o')]))
+                common=command.copy();common[common.index(str(emos/'src/emos_netp.c'))]=str(emos/'src/emos_app_span.c');common[-1]=str(fake/'span.o')
+                report['inputs']['component:emos_app_span.c']=hashlib.sha256((emos/'src/emos_app_span.c').read_bytes()).hexdigest()
+                with (output/'span-compile.log').open('w') as log:
+                    subprocess.run(common,cwd=root,stdout=log,stderr=subprocess.STDOUT,check=True,timeout=180)
+                cases.append(('parallel-pipeline',['tests/network/messages/parallel_pipeline_test.cpp',str(fake/'netp.o'),str(fake/'span.o')]))
                 flags += ['-I',str(root/'include')]
             if args.emos_source:
                 emos = args.emos_source.resolve()

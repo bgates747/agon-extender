@@ -72,3 +72,21 @@ This explicit EMOS composition excludes the prior resident UART NM endpoint;
 separate historical UART SDK/installed firmware remain identified by their own
 records. A checked header does not establish an installed matching service or
 an RFC25-enabled callback map; use the eventual matched component manifest.
+
+
+## Matched UART0 admission
+
+The optional matched EMOS profile routes public25h through EMOS admission to the
+reviewed RFC25 FIFO sender; historical experimental42h/43h are unavailable in
+that profile. HL/BC/DE supply source/count/callback, all24 bits. Foreground
+ADL/MBASE0/EI and complete ordinary application RAM spans are required. A returns
+0 accepted,19 invalid,31 busy,32 unsafe caller or35 unavailable route; flags are
+unspecified, and BC/DE/HL/index/alternate registers and MB are preserved. A refusal
+changes no TX source/descriptor/IER and generates no callback.
+
+The primary-register callback is a source-release signal only; preserve indexes
+and alternate registers if it uses them. No MOS call, wait or reentrant submit
+belongs there. EMOS retires the FIFO tail through a bounded foreground IER/TEMT
+read before another physical epoch. A logical netp session remains open across
+ordinary Legacy UART0 batches. Caller serialization still includes required
+receiver DONE. These checked source contracts do not establish a physical pass.

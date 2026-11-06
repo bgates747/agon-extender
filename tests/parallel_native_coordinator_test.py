@@ -16,7 +16,10 @@ class NativePairTest(unittest.TestCase):
   self.run_pair(False)
  def test_qualification_pair(self):
   self.run_pair(True)
- def run_pair(self,probe):
+ def test_network_pair(self):
+  if not os.environ.get("AGON_NETWORK_PARALLEL"):self.skipTest("optional NETP composition")
+  self.run_pair(False,True)
+ def run_pair(self,probe,network=False):
   clock=monotonic()
   with tempfile.TemporaryDirectory() as tmp:
    d=Path(tmp);prepare_sdk(d)
@@ -33,6 +36,7 @@ class NativePairTest(unittest.TestCase):
    units=['emos_console','emos_parallel_handover','emos_parallel_boot','emos_parallel_startup',
           'emos_parallel_native','emos_parallel_coordinator']
    if netp:units+=['emos_parallel_upload']
+   if network:units+=['emos_netp_link']
    for name in units:
     obj=d/(name+'.o');objects.append(str(obj))
     subprocess.run(['cc','-std=c17',*flags,*inc,'-include','eZ80.h',
@@ -40,7 +44,18 @@ class NativePairTest(unittest.TestCase):
    prefix=(ROOT/'tests/p4_native_payload_test.cpp').read_text().split('int main(){')[0]
    prefix=prefix.replace('static H admitted(', '[[maybe_unused]] static H admitted(')
    uart=(ROOT/'tests/p4_block_coordinator_test.cpp').read_text().split('static void boot(')[0]
-   source=d/'pair.cpp';source.write_text(prefix+uart+(ROOT/'tests/parallel_native_coordinator_test.cpp').read_text())
+   body=(ROOT/'tests/parallel_native_coordinator_test.cpp').read_text()
+   extra=''
+   if network:
+    extra,main=(ROOT/'tests/parallel_network_pair_test.cpp').read_text().split('// BODY\n')
+    body=body.replace('int main(){','int retained_donor_cases(){')
+    body=body.rstrip()[:-1]+' return 0;\n}\n'
+    body=body.replace('if(owner)result=owner->poll(++now,true,true);',
+                      'if(owner){result=owner->poll(++now,true,true);if(netp)assert(netp->retire());}')
+    body=body.replace('assert(peer.request(p,now,0x12340000+(++challengeSerial),reply));',
+                      'if(netp&&netp->ownsControl(p))assert(netp->request(p,reply,true,now));else assert(peer.request(p,now,0x12340000+(++challengeSerial),reply));')
+    body+='\n'+main
+   source=d/'pair.cpp';source.write_text(prefix+uart+extra+body)
    exe=d/'pair'
    subprocess.run(['c++','-std=c++17',*flags,*inc,*objects,str(source),
     *[str(ROOT/'vdp/video/extender/transport'/(s+'.cpp')) for s in
