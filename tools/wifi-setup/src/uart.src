@@ -1,0 +1,28 @@
+; SPDX-License-Identifier: GPL-3.0-only
+; Nonblocking admission to MOS byte TX, never a direct UART payload write.
+; AgonDev/Radiotux RX already uses this same UART1 LSR polling boundary.
+; Check THRE before MOS call so a full TX FIFO cannot trap Escape handling.
+; The usual MOS call performs the actual write with flowcontrol0 from uopen.
+; Return int24 HL: 1 accepted, 0 not ready, -1 MOS UART closed.
+ .assume adl=1
+ .include "agon/mos.inc"
+ .include "ez80f92.inc"
+ .section .text
+ .global _wifi_try_put
+_wifi_try_put:
+ pop de
+ ex (sp),hl
+ push de
+ in0 a,(UART1_LSR)
+ and 020h
+ jr z,wifi_busy
+ ld c,l
+ ld a,mos_uputc
+ rst.lil 08h
+ ld hl,1
+ ret c
+ ld hl,-1
+ ret
+wifi_busy:
+ ld hl,0
+ ret

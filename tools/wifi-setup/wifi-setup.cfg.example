@@ -1,0 +1,13 @@
+# Copy to wifi-setup.cfg locally. The real *.cfg file must never enter Git.
+# Values are literal printable ASCII, no quotes and no inline comments.
+# Spaces after '=' belong to the value; passwords may contain # , " and \.
+ssid=YOUR_WIFI_NAME
+password=YOUR_WIFI_PASSWORD
+bbs_host=your-pi.example.invalid
+bbs_port=2323
+baud=115200
+# MOS adds two clock counts per VBlank: 120 at 60 Hz, 100 at 50 Hz.
+tick_hz=120
+command_seconds=5
+join_seconds=60
+bbs_seconds=10

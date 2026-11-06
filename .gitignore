@@ -151,3 +151,8 @@ Desktop.ini
 
 # Local cross-agent consultation mailbox
 /zork.md
+
+# Console8 Wi-Fi utility: never publish operator credentials or generated files.
+/tools/wifi-setup/*.cfg
+/tools/wifi-setup/obj/
+/tools/wifi-setup/bin/
