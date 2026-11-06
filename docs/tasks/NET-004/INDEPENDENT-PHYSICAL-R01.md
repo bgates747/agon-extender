@@ -89,3 +89,31 @@ with isolated fake serial/keyboard/peer actors and verify one RUN, both readers
 closed and peer joined, no replay, correct failure/RAM-preservation disposition.
 They open no device, socket or live registry. Physical stage/install/restore
 source and exact later incoming component reconciliation remain outstanding.
+
+## Exact-image preparation checkpoint
+
+The [host image composer](scripts/image_span.py) and
+[local preparation tool](scripts/prepare_control_images.py) preserve identified
+owner bytes without device access. Four synthetic boundary tests pass: shorter
+images retain the actual existing sector tail, longer images retain the new
+last-sector tail, insufficient preservation/partition space is refused, and a
+later verified prefix is joined only to a proven untouched older suffix.
+Unknown bytes are never filled with assumedFF.
+
+Local image preparation rehashes all three actual P4 images and validations,
+compares partition-table bytes and retains both exact ROM images. Its restore
+image spans1765376B: the verified1761280B UART prefix plus the proven unchanged
+4096B prior suffix. Restoring only the UART image's shorter rounded prefix
+would leave comparison writes in that suffix, so full maximum touched-span
+restoration is mandatory. Exact composed image hashes remain in the ignored
+owner inventory; no binary backup is added to Git. Later actual component and
+suffix reconciliation remains required, with bounded read only if it is unknown.
+
+Seven bounded owner install/ROM/stage leaves have been adapted locally and AST
+checked without executing any target operation. They select fresh namespaces,
+actual active-slot metadata, positive written-byte checks and fresh SAVE-only
+callback/Legacy admission; the candidate filter also requires complete original
+failure retirement. They remain PREPARING: the full source freeze, later actual
+incoming binding, collection/recovery/restoration parent and fresh bench
+admission must be complete before declaring physical readiness or invocation.
+No independent physical request or target actor has been started.
