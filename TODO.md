@@ -11,7 +11,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Application networking — authorized framework preparation
 
-- [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility, private automatic-connect setting, DHCP and genuine optional ping; task first, manual C8 review pending. Radiotux sources stay unchanged.
+- [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility passes manual C8 connection/DHCP/two-ping path; private automatic-connect option and host fault checks retained. Public license/version closure and broader physical cases remain. Radiotux sources stay unchanged.
 
 - [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Plan published before code; bounded core and stopped outbound TCP adapter pass host sanitizer/loopback and actual P4 object compilation. Author accepts outbound TCP to Pi; payload/EMOS envelope/app library and worker integration remain. No firmware deployment or production selection.
 

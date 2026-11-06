@@ -1,8 +1,9 @@
 # Console8 Wi-Fi startup
 
 The separate `wifi-start` application connects the ESP8266 or returns to MOS
-without opening UART1. It has no BBS check. The first candidate has host checks
-and a native build; Smith's manual C8 review remains pending.
+without opening UART1. It has no BBS check. Smith's first manual C8 run succeeds: association/DHCP and both real pings
+pass, with normal return reported. Individual menu/cancellation/fault paths
+remain host-tested only; public release closure is pending.
 
 Prepare a private `wifi-start.cfg` from the secret-free example and use short
 commands in its directory:
@@ -53,17 +54,23 @@ command scope and build details. [NET-007](tasks/NET-007.md) retains validation
 and the manual/public-release boundary. The accepted full
 [setup/BBS diagnostic](network-setup.md) remains separately available unchanged.
 Radiotux sources are untouched; our bounded support is project-owned and kept
-outside his checkout. The new utility has no dependency on the proposed async
+outside his checkout. The new utility has no dependency on the separately developed async
 UART1 application driver.
 
 The retained candidate is `wifi-start-b2026-11-06-17-51-28Z` (31856bytes),
 with [exact manifest](tasks/NET-007/BUILD.json). Its generated manual package is
 `dist/wifi-start/wifi-start-b2026-11-06-17-51-28Z.zip` in the build owner's
 checkout. Cloning Git alone does not obtain generated binaries. This is a
-manual-review candidate, not a selected public release.
+manual-tested candidate, not a selected public release.
 
 At Smith's request the exact candidate is deployed on the mounted C8 card,
 including a private cfg copied locally from the working diagnostic cfg. It
 remains manual Connect-or-Skip by default; adding `auto_connect=1` to that
 private file enables immediate connection. Startup and existing private files
 remain unchanged. File verification is not a C8 execution/acceptance claim.
+
+The returned startup log reports ESP8266 ping round trips of7ms and5ms, then
+Wi-Fi ready and the UART close path at7 nominal seconds. These are one manual
+run and module-reported values, not a calibrated benchmark. The subsequent UART
+test's ordinary-baseline SDK carry bug is separate and owned by UART; it does
+not invalidate this successful connection. No connection-package bytes changed.

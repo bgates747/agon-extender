@@ -162,3 +162,13 @@ core-only figures above remain historical and exclude the later adapter.
 This handoff changes no C8 card files, utility selection, live MechAgon/bench
 custody, firmware, service or consumer. Extender's downstream integration remains
 N04-019.03, subject to its own source contract and normal qualification.
+
+## First Console8 UART fixture return
+
+UART reports its first ordinary AT baseline failed before async transmission:
+returned SDK `mos_uputc` reverses carry-success. UART owns the corrected shim
+and linked negative/positive controls; no Extender build, installation or target
+action is requested. This is a fixture-specific diagnosis, not a generic driver
+pass or EMOS fault. The separate NET-007 startup run succeeds with two genuine
+pings; its MOS carry handling already uses RET C for accepted transmission.
+Corrected UART fixture native checks are not a new physical pass.
