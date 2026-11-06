@@ -46,8 +46,8 @@ Unknown current state is reconciled at handoff; no target polling before that.
    ownership. They do not reproduce/clear MechAgon's failure. Original diagnostic
    P4/EMOS and working UART restoration are retained by exact byte scopes.
 2. [Guarded RFC25 control](NET-004/CARRIER-RFC25-CYCLE-R01.md): source0af5834a,
-   native17953B/d04442f1 and host callback/reply/refusal checks passed. It has
-   not run on hardware. Its source-release and ordered point reply are separate;
+   native17953B/d04442f1 and host callback/reply/refusal checks passed. It passed one finite physical control on bench59; see
+   [the actual result](PARALLEL-001/RFC25-RESULT-R01.md). Its source-release and ordered point reply are separate;
    no private UART register/drain syscall or game module is needed.
 3. [VALID filter candidate](NET-004/VALID-FILTER-R01.md): strict native reverse
    proof previously rejects extra VALID edges even after all bytes arrive.
@@ -74,12 +74,13 @@ P01-01 Publish this task/TODO and commit/push before new implementation;
 
 P01-02 Coordinate Wolf's existing assignment and exact carrier/acceptance
   contract. Notify UART/VDPlet of scheduling/resource boundaries and MechAgon of
-  the independent goal; no new peer work or premature release request. [ ]
+  the independent goal; no new peer work or premature release request. [x]
+  Existing contract returned; eight-bit mainboard endpoint gap remains P01-D05.
 
 P01-03 Audit maintained owner/fixture sources against retained failures and
   compiled RFC25 control. Prepare a finite component/input/rollback freeze and
   source-owned wrapper before reserving its ready hardware tranche. Report any
-  unsupported Wolf requirement before coding a workaround. [ ]
+  unsupported Wolf requirement before coding a workaround. [x]
 
 P01-04 Qualify the smallest independent data/ownership controls on fresh
   Olimex checkout; select declared legal boundary lengths, byte patterns,
@@ -165,3 +166,26 @@ Wolf, UART and VDPlet received the published goal/resource boundaries. Wolf and
 MechAgon received concrete supported API/current component facts and the next
 finite isolation plan. The existing FX160 passive-profile question received
 bounded existing-source facts only; no emulator/profile/firmware change.
+
+## First physical control and clean handback — 2026-11-06
+
+[Bench59 result](PARALLEL-001/RFC25-RESULT-R01.md) records one passing unfiltered
+control: four exact echoes0/1/127/128B, four67B guarded UART0 batches, four source
+releases and four ordered mainboard point replies; RELEASE0/restore1. No filter,
+analyzer, module, renderer or replay. The result does not reproduce or clear the
+larger failure and does not establish repeatability or Wolf acceptance.
+
+Incoming working UARTd9bcb/a25f was restored and all newly written bytes
+independently compared, including the maximum1765376B P4 touched span. Current
+mainboard5d657/profile8 was never written. Supported final getter exactabsence,
+rawmode0/callback0/Legacy0/files/CLI/cursor/inputneutral/offlineidle/freeports and
+all actors joined precede actual59release20:52:33.747342UTC. Wolf's PREPARING
+reservation is actualnext, not yet granted; source-only currentprofile8rollback
+and UART bootstrap details returned. MechAgon reserves a distinct finite24turn
+semantic replay after this full handback, with Extender owner install/rollback
+and explicit stopped operator handoffs. No competing target access.
+
+P01-04 and P01-06 remain open: prepare repeated/boundary controls independently,
+interpret the real-module workload discrimination, and close the explicit Wolf
+carrier/endpoint contract before consumer adaptation. The persistent goal stays
+active; production acceptance is not implied by this isolated pass.

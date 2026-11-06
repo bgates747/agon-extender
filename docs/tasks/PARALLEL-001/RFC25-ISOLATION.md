@@ -60,9 +60,9 @@ repeatability or Wolf integration acceptance by itself.
 
 P01-T01 Source-review and prepare exact wrapper/current handback/rollback freeze. [x]
 
-P01-T02 Normal checkout/selective install/readback, one case, collect/restore/release. [ ]
+P01-T02 Normal checkout/selective install/readback, one case, collect/restore/release. [x]
 
-P01-T03 Record the actual result and next discriminating fixture or owner repair. [ ]
+P01-T03 Record the actual result and next discriminating fixture or owner repair. [x]
 
 ## Source-check checkpoint
 
@@ -82,3 +82,8 @@ images. Source paths were refreshed for the new sole-owner task and namespace;
 no filter selector remains. The incoming native identity is taken from actual58
 handback, with no native firmware write. These checks finish offline readiness;
 actual admission/state/readback/invocation remain separately observed operations.
+
+Closed by [actual bench59 result](RFC25-RESULT-R01.md): one control passes;
+exact UART pair/full touched span restored, final checks pass, normal release
+20:52:33.747342UTC. Larger consumer fault and repeatability remain unresolved.
+Original frozen input documents retained with the closed run/c6175925.
