@@ -58,6 +58,10 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[BOARD-001 — Board-selectable P4 builds and compile-time pin profiles](docs/tasks/BOARD-001.md)** — Board profiles, shared pin consumers, ARM builds and validation pass for DevKit/PC. Web keyboard/video works; Author reports Nurples at 16–17 fps. The tested full-speed USB experiment bypasses the previous transaction-translation rejection, but serial now confirms failure of the keyboard's initial device-descriptor transfer. Try an alternative keyboard as the next hardware control. SD checks, electrical review and canonical qualification/acceptance remain.
 
+## Manual Console8 Wi-Fi fixture
+
+- [ ] **[NET-005 — Interactive Wi-Fi BBS fixture](docs/tasks/NET-005.md)** — Author selected a tiny Pi BBS using unchanged Radiotux terminal code; publish plan, implement/test the host, prepare a manual package and start the listener. Console8 access remains manual; no firmware or async/OTIRX changes.
+
 ## Networking prior-art review — awaiting review
 
 - [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Source review N02-01–05 complete; recommendations await Author review. Preserve the existing SD service; proposed AT compatibility is a separate decision.
