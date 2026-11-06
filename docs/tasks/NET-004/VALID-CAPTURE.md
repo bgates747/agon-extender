@@ -122,3 +122,19 @@ with an explicit stopped operator handoff. SD remains mounted.
 Machine-local raw traces, immutable input hashes, measured probe map and actual
 release/grant receipts are retained under `agents/net004/valid-sniffer-r01/` and
 the scheduler's corresponding local records. Production selection is unchanged.
+
+## Fresh moved-probe check
+
+Smith subsequently reported moving the probes and wants the next check to
+establish their actual placement. This is one new pinwalk after a physical
+change, not a replay of the completed first run. Reuse the same eleven-pin
+sequence and60second100kHz acquisition, with new paths and an actual fresh
+checkout. No renderer, firmware installation, reusable API or additional test.
+All current firmware remains installed; preserve normal startup. The same
+independent Agon reset hold, verified P4 output release/current boot fence and
+CLI/file/raw-mode/callback/input/resource handback apply. Coordinate the queued
+Wolf reservation normally before taking custody, and return a clean stopped
+handoff afterward. Preserve both old maps as history.
+
+N04-015-F Attribute the moved probes with exactly one fresh retained pinwalk,
+  report actual channels/signals, complete normal cleanup and release. [ ]
