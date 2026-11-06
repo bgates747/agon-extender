@@ -5,7 +5,8 @@ Upstream b774170ff46c393eeb5e495ea37936038d3f4f4f counts one descriptor per
 DONE interrupt. A body/tail pair can complete before that interrupt is served;
 EOF then exposes only the body count. Preserve its per-node cache/copy logic,
 but visit every completed node before EOF. Never fabricate the requested count.
-Only the explicit ExExt build derives this unit; the SDK is not edited.
+Explicit ExExt and network-parallel builds derive this unit; the SDK is not edited.
+NET-004 reused this fix after requested141/received128 exposed the same tail loss.
 Remove after a selected SDK supplies equivalent finite RX accounting and the
 coalesced/short-transfer controls plus physical stream regression pass.
 """

@@ -878,6 +878,7 @@ def main() -> None:
                f"-DAGON_VDP_ROOT={VDP}",
                f"-DAGON_ROLLING_SCANOUT={'ON' if args.rolling_scanout else 'OFF'}",
                f"-DAGON_EXEXT_STREAM={'ON' if args.exext_stream else 'OFF'}",
+               f"-DAGON_NETWORK_PARALLEL={'ON' if args.network_parallel else 'OFF'}",
                f"-DAGON_PARALLEL_UPLOAD={'ON' if args.parallel_upload_candidate else 'OFF'}",
                f"-DAGON_HDMI_TIMING={args.hdmi_timing}",
                f"-DSDKCONFIG={sdkconfig}",
@@ -968,7 +969,7 @@ def main() -> None:
         cache_component = verify(IDF, project)
         artifact_paths.extend(project / "components/esp_mm" / item["path"]
                               for item in cache_component["files"])
-    if args.exext_stream:
+    if args.exext_stream or args.network_parallel:
         artifact_paths.append(build/"exext-parlio/parlio_rx.c")
     if args.parallel_upload_candidate:
         artifact_paths.extend([build/"upload-parlio/parlio_tx.c",

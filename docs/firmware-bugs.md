@@ -125,3 +125,13 @@ build and reproducible conditions are reconciled; retain the original finding ID
 | Extender evidence | Independently verified full-HDMI stream-r07 fails T07: requested591, done1, received576, callback-fault0. The missing15 bytes equal its tail descriptor. The source-derived negative reproduces this accounting failure; physical confirmation of the proposed cause/remedy is pending. |
 | Remedy / owner | [PORT-008 EX04/EX06](tasks/PORT-008/EXEXT-STREAM-R01.md): an explicit ExExt build derives the pinned RX unit, draining actual CPU-owned completed nodes through the original cache/callback logic, with bounded traversal and no invented count. Original SDK remains untouched. Sixteen source-derived descriptor/cache/coalescing/short/stale/infinite controls pass under ASan/UBSan. |
 | Removal condition | A selected SDK implements equivalent finite descriptor accounting, followed by the same negative/positive controls and physical stream regression. |
+
+NET-004 reproduction,2026-11-05: the network-parallel profile compiled the
+original RX unit because the derivative was selected only by ExExt. Two generic
+payloads(0/1) echoed;127 payload bytes(141 framed) then reported nativeRX
+requested141/done1/received128/callback-fault0 and fenced completion. Saved app
+state retains admitted SEND query7. This is the same aligned-body/tail shape;
+the existing source-derived controls now include128+13 and128+14. The network
+profile selects the existing derivative, with exact source/compile/archive/ELF
+validation; a newly built physical remedy remains pending. No EMOS, payload
+framing or byte-clock change is required by this correction.

@@ -78,9 +78,9 @@ int main(void){
  parlio_rx_default_desc_done_callback(NULL,&event,&u);
  if(u.curr_trans.recv_bytes!=591 || partials!=2 || syncs!=2)return 71;
  ++cases;
- const size_t shapes[][3]={{2048,2048,0},{4032,64,1},{576,15,0},{64,0,0},{1,0,0}};
- const unsigned counts[]={2,3,2,1,1};
- for(unsigned s=0;s<5;s++)for(int split=0;split<2;split++){
+ const size_t shapes[][3]={{128,13,0},{128,14,0},{2048,2048,0},{4032,64,1},{576,15,0},{64,0,0},{1,0,0}};
+ const unsigned counts[]={2,2,2,3,2,1,1};
+ for(unsigned s=0;s<7;s++)for(int split=0;split<2;split++){
   size_t total=0;for(unsigned i=0;i<counts[s];i++)total+=shapes[s][i];
   u=setup(counts[s],shapes[s],total);
   if(split){for(unsigned i=1;i<u.node_num;i++)owners[i]=GDMA_LLI_OWNER_DMA;
@@ -130,7 +130,26 @@ class ParlioDescriptors(unittest.TestCase):
         r=self.execute(SDK.read_text());self.assertEqual(r.returncode,71,r.stderr)
     def test_derived(self):
         r=self.execute(patch.derive(SDK.read_bytes()));self.assertEqual(r.returncode,0,r.stderr)
-        self.assertIn('PASS 16',r.stdout)
+        self.assertIn('PASS 20',r.stdout)
+    def test_exact_derivative_must_reach_archive_and_elf(self):
+        import sys
+        sys.path.insert(0,str(ROOT/'scripts'))
+        from validate_p4_build import check_parallel_rx_linkage
+        with tempfile.TemporaryDirectory() as temp:
+            build=Path(temp);source=build/'exext-parlio/parlio_rx.c'
+            source.parent.mkdir();source.write_text(patch.derive(SDK.read_bytes()))
+            commands=[dict(file=str(source),output='rx.o')]
+            archive='esp-idf/esp_driver_parlio/libesp_driver_parlio.a'
+            ninja=f'build {archive}: archive rx.o\nbuild agon_extender.elf: link {archive}\n'
+            check_parallel_rx_linkage(commands,ninja,build,True)
+            for enabled,actions,edges in ((False,commands,ninja),(True,[],ninja),
+                    (True,commands*2,ninja),(True,commands,ninja.replace('rx.o','other.o')),
+                    (True,commands,f'build {archive}: archive rx.o\n')):
+                with self.subTest(enabled=enabled,actions=actions,edges=edges),self.assertRaises(SystemExit):
+                    check_parallel_rx_linkage(actions,edges,build,enabled)
+            source.write_text(source.read_text()+' ')
+            with self.assertRaises(SystemExit):check_parallel_rx_linkage(commands,ninja,build,True)
+            check_parallel_rx_linkage([], '',build,False)
     def test_reject_changed_sdk(self):
         with self.assertRaises(AssertionError):patch.derive(SDK.read_bytes()+b'\n')
 

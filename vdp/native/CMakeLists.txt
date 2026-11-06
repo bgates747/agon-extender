@@ -31,7 +31,7 @@ if(AGON_ROLLING_SCANOUT)
   include("${AGON_VDP_ROOT}/video/extender/display/rolling/strip_driver.cmake")
 endif()
 
-if(AGON_EXEXT_STREAM)
+if(AGON_EXEXT_STREAM OR AGON_NETWORK_PARALLEL)
   include("${AGON_VDP_ROOT}/video/extender/transport/parlio_rx_driver.cmake")
 endif()
 

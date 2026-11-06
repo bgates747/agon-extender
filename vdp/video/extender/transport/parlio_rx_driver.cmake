@@ -1,7 +1,8 @@
-# FWBUG-016: isolated finite RX descriptor accounting, explicit ExExt only.
+# FWBUG-016: isolated finite RX descriptor accounting, selected ExExt or network parallel.
 idf_component_get_property(parlio_dir esp_driver_parlio COMPONENT_DIR)
 idf_component_get_property(parlio_target esp_driver_parlio COMPONENT_LIB)
 set(rx_original "${parlio_dir}/src/parlio_rx.c")
+ # Historical output path retained for existing ExExt evidence; same RX owner.
 set(rx_derived "${CMAKE_BINARY_DIR}/exext-parlio/parlio_rx.c")
 execute_process(COMMAND "${PYTHON}" "${CMAKE_CURRENT_LIST_DIR}/patch_parlio_rx.py" "${rx_original}" "${rx_derived}" COMMAND_ERROR_IS_FATAL ANY)
 get_target_property(parlio_sources "${parlio_target}" SOURCES)

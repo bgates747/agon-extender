@@ -171,6 +171,35 @@ def check_upload_tx_linkage(commands: list[dict], ninja: str, build: Path, enabl
         fail("upload TX archive is absent from ELF link")
 
 
+def check_parallel_rx_linkage(commands: list[dict], ninja: str, build: Path, enabled: bool) -> None:
+    """Require the existing exact finite-RX fix for ExExt and network parallel."""
+    derivative = (build / "exext-parlio/parlio_rx.c").resolve()
+    actions = [c for c in commands if Path(c["file"]).name == "parlio_rx.c"]
+    derived = [c for c in actions if Path(c["file"]).resolve() == derivative]
+    if not enabled:
+        if derived:
+            fail("ordinary build selected finite-RX derivative")
+        return
+    if len(actions) != 1 or len(derived) != 1:
+        fail("parallel receive requires exactly one derived PARLIO RX compile action")
+    import importlib.util
+    patch = VDP / "video/extender/transport/patch_parlio_rx.py"
+    spec = importlib.util.spec_from_file_location("patch_parlio_rx", patch)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    expected = module.derive((IDF / "components/esp_driver_parlio/src/parlio_rx.c").read_bytes())
+    if derivative.read_bytes() != expected.encode():
+        fail("parallel RX differs from complete pinned descriptor-accounting derivative")
+    archive = "esp-idf/esp_driver_parlio/libesp_driver_parlio.a"
+    edges = [line for line in ninja.splitlines() if line.startswith(f"build {archive}:")]
+    obj = derived[0].get("output")
+    if len(edges) != 1 or not obj or obj not in edges[0].split():
+        fail("parallel RX object is absent from PARLIO archive")
+    elf = [line for line in ninja.splitlines() if line.startswith("build agon_extender.elf:")]
+    if len(elf) != 1 or archive not in elf[0].split():
+        fail("parallel RX archive is absent from ELF link")
+
+
 def check_rolling_fbcpy_linkage(commands: list[dict], ninja: str, build: Path) -> None:
     """Require the sole complete timestamp-only copy derivative in rolling."""
     expected = (build / "dsi-strip/esp_async_fbcpy.c").resolve()
@@ -305,6 +334,8 @@ def main() -> None:
     commands = json.loads(compile_path.read_text())
     check_upload_tx_linkage(commands, ninja_path.read_text().replace("$\n  ", ""),
                             output / "build", args.parallel_upload_candidate)
+    check_parallel_rx_linkage(commands, ninja_path.read_text().replace("$\n  ", ""),
+                              output / "build", args.exext_stream or args.network_parallel)
     by_source: dict[Path, list[dict]] = {}
     for command in commands:
         source = Path(command["file"]).resolve()
