@@ -1,0 +1,13 @@
+# Copy to wifi-start.cfg locally. Never publish the filled file.
+ssid=YOUR_WIFI_NAME
+password=YOUR_WIFI_PASSWORD
+# 0 waits indefinitely for Connect or Skip; 1 connects immediately.
+auto_connect=0
+# Default: two genuine ICMP pings to the DHCP gateway.
+# Or specify a hostname/IP. Use none to disable. Never scans TCP ports.
+ping_host=gateway
+baud=115200
+# MOS clock counts/second:120 at60Hz;100 at50Hz.
+tick_hz=120
+command_seconds=5
+join_seconds=60

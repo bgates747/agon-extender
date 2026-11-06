@@ -20,6 +20,8 @@ static inline int ws_mos_exit(int result) {return result?128+result:0;}
 struct ws_config {
  char ssid[33],password[65],host[64];
  unsigned port,baud,tick_hz,command_seconds,join_seconds,bbs_seconds;
+ /* Startup-only settings; diagnostic configuration remains strict. */
+ unsigned auto_connect;char ping_host[64];
 };
 struct ws_io {
  void *ctx;
@@ -33,7 +35,8 @@ struct ws_io {
 struct ws_state {
  struct ws_config cfg;
  struct ws_io io;
- char line[WS_LINE],reply[WS_REPLY],batch[WS_REPLY],ip[48],mac[48];
+ char line[WS_LINE],reply[WS_REPLY],batch[WS_REPLY],ip[48],mac[48],gateway[48];
+ unsigned ping_ms,ping_seen,ping_warning;
  size_t line_n,reply_n,batch_n;
  unsigned ipd_left,ipd_frames;
  uint32_t last_clock,last_rx,still_polls;
@@ -43,4 +46,6 @@ void ws_defaults(struct ws_config *);
 struct ws_reader {void *ctx;int (*next)(void *);}; /* -1 EOF, -2 I/O error */
 int ws_read_config(const struct ws_reader *,struct ws_config *,char *,size_t,int (*)(void *),void *);
 int ws_run(struct ws_state *,const struct ws_config *,const struct ws_io *);
+int ws_read_start_config(const struct ws_reader *,struct ws_config *,char *,size_t,int (*)(void *),void *);
+int ws_start(struct ws_state *,const struct ws_config *,const struct ws_io *);
 #endif

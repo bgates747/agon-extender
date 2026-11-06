@@ -8,9 +8,9 @@ static int bad(char *e,size_t n,unsigned line,const char *why) {
 }
 void ws_defaults(struct ws_config *c) {
  memset(c,0,sizeof(*c));c->port=2323;c->baud=115200;c->tick_hz=120;
- c->command_seconds=5;c->join_seconds=60;c->bbs_seconds=10;
+ c->command_seconds=5;c->join_seconds=60;c->bbs_seconds=10;strcpy(c->ping_host,"gateway");
 }
-int ws_read_config(const struct ws_reader *f,struct ws_config *c,char *e,size_t en,int (*cancel)(void *),void *ctx) {
+static int read_config(const struct ws_reader *f,struct ws_config *c,char *e,size_t en,int (*cancel)(void *),void *ctx,int startup) {
  char line[256];unsigned num=0,seen=0,total=0;ws_defaults(c);
  for(;;) {
   char *p=line,*eq,*end,*val;unsigned bit=0;size_t n=0;int ch;
@@ -41,21 +41,24 @@ int ws_read_config(const struct ws_reader *f,struct ws_config *c,char *e,size_t 
   else if(!strcmp(p,"command_seconds"))bit=64;
   else if(!strcmp(p,"join_seconds"))bit=128;
   else if(!strcmp(p,"bbs_seconds"))bit=256;
+  else if(startup&&!strcmp(p,"auto_connect"))bit=512;
+  else if(startup&&!strcmp(p,"ping_host"))bit=1024;
   else return bad(e,en,num,"unknown key");
   if(seen&bit)return bad(e,en,num,"duplicate key");
   seen|=bit;
   n=strlen(val);
-  if(bit==1||bit==2||bit==4) {
+  if(bit==1||bit==2||bit==4||bit==1024) {
    size_t max=bit==1?32:bit==2?64:63;
    if(n>max||(!n&&bit!=2))return bad(e,en,num,"invalid string length");
-   if(bit==4)for(size_t i=0;i<n;i++)if(!isalnum((unsigned char)val[i])&&val[i]!='.'&&val[i]!='-')return bad(e,en,num,"invalid BBS hostname");
-   strcpy(bit==1?c->ssid:bit==2?c->password:c->host,val);
+   if(bit==4||bit==1024)for(size_t i=0;i<n;i++)if(!isalnum((unsigned char)val[i])&&val[i]!='.'&&val[i]!='-')return bad(e,en,num,"invalid hostname");
+   strcpy(bit==1?c->ssid:bit==2?c->password:bit==4?c->host:c->ping_host,val);
   } else {
    unsigned long v;char *tail;
    if(!*val)return bad(e,en,num,"missing number");
    for(char *q=val;*q;q++)if(!isdigit((unsigned char)*q))return bad(e,en,num,"expected decimal number");
    v=strtoul(val,&tail,10);
-   if(*tail||v>(bit==16?115200UL:65535UL)||!v)return bad(e,en,num,"number out of range");
+   if(*tail||v>(bit==16?115200UL:65535UL)||(!v&&bit!=512))return bad(e,en,num,"number out of range");
+   if(bit==512) {if(v>1)return bad(e,en,num,"auto_connect must be 0 or 1");c->auto_connect=(unsigned)v;}
    if(bit==8)c->port=(unsigned)v;
    if(bit==16) {if(v!=9600&&v!=19200&&v!=38400&&v!=57600&&v!=115200UL)return bad(e,en,num,"unsupported baud");c->baud=(unsigned)v;}
    if(bit==32) {if(v!=100&&v!=120)return bad(e,en,num,"tick_hz must be 100 or 120");c->tick_hz=(unsigned)v;}
@@ -67,6 +70,9 @@ int ws_read_config(const struct ws_reader *f,struct ws_config *c,char *e,size_t 
    }
   }
  }
- if((seen&7)!=7)return bad(e,en,num,"ssid, password and bbs_host are required");
+ if((seen&(startup?3:7))!=(unsigned)(startup?3:7))return bad(e,en,num,startup?"ssid and password are required":"ssid, password and bbs_host are required");
  memset(line,0,sizeof(line));return WS_OK;
 }
+
+int ws_read_config(const struct ws_reader *f,struct ws_config *c,char *e,size_t en,int (*cancel)(void *),void *ctx) {return read_config(f,c,e,en,cancel,ctx,0);}
+int ws_read_start_config(const struct ws_reader *f,struct ws_config *c,char *e,size_t en,int (*cancel)(void *),void *ctx) {return read_config(f,c,e,en,cancel,ctx,1);}

@@ -64,6 +64,15 @@ static void modem_line(struct ws_state *s) {
  else if(!strcmp(p,"CONNECT"))s->connected=1;
  quoted(s,p,"+CIFSR:STAIP,\"",s->ip,sizeof(s->ip));
  quoted(s,p,"+CIFSR:STAMAC,\"",s->mac,sizeof(s->mac));
+ /* Startup ping/gateway replies are parsed only as bounded modem lines.
+  * The latency is reported by ESP8266, never inferred from MOS serial time. */
+ quoted(s,p,"+CIPSTA_CUR:gateway:\"",s->gateway,sizeof(s->gateway));
+ quoted(s,p,"+CIPSTA:gateway:\"",s->gateway,sizeof(s->gateway));
+ if(p[0]=='+'&&isdigit((unsigned char)p[1])) {
+  unsigned long value=0;const char *q=p+1;
+  while(isdigit((unsigned char)*q)) {if(value>6553UL) {s->failed=WS_PROTOCOL;break;}value=value*10+(unsigned)(*q++-'0');}
+  if(!*q&&value<=65535UL) {s->ping_ms=(unsigned)value;s->ping_seen=1;}
+ }
  /* Joining may echo a complete credential-bearing command even after ATE0.
   * Store only known nonsecret status text in this phase, never its raw echo. */
  if(s->secret) {
@@ -188,7 +197,7 @@ static int address_valid(const char *ip,const char *mac) {
  for(unsigned i=0;i<17;i++)if(i%3==2?mac[i]!=':':!isxdigit((unsigned char)mac[i]))return 0;
  return 1;
 }
-static int steps(struct ws_state *s) {
+static int wifi_steps(struct ws_state *s) {
  char cmd[260],ssid[67],pass[131],msg[170];
  say(s,"Opening ESP8266 command-mode setup. No stored settings or MAC change.");
  if(!command(s,"AT",s->cfg.command_seconds,"AT response",0))return 0;
@@ -218,6 +227,11 @@ static int steps(struct ws_state *s) {
  }
  snprintf(msg,sizeof(msg),"Station IP: %s; MAC: %s. Address assigned by DHCP.",s->ip,s->mac);say(s,msg);
  say(s,"Your router's MAC reservation determines the canonical address.");
+ return !s->failed;
+}
+static int steps(struct ws_state *s) {
+ char cmd[260];
+ if(!wifi_steps(s))return 0;
  if(!command(s,"AT+CIPMODE=0",s->cfg.command_seconds,"normal TCP command mode",0))return 0;
  if(!command(s,"AT+CIPMUX=0",s->cfg.command_seconds,"single TCP connection",0))return 0;
  if(!command(s,"AT+CIPDINFO=0",s->cfg.command_seconds,"bounded TCP receive framing",0))return 0;
@@ -229,10 +243,46 @@ static int steps(struct ws_state *s) {
  if(!send_bbs(s,"help\r\n",0)||!send_bbs(s,"time\r\n",0)||!send_bbs(s,"uptime\r\n",0)||!send_bbs(s,"quit\r\n",1))return 0;
  say(s,"Success: Wi-Fi, DHCP, TCP and BBS request/reply checks passed.");return !s->failed;
 }
-int ws_run(struct ws_state *s,const struct ws_config *c,const struct ws_io *io) {
+static int ping_command(struct ws_state *s,const char *cmd,const char *what) {
+ if(command(s,cmd,s->cfg.command_seconds,what,0))return 1;
+ /* A complete ERROR proves command mode has returned. It cannot distinguish
+  * unsupported PING from an unreachable peer. Never clear timeout/cancel/I/O. */
+ if(s->failed==WS_MODEM&&s->error&&!s->uncertain) {
+  s->failed=0;s->ping_warning=1;
+  say(s,"Warning: connectivity check refused or unavailable; Wi-Fi remains connected.");
+  return -1;
+ }
+ return 0;
+}
+static int startup_steps(struct ws_state *s) {
+ char cmd[120],msg[160];const char *target=s->cfg.ping_host;int rc;
+ say(s,"Connecting to configured Wi-Fi. Escape cancels.");
+ if(!wifi_steps(s))return 0;
+ say(s,"Connected: Wi-Fi association and DHCP verified.");
+ if(!strcmp(target,"none")) {say(s,"Ping disabled in configuration; network latency not checked.");return !s->failed;}
+ if(!strcmp(target,"gateway")) {
+  rc=ping_command(s,"AT+CIPSTA_CUR?","DHCP gateway query");if(rc<=0)return rc<0;
+  if(!address_valid(s->gateway,s->mac)||!strcmp(s->gateway,"0.0.0.0")) {
+   s->ping_warning=1;say(s,"Warning: module did not report a valid gateway; ping not checked.");return !s->failed;
+  }
+  target=s->gateway;
+ }
+ say(s,"Checking network reachability with two pings.");
+ snprintf(cmd,sizeof(cmd),"AT+PING=\"%s\"",target);
+ for(unsigned i=0;i<2;i++) {
+  s->ping_seen=0;rc=ping_command(s,cmd,"network ping");if(rc==0)return 0;
+  if(rc>0) {
+   if(s->ping_seen) {snprintf(msg,sizeof(msg),"Ping %u: %u ms (ESP8266-reported round trip).",i+1,s->ping_ms);say(s,msg);}
+   else {s->ping_warning=1;say(s,"Warning: ping returned OK without a latency; reply not verified.");}
+  } else break;
+ }
+ say(s,s->ping_warning?"Wi-Fi connected; ping verification incomplete. See progress log.":"Wi-Fi ready; both network pings passed.");
+ return !s->failed;
+}
+static int run(struct ws_state *s,const struct ws_config *c,const struct ws_io *io,int startup) {
  int result;memset(s,0,sizeof(*s));s->cfg=*c;s->io=*io;s->last_clock=io->now(io->ctx);s->last_rx=s->last_clock;
  say(s,"Wi-Fi setup: Escape cancels at any stage. Progress is logged without credentials.");
- steps(s);result=s->failed;
+ if(startup)startup_steps(s);else steps(s);result=s->failed;
  if(result) {
   char msg[100];snprintf(msg,sizeof(msg),"Stopped: %s (result %d).",result==WS_CANCEL?"Escape pressed":result==WS_TIMEOUT?"deadline expired":result==WS_PROTOCOL?"unexpected or oversized response":result==WS_LOG?"log write failed":result==WS_CLOCK?"MOS clock stopped":"ESP8266 refused or UART closed",result);say(s,msg);
   if(s->uncertain||s->data_pending)say(s,"Module operation may still be pending. No cleanup command injected; reset the module manually before another attempt if needed.");
@@ -242,3 +292,6 @@ int ws_run(struct ws_state *s,const struct ws_config *c,const struct ws_io *io) 
  memset(s->cfg.password,0,sizeof(s->cfg.password));memset(s->cfg.ssid,0,sizeof(s->cfg.ssid));
  return result?result:s->failed;
 }
+
+int ws_run(struct ws_state *s,const struct ws_config *c,const struct ws_io *io) {return run(s,c,io,0);}
+int ws_start(struct ws_state *s,const struct ws_config *c,const struct ws_io *io) {return run(s,c,io,1);}

@@ -25,9 +25,8 @@ static int escape(void *unused) {(void)unused;return getsysvar_keyascii()==27&&g
 static int receive(void *unused) {(void)unused;return mos_ugetc_nb();}
 static int transmit(void *unused,unsigned char c) {(void)unused;return wifi_try_put(c);}
 static void idle(void *unused) {(void)unused;for(volatile unsigned i=0;i<60;i++);}
-static int message(void *ctx,const char *text) {
+static int append_log(void *ctx,const char *text) {
  struct platform *p=ctx;uint32_t elapsed=(uint32_t)(now(NULL)-p->start);unsigned long sec=(unsigned long)(elapsed/p->hz);
- printf("[%lu s] %s\n",sec,text);
  if(p->log_failed)return 0;
  char prefix[35];size_t n;
  snprintf(prefix,sizeof(prefix),"[%lu s] ",sec);n=strlen(prefix);
@@ -37,6 +36,11 @@ static int message(void *ctx,const char *text) {
   p->log_failed=1;puts("Log write failed. Stopping; check free card space.");return 0;
  }
  return 1;
+}
+static int message(void *ctx,const char *text) {
+ struct platform *p=ctx;
+ printf("[%lu s] %s\n",(unsigned long)((uint32_t)(now(NULL)-p->start)/p->hz),text);
+ return append_log(ctx,text);
 }
 static int config_next(void *ctx) {
  unsigned char c;uint8_t fh=*(uint8_t *)ctx;
