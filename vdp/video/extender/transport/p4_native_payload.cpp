@@ -318,10 +318,20 @@ P4NativePayload::Result P4NativePayload::poll(std::uint32_t now) noexcept {
   if(transmit_) {
     auto r=egress_.poll(now);
     if(r==ParallelTxResult::pending)return result_;
-    if(r!=ParallelTxResult::complete)
-      printf("Parallel native TX result=%u requested=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d\n",
+    // NET-004 N04-012: retain the strict proof's last observed edge count
+    // after cleanup without another PCNT read. Exact DMA completion alone
+    // cannot distinguish a VALID proof rejection from another backend fault.
+    if(r!=ParallelTxResult::complete) {
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
+      const int validEdges=validCounter_.observedCount();
+#else
+      const int validEdges=-1; // This composition has no strict PCNT owner.
+#endif
+      printf("Parallel native TX result=%u requested=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d valid_edges=%d\n",
         unsigned(r),unsigned(length_),unsigned(done_.load()),unsigned(completed_.load()),
-        unsigned(edges_.load()),gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)));
+        unsigned(edges_.load()),gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)),
+        validEdges);
+    }
     const auto outcome=r==ParallelTxResult::complete?Result::complete:
         r==ParallelTxResult::cleanupFault?Result::cleanupFault:
         r==ParallelTxResult::timeout?Result::timeout:Result::fault;
