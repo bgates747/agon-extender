@@ -1,0 +1,10 @@
+{
+  "schema": "extender-corrective-source-freeze-v1",
+  "scope": "Read existing P4 boot after observer exception, complete only not-yet-issued pairedAgon reset, SAVE RAM; NO P4reset/test/replay",
+  "inputs": {
+    "agents/parallel001/replay-assist-r01/continue_paired.py": {
+      "bytes": 4156,
+      "sha256": "eb351068725a124973b2c611ae9864fd1a38bbac440848ac7fc12b6ab55aaf9e"
+    }
+  }
+}
