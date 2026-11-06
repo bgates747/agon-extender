@@ -1,0 +1,68 @@
+{
+  "schema": "extender-owner-source-freeze-v1",
+  "case": "r12",
+  "state": "source-prepared-not-invoked",
+  "kit_sha256": "7014a341fe754a242eb2962c94b4c5b6a76f2e48e18a93765bb5cb127c7fba4d",
+  "source_manifest_sha256": "002101712d5ca20fdf8f76e883025e230992adf4d046b1b4dc6b76cfd12da90f",
+  "input_count": 46,
+  "checks": {
+    "identity_and_ready": 4,
+    "capture_actor": 2,
+    "bootstrap": 3
+  },
+  "owner_leaves": {
+    "collect.py": {
+      "bytes": 2371,
+      "sha256": "5efe232954bec6f219f414cf0c6014ee521058ae1d338bac552a9a0748f21469"
+    },
+    "guard.py": {
+      "bytes": 3599,
+      "sha256": "ed300b9935469cc613a83d8c3384bb39f18bdc413ae860cca04d026005f06cce"
+    },
+    "check_capture_actor.py": {
+      "bytes": 3936,
+      "sha256": "ec5d7a56a3e4fb9acb842ba0530b067a40620e3c6464e140ec01f93223e07a1f"
+    },
+    "run.py": {
+      "bytes": 8867,
+      "sha256": "05475d46e36744669bcb6e9c249154e252d1075ab46b321455d99c0fb6e9b62c"
+    },
+    "bootstrap.py": {
+      "bytes": 4254,
+      "sha256": "4a23408658a20d1bb212f712d6699b24b09402055f67de314c6cb72fc351e647"
+    },
+    "check_bootstrap.py": {
+      "bytes": 4086,
+      "sha256": "60d86400306885d503d8908bdf2ec839d8ba5147200139b3aa8544a8cb80c2c3"
+    },
+    "check_guard.py": {
+      "bytes": 5195,
+      "sha256": "be924e0cd99b2e1db3a17072ae53d6cff78537c0767a3f80403a53943bcf4a7b"
+    },
+    "capture.py": {
+      "bytes": 6117,
+      "sha256": "e043ad72cfd09326b429abb7bdf59d2aaee429d91d959f8129486d9aba746a22"
+    },
+    "prepare_run.py": {
+      "bytes": 1054,
+      "sha256": "46d5f169e2460b041ba58da9a926bc708da697f31fd2642b681f9d344024f1a4"
+    },
+    "analyze.py": {
+      "bytes": 3142,
+      "sha256": "f87005d9fbc17a86915f852cf5b7cc9233e33dad24368059819933fbc76622f8"
+    },
+    "bench.py": {
+      "bytes": 7157,
+      "sha256": "723a047593f817a869d6bd06015dc928dbf3ef107212a559e1bc138cbeb220c6"
+    },
+    "freeze.py": {
+      "bytes": 1684,
+      "sha256": "572ea7ffe8e241405f708f6267d111e72646b164f391515e2c5efcd521f7d46c"
+    },
+    "analyzer-bin/sigrok-cli": {
+      "bytes": 252,
+      "sha256": "44c8d748981e3c01a2af8ea6ab1b7de80d6540a2f47fafc9347b905072717b15"
+    }
+  },
+  "source_scope": "No hardware/readiness/capture claim. New actual request, fresh current-component admission and full selected preparation remain."
+}

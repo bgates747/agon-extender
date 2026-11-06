@@ -2,7 +2,9 @@
 
 Prepare one new bounded capture of the existing MechAgon transport failure with
 the handshake probes established by the second pinwalk. Capture the unfiltered
-installed P4 before any candidate filter installation. This is not a replay of
+installed P4 before any candidate filter installation. The current consumer descriptor is
+`kit-final.json`: it adds Smith's final-one-attempt limit while keeping all22
+executable inputs byte-identical. This is not a replay of
 the failed transaction or a resumption of the completed pinwalk.
 
 ## Selected work and bounds
@@ -16,14 +18,14 @@ P4 serial, the analyzer and the finite Pi harness. MechAgon supplies source/data
 
 N04-017.01 Publish the owner plan before adapting the finite wrapper. Preserve
   old captures and output journals. Verify the new descriptor's22 exact inputs
-  and complete operation/cleanup contracts without touching hardware. [ ]
+  and complete operation/cleanup contracts without touching hardware. [x]
 
 N04-017.02 Replace every old fixed request/output binding in the owner leaves
   with one fresh exact request-bound context. Require actual owner/task/request/
   generation/token and source hashes before launch; reject released records.
   Keep the analyzer leaf passive and the parent as the sole native RUN actor.
   Check subprocess termination, original deadlines, no replay and fresh outputs
-  with device-free boundary checks. Preserve partial traces on interruption. [ ]
+  with device-free boundary checks. Preserve partial traces on interruption. [x]
 
 N04-017.03 Once independently ready, reserve normally and reconcile the actual
   current bench. Preserve unfiltered P4 diagnostic02addd and EMOS8270. Only the
@@ -64,3 +66,14 @@ qualification or proof of electrical origin. Keep native decisions/frames, host
 ticks, P4 cached count and wire samples as separate evidence. Sustained extra
 VALID intervals still fail exact-two proof. No shared P4/EMOS/startup, clocks,
 deadlines, checksums, polarity or protocol change belongs to this control.
+
+## Source-prepared checkpoint
+
+The [owner source freeze](UNFILTERED-R12-OWNER-FREEZE.json) identifies46 exact
+source/tool/data inputs. Four identity/ready/actor-retirement test methods, two
+real isolated capture-leaf idle/cancellation methods and three bootstrap-order/
+failure methods pass without device or network access. The acquisition has an
+independent privileged45-second stop plus three-second final termination bound.
+No hardware readiness or acquisition is claimed. The fresh final-case request
+is queued normally behind the current Wolf session; actual grant, current
+components and selected physical preparation remain prerequisites.

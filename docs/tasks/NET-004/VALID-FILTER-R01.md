@@ -32,7 +32,7 @@ installation, capture, application run or new bench reservation is selected.
 ## Bounded implementation and validation
 
 N04-016.01 Publish this plan before changing code; notify MechAgon of the
-  source-only phase and its hardware boundary. [ ]
+  source-only phase and its hardware boundary. [x]
 
 N04-016.02 Add a separately owned VALID filter only for the strict reverse TX
   path. Preserve CLOCK filtering, exact DMA/byte/edge proof, deadlines, GPIO
@@ -44,7 +44,7 @@ N04-016.03 Extend actual native SDK-fake sanitizer checks for both filter
   identities, enable-before-PCNT/READY ordering, successful1B transfer, sustained
   extra intervals still rejected, partial second-filter setup and failed cleanup
   retaining owner/DMA until successful retirement. Test strict and retained
-  ExExt compositions; do not pretend a digital fake measures analog filtering. [ ]
+  ExExt compositions; do not pretend a digital fake measures analog filtering. [x]
 
 N04-016.04 Through normal serial Pi compiler FIFO, run focused host checks and
   produce a new identified full-feature candidate using the exact installed
@@ -62,3 +62,13 @@ Do not change EMOS, consumer source, production selection, firmware on either
 board, startup or current Wolf inputs. Preserve the unfiltered diagnostic image
 and informative failure evidence. Public version/production promotion and any
 physical repair claim remain unselected.
+
+## Actual first compile disposition
+
+Source f3a102d5 is committed separately. Focused sanitizer checks pass246 retained
+ExExt assertions,219 strict native assertions and70 counter assertions. The
+identified full-build attempt stopped at its original fifteen-minute watchdog,
+joined all observed compiler descendants and released the compiler slot. It
+produced no deployable P4 image. No hardware was accessed and no filtering repair
+is claimed. A new identified build tranche is still required; this independent
+work does not block the final application case or its explicit UART1 alternative.
