@@ -8,3 +8,10 @@ CFLAGS+=$(CFLAGS_EXTRA) -Iinclude
 ifneq ($(WIFI_BUILD_ID),)
 CFLAGS+=-DWIFI_BUILD_ID='"$(WIFI_BUILD_ID)"'
 endif
+
+# Recompile this small utility on each explicit build so a new build identity
+# cannot silently reuse objects bearing a previous WIFI_BUILD_ID. Avoid make -B:
+# the retained SDK's directory rule uses plain mkdir on an existing bin folder.
+.PHONY: wifi_force
+wifi_force:
+$(OBJS): wifi_force
