@@ -102,3 +102,12 @@ accepted binaries/results; r03 has no inherited physical acceptance.
 
 Both variants compile from clean dd933691. The parallel00:34:43Z build is16567
 bytes; no hardware r03 run occurred. Exact identities are retained by NET-004.
+
+## Finite repeated matrix preparation
+
+`build.py --carrier parallel --repeat-matrix` selects the separate176-record,
+four-session source; `--rfc25-cycle` additionally selects guarded67B UART0
+batches. The original four-record source is unchanged. The finite peer is
+`repeat_peer.py` and the bounded work/physical gate is
+[PARALLEL-001](../../../docs/tasks/PARALLEL-001/REPEAT-MATRIX-R01.md). This is
+source preparation, not a qualified deployment or default bench recipe.

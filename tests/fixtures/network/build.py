@@ -23,7 +23,11 @@ def main():
                         help='Independent ordinary mainboard draw/query between echo records')
     parser.add_argument('--rfc25-cycle', action='store_true',
                         help='Independent guarded RFC25 drawing/point reply; parallel only')
+    parser.add_argument('--repeat-matrix', action='store_true',
+                        help='Separate finite176-record/four-session parallel appliance')
     args = parser.parse_args()
+    if args.repeat_matrix and (args.carrier!='parallel' or args.graphics_cycle):
+        parser.error('Repeat matrix requires parallel and excludes ordinary graphics variant')
     if args.rfc25_cycle and (args.graphics_cycle or args.carrier!='parallel'):
         parser.error('RFC25 cycle requires parallel carrier and excludes ordinary graphics cycle')
     if not re.fullmatch(r'[A-Za-z0-9-]+', args.build_id):
@@ -35,7 +39,7 @@ def main():
     source = work/'src'
     (source/'agon').mkdir(parents=True)
     inputs = {
-        'main.cpp':'tests/fixtures/network/main.cpp',
+        'main.cpp':('tests/fixtures/network/repeat.cpp' if args.repeat_matrix else 'tests/fixtures/network/main.cpp'),
         'endpoint.hpp':'tests/fixtures/network/endpoint.hpp',
         'carrier.hpp':'tests/fixtures/network/carrier.hpp',
         'mode_lifecycle.hpp':'tests/fixtures/scroll/mode_lifecycle.hpp',
@@ -43,6 +47,8 @@ def main():
         'net_callback.asm':'include/agon/net_callback.asm',
         'agon/net.h':'include/agon/net.h',
     }
+    if args.repeat_matrix:
+        inputs['repeat_matrix.hpp']='tests/fixtures/network/repeat_matrix.hpp'
     if args.carrier == 'parallel':
         del inputs['net_callback.asm']
         inputs['agon/net_parallel.h']='include/agon/net_parallel.h'
@@ -70,6 +76,7 @@ def main():
                   build_id=args.build_id, status='experimental', carrier=args.carrier,
                   graphics_cycle=args.graphics_cycle,
                   rfc25_cycle=args.rfc25_cycle,
+                  repeat_matrix=args.repeat_matrix,
                   source_commit=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip(),
                   scope='native Agon compile/link only; no invocation',
                   inputs={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in inputs.values()})
