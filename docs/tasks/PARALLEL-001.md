@@ -232,3 +232,20 @@ selects176 byte-exact records over four positive-close sessions, plain and
 optional guarded67B UART0 variants. This independent source/check work proceeds
 while consumers own hardware, without editing the current replay's pinned
 files. A separate exact physical freeze/fresh reservation remains required.
+
+## Filtered workload comparison and next repeatability tranche
+
+[Filtered62 result](PARALLEL-001/FILTER-RESULT-R01.md) passes the same24-pair
+real-module workload with native0/24decisions/24native+moduleframes/24hostintents,
+firsterror0 and positive close/cleanup/end. Original unfiltered60 failure remains
+informative and immutable. Exact incoming UART pair/max touched span restored,
+independently verified and fully cleaned before actual62 release22:15:09UTC.
+Wolf's separate ordinary-carrier hardware03 cohort received fresh63 custody;
+Extender target access stopped during that cohort.
+
+[Repeated physical plan](PARALLEL-001/REPEAT-PHYSICAL-R01.md) selects the passing
+37ba candidate alone for four sessions/176 records, then conditional guarded
+UART0 coexistence. Source/owner-helper checks and request freeze precede fresh
+normal admission; first unexpected result stops successors. This is a separate
+tranche, not another62 run. P01-D05 still awaits the Author's Wolf endpoint choice;
+no sidecar/staging/graphics substitute is silently selected as goal completion.
