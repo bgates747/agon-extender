@@ -66,3 +66,29 @@ that only the two worktree paths naming the same partition file differed. The
 referenced files and compiled partition-table bytes match exactly. The corrected
 postcheck retains that original failure and every actual raw hash. Compiler239
 released after all descendants joined; no firmware was installed.
+
+## Fresh physical continuation after the final parallel failure
+
+The final unfiltered consumer attempt failed under Extender55. All original
+actors joined; its64KiB RAM,16B first-fault record and native result were saved
+before getter LOAD. The native result records result6, two decisions and a
+POLL SUBMIT132; the Pi harness records four ticks/decision overrun. P4 reports
+93 transferred bytes and four VALID edges against its exact-two requirement.
+These are separate observations, with electrical cause unresolved. No replay
+or candidate filter installation is selected for MechAgon.
+
+The [fresh owner source freeze](UART13-OWNER-FREEZE.json) identifies53 exact
+inputs for the new matched UART installation under MechAgon's new reservation.
+All11 private host leaves parse and all53 actual inputs rehash. The installer
+selects the existing active P4 slot from unchanged partition/OTA metadata,
+preserves the overwritten sector tail from the exact retained incoming image,
+and independently compares newly written bytes. The131072B EMOS ROM is staged
+and read back before FLASH, then independently saved/read back after boot.
+No factory, partition, NVS or startup write belongs to this operation.
+
+The generic appliance is the existing checked default UART fixture, not the
+new independent graphics-cycle workload. Its actual four lengths are0,1,56,128B;
+those exact lengths are bound in the echo peer and result checks. The new
+owner performs one such proof, then feature/callback/Legacy/mode/files/CLI/idle
+checks and stops every actor before changing the operator context to MechAgon.
+A refusal stops for concrete disposition, with no automatic second invocation.

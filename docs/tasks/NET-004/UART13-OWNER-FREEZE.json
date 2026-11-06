@@ -1,0 +1,219 @@
+{
+  "schema": "extender-owner-source-freeze-v1",
+  "source_manifest_sha256": "17640f0d0624c885521c60007c51bf18facbf6a59ac2b5573927c9a35c606a1d",
+  "scope": "Source-only checked selective UART P4/EMOS install, one four-record UART proof and stopped handoff under fresh request; no physical result implied",
+  "inputs": {
+    "agents/net004/uart1-physical-r01/getter_handoff.py": {
+      "bytes": 943,
+      "sha256": "bd00ff9885b5112fe7266fc4f3533f51f83e5039b861f3dd13b526a580acfc77"
+    },
+    "agents/net004/uart1-physical-r01/prepare_generic.py": {
+      "bytes": 1742,
+      "sha256": "dbbd35f36917a920eaec6629de6c8c4393ae6b35570c2c25b874efa0b5ad286a"
+    },
+    "agents/net004/uart1-physical-r01/run_generic.py": {
+      "bytes": 6445,
+      "sha256": "1e74c86751caac51f8de7698137155c12b31a98fb3a443b3efded9bd0f7e455b"
+    },
+    "agents/net004/uart1-physical-r01/stage.py": {
+      "bytes": 2817,
+      "sha256": "91c7528e989d4a9a0259f6eb11c89979c3493b3e12b052b9a897690f472e1364"
+    },
+    "agents/net004/uart1-physical-r01/getter_adapter.py": {
+      "bytes": 2592,
+      "sha256": "27ab9bf43bc9604a97a537ccdff1b241a3a46f8d260067bdf716da1006c8d33f"
+    },
+    "agents/net004/uart1-physical-r01/handoff.py": {
+      "bytes": 4272,
+      "sha256": "56bc1b259be4e2d42a9407d231e8fa0263b74c5b3bd90ebf0dbb834e4a777b67"
+    },
+    "agents/net004/uart1-physical-r01/verify_emos.py": {
+      "bytes": 1129,
+      "sha256": "a4cf373fa6d47520b769af09dd66e7a33127e9d6510f998a0b5054d81784480f"
+    },
+    "agents/net004/uart1-physical-r01/flash_emos.py": {
+      "bytes": 3054,
+      "sha256": "bc5dd9c89f1c781565b73426052bf64ac9bd79996b391295016963d7ad6565dd"
+    },
+    "agents/net004/uart1-physical-r01/ops.py": {
+      "bytes": 1266,
+      "sha256": "90f8c08207578648bfc922d4310b9c39cc08110b34b3b15ca1a039e08d5d3ec8"
+    },
+    "agents/net004/uart1-physical-r01/install_p4.py": {
+      "bytes": 9521,
+      "sha256": "cca49851eb0566fa365e88ce522e5bb5a219ef59140f774538ffa1cafa4a761c"
+    },
+    "agents/bench-scheduler/mechagon-uart13-r01/admit.py": {
+      "bytes": 6135,
+      "sha256": "2bdc3e33c4c0ec44d14dfa64731abe9a2b719d4a5638da9db17621e8c98ee55a"
+    },
+    "agents/net003/physical_ops.py": {
+      "bytes": 3560,
+      "sha256": "568ff8f567d17796cee445d2a8457f7a8d7534b3012d1b8ffa5d9c688413a4d3"
+    },
+    "agents/remote009/bench-r01/hold_reset.py": {
+      "bytes": 2210,
+      "sha256": "2f6bb9a51b4a07530eb44dc7556c29dce3b83389310463da633dd7b617942a9e"
+    },
+    "scripts/passive_serial.py": {
+      "bytes": 2069,
+      "sha256": "b665826da471b786582bb4dd24214f7c4bc925fe7018d07106e661fc5e4a3543"
+    },
+    "scripts/sdcard.py": {
+      "bytes": 19583,
+      "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa"
+    },
+    "scripts/sdcard_staged.py": {
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    },
+    "scripts/keyboard.py": {
+      "bytes": 8822,
+      "sha256": "2bd907921d80315f9d83761213e8125527a07f849ff488e128188b0f114c6525"
+    },
+    "scripts/p4_boot_guard.py": {
+      "bytes": 891,
+      "sha256": "8c8efb4c825029adb64758b35f6424b04b952af46233cf888dab5cc2fe3e90a5"
+    },
+    "agents/net004/uart1-bootstrap-r01/bootstrap.py": {
+      "bytes": 4773,
+      "sha256": "d04f18ee229b4eca6c7134f8ba1efaa91edc5aebccc6b183b6ab4656c526ea83"
+    },
+    "agents/net004/independent-cycle-r01/uart-default/manifest.json": {
+      "bytes": 1315,
+      "sha256": "f9d904f4418513f4d1ea51267af7e87f0dc8c2b483656634e502999008eb87bc"
+    },
+    "agents/net004/independent-cycle-r01/uart-default/netprobe.bin": {
+      "bytes": 16276,
+      "sha256": "a0ba4216e08c4a0a4874749be8b1f0d8031cbfa9f2829c51ef1a033cd96c41ec"
+    },
+    "agents/net004/p4-uart1-r01/manifest.json": {
+      "bytes": 15508,
+      "sha256": "0c7f7bdd49e89a9845f3d7a4539c62c5485a7fe728e07c0eb8c6697fc9836581"
+    },
+    "agents/net004/p4-uart1-r01/validation.json": {
+      "bytes": 2551,
+      "sha256": "05a22375f28c221b8f8c0b03715c6c1730822bdef5bae0c3e3d8bda5722cdaed"
+    },
+    "agents/net004/p4-uart1-r01/dependencies.lock": {
+      "bytes": 14602,
+      "sha256": "a02df352a446db976bf1375db3de3eb7c6cdfd9603169c62ba84d30bccea78fc"
+    },
+    "agents/net004/p4-uart1-r01/sdkconfig": {
+      "bytes": 92574,
+      "sha256": "5a698ba686a54e6869f0665c1e29f5efcfa71395c68401f092eba4a723c9eef6"
+    },
+    "agents/net004/p4-uart1-r01/source-inputs.json": {
+      "bytes": 1156973,
+      "sha256": "29d97f0fe24ebec1e67db1607f99d77132a7680954da56118bfc67c9737f1ed7"
+    },
+    "agents/net004/p4-uart1-r01/source.tar.gz": {
+      "bytes": 28209826,
+      "sha256": "d271bef83b26b05d08b4346f28166fdbb4fa99a00c291c9a3bcc7020306bdde7"
+    },
+    "agents/net004/p4-uart1-r01/build/agon_extender.bin": {
+      "bytes": 1760160,
+      "sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e"
+    },
+    "agents/net004/p4-uart1-r01/build/agon_extender.elf": {
+      "bytes": 36367468,
+      "sha256": "af5f9e3acc84c869bfd83e184ba7a0f7df380d69da41da7da8a943efa949d34a"
+    },
+    "agents/net004/p4-uart1-r01/build/agon_extender.map": {
+      "bytes": 12377415,
+      "sha256": "19e9e1c9681e992a3530898dabe2445939f80135eae4552724d27fa23901d1bf"
+    },
+    "agents/net004/p4-uart1-r01/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "agents/net004/emos-uart-rfc25-r02/manifest.json": {
+      "bytes": 1121,
+      "sha256": "d5d8d3b96f9cd5ba42a0dad8bd63e1272c06d3605c5f34576f13e79469a399d4"
+    },
+    "agents/net004/emos-uart-rfc25-r02/ROM.bin": {
+      "bytes": 131072,
+      "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca"
+    },
+    "agents/net004/emos-uart-rfc25-r02/mos.elf.map": {
+      "bytes": 93469,
+      "sha256": "55b830f8978dd7269cf2c900c33bc2a0b24a7c24be543f3194d3d62f6ff68430"
+    },
+    "include/agon/net.h": {
+      "bytes": 7617,
+      "sha256": "b3f71cf3b84209cfebe700aae0b65fa240d7a5e2e2d56d1ec9ed7196d593a4d7"
+    },
+    "include/agon/net_callback.asm": {
+      "bytes": 1138,
+      "sha256": "10fdde5cc800d54bb9f6caae795f802e6422149c4513e8446521bb5dd9ec6459"
+    },
+    "owner:MechAgon/.runtime/render001/uart1-physical-r01/kit-prepared.json": {
+      "bytes": 8086,
+      "sha256": "256c443609a9f85ea5e0d68f7d790ddca05bc1cb75c774294a29012588ddbbc3"
+    },
+    "owner:MechAgon/.runtime/render001/uart1-adapter-build-r02/native/renderer/bin/uart1/mechrender.bin": {
+      "bytes": 26156,
+      "sha256": "0104cf8bfa8c42743580e60492464b37ed211b3b87ef244e84d9dffa8a9e268d"
+    },
+    "owner:MechAgon/.runtime/render001/module-packet128-r01/mechagon.vdpl": {
+      "bytes": 11032,
+      "sha256": "6462bb1d40b941f136a0c643b7509ecc87e5fff9ea1beb7f04594a15f6f6eda2"
+    },
+    "owner:MechAgon/.runtime/render001/assets.bin": {
+      "bytes": 149072,
+      "sha256": "fbede08a130534921b4b8b88862a43d492418bfc77ab51fabb2d99e38b954835"
+    },
+    "owner:MechAgon/native/readback/bin/vdpstate.bin": {
+      "bytes": 13713,
+      "sha256": "5ab2dd6307d5abe6446f6ff6c75db374ac252b5f068f12ce888211a5c06642e5"
+    },
+    "owner:MechAgon/scripts/render_hardware.py": {
+      "bytes": 32344,
+      "sha256": "97ec1fe7fc479ae3f8ac591485b933d1ad42a79d06a38ffad530b78dbd9d9de3"
+    },
+    "owner:MechAgon/scripts/render_match.py": {
+      "bytes": 17753,
+      "sha256": "faeabac6f0ced774deb36c9fa31be6e651f6f2a3a54daecf35d16988c6dc6cf8"
+    },
+    "owner:MechAgon/mechagon/bridge.py": {
+      "bytes": 15444,
+      "sha256": "d6b3435a1c94010d894fddf222df031fdc1d867bbd37d9682d3ff7e77d72bac4"
+    },
+    "owner:MechAgon/mechagon/presentation.py": {
+      "bytes": 6403,
+      "sha256": "cb93fb3d2185af6dc52c5dcfe2e557c569404d58ed6e44f1573366820fe67f55"
+    },
+    "owner:MechAgon/.runtime/mechagon-server/build-r01/source/server/build/libs/robocode-tankroyale-server-1.4.0-all.jar": {
+      "bytes": 6645378,
+      "sha256": "5e0f3c67d1b6f58f5f09ba85672b797882438cf1dafd2d8aa262be3de9ed6146"
+    },
+    "owner:MechAgon/.runtime/render001/native-install-r01/plan.json": {
+      "bytes": 883,
+      "sha256": "8e37fa63e508aca89d1c11928e7214ad12df2c1a67a85b4f85ce6140126fe7b8"
+    },
+    "owner:MechAgon/.runtime/render001/native-install-r01/restore-sectors.bin": {
+      "bytes": 1105920,
+      "sha256": "5fbf82c41d6a7fbee6a9f121b16f321db544c316ee286f634878d7763ce54f37"
+    },
+    "owner:MechAgon/.runtime/render001/native-install-r01/candidate-sectors.bin": {
+      "bytes": 1105920,
+      "sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de"
+    },
+    "owner:agon-vdplet/build/vdpl028-profile8-r02/firmware/firmware-src/.pio/build/esp32dev/firmware.bin": {
+      "bytes": 1104176,
+      "sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07"
+    },
+    "owner:MechAgon/.runtime/render001/uart1-adapter-build-r02/native/renderer/bin/uart1/mechrender.map": {
+      "bytes": 40411,
+      "sha256": "70e395421b4a60565ff9bdce3bd04bdea013d5c612925bb83965ef510a0678f8"
+    },
+    "agents/net004/uart1-bootstrap-r01/source-pins.json": {
+      "bytes": 1177,
+      "sha256": "9543533b923a52b4fe23db1200b48308c77524b0ebc4c699605916438c9aca16"
+    },
+    "owner:MechAgon/docs/tasks/RENDER-001/scripts/uart1_physical.py": {
+      "bytes": 9508,
+      "sha256": "62ebe3ff9d5279c7a49a8ab0a19b54421efd42733648ee047cf8172c2d495872"
+    }
+  }
+}
