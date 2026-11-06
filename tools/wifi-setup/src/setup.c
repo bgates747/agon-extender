@@ -90,7 +90,10 @@ static void consume(struct ws_state *s,unsigned char c) {
   if(!n||n>=sizeof(s->reply)-s->reply_n) {s->failed=WS_PROTOCOL;return;}
   s->ipd_left=n;s->line_n=0;s->line[0]=0;return;
  }
- if(c=='>'&&(!s->line_n||(s->line_n==1&&s->line[0]==' '))) {s->prompt=1;return;}
+ if(c=='>'&&(!s->line_n||(s->line_n==1&&s->line[0]==' '))) {s->prompt=1;s->line_n=0;s->line[0]=0;return;}
+ /* The modem may send '> ' without a newline. Its trailing space is not
+  * part of a subsequent +IPD header; payload spaces were handled above. */
+ if(c==' '&&s->prompt&&!s->line_n)return;
  if(c=='\r')return;
  if(c=='\n') {modem_line(s);s->line_n=0;s->line[0]=0;return;}
  if(s->line_n+1>=sizeof(s->line)) {s->failed=WS_PROTOCOL;return;}

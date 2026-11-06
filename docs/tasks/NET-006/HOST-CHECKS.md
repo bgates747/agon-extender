@@ -62,3 +62,8 @@ bytes. A reply arriving before SEND OK also passes. Existing fault/cancellation,
 redaction, clock and native file-adapter checks remain. Native main maps internal
 failure codes to MOS128+code; the mapping and all file-error paths are checked.
 No physical repair claim is made until Smith reruns the corrected C8 image.
+
+The reordered-response case additionally exposed a modem `> ` prompt with no
+following newline. Its trailing space must not become part of the next IPD
+header. The parser now consumes that prompt spacing separately, preserving
+spaces inside length-delimited payloads. All24 scenarios pass after correction.
