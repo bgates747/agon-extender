@@ -50,27 +50,27 @@ int main(int argc,char **argv) {
  if(argc>1&&(!strcmp(argv[1],"--help")||!strcmp(argv[1],"-h"))) {
   puts("Usage: wifi-setup <private.cfg> [progress.log]\nDefault log: wifi-setup.log in current directory. Escape cancels.\nNo credentials on command line. Read README before using UART1.");return 0;
  }
- if(argc<2||argc>3) {puts("Usage: wifi-setup <private.cfg> [progress.log]");return WS_CONFIG;}
+ if(argc<2||argc>3) {puts("Usage: wifi-setup <private.cfg> [progress.log]");return ws_mos_exit(WS_CONFIG);}
  cfgpath=argv[1];logpath=argc==3?argv[2]:"wifi-setup.log";
  cn=strlen(cfgpath);ln=strlen(logpath);
  /* Distinct suffixes also prevent ordinary case-insensitive FAT aliasing. */
  if(cn<4||ln<4||strcmp(cfgpath+cn-4,".cfg")||strcmp(logpath+ln-4,".log")) {
-  puts("Use a private .cfg input and a distinct .log output.");return WS_CONFIG;
+  puts("Use a private .cfg input and a distinct .log output.");return ws_mos_exit(WS_CONFIG);
  }
- if(escape(NULL))return WS_CANCEL;
+ if(escape(NULL))return ws_mos_exit(WS_CANCEL);
  platform.hz=120;platform.start=now(NULL);
- platform.log=mos_fopen(logpath,FA_WRITE|FA_OPEN_ALWAYS);if(!platform.log) {puts("Cannot append progress log. UART not opened.");return WS_LOG;}
+ platform.log=mos_fopen(logpath,FA_WRITE|FA_OPEN_ALWAYS);if(!platform.log) {puts("Cannot append progress log. UART not opened.");return ws_mos_exit(WS_LOG);}
  platform.file=mos_getfil(platform.log);
  if(!platform.file||ffs_fsize(platform.file,&end)!=FR_OK||mos_flseek(platform.log,end)!=FR_OK) {
-  puts("Cannot locate the end of the progress log.");mos_fclose(platform.log);return WS_LOG;
+  puts("Cannot locate the end of the progress log.");mos_fclose(platform.log);return ws_mos_exit(WS_LOG);
  }
- if(!message(&platform,WIFI_BUILD_ID "; starting new session.")) {mos_fclose(platform.log);return WS_LOG;}
+ if(!message(&platform,WIFI_BUILD_ID "; starting new session.")) {mos_fclose(platform.log);return ws_mos_exit(WS_LOG);}
  cfg=mos_fopen(cfgpath,FA_READ);
- if(!cfg) {message(&platform,"Cannot open private configuration file. UART not opened.");mos_fclose(platform.log);return WS_CONFIG;}
+ if(!cfg) {message(&platform,"Cannot open private configuration file. UART not opened.");mos_fclose(platform.log);return ws_mos_exit(WS_CONFIG);}
  reader.ctx=&cfg;reader.next=config_next;
  result=ws_read_config(&reader,&config,error,sizeof(error),escape,NULL);mos_fclose(cfg);
- if(result) {message(&platform,error);memset(&config,0,sizeof(config));mos_fclose(platform.log);return result;}
- if(escape(NULL)) {message(&platform,"Escape pressed before UART open.");memset(&config,0,sizeof(config));mos_fclose(platform.log);return WS_CANCEL;}
+ if(result) {message(&platform,error);memset(&config,0,sizeof(config));mos_fclose(platform.log);return ws_mos_exit(result);}
+ if(escape(NULL)) {message(&platform,"Escape pressed before UART open.");memset(&config,0,sizeof(config));mos_fclose(platform.log);return ws_mos_exit(WS_CANCEL);}
  platform.hz=config.tick_hz;
  snprintf(error,sizeof(error),"Clock conversion: %u ticks/second (nominal); UART1 %u baud, 8N1, no RTS/CTS.",config.tick_hz,config.baud);message(&platform,error);
  uart.baudRate=config.baud;uart.dataBits=8;uart.stopBits=1;uart.parity=0;uart.flowcontrol=0;uart.eir=0;
@@ -83,5 +83,5 @@ int main(int argc,char **argv) {
  memset(&state,0,sizeof(state));memset(&config,0,sizeof(config));
  if(ffs_fsync(platform.file)!=FR_OK||platform.log_failed) {puts("Log incomplete: card write/sync failed.");if(!result)result=WS_LOG;}
  mos_fclose(platform.log);
- printf("Returned to MOS. Result %d.\n",result);return result;
+ printf("Returning to MOS. Application result %d; MOS exit %d.\n",result,ws_mos_exit(result));return ws_mos_exit(result);
 }

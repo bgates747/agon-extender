@@ -7,7 +7,7 @@ struct peer {
  uint32_t clock,ready;
  char rx[14000],tx[500],log[50000],payload[30];
  size_t ri,rn,tn,ln,pn;unsigned pending,queries,commands;
- int scenario,phase,escape_phase,log_calls,closed;
+ int scenario,phase,escape_phase,log_calls,closed;unsigned dropped;
 };
 static const char *password="s3c,\"ret\\phrase";
 static uint32_t now(void *v) {return ((struct peer*)v)->clock;}
@@ -18,7 +18,13 @@ static void enqueue(struct peer *p,const char *s,unsigned delay) {
 static int rx(void *v) {struct peer *p=v;if((int32_t)(p->clock-p->ready)<0||p->ri==p->rn||(p->scenario==19&&p->clock%3))return -1;return (unsigned char)p->rx[p->ri++];}
 static void idle(void *v) {struct peer *p=v;if(p->scenario!=12)p->clock++;}
 static int msg(void *v,const char *s) {
- struct peer *p=v;size_t n=strlen(s);assert(p->ln+n+2<sizeof(p->log));memcpy(p->log+p->ln,s,n);p->ln+=n;p->log[p->ln++]='\n';p->log[p->ln]=0;p->log_calls++;
+ struct peer *p=v;
+ /* A synchronous screen/card write leaves only the first16 unread UART bytes.
+  * The host transcript already exists; subsequent arriving bytes are lost. */
+ if(((p->scenario==21&&p->phase==11)||(p->scenario==22&&p->phase==9))&&p->rn-p->ri>16) {
+  p->dropped+=(unsigned)(p->rn-p->ri-16);p->rn=p->ri+16;
+ }
+ size_t n=strlen(s);assert(p->ln+n+2<sizeof(p->log));memcpy(p->log+p->ln,s,n);p->ln+=n;p->log[p->ln++]='\n';p->log[p->ln]=0;p->log_calls++;
  return !(p->scenario==11&&p->log_calls>=5);
 }
 static void frame(struct peer *p,const char *text,int close) {
@@ -46,7 +52,7 @@ static void command(struct peer *p) {
   if(p->scenario==8)enqueue(p,"ERROR\r\n",0);
   else if(p->scenario==9)enqueue(p,"CONNECT\r\nOK\r\n+IPD,99999:bad",0);
   else {
-   const char *welcome="test BBS\r\nbbs> ";snprintf(out,sizeof(out),"CONNECT\r\nOK\r\n+IPD,%u:%s",(unsigned)strlen(welcome),welcome);enqueue(p,out,0);
+   const char *welcome=p->scenario==22?"wifi-bbs-r01-b2026-11-06-04-03-51Z (experimental)\r\nPi Wi-Fi BBS. Type help.\r\nbbs> ":"test BBS\r\nbbs> ";snprintf(out,sizeof(out),"CONNECT\r\nOK\r\n+IPD,%u:%s",(unsigned)strlen(welcome),welcome);enqueue(p,out,0);
   }
  } else if(!strncmp(p->tx,"AT+CIPSEND=",11)) {p->phase=10;p->pending=(unsigned)atoi(p->tx+11);p->pn=0;assert(p->pending<sizeof(p->payload));enqueue(p,p->scenario==14?"ERROR\r\n":p->scenario==15?"":"OK\r\n> ",0);}
  else {fprintf(stderr,"Unexpected command: %s\n",p->tx);abort();}
@@ -62,6 +68,11 @@ static int tx(void *v,unsigned char c) {
    if(p->scenario==16)enqueue(p,"SEND FAIL\r\n",0);
    else if(p->scenario==17)enqueue(p,"SEND OK\r\n+IPD,20:truncated",0);
    else if(!strcmp(p->payload,"quit\r\n"))frame(p,"Goodbye.\r\n",1);
+   else if(p->scenario==23) {
+    const char *body="Reply before SEND OK.\r\nbbs> ";char reordered[200];
+    snprintf(reordered,sizeof(reordered),"+IPD,%u:%s\r\nSEND OK\r\n",(unsigned)strlen(body),body);enqueue(p,reordered,0);
+   }
+   else if(p->scenario==21)frame(p,"help | time | uptime | note TEXT | notes | quit\r\nNotes: 1-60 printable characters; notes shows the last three.\r\nbbs> ",0);
    else if(p->scenario==20)frame(p,"secret-long and secret must be redacted.\r\nbbs> ",0);
    else if(p->scenario==18)frame(p,"ERROR is just BBS text; OK too.\r\nbbs> ",0);
    else frame(p,"Useful BBS data.\r\nbbs> ",0);
@@ -112,14 +123,16 @@ static int run(int scenario,int escape_phase,uint32_t clock,unsigned hz) {
   if(scenario==12)expected=WS_CLOCK;
   if(result!=expected)fprintf(stderr,"scenario%d: result%d expected%d\n%s",scenario,result,expected,p.log);
   assert(result==expected);
+  if(scenario==21||scenario==22)assert(!p.dropped);
   if(!result)assert(strstr(p.log,"Success:")&&strstr(p.log,"BBS reply:")&&strstr(p.log,"BBS request: time"));
  }
  return result;
 }
-int main(void) {
+int main(int argc,char **argv) {
+ if(argc==2) {run(atoi(argv[1]),0,0,120);return 0;}
  config_tests();
- for(int i=0;i<=20;i++)run(i,0,0,120);
+ for(int i=0;i<=23;i++)run(i,0,0,120);
  for(int i=1;i<=11;i++)run(0,i,0,120);
  run(0,0,0xfffffff0UL,120);run(0,0,0,100);
- puts("PASS: config cases,21 AT scenarios,11 cancellation phases, clock wrap and100Hz.");return 0;
+ puts("PASS: config cases,24 AT scenarios,11 cancellation phases, clock wrap and100Hz.");return 0;
 }

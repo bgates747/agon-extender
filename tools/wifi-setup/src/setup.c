@@ -99,7 +99,9 @@ static void consume(struct ws_state *s,unsigned char c) {
 static int pump(struct ws_state *s) {
  if(!check(s))return 0;
  /* Short batches keep Escape/deadline checks running even under RX flood. */
- for(unsigned i=0;i<32;i++) {int c=s->io.receive(s->io.ctx);if(c<0)break;consume(s,(unsigned char)c);if(s->failed)return 0;}
+ unsigned got=0;
+ for(unsigned i=0;i<32;i++) {int c=s->io.receive(s->io.ctx);if(c<0)break;got++;consume(s,(unsigned char)c);if(s->failed)return 0;}
+ if(got)s->last_rx=s->io.now(s->io.ctx);
  s->io.idle(s->io.ctx);return check(s);
 }
 static void show_batch(struct ws_state *s) {
@@ -110,7 +112,8 @@ static int expired(struct ws_state *s,uint32_t start,unsigned seconds) {
 }
 static void breadcrumb(struct ws_state *s,const char *what,uint32_t start,uint32_t *last,unsigned bound) {
  uint32_t now=s->io.now(s->io.ctx);
- if((uint32_t)(now-*last)>=(uint32_t)2*s->cfg.tick_hz) {
+ if((uint32_t)(now-*last)>=(uint32_t)2*s->cfg.tick_hz&&
+    (uint32_t)(now-s->last_rx)>=s->cfg.tick_hz/4) {
   char msg[180];*last=now;
   snprintf(msg,sizeof(msg),"Still waiting for %s: %lu / %u seconds. Escape cancels.",what,(unsigned long)((uint32_t)(now-start)/s->cfg.tick_hz),bound);say(s,msg);
  }
@@ -127,27 +130,34 @@ static int transmit(struct ws_state *s,const char *data) {
  }
  return 1;
 }
-enum { WAIT_OK,WAIT_PROMPT,WAIT_SENT,WAIT_BBS,WAIT_CLOSED };
+enum { WAIT_OK,WAIT_PROMPT,WAIT_CONNECT,WAIT_REPLY,WAIT_QUIT };
 static int wait_for(struct ws_state *s,int target,unsigned seconds,const char *what) {
  uint32_t start=s->io.now(s->io.ctx),last=start;
  while(pump(s)) {
-  int done=(target==WAIT_OK&&s->ok)||(target==WAIT_PROMPT&&s->prompt)||(target==WAIT_SENT&&s->send_ok)||(target==WAIT_BBS&&!s->ipd_left&&s->reply_n>=5&&!strcmp(s->reply+s->reply_n-5,"bbs> "))||(target==WAIT_CLOSED&&s->closed);
+  int reply_ready=!s->ipd_left&&s->reply_n>=5&&!strcmp(s->reply+s->reply_n-5,"bbs> ");
+  int done=(target==WAIT_OK&&s->ok)||(target==WAIT_PROMPT&&s->prompt)||
+    (target==WAIT_CONNECT&&s->ok&&s->connected&&reply_ready)||
+    (target==WAIT_REPLY&&s->send_ok&&reply_ready)||
+    (target==WAIT_QUIT&&s->send_ok&&s->closed&&!s->ipd_left&&s->reply_n);
   if(s->error) {s->uncertain=0;s->failed=WS_MODEM;break;}
-  if(done) {if(target==WAIT_OK||target==WAIT_SENT)s->uncertain=0;show_batch(s);return !s->failed;}
-  if(s->closed&&target!=WAIT_CLOSED) {s->failed=WS_PROTOCOL;break;}
+  if(done) {if(target!=WAIT_PROMPT)s->uncertain=0;show_batch(s);return !s->failed;}
+  if(s->closed&&target!=WAIT_QUIT) {s->failed=WS_PROTOCOL;break;}
   if(expired(s,start,seconds)) {s->failed=WS_TIMEOUT;break;}
   breadcrumb(s,what,start,&last,seconds);
  }
  show_batch(s);return 0;
 }
 static void flags(struct ws_state *s) {s->ok=s->send_ok=s->prompt=s->closed=s->error=0;}
-static int command(struct ws_state *s,const char *cmd,unsigned seconds,const char *what,int secret) {
+static int command_wait(struct ws_state *s,const char *cmd,unsigned seconds,const char *what,int secret,int target) {
  char text[280];flags(s);s->secret=secret;
  snprintf(text,sizeof(text),"Request: %s",secret?"AT+CWJAP_CUR=<credentials redacted>":cmd);say(s,text);
  snprintf(text,sizeof(text),"Waiting for %s (up to %u seconds; Escape cancels).",what,seconds);say(s,text);
  s->uncertain=1;
  if(!transmit(s,cmd)||!transmit(s,"\r\n"))return 0;
- return wait_for(s,WAIT_OK,seconds,what);
+ return wait_for(s,target,seconds,what);
+}
+static int command(struct ws_state *s,const char *cmd,unsigned seconds,const char *what,int secret) {
+ return command_wait(s,cmd,seconds,what,secret,WAIT_OK);
 }
 static int send_bbs(struct ws_state *s,const char *request,int final) {
  char cmd[50],msg[100];flags(s);s->secret=0;
@@ -157,8 +167,10 @@ static int send_bbs(struct ws_state *s,const char *request,int final) {
  if(!transmit(s,cmd)||!transmit(s,"\r\n")||!wait_for(s,WAIT_PROMPT,s->cfg.command_seconds,"ESP8266 send prompt"))return 0;
  if(!transmit(s,request))return 0;
  s->data_pending=0;
- if(!wait_for(s,WAIT_SENT,s->cfg.bbs_seconds,"TCP SEND OK"))return 0;
- if(!wait_for(s,final?WAIT_CLOSED:WAIT_BBS,s->cfg.bbs_seconds,final?"BBS goodbye and TCP closure":"complete BBS reply"))return 0;
+ /* Do not print or sync SEND OK metadata while +IPD is still arriving.
+  * With a16-byte polled UART FIFO, that I/O gap loses a fast BBS reply.
+  * Complete the logical transaction before emitting either metadata or data. */
+ if(!wait_for(s,final?WAIT_QUIT:WAIT_REPLY,s->cfg.bbs_seconds,final?"BBS goodbye and TCP closure":"SEND OK and complete BBS reply"))return 0;
  if(!s->reply_n) {s->failed=WS_PROTOCOL;return 0;}
  say(s,"BBS reply:");say(s,s->reply);s->reply_n=0;s->reply[0]=0;return !s->failed;
 }
@@ -207,15 +219,15 @@ static int steps(struct ws_state *s) {
  if(!command(s,"AT+CIPMUX=0",s->cfg.command_seconds,"single TCP connection",0))return 0;
  if(!command(s,"AT+CIPDINFO=0",s->cfg.command_seconds,"bounded TCP receive framing",0))return 0;
  snprintf(cmd,sizeof(cmd),"AT+CIPSTART=\"TCP\",\"%s\",%u",s->cfg.host,s->cfg.port);
- if(!command(s,cmd,s->cfg.bbs_seconds,"BBS TCP connection",0))return 0;
- s->connected=1;
- if(!wait_for(s,WAIT_BBS,s->cfg.bbs_seconds,"BBS welcome"))return 0;
+ /* CONNECT/OK can be immediately followed by the welcome. Receive both
+  * before any display/card output, for the same FIFO reason as CIPSEND. */
+ if(!command_wait(s,cmd,s->cfg.bbs_seconds,"BBS TCP connection and welcome",0,WAIT_CONNECT))return 0;
  say(s,"BBS welcome:");say(s,s->reply);s->reply_n=0;s->reply[0]=0;
  if(!send_bbs(s,"help\r\n",0)||!send_bbs(s,"time\r\n",0)||!send_bbs(s,"uptime\r\n",0)||!send_bbs(s,"quit\r\n",1))return 0;
  say(s,"Success: Wi-Fi, DHCP, TCP and BBS request/reply checks passed.");return !s->failed;
 }
 int ws_run(struct ws_state *s,const struct ws_config *c,const struct ws_io *io) {
- int result;memset(s,0,sizeof(*s));s->cfg=*c;s->io=*io;s->last_clock=io->now(io->ctx);
+ int result;memset(s,0,sizeof(*s));s->cfg=*c;s->io=*io;s->last_clock=io->now(io->ctx);s->last_rx=s->last_clock;
  say(s,"Wi-Fi setup: Escape cancels at any stage. Progress is logged without credentials.");
  steps(s);result=s->failed;
  if(result) {

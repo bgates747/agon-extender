@@ -6,7 +6,7 @@ compatibility. The native image and manual package are separate build evidence.
 
 ## Core scenarios
 
-1. Twenty-one scripted AT scenarios include complete setup/BBS exchange, no AT
+1. Twenty-four scripted AT scenarios include complete setup/BBS exchange, no AT
    response, delayed replies and heartbeat breadcrumbs, unsupported DHCP,
    association timeout/refusal, delayed/missing lease, refused TCP, oversized
    `+IPD`, permanently/temporarily blocked TX, failed logging, frozen clock,
@@ -47,3 +47,18 @@ Hardware remains untested. In particular,115200 polling without RTS/CTS, actual
 AT1.3 command acceptance, keyboard Escape latency, card sync and ordinary CLI
 handback need Smith's manual C8 test. There is no emulator result, measured
 UART throughput, public release/tag or completed license clearance.
+
+## First-manual-run regression
+
+The first hardware log proves Wi-Fi/DHCP/TCP/welcome, then a help timeout after
+SEND OK. Pi TCP counters show6 request bytes received and199 welcome/reply bytes
+sent and acknowledged by ESP8266. They do not measure eZ80 UART overruns.
+
+The old source fails a bounded16-byte-FIFO model which drops arriving bytes
+while the message callback performs synchronous I/O. Both SEND OK/help and
+CONNECT/OK/welcome gaps are covered separately. The correction completes each
+logical reply before display/log sync; the same model passes without dropped
+bytes. A reply arriving before SEND OK also passes. Existing fault/cancellation,
+redaction, clock and native file-adapter checks remain. Native main maps internal
+failure codes to MOS128+code; the mapping and all file-error paths are checked.
+No physical repair claim is made until Smith reruns the corrected C8 image.

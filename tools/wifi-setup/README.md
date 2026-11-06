@@ -54,6 +54,10 @@ DHCP is enabled through `CWDHCP_CUR=1,1`; station mode/join use `_CUR` commands.
 The app does not change MAC, set a static IP, save credentials/defaults to module
 flash, enter TCP passthrough, change UART vectors or alter startup. It leaves
 successful Wi-Fi association active after closing its own TCP/UART session.
+The utility collects CONNECT/OK plus the complete welcome, and SEND OK plus
+the complete BBS reply, before printing or syncing those records. This avoids
+a synchronous display/card-write gap in the small polled UART receive FIFO.
+Wait breadcrumbs are deferred briefly while receive bytes are arriving.
 The BBS endpoint is plain TCP, not TLS/Telnet. Only use trusted local services.
 
 SSID/password and escaped forms are redacted from all display/log messages;
@@ -70,7 +74,13 @@ MOS file handles; it does not inspect or allocate MOS-internal file structures.
 No program can make a blocked MOS/SD operation instantaneously cancellable;
 all program-owned polling, TX readiness and response waits check Escape.
 
-| Result | Meaning |
+The table shows the application result printed in progress messages. MOS process
+exit is0 on success and128 plus that result on failure (for example133 for a
+reply timeout). This keeps private diagnostics outside MOS's built-in FatFS
+error numbers. A startup/EXEC script still stops at its failed RUN line; that
+script message does not establish that the log or script file is missing.
+
+| Application result | Meaning |
 |---:|---|
 | 0 | Wi-Fi/DHCP/BBS sequence completed |
 | 2 | Config/usage error |

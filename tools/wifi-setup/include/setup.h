@@ -14,6 +14,9 @@
 #define WS_PROTOCOL 6
 #define WS_LOG 7
 #define WS_CLOCK 8
+/* Internal outcomes are not FatFS errors. Keep nonzero MOS exits out of the
+ * current MOS built-in error table while preserving failure for scripts. */
+static inline int ws_mos_exit(int result) {return result?128+result:0;}
 struct ws_config {
  char ssid[33],password[65],host[64];
  unsigned port,baud,tick_hz,command_seconds,join_seconds,bbs_seconds;
@@ -33,7 +36,7 @@ struct ws_state {
  char line[WS_LINE],reply[WS_REPLY],batch[WS_REPLY],ip[48],mac[48];
  size_t line_n,reply_n,batch_n;
  unsigned ipd_left,ipd_frames;
- uint32_t last_clock,still_polls;
+ uint32_t last_clock,last_rx,still_polls;
  int ok,send_ok,prompt,closed,error,failed,secret,uncertain,data_pending,connected;
 };
 void ws_defaults(struct ws_config *);

@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-only: actual main adapter with host MOS double. */
 #include <agon/mos.h>
+#include "setup.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -33,7 +34,7 @@ int main(int argc,char **argv) {
  char cfg[400],log[400];char *args[]={"wifi-setup",cfg,log,NULL};
  assert(argc==2);snprintf(cfg,sizeof(cfg),"%s/private.cfg",argv[1]);snprintf(log,sizeof(log),"%s/progress.log",argv[1]);
  for(fault=0;fault<=5;fault++) {
-  int expected=fault==0?4:fault<=3?7:fault==4?3:2;FILE *f=fopen(cfg,"wb");
+  int expected=128+(fault==0?4:fault<=3?7:fault==4?3:2);FILE *f=fopen(cfg,"wb");
   assert(f);fputs("ssid=private-network\npassword=never-log-this\nbbs_host=example.invalid\n",f);fclose(f);
   f=fopen(log,"wb");assert(f);fputs("PREVIOUS SESSION\n",f);fclose(f);
   uart_calls=reads=0;int got=ws_native_main(3,args);
@@ -42,5 +43,6 @@ int main(int argc,char **argv) {
   char buffer[4000];f=fopen(log,"rb");size_t n=fread(buffer,1,sizeof(buffer)-1,f);buffer[n]=0;fclose(f);
   assert(!strncmp(buffer,"PREVIOUS SESSION\n",17));assert(!strstr(buffer,"never-log-this")&&!strstr(buffer,"private-network"));
  }
+ for(int code=0;code<=8;code++)assert(ws_mos_exit(code)==(code?128+code:0));
  puts("PASS: native adapter log append, partial write, sync/seek failures, config Escape/read failure, no premature UART open.");return 0;
 }
