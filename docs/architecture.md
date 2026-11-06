@@ -695,9 +695,10 @@ Smith's2026-11-06 [UART1 placement decision](decisions/ADR-2026-11-06-applicatio
 places the reusable asynchronous UART1 engine, transfer state, buffers and ISR
 in application RAM, with development owned by UART's generic MOS project.
 EMOS does not gain a resident UART1 async implementation for this work.
-The application driver still operates through an explicitly supported EMOS
-admission/interrupt arrangement, preserving routing, shared-pin ownership and
-existing keyboard/network receive handling. This accepted placement does not
+UART's default driver targets vanilla MOS and the Console8 ESP8266. Extender
+owns a separate EMOS adaptation; its supported admission/interrupt arrangement
+must preserve routing, shared-pin ownership and keyboard/network receive
+handling. EMOS adaptation does not gate the vanilla driver. This accepted placement does not
 qualify a driver or change the current synchronous UART1 network submission.
 
 EMOS is also the sole authoritative source of the current formal operating-mode

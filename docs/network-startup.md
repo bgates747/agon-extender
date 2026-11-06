@@ -13,6 +13,18 @@ LOAD wifi-start.bin
 RUN .
 ```
 
+For optional startup, add this before Jukebox starts (replace any earlier Wi-Fi
+setup block). The final `CD /` returns subsequent root-relative commands to the
+normal boot directory; use the appropriate directory if your next block expects
+another working directory. The agent does not edit startup automatically.
+
+```text
+CD /extender/network/wifi-start
+LOAD wifi-start.bin
+RUN .
+CD /
+```
+
 The program defaults to local `wifi-start.cfg` and append-only `progress.log`.
 Use `RUN . private.cfg progress.log` for other local filenames. The only choices
 are1 Connect as configured and2 Skip connection; Escape skips or cancels.
@@ -49,3 +61,9 @@ with [exact manifest](tasks/NET-007/BUILD.json). Its generated manual package is
 `dist/wifi-start/wifi-start-b2026-11-06-17-51-28Z.zip` in the build owner's
 checkout. Cloning Git alone does not obtain generated binaries. This is a
 manual-review candidate, not a selected public release.
+
+At Smith's request the exact candidate is deployed on the mounted C8 card,
+including a private cfg copied locally from the working diagnostic cfg. It
+remains manual Connect-or-Skip by default; adding `auto_connect=1` to that
+private file enables immediate connection. Startup and existing private files
+remain unchanged. File verification is not a C8 execution/acceptance claim.

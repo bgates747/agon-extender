@@ -21,6 +21,12 @@ handover and committed mode. Application placement does not authorize replacing
 its receive path or silently taking UART1/vector ownership. Generic driver code,
 Extender/EMOS integration and consumer adaptation retain separate owners.
 
+Smith subsequently selects vanilla MOS as UART's default driver target, with
+the TX/RX-only Console8 ESP8266 as its initial test device. Extender owns a
+separate EMOS adaptation and any required ownership hooks; EMOS integration
+does not gate the vanilla driver. The EMOS ownership rule above applies to
+that adaptation, not to a stock-MOS machine without EMOS.
+
 This is an accepted placement and ownership decision, not an implemented driver,
 frozen numeric ABI, firmware installation or qualification result. Current UART
 network submission remains synchronous until separately integrated.

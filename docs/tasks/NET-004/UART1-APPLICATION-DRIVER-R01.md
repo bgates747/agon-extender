@@ -17,13 +17,15 @@ owns consumer changes. This record tracks coordination, not another driver tree.
    source lifetime. Distinguish source release, wire drain and peer execution;
    never infer cancellation from a timeout. Document actual result semantics
    rather than confusing raw upstream IER-derived A with EMOS's guarded A0.
-3. EMOS retains physical admission, ordinary VDU routing, Port C/UART1/parallel
+3. For the separate Extender adaptation only, EMOS retains physical admission, ordinary VDU routing, Port C/UART1/parallel
    handover and committed mode. Preserve its existing keyboard/NM receive
    assembly and callback delivery. The application must not silently replace
    an EMOS-owned vector, reinitialize UART1 or bypass its current transport API.
    Negotiate a supported ownership/IRQ arrangement before implementation relies
    on one. The current public NM SUBMIT remains synchronous until integrated.
-4. First consumer is MechAgon on the tested UART-NM/guarded-UART0 pair. Preserve
+4. The default driver targets vanilla MOS and Console8 ESP8266 TX/RX-only
+   wiring. MechAgon on the tested UART-NM/guarded-UART0 pair is downstream
+   Extender integration, not a vanilla driver gate. For that adaptation preserve
    current NM framing and opaque128B records, including up to146B forward wire
    frames. Keep ordinary mainboard UART0 graphics independent. No game schema,
    P4 networking implementation or checksum belongs in the generic driver.
@@ -56,7 +58,7 @@ N04-019.01 Record Smith's placement/ownership decision and send substantive
 
 N04-019.02 Record UART's actual owning task/source location and proposed ABI,
   interrupt lifecycle, EMOS dependencies and qualification plan when returned.
-  Resolve concrete owner conflicts without creating a duplicate driver here. [ ]
+  Resolve concrete owner conflicts without creating a duplicate driver here. [x]
 
 N04-019.03 Have component owners integrate only their own source after the
   supported ownership contract is settled. Preserve the working live renderer;
@@ -68,8 +70,8 @@ N04-019.03 Have component owners integrate only their own source after the
 |---|---|---|
 | U1-D01 | Accepted | Smith: generic driver and async engine in application RAM; UART owns development outside Extender. |
 | U1-D02 | Delegated/open | UART with Extender: callable ABI and whether any optional RST entry is useful; no invented number. |
-| U1-D03 | Delegated/open | UART with Extender: stock versus EMOS interrupt/admission and RX chaining arrangement; identify any minimal firmware-owner hook. |
-| U1-D04 | Delegated/open | UART with MechAgon: initial TX scope, source/drain/error/stop semantics and consumer integration. |
+| U1-D03 | Author clarified | Vanilla MOS is UART's default. Extender owns its separate EMOS adaptation/needed hooks; these do not gate UART development. |
+| U1-D04 | Split scope | UART owns the initial vanilla Console8 ESP8266 test; MechAgon lifetime requirements remain downstream input. Current consumer is unchanged. |
 
 ## Source facts supplied to UART
 
@@ -99,3 +101,34 @@ there is no operational adapter or physical UART result. MechAgon146B wire
 lifetime/writer exclusion is incorporated. Owner admission/IRQ/CTS retry/LSR
 and positive tail retirement remain the concrete integration boundary, not a
 new resident engine or an assumed public hook.
+
+## Vanilla-first clarification and existing ESP8266 facts
+
+Smith's original UART message was read directly: thread
+`01a132e0-4787-7310-93e9-f5248ffb2ff8`, turn
+`01a1b203-8a13-7640-a3ed-7936bd738a3d`, message
+`01a1b203-8a97-7920-9ceb-87fb68c08ef5`. Vanilla MOS/application-owned UART1
+is the default; Console8's ESP8266 is the initial test device without CTS/RTS.
+Extender owns downstream EMOS adaptation and any needed owner hooks. This
+supersedes the original EMOS-first/MechAgon-first integration dependency above;
+it does not authorize new C8 access, alter live firmware or remove EMOS ownership
+requirements when that separate adaptation is implemented.
+
+Existing source-only facts were returned through
+`uart1-vanilla-esp8266-existing-facts-one` with an accepted immediate chat alert:
+
+1. Observed module self-report AT1.3.0.0/SDK2.0.0; no retained exact firmware
+   BIN/source/hash or known receive-buffer capacity. No firmware replacement.
+2. Accepted small-command host usage:1152008N1, flowcontrol0/eir0, four-wire
+   power/GND/TX/RX. A polling setup/BBS pass is not an async bulk qualification.
+3. AT/ATE0/GMR and bounded CIPSEND prompt, SEND OK, length-delimited IPD and
+   expected BBS reply are distinct witnesses. There is no established arbitrary
+   byte echo, replenishing credit, XON/XOFF or unlimited receive window.
+4. The accepted diagnostic sends at most8 application bytes per selected BBS
+   request, one transaction at a time. Complete logical replies before foreground
+   display/card sync; prior polling RX gaps are reproduced in retained host tests.
+5. Nominal MOS120counts/s at60Hz,100 at50Hz; raw counts are not milliseconds.
+   The separate new startup utility's genuine ping is not yet a physical pass.
+
+No new device query, serial reader, BBS service change or hardware test occurred
+for this source-coordination return.
