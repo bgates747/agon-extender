@@ -27,6 +27,8 @@ separate EMOS adaptation and any required ownership hooks; EMOS integration
 does not gate the vanilla driver. The EMOS ownership rule above applies to
 that adaptation, not to a stock-MOS machine without EMOS.
 
-This is an accepted placement and ownership decision, not an implemented driver,
-frozen numeric ABI, firmware installation or qualification result. Current UART
-network submission remains synchronous until separately integrated.
+This accepted placement and ownership decision does not itself qualify a driver
+or select a firmware installation. UART has since supplied a host-tested/native-
+linked vanilla application driver; no eZ80 execution is established. Extender
+integration remains separate and current UART network submission remains
+synchronous until that adaptation is implemented and qualified.

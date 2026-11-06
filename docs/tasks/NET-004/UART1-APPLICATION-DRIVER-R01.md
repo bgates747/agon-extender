@@ -132,3 +132,33 @@ Existing source-only facts were returned through
 
 No new device query, serial reader, BBS service change or hardware test occurred
 for this source-coordination return.
+
+## Vanilla source/artifact return
+
+UART returns source `510ad1ab26ccd8f3b07b1135b690cf087a7443e0`,
+evidence `05a2513`, and `U1-001/vanilla-r03.md`. The default application-only
+C interface now provides open/submit/read/finish/stop/close/snapshot and an
+HL/BC/DE ordinary CALL entry. The host-tested/native-linked vanilla adapter
+exists; no eZ80 execution or physical qualification has occurred. Earlier
+core-only figures above remain historical and exclude the later adapter.
+
+1. Application object text2542B, internal BSS34B plus caller RX ring. These
+   exclude SDK/CRT/callbacks and do not represent resident firmware growth.
+2. The generic core/emit are reusable by Extender's future owner adapter. Its
+   backend must supply admitted status/emission, bounded RX-first/error service,
+   atomic TX/retry effects and positive source/wire retirement. The vanilla
+   installer owns stock UART1/vector1Ah and must not replace EMOS's RX owner.
+3. Callback releases the source; finish observes local TEMT separately. Neither
+   proves ESP8266 receipt. No-flow-control reserve bounds local FIFO only and
+   leaves remote protocol pacing external; no remote credit is inferred.
+4. Host sanitizer/byte/event/native-link checks are UART evidence. Prepared
+   `u1test.bin` is15069B, SHA256
+   `42410864fec9e492899d937152a5954a8b301d1e845449b29bdc26515fc34e5d`;
+   it compares ordinary/async AT/GMR replies, not bulk throughput or CPU savings.
+5. Locally retained `vanilla-prepared-r03.zip` SHA256
+   `fd0902426f22ee3b90c21367525c41e7a53d4ac3a3c6c99aaa97b3d20384ff68`
+   was independently rehashed on receipt. It is not deployed or a release.
+
+This handoff changes no C8 card files, utility selection, live MechAgon/bench
+custody, firmware, service or consumer. Extender's downstream integration remains
+N04-019.03, subject to its own source contract and normal qualification.
