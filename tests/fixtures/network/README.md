@@ -69,6 +69,10 @@ The host must preserve that original invocation and recover normally; no replay.
 The builder excludes combining this option with the ordinary-graphics option
 or UART carrier. Its source/build and later physical boundaries are in
 `docs/tasks/NET-004/CARRIER-RFC25-CYCLE-R01.md`; no hardware result is inherited.
+The first explicit build passes actual state/packet sanitizer checks and native
+linking at17953B/d04442f1. Its exact source/build manifest is retained in
+`docs/tasks/NET-004/RFC25-CYCLE-MANIFEST-R01.json`; physical staging/invocation
+still requires a new owner package and fresh actual checkout.
 
 The first r02 invocation returned cleanly at argument validation, before mode or
 network activity. Its inherited AgonDev `sscanf` treats a string NUL as a

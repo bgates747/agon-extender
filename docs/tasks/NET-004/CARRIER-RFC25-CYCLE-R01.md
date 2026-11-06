@@ -36,7 +36,7 @@ N04-018.03.9 Check the actual leaf with source-release-before-return, reply-firs
   source-first, all named refusals, unknown result, source-stall, reply-timeout,
   cancellation, packet content and one-submit assertions. Compile unchanged
   defaults plus the explicit variant through normal compiler FIFO; record exact
-  sources and a fresh build timestamp. No hardware during preparation. [ ]
+  sources and a fresh build timestamp. No hardware during preparation. [x]
 
   The finite compile tranche uses one compiler at a time, expected under two
   minutes and a three-minute whole-tranche stop including owned cleanup.
@@ -81,3 +81,14 @@ function with the same name and fails compilation before any native build.
 Its selection is corrected to the explicit ordinary branch; original logs and
 retired children are retained,242 released, and a fresh source/build follows.
 This is a test-harness correction, with no hardware or firmware result.
+
+The corrected source0af5834a passes both actual-leaf sanitizer checks and all
+four serial native variants in6.345s under compiler243, with all owned children
+joined before release. The [exact compiled fixture record](RFC25-CYCLE-MANIFEST-R01.json)
+retains input hashes and the17953B/d04442f1 result. Its source-release,
+reply-first/source-first, immediate callback, refusals, unknown result, timeout,
+cancellation and packet checks pass; these are host event simulations, not
+physical IRQ/timing qualification. The new assembly bridge compiles/links into
+the native application. No deployment, hardware invocation or new bench
+reservation was performed. The later owner wrapper/current-component/fresh
+custody boundary in N04-018.03.10 remains open.
