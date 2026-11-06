@@ -33,7 +33,7 @@ N04-018.03 Reuse the independent four-record echo appliance as the baseline
 
 N04-018.04 Finish the existing fixed VALID-filter candidate source/check/build
   tranche independently. Preserve strict edge/byte/DMA/deadline proof and the
-  exact unfiltered baseline. Prepare a finite unfiltered/filtered comparison
+  exact unfiltered baseline. Prepare the [finite unfiltered/filtered comparison](INDEPENDENT-PHYSICAL-R01.md)
   using Extender fixtures, with exact input/rollback and source pins, after
   MechAgon's selected unfiltered control. This is no second MechAgon attempt. [ ]
 

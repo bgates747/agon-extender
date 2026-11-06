@@ -102,3 +102,14 @@ idle services and stopped host reader/peer are checked. See the retained
 [physical qualification record](tasks/NET-003/PHYSICAL.md) for composition and
 limits. This is successful-path evidence, not calibrated latency, failure/timeout
 injection, controller exercise, visual acceptance or a production release.
+
+## Matched guarded-graphics UART development pair
+
+On2026-11-06, a newly identified UART-NM P4 composition and EMOS composition
+retaining guarded UART0 RFC25 pass the same physical0,1,56,128B echo proof.
+The [matched component record](tasks/NET-004/UART1-MATCHED-R01.json) identifies
+exact source, SDK, binary and map bytes; the [installation/result record](tasks/NET-004/UART1-RFC25-R01.md)
+bounds selective installation, independent readbacks and stopped operator
+handoff. UART-NM and callback chaining retain the public contract above.
+Generic successful networking and normal cleanup do not establish graphics
+coexistence or select a production bundle.

@@ -33,7 +33,7 @@ N04-018.02.5 Return exact matched artifacts and callback-chain contract to
   MechAgon. Deploy only after the one final parallel attempt actually fails,
   completes its cleanup and yields a normal fresh admission/readiness record.
   Keep the installed unfiltered combination for the final parallel attempt.
-  No hidden carrier fallback, uncertain payload replay or address guess. [ ]
+  No hidden carrier fallback, uncertain payload replay or address guess. [x]
 
 ## Prepared EMOS result and conditional physical sequence
 
@@ -92,3 +92,27 @@ those exact lengths are bound in the echo peer and result checks. The new
 owner performs one such proof, then feature/callback/Legacy/mode/files/CLI/idle
 checks and stops every actor before changing the operator context to MechAgon.
 A refusal stops for concrete disposition, with no automatic second invocation.
+
+## Actual installation and generic result
+
+Fresh MechAgon56 began with Extender as sole delegated installer. Selective
+P4appd9bcb1a2 was written to the verified active slot, preserving1120B of
+sector tail from the exact known-installed owner image. The entire1761280B
+written span was independently read/compared. Retained prior-image verification
+is the tail provenance; no new incoming-device backup is claimed. EMOSa25f
+was staged/read back, flashed once and its full131072B independently saved and
+read back. Both exact identified boots, normal input and actual CLI pass.
+
+ONE generic UART echo passes0,1,56,128B in both directions, error0/release0/
+restore1. The app reports four nominal120Hz ticks; host RUN-to-observed return
+is10.121s including keyboard delivery and observation. Neither is calibrated
+wire latency. Supported postgetter confirms feature2ABSENT, rawmode0/callback0/
+Legacy0, fullstartup/listener, actualCLI/cursor, neutral input, offline listener,
+idle worker and free programming ports. Mainboard20029942/full5fbf was untouched.
+
+Every owner actor, reader, reset holder and echo peer joined before a real
+stopped operator transfer to MechAgon under the same current56 lease. Extender
+ceased all target access; MechAgon owns its separately selected renderer case
+and final cleanup. This qualifies only the generic successful UART path and
+normal handback, not renderer/RFC25 coexistence, optical output, production
+promotion or a repair of the parallel carrier. Exact rollback images remain.
