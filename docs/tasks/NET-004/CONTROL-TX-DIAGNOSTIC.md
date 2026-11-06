@@ -1,8 +1,10 @@
 # NET-004 control transmit diagnostic
 
 Retain the cause of the first failed UART1 control transmission before EMOS
-recovery changes its pins and state. Source and finite compiler work are selected;
-hardware installation and one reproduction require a fresh stopped handoff.
+recovery changes its pins and state. Source/build work and the separately
+selected physical attempt are complete;
+the first control-TX failure remains unattributed because module admission failed
+before the network operation.
 No production behavior, feature removal or uncertain replay is selected.
 
 ## Scope and evidence
@@ -47,8 +49,9 @@ against changed addresses without an explicit rebuilt binding. [x]
 
 N04-011.06 After separate stopped hardware handoff, select one finite reproduction
 with existing bounded P4 USB failure capture. Preserve both endpoints, stop at
-the first failure, and follow normal recovery without replay. No target action
-is released by the current source/build selection. [ ]
+the first failure, and follow normal recovery without replay. The separate
+stopped handoff selected installation, generic echo and one
+reproduction; the attempt stopped before network admission. [x]
 
 N04-011.07 Choose a production correction only from actual attributed evidence;
 then reuse four-case echo and the separately selected matched coexistence case.
@@ -101,6 +104,47 @@ single selected reproduction, the consumer owner must select an exact-map
 first-error copy into application storage and durable results, or demonstrate
 another concrete pre-reset capture path. The old507-byte private snapshot must
 not be run against a changed map. This is an evidence gap, not a request for a
-new human approval or permission to repeat a failed run. Extender retains the
-actual stopped operator handoff while this dependency is reconciled; no target
-flash, reset or test has occurred in this preparation tranche.
+new human approval or permission to repeat a failed run. At that build
+checkpoint, Extender retained the actual stopped operator handoff with no target
+flash, reset or test yet performed; the following physical checkpoint records
+the exact consumer binding and subsequent operations.
+
+## Physical diagnostic checkpoint — 2026-11-05
+
+Extender received the actual stopped MechAgon operator handoff under its retained
+lease. The diagnostic EMOS composition above was installed once and independently
+compared across the full 131072-byte ROM. P4 and mainboard VDP images were retained;
+startup and the listener remained unchanged. The reused generic parallel fixture
+passed 0/1/127/128-byte records, 10 required-size checks, positive RELEASE 0 and
+restore 1. Mode 0/callback zero/actual CLI were verified. This is an experimental
+diagnostic installation, not production promotion or Author acceptance.
+
+MechAgon supplied a newly built exact-map consumer that copies only 16 bytes at
+0xBD09B on its first transport error. Extender independently compared that client,
+the retained module/assets/getter and established fresh feature 2 absence. An
+ordinary host output-directory setup refusal occurred before server or native
+launch; correcting that path did not repeat a hardware workload.
+
+The ONE selected native invocation returned result 4, zero decisions/views and
+no network operation. Mainboard VDP diagnostics show successful 8548-byte executable
+allocation followed by refusal of a 2308-byte data allocation (module LOAD status 6).
+The Pi host reached its original native-registration deadline and joined its
+owned children without cleanup errors. No UART-control fault was captured: the
+resident 16-byte record is all zeroes; no client first-error file was generated
+because the transport was never called. The module allocation cause remains
+with the mainboard runtime/consumer owners; this is not evidence of a new EMOS
+defect or a successful coexistence qualification.
+
+Extender saved the mapped application code/data/BSS before any subsequent LOAD,
+retained the current native receipt and both endpoint captures, and needed no
+reset or replay. The original control-TX reproduction remains open behind the
+module-admission failure. Private hardware paths, receipts and exact matched
+consumer maps remain in the ignored owner record.
+
+The selected postgetter confirmed exact original feature 2 absence, mode 0 and
+callback zero. Visible CLI, cursor, unchanged startup/listener, neutral admitted
+input, offline listener/idle worker and free serial ports all passed. Extender
+joined every owned actor and returned a recorded stopped sole-operator handoff
+to MechAgon under the existing lease. Diagnostic EMOS remains installed; P4 and
+mainboard VDP were unchanged. MechAgon retains its native restoration and eventual
+lease-release responsibility. This return grants no additional test invocation.
