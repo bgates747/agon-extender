@@ -31,27 +31,37 @@ N04-018.04.4 Obtain a normal fresh exclusive bench checkout during consumer
   appliance against that baseline, each with its original150s outer observation
   bound and one finite echo peer. First unexpected result stops dispatch;
   preserve journals, original actors, first fault and RAM before getter LOAD.
-  Recovery never authorizes repeating the interrupted appliance. [ ]
+  Recovery never authorizes repeating the interrupted appliance. [x]
 
 N04-018.04.5 If the unfiltered graphics control reproduces the strict VALID
   proof failure and completes its clean retirement, use the separately built
   fixed-filter P4 application37ba69e3 with the same EMOS/app/peer inputs for
   at most one new comparison. This is an explicitly different candidate,
   never a retry of the failed transaction. If retirement/input is unresolved,
-  stop the comparison and restore through the supported recovery protocol. [ ]
+  stop the comparison and restore through the supported recovery protocol. Both
+  controls passed; the conditional comparison was not selected. [x]
 
 N04-018.04.6 Where a diagnostic capture is selected in the exact later wrapper,
   use the established physical D2/D4/D6 mapping and finite24MHz/30s/768MiB/
   45s-stop acquisition. Require delivered idle samples before RUN; join the
   analyzer and peer before collection. No extra pinwalk, capture rearm, deadline
   extension or unbounded trace. Keep PCNT-native proof separate from aggregate
-  READY-low wire intervals and from application timing. [ ]
+  READY-low wire intervals and from application timing. This batch selected no
+  analyzer acquisition. [x]
 
 N04-018.04.7 Restore the actual incoming UART pair/application span and any
   changed mainboard feature/mode/route state; verify every new write and the
   full normal files/CLI/callback/neutral/offlineidle/freeports handback. Finish
   selected tests/cleanup under the lease, release normally, then analyze offline.
-  Preserve useful raw failures and leave the SD mounted. [ ]
+  Preserve useful raw failures and leave the SD mounted. [x]
+
+## Actual completion
+
+The [physical result](INDEPENDENT-RESULT-R01.md) records both controls passing,
+the unselected filter comparison, exact working UART restoration and actual
+clean release57. All target actors stopped; no successor was queued. Earlier
+preparation checkpoints below retain their chronological scope and are not a
+current readiness or custody statement.
 
 ## Existing evidence and limits
 

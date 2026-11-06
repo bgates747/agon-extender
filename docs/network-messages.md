@@ -121,3 +121,10 @@ state is restored afterward; the UART pair remains the development baseline.
 This is one bounded consumer result, not optical acceptance, calibrated display
 FPS, general capacity or production qualification. Consumer implementation and
 its raw case records remain with MechAgon.
+
+Extender's separate [independent parallel controls](tasks/NET-004/INDEPENDENT-RESULT-R01.md)
+pass0,1,127,128B both with and without ordinary mainboard draw/query cycles on
+the identified unfiltered development pair. They do not exercise guarded RFC25
+or reproduce/clear the consumer failure. The working UART pair was restored
+with independent readback and full clean bench handback afterward; the filter
+candidate remains untested and production selection unchanged.

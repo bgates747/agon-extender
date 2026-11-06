@@ -25,7 +25,7 @@ N04-018.03.4 Compile/check both unchanged default and new explicit variant in a
   fresh normal compiler tranche. Preserve old fixture binaries/receipts. Prepare
   exact components, host echo inputs and fresh result paths before requesting
   a later bounded independent bench slot during consumer coding time. No
-  automatic repeated invocation, test retry or extra MechAgon application case. [ ]
+  automatic repeated invocation, test retry or extra MechAgon application case. [x]
 
 ## Bounded research
 
@@ -46,5 +46,13 @@ and parallel eZ80 builds pass; the selected new parallel graphics variant is
 `39f3893fe0aec41b14f59dd885215a19f149ff4b1994c55292fb647b554168e3`,
 build `network-cycle-parallel-cycle-r01-b2026-11-06-09-20-47Z`. Exact input
 source/build manifests are owner-retained. No new fixture is staged or invoked;
-its separate physical plan and current-component binding remain pending. It
-never replaces or precedes MechAgon's one final application case.
+its separate physical plan and current-component binding remained pending at
+that checkpoint. It never replaces or precedes MechAgon's one final application case.
+
+## Physical result
+
+The [independent physical batch](INDEPENDENT-RESULT-R01.md) subsequently passes
+all four echoes and all four ordinary draw/query cycles on unfiltered02addd/
+8270. The plain control also passes. This does not qualify guarded RFC25 or
+clear the renderer fault. Working UART bytes and full normal handback were
+restored before actual release57; no filtered comparison was selected.

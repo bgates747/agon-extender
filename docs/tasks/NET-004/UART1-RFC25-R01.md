@@ -116,3 +116,10 @@ ceased all target access; MechAgon owns its separately selected renderer case
 and final cleanup. This qualifies only the generic successful UART path and
 normal handback, not renderer/RFC25 coexistence, optical output, production
 promotion or a repair of the parallel carrier. Exact rollback images remain.
+
+MechAgon's separately owned renderer subsequently passes977 matching native/
+module/host frames and977 accepted intents with positive release/module/end.
+It restores the exact incoming mainboard span/feature/state and releases56
+normally. This is a bounded consumer coexistence result; optical FPS, general
+capacity and production acceptance remain unclaimed. Extender's later independent
+controls and exact restoration are recorded [separately](INDEPENDENT-RESULT-R01.md).

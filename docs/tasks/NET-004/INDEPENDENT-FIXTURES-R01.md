@@ -19,7 +19,7 @@ N04-018.02 Prepare the smallest supported UART1 consumer binding from existing
   netp-only ROM8270 exposes `ext.net`. Return concrete source/artifact facts to
   MechAgon. Deployment follows the actual final-case failure and a separately
   matched prepared combination, never an uncertain session fallback. Detailed
-  compile selection: [UART1/RFC25 preparation](UART1-RFC25-R01.md). [ ]
+  compile selection: [UART1/RFC25 preparation](UART1-RFC25-R01.md). [x]
 
 N04-018.03 Reuse the independent four-record echo appliance as the baseline
   and prepare a separate generic carrier/graphics-cycle fixture. Exercise
@@ -28,7 +28,9 @@ N04-018.03 Reuse the independent four-record echo appliance as the baseline
   release. Keep game schema, renderer and consumer runtime out of this fixture.
   The [first ordinary graphics variant](CARRIER-GRAPHICS-CYCLE-R01.md) now
   compiles and passes its actual-leaf checks; repeated entry and guarded RFC25
-  variants remain separate qualification. Static buffers, finite iteration/time caps and delayed result logging preserve
+  variants remain separate qualification. The [first physical batch](INDEPENDENT-RESULT-R01.md)
+  passes plain and ordinary-graphics controls; it does not reproduce or clear
+  the renderer fault. Static buffers, finite iteration/time caps and delayed result logging preserve
   useful evidence. Check mode/route/callback/cursor restoration. [ ]
 
 N04-018.04 Finish the existing fixed VALID-filter candidate source/check/build

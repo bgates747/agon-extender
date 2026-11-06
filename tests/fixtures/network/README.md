@@ -52,8 +52,10 @@ optical output. It uses the existing four-record peer with
 `--sizes 0,1,127,128`. Default builds retain their original workload.
 
 This source variant belongs to NET-004's independent carrier investigation;
-it is not an extra MechAgon final attempt or a guarded RFC25 test. Compile and
-hardware qualification are pending. No module, sprite, raw peripheral access,
+it is not an extra MechAgon final attempt or a guarded RFC25 test. The first
+compiled parallel variant passes one physical four-record/four-draw control
+on2026-11-06; NET-004/INDEPENDENT-RESULT-R01.md records exact scope and restoration.
+This does not clear the renderer defect. No module, sprite, raw peripheral access,
 automatic replay or new callback is added by the option.
 
 The first r02 invocation returned cleanly at argument validation, before mode or
