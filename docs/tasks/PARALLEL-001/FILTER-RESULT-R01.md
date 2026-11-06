@@ -16,7 +16,7 @@ The P4 fixed two-IO-sample VALID filter is the selected candidate difference.
 |---|---:|---:|
 | Native decisions | 2 | 24 |
 | Native completed FRAME returns | 2 | 24 |
-| Module completed frames | 2 | 24 |
+| Module completed frames | Not independently collected | 24 |
 | Host intents received | 2 | 24 |
 | Native first error | SUBMIT132 | 0 |
 | Native result | Interrupted/fault; original RAM retained | 0 |
