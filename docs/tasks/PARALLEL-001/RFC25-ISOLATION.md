@@ -63,3 +63,14 @@ P01-T01 Source-review and prepare exact wrapper/current handback/rollback freeze
 P01-T02 Normal checkout/selective install/readback, one case, collect/restore/release. [ ]
 
 P01-T03 Record the actual result and next discriminating fixture or owner repair. [ ]
+
+## Source-check checkpoint
+
+The new sole-owner parent and tests live under `scripts/` beside this plan.
+They retain the old parent's one-RUN/reader/peer retirement behavior but admit
+only a new PARALLEL-001-RFC25 token/task and exact guarded67B fixture. Eight
+device-free checks pass under compiler258, including one dispatch/timeout and
+joined actors. Nine original compile inputs and the unchanged17953B/d04442f1
+fixture rehash exactly. No target, serial reader, TCP peer or fixture ran here.
+The complete install/stage/collection/restoration wrapper/current binding is
+still PREPARING; these checks are not physical readiness or a reservation.

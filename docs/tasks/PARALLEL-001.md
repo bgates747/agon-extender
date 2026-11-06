@@ -137,3 +137,31 @@ the compiled generic RFC25 control, after MechAgon58 actual release. It preserve
 the now-current profile8 mainboard and restores the incoming working UART pair.
 The full owner freeze/current component binding remains preparation; no hardware
 reservation, grant, installation or RUN has occurred under this goal yet.
+
+## Consumer contract and current source checkpoint
+
+Wolf returns PERF-004 plan/pre-code checkpoint b9a7062: its assigned fill-only
+comparison preserves ordinary RST18h mainboard VDPlet byte submission,65B
+frame stream and17B READ16 requests, stopped readout and actual indexed renderer
+completion. No eight-bit consumer API/route has yet been selected. Keep this
+comparison on its known carrier; qualification of another carrier is a separate
+cohort, not part of the fill-effect attribution.
+
+The current ext.netp API carries bounded NM/TCP messages to P4; it does not
+replace Wolf's mainboard VDPL graphics/reply path. Experimental ordinary ExExt
+routes VDU/replies to P4's parser and is not the currently selected mainboard
+worker path. P01-D05 remains an explicit owner interface/endpoint gap; no consumer
+workaround or raw port bypass is implemented. Extender can still qualify the
+shared physical transport independently while that integration is resolved.
+
+MechAgon58 actually released20:25:41UTC; its profile8/5d657 mainboard is current
+and intentionally retained. Extender read the release/observation only; no target
+access. The source-only RFC25 parent rehashes nine original compile inputs and
+the unchanged17953B fixture. Eight actual-parent/model checks pass in1.990s
+under compiler258, released20:30:46UTC with no successor. Historical control
+source is unchanged. Full physical wrapper/freeze remains preparation.
+
+Wolf, UART and VDPlet received the published goal/resource boundaries. Wolf and
+MechAgon received concrete supported API/current component facts and the next
+finite isolation plan. The existing FX160 passive-profile question received
+bounded existing-source facts only; no emulator/profile/firmware change.
