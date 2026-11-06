@@ -42,6 +42,20 @@ mode0/callback restoration, actual CLI and startup/resource handback are retaine
 under NET-003. Earlier parser-failed bytes remain preserved and unselected.
 No Escape/fault/controller exercise, optical pass or production acceptance follows.
 
+## Independent graphics-cycle source variant
+
+The explicit builder option `--graphics-cycle` adds ordinary counted mainboard
+VDU line drawing and one mode-query completion after each0/1/127/128-byte echo.
+The next network request follows that completion. The result records four raw
+query tick intervals in nominal120Hz units, distinct from rendering time and
+optical output. It uses the existing four-record peer with
+`--sizes 0,1,127,128`. Default builds retain their original workload.
+
+This source variant belongs to NET-004's independent carrier investigation;
+it is not an extra MechAgon final attempt or a guarded RFC25 test. Compile and
+hardware qualification are pending. No module, sprite, raw peripheral access,
+automatic replay or new callback is added by the option.
+
 The first r02 invocation returned cleanly at argument validation, before mode or
 network activity. Its inherited AgonDev `sscanf` treats a string NUL as a
 successful trailing `%c`; the fixture now uses `endpoint.hpp` for exact decimal

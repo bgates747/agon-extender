@@ -54,6 +54,30 @@ struct ModeIO {
 };
 
 static bool escaped(){return sysvars[sysvar_vkeydown]&&sysvars[sysvar_keyascii]==27;}
+#ifdef NETPROBE_GRAPHICS_CYCLE
+// Independent owner control: ordinary UART0 VDU, not a game/module/RFC25 test.
+// Each query follows its draw in the same stream; no network request is pending.
+// A mode response establishes a bounded ordering witness, not optical timing.
+static uint24_t graphics_ticks[4];
+static uint8_t graphics_cycle(unsigned index){
+    if(escaped())return 130;
+    const uint8_t y=uint8_t(32+index*32);
+    const uint8_t packet[]={18,0,uint8_t(1+index),25,4,32,0,y,0,
+        25,5,224,0,uint8_t(y+32),0,23,0,0x86};
+    sysvars[sysvar_vdp_pflags]&=uint8_t(~vdp_pflag_mode);
+    const auto began=ticks();
+    if(!write_bytes(packet,sizeof(packet)))return 132;
+    uint32_t fuse=8000000;
+    while(uint24_t(ticks()-began)<300&&--fuse){
+        if(escaped())return 130;
+        if(sysvars[sysvar_vdp_pflags]&vdp_pflag_mode){
+            graphics_ticks[index]=uint24_t(ticks()-began);
+            return sysvars[sysvar_scrMode]==20?0:133;
+        }
+    }
+    return 131; // One outstanding query, no resubmission on timeout.
+}
+#endif
 static uint8_t wait_reply(){
     auto start=ticks();uint32_t fuse=12000000;
     while(uint24_t(ticks()-start)<60&&--fuse){
@@ -79,13 +103,17 @@ int main(int argc,char**argv){
     if(ok){const uint8_t text[]={4,17,15,17,128,12};ok=write_bytes(text,sizeof(text));}
     printf("Network echo probe - mainboard mode20; carrier=%s\r\n",probe_carrier);
     puts("Four binary lengths; Escape cancels. No automatic replay.");
+#ifdef NETPROBE_GRAPHICS_CYCLE
+    puts("Independent ordinary mainboard draw/query after each echo; no game or module.");
+    unsigned graphics_passed=0;
+#endif
     if(ok){error=probe_begin();ok=!error;opened=ok;}
     if(ok){error=request(AGON_NET_CONNECT,address,6);ok=!error;}
     auto connecting=ticks();uint32_t connect_fuse=10000000;
     while(ok&&probe_status()==AGON_NET_CONNECTING&&
           uint24_t(ticks()-connecting)<240&&--connect_fuse){error=request(AGON_NET_POLL);ok=!error;}
     ok=ok&&connect_fuse&&probe_status()==AGON_NET_CONNECTED;
-#ifdef NETPROBE_PARALLEL
+#if defined(NETPROBE_PARALLEL) || defined(NETPROBE_GRAPHICS_CYCLE)
     const unsigned sizes[]={0,1,127,128};
 #else
     const unsigned sizes[]={0,1,56,128};
@@ -102,7 +130,11 @@ int main(int argc,char**argv){
                 ok=probe_size()==sizes[i]&&!memcmp(probe_data(),payload,sizes[i]);received=true;
             }else if(ok)ok=probe_status()==AGON_NET_CONNECTED;
         }
-        ok=ok&&received&&receive_fuse;if(ok)++passed;
+        ok=ok&&received&&receive_fuse;
+#ifdef NETPROBE_GRAPHICS_CYCLE
+        if(ok){error=graphics_cycle(i);ok=!error;if(ok)++graphics_passed;}
+#endif
+        if(ok)++passed;
     }
     const auto elapsed=uint24_t(ticks()-start);
     auto released=probe_release();
@@ -128,6 +160,11 @@ int main(int argc,char**argv){
     bool restored=mode.restore();
     fprintf(result,"%s passed=%u/4 result=%s error=%u release=%u restore=%u elapsed_ticks=%lu tick_hz_nominal=120 carrier=%s size_checks=%u\n",
             NETPROBE_BUILD_ID,passed,ok&&restored?"PASS":"FAIL",unsigned(error),unsigned(released),unsigned(restored),(unsigned long)elapsed,probe_carrier,probe_size_checks);
+#ifdef NETPROBE_GRAPHICS_CYCLE
+    fprintf(result,"ordinary_graphics_cycles=%u/4 query_ticks=%lu,%lu,%lu,%lu calibrated=0 rfc25_test=0\n",
+        graphics_passed,(unsigned long)graphics_ticks[0],(unsigned long)graphics_ticks[1],
+        (unsigned long)graphics_ticks[2],(unsigned long)graphics_ticks[3]);
+#endif
     const bool saved=fclose(result)==0;
     puts(ok&&restored&&saved?"Network echo probe PASS":"Network echo probe FAIL");
     printf("Result: %s; %lu nominal120Hz ticks\r\n",argv[2],(unsigned long)elapsed);

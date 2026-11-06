@@ -19,6 +19,8 @@ def main():
     parser.add_argument('--build-id', default='UNVERSIONED-DO-NOT-DEPLOY',
                         help='Approved fixture identity plus actual UTC build timestamp')
     parser.add_argument('--carrier', choices=('uart','parallel'), default='uart')
+    parser.add_argument('--graphics-cycle', action='store_true',
+                        help='Independent ordinary mainboard draw/query between echo records')
     args = parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9-]+', args.build_id):
         parser.error('build ID contains unsupported characters')
@@ -49,10 +51,14 @@ def main():
                                'include $(shell agondev-config --makefile)\n'
                                'CXXFLAGS += -Isrc -std=c++17 -fno-exceptions -fno-rtti -Wall -Wextra -Werror\n'+
                                ('CXXFLAGS += -DNETPROBE_PARALLEL=1\n' if args.carrier=='parallel' else ''))
+    if args.graphics_cycle:
+        with (work/'Makefile').open('a') as file:
+            file.write('CXXFLAGS += -DNETPROBE_GRAPHICS_CYCLE=1\n')
     env = dict(os.environ, PATH=str(args.toolchain_bin.resolve())+os.pathsep+os.environ['PATH'])
     start = time.monotonic_ns()
     report = dict(started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                   build_id=args.build_id, status='experimental', carrier=args.carrier,
+                  graphics_cycle=args.graphics_cycle,
                   source_commit=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip(),
                   scope='native Agon compile/link only; no invocation',
                   inputs={p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in inputs.values()})
