@@ -77,3 +77,51 @@ MechAgon subsequently restored its exact incoming mainboard application/tail
 and cleanly released generation43; Wolf is first awaiting its current-binding
 readiness. Retained diagnostic EMOS and existing P4 identities are explicit in
 the private release record. Original r08 evidence remains unchanged.
+
+
+## Consumer r10 source interpretation — 2026-11-06
+
+MechAgon's later selected capture used installed diagnostic02addd54 and retained
+EMOS8270 under its sole physical custody. The P4 failure now records requested93,
+DMA done1/bytes93, callbackfault0, and cached `valid_edges=5`, then backendFault5
+at native completion. The strict VALID proof starts at zero, counts both edge
+polarities and requires exactly2; a sampled5 therefore takes its excess-count
+failure branch. This attributes the backend rejection to the framing proof.
+It does not establish where the extra counted transitions originated, validate
+end-to-end payload contents, or turn exact DMA bytes into a successful block.
+
+The odd cached count and later logged VALID-high are not an atomic snapshot.
+The counter sample can precede additional pin activity, stop/cleanup and the
+later GPIO log read. Do not infer parity/counter arithmetic failure from that
+pair, or relax acceptance to count>=2. Pinned IDF5.5.5 `pulse_cnt.c` writes the
+observed value and returns ESP_OK; the normal parameter-error path cannot
+produce this populated5 from its local initial-1.
+
+The retained native first16B SD witness equals the application RAM copy and
+records deadline/three prefix bytes remaining, UART1 LSR0x60 and PortC0xFB:
+FIFO/shifter empty, active-low CTS blocked, zero prefix transmission. This is
+consistent with the next control request following the P4 block rejection.
+Native evidence supports one decision/one FRAME; the host's52ticks/104colourstates
+are a separate scope and do not count physical frames. Original fault/teardown
+limitations remain; recovery is not an ordered native-exit pass.
+
+Source review identifies an existing remedy to evaluate, not a selected change:
+`p4_parallel_upload.cpp` already enables the fixed two-IO_MUX-cycle VALID pin
+filter before capture, alongside CLOCK filtering, with exact VALID2 proof
+retained. The bounded native TX leaf filters CLOCK but not VALID. The earlier
+[upload repair](../PORT-008/UPLOAD-REPAIR-R01.md) passed bounded controls after
+this mechanism was added, without proving the electrical source. Reusing that
+existing filter inside the native owner's lifecycle is the narrow next candidate;
+its actual partial-setup/cleanup/fault tests, tiny valid payload intervals and
+continued rejection of sustained extra intervals must remain. No configurable
+long debounce, software checksum, deadline increase or guard removal is implied.
+EMOS's reviewed atomic PortD writes show one payload VALID-low then VALID-high,
+held for the return handshake; no source-established extra software transition
+was identified in this consultation.
+
+This consultation changes no source, builds or hardware. Extender remains
+stopped while MechAgon owns recovery, RAM preservation, exact native restoration
+and release. Retain diagnostic02addd54/EMOS8270 for honest handback; the new evidence
+does not itself require rolling back the diagnostic to its parent. The next
+implementation/build/capture still needs concrete owner selection and normal
+fresh admission. Production status remains unchanged.
