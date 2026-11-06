@@ -200,3 +200,9 @@ Publish/freeze owner leaves before admission, preserve current mainboard5d657,
 restore the exact incoming UART pair after consumer teardown, and make no
 Extender target calls during MechAgon's sole-operator phase. No extra generic
 echo/filter/game or consumer takeover is selected.
+
+[Repeated epoch/boundary source preparation](PARALLEL-001/REPEAT-MATRIX-R01.md)
+selects176 byte-exact records over four positive-close sessions, plain and
+optional guarded67B UART0 variants. This independent source/check work proceeds
+while consumers own hardware, without editing the current replay's pinned
+files. A separate exact physical freeze/fresh reservation remains required.
