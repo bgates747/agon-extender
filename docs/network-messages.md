@@ -113,3 +113,11 @@ bounds selective installation, independent readbacks and stopped operator
 handoff. UART-NM and callback chaining retain the public contract above.
 Generic successful networking and normal cleanup do not establish graphics
 coexistence or select a production bundle.
+
+The first separately admitted MechAgon UART renderer case also completes977
+matching native/module/host frames and977 accepted intents, with positive
+transport release, module cleanup and end. Exact incoming mainboard/feature/
+state is restored afterward; the UART pair remains the development baseline.
+This is one bounded consumer result, not optical acceptance, calibrated display
+FPS, general capacity or production qualification. Consumer implementation and
+its raw case records remain with MechAgon.

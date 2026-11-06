@@ -10,7 +10,7 @@ parallel attempt is never replayed or used as a dispatch dependency.
 N04-018.04.1 Prepare source-only while another owner uses Olimex. Bind the
   actual later incoming component manifest and retained rollback bytes; no
   remote state query, capture or installation during another operator's work.
-  Retain the new UART development baseline for exact restoration. [ ]
+  Retain the new UART development baseline for exact restoration. [x]
 
 N04-018.04.2 Prepare a fresh owner-local parent for the existing default parallel
   echo appliance16593B/04a3934b and ordinary-graphics-cycle appliance17336B/
@@ -24,7 +24,7 @@ N04-018.04.3 Preserve the unfiltered full-feature P4 application02addd and match
   and ROM installation with independent written-byte verification, actual boot
   slot and overwrite-tail preservation, normal input/CLI/files admission and
   no startup/factory/partition/NVS write. Later current bindings must match,
-  otherwise stop and reconcile before reserving a ready slot. [ ]
+  otherwise stop and reconcile before reserving a ready slot. [x]
 
 N04-018.04.4 Obtain a normal fresh exclusive bench checkout during consumer
   source work, without preemption. Run at most one default and one graphics
@@ -117,3 +117,37 @@ failure retirement. They remain PREPARING: the full source freeze, later actual
 incoming binding, collection/recovery/restoration parent and fresh bench
 admission must be complete before declaring physical readiness or invocation.
 No independent physical request or target actor has been started.
+
+## Selected complete owner package
+
+The [owner freeze](INDEPENDENT-R01-OWNER-FREEZE.json) identifies73 actual
+source/artifact inputs. Fresh incoming binding uses the actual clean MechAgon56
+release: UARTd9bcb/a25f, mainboard20029942/fullspan5fbf, featureABSENT, unchanged
+startup/listener and no owner actors. This records provenance, not a fresh
+device read. Normal FIFO, fresh actual CLI/state observation and lease remain
+mandatory before installation or invocation.
+
+The owner package now includes serialized CLI/SAVE completion, collection,
+one Agon-then-conditional-paired recovery without replay, raw callback/route
+retirement, exact full-span UART restoration, final feature/files/CLI/idle
+checks and normal release. Failure RAM is saved as65536B before a getter LOAD.
+Filtered dispatch additionally requires a retired graphics failure with actual
+P4 transferred-byte completion and MORE THAN TWO VALID edges; ordinary timeout,
+wrong byte count, callback fault or unrelated refusal does not select it.
+
+This first independent batch selects NO analyzer acquisition. MaximumONE default
+andONE ordinary-graphics appliance use the unfiltered baseline. Only the stated
+strict extra-VALID failure permits maximumONE graphics comparison on the fixed
+filter image. First failure otherwise stops dispatch for preservation/restoration.
+Each invocation retains150s original observation; no new dispatch after20min
+from grant, with10min planned cleanup. An uncertain cleanup retains custody;
+there is no automatic lease expiry. Expected total preparation/testing/restore
+is approximately20min, based on retained written-span/readback and short echo
+runs, not a test deadline extension or calibrated transport estimate.
+
+Final cleanup reuses the existing bounded13713B/5ab2dd63 feature readback
+appliance only after raw callback retirement and all selected RAM/result
+preservation. Its prior owned result is retained before reuse, disposable4999
+buffer is cleared, and exact featureABSENT is required. No game/module runtime
+is imported; no mainboard firmware, startup, factory, partition or NVS write.
+The support files follow the Extender SD layout. SD remains mounted.

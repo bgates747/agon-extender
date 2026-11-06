@@ -58,6 +58,8 @@ class Admission(unittest.TestCase):
                         installed_components=context['components'])
         self.reject(context=context, prepared=prepared)
         prepared['unfiltered_failure_retired'] = True
+        self.reject(context=context, prepared=prepared)
+        prepared['unfiltered_failure_kind'] = 'strict-valid-proof'
         validate_binding(context, self.grant, prepared)
         self.reject(prepared=prepared)
 

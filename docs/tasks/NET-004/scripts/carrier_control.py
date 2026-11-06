@@ -74,7 +74,7 @@ def validate_binding(context, grant, prepared):
     if (context['components'].get('p4_app_sha256') != wanted or
             context['components'].get('emos_rom_sha256') != PARALLEL_EMOS):
         raise RuntimeError('Exact selected baseline/filter pair required')
-    if prepared.get('case') == 'filtered-graphics' and not prepared.get('unfiltered_failure_retired'):
+    if prepared.get('case') == 'filtered-graphics' and (not prepared.get('unfiltered_failure_retired') or prepared.get('unfiltered_failure_kind')!='strict-valid-proof'):
         raise RuntimeError('Filtered comparison requires preserved and retired unfiltered failure')
 
 
