@@ -79,7 +79,7 @@ def check_parallel_qualification_identity(build_id: str, selected: bool,
 
 
 def network_boot_identity(build_id: str, profile: str, board: str,
-                          output: str, network_messages: bool, boot: bool) -> bool:
+                          output: str, network_messages: bool, boot: bool, network_parallel: bool = False) -> bool:
     """NET-003: inherit EMOS's existing reciprocal boot fence, not payload tests.
 
     The native Eirene product still gates UART admission on this handshake.
@@ -88,7 +88,8 @@ def network_boot_identity(build_id: str, profile: str, board: str,
     """
     if not network_messages or (profile, board, output) != ("p4-console", "p4-pc", "hdmi"):
         return False
-    match = re.fullmatch(r"net-003-r[0-9]{2,}-b(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z", build_id)
+    lineage = "net-004" if network_parallel else "net-003"
+    match = re.fullmatch(lineage+r"-r[0-9]{2,}-b(\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z", build_id)
     if not match:
         return False
     try:
@@ -96,7 +97,7 @@ def network_boot_identity(build_id: str, profile: str, board: str,
     except ValueError as error:
         raise SystemExit("network boot build ID has an invalid UTC timestamp") from error
     if not boot:
-        raise SystemExit("identified NET-003 network composition requires the reciprocal EMOS boot fence")
+        raise SystemExit("identified network composition requires the reciprocal EMOS boot fence")
     return True
 
 
@@ -718,7 +719,7 @@ def main() -> None:
     # probe/data endpoint or alternate renderer. Earlier boot-less candidates
     # build successfully but are incompatible with that native EMOS composition.
     network_boot = network_boot_identity(args.build_id, args.profile, args.board,
-        args.display_output, args.network_messages, args.parallel_boot_candidate) and not any((
+        args.display_output, args.network_messages, args.parallel_boot_candidate, args.network_parallel) and not any((
         args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream,
         args.parallel_upload_candidate, args.indexed_ppa, args.direct_rgb888,
         args.rolling_scanout, args.render_benchmark_output))

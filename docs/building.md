@@ -724,3 +724,15 @@ existing boot-release and USB host options required by the installed EMOS/board
 pair using machine-local records. Do not enable parallel diagnostic/ExExt
 variants for this experiment. Integrated hardware checks and human acceptance
 remain pending; selected production is unchanged.
+
+
+### Experimental foreground parallel network carrier
+
+`--network-messages --network-parallel --parallel-boot-candidate` selects the
+NET-004 P4 adapter for `p4-console --board p4-pc --display-output hdmi`.
+An identified build uses `net-004-rNN-bTIMESTAMP` and clean committed inputs;
+NET-003 identities remain the separate UART carrier. Keep the matching USB,
+controller and reset configuration from the selected component manifest.
+The profile excludes ExExt/probe/data consumers, does not commit a display
+route, and requires the matched `ext.netp` EMOS composition. It is an uninstalled
+experimental carrier pending paired qualification, not selected production.

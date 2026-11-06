@@ -38,6 +38,22 @@ class NativeP4ProfilesTest(unittest.TestCase):
                       'AGON_EXTENDER_PARALLEL_DATA_CHECK=1', 'AGON_EXTENDER_PARALLEL_PROBE=1'):
             self.assertNotIn(extra, profile['definitions'])
 
+    def test_parallel_network_identity_and_exclusive_binding(self):
+        from build_p4 import network_boot_identity, select_display_profile
+        identity='net-004-r01-b2026-11-05-23-00-00Z'
+        self.assertTrue(network_boot_identity(identity,'p4-console','p4-pc','hdmi',True,True,True))
+        self.assertFalse(network_boot_identity(identity,'p4-console','p4-pc','hdmi',True,True))
+        self.assertFalse(network_boot_identity(identity.replace('004','003'),'p4-console','p4-pc','hdmi',True,True,True))
+        p=select_display_profile(self.document,'p4-console','p4-pc','hdmi',network_messages=True,
+                                 parallel_boot_candidate=True,network_parallel=True)
+        self.assertIn('AGON_EXTENDER_NETWORK_PARALLEL=1',p['definitions'])
+        for options in ({'network_messages':False,'parallel_boot_candidate':True},
+                        {'network_messages':True,'parallel_boot_candidate':False},
+                        {'network_messages':True,'parallel_boot_candidate':True,'exext_stream':True},
+                        {'network_messages':True,'parallel_boot_candidate':True,'parallel_probe_candidate':True}):
+            with self.assertRaises(SystemExit):
+                select_display_profile(self.document,'p4-console','p4-pc','hdmi',network_parallel=True,**options)
+
     def test_upload_requires_distinct_clean_identity_and_excludes_other_endpoints(self):
         from build_p4 import check_indexed_identity, check_parallel_qualification_identity, select_display_profile
         identity = 'port-008-upload-r01-b2026-11-03-20-00-00Z'
