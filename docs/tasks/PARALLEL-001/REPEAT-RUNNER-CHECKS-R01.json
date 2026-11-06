@@ -1,0 +1,41 @@
+{
+  "schema": "extender-repeat-runner-checks-v1",
+  "status": "host-checked-not-physically-run",
+  "scope": "One explicit repeated fixture invocation;176records/fourpositivecloses;plain or guardedRFC25;no install/reset/device/emulator",
+  "compiler_generation": 267,
+  "actual_test_methods": {
+    "peer_socket_and_native_matrix": 10,
+    "runner_admission_and_result": 6
+  },
+  "duration_seconds": 2.2063498600036837,
+  "all_owned_children_joined": true,
+  "compiler_released": true,
+  "next_request": null,
+  "sources": {
+    "docs/tasks/PARALLEL-001/scripts/repeat_control.py": {
+      "bytes": 15290,
+      "sha256": "5ca1458122a9fb7e8b3a5f009590f1e7862eb5bcb1bf46756459265e4b41cb5d"
+    },
+    "tests/fixtures/network/repeat_peer.py": {
+      "bytes": 3855,
+      "sha256": "ecd2497b08aba51a9a8ff846d36fc683f5804b1e4ffd72775c0a30cbfc5283d0"
+    },
+    "tests/network/repeat/test_peer.py": {
+      "bytes": 5305,
+      "sha256": "ebe18a250be60900c6734a6a631094f3355e5b7431c55461a32d023b7624829c"
+    },
+    "tests/network/repeat/test_runner.py": {
+      "bytes": 5318,
+      "sha256": "25b6fe1d4cdd27b6c2c11c57a038513c53844c87ff80f1b2d56300c5bd9a02df"
+    }
+  },
+  "native_fixtures_unchanged": true,
+  "native_fixture_record": "REPEAT-BUILD-R01.json",
+  "whole_peer_seconds": 150,
+  "first_registration_seconds": 30,
+  "connected_progress_seconds": 5,
+  "serial_bytes_cap_each": 4194304,
+  "peer_file_bytes_cap": 1048576,
+  "physical_input_freeze_and_checkout_pending": true,
+  "no_Wolf_integration_or_timing_claim": true
+}

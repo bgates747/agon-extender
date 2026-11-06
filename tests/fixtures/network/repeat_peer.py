@@ -20,15 +20,15 @@ def payload(session,index,size):
     if pattern==2:return bytes(255 if (j+seed)%2 else 0 for j in range(size))
     return bytes(1<<((j+seed)%8) for j in range(size))
 
-def serve(server,output,*,seconds=150,progress=5):
+def serve(server,output,*,seconds=150,progress=5,registration=30):
     """Original whole deadline plus bounded reads; no retry after any failure."""
     start=time.monotonic();deadline=start+seconds
     report=dict(started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),
                 records=[],closed_sessions=0,passed=False,clock='host monotonic')
-    def timeout(peer):
+    def timeout(peer,limit=progress):
         left=deadline-time.monotonic()
         if left<=0:raise TimeoutError('Original whole peer deadline')
-        peer.settimeout(min(progress,left))
+        peer.settimeout(min(limit,left))
     def exact(peer,n):
         data=bytearray()
         while len(data)<n:
@@ -38,7 +38,11 @@ def serve(server,output,*,seconds=150,progress=5):
         return bytes(data)
     try:
         for session in range(SESSIONS):
-            timeout(server);peer,_=server.accept()
+            # Initial CLI delivery/mode settling precedes CONNECT. This is a
+            # registration allowance inside the original whole deadline, never
+            # a reset of that deadline or a retry after a failed accept.
+            timeout(server,registration if session==0 else progress)
+            peer,_=server.accept()
             with peer:
                 for index in range(ROUNDS*len(SIZES)):
                     size=SIZES[index%len(SIZES)]
@@ -63,13 +67,15 @@ def serve(server,output,*,seconds=150,progress=5):
 
 def main():
     import os
+    import resource
+    resource.setrlimit(resource.RLIMIT_FSIZE,(1024*1024,1024*1024))
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--bind',required=True);p.add_argument('--port',required=True,type=int)
     p.add_argument('--output',required=True,type=Path);a=p.parse_args()
     a.output.mkdir(parents=True,exist_ok=False)
     with socket.socket() as server:
         server.bind((a.bind,a.port));server.listen(1)
-        (a.output/'ready.json').write_text(json.dumps(dict(pid=os.getpid(),port=server.getsockname()[1],sessions=4,records=176,deadline_monotonic=time.monotonic()+150))+'\n')
+        (a.output/'ready.json').write_text(json.dumps(dict(pid=os.getpid(),port=server.getsockname()[1],sessions=4,records=176,initial_registration_seconds=30,progress_seconds=5,deadline_monotonic=time.monotonic()+150))+'\n')
         report=serve(server,a.output)
     print(json.dumps(dict(passed=report['passed'],records=len(report['records']),closed_sessions=report['closed_sessions'])))
 if __name__=='__main__':main()

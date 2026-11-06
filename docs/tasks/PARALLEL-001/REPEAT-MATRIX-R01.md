@@ -72,6 +72,15 @@ compiler slots released. No firmware or hardware change by these checks.
 | Repeated guarded RFC25 |17886|`d343dd13171d13058daa44dcff1dbb160f2e779e2b9504f6d26af14b0dcc9df8`|
 
 Both use source d59c796d and actual build timestamp2026-11-06-21-16-00Z.
-These are compiled candidates only; finite owner physical runners/current input
-freeze and actual fresh admission remain unprepared. The current consumer60
-replay and its exact incoming UART restoration remain separate and first.
+These are compiled candidates only. The separate
+[finite repeated runner](REPEAT-RUNNER-R01.md) is now source-checked: ten real
+peer/socket/native-matrix controls and six actual runner admission/result controls
+pass on Pi267. Initial registration gets30s within the original150s peer bound;
+connected progress and subsequent accepts remain5s. Serial witnesses, peer
+byte matrix/positive closes and durable native counters remain separate.
+[Exact runner check identities](REPEAT-RUNNER-CHECKS-R01.json) preserve these
+results. Native fixture bytes did not change. Current physical input/rollback
+freeze, selected component cohort and actual fresh admission remain pending;
+no repeated hardware or Wolf integration claim follows. Consumer60 is closed
+as an informative failure with exact UART restoration; Wolf61 and the queued
+single filtered consumer comparison retain normal FIFO priority.

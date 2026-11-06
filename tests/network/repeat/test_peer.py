@@ -15,8 +15,8 @@ spec=importlib.util.spec_from_file_location('repeat_peer',ROOT/'tests/fixtures/n
 peer=importlib.util.module_from_spec(spec);spec.loader.exec_module(peer)
 
 class CountedServer:
-    def __init__(self,sock):self.sock=sock;self.accepts=0
-    def settimeout(self,value):self.sock.settimeout(value)
+    def __init__(self,sock):self.sock=sock;self.accepts=0;self.timeouts=[]
+    def settimeout(self,value):self.timeouts.append(value);self.sock.settimeout(value)
     def accept(self):self.accepts+=1;return self.sock.accept()
 
 def exact(sock,n):
@@ -40,18 +40,21 @@ class PeerTests(unittest.TestCase):
                 for value in data:coverage|=value
         self.assertEqual(at,len(raw));self.assertEqual(coverage,255)
 
-    def run_case(self,fault=None):
+    def run_case(self,fault=None,*,first_delay=0,progress=.3):
         errors=[];returned=0
         with tempfile.TemporaryDirectory() as temp,socket.socket() as server:
             server.bind(('127.0.0.1',0));server.listen(1);counted=CountedServer(server)
             def worker():
-                try:peer.serve(counted,Path(temp),seconds=5,progress=.3)
+                try:peer.serve(counted,Path(temp),seconds=5,progress=progress)
                 except BaseException as exc:errors.append(exc)
             thread=threading.Thread(target=worker);thread.start()
             try:
+                if first_delay:threading.Event().wait(first_delay)
                 for s in range(4 if fault is None else 1):
                     with socket.create_connection(server.getsockname(),timeout=1) as client:
                         client.settimeout(1)
+                        if fault=='stalled-header':
+                            client.sendall(b'\0\0');threading.Event().wait(progress*2);break
                         if fault=='short-header':client.sendall(b'\0\0');break
                         for i in range(44):
                             n=peer.SIZES[i%len(peer.SIZES)];data=peer.payload(s,i,n)
@@ -76,6 +79,8 @@ class PeerTests(unittest.TestCase):
             self.assertEqual(len(report['records']),returned)
             if fault:self.assertIn('first_error',report)
             else:self.assertEqual(report['closed_sessions'],4);self.assertEqual(returned,176)
+            self.assertGreater(counted.timeouts[0],progress)
+            if fault is None:self.assertTrue(all(t<=progress for t in counted.timeouts[1:]))
 
     def test_four_positive_closed_sessions(self):self.run_case()
     def test_wrong_length_stops(self):self.run_case('length')
@@ -83,6 +88,8 @@ class PeerTests(unittest.TestCase):
     def test_short_header_stops(self):self.run_case('short-header')
     def test_short_payload_stops(self):self.run_case('short-data')
     def test_extra_record_stops(self):self.run_case('extra')
+    def test_first_registration_can_outlast_connected_progress(self):self.run_case(first_delay=.35,progress=.2)
+    def test_connected_partial_header_keeps_progress_bound(self):self.run_case('stalled-header',progress=.05)
     def test_original_whole_deadline_stops_without_client(self):
         with tempfile.TemporaryDirectory() as temp,socket.socket() as sock:
             sock.bind(('127.0.0.1',0));sock.listen(1)
