@@ -60,7 +60,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Manual Console8 Wi-Fi fixture
 
-- [ ] **[NET-005 — Interactive Wi-Fi BBS fixture](docs/tasks/NET-005.md)** — Author selected a tiny Pi BBS using unchanged Radiotux terminal code; publish plan, implement/test the host, prepare a manual package and start the listener. Console8 access remains manual; no firmware or async/OTIRX changes.
+- [ ] **[NET-005 — Interactive Wi-Fi BBS fixture](docs/tasks/NET-005.md)** — Pi BBS implemented and running; eight host TCP checks pass and the exact unchanged Radiotux terminal package is verified. Smith's manual Console8/ESP8266 AT, Wi-Fi and terminal review remains; no remote Console8 access or async/OTIRX changes.
 
 ## Networking prior-art review — awaiting review
 
