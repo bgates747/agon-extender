@@ -23,10 +23,14 @@ CRC/checksum, fabricated ABI, relaxed proof or unmeasured speed claim. Preserve
 normal mode/input/services and exact installed component rollback/restoration.
 Oryx is excluded; Pi compiler FIFO and Olimex reservations remain separate.
 
-At task creation the canonical registry still names MechAgon58 as sole operator
-of an open-ended viewing session. Extender has no target access. Retained UART
-pair and prior test hashes are provenance, not a fresh read of occupied hardware.
-Unknown current state is reconciled at handoff; no target polling before that.
+Current checkpoint: filtered37ba/8270 passed one matched24-turn real-module
+comparison on62, followed by exact incoming UART restoration/full independent
+readback and clean release. Wolf now holds63 exclusively for its unchanged
+ordinary-carrier fill comparison. Extender's repeated176-record plain/guarded
+RFC25 package is frozen at78 inputs and queued normally behind it; no repeated
+hardware invocation has occurred. Actual cleanup/release and a new current-tuple
+admission remain mandatory before Extender touches the target again. Retained
+hashes are provenance, not a fresh read of occupied hardware.
 
 ## Ownership and decision register
 
@@ -37,7 +41,7 @@ Unknown current state is reconciled at handoff; no target polling before that.
 | P01-D03 | Existing normative contract | EMOS owns Port C/UART1/parallel admission, mode/route and handover. P4 owns its DMA/GPIO/counter lifecycle; applications use supported owner interfaces. |
 | P01-D04 | Existing normative contract | No interprocessor CRC/checksum, per-byte acknowledgement, uncertain replay, speculative fallback or count/deadline relaxation to conceal failure. |
 | P01-D05 | Author endpoint clarification pending | Wolf returned its actual mainboard-only graphics contract and confirms no existing assignment selects a P4 VDPL provider, ext.netp sidecar or other eight-bit endpoint. Clarify which Wolf operation must use parallel before consumer-specific implementation; independent transport work continues. |
-| P01-D06 | Evidence driven | Choose the smallest fixture/change separating observed failure causes. The untested fixed VALID filter is a candidate, not an attributed electrical repair or default deployment. |
+| P01-D06 | Evidence driven | Choose the smallest fixture/change separating observed failure causes. The fixed VALID filter passed one matched24-turn case; it remains a candidate pending repeated controls, not an attributed electrical repair or default deployment. |
 
 ## Bounded evidence and research précis
 
@@ -51,7 +55,7 @@ Unknown current state is reconciled at handoff; no target polling before that.
    no private UART register/drain syscall or game module is needed.
 3. [VALID filter candidate](NET-004/VALID-FILTER-R01.md): strict native reverse
    proof previously rejects extra VALID edges even after all bytes arrive.
-   Candidate37ba is built but uninstalled/untested. Preserve exact-two proof,
+   Candidate37ba passed one matched24-turn physical case62. Preserve exact-two proof,
    DMA completion, byte totals, first error and native peripheral retirement.
 4. Existing forward DMA descriptor completion/coalescing correction has bounded
    four-record physical proof. Do not reintroduce the rejected one-DONE-bit-per-
@@ -70,8 +74,13 @@ Unknown current state is reconciled at handoff; no target polling before that.
    rejects strict VALID3 versus2 despite full118B/DMA completion, after two
    native FRAME returns. Exact RAM/first control-prefix deadline retained;
    working UART pair/full touched span independently restored and released.
-   Wolf61 now owns its ordinary-carrier comparison. The next fixed-filter
-   comparison is source preparation behind Wolf, not an electrical-cause claim.
+   [Filtered62 comparison](PARALLEL-001/FILTER-RESULT-R01.md) then passed24
+   decisions/native+moduleframes/hostintents with positive cleanup; no electrical
+   cause claim follows. Wolf63 owns its separate ordinary-carrier comparison.
+8. [Repeated physical freeze](PARALLEL-001/REPEAT-PHYSICAL-FREEZE-R01.json)
+   pins78 owner/component/native/rollback inputs. Fourteen actual owner-control
+   checks and the existing16 runner/peer checks pass; nativeplain3ae0/RFC25d343
+   remain unchanged. Actual repeated hardware and Wolf integration are pending.
 
 ## Work
 
