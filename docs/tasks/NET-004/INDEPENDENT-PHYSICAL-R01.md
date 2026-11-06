@@ -17,7 +17,7 @@ N04-018.04.2 Prepare a fresh owner-local parent for the existing default paralle
   39f3893f. Each talks to the Pi's finite echo peer using four exact lengths
   0,1,127,128B. The eZ80 appliance uses public EMOS interfaces; EMOS owns the
   parallel carrier, P4 owns its TCP connection, and the mainboard VDP executes
-  ordinary graphics. No game/module/private-RAM ABI or additional CRC. [ ]
+  ordinary graphics. No game/module/private-RAM ABI or additional CRC. [x]
 
 N04-018.04.3 Preserve the unfiltered full-feature P4 application02addd and matched
   diagnostic EMOS8270 as the comparison baseline. Prepare selective application
@@ -70,3 +70,22 @@ MechAgon parallel run, grant bench time or claim a filtering repair. The owner
 must publish the exact later parent/source/current-component freeze before
 physical admission. Source-bound preparation and first-fault retirement checks
 remain outstanding here.
+
+## Independent parent checkpoint
+
+The [owner parent](scripts/carrier_control.py) has no consumer import, protocol
+or game dependency. It requires an exact later component/source/prepared-file
+binding and fresh actual ownership, then issues at most one LOAD/RUN with the
+original150s observation. It joins both passive serial readers and its finite
+echo peer before exposing a collection boundary. Failures retain custody and
+require RAM preservation before a later LOAD; the parent never resets or retries.
+An actor receipt is not a complete handback or release.
+
+Eight device-free checks pass in1.990s: baseline/candidate mismatch, operator
+transfer/released/pending context, wrong carrier, missing stage/readback or
+callback/route admission, unsafe SD paths, candidate failure-retirement gate,
+and actual-parent success/timeout paths. The latter exercise real reader threads
+with isolated fake serial/keyboard/peer actors and verify one RUN, both readers
+closed and peer joined, no replay, correct failure/RAM-preservation disposition.
+They open no device, socket or live registry. Physical stage/install/restore
+source and exact later incoming component reconciliation remain outstanding.
