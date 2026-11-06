@@ -1,0 +1,344 @@
+{
+  "schema": "extender-repeated-physical-freeze-v3",
+  "status": "prepared-host-checked-not-admitted",
+  "request": "98c414eaa6ce",
+  "task": "PARALLEL-001-REPEAT",
+  "plan": "REPEAT-PHYSICAL-R01.md",
+  "local_source_manifest_sha256": "c8399d96a41b2bfa2d20f13f0551187cf27bb3e74e74ffcecbddd50a777e383a",
+  "input_count": 78,
+  "inputs": {
+    "mechagon:native/readback/bin/vdpstate.bin": {
+      "bytes": 13713,
+      "sha256": "5ab2dd6307d5abe6446f6ff6c75db374ac252b5f068f12ce888211a5c06642e5"
+    },
+    "agents/bench-reset/usb-reset.local.json": {
+      "bytes": 193,
+      "sha256": "9917c14b8ea439e5db10c747ea53017b3041afe14af582b042e040e25b8aa5ca"
+    },
+    "agents/bench-scheduler/parallel001-repeat-r01/admit.py": {
+      "bytes": 7283,
+      "sha256": "73f4cdd4fbbc895a4bab74ac3c34a9ad6393cca05f58b41808816f7372b85096"
+    },
+    "agents/bench-scheduler/parallel001-repeat-r01/reservation.json": {
+      "bytes": 487,
+      "sha256": "d07aa078a0b9c4c260852db8332ea6e18dc9092148168a92df2a62fb6c866ad7"
+    },
+    "agents/net003/physical_ops.py": {
+      "bytes": 3560,
+      "sha256": "568ff8f567d17796cee445d2a8457f7a8d7534b3012d1b8ffa5d9c688413a4d3"
+    },
+    "agents/net004/emos-control-tx-diag-r01/ROM.bin": {
+      "bytes": 131072,
+      "sha256": "8270ecd709138fe5ae617a91d5d365eeede0738025d5043fc790541b19b8f281"
+    },
+    "agents/net004/emos-control-tx-diag-r01/manifest.json": {
+      "bytes": 1117,
+      "sha256": "3af95c9d4479f032cc2971b0cace43987425d4fd47a6d516452474f9de77094f"
+    },
+    "agents/net004/emos-control-tx-diag-r01/mos.elf.map": {
+      "bytes": 95361,
+      "sha256": "3b9c439d41b8543b05efe252e5f1e6a5ae3b1d7d7cc91e8e4c379f7051672519"
+    },
+    "agents/net004/emos-uart-rfc25-r02/ROM.bin": {
+      "bytes": 131072,
+      "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca"
+    },
+    "agents/net004/emos-uart-rfc25-r02/manifest.json": {
+      "bytes": 1121,
+      "sha256": "d5d8d3b96f9cd5ba42a0dad8bd63e1272c06d3605c5f34576f13e79469a399d4"
+    },
+    "agents/net004/emos-uart-rfc25-r02/mos.elf.map": {
+      "bytes": 93469,
+      "sha256": "55b830f8978dd7269cf2c900c33bc2a0b24a7c24be543f3194d3d62f6ff68430"
+    },
+    "agents/net004/p4-full-r02/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "agents/net004/p4-uart1-r01/build/agon_extender.bin": {
+      "bytes": 1760160,
+      "sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e"
+    },
+    "agents/net004/p4-uart1-r01/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "agents/net004/p4-uart1-r01/manifest.json": {
+      "bytes": 15508,
+      "sha256": "0c7f7bdd49e89a9845f3d7a4539c62c5485a7fe728e07c0eb8c6697fc9836581"
+    },
+    "agents/net004/p4-uart1-r01/sdkconfig": {
+      "bytes": 92574,
+      "sha256": "5a698ba686a54e6869f0665c1e29f5efcfa71395c68401f092eba4a723c9eef6"
+    },
+    "agents/net004/p4-uart1-r01/validation.json": {
+      "bytes": 2551,
+      "sha256": "05a22375f28c221b8f8c0b03715c6c1730822bdef5bae0c3e3d8bda5722cdaed"
+    },
+    "agents/net004/p4-valid-filter-r02/build/agon_extender.bin": {
+      "bytes": 1764368,
+      "sha256": "37ba69e3648ea2e7663d071149acc057fab64f8546af3d784afa711505f8e38e"
+    },
+    "agents/net004/p4-valid-filter-r02/build/agon_extender.elf": {
+      "bytes": 36436040,
+      "sha256": "f25a1d48c704f418b71baccd19ae4eacff7af16c11db354c90226d692db4cd64"
+    },
+    "agents/net004/p4-valid-filter-r02/build/agon_extender.map": {
+      "bytes": 12380647,
+      "sha256": "8645f1a8306ff617ce892a4d11d6dddf3c4dbe7d9c21959efe8cee647beea64b"
+    },
+    "agents/net004/p4-valid-filter-r02/build/config/sdkconfig.h": {
+      "bytes": 61144,
+      "sha256": "53b554dd535f5f4bc9cc175226b528d73938b024f416b4f0832e07a1df4e2071"
+    },
+    "agents/net004/p4-valid-filter-r02/build/partition_table/partition-table.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "agents/net004/p4-valid-filter-r02/manifest.json": {
+      "bytes": 16120,
+      "sha256": "f0c135beb9bd120dd8abcd0f86d9301da43b993436c28f0f1bfdc49370d3bf1b"
+    },
+    "agents/net004/p4-valid-filter-r02/validation.json": {
+      "bytes": 2567,
+      "sha256": "382d18cc1e5bfa79a8cae3be41d7a3d03327b6a371d1fcf5f0f1389a6064fea8"
+    },
+    "agents/parallel001/filter-assist-r01/released.json": {
+      "bytes": 7283,
+      "sha256": "22f96825b46e78b97c71569320f65ad6a0a103dc8e19fddd29736c5652b6865d"
+    },
+    "agents/parallel001/repeat-physical-r01/begin_cases.py": {
+      "bytes": 837,
+      "sha256": "42b8855c453d2c7a54e355254f65b89472aee2395bf5651b6e27b0de80c0b80f"
+    },
+    "agents/parallel001/repeat-physical-r01/begin_restore.py": {
+      "bytes": 1447,
+      "sha256": "10495ba371621a47c09da1c747cf68cd5f9b50c0ff4c8f34e806d0920aa997cf"
+    },
+    "agents/parallel001/repeat-physical-r01/checks-r02.py": {
+      "bytes": 4435,
+      "sha256": "8690990e0d6cf0d6f72801007993f52d0eb28e635809d41a7b6720d0de56af01"
+    },
+    "agents/parallel001/repeat-physical-r01/checks.py": {
+      "bytes": 4435,
+      "sha256": "f3b91033bd01eca9902f49d838ed3a8d08494bf50fc90c1dca0da1ecdfab0d4c"
+    },
+    "agents/parallel001/repeat-physical-r01/collect_case.py": {
+      "bytes": 3219,
+      "sha256": "38e15dd91e04974be6d8a93966b61559c86d541624aa2f50c8f152381a9aa80e"
+    },
+    "agents/parallel001/repeat-physical-r01/final.py": {
+      "bytes": 2739,
+      "sha256": "688aa2d297f2ad3ee4d7d739888bfbbb4f577f22793c475f6369655ead66a804"
+    },
+    "agents/parallel001/repeat-physical-r01/flash_rom.py": {
+      "bytes": 2988,
+      "sha256": "59ef05ca5dbd55a198aa23108da5af95141cbafdd6cc6fe4a9c0d8d401692ebc"
+    },
+    "agents/parallel001/repeat-physical-r01/images-r01/baseline-sectors.bin": {
+      "bytes": 1765376,
+      "sha256": "bfb8962872bd832c5627a49cbf68d8a82bd3774b09aa30bf0eee5b2b9bcf2cbf"
+    },
+    "agents/parallel001/repeat-physical-r01/images-r01/images.json": {
+      "bytes": 1944,
+      "sha256": "e884a50a904e6cf2d21ed8cbd0a8bc66a33b967c6aa8a103134201e3dca53950"
+    },
+    "agents/parallel001/repeat-physical-r01/images-r01/incoming-uart-full-span.bin": {
+      "bytes": 1765376,
+      "sha256": "629aab118e03e7b42b3235d7eed633b6103931273d524f097ef446e92fc3d17f"
+    },
+    "agents/parallel001/repeat-physical-r01/install_p4.py": {
+      "bytes": 9729,
+      "sha256": "52d3c81787e055aab108c20e070e4d0f913eae433203c08f8bafe39cbb09ddac"
+    },
+    "agents/parallel001/repeat-physical-r01/ops.py": {
+      "bytes": 1464,
+      "sha256": "b1d967ed65be020e0ade97e973beaef598aba03a5cb08354818192d8b0ed1612"
+    },
+    "agents/parallel001/repeat-physical-r01/release.py": {
+      "bytes": 2262,
+      "sha256": "44eec8287b61560e0b9689a0f9c4d68c3361152d64144b2df17f82b5b0f89e1c"
+    },
+    "agents/parallel001/repeat-physical-r01/run_case.py": {
+      "bytes": 1118,
+      "sha256": "4c7f529df45b6aba23c150c0d39cffa1c30c3477e2aecfa33f343169a56e66d7"
+    },
+    "agents/parallel001/repeat-physical-r01/stage_fixture.py": {
+      "bytes": 4270,
+      "sha256": "4f6363572d375f5856fefe51f0c1f3ab4f57d80672cb3c157828b8606dc89156"
+    },
+    "agents/parallel001/repeat-physical-r01/stage_rom.py": {
+      "bytes": 3316,
+      "sha256": "236a7d3bb649ae6a62c04ffdfd4fc6db677135417efb62bd69d79ed57df757fe"
+    },
+    "agents/parallel001/repeat-physical-r01/test_controls.py": {
+      "bytes": 6087,
+      "sha256": "8f63fa9626badf32119011100b90601387dded47bbf903c9cf4848cee7c2ed82"
+    },
+    "agents/parallel001/repeat-physical-r01/verify_rom.py": {
+      "bytes": 1661,
+      "sha256": "d18feb71e6fd865c2d60a323b14131abdff9732d109229d2591b24e4d09601d4"
+    },
+    "agents/parallel001/repeat-physical-r01/workflow.py": {
+      "bytes": 3681,
+      "sha256": "573a995b74c0c1f0910f708fc1f34c762d3299b53cab149c96b139f772421191"
+    },
+    "agents/parallel001/repeat-r02/repeat-plain/manifest.json": {
+      "bytes": 1486,
+      "sha256": "42759478e77950ae73174c45aac57f36cb8b09436108e3d4f273ac1eb8915eaf"
+    },
+    "agents/parallel001/repeat-r02/repeat-plain/netprobe.bin": {
+      "bytes": 16799,
+      "sha256": "3ae08d0f574e86472f04b4c37119460bc6bfe108f2a99ae6f8993533bde21e5e"
+    },
+    "agents/parallel001/repeat-r02/repeat-rfc25/manifest.json": {
+      "bytes": 1707,
+      "sha256": "209ddc496a1acffbef54d094f4064cefa29dbfb538cc1a53f279bb7d4c31335f"
+    },
+    "agents/parallel001/repeat-r02/repeat-rfc25/netprobe.bin": {
+      "bytes": 17886,
+      "sha256": "d343dd13171d13058daa44dcff1dbb160f2e779e2b9504f6d26af14b0dcc9df8"
+    },
+    "agents/release001/live-preparation-r01/config.json": {
+      "bytes": 706,
+      "sha256": "9948c07193eb0d993725c12648aecce5fa4c666f29c5c1f8b48eceff97613dd5"
+    },
+    "agents/remote009/bench-r01/hold_reset.py": {
+      "bytes": 2210,
+      "sha256": "2f6bb9a51b4a07530eb44dc7556c29dce3b83389310463da633dd7b617942a9e"
+    },
+    "agents/remote009/fast-transfer-pin-r01/sdcard_staged.py": {
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    },
+    "docs/tasks/PARALLEL-001/REPEAT-BUILD-R01.json": {
+      "bytes": 4850,
+      "sha256": "01a5ef68204f968215e1d3b9ccc8c36df3e4fcd83426dbf848665a93f7ac81aa"
+    },
+    "docs/tasks/PARALLEL-001/REPEAT-OWNER-CHECKS-R01.md": {
+      "bytes": 1809,
+      "sha256": "41dc848af177bb93fc2c48953fa0495170f9673876a03af542b054e673b09b54"
+    },
+    "docs/tasks/PARALLEL-001/REPEAT-PHYSICAL-R01.md": {
+      "bytes": 5190,
+      "sha256": "2fe7da6ad83ba67d338523dc6cfe6644f2e18ea1497177ae49c0c9d1a5402c51"
+    },
+    "docs/tasks/PARALLEL-001/REPEAT-RUNNER-CHECKS-R01.json": {
+      "bytes": 1528,
+      "sha256": "cae111d34686626b71d457e4bed2253946e7df7adb71f41f21ed3a0b9de43a87"
+    },
+    "docs/tasks/PARALLEL-001/scripts/repeat_control.py": {
+      "bytes": 15290,
+      "sha256": "5ca1458122a9fb7e8b3a5f009590f1e7862eb5bcb1bf46756459265e4b41cb5d"
+    },
+    "include/agon/net.h": {
+      "bytes": 7617,
+      "sha256": "b3f71cf3b84209cfebe700aae0b65fa240d7a5e2e2d56d1ec9ed7196d593a4d7"
+    },
+    "include/agon/net_callback.asm": {
+      "bytes": 1138,
+      "sha256": "10fdde5cc800d54bb9f6caae795f802e6422149c4513e8446521bb5dd9ec6459"
+    },
+    "include/agon/net_parallel.h": {
+      "bytes": 3839,
+      "sha256": "e0504f1e9e33a8ae8dcb034bc91d84cb82270fd7f38279abfc88a3a5e054f011"
+    },
+    "scripts/controller_udp.py": {
+      "bytes": 9979,
+      "sha256": "98d4bb85296e180c892ba704db242874e26b6cc7c63461b2ae1fcdf423f64f7c"
+    },
+    "scripts/keyboard.py": {
+      "bytes": 8822,
+      "sha256": "2bd907921d80315f9d83761213e8125527a07f849ff488e128188b0f114c6525"
+    },
+    "scripts/p4_boot_guard.py": {
+      "bytes": 891,
+      "sha256": "8c8efb4c825029adb64758b35f6424b04b952af46233cf888dab5cc2fe3e90a5"
+    },
+    "scripts/passive_serial.py": {
+      "bytes": 2069,
+      "sha256": "b665826da471b786582bb4dd24214f7c4bc925fe7018d07106e661fc5e4a3543"
+    },
+    "scripts/reset_agon_usb.py": {
+      "bytes": 3632,
+      "sha256": "19fd4577cdca0e1dc8000ba3a1904f21f544cc597becd96e2592671c7f72406f"
+    },
+    "scripts/sdcard.py": {
+      "bytes": 19583,
+      "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa"
+    },
+    "scripts/sdcard_staged.py": {
+      "bytes": 12231,
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef"
+    },
+    "scripts/serial_monitor.py": {
+      "bytes": 2142,
+      "sha256": "ea779fd8564d8f431192e38d63f659f489d8fcc73510f782fe31632f6edcdf74"
+    },
+    "tests/fixtures/controller/mos_io.asm": {
+      "bytes": 541,
+      "sha256": "831bb311f42b513bd0c4d2c016e70097e4360b830ff22ef2143122a1d8886fd4"
+    },
+    "tests/fixtures/network/carrier.hpp": {
+      "bytes": 3113,
+      "sha256": "d4e117cfc30b595d73f0be4182b8590d4d790334bc1b26ffb3bb7dfa2d930c53"
+    },
+    "tests/fixtures/network/endpoint.hpp": {
+      "bytes": 1076,
+      "sha256": "8e777a51ef00face5600e4c2e93f279582e2c2fd09212f26232dc0a0bee8db5a"
+    },
+    "tests/fixtures/network/repeat.cpp": {
+      "bytes": 10241,
+      "sha256": "8c4b5c5b7d288ad5a5c8ea4b579453b0254463e869c9f519f86b5ca2ddb1c9d8"
+    },
+    "tests/fixtures/network/repeat_matrix.hpp": {
+      "bytes": 804,
+      "sha256": "e12a8b5ea6fce234fbc50352c485d267f0e8c4d4a8bf5c149a78522d6add894c"
+    },
+    "tests/fixtures/network/repeat_peer.py": {
+      "bytes": 3855,
+      "sha256": "ecd2497b08aba51a9a8ff846d36fc683f5804b1e4ffd72775c0a30cbfc5283d0"
+    },
+    "tests/fixtures/network/rfc25.asm": {
+      "bytes": 1057,
+      "sha256": "2c8a27b8ec97048ef29a07eebfb8a8252d6e64c7277cfea1debafc91f16d0df3"
+    },
+    "tests/fixtures/network/rfc25_cycle.hpp": {
+      "bytes": 2789,
+      "sha256": "fc1d8748a573c6e0cf2fca5c600bd11aa75c5a0565ec4793775fa05af179f638"
+    },
+    "tests/fixtures/scroll/mode_lifecycle.hpp": {
+      "bytes": 1733,
+      "sha256": "18e3389062fbd5a7db7b239317f1d60f4efbe29fef9822e39fd46a3c04b59b22"
+    },
+    "tests/network/repeat/test_peer.py": {
+      "bytes": 5305,
+      "sha256": "ebe18a250be60900c6734a6a631094f3355e5b7431c55461a32d023b7624829c"
+    },
+    "tests/network/repeat/test_runner.py": {
+      "bytes": 5318,
+      "sha256": "25b6fe1d4cdd27b6c2c11c57a038513c53844c87ff80f1b2d56300c5bd9a02df"
+    }
+  },
+  "owner_checks": {
+    "compiler_generation": 269,
+    "actual_test_methods": 14,
+    "duration_seconds": 2.1086918609798886,
+    "all_owned_children_joined": true,
+    "released": "2026-11-06T22:21:26.788308+00:00",
+    "initial_double_defect": "Missing subprocess.DEVNULL in inert test double, corrected without runtime change"
+  },
+  "scope": "One plain176record/four-session case then conditional guardedRFC25; firstfault stops; exact UART fullspan/ROM rollback; no hardware readiness or Wolf integration claim",
+  "supersedes": "REPEAT-PHYSICAL-FREEZE-R02.json",
+  "correction": "Pre-invocation admission batch uses already-established installer parent; old source and selection preserved. No target call under r01.",
+  "admission_correction_validation": {
+    "actual_upload_source": "scripts/sdcard.py Client.upload does not create missing parent directories.",
+    "source_syntax_pass": true,
+    "only_admission_path_and_descriptor_selection_changed": true,
+    "old_source_sha256": "934590261b7f52798ed551f214562c63bd44937dda0414652cabca7f0fae19fd",
+    "new_source_sha256": "73f4cdd4fbbc895a4bab74ac3c34a9ad6393cca05f58b41808816f7372b85096",
+    "no_target_calls_before_correction": true,
+    "existing_established_parent": "/extender/install",
+    "reporter_correction": "R02 informational new_source_sha256 used a loop variable for another input; its authoritative input entry was correct. R03 records the exact selected helper digest; no hardware used R01/R02."
+  }
+}
