@@ -1,0 +1,18 @@
+{
+  "schema": "extender-corrective-source-freeze-v1",
+  "scope": "Stopped60 recovery/RAMbeforeLOAD; existing owner/consumerfreeze unchanged",
+  "inputs": {
+    "agents/parallel001/replay-assist-r01/recover_consumer.py": {
+      "bytes": 3466,
+      "sha256": "d8bce4264eb801954880b8e30a0b2ecf276b510c78f3e54fc220172703744595"
+    },
+    "agents/parallel001/replay-assist-r01/bootstrap_recovery.py": {
+      "bytes": 5306,
+      "sha256": "dda779420456cc9280d50f196f768c175a9a53a66b80d9bd1d7001cac94c6947"
+    },
+    "docs/tasks/PARALLEL-001/REPLAY-RECOVERY-R01.md": {
+      "bytes": 2346,
+      "sha256": "1092e31c52635673e2777d7f5cd33e8bec5ebfac636e0978b0eb64c16df5efb6"
+    }
+  }
+}
