@@ -691,6 +691,15 @@ direct manipulation is unsupported caveat emptor. Project hardware and
 software still use fail-safe defaults and bounded activation, but make no
 non-bricking guarantee for external code that violates this normative contract.
 
+Smith's2026-11-06 [UART1 placement decision](decisions/ADR-2026-11-06-application-uart1-async-driver.md)
+places the reusable asynchronous UART1 engine, transfer state, buffers and ISR
+in application RAM, with development owned by UART's generic MOS project.
+EMOS does not gain a resident UART1 async implementation for this work.
+The application driver still operates through an explicitly supported EMOS
+admission/interrupt arrangement, preserving routing, shared-pin ownership and
+existing keyboard/network receive handling. This accepted placement does not
+qualify a driver or change the current synchronous UART1 network submission.
+
 EMOS is also the sole authoritative source of the current formal operating-mode
 name. It derives that name only from committed VDU-route and EDP-service state.
 EDP/P4 firmware and applications may report their local condition, requested or

@@ -16,6 +16,7 @@ attention instructions are not continuing execution authorization.
 |---|---|
 | [Application messages through outbound P4 TCP](ADR-2026-11-04-application-network-messages.md) | Accepted / Partial; NET-003 owns remaining interface and integration decisions |
 | [Separate app progress from parallel qualification](ADR-2026-11-06-independent-parallel-qualification.md) | Accepted / Complete; one final MechAgon parallel attempt, explicit UART1 on failure, independent Extender fixtures |
+| [Application-owned asynchronous UART1 driver](ADR-2026-11-06-application-uart1-async-driver.md) | Accepted / Partial; UART owns generic application driver; NET-004 tracks EMOS integration decisions |
 | [ADR-0001 — Place Extender code under `vdp/video/extender/`](ADR-0001-vdp-source-layout.md) | Accepted / Complete |
 | [ADR-0002 — Use PlatformIO with Arduino and ESP-IDF together](ADR-0002-hybrid-firmware-framework.md) | Superseded by ADR-0023 / Complete |
 | [ADR-0003 — Pin pioarduino release 55.03.311](ADR-0003-pioarduino-platform-baseline.md) | Accepted / Complete |
