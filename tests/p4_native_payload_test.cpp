@@ -11,7 +11,7 @@ using R=P::Result;
 constexpr std::array<int,8> pins{{17,18,19,20,32,33,36,46}};
 static int core,op,fail=-1,ready=1,valid=1,clockLevel=1;
 static bool enabled,txLive,rxLive,delLive,outputs,watch;
-static bool filterLive,filterEnabled;
+static bool filterLive,filterEnabled,validFilterLive,validFilterEnabled;
 static unsigned rxCreates,txCreates;
 struct Counter {bool live,channel,enabled,running,watch,cleared;int raw,edge,level,positive,negative,high,low;};
 static Counter counters[2];
@@ -38,21 +38,43 @@ int gpio_reset_pin(int){if(fails())return ESP_FAIL;outputs=false;return 0;}
 int gpio_set_direction(int,int m){assert(m==GPIO_MODE_INPUT);if(fails())return ESP_FAIL;outputs=false;return 0;}
 int gpio_pullup_dis(int){return fails()?ESP_FAIL:0;}
 int gpio_pulldown_dis(int){return fails()?ESP_FAIL:0;}
+static bool isValidFilter(void* u){assert(u==reinterpret_cast<void*>(4)||u==reinterpret_cast<void*>(5));return u==reinterpret_cast<void*>(5);}
 int gpio_new_pin_glitch_filter(gpio_pin_glitch_filter_config_t const*c,void**u){
- assert(c->gpio_num==14&&c->clk_src==GLITCH_FILTER_CLK_SRC_DEFAULT&&!filterLive);
+ assert((c->gpio_num==14||c->gpio_num==16)&&c->clk_src==GLITCH_FILTER_CLK_SRC_DEFAULT);
+ const bool validPin=c->gpio_num==16;
+ bool& live=validPin?validFilterLive:filterLive;
+ assert(!live);
+ if(validPin)assert(filterEnabled&&!counterRunning&&ready==1&&!enabled);
  if(fails())return ESP_FAIL;
- filterLive=true;*u=reinterpret_cast<void*>(4);return ESP_OK;
+ live=true;*u=reinterpret_cast<void*>(validPin?5:4);return ESP_OK;
 }
-int gpio_glitch_filter_enable(void*){assert(filterLive&&!filterEnabled);if(fails())return ESP_FAIL;filterEnabled=true;return ESP_OK;}
-int gpio_glitch_filter_disable(void*){assert(filterEnabled&&!enabled);if(fails())return ESP_FAIL;filterEnabled=false;return ESP_OK;}
-int gpio_del_glitch_filter(void*){assert(filterLive&&!filterEnabled&&!enabled&&!txLive);if(fails())return ESP_FAIL;filterLive=false;return ESP_OK;}
+int gpio_glitch_filter_enable(void*u){
+ const bool v=isValidFilter(u);bool& on=v?validFilterEnabled:filterEnabled;
+ assert((v?validFilterLive:filterLive)&&!on);
+ if(v)assert(!counterRunning&&ready==1&&!enabled);
+ if(fails())return ESP_FAIL;
+ on=true;return ESP_OK;
+}
+int gpio_glitch_filter_disable(void*u){
+ const bool v=isValidFilter(u);bool& on=v?validFilterEnabled:filterEnabled;
+ assert(on&&!enabled);if(v)assert(!countersLive()&&!counterRunning&&!txLive);
+ if(fails())return ESP_FAIL;
+ on=false;return ESP_OK;
+}
+int gpio_del_glitch_filter(void*u){
+ const bool v=isValidFilter(u);bool& live=v?validFilterLive:filterLive;
+ assert(live&&!(v?validFilterEnabled:filterEnabled)&&!enabled&&!txLive);
+ if(v)assert(!countersLive()&&!counterRunning);
+ if(fails())return ESP_FAIL;
+ live=false;return ESP_OK;
+}
 void*heap_caps_aligned_alloc(std::size_t a,std::size_t n,int caps){
  assert(a==64&&!allocation);
  assert(caps==(MALLOC_CAP_INTERNAL|MALLOC_CAP_DMA|MALLOC_CAP_8BIT));
 if(fails())return nullptr;
  requested=n;allocation=std::malloc(n);return allocation;
 }
-void heap_caps_free(void*p){assert(p&&p==allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!filterLive&&!filterEnabled);std::free(p);allocation=nullptr;}
+void heap_caps_free(void*p){assert(p&&p==allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!filterLive&&!filterEnabled&&!validFilterLive&&!validFilterEnabled);std::free(p);allocation=nullptr;}
 int parlio_new_tx_unit(parlio_tx_unit_config_t const*c,void**u){
  assert(c->data_width==8&&c->trans_queue_depth==1&&c->clk_src==PARLIO_CLK_SRC_EXTERNAL);
  assert(c->clk_in_gpio_num==14&&c->clk_out_gpio_num==-1&&c->valid_gpio_num==-1);
@@ -113,7 +135,9 @@ int pcnt_channel_set_level_action(void*u,int h,int l){auto&x=channel(u);assert((
 int pcnt_unit_add_watch_point(void*u,int n){auto&x=unit(u);assert(n==32767&&!x.enabled);if(fails())return ESP_FAIL;x.watch=true;return ESP_OK;}
 int pcnt_unit_enable(void*u){auto&x=unit(u);assert(x.live&&x.watch&&!x.enabled);if(fails())return ESP_FAIL;x.enabled=true;return ESP_OK;}
 int pcnt_unit_clear_count(void*u){auto&x=unit(u);assert(x.enabled&&!x.running&&x.watch);if(fails())return ESP_FAIL;x.raw=0;x.cleared=true;return ESP_OK;}
-int pcnt_unit_start(void*u){auto&x=unit(u);assert(x.enabled&&!x.running&&x.cleared&&valid==1);if(fails())return ESP_FAIL;x.running=true;running();return ESP_OK;}
+int pcnt_unit_start(void*u){
+ if(txLive)assert(validFilterLive&&validFilterEnabled&&filterEnabled&&ready==1);
+ auto&x=unit(u);assert(x.enabled&&!x.running&&x.cleared&&valid==1);if(fails())return ESP_FAIL;x.running=true;running();return ESP_OK;}
 int pcnt_unit_get_count(void*u,int*n){auto&x=unit(u);assert(x.enabled);if(fails())return ESP_FAIL;*n=x.raw;return ESP_OK;}
 int pcnt_unit_stop(void*u){auto&x=unit(u);assert(x.enabled&&x.running);if(fails())return ESP_FAIL;
  if(x.edge==14&&clockStopRace){
@@ -140,7 +164,7 @@ void esp_rom_gpio_connect_in_signal(int,int,bool invert){assert(!invert);}
 #endif
 #endif
 static void reset(){
- assert(!allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!outputs&&!countersLive()&&!counterRunning&&!filterLive&&!filterEnabled);
+ assert(!allocation&&!enabled&&!txLive&&!rxLive&&!delLive&&!watch&&!outputs&&!countersLive()&&!counterRunning&&!filterLive&&!filterEnabled&&!validFilterLive&&!validFilterEnabled);
  for(auto&x:counters)x={};
  clockStopRace=0;rxCreates=txCreates=0;
  core=0;op=0;fail=-1;ready=valid=clockLevel=1;edge=nullptr;edgeContext=context=nullptr;tc={};rc={};
@@ -171,7 +195,7 @@ int main(){unsigned cases=0;
   reset();auto h=admitted(n,tx);P p(pins,14,16,15,0);std::vector<std::uint8_t>b(n+2,0xa5);
   for(unsigned i=0;i<n;++i)if(tx)b[i+1]=std::uint8_t(i*73+17);
   assert(p.arm(h,true,tx,b.data()+1,n,n,0,100)==R::pending&&ready==0&&!watch&&counterRunning);
-  if(tx)assert(std::memcmp(dma,b.data()+1,n)==0);else for(unsigned i=0;i<n;++i)dma[i]=std::uint8_t(i*73+17);
+  if(tx)assert(validFilterLive&&validFilterEnabled&&std::memcmp(dma,b.data()+1,n)==0);else for(unsigned i=0;i<n;++i)dma[i]=std::uint8_t(i*73+17);
   signal(false);clockEdges(n);
   if(tx&&!late){completed(tx,n);assert(p.poll(1)==R::pending&&allocation&&ready==0);}
   // Callback may arrive before or after VALID deasserts; PCNT proves the
@@ -244,7 +268,7 @@ int main(){unsigned cases=0;
  }
  // A TX callback and inactive VALID alone cannot certify peer consumption.
  // Hardware counts both polarities without any GPIO interrupt handler.
- for(int edges:{0,1,3,4}){
+ for(int edges:{0,1,3,4,5,6}){
   reset();auto h=admitted(1,true);P p(pins,14,16,15,0);std::uint8_t b[1]{17};
   assert(p.arm(h,true,true,b,1,1,0,100)==R::pending&&!watch&&counterRunning);
   for(int i=0;i<edges;++i)signal(i%2!=0);
@@ -282,7 +306,8 @@ int main(){unsigned cases=0;
   for(auto v:b)assert(v==0xa5);
   ++cases;
  }
- // Fail every SDK/allocation operation in successful start and cleanup traces.
+ // Fail every SDK/allocation operation in successful start and cleanup traces,
+ // including second-filter create/enable/disable/delete and proof retirement.
  for(bool tx:{false,true}){
   reset();auto h=admitted(8,tx);std::uint8_t b[8]{};P count(pins,14,16,15,0);
   assert(count.arm(h,true,tx,b,8,8,0,100)==R::pending);signal(false);clockEdges(8);signal(true);completed(tx,8);

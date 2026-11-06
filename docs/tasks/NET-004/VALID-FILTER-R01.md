@@ -32,19 +32,19 @@ installation, capture, application run or new bench reservation is selected.
 ## Bounded implementation and validation
 
 N04-016.01 Publish this plan before changing code; notify MechAgon of the
-  source-only phase and its hardware boundary. [ ]
+  source-only phase and its hardware boundary. [x]
 
 N04-016.02 Add a separately owned VALID filter only for the strict reverse TX
   path. Preserve CLOCK filtering, exact DMA/byte/edge proof, deadlines, GPIO
   polarity, one-byte intervals, ABI and first-error retention. Stop counters
   and the peripheral before disabling/deleting the filter; preserve partial
-  creation/enable/disable/delete failures and retained-resource compositions. [ ]
+  creation/enable/disable/delete failures and retained-resource compositions. [x]
 
 N04-016.03 Extend actual native SDK-fake sanitizer checks for both filter
   identities, enable-before-PCNT/READY ordering, successful1B transfer, sustained
   extra intervals still rejected, partial second-filter setup and failed cleanup
   retaining owner/DMA until successful retirement. Test strict and retained
-  ExExt compositions; do not pretend a digital fake measures analog filtering. [ ]
+  ExExt compositions; do not pretend a digital fake measures analog filtering. [x]
 
 N04-016.04 Through normal serial Pi compiler FIFO, run focused host checks and
   produce a new identified full-feature candidate using the exact installed
@@ -62,3 +62,23 @@ Do not change EMOS, consumer source, production selection, firmware on either
 board, startup or current Wolf inputs. Preserve the unfiltered diagnostic image
 and informative failure evidence. Public version/production promotion and any
 physical repair claim remain unselected.
+
+## Checked source checkpoint
+
+The clean implementation worktree starts from published plan414cdff8. Its P4
+source matches retained installed diagnostic sourcee14e0b8a after preserving the
+cached VALID-count failure log (that leaf lived on the earlier owner branch).
+Only the new strict reverse filter/lifecycle and corresponding SDK-fake checks
+change from that diagnostic source; the existing RX descriptor remedy remains.
+No EMOS or public caller ABI changes.
+
+Three actual-component sanitizer methods pass:246 retained ExExt cases,219
+strict native payload cases and70 VALID/CLOCK counter cases. The SDK fake checks
+filter identities, enabling before PCNT/READY, counter/peripheral retirement
+before VALID-filter disable/delete, all successful-path SDK fault points and
+DMA retention until cleanup. One-byte intervals still succeed;3..6 sustained
+edges still fail exact-two proof. The first compile caught misleading indentation
+in the new fake; formatting was corrected before the passing checks. Two local
+receipt-path mistakes changed no source/runtime behavior and were corrected;
+all invoked children exited. Digital fake checks make no analog/glitch-width
+claim. Host duration4.024s, not transport timing. Full candidate build follows.

@@ -117,6 +117,16 @@ bool P4NativePayload::start(std::uint8_t const* data,std::size_t length) noexcep
   if(!clockFilter_ && gpio_new_pin_glitch_filter(&filter,&clockFilter_)!=ESP_OK)return false;
   if(gpio_glitch_filter_enable(clockFilter_)!=ESP_OK)return false;
   clockFilterEnabled_=true;
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
+  // NET-004 N04-016: R10 counted five VALID edges for one reverse block.
+  // Reuse the upload owner's fixed two-IO_MUX-sample pin filter BEFORE PCNT
+  // starts and READY admits the peer. This does not attribute the extra pulses
+  // or weaken exact-two proof. No configurable debounce or byte delay is added.
+  filter.gpio_num=static_cast<gpio_num_t>(valid_);
+  if(gpio_new_pin_glitch_filter(&filter,&validFilter_)!=ESP_OK)return false;
+  if(gpio_glitch_filter_enable(validFilter_)!=ESP_OK)return false;
+  validFilterEnabled_=true;
+#endif
   parlio_tx_unit_config_t config{};
   for(auto& pin:config.data_gpio_nums)pin=GPIO_NUM_NC;
   for(std::size_t i=0;i<pins_.size();++i)config.data_gpio_nums[i]=static_cast<gpio_num_t>(pins_[i]);
@@ -226,7 +236,8 @@ bool P4NativePayload::stop() noexcept {
   // this owner and DMA. Its finite capture window is bounded by the native deadline.
   bool okay=true;
 #if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
-  okay=validCounter_.cleanup();
+  const bool validProofRetired=validCounter_.cleanup();
+  okay=validProofRetired;
   if(!clockCounter_.cleanup())okay=false;
 #endif
   if(enabled_) {
@@ -264,7 +275,23 @@ bool P4NativePayload::stop() noexcept {
       if(gpio_del_glitch_filter(clockFilter_)==ESP_OK)clockFilter_=nullptr;else okay=false;
     }
   }
-  const bool stopped=okay && !clockFilterEnabled_ && !enabled_ && !delimiter_
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
+  // Keep VALID filtering while its proof or TX peripheral is still live.
+  // A failed disable/delete retains this owner and DMA until cancel retires it.
+  if(validFilter_ && validProofRetired && !enabled_ && !tx_) {
+    if(validFilterEnabled_) {
+      if(gpio_glitch_filter_disable(validFilter_)==ESP_OK)validFilterEnabled_=false;else okay=false;
+    }
+    if(!validFilterEnabled_) {
+      if(gpio_del_glitch_filter(validFilter_)==ESP_OK)validFilter_=nullptr;else okay=false;
+    }
+  }
+#endif
+  const bool stopped=okay
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
+      && !validFilter_ && !validFilterEnabled_
+#endif
+      && !clockFilterEnabled_ && !enabled_ && !delimiter_
 #if defined(AGON_EXTENDER_EXEXT_STREAM)
       && (keepResources_ || (!clockFilter_ && !tx_ && !rx_));
 #else
@@ -318,10 +345,20 @@ P4NativePayload::Result P4NativePayload::poll(std::uint32_t now) noexcept {
   if(transmit_) {
     auto r=egress_.poll(now);
     if(r==ParallelTxResult::pending)return result_;
-    if(r!=ParallelTxResult::complete)
-      printf("Parallel native TX result=%u requested=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d\n",
+    // NET-004 N04-012: retain the strict proof's last observed edge count
+    // after cleanup without another PCNT read. Exact DMA completion alone
+    // cannot distinguish a VALID proof rejection from another backend fault.
+    if(r!=ParallelTxResult::complete) {
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
+      const int validEdges=validCounter_.observedCount();
+#else
+      const int validEdges=-1; // This composition has no strict PCNT owner.
+#endif
+      printf("Parallel native TX result=%u requested=%u done=%u bytes=%u callback_fault=%u clock=%d valid=%d valid_edges=%d\n",
         unsigned(r),unsigned(length_),unsigned(done_.load()),unsigned(completed_.load()),
-        unsigned(edges_.load()),gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)));
+        unsigned(edges_.load()),gpio_get_level(gpio_num_t(clock_)),gpio_get_level(gpio_num_t(valid_)),
+        validEdges);
+    }
     const auto outcome=r==ParallelTxResult::complete?Result::complete:
         r==ParallelTxResult::cleanupFault?Result::cleanupFault:
         r==ParallelTxResult::timeout?Result::timeout:Result::fault;

@@ -68,6 +68,10 @@ class P4NativePayload final : private ParallelTxBackend {
   parlio_rx_delimiter_handle_t delimiter_{};
   parlio_tx_unit_handle_t tx_{};
   gpio_glitch_filter_handle_t clockFilter_{};
+#if !defined(AGON_EXTENDER_PARALLEL_DATA_CHECK) && !defined(AGON_EXTENDER_EXEXT_STREAM)
+  gpio_glitch_filter_handle_t validFilter_{};
+  bool validFilterEnabled_{};
+#endif
   std::uint8_t *dma_{},*buffer_{};
   std::size_t length_{};
   std::uint32_t began_{},timeout_{};
