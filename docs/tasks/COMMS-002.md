@@ -9,7 +9,7 @@ UART1, and whether those changes improve the complete application workload.
 completed with three qualified paired size sets and an unresolved 4097-byte
 capture. [Results](COMMS-002/PHYSICAL-R01-RESULT.md): parallel reaches 3.371×
 UART1 command-stream rate at 8192 bytes on the identical 360 MHz diagnostic
-pair; UART1 wins 256 bytes. Exact incoming 240 MHz UART pair restored and
+pair; UART1 wins 256 bytes. Exact incoming 360 MHz Extender P4 UART pair restored and
 normal lease released. Broader corpus, reverse bulk, useful CPU headroom and
 application-matched performance remain. The independent new core/engine source
 tranche is host/native-link checked, not the live executable used for r01.
@@ -48,7 +48,7 @@ Consumer-specific replays remain with their owners.
 
 The selected forward r01 uses one retained matched pair with explicit carrier
 selection and complete receiver-byte verification outside timing. Its P4 runs
-at configured360MHz; current network/application firmware runs240MHz and is
+at configured360MHz; current Extender P4 network/application firmware also runs360MHz and is
 restored after acquisition. Reverse bulk, the broader corpus and useful CPU
 progress remain separate future bindings; r01 does not invent those results.
 

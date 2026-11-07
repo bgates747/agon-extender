@@ -650,7 +650,7 @@
     "Whole-acquisition integrity-only selection; no timing-based exclusions; original invalid acquisitions retained",
     "One warmup plus five measured samples per qualified arm/length; p95 nearest rank of5 equals maximum, no population-tail estimate",
     "Nominal clocks/preemption inclusive/software-observed drain, no independent oscillator or optical calibration",
-    "One matched diagnostic pair at360MHz; current240MHz networking pair restored, not measured here",
+    "One matched diagnostic pair at360MHz; current360MHz Extender P4 networking pair restored, not measured here",
     "No reverse bulk, useful CPU-headroom, renderer FPS, game performance or endurance qualification",
     "Fresh labelled acquisitions follow capture-absence controls and P4 reinitialization; startup/core history differs"
   ],
@@ -703,5 +703,12 @@
     "native_never_written": true,
     "startup_listener_unchanged": true,
     "normal_clean_release": true
+  },
+  "report_context_correction": {
+    "date": "2026-11-07",
+    "previous_statement": "Restored Extender P4 networking pair was240MHz",
+    "corrected_statement": "Retained current Extender P4 SDK config and later same-build boot report360MHz; mainboard VDP240MHz is a different processor",
+    "sdkconfig_sha256": "5a698ba686a54e6869f0665c1e29f5efcfa71395c68401f092eba4a723c9eef6",
+    "effect": "No changed samples, hashes, measured ratios, installation identity or qualification scope"
   }
 }

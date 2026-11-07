@@ -2,7 +2,7 @@
 
 Eight-bit parallel improves the larger tested ordinary VDU transfers on the matched diagnostic pair. At 8192 stream bytes, sender drain falls from 81.139 to 24.069 ms, a 70.34% reduction and 3.371× the UART1 command-stream rate. UART1 wins the 256-byte case. The 4097-byte pair remains unqualified because its parallel USB byte dumps are incomplete.
 
-This run uses one identical configured 360 MHz P4 build for both carriers. The current 240 MHz networking/application pair was restored afterward; its performance was not measured here.
+This run uses one identical configured 360 MHz P4 build for both carriers. The restored Extender P4 networking/application image also configures 360 MHz; its performance was not measured here. The earlier 240 MHz description of that P4 image was incorrect (see the report correction below).
 
 ## Measured scopes
 
@@ -61,3 +61,15 @@ Two host compatibility mismatches were reconciled without application replay: th
 The next prepared MechAgon reservation received normal fresh generation 71 and a stopped sole-operator handoff after release. No firmware promotion, blocked Wolf endpoint decision or broader benchmark completion follows.
 
 The [structured result](PHYSICAL-R01-RESULT.json) preserves selected raw counts, ranges, acquisition hashes and installation identities. Large captures, operation freezes, control receipts and full restoration/release evidence remain in the ignored local run directory named there. The [physical plan](PHYSICAL-R01.md) and [fixture source](../../../tests/performance/stream_timing/README.md) retain the explicit measurement contract. Reverse bulk, useful CPU progress, the remaining live corpus and application-matched performance remain outstanding; [COMMS-001](../COMMS-001.md) stays a separate accuracy/endurance task.
+
+## Report context correction — 2026-11-07
+
+Earlier prose described the restored Extender P4 networking image as240MHz.
+Its retained configuration SHA256
+`5a698ba686a54e6869f0665c1e29f5efcfa71395c68401f092eba4a723c9eef6`
+selects360MHz; the separately retained later recovery boot reports360000000Hz
+for the same current P4 build. This corrects context, not a measured sample,
+component identity or performance value. Both diagnostic arms already used the
+same360MHz P4 image. The mainboard VDP's separate240MHz native-renderer clock
+must not be confused with the Extender P4's clock. Networking versus diagnostic
+compositions still differ; no application FPS or isolated CPU claim follows.
