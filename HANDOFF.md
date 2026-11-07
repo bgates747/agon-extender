@@ -1,3 +1,51 @@
+# Current — actual96 sole Mech L0; Extender target access stopped
+
+Fresh96/2d99072a33d5 after actual95 cleanrelease/currenttuple/new ownCLI/
+readEXIT/SAVE-only raw0/callback0/route0/wholefiles/inputneutral/offlineidle/
+freeUSB. All1327 frozen d889b92b/300349B kit inputs matched. Exact47dadc/a25f
+staged/fullGET, ONE47dadcFLASH/automaticexactboot/full131072 independentROM
+readback/freshCLI/state/files/idle PASS. Context mechagon-headroom-l0-r01 now
+operator=mechagon/phase=consumer, actual stoppedsolehandoff/ROM receipt and
+frozenprecontact(stage) PASS; substantive mail+steering delivered. ALL Extender
+targetaccessSTOPPED/readersjoined/no pending. No HTTP/serial/SD/PRT/flash/reset/
+newcompiler during consumer. Wait actualjoined stoppedreturn before same96
+exacta25f restore/fullreadback/fullcleanup/normalrelease.
+
+ONLY ONE frozen L0 native9de7/normalfa4a/PROFILE1 DETAIL0 PROBE0 WAIT1/normal
+overlap30TPS Walls90native150CLI180host/fresh128Bspare/fullboundedtrace. Actual
+handoffexplicit: ownerAPP noPRT0/1/nootherselectedtimerowner, disposablePRT1
+permitted solely consumer quietpreOPEN /256 calibration; guardrefusesenabled/
+IRQtimer, stopbeforehook. No live scheduler timer probe/inactive claim, runtime
+PRT sampling/IRQobserver/baud/moduleprofile/rendereropt/P4 change/replay. L1
+unselected/separatereservation. Source native9de7datafa4a/owner47dadc installed
+provisional; incominga25f rollback REQUIRED. P4d9b/native5d657/startuped403/
+listener0566 unchanged/SDmounted. Mechfirst/OryxDOWN; earlierheadingshistorical.
+Separate P4accounting source/build/package PASS35dd4606/3f06743e returned; no
+install/physicalreader/CPU%claim or coupling into L0.
+
+# Current — actual96 sole Extender L0 installation; Mech target-stopped
+
+Actual95 Wolf cleanrelease17:28:46UTC/exact full85f9 restoration/readback and
+both controller-observer/tracer terminal proof verified. Exact L0 finalkit
+300349B d889b92b/1327inputs independently matched, actual93 isolation PASS and
+currenttuple/new CLI/readEXIT/SAVE-only raw0/callback0/route0/wholefiles/input/
+idle/freeUSB admission PASS. Fresh96/2d99072a33d5, contextmechagon-headroom-l0-r01,
+operatorlinux-extender/owner-install; central grant/context owns actualtoken.
+Exact47dadc/a25f staging/fullGET comparison active; consumer staysSTOPPED.
+Need ONE47dadc FLASH/automaticboot/full131072 independentreadback/freshfullCLI/
+state/files/inputidle, actual stoppedsolehandoff before Mech case. No scheduler
+reset/LOAD/RUN/getter/PRT probe/P4/native/startup/listener write or replay.
+
+Selected ONE finite L0 native9de7/normalfa4a/PROFILE1 DETAIL0 PROBE0 WAIT1,
+spare128B/fulltrace only, 90native150CLI180host30TPS Walls. Explicit source
+admission: ownerAPP noPRT, noother selectedtimerowner; consumer ONEquiet
+preOPEN /256 PRT1 calibration only, refuse enabled/IRQtimer, stopbeforehook;
+not a live timer observation or forced takeover, no runtimePRT/IRQobserver.
+After actualjoined/stoppedreturn same96 exacta25f restore/fullreadback/full
+cleanup/normalrelease. L1 separate/unselected. P4 accounting artifact complete/
+source35dd4606 pushed, no install/case/reader/CPU claim; primaryL0 unchanged.
+Mechfirst/OryxDOWN/SDmounted; earlier headings historical.
+
 # Current — Wolf95 released; Mech L0 final freeze next; P4 artifact checked
 
 Actual95 clean release17:28:46.321142UTC/all six frozen rooms+sevenINFO PASS.
