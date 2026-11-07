@@ -1,3 +1,39 @@
+# Current — actual94 sole MechR08; Extender target access stopped
+
+Exact frozen1015-input230217B cd6171d5 R08 admitted fresh94/e419 after actual93
+owner isolationPASS/restoration/release/newCLIrawstate/files/input/idle. Exact
+47dadc/a25f stage+fullGET, ONE47dadcFLASH/exactautomaticboot/full131072B independent
+readback/freshraw0/callback0/route0/whole startup-listener/actualCLI/readEXIT/
+inputneutral/offlineidle/worker0/freeUSB PASS. Context mechagon-goal001-r08 is
+operatormechagon/phaseconsumer, actual stoppedsolehandoff names new47dadc full
+readback/receipt; actualconsumerprecontact(stage)PASS. Substantive handoff and
+steering accepted. ALL Extender target accessSTOPPED/readersjoined/no pending.
+Do not contactHTTP/USB/serial/SD/PRT, reset, collect or launchcompiler alongside
+sole consumer. ONLY frozenONEwaitON68be/normalfa4a/assets/30TPS Walls/outline/
+90native150CLI180host/fulltrace; all optionalIRQ/profile/spareOFF. No extraaxis,
+replay/576/diag/default/P4/native/startup/listenerchange. Wait actualalljoined/
+stoppedreturn then sole same94 exacta25f rollback/fullreadback/fullcleanup/
+normalrelease; old93tokeninvalid, current94 held. Incoming d9b/a25f/5d657/ed403/
+0566 retained, installed47dadc provisional; SDmounted. Wolf793 next, Mechfirst,
+OryxDOWN. Earlierheadings historical; centralregistry/currentcontext govern.
+
+# Current — actual94 sole Extender installation for frozen MechR08
+
+Actual93 quietowner isolation PASS/restored/released16:32:10UTC, oldtokeninvalid.
+Fresh94/e419abc7da11 normalgrant after newCLI/readEXIT/SAVE-only raw0/callback0/
+route0/wholefiles/inputneutral/offlineidle/freeUSB. All1015 frozen230217B cd6171d5
+inputs exact. Context agents/bench-scheduler/mechagon-goal001-r08, soleoperator
+linux-extender/owner-install; actual94 lease in canonical grant/context only.
+Exact47dadc candidate/a25f rollback stage/fullGET comparison active. Need ONE
+FLASH/automaticboot/full131072 readback/freshstate/CLI/idle then actual stopped
+soleMechhandoff. NO native/getterLOAD/RUN/manualreset/P4/native/startup/listener
+write/replay byowner. Root remainsSTOPPED until actualhandoff. Frozen owner-
+selection/source-preparation untouched. Selected one90/150/180s waitON68be/normal
+fa4a30TPS Walls/outline/fulltrace; alloptionalprofiles/IRQ/sparefalse, no newaxis.
+After actual rootjoined/stoppedreturn, same94 exacta25f rollback/readback/full
+cleanup/normalrelease required. Wolf793 next; Mechfirst/OryxDOWN/SDmounted.
+Earlier headings historical; canonicalregistry/currentcontext govern custody.
+
 # Current — receive-protection isolation93 PASS/restored/released; MechR08 next
 
 Actual93/dd79 clean RELEASED16:32:10.658579UTC/oldtokeninvalid/allactorsSTOPPED.
