@@ -56,7 +56,7 @@ Inspect target symbols/listing and default code/data identity, report ON text/
 BSS/stack limits without inventing IRQ/runtime cost. Retain finite commands and
 joined descendants, release compiler and immediately notify its successor.
 
-NW-004 [ ] Return exact source/package/member hashes and limits to MechAgon and
+NW-004 [x] Return exact source/package/member hashes and limits to MechAgon and
 UART. Do not change the frozen physical diagnostic or perform a bench run.
 Root owns any later consumer selection/freeze/qualification.
 
@@ -91,3 +91,8 @@ its final synthetic owner-abort check. The current RX-scope fake publishes
 `emos_key_faulted` immediately. Assert the current model's pending-fault contract
 as the maintained RX-scope test does; retain borrowed source/association and
 unchanged notification-count checks. The SDK candidate remains unchanged.
+
+Source/native package and exact limits delivered to MechAgon and UART through
+the existing consultation. The immutable private package records its source
+result commit and checked build commit; this later completion note changes no
+header, test or compiled artifact. No consumer/firmware/physical adoption.
