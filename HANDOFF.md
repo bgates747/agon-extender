@@ -1,3 +1,27 @@
+# Current — Wolf75 restored bytes, boot admission unresolved; U1 kit ready
+
+Wolf's exact1105920B85f9 restored span independently matches. Its normal cleanup
+P4-init→Agon attempt timed out60s with remote readyfalse/session0/reason0; no
+actual CLI/fullhandback/release yet. Wolf retains SOLE75, all its children joined.
+Extender remains targetSTOPPED. Source-only reply source-bootstrap75 retains
+logs/hashes and recommends one bounded read-only existing-epoch observation
+before any fresh recovery decision, not rerunning the old bootstrap or benchmark.
+Do not equate reason0 with no transport/admission boundary: no-session cancel
+can retain reason0. Existing earlier admission line is not timestamp-joined to
+post-reset success. Await actual owner reply; no second operator or device poll.
+
+Mech final U1 kit0112d4fc/116inputs/ff6bd48 independently rehashed unchanged;
+request1b46642ee71b source READY but no freshgrant while75 retained. Request-local
+admit.py prepared/syntax checked, four-file admission source inventory plus
+existing15-input install/handoff selection preserved in consumer freeze. Do not
+edit any admitted frozen input. On actual clean75release, use admit.py --release
+ACTUALreceipt for fresh CLI/SAVE-only admission and owner-install context; no
+reset/LOAD/RUN/getter. Then separate install.py stage/flash/verify candidate,
+actual fullROMreadback043a and stopped handoff via handoff.py; root consumer
+only after mailbox+steering with actual proof. Samelease a25frollback remains
+required before normalrelease. NewROM still UNINSTALLED.
+Earlier checkpoints below are historical.
+
 # Current — Wolf75 sole cleanup after deliberate visual stop
 
 Wolf reports its own deliberate stop, cases01–05 collected and post05 probe
