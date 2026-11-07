@@ -42,20 +42,33 @@ not a new physical case or a claimed fix for receiver overrun.
 
 ## Implementation and validation
 
-NW-001 [ ] Commit this plan, create isolated source branch and preserve frozen
+NW-001 [x] Commit this plan, create isolated source branch and preserve frozen
 root SDK/diagnostic input identities.
 
-NW-002 [ ] Add the smallest opt-in header splice, comments and focused actual-C
+NW-002 [x] Add the smallest opt-in header splice, comments and focused actual-C
 checks. Verify source-release publication/client identity; source-before-return;
 real SOURCE/TAIL/IDLE/fault/error notifications; quiet/no-progress calls produce
 none; repeated retained fault produces none; failed CLOSE preserves association.
 
-NW-003 [ ] Under normal Pi FIFO, compile actual unchanged core plus adapter
+NW-003 [x] Under normal Pi FIFO, compile actual unchanged core plus adapter
 checks with sanitizers and paired native control/OFF/ON application probes.
 Inspect target symbols/listing and default code/data identity, report ON text/
 BSS/stack limits without inventing IRQ/runtime cost. Retain finite commands and
 joined descendants, release compiler and immediately notify its successor.
 
-NW-004 [ ] Return exact source/package/member hashes and limits to MechAgon and
+NW-004 [x] Return exact source/package/member hashes and limits to MechAgon and
 UART. Do not change the frozen physical diagnostic or perform a bench run.
 Root owns any later consumer selection/freeze/qualification.
+
+## Checked source handoff completion
+
+The isolated `codex/net004-app-notify-r01` branch contains the checked header and
+bounded source/native result in the owner branch.
+The ignored source worktree and exact private package location are recorded in
+the owner handoff; this task does not assume those private paths on other hosts.
+Compiler386 passes19 steps and releases normally. Undefined default application
+binary/objects are exact; ON link-only probe costs145 text bytes, one app wake
+byte and12 additional static service-frame bytes, excluding nested/IRQ bounds.
+Source/native checked artifacts and full limits were returned to MechAgon and
+UART. Current root SDK/EMOS/core/emitter and the selected physical diagnostic
+remain unchanged. Consumer integration and any physical case are separate.

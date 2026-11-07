@@ -1,3 +1,70 @@
+# Current — actual91 sole Wolf021; MechR07 source-ready; SDK handoff checked
+
+Actual91/06d32e827da7 fresh grant after actual90 cleanrelease/currenttuple and
+new CLI/readEXIT/SAVE-only rawmode0/callback0/route0/wholefiles/inputneutral/idle/
+freeUSB. Exact716pins42783945 and actual60file mandatorylauncher closure pass.
+SoleWolf PID1425962/PPID1750, epoch1794064119.4695578/session35512 launchedONCE.
+Context agents/bench-scheduler/wolf-perf021-r01; actual stopped handoff/mandatory
+launch and accepted steering retained. ALL Extender target access STOPPED/no
+pending/readers. Only frozen6uncapped original/cyan/combined/combined/cyan/original
+600-pose rooms+7INFO/4200absolute360cleanup660admission/current7593app-only/full
+85f9 restore/readback/fullhandback/normalrelease. No oldtoken/replay/HOLD/newaxis.
+Wait actual joined cleanup/release; no target observer or compiler currently.
+
+Mech next R07/cbeb5e59f289 READY,105734B b212028d/486inputs independently rehashed;
+owner prep agents/bench-scheduler/mechagon-goal001-r07 has exact80fe/a25f selection,
+admission/finish/binding/cleanup source/helpers/pins. No grant/context/targetcall.
+Actual91 real release/currenttuple precedes normal newgrant/owner EMOS-only80fe
+install/fullROMreadback/stoppedsoleMech handoff. Same367native8184/map620e/normal
+fa4a1896data module and one IRQ-only90/150/180 case. Only host allowlist/cap fix;
+no wake/baud/batching/profile change. Root targetstopped. Mechfirst/Wolfsecond.
+
+Actual90 originalR06 failed HOST owned-path guard BEFORE main matchLOAD/RUN/host
+process, zero matchtelemetry; separate pregetter DID run/ABSENT/callbackrestored.
+Exactincominga25f full131072B rollback/readback/fullfreshcleanup/release15:00:52UTC
+retained in mechagon-goal001-r06/released.json. P4d9b/native5d657/startuped403/
+listener0566 unchanged, SDmounted. Original475kit/failure retained, no replay.
+
+Selected optional SDK NOTIFY completed in isolated worktree
+agents/net004/app-wake-notify-r01/source, branchcodex/net004-app-notify-r01,
+resultsourcea6a8a4b3/buildsourcece0684da. Compiler38619stepsPASS2.043s/allchildren
+joined/released15:11:17UTC/nextnone. OFF objects+wholeprobe byte-exact; ON core/
+emitter unchanged,+145apptext/+1appwakeBSS/0data; private service staticframe8->20
+excludes args/IRQ/nested calls. Actual-C sourcepublication/phase/fault/quiet/early
+callback/refusedclose+oldSDKnegative tests pass; native storeorder reviewed. No
+executedISA/IRQ/timing/cure/wholeMechapp claim, no ROM/core/emitter edit. Root SDK
+remains unchanged. Exact private44entry100590B23bed1e8 source-native-r01.zip and
+package-r01 metadata retained; substantive package sent/acceptedsteered toMech/
+UART. Link-only probe binaries NEVERstage/RUN. Earlier382/384/385 test-model
+failures corrected without SDK change and records retained. No owncompilerlease.
+OryxDOWN. Earlier headings historical; central registry governs custody.
+
+# Current — actual90 restored/released; isolated SDK qualification in preparation
+
+Actual90 R06 stopped at host clear_result allowlist BEFORE host process/main
+match LOAD/RUN; zero match invocations or newly produced match telemetry. Separate
+pregetter DID run and returned ABSENT/callbackrestored. Root allactors joined,
+sole owner return accepted. Exact incominga25f ONEFLASH/boot/full131072B readback
+and fresh rootCLI/cursor/rawmode0/callback0/route0/wholefiles/inputneutral/offline
+idle/worker0/freebothUSB PASS. Released15:00:52.632573UTC, old90tokeninvalid.
+Receipt agents/bench-scheduler/mechagon-goal001-r06/released.json, actual new
+verify-rollback/ROM.bin+receipt and final/fresh.json. All Extender target access
+STOPPED/no pending/readers. Current baseline d9b/a25f/5d657/ed403/0566; SDmounted.
+Central Wolf06d32e827da7 is PREPARING, no qualified final kit/grant inferred.
+Mech prepares NEW R07 host allowlist fix, preserving original475 kit/90evidence.
+Mechfirst/Wolfsecond, OryxDOWN. No automatic retry or diagnostic firmware retained.
+
+Optional SDK notify is isolated worktree agents/net004/app-wake-notify-r01/source,
+branchcodex/net004-app-notify-r01 sourcea7954148. Root net_async.h unchanged.
+Tiny default-OFF header hook after source publication/actual phase/fault changes;
+no core/emitter/resident edit. Compiler382 stopped at host link: old harness
+lacked current scoped lock/RX substitutions, no notification/native probe ran.
+Released382/allchildrenjoined/nextnone. Source correction selects maintained
+rx_scope actual owner harness plus old-header negative control; SAME SDK splice.
+New compilerrequest3c12f0507528 pending behind Mech383; normalcheckout/assert
+before guarded compile-r02.py. Sources committed/pushed before builds. R01 logs
+and corrected source note retained; no compiler/target result claimed yet.
+
 # Current — actual90 sole Mech IRQ diagnostic; Extender target-stopped
 
 Fresh90/request21e59f934f2e exact475-pin44715c54 admission, owner EMOS-only80fe
