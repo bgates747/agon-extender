@@ -78,3 +78,9 @@ only test-model selection changes, with the SDK candidate unchanged. The old
 header negative control must compile and fail at its notification assertion,
 not pass through an unused-hook compile failure. Retain the brief failed-link
 receipt and use a fresh qualification output/normal compiler grant.
+
+The second host check passed the current owner's RX-scope regression. The
+notification harness then failed compilation because renaming the donor's C
+`main` removes its special implicit return-zero rule. Add an explicit return-zero
+to the reused test entry; no SDK, owner, core or notification logic changes.
+The original-header negative control still must link and fail at runtime.

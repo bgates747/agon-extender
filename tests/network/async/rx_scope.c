@@ -190,4 +190,5 @@ int main(void){
     emos_net_reset();assert(!reserved&&pending_fault);
     assert(agon_neta_progress(c)==35&&c->tx.source==borrow);
     assert(irq&&rx_visits);puts("actual app/core/EMOS RX scope: held foreground/IRQ refusal/pending fault-stop/post-RX revoke/no double release PASS");
+    return 0; /* Also valid when reused under a non-main test symbol. */
 }
