@@ -1,3 +1,45 @@
+# Current — actual104 restored and cleanly released; no next request
+
+Actual104/032e450a86b5 released23:10:15.498530UTC; old token invalid,
+actual next null. ALL Extender target access/readers/commands stopped.
+Original compact R11 failed its150s CLI observation after host307 frames/
+306 intents/native EOF. Native outcome/retirement/cause remain unknown.
+One ordinary Agon recovery failed admission. The paired helper issued one
+explicit P4 reset but a transient HTTP startup read aborted before its Agon
+step. A bounded readiness continuation used the same P4 boot, added no P4
+reset and completed the missing Agon step; fresh admitted input/CLI passed.
+All original failures and operation journals are retained, no test replay.
+
+Full64KiB RAMe92ff550 is explicitly post-reset, preserved before any subsequent
+LOAD or firmware write. Optional native-status/carrier/poison SD files absent;
+first-poison bytes remain in full RAM at offsetc4ac for root correlation.
+Existing feature getter passed absence after recovery. ONE incoming a25f
+rollback/automaticboot and full independent131072B readback passed, followed
+by fresh rootCLI/cursor/rawmode0/callback0/Legacy0/wholefiles/inputneutral/
+offlineidle/freeUSB/fullhandback. All original and cleanup handles terminal.
+Evidence: agents/bench-scheduler/mechagon-goal001-r11/actual104-clean-return.json,
+released.json and release-observation.json. Complete release mail and immediate
+steering sent before offline closeout. P4d9b/native5d657/startuped403/listener0566
+firmware/files unchanged; SDmounted. No current bench or compiler checkout.
+No async/performance/graphics-retirement pass or new physical case. HDMI visual
+qualification remains unfinished; publication hold persists. Earlier headers historical.
+
+# Current — actual104 original timeout; Extender sole recovery/restore
+
+R11 original150s CLI observation expired after one invocation. Root original
+live9159 exited1, stage78898/pre62155 exited0; all exact host actors/readers are
+joined/absent. Matching stopped return accepted; context now Extender sole
+operator/owner-restore under same104/032e450a86b5. Native graphics/source/drain/
+CLOSE remain unknown; no inferred retirement from TCP EOF. ONE standing Agon-only
+recovery is underway after rehashing unchanged setup-only startup. No P4 reset,
+firmware write, LOAD or replay. Any recovered full64KiB RAM must be explicitly
+post-reset and saved before later LOAD/write; original SD bytes need correlation.
+Then existing feature cleanup, exactincominga25f rollback/full131072B readback/
+freshhandback/normalrelease. Source/actor/operation evidence and current context:
+agents/bench-scheduler/mechagon-goal001-r11/. No new case or physical admission.
+P4d9b/native5d657/startuped403/listener0566 preserved; SD mounted. Publication
+hold remains; earlier headers historical. HDMI visual work remains unqualified.
+
 # Current — actual104 compact R11 installed and handed to MechAgon
 
 Actual104/032e450a86b5 is central-owned and solely operated by MechAgon, phase
