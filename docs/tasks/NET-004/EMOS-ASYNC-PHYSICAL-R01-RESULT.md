@@ -43,3 +43,20 @@ Machine/device/network identities, lease and exact timestamped journals remain
 in ignored request-local installation/handoff records. This result records
 installation checks, not electrical CTS qualification, useful CPU savings,
 optical frame rate or tick-for-tick 30 Hz compliance.
+
+## First finite consumer failure — recovery pending
+
+MechAgon's one invocation reached five native intents and six host FRAME sends,
+then the host reported peer connection reset104. The original150s native
+observation expired without a stopped terminal or CLI; all original parent/host/
+reader actors joined before actual stopped return. Native exit, cleanup and
+source/drain/reply fault witnesses are not yet collected. No cause is established
+from the host reset and no async workload pass is claimed.
+
+Extender assumes sole same-lease recovery/rollback after that stopped proof.
+Selected cleanup begins with the standing one Agon recovery, then initialized
+P4/Agon fallback only if needed; no reset loop or test replay. Preserve64KiB at
+040000 and original status if present before LOAD/FLASH. Mark RAM post-reset
+when applicable. Then bounded feature/raw/files/CLI cleanup and exact retained
+a25f fullROM rollback/readback precede release. All installation/source/result
+records remain preserved, including the original failed invocation.
