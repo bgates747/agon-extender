@@ -1,3 +1,32 @@
+# Current — actual81 Wolf sole finite gap; source-only accounting checks queued
+
+Actual80 failed before transport_open: moduledata2052 refused/largest2036,
+zero decisions/network/progress; no async carrier conclusion. Mech preserved
+RAM8fa54450 beforeLOAD and postgetter/fullidle. Extender restored exacta25f full
+ROM/readback and fresh CLI/cursor/files/input/idle/freeUSB; actual80 RELEASE
+10:56:16.959131UTC. Firstrelease metadata owner/physicalobserver mismatch was
+corrected with originalfresh epoch and explicitphysicalobserver; no repeated
+hardware operation or reset/replay. Receipt agents/bench-scheduler/
+mechagon-goal001-r01/released.json. Mechcompactmodule source builds separately.
+
+Fresh81/456459d1283d is soleWolf, actualPID1287358/session48884, original409pin
+86855bdb/17d50b3 finite4uncapped600poseABBA+5INFO. Context/handoff/launcher:
+agents/bench-scheduler/wolf-perf016-r01. Extender ALLtargetaccessSTOPPED.
+Original native7593 app-only/full85f9 restore+readback/fullcleanup/normalrelease,
+no P4/EMOS/startup/listener/carrier write or newcase. Firstnotificationreview
+creationtimedout; single permitted communication retryconfirmed alreadyrunning
+actor and delivered. No secondcontroller launch or toolroute bypass.
+
+P4defaultOFF NM counters source-only worktree agents/net004/p4-nm-accounting-r01/
+source branchcodex/net004-p4-nm-accounting-r01, basede14/currentd9 source.
+First actual model/recorder/TcpClient+sanitizer/threaded200event/defaultOFF
+-Os/-O2object-equivalence checks PASS compiler3356.4s/released10:57:52. New
+actualRuntime/Peer worker+selector composition checks queued4ccea912cbef behind
+Mech336. NativeP4link/fit pending; no new counters installed or CPU claim.
+Rootplan docs/tasks/NET-004/P4-NM-ACCOUNTING-R01.md. Model/code uncommitted in
+isolatedworktree until remaining checks; preserve frozen consumer inputs.
+OryxDOWN, normalPiFIFO, Mechfirst/Wolfsecond. Earlier entries are history.
+
 # Current — actual80 MechAgon sole consumer, Extender target-stopped
 
 Candidate8de66 full131072B ROM independently compared; fresh mode0/callback0/
