@@ -198,3 +198,49 @@ NM cost. A later separately frozen matched diagnostic case is still required.
 4. Freeze the identified app/ELF/map/config/dependency lock/source archive, build and validation manifests, reader contract and independent inventory hashes. Explicitly preserve active-scope, saturation, invalid-clock/lifecycle, same-boot boundaries and inclusive/non-additive wall-time limits. The read-only local HTTP reader has no clear/start/reset and does not prove quiescence, wire occupancy, CTS or CPU percentage; no duplicate profiler or per-byte timestamp is added.
 5. Rehash exact retained normald9b application/manifest and record app offset20000 plus candidate/rollback sector-aligned touched spans. Preserve bootloader, partition table, NVS and unrelated mutable storage. Locate existing provenance for bytes beyond the old app through the new touched-sector end; if unknown, name only that unresolved tail as a future pre-write preservation prerequisite, without reading hardware now or inventing erased bytes. No incoming full-device backup is required when the exact retained spans/provenance already cover it.
 6. Return exact package and read-only reader boundaries for a future separately frozen matched diagnostic case. Current Wolf95 and the first-priority unchanged47dadc L0/L1 owner installation/handoff stay independent; no accounting deployment is attached to them. Processor-time attribution beyond these inclusive wall brackets requires separately selected scheduler-aware evidence; no CPU percentage follows from source size or a successful native link.
+
+## Identified build result, 2026-11-07
+
+The checked accounting source now has an identified experimental artifact for a
+future matched diagnostic case. It has not been installed or executed on P4.
+The ordinary installed P4 and production selection remain unchanged.
+
+1. Source `ae7504c034ebba102b3a0b4bb2913230a190343c`, clean canonical native
+   build `net-003-r02-b2026-11-07-17-20-06Z`, passes profile/action/archive/ELF
+   validators. Compiler406 completed in556.217 seconds and released at
+   17:29:23.123948UTC after all owned descendants joined; automatic successor407
+   MechAgon received the immediate mailbox/steering handoff. Existing twenty host
+   checks and matched350 OFF/ON fit remain the evidence; neither was duplicated.
+2. App1,764,368 bytes, SHA256
+   `7a219ac1679b70d8c38ecf553230d2017ab9d194a6a68677dd07ce4683570f1e`.
+   Flash text1,341,260, read-only data284,684, initialized DRAM22,348,
+   DRAM0/DRAM1 BSS38,344/12,384 bytes, IRAM text115,204. Compared with the prior
+   unversioned ON fit, app and read-only data each grow48 bytes; identity and
+   private reset configuration differ, so this is not another isolated recorder
+   cost comparison. Effective SDK settings match the installed UART source;
+   only two partition-table source pathname strings differ.
+3. Owner-local package46,379,123 bytes, SHA256
+   `3f06743ee8c9a48b96841a3782ea073dcc09fd3546cc6cc0a263caaf6f4edda2`.
+   All22 members independently equal their retained originals: source archive
+   and input inventory, app/ELF/map/compile actions, config/dependencies,
+   manifests, reader contract and exact app-only candidate/rollback spans.
+   This private package includes the installed private reset configuration;
+   publication is not selected. Generated artifacts stay in the ignored owner
+   record rather than Git.
+4. Future app-only write offset0x20000 and sector-aligned span1,765,376 bytes
+   are fully covered by the existing verified normal UART restoration artifact.
+   Candidate span SHA256
+   `fbedce5fbafc51e08ffde35d81fae6b0d9a02b5cfb0123032d44a82389d6b239`;
+   exact rollback span
+   `629aab118e03e7b42b3235d7eed633b6103931273d524f097ef446e92fc3d17f`.
+   Normal application hash remains `d9bcb1a2...`, separately from its touched
+   sectors. Existing incoming-tail provenance was rehashed locally; no unknown
+   bytes, invented erased tail or new device backup is needed for this span.
+   Bootloader, partition table, NVS and unrelated storage remain outside it.
+5. Read-only `GET /diagnostics/nm-accounting` follows the source reader contract:
+   same boot/build, valid unsaturated coherent snapshots, active-scope and
+   crossing-scope limits, non-additive inclusive elapsed time. No start/clear/reset,
+   CPU percentage, physical CTS, wire occupancy or proven quiescence. A future
+   separately frozen matched workload, reader schedule, positive retirement and
+   exact installation/rollback remain prerequisites to hardware measurement.
+   This artifact adds no test or firmware substitution to L0/L1 headroom work.

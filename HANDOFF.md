@@ -1,3 +1,29 @@
+# Current — Wolf95 released; Mech L0 final freeze next; P4 artifact checked
+
+Actual95 clean release17:28:46.321142UTC/all six frozen rooms+sevenINFO PASS.
+Exact incoming1105920B85f9 restore/fullreadback/freshCLI/raw0/callback0/route0/
+whole startup-listener/inputneutral/offlineidle/freeUSB PASS; controller14965/
+1451306 and observer27507/1451478 plus tracer1451480 terminal, all Wolf target
+accessSTOPPED/old95tokeninvalid/SDmounted. Retained proof PERF022/hardware02
+released.json, host-actors-terminal.json, final-checks/observation.json. Central
+registry/currentcontext govern; no live95 or historical SIGTERM repair claim.
+
+Primary Mech L0 request2d99072a33d5 PREPARING, source templates returned under
+mechagon-headroom-l0-r01: owner-selection/source-preparation immutable for final
+freezer. Exact existing47dadc/a25f; owner APP uses noPRT, only consumer quiet
+preOPEN /256 calibration allowed with inactive/IRQ refusal/stopbeforeOPEN. This
+is source contract, not hardware timer observation. Wait finalkit/control407
+then fresh currenttuple/CLI admission/install/fullROM readback/stoppedhandoff.
+No target access, lease or consumer invocation yet. Mech first/Oryx DOWN.
+
+Separate P4 identified source/build/package PASS: unchangedae7504c0, build
+net-003-r02-b2026-11-07-17-20-06Z, app1764368B7a219ac1, private22member
+package3f06743e in net004/p4-nm-accounting-r01/identified-r01. All members
+independently equal; exact1765376 touched candidate/normald9b rollbackcovered
+by existing verified tails. Compiler406 released17:29:23UTC/allchildrenjoined,
+actual automaticMech407 notified. Inclusive nonadditive wall counters only,
+noCPUpercentage, no hardware install/reader/case or L0/L1 substitution.
+
 # Current — actual95 sole Wolf022; Mech94 restored/released normally
 
 Actual94/e419 R08 normal result0/zeroUARTerror/positive source-drain-CLOSE/
