@@ -40,7 +40,13 @@ enum { ARD_SPAN_PRESENT=1, ARD_START_CAPTURED=2, ARD_END_CAPTURED=4,
  * are raw evidence. Decoder requires flags1/2/4, both controls0x0d, same epoch,
  * start/end nonzero and start>=end. Eight bounded nested tags retain matching
  * entry/end identity; overflow/mismatch is partial, never a CPU timing stack. PARTIAL globally describes omitted tails,
- * not permission to treat a missing end as0. Current active-at-fault is
+ * not permission to treat a missing end as0. Separately, ACTIVE_AT_FAULT may
+ * derive a start-to-first-fault PREFIX using global92..94, only when PRESENT,
+ * START_CAPTURED, ACTIVE_AT_FAULT, frozen/raw-error/event40/context validity,
+ * same nonzero span/global epoch and valid nonzero descending0x0d endpoints
+ * agree without overflow/owner loss. Ordinary current timing stays UNKNOWN;
+ * never synthesize END_CAPTURED or sum this prefix as a completed CPU span.
+ * Full stopped interpretation and missing coverage: rxdiag/README.md. Current active-at-fault is
  * explicitly bit16; there is no measured all-IRQ gap. Gap_flags is reserved0
  * until an actual gap boundary is captured; REARM_GAP means excluded interval,
  * never a duration. Overflow invalidates derived spans rather than wrapping. */

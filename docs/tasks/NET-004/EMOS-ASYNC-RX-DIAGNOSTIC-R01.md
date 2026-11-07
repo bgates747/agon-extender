@@ -263,3 +263,17 @@ consumer must bind this exact source before its own checked application link.
 Wolf85 completed its separate four-room/five-INFO cohort and cleanly released;
 all target actors stopped and baseline native/tail85f9 restored/read back.
 No new diagnostic physical reservation exists at this checkpoint.
+
+## Active-first-fault interpretation clarification
+
+UART review correctly found the owner prose described only closed spans. Mech's
+already-checked stopped decoder separately derives `current_start_to_fault`
+from the active start/global first-fault sample with explicit epoch/control/
+validity checks; ordinary missing-end timing remains UNKNOWN. The owner accepts
+that separate prefix rule, now documented in `include/agon/rxdiag/README.md` and
+a header comment. No END_CAPTURED is synthesized, recorder instructions or ROM
+are changed, and no additional PRT/LSR read is introduced. Package-r01 retains
+its original header/source hashes; this is a schema2 interpretation corrigendum,
+not a newly executed firmware result. A drafted endpoint-write alternative was
+never built or installed and was removed before selecting the smaller rule.
+Independent uninstrumented Mech R04/8de66 remains the current physical priority.

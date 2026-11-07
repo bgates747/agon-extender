@@ -1,3 +1,28 @@
+# Current — actual86 sole Mech serialized R04; Extender target-stopped
+
+Exact existing8de66 candidate/source954e3c54 staged/fullGETcompared, ONEFLASH/
+exact automatic boot and full131072B independent new-ROM comparison PASS. Fresh
+rawmode0/callback0/route0/whole startup-listener/actualCLI/readEXIT/inputneutral/
+offlineidle/freeUSB pass. All381 frozen R04 ed12c53d/80128B inputs and actual
+frozen precontact() pass. Context agents/bench-scheduler/mechagon-goal001-r04;
+actual matching stopped handoff delivered/steered to Mech. Current operator is
+mechagon/consumer. Extender ALLtargetaccessSTOPPED/no pending/readers joined.
+Wait for actual joined/stopped consumer return before same86 exacta25f rollback/
+fullreadback/fullcleanup/normalrelease. Do not poll native/HTTP/serial/SD while
+Mech owns it. ONE unprofiled serialized-I/O case/original90/150/180bounds only;
+no observer/PRT/baud/P4/native/startup/listener change or replay. SD mounted.
+Wolf018/09459a8a64f8/415pins5d26 READY waits after real86cleanrelease; no grant.
+
+Source observer r01 root2b826e3c/EMOS1727fa19 and exact184789B0a9e85ac retained;
+identified diagnostic80fe/free176 is NOT installed. App code unchanged after
+checked362. Owner prose now permits the independently tested separate active
+start-to-global-fault prefix; ordinary current missing-end timing stays UNKNOWN.
+No END_CAPTURED synthesized, endpoint patch or extra PRT/LSR read. Package-r01
+pins remain immutable; header comment/README is a schema2 interpretation
+corrigendum. Native IRQ/PRT/register execution remains unqualified, no cause/cure.
+P4 accounting source/nativefit reported but not installed. Oryx DOWN; Mechfirst,
+Wolfsecond, normal Pi compilerFIFO. Earlier headings below are historical only.
+
 # Current — Wolf85 cleanly released; checked diagnostic source handoff
 
 Wolf85 four uncapped room ABBA/fiveINFO PASS2400records; original actor1363229/
