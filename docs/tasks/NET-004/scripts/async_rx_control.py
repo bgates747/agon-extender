@@ -44,6 +44,10 @@ def save(path, value):
         os.fsync(file.fileno())
 
 
+def actual_cli(raw, sentinel):
+    # A sentinel without its following prompt cannot delimit a later LOAD.
+    return sentinel in raw and re.search(rb'(?:^|[\r\n])/[^\r\n]{0,96} \*',bytes(raw).split(sentinel,1)[1]) is not None
+
 def validate_binding(context, grant, prepared):
     """A new exact owner case, never historical lease/fixture compatibility."""
     if not (grant.get('owner') == 'linux-extender' and grant.get('task') == TASK
@@ -90,7 +94,7 @@ def validate_durable_result(text, case='async-rx'):
     lines=text.splitlines()
     if len(lines)!=5:raise RuntimeError('Missing session retirement evidence')
     for session,line in enumerate(lines[:4]):
-        if line != 'session=%d records=%d first_error=0 source_phase=0 close=0' % (session,(session+1)*44):
+        if line != 'session=%d records=%d first_error=0 source_phase=4 close=0' % (session,(session+1)*44):
             raise RuntimeError('Incomplete/failed session retirement')
     words=lines[4].split()
     if not words or words[0]!=BUILD_ID:raise RuntimeError('Wrong native identity')
@@ -207,7 +211,7 @@ def run(context_path, prepared_path, output):
                 line('mirror-on', 'VDU 2')
                 sentinel = b'Extender async UART1 observer'
                 line('actual-cli', 'VDU ' + ' '.join(map(str, sentinel + b'\r\n')))
-                wait(lambda: sentinel in raw, time.monotonic() + 15, 'Actual CLI')
+                wait(lambda: actual_cli(raw,sentinel), time.monotonic() + 15, 'Actual CLI')
                 mark = len(raw)
                 line('load-once', 'LOAD ' + prepared['fixture_remote'])
                 prompt = lambda data: re.search(rb'(?:^|[\r\n])/[^\r\n]{0,96} \*', bytes(data))

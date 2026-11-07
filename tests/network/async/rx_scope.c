@@ -123,7 +123,8 @@ int main(void){
     assert(agon_neta_close(c)==0&&!reserved&&!agon_neta_active&&c->tx.phase==U1_DETACHED);
     /* Masked call refuses without accepting/publishing or touching query. */
     fresh(c);irq=0;assert(agon_net_submit(&c->net,AGON_NET_POLL,0,0)==31);irq=1;
-    assert(c->net.query==0&&!bytes);assert(agon_neta_close(c)==0);
+    assert(c->net.query==0&&!bytes);assert(agon_neta_close(c)==0);assert(c->tx.phase==U1_DETACHED);
+    printf("checked-post-close-phase=%u\n",(unsigned)c->tx.phase);
     /* Very short source may release before SUBMIT returns. TEMT still later. */
     fresh(c); /* POLL wire18, so force one-byte remaining via bounded SEND0 below */
     assert(agon_net_submit(&c->net,AGON_NET_POLL,0,0)==0);assert(bytes==16);

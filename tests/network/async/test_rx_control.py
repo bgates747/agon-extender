@@ -33,13 +33,18 @@ class RxControl(unittest.TestCase):
     c,g,p=copy.deepcopy((self.c,self.g,self.p));mutate(c,g,p)
     with self.assertRaises(RuntimeError):m.validate_binding(c,g,p)
  def test_durable_and_partial_retirement(self):
-  text='\n'.join('session=%d records=%d first_error=0 source_phase=0 close=0'%(s,(s+1)*44) for s in range(4))
+  text='\n'.join('session=%d records=%d first_error=0 source_phase=4 close=0'%(s,(s+1)*44) for s in range(4))
   text+='\n'+m.BUILD_ID+' result=PASS first_error=0 records=176/176 opened=4/4 closed=4/4 release=0 restore=1 elapsed_ticks=500 tick_hz_nominal=120 carrier=uart1-async irq_complete=0\n'
   m.validate_durable_result(text)
-  for bad in (text.replace('closed=4/4','closed=3/4'),text.replace('source_phase=0','source_phase=3'),
+  for bad in (text.replace('closed=4/4','closed=3/4'),text.replace('source_phase=4','source_phase=3'),text.replace('source_phase=4','source_phase=0'),
               text.replace('elapsed_ticks=500','elapsed_ticks=14400'),text.replace('restore=1','restore=0'),
               text.replace('records=176/176','records=175/176'),text+'extra\n'):
    with self.assertRaises(RuntimeError):m.validate_durable_result(bad)
+ def test_load_boundary_requires_prior_prompt(self):
+  marker=b'new sentinel'
+  self.assertFalse(m.actual_cli(b'\r\n/ *'+marker,marker))
+  self.assertFalse(m.actual_cli(marker+b'\r\n',marker))
+  self.assertTrue(m.actual_cli(marker+b'\r\n/ *',marker))
  def test_peer_must_be_complete(self):
   p=dict(passed=True,closed_sessions=4,records=[dict(session=s,index=i,bytes=m.SIZES[i%11]) for s in range(4) for i in range(44)])
   m.validate_peer_report(p);p['records'].pop()

@@ -217,3 +217,14 @@ host admission/result checks, not a simulated UART/IRQ execution. First physical
 readiness still requires exact frozen staging/install/rollback/collection and
 fresh central admission. Wolf's existing qualified finite goal case78 uses the
 bench while this preparation continues; no parallel Extender target access.
+
+
+Read-only preparation review corrected the collector to expect the actual
+post-close U1_DETACHED4 state (not pre-close IDLE0), and requires the sentinel's
+following CLI prompt before delimiting LOAD completion. The released local
+context must also record the independently verified rollback identity. These
+were caught before physical invocation; no target result is being reinterpreted.
+Actual C close-state output joins the validator contract; host-only CLI negative
+controls reject a delayed preceding prompt. Ordinary setup text/query tails are
+not externally timed: the case excludes issued UART0/RFC25 work while NM is
+active, not a proven global UART0 electrical-quiescence interval.
