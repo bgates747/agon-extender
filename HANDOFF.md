@@ -1,3 +1,17 @@
+# Current — R11 owner source packet returned; bench remains unoccupied by Extender
+
+Mech request032e450a86b5/GOAL-001-COMPACT-OVERLAP-R11 is PREPARING. Request-local
+c1047/a25f owner templates and14-input file-only preflight passed and were
+returned by durable mail plus immediate steering. Packet:
+agents/bench-scheduler/mechagon-goal001-r11/{owner-selection,source-preparation,
+predecessor-binding,owner-preflight,template-pins}.json. Source packet is ready
+for the consumer freezer only; compact module qualification/final kit and fresh
+entry/grant/install/stopped handoff remain required. No new owner firmware/API/
+isolation, compiler, target access or bench hold. Preserve existing queues.
+Actual102 component isolation PASS and actual103 failed allocation/verifieda25f
+rollback/clean22:30:47UTC release remain immutable predecessor evidence. No replay.
+P4/native/startup/listener unchanged, SD mounted; publication hold remains.
+
 # Current — actual103 restored and cleanly released; no queued successor
 
 Actual103/ea4224a1673d clean release22:30:47.034970UTC; old token invalid,
