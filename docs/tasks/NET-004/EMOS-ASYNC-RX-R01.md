@@ -240,3 +240,17 @@ incorrectly rejecting good data because cleanup extended past dispatch cutoff.
 The host runner records native dispatch epoch and observed duration (including
 command delivery/terminal observation), separately from the Pi peer duration.
 No timeout or physical execution was changed by this clarification.
+
+## First isolated hardware result
+
+The selected ONE four-session/176-record case passed under actual generation79;
+[the result](EMOS-ASYNC-RX-PHYSICAL-R01-RESULT.md) records exact bytes, positive
+source/drain/close retirement, native SD/CLI and preserved RAM. Exact incoming
+workinga25f rollback/fullreadback and fresh full cleanup completed before normal
+release10:36:14UTC. No reset/replay, blocked-CTS exercise, renderer/PRT work,
+production promotion,76cause/cure or useful-CPU claim follows. The new separate
+MechAgon consumer339 trial binds the same qualified8de66/source954e package;
+its normal fresh grant, sole owner install/readback/stopped handoff and samelease
+incoming-ROM rollback remain mandatory. Frozen generation79 input bytes are
+retained unchanged in its source ledger, rather than reinterpreting this later
+plan update as an input to that completed case.

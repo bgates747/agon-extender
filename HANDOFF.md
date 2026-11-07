@@ -1,3 +1,27 @@
+# Current — actual80 MechAgon reservation, Extender sole EMOS installer
+
+Actual79 isolation passed176/176 records/four positive connection retirements,
+nativeSD/Pipeer/CLI/state agreement; RAM885a preserved beforeLOAD. Exacta25f
+fullROM rollback/readback/fullcleanup passed; actual79 RELEASE10:36:14UTC.
+Result docs/tasks/NET-004/EMOS-ASYNC-RX-PHYSICAL-R01-RESULT.md. All old79 access
+invalid; its89-file bff4173b input freeze remains immutable retained evidence.
+
+Actual new80/339610ada316 is centralMechAgon, soleoperatorlinux-extender,
+phaseowner-install. Context agents/bench-scheduler/mechagon-goal001-r01; fresh
+CLI/SAVE-only mode0/callback0/route0/wholefiles/input/idle evidence passed.
+Exact160input consumer kitd39e185b/3d28885 matches. Candidate8de66/source954e/
+map6c25,575free; same EMOS-only stage/FLASH/fullreadback then actual stopped
+Mechhandoff with kitSHA/ROMpath/receipt is selected. Rootconsumer remains
+hardwareSTOPPED until thathandoff. No current candidate install is implied
+until owner-install/verify-candidate receipt exists. P4d9bcb/native5d657/full
+native85f9/startuped403/listener0566 preserved. Same80 a25f rollback/fullcleanup/
+normalrelease only after actual consumer stoppedreturn. No replay/newcase.
+
+Mechfirst/Wolfsecond; Wolf456459d1283d is PREPARING behind80, notgranted.
+OryxDOWN. Later selected defaultOFF P4local inclusive counters sourceprep waits
+until currentinstall/handoff; no currentP4change/globalCPU instrumentation.
+Earlier checkpoints are history and convey no current custody.
+
 # Current — Wolf78 sole finite gap; async isolation is next
 
 Actual78 belongs solely to Wolf. Its original finite sprite comparison is
