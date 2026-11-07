@@ -33,6 +33,13 @@ try:
   oldrun=subprocess.run([str(O/'old-composition')],stdout=log,stderr=subprocess.STDOUT,timeout=15,preexec_fn=no_core)
  assert oldrun.returncode!=0,'Historical demand-clear bug escaped new actual-C oracle'
  report['old_actual_owner_negative_control']=dict(returncode=oldrun.returncode,expected_failure=True)
+ # Distinguish false idle after actual error-driven abort from the STOP oracle.
+ run('old-c2-link',common+['-DLEGACY_OWNER_CONTROL','-DLEGACY_C2_ONLY','-I'+str(R/'include'),'-I'+str(U/'include'),str(R/'tests/network/async/rx_scope.c'),str(U/'src/u1_tx.c'),str(O/'old-emos_net.o'),str(O/'old-emos_neta.o'),'-o',str(O/'old-c2')])
+ with (O/'old-c2-negative-control.log').open('x') as log:
+  c2=subprocess.run([str(O/'old-c2')],stdout=log,stderr=subprocess.STDOUT,timeout=15,preexec_fn=no_core)
+ assert c2.returncode!=0,'Historical error-driven abort returned positive idle'
+ report['old_post_rx_abort_negative_control']=dict(returncode=c2.returncode,expected_failure=True)
+
 
  # Existing synchronous actual C peer/P4 test is a regression control.
  run('sync-endpoint',common+flags[:1]+flags[3:]+['-c',str(E/'src/emos_net.c'),'-o',str(O/'sync.o')])

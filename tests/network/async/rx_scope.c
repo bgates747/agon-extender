@@ -155,6 +155,7 @@ int main(void){
     assert(agon_net_submit(&c->net,AGON_NET_POLL,0,0)==35&&!c->net.admitted);
     assert(agon_neta_active==c&&reserved&&c->tx.phase==U1_IDLE);
     refuse_submit=0;assert(agon_neta_close(c)==0&&!reserved&&!agon_neta_active);
+#ifndef LEGACY_C2_ONLY
     /* Source-safe false-IFF refusal cannot clear an enclosing hold. */
     fresh(c);uint8_t enabled=emos_neta_lock();
     assert(enabled&&emos_neta_rx_hold&&rx_stop&&!irq);
@@ -166,6 +167,7 @@ int main(void){
     pending_fault=0;pending_stop=1;assert(agon_neta_progress(c)==0&&rx_stop);
     pending_stop=0;assert(agon_neta_progress(c)==0&&!rx_stop);
     assert(agon_neta_close(c)==0&&!rx_stop);
+#endif
     /* Actual RX->fault->net_reset can clear demand. It must not become idle
      * or double-release. All borrowed storage stays allocated in this test. */
     fresh(c);stop=1;assert(agon_net_submit(&c->net,AGON_NET_POLL,0,0)==0);

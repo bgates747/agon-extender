@@ -25,18 +25,18 @@ work finish first; all source preparation below is independent of that bench.
 
 ## First offline tranche
 
-1. [ ] Join actual eZ80 owner source/generated/linked code to the failed ROM.
+1. [x] Join actual eZ80 owner source/generated/linked code to the failed ROM.
    Inventory IRQ exclusions, RX STOP assertion/release, RX parser/app callback,
    UART0 and VBlank paths. Distinguish bounded native instruction paths from
    unbounded CTS waits and unmeasured callback work; do not invent cycle totals.
-2. [ ] Join matched retained P4 source/IDF UART queue and hardware CTS setup to
+2. [x] Join matched retained P4 source/IDF UART queue and hardware CTS setup to
    its installed artifact. Identify the maximum queued transmit path and actual
    source guarantees about STOP; do not infer electrical response from APIs.
 3. [ ] Coordinate generic UART0/U1 contracts with UART owner. Keep its unchanged
    core/emitter; any generic correction is UART-owned. Extender may correct its
    derivative EMOS-specific admission/ISR glue, preserving register/IFF, RX/error
    sample, writer/mode guard, source/drain/reply and positive-close contracts.
-4. [ ] Select the smallest concrete owner correction supported by those source
+4. [x] Select the smallest concrete owner correction supported by those source
    findings, or a bounded opt-in discriminator if physical timing is missing.
    Candidate contracts include asserting STOP before long owner exclusions and
    releasing it only after corresponding RX/IRQ readiness; avoid globally
@@ -106,3 +106,63 @@ Implement/check these in an isolated EMOS worktree, preserving failed-trial
 source and binaries. They close identifiable owner contract/readiness gaps;
 neither is asserted to explain76OE. The standalone IRQ epilogue gap, unrelated
 UART0 CTS wait and unknown peer electrical response remain separate limits.
+
+## Checked first correction and next bounded derivative
+
+C1/C2 pass actual-C sanitizer/lifetime checks, distinct historical-source
+negative controls and the complete native identified-ROM validators. Source
+54abf57, raw ROM130422 bytes,650 free; delta281 ROM bytes and1 BSS byte against
+failed043a. Full ROM e74df3582e1d2a301c15362df8a1bc06f9f8f43019711436770a7ca275544119.
+No installation or causal attribution follows. The first build correctly stopped
+at the Port C inventory: two narrowly gated new leaves now have exact linked
+write/IFF/health/return verification. No validator was skipped.
+
+C3 selected before integration: incorporate UART owner's immutable bounded-CTS
+source derivative05b8b10 (handoff5f568c1), preserving its native admitted copy
+paths and saved AF/EI/RETI frame. EMOS calls its bounded rearm from the existing
+saved VBlank path. The pending flag precedes IER/TEMT in EMOS ownership checks:
+TX interrupt masked plus empty FIFO does not retire a deferred source. Existing
+route/reset admission must refuse it; no new cancellation API is introduced.
+Only accepted new publication/final copy or actual reset teardown may clear the
+pending flag. BSS initialization is the existing actual-reset teardown; a route
+request cannot clear it. No UART generic donor/IRQ installer is imported.
+
+Qualification must compare exact generic defer/rearm source and linked bytes,
+reject missing pending ownership and admission-after-count mutations, preserve
+all original validators and check the complete ROM fit. Generic+52 ROM/+1 BSS
+is a standalone cost, not the EMOS integration size. No unbounded WAIT_CTS is
+allowed in the selected optional TX leaf. One VBlank retry may add one refresh
+interval; no latency/throughput improvement or76 cure is assumed.
+
+## First isolated physical case — selected before fixture code
+
+1. A separate application-owned UART1 async echo appliance reuses the existing
+   four-session/176-record deterministic matrix (eleven lengths0..128 and four
+   binary patterns). eZ80 sends through EMOS/U1 to P4 NM/TCP; the Pi echo peer
+   returns the exact payload through P4/UART1. Both endpoints compare exact
+   bytes. No CRC, additional sensor, renderer, module or game is added here.
+2. The app installs the existing checked NM callback bridge, services only its
+   app-owned core through supported EMOS hooks, and retires source, later wire
+   idle and reply independently. Every session must positively close and restore
+   its saved callback before the next declared session. Failure never reconnects
+   or resubmits an uncertain request. Refused close retains static storage and
+   original fault, logs what is safely possible, and waits for owner recovery.
+3. First isolation deliberately keeps UART0 display and SD activity outside live
+   NM/source ownership. It qualifies the owner integration/lifecycle, not mixed
+   graphics overlap, useful-work capacity or async performance. Quiet UART0 does
+   not exercise C3 blocked CTS physically; linked/source checks remain explicit.
+4. Record entry mode, conditionally select mode20, settle at least one second,
+   restore entry mode and visible cursor/CLI. Escape is checked between bounded
+   calls. Native case ceiling14400 nominal120Hz MOS counts; independent loop
+   fuses and peer's150-second original envelope stop missing progress. Startup
+   is untouched; one explicit LOAD/RUN only, no automatic restart on reset.
+5. The Pi runner stages and verifies one new identified app and peer, installs
+   and independently reads back the exact combined candidate ROM only, retains
+   current P4/native/startup/listener, then invokes this case once. It preserves
+   SD results and, on unsafe failure, original application RAM before LOAD;
+   follows supported recovery, restores exact retained working a25f ROM/readback
+   and full idle handback/release. No P4 installation or unrelated firmware write.
+6. Freeze ROM/ELF/map/config, app/listing/core/SDK/callback, peer/runner, fresh SD
+   namespace and retained rollback hashes before READY. Normal fresh admission
+   after actual77 release; no old token. MechAgon remains first priority and
+   Wolf may use finite gaps while this source preparation is incomplete.
