@@ -1,0 +1,79 @@
+# COMMS-002 — Matched UART1 versus parallel performance
+
+Smith clarifies that faster MOS↔VDP communication is the project's primary
+motivation, well ahead of the faster renderer as a side benefit. Determine where
+eight-bit parallel improves or worsens supported communication relative to
+UART1, and whether those changes improve the complete application workload.
+
+**State:** Separate design/task prepared; no code, build or hardware run.
+**Owner:** Extender owns reusable transport benchmark and EMOS/P4 accommodations.
+Consumer-specific replays remain with their owners.
+**Design:** [Performance comparison r01](../testing/communications-performance-design.md).
+
+## Boundaries
+
+1. Keep this test separate but complementary to [COMMS-001](COMMS-001.md).
+   Different executable/runner, invocation, configurations, records, runs and
+   conclusions. Do not extract speed results from the endurance/CRC/retry loop.
+2. Match the same eZ80 and P4 renderer, logical bytes, command/scene workload,
+   clocks, receiver state and output requirements. A mainboard-VDP versus P4
+   rendering comparison answers a different question.
+3. Separate transfer, setup/turnaround, receiver execution, eZ80 occupation and
+   complete application time. Count failures honestly and preserve strict
+   completion/ownership checks; do not time retries as successful transfers.
+4. Accuracy is a prerequisite for a usable sample, not permission to add a new
+   carrier checksum/retry protocol. Keep outside-window correctness checks and
+   matched instrumentation visible. Performance does not prove endurance.
+5. Prepare offline while others hold the bench. Normal ownership, task freeze,
+   explicit invocation, no autoexec modification, mode restoration and exact
+   rollback govern any later selected run. No current lease takeover.
+
+## Decision register
+
+| ID | State | Decision |
+|---|---|---|
+| C02-D01 | Selected by Smith | Separate performance test; faster MOS↔VDP communication is the primary project objective, faster renderer a secondary benefit |
+| C02-D02 | Selected by Smith | Separate but complementary to accuracy/endurance testing; no conflation of their runs or conclusions |
+| C02-D03 | Proposed | Matched UART1 baseline and parallel arms, same P4 renderer and command/data corpus, local sink and actual VDU streams before application replay |
+| C02-D04 | Unresolved source binding | Identify actual supported VDU/data paths, exact pair or transport-only composition delta and receiver completion contract |
+| C02-D05 | Unresolved measurement binding | Select qualified timer/batch sizes and supported eZ80 occupation/progress instrumentation without mistaking elapsed time for CPU cost |
+
+Next decision C02-D04: prefer a single matched firmware pair with explicit
+carrier selection. If current owners require separate compositions, retain
+their exact minimal delta and compare the supported paths openly. This affects
+installation/restoration, scheduling, API boundaries and interpretation; no
+new numeric ABI or dual-provider build is assumed by this task.
+
+## Work sequence
+
+1. C02-01 [x] Record the separate objective/design and primary project motivation
+   before coding, linked from the sole authoritative TODO.
+2. C02-02 [ ] Audit actual public MOS/VDP documentation and owned UART1/parallel
+   VDU/data source paths; pin baseline/source/build identities and completion
+   semantics. Reuse existing bounded transport evidence without calling it a
+   speed comparison. Keep official references read-only.
+3. C02-03 [ ] Freeze workload sizes/patterns/VDU commands, exact matched arms,
+   clocks, timer resolution, instrumentation, repetition/order and correctness
+   checks. Include setup-dominated tiny cases and sustained streams.
+4. C02-04 [ ] Implement the dedicated benchmark/coordinator and meaningful
+   timer-boundary/byte-equality/refusal checks. Keep endurance fault injection,
+   five-attempt retry state and hours-long schedule out of this program.
+5. C02-05 [ ] Build/check through normal compiler FIFO; freeze binaries/manifests
+   and finite deployment/invocation/restoration before requesting target time.
+6. C02-06 [ ] Run a selected bounded paired comparison under fresh sole custody,
+   with repeated/reversed controls and exact incoming restoration/clean handback.
+7. C02-07 [ ] Report side-by-side UART1/parallel units, median/tails/worst cases,
+   sample counts and percentage change from UART1. Identify crossover and
+   separate transport gains from rendering/application limits. Propose changes
+   from measured costs, including an honest negative outcome if needed.
+
+## Evidence limits and relationship to existing tasks
+
+1. No measured UART1-versus-parallel gain exists for this task. Prior upload,
+   repeated echo and MechAgon live results have their own payload/completion
+   scopes and cannot establish a general VDU stream speedup.
+2. PARALLEL-001's selected Wolf endpoint remains unresolved. This independent
+   transport performance task neither silently chooses that endpoint nor closes
+   the goal. It can provide reusable owner evidence for later consumer choices.
+3. COMMS-001 remains an accuracy/endurance design. It supplies separate failure
+   knowledge; COMMS-002 supplies speed/CPU-cost evidence. Neither replaces the other.

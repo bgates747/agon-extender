@@ -1,3 +1,31 @@
+# Current discussion checklist
+
+Author clarification: faster MOS↔VDP communications is the primary project
+motivation, not merely a benefit alongside renderer speed. The separate
+[COMMS-002 task](docs/tasks/COMMS-002.md) and
+[performance design](docs/testing/communications-performance-design.md) compare
+UART1/parallel on matched workloads with separate transport/render/application/
+CPU evidence. Keep it separate but complementary to COMMS-001, with different
+programs, runs, logs and conclusions. Both remain design-only.
+
+Current Author request: prepare the design and task before coding the mixed
+UART1/parallel communications accuracy appliance. See
+[COMMS-001](docs/tasks/COMMS-001.md) and its
+[design r01](docs/testing/communications-accuracy-design.md). Both are written;
+no fixture implementation/build/deployment/invocation has started. Preserve
+the four direction pairs, VDU/data workloads, endpoint CRC checks, UART1 failure
+reports, five failed attempts total, SD/Pi logs and no extra sensors. Actual
+filter rejection counters and the mixed-leg EMOS interface remain source
+dependencies, not existing capabilities. Discussion outcomes are in the agenda.
+
+The Author's pending conversation topics are saved in the
+[temporary project discussion checklist](docs/discussion-checklist.md).
+Read and maintain that agenda after context compaction; mark topics discussed
+and record their outcomes. It is not a second implementation TODO or authority
+to resume the blocked parallel goal. Use the live central registry and
+`HARDWARE.local.md` for current bench custody. Operational checkpoints below
+are historical.
+
 # Active work — renewed Nurples optimization window
 
 Author renewed eight hours2026-10-13T00:37:17Z–08:37:17Z. Continue existing
