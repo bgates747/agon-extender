@@ -174,3 +174,23 @@ uint8_t mask now has an explicit uint8_t cast, preserving C value semantics.
 No source or IRQ runtime claim follows; recheck actual C binary equivalence and
 compile the actual C++ fixture before hardware qualification. Compiler323 joined
 and released normally; this was offline build preparation, not a physical retry.
+
+
+### C3 foreground ownership observation — correction before installation
+
+Source review of checked244030d found a real interleave: foreground mode request
+reads pending0; UART0 IRQ defers and masks TXempty/sets pending1; the resumed
+helper sees IERoff/TEMT1 and clears ownership. Pending-first ordering alone is
+insufficient outside DI. The candidate was not installed, and its deployment
+selection is withdrawn while its source/check evidence remains frozen.
+
+Before another build, make the complete owned/pending/IER/TEMT observation a
+bounded caller-IFF-preserving atomic leaf. Preserve BC, no spin/callback/byte
+copy, retain disabled entry without EI and restore enabled entry once. Exact
+linked validation must require this wrapper and its pending-first locked body.
+This is an EMOS foreground composition defect, not a generic donor fault or
+assigned76 cause. There is still no supported cancellation on arbitrary app
+return/unload: callbacks plus later wire idle must retire positively, otherwise
+retain storage/quarantine and recover before LOAD. The first quiet-UART0
+isolation does not qualify cancellation. Wolf's qualified finite gap may run
+while this source correction/owner runner remains unready.
