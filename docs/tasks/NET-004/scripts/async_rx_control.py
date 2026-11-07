@@ -30,7 +30,7 @@ CASES = ('async-rx',)
 SIZES = [0, 1, 2, 17, 63, 64, 65, 75, 79, 127, 128]
 FIXTURE = '7ad4c8915a6f0a2ed721f5ab8ac080ca526d92ce3b30a1febc74567fb037fa1e'
 P4 = 'd9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e'
-EMOS = 'd43150a05293dabaecc2599922bc8cd8a6ee7453f0ff0a6577aaa84457eb90d7'
+EMOS = '8de66c3ac52a4f4c90ffaac30f7de740c7aa71218f4753c2f3950d6fb9a5a222'
 UNCHANGED = dict(native_vdp_sha256='5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07',
  startup_sha256='ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64',
  listener_sha256='0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2')

@@ -32,7 +32,7 @@ work finish first; all source preparation below is independent of that bench.
 2. [x] Join matched retained P4 source/IDF UART queue and hardware CTS setup to
    its installed artifact. Identify the maximum queued transmit path and actual
    source guarantees about STOP; do not infer electrical response from APIs.
-3. [ ] Coordinate generic UART0/U1 contracts with UART owner. Keep its unchanged
+3. [x] Coordinate generic UART0/U1 contracts with UART owner. Keep its unchanged
    core/emitter; any generic correction is UART-owned. Extender may correct its
    derivative EMOS-specific admission/ISR glue, preserving register/IFF, RX/error
    sample, writer/mode guard, source/drain/reply and positive-close contracts.
@@ -41,7 +41,7 @@ work finish first; all source preparation below is independent of that bench.
    Candidate contracts include asserting STOP before long owner exclusions and
    releasing it only after corresponding RX/IRQ readiness; avoid globally
    changing nested locks or introducing a resident serializer without proof.
-5. [ ] Check actual-source nested/foreground/IRQ cases and first-fault lifetime,
+5. [x] Check actual-source nested/foreground/IRQ cases and first-fault lifetime,
    delayed CTS, RX-first cap and callback behavior. Use normal serial compiler
    FIFO, finite15min build/check tranche, all mandatory native validators and
    exact identified ROM/map/full size. Preserve synchronous default object and
@@ -194,3 +194,26 @@ return/unload: callbacks plus later wire idle must retire positively, otherwise
 retain storage/quarantine and recover before LOAD. The first quiet-UART0
 isolation does not qualify cancellation. Wolf's qualified finite gap may run
 while this source correction/owner runner remains unready.
+
+
+### Atomic candidate checked; physical isolation still pending
+
+Source954e3c5 corrects the foreground race with a16-byte wrapper preserving BC
+and caller IFF around the complete pending/IER/TEMT snapshot. Mandatory linked
+validation requires the exact wrapper and rejects missing DI, unconditional EI
+on disabled entry, and lost BC restore mutations. Full native validators and
+actual-source sanitizer/lifetime/old-error controls pass compiler327/12.279s;
+children joined/released, no successor at release. RawROM130497/free575,
++356 ROM/+2 BSS versus043a. Exact fullROM
+8de66c3ac52a4f4c90ffaac30f7de740c7aa71218f4753c2f3950d6fb9a5a222;
+map6c25fbc94d6fd36f7299b4a82a49c962221ba355124cd53d403de2d7d62fba71.
+Uninstalled experimental candidate; old d43150 is a retained source baseline,
+not a deployable selection. The actual C probe remains byte-identical across
+the SDK C++ byte-mask cast; the new C++ echo binary is17809 bytes.
+
+The standalone controller rejects stale owner/token/ROM/native/fixture, partial
+matrix/close, uncertain callback/mode and old output namespaces. Its tests are
+host admission/result checks, not a simulated UART/IRQ execution. First physical
+readiness still requires exact frozen staging/install/rollback/collection and
+fresh central admission. Wolf's existing qualified finite goal case78 uses the
+bench while this preparation continues; no parallel Extender target access.
