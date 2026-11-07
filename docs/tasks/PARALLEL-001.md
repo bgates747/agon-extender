@@ -11,8 +11,10 @@ matched Wolf integration evidence, explicit limits and clean handbacks.
 Smith explicitly requests a persistent goal on2026-11-06: get eight-bit parallel
 working, use Wolf as the already-assigned test case, keep Oryx unavailable and
 share the powered Olimex bench with UART/VDPlet through normal reservations.
-The persistent goal is active in Extender's existing chat. This task consolidates
-that objective without restarting MechAgon's completed final parallel attempt or
+The persistent goal is blocked on P01-D05: Wolf's assigned operation for the
+eight-bit link has not been selected. The transport evidence below is retained;
+this status does not stop Wolf's separate ordinary-carrier suite or change bench
+custody. This task consolidates that objective without restarting MechAgon's completed final parallel attempt or
 making its working UART renderer depend on a parallel repair.
 
 Source/check preparation, focused diagnosis and implementation in maintained
