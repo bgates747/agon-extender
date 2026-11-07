@@ -1,4 +1,4 @@
-# Current — forward performance complete; MechAgon71 stopped recovery
+# Current — forward performance result; Wolf72 sole operator
 
 COMMS002 physical70 is cleanly released with exact incoming UARTd9bcb/EMOSa25f
 and full touched P4span restored/readback equal; mainboardprofile8 unchanged.
@@ -9,13 +9,19 @@ USB acquisitions retained;4097 unqualified, not transport corruption proof.
 No reversebulk/CPUheadroom/FPS/endurance/production claim. Analysis hashes and
 raw proof retained agents/comms-performance-r01. Wider COMMS001/002 remain open.
 
-Fresh actual71 granted/stopped handoff to MechAgon async001 after39pin/fresh
-CLI/state/file/idle proof. Its ONE native returned result4/4decisions/5views,
-UNLOAD0/actualCLI; collection then lost input admission (reason6). Root reports
-all actors stopped and delegates samelease cleanup to Extender. Follow bounded
-[BENCH010 recovery](docs/tasks/BENCH-010/ASYNC001-RECOVERY-R01.md), preserveRAM
-beforeLOAD, retain failure/normal-exit distinction, no replay/firmwarewrite.
-Wolf f60e5f0fed70 follows with newly qualified419inputkit; no grant while71active.
+Fresh actual71/MechAgon async001 returned result4/UNLOAD0/actualCLI, then
+collection inputreason6. Under its stoppedreturn Extender used one Agon reset,
+preserved64KiB040000 beforeLOAD (SHA7a5d4f5c), collected original status, then
+existing postgetter/raw/files/CLI/input/idle/freeports checks passed. Native
+close/cleanup/end1 established; local TAKE timeout is owner sourceanalysis,
+not proven carrier cause. Actual71 cleanreleased; no firmwarewrite/P4reset/game
+replay. [Recovery result](docs/tasks/BENCH-010/ASYNC001-RECOVERY-R01.md).
+Wolf f60e5f0fed70/419inputkita1f7a867 received actualfresh72 and stopped sole
+handoff after currenttuple/wholefiles/CLI/rawstate/idle proof. One selected
+finite original-ray comparison, exactnativeapp-tail restoration/fullcleanup
+then normalrelease, no newhold. No schedulertest/flash/reset; Extender alltarget
+accessSTOPPED at handoff. Consult live registry
+and ignored HARDWARE.local.md for actual custody, not old checkpoint prose.
 Old checkpoints below are historical and cannot establish current custody.
 
 # Active selected run — COMMS002 forward performance

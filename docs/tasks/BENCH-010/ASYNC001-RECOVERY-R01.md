@@ -33,3 +33,24 @@ Private source freeze, stopped-return evidence, context and operational receipts
 remain in the ignored request-local recovery directory. Existing selected
 ASYNC-001 implementation/verification and standing monitored-recovery authority
 cover this cleanup. No new consumer or firmware task is authorized here.
+
+## Actual outcome
+
+Input admission remained unavailable at the stopped boundary. One ordinary
+Agon reset restored fresh input and actual CLI; P4 reset was unnecessary.
+Before any LOAD, Extender saved 65,536 bytes from 040000, SHA256
+`7a5d4f5c8f8b99de2e3e6bdbc5322bf4fedfff2eec96b96202e8700bdde0a3d7`,
+and collected the original native status. That status records result 4, four
+decisions, five presentation records, two native/module frames and successful
+close/cleanup/end. MechAgon's source analysis identifies a local TAKE timeout;
+this record does not attribute the cause to P4 BUSY, RFC refusal or wire noise.
+
+The selected getter reports exact feature absence and callback/buffer retirement.
+Raw mode 0/callback zero/Legacy 0, full unchanged startup/listener, actual CLI/
+cursor, neutral input, offline listener, idle worker, free ports and joined
+actors pass. Generation 71 cleanly released at `2026-11-07T05:13:42.688614+00:00`.
+MechAgon received preserved evidence and the complete handback before extended
+analysis; Wolf's prepared normal reservation follows. No firmware write, P4
+reset, application replay or additional game occurred. RAM is explicitly
+post-reset evidence; original observed native return remains separate from
+recovered cleanup. All Extender target access stopped at release.
