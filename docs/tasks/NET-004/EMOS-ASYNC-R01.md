@@ -82,7 +82,7 @@ clients and the already frozen consumer scheduler case remain unchanged.
    its adaptation. Prepare a separate finite trial/immutable kit/current tuple,
    fresh normal checkout and explicit stopped sole-operator handoffs. Current
    frozen scheduler case is independent; no new driver inserted there.
-6. [ ] Return actual source/size/test and useful-work results and limitations to
+6. [x] Return actual source/size/test and useful-work results and limitations to
    UART/MechAgon. No production acceptance, automatic adoption or version tag.
 
 ## Decision register
@@ -92,12 +92,12 @@ clients and the already frozen consumer scheduler case remain unchanged.
 | EA01 | Author selected | Provisional reuse/integration/trial now; no longer gated by longer vanilla benchmarks. |
 | EA02 | Owner selected | Separate opt-in provider and immutable one-source guard before construction; preserve synchronous ABI. |
 | EA03 | Implementation closure | Exact hook/result/capability layout, atomic sample/error retirement and competing-writer inventory must be checked before consumer binding. |
-| EA04 | Qualification pending | Full16B/multi-FIFO CTS reserve and actual useful foreground work need matched physical trial. |
+| EA04 | First trial failed | Receiver overrun after source release; cause unresolved. Full16B/multi-FIFO CTS reserve and useful foreground work remain unqualified; working ROM restored. |
 
 Human source IDs and exact build/network/device paths remain in ignored owner
 records; no credentials or unique-device configuration belongs in this task.
 
-## Checked provisional binding (not physically qualified)
+## Checked provisional binding (first physical trial failed)
 
 The optional build flag EMOS_UART1_APP selects provider ext.neta through the
 unchanged66B service gateway. It requires the UART-NM/guarded-RFC25 composition
@@ -130,8 +130,9 @@ a refused cleanup preserves all state. No additional staging or general queue.
 
 Actual-C composition tests and target link/mandatory ROM validators pass. The
 checked SDK/ROM binding is available for the selected consumer adaptation; it
-is not installed or hardware-qualified. The current failed consumer run used old synchronous
-UART1 submission and cannot be attributed to this uninstalled adapter.
+is not hardware-qualified. The earlier synchronous failure is separate from the
+subsequent first U1 trial, which reported UART1 receiver overrun and deliberate
+quarantine; its cause is unresolved. The candidate is rolled back.
 
 [Offline result](EMOS-ASYNC-R01-RESULT.md) records the checked candidate, actual
 linked sizes, malformed-OPEN lifetime correction and remaining physical boundary.
@@ -157,5 +158,18 @@ preserved. No installation or physical readiness is claimed.
 
 [First physical installation](EMOS-ASYNC-PHYSICAL-R01-RESULT.md) records exact
 ROM staging, one FLASH, independent full readback and stopped consumer handoff.
-The selected workload and same-lease working-ROM rollback remain pending;
-installation is not an async workload, performance or production pass.
+The selected first trial failed with receiver overrun after source release.
+Original status and post-reset RAM are retained; exact working-ROM restoration
+and normal clean release are complete. This is no async-performance or
+production pass. UART and consumer source feedback is retained in that result.
+
+## Remaining owner receive-service investigation
+
+1. [ ] Correlate exact owner RX STOP/peer TX behavior and masked/callback service
+   intervals against the reported first overrun. Distinguish source facts from
+   measured timing and preserve the reciprocal UART0/NM guard. No error clearing,
+   forced close, generic-core rewrite or replay follows from the first result.
+2. [ ] Select and publish a concrete minimal correction or bounded discriminator
+   only after that source analysis; use fresh normal custody for any later
+   physical case. Keep the working synchronous ROM baseline. This record does
+   not select another invocation or a performance comparison.

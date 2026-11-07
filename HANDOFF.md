@@ -1,3 +1,31 @@
+# Current — actual76 clean released, failed U1 trial preserved, working ROM restored
+
+Actual76/1b46642ee71b RELEASE2026-11-07T07:48:31.562200UTC; oldtokeninvalid,
+nextnull at release. ALL Extender/Mech targetactors stopped. Full131072B a25f
+working ROM independently readback exact; P4d9bcb/native5d657profile8/fulltail85f9/
+startuped403/listener0566 unchanged. Fresh rootCLI/cursor/rawmode0/callback0/route0/
+wholefiles/inputneutral/offlineidle/worker0/freebothUSB pass; SDmounted.
+Current source of receipt: agents/bench-scheduler/mechagon-async001-u1-r01/
+released76.json; owner-final-r02/observation.json,state.json; owner-install/
+verify-rollback/ROM.bin,receipt.json. No old custody or new grant implied.
+
+ONE U1trial failed: original status0da0db39 + postreset64KiBRAM4a7aa3d3 beforeLOAD
+match immutablecf910/map3306/25SDwitnesses. UART1receiverOE0x02, source released/
+remaining0, no positive laterdrain/close. Result6 explicitHALTquarantine explains
+noCLI; no genericcore/P4/noise cause or speedup claimed. Standing oneAgon failed,
+oneP4 initialization earlyHTTP timeout BEFOREpairedAgon; observed sameP4 stable
+then issued missing pairedAgon once, no secondP4reset/replay. Existingfeature
+getter absent/callbackrestored; exacta25frollback/fullcleanup done. Firstfinal
+registry write failed sandbox permission; genuinely new checks then release,
+no restamped observation. Physicalresult docs/tasks/NET-004/
+EMOS-ASYNC-PHYSICAL-R01-RESULT.md; remaining source timing investigation in
+EMOS-ASYNC-R01.md. Keep reciprocal UART0/NM gate and error/unsafeclose handling.
+
+Wolf011 new8fd506cf5fbe PREPARING: manual visible guest, stage+LOAD ONLY, NO RUN
+by agent. Current tuple/readback/release supplied; exact frozen kit/readiness
+required before normal fresh grant. No simpler profile8 qualification assumed.
+Earlier checkpoints below are history.
+
 # Current — actual76 MechAgon sole provisional UART1 consumer
 
 Actual Wolf75 cleanrelease independently verified. New76/1b46642ee71b fresh CLI/

@@ -3,7 +3,9 @@
 The first application-owned EMOS adaptation passes actual-source sanitizer tests,
 an eZ80 application link and every selected native firmware validator. The engine
 remains in application RAM. This is a checked provisional consumer binding, not
-an installed driver or a physical async-performance/30 Hz result.
+a physical async-performance/30 Hz result. The subsequent first physical trial
+failed with receiver overrun; its [physical result](EMOS-ASYNC-PHYSICAL-R01-RESULT.md)
+records exact evidence and complete working-ROM restoration/release.
 
 ## Exact scope and sizes
 
@@ -38,7 +40,8 @@ transfer queue, buffer, callback engine or timeout loop is introduced.
    separately installed user keyboard callback: retire that existing chain too.
 4. Exact retained build objects, ELF/map/ROM and input hashes remain in the
    ignored owner binding inventory. Working UART ROMa25f/P4d9bcb remain installed
-   and are retained rollback; the new ROM has never touched the bench.
+   and are retained rollback. The candidate was subsequently installed/verified for
+   one failed trial, then rolled back; see the physical result.
 
 ## What passed
 
@@ -92,10 +95,11 @@ owner probe above. The resident ROM cost remains separate.
 Async executable SHA256
 `cf910bd7e15533067f5c1cd886af0b3874258acfc4da087c1923e1bd784bfb4b`;
 map `330608002abab39fc98efe1c7aef74f8fd9de159453f285b92510423392872cb`.
-No consumer hardware invocation, useful-CPU percentage or frame-rate result
-is established by these links. The new trial is preparing behind the current
-bench owner. [Owner installation plan](EMOS-ASYNC-PHYSICAL-R01.md) bounds its
-separate firmware change and rollback.
+These links establish no useful-CPU percentage or frame-rate result. The later
+first consumer invocation failed with UART1 receiver overrun and deliberate
+quarantine; the working ROM is restored and the bench released. The
+[owner installation plan](EMOS-ASYNC-PHYSICAL-R01.md) bounds that separate
+firmware change and rollback.
 
 ## Remaining physical boundary
 
@@ -104,9 +108,10 @@ headroom for queued eZ80 FIFO/shifter bytes under one writer; this source argume
 is not a measured electrical CTS qualification. EMOS keeps RX/vector/error/LSR,
 GPIO/mode/writer ownership. No source or wire completion proves peer execution.
 
-MechAgon must adapt its caller to independent source/wire/reply lifetimes and the
-reciprocal UART0/NM gate, build against this exact SDK/core/ROM, and freeze one
-finite consumer trial. Extender prepares exact EMOS-only install/readback and
-working-ROM rollback under a new normal lease and explicit stopped handoffs.
+MechAgon adapted its caller, checked its links and ran one frozen finite trial
+with the independent source/wire/reply lifetimes and reciprocal UART0/NM gate.
+That trial failed with receiver overrun. Extender completed exact EMOS-only
+installation/readback, evidence preservation, working-ROM rollback/fullreadback
+and normal clean release. Receive/IRQ/peer STOP timing remains unresolved.
 No vanilla benchmark gate, production promotion, implicit parallel substitution,
 checksum, replay, speedup or tick-for-tick30Hz claim is introduced.
