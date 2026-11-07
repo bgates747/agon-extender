@@ -1,3 +1,51 @@
+# Current — actual106 sole Agon6502; R12 source templates returned
+
+Actual105 Wolf cleanrelease23:50:55.967071UTC independently reconciled: original
+andcleanupactorsjoined, exactfull85f9restore/readback/currentmatchedbootstrap/
+freshfullhandback. Game/data owner-reported250records passed; originalsuite
+failedonlypostdata metadatajournalreuse. No Extender game acceptance/cause claim.
+
+Fresh actual106/8edf1c23bec0 now granted to agon-6502, solely operated by that
+owner; grant/context/stoppedhandoff and entryproof under
+agents/bench-scheduler/dsk001-local-flush-r01. Original human persistence/goal/
+Olimex-only instructions directly verified. Exact25input0bd9aea2 freeze/sourceABI,
+actual105cleanhandback and freshcurrentCLI/readEXIT/SAVE-onlyrawmode0/callback0/
+Legacy0/wholefiles/inputneutral/offlineidle/freeUSB pass. ALL Extender targetaccess/
+readers/pendingcommands STOPPED. ONE ordinaryMOS disposablefile case only,
+original180s/600s bounds; no guest/nativeVDPlet/mode/firmware/reset/callback/timer
+or replay/HOLD; fullbyte/result retrieval, entrycwdroot/state/files/inputidle/
+resources/CLI cleanup andnormalrelease/immediateactualnext required. d9b/a25f/
+5d657/ed403/0566 preserved; SDmounted.
+
+Mech R12 4dede follows, PREPARING. Final3bb38d/a25f owner/map/source/predecessor
+packet passed20inputfile-onlypreflight and was returned by mail+steering:
+agents/bench-scheduler/mechagon-goal001-r12. Finalnewcaller/native/map/decoder/kit
+notready/no R12install. No source/runtimehelper edit, no benchhold or c1047
+isolationtransfer claim. Existing publicationhold remains. Earlier content historical.
+
+# Current — R12 source templates returned; physical105 sole Wolf cleanup
+
+R12 4dede2220dc4 PREPARING: request-local final3bb38d/a25f owner-selection,
+source-preparation,map/predecessor/templatepins and20input file-only preflight
+passed, returned by mail+immediate steering. See agents/bench-scheduler/mechagon-goal001-r12.
+Final consumer native/map/decoder/kit pending; sourcefreeze-ready only, no
+physicalqualification/admission/target/build/hold. Earlier102 c1047 isolation
+is historical, not new witness physical PASS. No helper or runtime edit.
+
+Agon6502 final25-pin local-file cohort rehashed; exacta25f/2c79source and actual
+consumer object agree on FIL36B/objsizeoffset11..14/tinyconfig and FFS80..86calls.
+Source-only compatibility result and limits returned, no device/compile/newtest:
+agents/bench-scheduler/dsk001-local-flush-r01/source-abi-assessment.json.
+Normal8edf next after105, R12 follows; actualfuture predecessor/freshgrant required.
+
+Wolf105 owner reports original game/data250records passed, then final EXIT failed
+on reused metadata label after new listener boot. Originalcontroller21627 exit1,
+observer85973 exit0/tracer0 joined; soleWolfnecessary cleanup/restoration remains.
+No cleanrelease inferred. ExtenderALLtargetSTOPPED/no pendingdevicecommand.
+Expectedincoming tuple/source receipts are not live currentdeviceclaims. MountedSD,
+no replay/P4/EMOS/default/nativeaxis selected. Existing publicationhold preserved.
+Earlier handoff content historical.
+
 # Current — optional UART0 witness source checked; physical105 sole Wolf
 
 G01-U0-001 source/native preparation complete, uninstalled: clean EMOS03e05c2/SDKd6be7212; identified r05-b2026-11-07-23-38-00Z fullROM3bb38d6c. OFF exactc1047; ON+309ROM/+3BSS,36apprecord,26ROMfree. All mandatory native guards,790 record/256 added handler cases,13 actual-C lifetime/span and default notify/core/emitter identity/negative controls pass. Local artifacts under agents/net004/uart0-rx-witness-r01/{RESULT.md,checked-result.json,package-r02,uart0-rx-witness-r02.zip}; tracked NET-004 result details exact scopes/stack/cost/lifetimes. No new physical case/install, no missing-reply/U1cause claim. Prior P4coredump producing metadata unknown; no fresh acquisition. Compiler496 released/allchildrenjoined, successor497 steered. Publication hold persists.
