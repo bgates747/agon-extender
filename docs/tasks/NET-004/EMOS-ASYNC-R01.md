@@ -274,3 +274,11 @@ from lifetimeRX267336; its53440nonPCMbytes equal64bytes/request in aggregate,
 not an attribution to individual AT/Wi-Fi/driver costs. This is an extended
 receive-integrity pass, not sustained8kplayback. Larger bounded request windows
 remain Jukebox's proposed next comparison; no new owner work is assigned.
+
+## Goal-directed receive correction tranche
+
+Smith's independently verified MechAgon goal delegation selects reliability
+first, measured eZ80 headroom and then maximum sustainable presentation rate.
+The [receive-service plan](EMOS-ASYNC-RX-R01.md) bounds Extender's owner source,
+correction, measurement and separate isolation work. Protected current/queued
+bench owners finish first; no active lease is transferred or preempted.
