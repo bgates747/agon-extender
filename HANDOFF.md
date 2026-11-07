@@ -1,3 +1,22 @@
+# Current — actual80 MechAgon sole consumer, Extender target-stopped
+
+Candidate8de66 full131072B ROM independently compared; fresh mode0/callback0/
+route0/files/CLI/input/idle/freeports passed. Exact160inputd39e consumer339 under
+actual80 now operatorMechAgon/phaseconsumer. Actual stoppedhandoff delivered:
+agents/bench-scheduler/mechagon-goal001-r01/{context.json,stopped-operator-handoff.json}.
+All Extender targetaccessSTOPPED/no readers/pending commands. MechONE finite
+unprofiled30TPS Native/Walls case only; actual joined/stopped return must precede
+same80 ownera25frollback/fullreadback/fullcleanup/normalrelease. No early target
+poll/getter/reset or sharedoperator. Current P4d9bcb/native5d657/startuped403/
+listener0566 unchanged; SDmounted. Incoming grant80 preservesa25frollback.
+
+Prior79 isolated176-record/four-sessionPASS/fulla25frestore/release10:36:14UTC
+published6c046e93; no76cure/speed/CPU/reliability expansion. Wolf016456459 is
+PREPARING behindcurrentMechprioritychain. OryxDOWN. Afterhandoff source-only
+P4local counters/timing prototype may proceed in isolateddefaultOFFsource,
+without current firmware change or globaltaskCPU accounting. Earlier entries
+are historical, no current authority.
+
 # Current — actual80 MechAgon reservation, Extender sole EMOS installer
 
 Actual79 isolation passed176/176 records/four positive connection retirements,
