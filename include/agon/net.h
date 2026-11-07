@@ -73,6 +73,26 @@ static __attribute__((naked,noinline,unused)) uint24_t agon_net_native(uint8_t*r
 #endif
 #endif
 #define AGON_NET_BARRIER() __asm__ volatile("" ::: "memory")
+/* Optional owner adapter hooks. Defaults retain the synchronous ext.net ABI.
+ * An async adapter must refuse BEFORE query/header/payload construction; a
+ * later gateway BUSY cannot undo writes into an outstanding source borrow. */
+#ifndef AGON_NET_PROVIDER
+#define AGON_NET_PROVIDER "net"
+#endif
+#ifndef AGON_NET_OPEN_FRAME
+#define AGON_NET_OPEN_FRAME(c) 1
+#endif
+#ifndef AGON_NET_SUBMIT_GUARD
+#define AGON_NET_SUBMIT_GUARD(c) 0
+#endif
+#ifndef AGON_NET_RELEASED
+#define AGON_NET_RELEASED(c) ((void)0)
+#endif
+#ifndef AGON_NET_BAD_OPEN
+#define AGON_NET_BAD_OPEN(c) do { \
+    (c)->input[0]=AGON_NET_LOCAL_RELEASE;(void)agon_net_exchange(c,1,0); \
+} while(0)
+#endif
 typedef struct agon_net_client {
     uint8_t request[66],input[AGON_NET_INPUT],reply[AGON_NET_BODY];
     uint32_t token,query;
@@ -83,18 +103,18 @@ static inline void agon_net_pointer(uint8_t*p,const void*v){
     uintptr_t n=(uintptr_t)v;p[0]=(uint8_t)n;p[1]=(uint8_t)(n>>8);p[2]=(uint8_t)(n>>16);
 }
 static inline uint8_t agon_net_exchange(agon_net_client*c,unsigned n,unsigned capacity){
-    uint8_t*r=c->request;memset(r,0,66);r[0]=66;r[2]=1;r[4]=3;r[5]=3;r[6]=2;
-    memcpy(r+25,"ext",3);memcpy(r+41,"net",3);
+    uint8_t*r=c->request;memset(r,0,66);r[0]=66;r[2]=1;r[4]=3;r[5]=sizeof(AGON_NET_PROVIDER)-1;r[6]=2;
+    memcpy(r+25,"ext",3);memcpy(r+41,AGON_NET_PROVIDER,sizeof(AGON_NET_PROVIDER)-1);
     agon_net_pointer(r+10,c->input);r[13]=(uint8_t)n;
     if(capacity){agon_net_pointer(r+16,c->reply);r[19]=(uint8_t)capacity;}
     return (uint8_t)AGON_NET_CALL(r);
 }
 static inline uint8_t agon_net_begin(agon_net_client*c){
     uint8_t r;if(c->admitted)return AGON_NET_LOCAL_BUSY;
-    c->input[0]=AGON_NET_LOCAL_OPEN;r=agon_net_exchange(c,1,7);
+    c->input[0]=AGON_NET_LOCAL_OPEN;r=agon_net_exchange(c,AGON_NET_OPEN_FRAME(c),7);
     if(!r&&(c->request[22]!=7||c->request[23]||c->request[24]||
        !agon_net_u32(c->reply)||c->reply[3])){
-        c->input[0]=AGON_NET_LOCAL_RELEASE;(void)agon_net_exchange(c,1,0);
+        AGON_NET_BAD_OPEN(c);
         return AGON_NET_PROTOCOL_ERROR;
     }
     if(!r){c->token=agon_net_u32(c->reply);c->query=0;c->pending=c->ready=0;c->admitted=1;c->reply_length=0;memcpy(c->previous,c->reply+4,3);}
@@ -102,13 +122,14 @@ static inline uint8_t agon_net_begin(agon_net_client*c){
 }
 static inline uint8_t agon_net_release(agon_net_client*c){
     uint8_t r;c->input[0]=AGON_NET_LOCAL_RELEASE;r=agon_net_exchange(c,1,0);
-    if(!r){c->admitted=c->pending=c->ready=0;c->token=c->query=0;}
+    if(!r){c->admitted=c->pending=c->ready=0;c->token=c->query=0;AGON_NET_RELEASED(c);}
     return r;
 }
 static inline uint8_t agon_net_submit(agon_net_client*c,uint8_t kind,const void*payload,uint8_t length){
     uint8_t*r=c->input+5,result;
     if(!c->admitted)return AGON_NET_UNAVAILABLE;
     if(c->pending)return AGON_NET_LOCAL_BUSY;
+    result=AGON_NET_SUBMIT_GUARD(c);if(result)return result;
     if(kind<1||kind>3||length>AGON_NET_PAYLOAD||(length&&!payload)||
        (kind==1?length!=6:kind==2?length!=0:0))return 19;
     if(c->query==UINT32_MAX)return AGON_NET_QUERY_EXHAUSTED;

@@ -1,3 +1,25 @@
+# Current — Wolf75 sole operator; provisional UART1 binding checked offline
+
+Fresh normal75/c2eb/WOLF-PERF009 actual grant and stopped handoff accepted;
+469input98d9397e/real60file Extender launcher/current74released tuple verified.
+Fresh SAVE-only mode0/callback0/Legacy0/wholefiles/CLI/inputidle/freeUSB; no
+scheduler flash/reset/LOAD/RUN/getter/PRTread. Wolf alone owns existing finite
+sixguest/sevenprobe wall-hoist comparison, exact native/tail85f9restore and full
+cleanup/normalrelease. No HOLD. Extender alltargetaccessSTOPPED. Context/evidence
+agents/bench-scheduler/wolf-perf009-r01; current facts in HARDWARE.local.md.
+
+Actual74 failedcase/RAM9828/status and supported recovery retained; cleanreleased
+06:24:51UTC, no replay/firmwarewrite. New UART1 provisional owner ROM043a is
+UNINSTALLED: source2c47053/native fullvalidators pass, app/core/EMOS-C lifetime
+checks including malformedOPEN/refusedcleanup pass. [Result](docs/tasks/NET-004/EMOS-ASYNC-R01-RESULT.md)
+reports resident+1033B/931Bfree and app probe+1199Btext/+19Bstate; no physical or
+usefulCPU/30Hz claim. Reuse UART823bb91 core/emitter, ext.neta explicitoptin,
+preconstruction guard, source/tail/peer retirement. Commit/publish exact SDK/
+consumer binding, then coordinate MechAgon-owned caller/trial; prepare EMOS-only
+install/readback/rollback under separate fresh normalbench after its kit ready.
+Never insert newROM into current Wolf75 or change workingUART choice.
+Earlier checkpoints below are historical; preserve unrelated BENCH010 dirt.
+
 # Current — MechAgon74 sole operator; provisional UART1 integration selected
 
 Actual fresh74 f2aa/ASYNC-001-R02 granted after actual73 clean release and new

@@ -42,3 +42,21 @@ interrupted sequence: bounded read-only current display readiness, then its
 not-yet-issued ONE Agon reset and actual CLI/RAM preservation. Failure to
 establish current initialization stops before another pulse. No repeated test
 or transfer follows this host-observation correction.
+
+## Actual completion
+
+The interrupted sequence completed without another P4 reset: fresh current
+display readiness then its not-yet-issued Agon fallback restored actual CLI.
+Post-reset64KiB040000 RAM was saved before LOAD and rehashed9828c52c; original
+SD status was collected. MechAgon independently matches its immutable native
+text/rodata and first-error witness. Original failure is local TAKE/POLL658 with
+657 callbacks accepted and no observed658; not proved P4 BUSY/RFC/wire cause.
+Original close/cleanup/end1 and actual native CLI remain separate from recovery.
+
+Existing postgetter exact featureABSENT/callback/buffer retirement, rawmode0/
+callback0/Legacy0/whole unchanged startup-listener/CLI/cursor/inputneutral/
+offlineidle/worker0/freeUSB/joinedactors pass. Actual74 normal release at
+2026-11-07T06:24:51.647414UTC, nextnull. UARTP4d9bcb/EMOSa25f/mainboardprofile8
+retained and SD mounted. All Extender target access stopped. No firmwarewrite,
+game replay or driver trial. Fresh Wolf75 later received its independent normal
+SAVE-only admission/stopped handoff for its already-qualified finite comparison.

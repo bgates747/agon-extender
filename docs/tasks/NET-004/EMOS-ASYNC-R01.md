@@ -65,16 +65,16 @@ clients and the already frozen consumer scheduler case remain unchanged.
 
 ## Bounded implementation and validation tranche
 
-1. [ ] Publish this plan and the EMOS task before code; send concrete source/
+1. [x] Publish this plan and the EMOS task before code; send concrete source/
    lifetime binding to UART and MechAgon, resolving material conflicts only.
-2. [ ] Implement the smallest owner glue and application adapter in their owner
+2. [x] Implement the smallest owner glue and application adapter in their owner
    repositories. Pin/import unchanged reusable core with license/provenance.
    Preserve old synchronous provider and matched P4/working UART baseline.
-3. [ ] Check actual C early callback/reply, TAKE then next SUBMIT, delayed CTS,
+3. [x] Check actual C early callback/reply, TAKE then next SUBMIT, delayed CTS,
    max146B/full count, masked calls, RX/errors, competing writers, tick retries,
    foreground progress, tail-live/invalid-reply/timeout detach and abnormal exit.
    Verify borrowed bytes/query/source remain identical on every refusal.
-4. [ ] Normal FIFO Pi build, finite15min tranche, serial compiler; host sanitizer
+4. [x] Normal FIFO Pi build, finite15min tranche, serial compiler; host sanitizer
    checks and native linked EMOS validators/actual application link. Record full
    application text/BSS, adapter overhead, resident ROM delta and remaining space.
    Do not waive validators, drop features or claim physical behaviour from host.
@@ -96,3 +96,42 @@ clients and the already frozen consumer scheduler case remain unchanged.
 
 Human source IDs and exact build/network/device paths remain in ignored owner
 records; no credentials or unique-device configuration belongs in this task.
+
+## Implemented binding candidate (not yet qualified)
+
+The optional build flag EMOS_UART1_APP selects provider ext.neta through the
+unchanged66B service gateway. It requires the UART-NM/guarded-RFC25 composition
+and refuses the parallel profile. No new MOS syscall/vector number is assigned.
+
+| Operation | Input | Output | Success and refusal |
+|---|---|---|---|
+| OPEN0 | selector +3-byte app hook pointer (4B) | existing7B token/saved callback |0 admitted,31 busy,19 invalid span,35 unavailable |
+| SUBMIT2 | same147B maximum gateway input/146B wire frame | none |0 accepted source, including possible early callback;31/19/35 before acceptance |
+| PROGRESS4 | selector only | none |0 later positive wire-idle,31 source/tail/retry,35 fault/unavailable |
+| RELEASE3 | selector only | none |0 positive hook removal,31 live source/tail,35 retained fault/unavailable |
+
+EMOS calls an ordinary C app hook under DI with both register sets protected:
+event1 START returns admission; event0 SERVICE receives its existing RX drain's
+shared final LSR with bit0 replaced by GPIO CTS STOP; event2 FAULT retains first
+fault/source. Service returns0 idle,1 TX demand,2 CTS retry,3 tail,4 fault. The
+actual source validates spans/IFF/Legacy mode, reserves the shared serializer/
+Port C guard, services RX before at most one burst, preserves RX IER enables,
+and retries via existing VBlank/explicit foreground progress. A16-byte RX cap
+never treats its final data byte as a status sample. Abnormal exit removes the
+hook atomically and faults a live stream without claiming completion.
+
+The application adapter is include/agon/net_async.h in the single transport-owning
+C unit, linked against the unchanged UART core/emitter. Its client contains the
+existing NM client plus TX state/release flag, with one app-BSS active pointer.
+The existing net.h has default-no-op adapter hooks; old synchronous users retain
+provider/wire behavior. The async guard calls owner progress BEFORE query/header/
+payload writes. A positive generic RELEASE also retires the app hook association;
+a refused cleanup preserves all state. No additional staging or general queue.
+
+Actual-C composition tests and target link/mandatory ROM validators are the next
+build boundary. This candidate is not installed, hardware-qualified, or yet a
+consumer SDK/ROM selection. The current failed consumer run used old synchronous
+UART1 submission and cannot be attributed to this uninstalled adapter.
+
+[Offline result](EMOS-ASYNC-R01-RESULT.md) records the checked candidate, actual
+linked sizes, malformed-OPEN lifetime correction and remaining physical boundary.
