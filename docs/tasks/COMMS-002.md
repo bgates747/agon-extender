@@ -108,3 +108,38 @@ not implement every proposed corpus, reverse or useful CPU-progress adapter.
 The 4097-byte boundary is explicitly unqualified after incomplete captures;
 existing historical numbers are not substituted for it. No promotion or new
 parallel/Wolf endpoint choice is inferred.
+
+## MechAgon application-shaped workload context
+
+The Author directs reading MechAgon's existing byte-budget discussion rather
+than treating large-buffer throughput as the application workload. The source
+count in MechAgon's `docs/tasks/PERF-001.md`, “Discussion: current message sizes”,
+provides this historical two-tank/no-bullet, one-scene/one-decision baseline:
+
+| Endpoints and carrier | Minimum bytes per turn | Scope |
+|---|---:|---|
+| Pi bridge → P4, TCP payload | 144 | 56-byte STATE + 80-byte FRAME, each with four-byte TCP record length |
+| P4 → eZ80, UART1 | 184 | Two framed record replies plus SEND acknowledgement |
+| eZ80 → mainboard VDP, UART0 | 117 | 80-byte FRAME + 37-byte buffer/upload/RUN wrapper |
+| Mainboard VDP → eZ80, UART0 | 12 | Tagged completion plus framing |
+| eZ80 → P4, UART1 | 78 | Two POLLs plus framed 24-byte intent SEND |
+| P4 → Pi bridge, TCP payload | 28 | 24-byte intent plus four-byte record length |
+
+Each additional empty UART1 POLL adds 18 eZ80→P4 and 16 P4→eZ80 bytes.
+Each bullet adds 12 display bytes; beyond four bullets, scene chunking adds
+further record and mainboard-command overhead. TCP rows exclude IP/Ethernet
+headers. These are source-derived baseline counts, not new captured traffic;
+ASYNC-001 changes scheduling, so its actual polling count must not be assumed.
+The Royale server's original JSON/WebSocket traffic is not included in the
+compact Pi-bridge rows and does not reach the eZ80.
+
+This workload is dominated by small bidirectional transactions, with more UART1
+bytes P4→eZ80 than eZ80→P4. The completed physical r01 measures large forward
+ordinary VDU buffers eZ80→P4; it does not measure that dominant reverse path or
+these network-message envelopes. Its 256-byte result also cannot decide the
+complete application's winning carrier. UART0's 117/12-byte rendering exchange
+is a separate physical link; replacing UART1 with parallel does not accelerate
+UART0 itself. Preserve these distinctions when selecting a later matched replay,
+including supported transaction sizes, actual poll count and turnaround. This
+narrow source discussion does not release MechAgon's held full-cycle profiling
+campaign, select a new fixture invocation, or change the current bench owner.
