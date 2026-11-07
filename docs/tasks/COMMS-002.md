@@ -5,7 +5,7 @@ motivation, well ahead of the faster renderer as a side benefit. Determine where
 eight-bit parallel improves or worsens supported communication relative to
 UART1, and whether those changes improve the complete application workload.
 
-**State:** Design published before coding; Smith then authorises the largest
+**State:** Smith selects the fresh [physical forward tranche](COMMS-002/PHYSICAL-R01.md) now; preparation and normal Wolf handback are active. Design published before coding; Smith then authorises the largest
 independent tranche on both tasks. Separate corpus/timer/measurement engine and
 collector pass sanitizer/source/CLI checks and an identified eZ80 link. Actual
 owner VDU/timer/receiver binding remains; no hardware benchmark or measured gain.
