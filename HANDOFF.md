@@ -1,3 +1,31 @@
+# Current — actual82 Mech compact consumer sole; Extender target-stopped
+
+Actual Wolf81 clean release11:22:53UTC/full85f9restore/readback/wholefinalproof
+reconciled. New82/b043da4b8156 normal fresh admission completed. Exact8de66 ROM
+stage/readback, ONEFLASH/exactboot, full131072B independent readback PASS, plus
+rawmode0/callback0/route0/wholefiles/CLI/readEXIT/inputneutral/offlineidle/freeUSB.
+Actual stopped handoff delivered/steered to Mech; real frozen precontact() and
+all162inputs15f46f18 matched against actual82 proof. Context and handoff:
+agents/bench-scheduler/mechagon-goal001-r02. Current operatorMechAgon/consumer.
+ALL Extender target access STOPPED/readersjoined/no pending commands. Wait for
+actual root stopped return; only then same82 exacta25f rollback/fullROMreadback/
+fullcleanup/normalrelease. No extra echo/profiling/replay/P4/native/startup edit.
+Original grant preserves incominga25f. SDmounted. New final.py correctly names
+logicalowner observer plus physicalobserverlinux-extender; no prior80metadata bug.
+
+Compiler342/c3ae7c2994924cc5a3f3bcd3a96f70dd owns source-only P4 native OFF/ON
+fit pair52321a29b5b4. Guard unifiedsession2373, log and onesecond thermal/process
+journals agents/net004/p4-nm-accounting-r01/native-r01. Sourcea66f0563 clean/
+pushed; no hardware diagnostic installed. OFF currently compiling, then ON only
+if first build passes. Keep onecompiler,80C/512MiB/sensors,840s child/1800s whole;
+firstunexpectedSTOP and joined descendants before normal compiler release/
+actualnextowner alert. No idle holding342 and no unsupported target/runtimeclaim.
+Build guard has no device access; Mech bench work remains independent/first.
+
+Earlier compiler339 twenty native-host sanitizer/composition steps PASS15.633s,
+released11:16:21.860057UTC/actual340 Wolfnotified. All current proof/leases above
+replace prior81/queued342 headings below; earlier entries are history.
+
 # Current — Wolf81 sole; compact Mech consumer prepared; P4 source checks pass
 
 Wolf81/456459d1283d remains sole finite operator, PID1287358/session48884.
