@@ -1,3 +1,22 @@
+# Current — Wolf77 sole uncapped-visible preparation, human RUN only
+
+New directSmith steering selects fastest visible result, not prior30Hz cap.
+Wolf WOLF-PERF-012 removes only synthetic pacing from visiblefixture: samea926
+module/native7593route/perframeC3+fence,600sequentialposes/two turns in measured
+actualtime. Prior01130Hz result/hostraw remain frozen, not maximumcapacity.
+
+Actual77 HELD/soleWolf; Extender targetaccessSTOPPED. Newextension/context under
+Wolf WOLF-PERF-012/build/hardware01 joins original77grant and all163pins/kit5f77.
+Host-only review matched extension/originalpins, no materialconcernidentified.
+Wolf freshownentry/metadataMOVEarchives oldSDoutputs then newrotate-max.bin/full
+GET/reusedverifiedassets/module; sameapp-only7593install/readback/currentboot
+and LOADONLY. NO agentRUN/static/probe/hiddenarm/automaticcollection. Smith
+manualstart afterreadyquestion; collection only afterhisconfirmation, then
+exact85f9restore/fullcleanup/HOLD77. No Extender targetcheck or new grant/release.
+Currentphysicalprogress is Wolf-owned; latestpreceding verifiedidle state and
+workingUARTa25f/P4d9bcb/profile8 restoration proof recorded below. No uncapped
+result yet. SDmounted. Earlier checkpoints below are history.
+
 # Current — Wolf77 restored idle and HELD for Smith; all target actors stopped
 
 Owner result3c9eb62: Smith manually started visiblefixture and confirmed both
