@@ -1,3 +1,42 @@
+# Current — actual90 sole Mech IRQ diagnostic; Extender target-stopped
+
+Fresh90/request21e59f934f2e exact475-pin44715c54 admission, owner EMOS-only80fe
+stage/fullGET comparison/ONEFLASH/exact automaticboot/full131072B readback PASS.
+Raw mode0/callback0/route0/whole startup-listener/actualCLI/readEXIT/inputneutral/
+offlineidle/worker0/freeUSB PASS. Matching stopped sole-Mech handoff and context
+agents/bench-scheduler/mechagon-goal001-r06; exact consumer precontact(stage)
+passes. Actual installed components d9b/80fe/5d657/ed403/0566; incominga25f and
+fullnative85f9 rollback retained. Mech sole90 now; ALL Extender target access
+STOPPED/no pending/readersjoined. ONE observed-overlap IRQ-only/fulltrace90/150/
+180s case; no wake/baud/batching/profile/secondNULL migration. Wait real joined/
+stopped return before same90 exacta25f rollback/fullreadback/fullcleanup/release.
+Do not poll native/HTTP/serial/SD/PRT, reset or collect while Mech owns it.
+
+Wolf89 previous boot-admission failure/zero room cases preserved; exactfull85f9
+restore/readback/currentbootstrap/fullhandback/release14:45:59UTC verified. No
+room benchmark result or cause inferred. Source-only optional APP SDK notify
+selected separately; preserve root net_async.h and all475 frozen inputs during
+R06. No compiler launch until current consumer case stops. OryxDOWN, Mechfirst/
+Wolfsecond, SDmounted. Earlier headings historical; actualregistry governs.
+
+# Current — actual90 Mech IRQ diagnostic; sole Extender installation
+
+Actual89 Wolf pre-guest boot-admission failure preserved, zero room cases. Exact
+incoming85f9 native/tail full1105920B restore/readback and selected restored-image
+bootstrap/rawmode0/callback0/route0/files/rootCLI/input/idle/freeUSB PASS; released
+14:45:59UTC, old89 token invalid. Fresh90/request21e59f934f2e granted only after
+new actual CLI/readEXIT/SAVE-only rawmode0/callback0/route0/wholefiles/inputneutral/
+offlineidle/freeUSB proof and all475 frozen kit44715c54 pins. Current sole operator
+linux-extender/owner-install, context agents/bench-scheduler/mechagon-goal001-r06.
+Selected EMOS-only80fe candidate/a25f rollback stage/fullGET, then ONEFLASH and
+full131072B readback/freshCLI/state/idle before any actual stopped Mech handoff.
+No test/LOAD/RUN/reset or P4/native/startup/listener write by this installer.
+Mech target access remains stopped until real handoff. Current incoming baseline
+d9b/a25f/5d657/ed403/0566 retained, SDmounted. R06 one observed-overlap IRQ-only
+90/150/180 finite case; no wake/halfbaud/profile/batching migration or second case.
+Source-only wait/optional APP notification contracts returned, no adapter edit.
+Earlier headings historical; actual registry/context govern custody.
+
 # Current — actual89 sole Wolf cleanup; Mech source-only wait contract
 
 Actual88 normal507-frame R05 evidence/profile retained; exactincominga25f
