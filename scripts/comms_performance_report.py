@@ -48,7 +48,7 @@ def analyse(rows):
             if not isinstance(row.get(field), str) or not row[field] or len(row[field]) > 100:
                 raise ValueError('Missing bounded sample identity: ' + field)
         for field in IDENTITY[:3]:
-            if not re.fullmatch('[0-9a-f]{64}', row.get(field, '')):
+            if not isinstance(row.get(field), str) or not re.fullmatch('[0-9a-f]{64}', row[field]):
                 raise ValueError('Missing matched hash: ' + field)
         for field in ('ez80_hz', 'p4_hz', 'iterations', 'clock_hz'):
             if not positive_int(row.get(field)):

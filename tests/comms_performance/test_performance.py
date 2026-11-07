@@ -65,7 +65,7 @@ class PerformanceTests(unittest.TestCase):
 
     def test_mismatched_workload_rate_and_hidden_case_changes(self):
         a, b = sample(), sample('parallel')
-        for key, value in (('workload_sha256','d'*64), ('renderer_sha256','d'*64), ('clock_hz', 100), ('iterations', 20)):
+        for key, value in (('workload_sha256','d'*64), ('renderer_sha256','d'*64), ('workload_sha256',None), ('clock_hz', 100), ('iterations', 20)):
             with self.assertRaises(ValueError): analyse([a, dict(b, **{key:value})])
         with self.assertRaises(ValueError):
             analyse([a, b, dict(a,pair='2',iterations=20),dict(b,pair='2',iterations=20)])

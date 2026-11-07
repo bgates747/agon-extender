@@ -30,7 +30,7 @@ inline bool byte_at(Workload kind,uint32_t amount,uint16_t buffer_id,uint32_t at
 // Without it equal/modulo counters cannot disambiguate multiple wraps.
 inline bool interval(uint32_t start,uint32_t end,unsigned bits,uint32_t confirmed_upper,uint32_t&counts){
     if(bits<8||bits>32||!confirmed_upper)return false;
-    uint32_t mask=bits==32?0xffffffffUL:(uint32_t(1)<<bits)-1;
+    uint32_t mask=bits==32?uint32_t(0xffffffffUL):(uint32_t(1)<<bits)-1;
     if(start>mask||end>mask||confirmed_upper>(mask>>1))return false;
     uint32_t result=(end-start)&mask;
     if(!result||result>confirmed_upper)return false;

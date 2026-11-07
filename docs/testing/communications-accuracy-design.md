@@ -29,6 +29,10 @@ analysis of this endurance run.
    UART run is useful context rather than a controlled carrier comparison.
    CPU stalls, receiver state, ownership, buffering, scheduling, framing,
    filesystem delays and network disconnects remain possible contributors.
+   MechAgon's later source/trace clarification identifies its fatal pending-
+   decision bridge check after SkippedTurn426/Tick427 as the immediate stop
+   trigger. It does not explain the missing native decision or establish a
+   network fault; the fixture must not silently adopt either diagnosis.
 2. The appliance must distinguish corruption, truncation, extra bytes, missing
    records, duplicates, reordering, stale replies, refusal and timeout. A correct
    eventual answer must not erase an earlier failure.

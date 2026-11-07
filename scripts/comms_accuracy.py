@@ -61,6 +61,10 @@ class Frame:
     payload: bytes = b''
 
     def validate(self):
+        if any(type(getattr(self, name)) is not int for name in (
+                'kind', 'tx', 'rx', 'pattern', 'run', 'case', 'sequence', 'seed',
+                'total', 'offset', 'attempt', 'direction', 'status', 'flags')):
+            raise ProtocolError('Integer fields required, not booleans/coercions')
         for name in ('run', 'case', 'sequence'):
             if not 1 <= getattr(self, name) <= 0xffffffff:
                 raise ProtocolError('Nonzero uint32 identity required')
@@ -113,7 +117,7 @@ def case_frames(plan, chunk=MAX_PAYLOAD):
     if not 1 <= chunk <= MAX_PAYLOAD:
         raise ProtocolError('Chunk size')
     total = plan['total']
-    if not isinstance(total, int) or not 0 <= total <= MAX_LOGICAL:
+    if type(total) is not int or not 0 <= total <= MAX_LOGICAL:
         raise ProtocolError('Logical size')
     for sequence, offset in enumerate(range(0, max(1, total), chunk), 1):
         n = min(chunk, total - offset)

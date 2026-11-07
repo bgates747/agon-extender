@@ -71,7 +71,7 @@ class AccuracyTests(unittest.TestCase):
         for bad in (f.encode()[:-1], f.encode() + b'x', b''):
             with self.assertRaises(ProtocolError):
                 Frame.decode(bad)
-        for changes in (dict(offset=169), dict(run=0), dict(attempt=0), dict(total=17*1024*1024)):
+        for changes in (dict(offset=169), dict(run=0), dict(run=True), dict(attempt=0), dict(total=17*1024*1024)):
             with self.assertRaises(ProtocolError):
                 dataclasses.replace(f, **changes).encode()
 
