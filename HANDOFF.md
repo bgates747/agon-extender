@@ -1,3 +1,36 @@
+# Current — actual104 compact R11 installed and handed to MechAgon
+
+Actual104/032e450a86b5 is central-owned and solely operated by MechAgon, phase
+consumer. ONE c1047 FLASH/automaticboot and full independent131072B readback
+passed, together with fresh actual CLI/rawmode0/callback0/Legacy0/wholefiles/
+inputneutral/offlineidle/freeUSB. Exact frozen R11 adapter precontact and cold
+record binding passed all2539 inputs/654aa7f9 kit. Complete actual grant/context/
+readback/stopped handoff was returned by durable mail and immediate steering:
+agents/bench-scheduler/mechagon-goal001-r11/. ALL Extender targetaccess/readers/
+commands stopped. Only after root's actual joined stopped return may Extender
+assume same104 originalRAM-beforeLOAD preservation ifneeded and exact incoming
+a25f rollback/fullreadback/freshfullhandback/normalrelease. No concurrent observer
+or new case. Original ONE90/150/180/1200fromgrant bounds unchanged; compact1936B
+module data is not an allocation or performance pass. P4d9b/native5d657/startup
+ed403/listener0566 unchanged, SDmounted. Publication hold remains; no push.
+Earlier headers are historical. HDMI visual qualification remains unfinished;
+no HDMI change was selected or made.
+
+# Current — actual104 compact R11 owner installation
+
+Fresh actual104/032e450a86b5 admitted after all2539 frozen654aa7f9 inputs,
+actual103 release/current tuple and new actual CLI/rawmode0/callback0/Legacy0/
+wholefiles/inputneutral/offlineidle/freeUSB checks. Central owner is MechAgon,
+sole hardware operator Extender in owner-install. Context and grant under
+agents/bench-scheduler/mechagon-goal001-r11/. Exactc1047/a25f staging/readback
+is in progress, followed by ONE c1047 FLASH/automaticboot/full131072B readback
+and stopped sole consumer handoff. Root remains entirely target-stopped.
+Same ONE90/150/180/1200fromgrant bounds; no physical allocation fit assumed.
+Only the compact renderer module differs in the root case. No P4/native/
+startup/listener/HDMI/profile/PRT/baud change or replay. Same104 incominga25f
+rollback/fullhandback/release follows the actual joined stopped return.
+SD mounted; no compiler held; publication hold remains. Earlier headers historical.
+
 # Current — R11 owner source packet returned; bench remains unoccupied by Extender
 
 Mech request032e450a86b5/GOAL-001-COMPACT-OVERLAP-R11 is PREPARING. Request-local
