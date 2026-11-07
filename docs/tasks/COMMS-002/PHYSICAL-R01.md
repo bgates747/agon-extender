@@ -90,3 +90,32 @@ for cleanup. No automatic reset at that horizon. Source/validator checks use a
 normal serial compiler reservation; no new emulator or firmware compilation is
 needed for these exact retained binaries. Complete later corpus/reverse/CPU
 bindings separately, rather than claiming this forward tranche completes them.
+
+## Capture acquisition amendment — before further dispatch
+
+The original host stopped at P4096: the application completed six zero-flag rows,
+returned to the CLI, and left Legacy/normal listener EXIT/cursor, but USB dump1
+contains8150 rather than8192 byte lines (the other five are complete). Preserve
+this acquisition as invalid. This does not identify transport corruption.
+The standing Author-selected [capture procedure](../../qualification/capture-failure-protocol.md)
+supersedes the original stop-on-capture-failure rule above:
+
+1. Retain original matrix STOP and captures; perform one current supported Agon
+   recovery with fresh actual CLI/read/EXIT before the five remaining independent
+   cases. An unrecoverable or non-capture fault stops all dispatch.
+2. After independent acquisitions, install the already retained matched P4
+   capture-absence control `d49d88e54879372db4e1f61252b83f67daf8be5d984f89b0284b285033e29927`,
+   source `d74185caa47107b52bb2633eb9d27291f5f98c1e`, same360MHz/configuration,
+   with the debug-dump routine absent. Keep the exact EMOS/MOSlet/workload/fences.
+   Run one bounded60s control for each marked case; report separately, no byte
+   proof or replacement performance sample. No new build required.
+3. If time remains within the original60min horizon and15min cleanup reserve,
+   one separately labelled fresh acquisition per marked, positively completed
+   case may follow the controls after restoring the exact capture P4 and fresh
+   CLI readiness. Never resubmit an uncertain invocation, overwrite the original,
+   suppress failure, or select by elapsed time. A second incomplete acquisition
+   remains unresolved; no further acquisition attempt in this tranche.
+4. Preserve source freezes before corrections, named continuation records and
+   component verification. The control uses the already preserved full touched
+   P4 span; no new regions are written. Restore exact incoming UART pair/tail
+   and normal full handback irrespective of acquisition completeness.
