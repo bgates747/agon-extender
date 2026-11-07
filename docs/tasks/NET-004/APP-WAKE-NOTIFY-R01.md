@@ -84,3 +84,10 @@ notification harness then failed compilation because renaming the donor's C
 `main` removes its special implicit return-zero rule. Add an explicit return-zero
 to the reused test entry; no SDK, owner, core or notification logic changes.
 The original-header negative control still must link and fail at runtime.
+
+The third actual-C run passed the notification/quiet/lifetime assertions up to
+its final synthetic owner-abort check. The current RX-scope fake publishes
+`pending_fault` from hardware release, whereas the old donor set the public
+`emos_key_faulted` immediately. Assert the current model's pending-fault contract
+as the maintained RX-scope test does; retain borrowed source/association and
+unchanged notification-count checks. The SDK candidate remains unchanged.

@@ -81,7 +81,7 @@ int main(void) {
     assert(notifications==prior && !sticky); /* Retained same fault is quiet. */
     assert(agon_neta_close(c)==35 && reserved && agon_neta_active==c);
     /* Owner abort does not invent a source/drain/health notification. */
-    emos_net_reset();assert(!reserved && emos_key_faulted);
+    emos_net_reset();assert(!reserved && pending_fault);
     assert(agon_neta_progress(c)==35 && c->tx.source==borrow);
     assert(notifications==prior);
     puts("actual SDK notify: publication, transitions, quiet service, early source, retained lifetime PASS");
