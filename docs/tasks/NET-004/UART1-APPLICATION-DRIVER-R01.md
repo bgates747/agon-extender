@@ -45,6 +45,21 @@ owns consumer changes. This record tracks coordination, not another driver tree.
    compiler/emulator/human/bench gates persist; no current live bench access,
    firmware replacement, game restart or emulator change is delegated here.
 
+## Code-size constraint — Author clarification, 2026-11-07
+
+Keep the implementation small. Tom's compact Eirene UART0 RFC implementation
+is the reference for the UART1 adaptation's scope and economy. Extender reuses
+UART's existing application TX core and OTIRX leaf; EMOS receives only necessary
+admission/interrupt/CTS-retry glue. Do not create a second driver framework,
+duplicate transfer state or queues, or add abstraction layers merely for this
+adaptation. Preserve the existing ownership and lifetime contract.
+
+Before selecting a build, compare the actual linked application text/BSS and
+resident EMOS ROM delta against the exact baseline. Report bytes, including
+adapter/glue overhead, rather than citing only the small copy leaf or source
+line count. The Author has not selected a numerical size ceiling; compactness
+must be demonstrated by the actual implementation and link evidence.
+
 ## Coordination actions
 
 N04-019.01 Record Smith's placement/ownership decision and send substantive
