@@ -48,3 +48,16 @@ issuance and joined-child receipts, actual CLI capture, RAM size/hash, getter
 output, raw state/file comparisons, final resource proof and canonical release.
 Native result/close/cleanup remain unproven unless the preserved evidence
 actually establishes them. No production or optical acceptance follows.
+
+
+## Actual outcome
+
+One ordinary Agon reset restored fresh input and an actual CLI. Paired/P4
+recovery was not used. Extender saved 65,536 B from 040000 after reset and before
+any LOAD, SHA256 `3d7c29d7c2245b48a750f1678ccd412f5d02a7e465274bb49f103fed2721ada8`.
+The identified getter and raw state/files/CLI/input/idle/resources checks passed
+in the recovered state. Firmware and normal startup/listener were unchanged.
+Generation 68 cleanly released at `2026-11-07T02:27:54.196355UTC`, no successor;
+MechAgon received the preserved RAM and complete handback before analysis.
+Original native exit and original renderer cleanup remain unproven. No replay,
+firmware replacement or parallel test occurred.
