@@ -1,4 +1,4 @@
-# Current — forward performance result; Wolf72 sole operator
+# Current — forward performance result; Wolf73 sole operator
 
 COMMS002 physical70 is cleanly released with exact incoming UARTd9bcb/EMOSa25f
 and full touched P4span restored/readback equal; mainboardprofile8 unchanged.
@@ -16,12 +16,16 @@ existing postgetter/raw/files/CLI/input/idle/freeports checks passed. Native
 close/cleanup/end1 established; local TAKE timeout is owner sourceanalysis,
 not proven carrier cause. Actual71 cleanreleased; no firmwarewrite/P4reset/game
 replay. [Recovery result](docs/tasks/BENCH-010/ASYNC001-RECOVERY-R01.md).
-Wolf f60e5f0fed70/419inputkita1f7a867 received actualfresh72 and stopped sole
-handoff after currenttuple/wholefiles/CLI/rawstate/idle proof. One selected
-finite original-ray comparison, exactnativeapp-tail restoration/fullcleanup
-then normalrelease, no newhold. No schedulertest/flash/reset; Extender alltarget
-accessSTOPPED at handoff. Consult live registry
-and ignored HARDWARE.local.md for actual custody, not old checkpoint prose.
+Wolf72 stopped before probes/guests/timing on wrong host interpreter, then
+exact incoming85f9 restore/readback/currentbootstrap/fullcleanup and cleanrelease
+passed. The corrected separate request a9367f3c73e6 received fresh73 after
+486inputkit0528ed13/source5eb6d84 rehash, actual Extender-interpreter launch02
+60file preflight match and new CLI/state/wholefiles/input/idle admission.
+Wolf alone runs ONE frozen finite same comparison through mandatory launch02,
+then exactnativeapp-tail restoration/fullcleanup/normalrelease, no newhold.
+Actual context/stoppedhandoff agents/bench-scheduler/wolf-perf007-r02; accepted
+mail+steering sent. No schedulertest/flash/reset; Extender alltargetaccessSTOPPED.
+Consult live registry and ignored HARDWARE.local.md for actual custody.
 Old checkpoints below are historical and cannot establish current custody.
 
 # Active selected run — COMMS002 forward performance
