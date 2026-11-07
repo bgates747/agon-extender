@@ -1,6 +1,18 @@
 // Stopped core self-check, not a transport appliance. Never deploy as one.
-#include "core.hpp"
+#include "engine.hpp"
 #include <stdio.h>
+struct LocalModel {
+    bool running(){return true;}
+    bool checkpoint(comms_accuracy::Checkpoint,const comms_accuracy::Frame&,uint8_t){return true;}
+    bool baseline(const comms_accuracy::Frame&){return true;}
+    comms_accuracy::Exchange exchange(const uint8_t*p,size_t n,uint8_t,uint8_t rx,uint8_t*out,size_t capacity){
+        comms_accuracy::Frame f;if(comms_accuracy::decode(p,n,f)!=comms_accuracy::decoded)return {};
+        f.kind=comms_accuracy::ack;f.direction=1;
+        return {comms_accuracy::encode(f,out,capacity),true,rx};
+    }
+    bool uart_report(const comms_accuracy::Frame&,uint8_t){return false;}
+    size_t uart_retry(const comms_accuracy::Frame&,uint8_t*,size_t){return 0;}
+};
 int main(){
     using namespace comms_accuracy;
     const uint8_t vector[]="123456789";
@@ -13,5 +25,8 @@ int main(){
     Attempts a;if(!a.begin(f)||!a.complete(false,true,1)||!a.report(true))return 3;
     f.kind=retry;f.direction=1;f.length=0;f.flags=1;n=encode(f,bytes,sizeof(bytes));
     if(a.control(bytes,n)!=Attempts::accepted||a.attempt()!=2)return 4;
+    Frame first;first.run=1;first.case_id=1;first.sequence=1;first.total=169;
+    LocalModel model;auto result=run_case(first,model);
+    if(result.outcome!=case_passed||result.verified_bytes!=169)return 5;
     puts("COMMS-001 core self-check; no transport or hardware qualification");return 0;
 }

@@ -25,6 +25,13 @@ appliance and does not implement physical UART1 NACK delivery or retirement.
    separately bind MOS write/commit behaviour.
 6. `selfcheck.cpp` is a stopped target compilation probe. Its successful link
    is not permission to deploy, invoke it, or call this a ready transport test.
+7. `engine.hpp` runs one logical case through a typed owner adapter. It records
+   intent before baseline/transfer, validates every returned record and complete
+   stream CRC, and preserves the first failure after a successful retry. On an
+   uncertain ownership witness it makes no further adapter calls, including log
+   writes. The caller retains final route/mode/CLI cleanup responsibility and
+   may perform it only from a positively retired state. Host models and target
+   link probes do not supply the missing live adapter.
 
 The [task](../../../docs/tasks/COMMS-001.md) owns remaining adapters and physical
 gates. The separate benchmark has no dependency on this retry/CRC engine.

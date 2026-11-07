@@ -33,7 +33,7 @@ def main():
             src = out / 'src'
             src.mkdir(parents=True)
             inputs = {}
-            for source, target in (('core.hpp', 'core.hpp'), ('selfcheck.cpp', 'main.cpp')):
+            for source, target in (('core.hpp', 'core.hpp'), ('engine.hpp', 'engine.hpp'), ('selfcheck.cpp', 'main.cpp')):
                 p = root / 'tests/fixtures' / ('comms_' + kind) / source
                 shutil.copyfile(p, src / target)
                 inputs[str(p.relative_to(root))] = hashlib.sha256(p.read_bytes()).hexdigest()

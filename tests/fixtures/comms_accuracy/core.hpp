@@ -11,11 +11,15 @@ inline uint16_t get16(const uint8_t*p){return uint16_t(p[0])|(uint16_t(p[1])<<8)
 inline uint32_t get32(const uint8_t*p){return uint32_t(p[0])|(uint32_t(p[1])<<8)|(uint32_t(p[2])<<16)|(uint32_t(p[3])<<24);}
 inline void put16(uint8_t*p,uint16_t v){p[0]=uint8_t(v);p[1]=uint8_t(v>>8);}
 inline void put32(uint8_t*p,uint32_t v){for(unsigned i=0;i<4;++i)p[i]=uint8_t(v>>(8*i));}
-inline uint32_t crc32(const uint8_t*p,size_t n){
-    uint32_t v=0xffffffffUL;
-    for(size_t i=0;i<n;++i){v^=p[i];for(unsigned b=0;b<8;++b)v=(v>>1)^((v&1)?0xedb88320UL:0);}
-    return v^0xffffffffUL;
-}
+class Crc32 {
+ public:
+    void update(const uint8_t*p,size_t n){
+        for(size_t i=0;i<n;++i){value_^=p[i];for(unsigned b=0;b<8;++b)value_=(value_>>1)^((value_&1)?0xedb88320UL:0);}
+    }
+    uint32_t value()const{return value_^0xffffffffUL;}
+ private:uint32_t value_=0xffffffffUL;
+};
+inline uint32_t crc32(const uint8_t*p,size_t n){Crc32 v;v.update(p,n);return v.value();}
 inline uint8_t pattern_byte(uint8_t pattern,uint32_t seed,uint32_t at){
     switch(pattern){
     case 0:return 0;case 1:return 255;case 2:return (at&1)?255:0;

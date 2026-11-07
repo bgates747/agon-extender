@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+#include "engine_model.hpp"
 using namespace comms_accuracy;
 static Frame sample(){
     Frame f;f.run=0x12345678;f.case_id=7;f.sequence=1;f.total=84;f.length=84;f.pattern=5;f.seed=0xfedcba98;
@@ -55,5 +56,26 @@ int main(int argc,char**argv){
     assert(!a.begin(sample()));
     Attempts b;f=sample();assert(b.begin(f));assert(b.complete(false,true,1));assert(!b.report(false));
     assert(b.state()==Attempts::halted);b.infrastructure_fault();assert(b.state()==Attempts::halted);
+    f=sample();f.total=169;
+    AccuracyModel clean;auto result=run_case(f,clean);
+    assert(result.outcome==case_passed&&result.verified_bytes==169&&clean.exchanges==3&&clean.reports==0);
+    assert(result.expected_stream_crc==result.received_stream_crc&&result.failed_attempts==0);
+    AccuracyModel recovered;recovered.fail_through=1;result=run_case(f,recovered);
+    assert(result.outcome==case_passed&&result.attempts==2&&result.failed_attempts==1&&result.first_error==bad_crc);
+    assert(recovered.reports==1&&recovered.retries==1&&recovered.exchanges==4);
+    AccuracyModel five;five.fail_through=5;result=run_case(f,five);
+    assert(result.outcome==case_failed&&result.attempts==5&&five.exchanges==5&&five.reports==5&&five.retries==4);
+    AccuracyModel unknown;unknown.unsafe=true;result=run_case(f,unknown);
+    assert(result.outcome==ownership_unknown&&unknown.checkpoints==1&&unknown.reports==0&&unknown.retries==0);
+    AccuracyModel log;log.fail_log_at=1;result=run_case(f,log);
+    assert(result.outcome==log_failed&&log.exchanges==0&&log.attempts==0);
+    AccuracyModel uart;uart.fail_through=1;uart.report_ok=false;result=run_case(f,uart);
+    assert(result.outcome==infrastructure_failed&&uart.exchanges==1&&uart.retries==0);
+    AccuracyModel stale;stale.wrong_case=true;result=run_case(f,stale);
+    assert(result.outcome==case_failed&&result.first_error==bad_sequence&&stale.reports==5);
+    AccuracyModel peer;peer.peer_nack=true;result=run_case(f,peer);
+    assert(result.outcome==case_failed&&result.first_error==bad_pattern&&peer.reports==5);
+    AccuracyModel cancel;cancel.keep_running=false;result=run_case(f,cancel);
+    assert(result.outcome==cancelled&&cancel.checkpoints==0&&cancel.exchanges==0);
     puts("Accuracy core: corruption, spans, source-safe refusal, five attempts and controls PASS");
 }

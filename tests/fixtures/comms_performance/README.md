@@ -28,6 +28,11 @@ does not implement fault injection, retries or an endurance schedule.
    that interpretation fits the chosen workload.
 6. `selfcheck.cpp` proves stopped eZ80 compilation/link syntax only. No timing,
    hardware invocation or speed result follows from running host unit tests.
+7. `engine.hpp` supplies the independent measurement ordering. A submit refusal
+   must mean no source was accepted; uncertain admission returns an unsafe
+   sample with no cleanup calls. Source-release retirement means the borrowed
+   input is safe, while complete retirement means the required receiver/owner
+   fence is safe. Validation and cleanup occur outside both measured intervals.
 
 The [task](../../../docs/tasks/COMMS-002.md) owns actual API/timer/firmware binding
 and the later finite matched hardware comparison.
