@@ -1,3 +1,45 @@
+# Current — actual92 restored/released; receive-protection source tranche active
+
+Actual92 clean RELEASED15:47:24UTC; exact131072B incominga25f rollback and
+independentreadback/full freshCLIcursor/raw0/callback0/route0/wholefiles/input/
+offlineidle/worker0/freeUSB PASS. ONE standingAgon recovery/actualCLI preceded
+64KiB040000 RAM saved explicitlyPOSTRESET beforeanyLOAD; exact8184/map620e text/
+rodata equal, raw4CB08/128 record retained and returned toMech. OriginalSDstatus/
+carrier/IRQ product ABSENT. Existing featuregetter afterRAM provedABSENT/ordered
+release/callbackrestoration. No P4reset/fallback/replay. Allactorsjoined/ALL
+ExtendertargetaccessSTOPPED/old92tokeninvalid/nextnone, SDmounted. Current
+P4d9b/EMOSa25f/native5d657/startuped403/listener0566. Receipts mechagon-goal001-r07
+released.json/release-observation.json/owner-install/verify-rollback/final.
+
+Matched source/native record rawLSR63/OE in first UART1 drain sample confirmed
+byMech/UART; remaining16 is budget notoccupancy. Cause remains unresolved;
+41.67us markerfragments notcompleteIRQlatency/blackout. Mechselected owner
+correction source/build under existingGOAL: protectUART1 reserve aroundUART0
+RX/TX and RX-first beforeREADY. Pre-code docs/tasks/NET-004/EMOS-ASYNC-RX-
+PROTECTION-R01.md recorded beforeimplementation. Isolated source agents/net004/
+uart1-rx-protect-r01/emos-source branchcodex/net004-uart1-rx-protection-r01 from
+1727fa19; new earlySTOP/distinctU0hold/boundedRXtail/deferredcapdraft implemented,
+qualification notyetrun. No newphysicalcase, firmwareinstallation/baud/default
+change orgenericU1edit. Source/fit/finiteisolation→consumerproposal required;
+normalPiFIFO beforecompiler. Mechfirst/Wolfsecond/OryxDOWN. Earlierheadings
+historical; centralregistry/currentcontextgovern custody.
+
+# Current — actual92 sole Extender preservation/recovery after stopped R07
+
+Real Mech stoppedreturn10:41UTC matched92/cbeb/lease and alljoined/rootSTOPPED.
+Extender asserted actuallease and atomically assumed operatorlinux-extender/
+owner-restore. Original oneRUN/150s expired/noCLI; host reset104/3scenes2intents,
+nativecause UNKNOWN. No originalRAM/status/IRQ attribution yet. Setup-only startup
+unchanged. One standing commissioned Agon-only recovery is active, followed by
+actualCLI and64KiB040000 preservation BEFORE anyLOAD; RAM afterreset must be
+labelled post-reset. No earlier recovery pulse, no replay or newcase. If leaf
+fails STOP before separately selected standing initializedP4→Agon fallback.
+Helpers recover92/feature92/final-recovery pinned privately; old486consumer/
+originalhelper sources unchanged. Mech ALLtargetSTOPPED. Current installed
+80fe/P4d9b/native5d657/startuped403/listener0566; retaineda25f rollback still
+required after preservation/featurecleanup/fullreadback/finalhandback. SDmounted.
+Earlier headings historical; registry/currentcontext govern custody.
+
 # Current — actual92 R07 host reset; Mech original observation still sole
 
 Owner reports ONE nativeRUN15:37:20UTC/1794065840.46729 after stage/pregetter/

@@ -283,3 +283,7 @@ consumer precontact() passed; sole stopped handoff delivered. Extender remains
 target-stopped until the actual joined return, then same86 exacta25f restoration/
 readback/fullcleanup/normalrelease. No diagnostic/PRT/baud/P4/native/startup change
 or result is implied by installation.
+
+## Selected receive-protection continuation after actual92
+
+The [UART0 competing-service protection contract](EMOS-ASYNC-RX-PROTECTION-R01.md) owns the selected next source/build tranche: early UART1 STOP across UART0 RX/TX, distinct hold ownership, RX-first tail and deferred-cap continuation. Actual92 cleanup/release is complete; its overrun and incomplete IRQ timing remain evidence, not proof of a sole cause. No new physical case or baud substitution is selected.
