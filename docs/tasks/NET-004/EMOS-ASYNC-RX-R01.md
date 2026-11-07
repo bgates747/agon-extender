@@ -166,3 +166,11 @@ interval; no latency/throughput improvement or76 cure is assumed.
    namespace and retained rollback hashes before READY. Normal fresh admission
    after actual77 release; no old token. MechAgon remains first priority and
    Wolf may use finite gaps while this source preparation is incomplete.
+
+
+The first separate fixture native build stopped before firmware build on a C++
+list-initializer narrowing error in the provisional SDK sample mask. The bounded
+uint8_t mask now has an explicit uint8_t cast, preserving C value semantics.
+No source or IRQ runtime claim follows; recheck actual C binary equivalence and
+compile the actual C++ fixture before hardware qualification. Compiler323 joined
+and released normally; this was offline build preparation, not a physical retry.

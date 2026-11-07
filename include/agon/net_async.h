@@ -45,7 +45,7 @@ static uint8_t agon_neta_service(uint8_t event,uint8_t sample){
     if(event==1)return u1_start(&c->tx,c->net.input+1,c->net.request[13]-1,agon_neta_source_done);
     if(event==2)u1_report_fault(&c->tx,sample?U1_LINE_ERROR:U1_OWNER_LOST,sample);
     else {
-        u1_sample s={1,(sample&0x20)!=0,(sample&1)==0,(sample&0x40)!=0,sample&0x9e};
+        u1_sample s={1,(sample&0x20)!=0,(sample&1)==0,(sample&0x40)!=0,(uint8_t)(sample&0x9e)};
         (void)u1_step(&c->tx,s,u1_emit_uart1);
     }
     if(c->tx.phase==U1_FAULT)return 4;
