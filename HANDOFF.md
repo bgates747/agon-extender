@@ -14,9 +14,13 @@ New normal95/793c29add4f8 granted after fresh actualCLI/readEXIT/SAVE-only state
 wholefiles/input/idle and exact822db776 kit/dualinterpreterclosures/full85f9
 rollback/currenttuple. Context wolf-perf022-r02 operatorWolf; actual stoppedsole
 handoff/grant/exact mandatory-controller and mandatory-observer argv delivered/
-steering accepted. ALL Extender targetaccessSTOPPED/no pending/readers. Wait
-actualcontroller/observer PIDs+foregroundhandles and eventual real joined clean
-return; no separate owner HTTP/serial/SD/reset/PRT/flash/test/probing. Onlyfull
+steering accepted. ALL Extender targetaccessSTOPPED/no pending/readers. Actual owner reports
+controller1451306/start32977541/session14965; observer1451478/start32978736/
+session27507 and tracer1451480; both originalforegroundhandles live. Positive
+preIOattach1794070817.703/sessionhash/nonce/same95lease joined from retained
+files, not a new process/device probe. Evidence actual-operator-live95.json.
+Wait actual joined cleanreturn; no separate HTTP/serial/SD/reset/PRT/flash/test/
+probing or controllerrestart. Onlyfull
 6uncapped original/cyan/combined/combined/cyan/original600poses+7INFO/4200incl45s
 handshake/360reserve/660newguest, positive exactPID observer BEFOREdeviceIO, no
 fatalcancel suppression/parentgroupchange. OnlycontrollerdeviceIO, observerhost-
