@@ -1,3 +1,66 @@
+# Current — Wolf PROFILE001 actual101 sole owner; Extender target access stopped
+
+Actual100 SIDEBAR both arms returned normal result0/positive source-drain-CLOSE;
+all original tools and host actors joined. Extender assumed matching stopped
+return, restored exact incoming a25f by one FLASH/automatic boot, independently
+compared all131072 ROM bytes and proved fresh rootCLI/cursor/raw0/callback0/
+route0/whole startup-listener/inputneutral/offlineidle/worker0/freebothUSB.
+Actual100 released2026-11-07T21:25:15.041090UTC; oldtokeninvalid, SDmounted.
+Receipt agents/bench-scheduler/mechagon-sidebar001/released.json.
+
+Fresh actual101/b23015b2e071/leasedd0161cdd4f643739e6aed8af30a899b granted
+Wolf only after unchanged341pin0f774a0c kit, both actual interpreter closures,
+current restored tuple and new CLI/SAVE-only state/files/idle checks matched.
+Context agents/bench-scheduler/wolf-profile001/context.json; exact mandatory
+controller/observer argv and stopped solehandoff delivered by mail+steering.
+ALL Extender targetaccess STOPPED/no pending/readersjoined. Only one250-submission
+normal fullgame profiling case+twoINFO;1800s inclusive/360cleanup/660newguest/
+300originalRUN/45attach, exact native85f9 full restore/readback/cleanup/normalrelease.
+No paused Wolf optimization goal resumption or extra case. MechGOAL remains active.
+
+New UART0 carry isolation40c5c1aa159d is PREPARING after Wolf; c1047 unchanged and
+uninstalled. Compiler448 source/cursor controls, actual controller and native
+appliance/nonRFC25 wrapper passed; final inventory failed on nonexistent ELF
+path. All children joined/released21:24:30UTC/automatic449 notified; no owned
+compiler. Fix inventory from actual native linker map before READY; no target
+claim or fixture dispatch. Root publication hold remains, no push retried.
+Earlier sections below are historical; central registry and current contexts govern.
+
+# Current — actual100 SIDEBAR sole Mech; Extender target access stopped
+
+Actual100/026b/lease697099fe15fc4bb6afeb0c2e990230d8 same8de66 installed by ONEFLASH/automatic
+boot/full131072B independentreadback; fresh CLI/raw0/callback0/route0/wholefiles/
+inputneutral/offlineidle/freeUSB passed. All260 finalshared8d56366e inputs and
+actualfrozenprecontact(stage) matched. Operator=mechagon/phaseconsumer in
+agents/bench-scheduler/mechagon-sidebar001/context.json; matching stoppedsole
+handoff delivered. ALL Extender targetaccess STOPPED/readersjoined/no pending.
+At most OFF then ON90/150/180s under original1200s grantwindow from20:59:10UTC;
+ONonlyafterpositiveOFFclosure/postidle, firstfaultSTOP. Same100incominga25f full
+rollback/readback/cleanup/release remains owner duty after actualjoinedreturn.
+Wolfb230 profiling READY normalnext; no currentgrant/preemption. P4/native/
+startup/listener unchanged/SDmounted. UART0source9dd/c104native qualified439,
+uninstalled;+2ROM/0RAM/free335, no ownedcompiler or newphysicalinvocation.
+Human MechGOALresume verified; Wolfoptimizationgoal remains paused. Earlier
+sections historical; centralregistry+actualcontext govern currentcustody.
+
+# Current — resumed GOAL source checked; SIDEBAR100 sole owner installation
+
+Human resume verified from original message01a1b7c1-b296-7cf0-88cd-00e9af7b9494.
+UART0 immediatecarryfix source9dd099fc/nativec1047fae passes matched checks439,
+released20:55:53UTC/allchildrenjoined; +2text/0RAM/free335, uninstalled. Source
+and finite UNSELECTED isolation proposal: docs/tasks/NET-004/EMOS-UART0-RX-CARRY-R01.md.
+P4 firstfailure420 artifact still retained/uninstalled; no packaging needed.
+
+SIDEBAR request026b64fc50f8 actual100 lease697099fe15fc4bb6afeb0c2e990230d8 now
+SOLE Extender operatorlinux-extender/owner-install. All260 sharedbundle8d56366e
+inputs and actual99release/currenttuple/newCLI/SAVE-only state/files/inputidle
+matched. ONE retained8de66 stage/install/fullreadback in progress; no newcarryfix
+or47dadc substitution. Mech targetSTOPPED until fresh completedsolehandoff.
+Context agents/bench-scheduler/mechagon-sidebar001/context.json. Same100a25f
+rollback/fullreadback/fullcleanup/release after joined consumerreturn; queued
+Wolfb230 profiling READY next, no preemption/grant yet. Extender owns no compiler.
+Startup/listener/P4/native unchanged, SDmounted. Earliersections historical.
+
 # Current — paused goals; all resources released (2026-11-07 18:57 UTC)
 
 Mech and Wolf goals are paused at their human-requested clean stopping boundary.
