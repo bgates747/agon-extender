@@ -22,8 +22,8 @@ selected by this source/build plan.
 3. Exact source954e3c54: `src/emos_keyboard_io.asm` drains at most16 bytes and
    can dispatch a whole NM callback before continuing; its first-error branch
    already owns the acknowledging LSR sample in C. `src/interrupts.asm` owns
-   UART0 RX/protocol dispatch and VBlank. `src/uart0_async.asm` has bounded CTS
-   deferral; callbacks in the matched app store flags. `src/emos_neta.c` owns
+   UART0 RX/protocol dispatch and VBlank. `src/emos_uart0_rfc25_io.asm` owns the selected bounded CTS
+   deferral (`uart0_async.asm` is excluded from this composition); callbacks in the matched app store flags. `src/emos_neta.c` owns
    the app service hook and positive-close association. Do not rewrite the
    generic UART sender or assign causality from source length.
 4. Official reference baseline remains agon-docs f9806bd3, MOSv3.0.2 83364093

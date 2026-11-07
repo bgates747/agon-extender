@@ -269,3 +269,17 @@ The [first-error diagnostic plan](EMOS-ASYNC-RX-DIAGNOSTIC-R01.md) selects sourc
 build preparation using an app-RAM observer and small optional EMOS hooks,
 explicit disposablePRT1 and current/preceding-span evidence. Do not repeat the
 same uninstrumented consumer or infer a cure from the quiet owner79 pass.
+
+## Separate serialized-I/O control, actual86
+
+The next selected finite consumer changes one scheduling policy: fresh NM
+SUBMIT waits for the complete renderer reply while accepted source/drain/reply
+progress and bot work remain async. This is R04, not a replay of R03 or the
+first-error observer. All381 ed12c53d frozen inputs and source controls passed.
+After actual85 fullnative85f9 handback, Extender admitted86, staged/read back the
+existing8de66 and rollbacka25f, issued one candidateFLASH and independently
+compared full131072B. Fresh rawstate/wholefiles/CLI/input/idle/freeUSB and actual
+consumer precontact() passed; sole stopped handoff delivered. Extender remains
+target-stopped until the actual joined return, then same86 exacta25f restoration/
+readback/fullcleanup/normalrelease. No diagnostic/PRT/baud/P4/native/startup change
+or result is implied by installation.
