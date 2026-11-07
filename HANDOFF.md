@@ -1,3 +1,28 @@
+# Current — actual91 sole Wolf cleanup after host SIGTERM; target result unknown
+
+Original Wolf021 PID1425962/session35512 exited1 on SIGTERM15 at1794064613.198
+(493.728s from launch). Native7593 install/bootstrap and entryINFO passed. First
+original control RUN issuedONCE1794064583.4257736; original keyboard journal is
+boot2341992575/session2989486216/sequence8/inactive/pendingnull. No completed room
+receipt or candidate run/comparison. Asset breadcrumbs through47 at hostsignal;
+sender/cause UNKNOWN, no target-failure or successful arm inferred. Original716
+kit/input/journals/serial/signal stack retained. Unlike89, an original guest DID
+RUN: preserve THIS guest BIN/map-bound RAM beforeLOAD/reset if readable, not the
+Mech64KiB window or a no-guest claim. Any reset-before-RAM must be labelled.
+
+Wolf retains SOLE91 for original remaining300s observation/actualCLI/RAM+original
+output preservation, exactfull85f9 native/tail restoration/independentreadback,
+one matchedbootstrap/fullhandback/normalrelease. No suite restart/candidate/
+probe/dispatch, partial-line assumption from pendingnull or fresh300s timeout.
+Source disposition sent/acceptedsteered in wolf-perf021-r01/signal-source-*.
+ALL Extender target access remains STOPPED/no pending/readers; no peer device
+check or takeover. Current diagnosticR07/cbeb486pins b212 prepared offline waits
+actual91 cleanrelease/currenttuple and normalfreshgrant. Do not assumeavailability.
+
+SDK default-OFF notify source/native package already delivered and pushed; no
+own compiler/target work. Mechfirst/Wolfsecond, OryxDOWN, SDmounted. Earlier
+headings historical; centralregistry/context govern custody.
+
 # Current — actual91 sole Wolf021; MechR07 source-ready; SDK handoff checked
 
 Actual91/06d32e827da7 fresh grant after actual90 cleanrelease/currenttuple and
