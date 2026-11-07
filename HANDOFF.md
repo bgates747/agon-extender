@@ -3,12 +3,15 @@
 Wolf's exact1105920B85f9 restored span independently matches. Its normal cleanup
 P4-init→Agon attempt timed out60s with remote readyfalse/session0/reason0; no
 actual CLI/fullhandback/release yet. Wolf retains SOLE75, all its children joined.
-Extender remains targetSTOPPED. Source-only reply source-bootstrap75 retains
-logs/hashes and recommends one bounded read-only existing-epoch observation
-before any fresh recovery decision, not rerunning the old bootstrap or benchmark.
+Extender remains targetSTOPPED. Source-only source-bootstrap75 retains logs/hashes.
+Owner15s read-only existing-epoch observation stayed unready; ledger proves initial
+timing-image bootstrap success, ordinary cleanup bootstrap failure and no recovery-
+specific attempt yet. Returned standing Author recovery disposition: one Agon-only,
+then only if needed one initialized-P4→Agon recovery, actual CLI/fullhandback; no
+reflash/fixture replay/reset loop. Actual recovery result/release still pending.
 Do not equate reason0 with no transport/admission boundary: no-session cancel
-can retain reason0. Existing earlier admission line is not timestamp-joined to
-post-reset success. Await actual owner reply; no second operator or device poll.
+can retain reason0. Earlier admission line is not timestamp-joined to post-reset
+success. No second operator or parallel device poll.
 
 Mech final U1 kit0112d4fc/116inputs/ff6bd48 independently rehashed unchanged;
 request1b46642ee71b source READY but no freshgrant while75 retained. Request-local
