@@ -20,6 +20,7 @@ import tarfile
 from urllib.parse import urlsplit
 
 from p4_board import DEFAULT_BOARD, apply_sdk_overrides, load_board, write_board_inputs
+from p4_uart1_control import check as check_uart1_control
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,7 +40,7 @@ HDMI_GEOMETRIES = {"auto": (848, 480), "1280x720": (1280, 720), "848x480": (848,
 EXPERIMENTAL_HDMI_ID = re.compile(r"hdmi-001-r[0-9]{2}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 EXPERIMENTAL_BENCH_ID = re.compile(r"bench-009-r[0-9]{2,}-b([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2})Z")
 SOURCE_SCOPE = ("vdp", "scripts/build_p4.py", "scripts/validate_p4_build.py", "scripts/p4_cache_msync.py",
-                "scripts/p4_board.py", "scripts/p4_ppa_clut.py", "scripts/p4_usb_host.py")
+                "scripts/p4_board.py", "scripts/p4_ppa_clut.py", "scripts/p4_usb_host.py", "scripts/p4_uart1_control.py")
 
 ROLLING_SDK_OVERRIDES = {
     "CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL": "0",
@@ -691,6 +692,9 @@ def main() -> None:
     parser.add_argument("--reset-url",
                         help="embed a machine-local HTTP(S) reset endpoint")
     args = parser.parse_args()
+    uart1_control = check_uart1_control(ROOT)
+    if not args.network_messages or args.network_parallel:
+        parser.error("Task-private half-baud control requires UART1 NM composition")
     if not SAFE_NAME.fullmatch(args.build_id):
         parser.error("build ID contains unsupported characters")
     source_commit = subprocess.check_output(
@@ -991,7 +995,9 @@ def main() -> None:
         artifact_paths.extend(project / "components" / item["path"] for item in component["files"])
     if source_record is not None:
         artifact_paths.extend([output / "source.tar.gz", output / "source-inputs.json"])
+    artifact_paths.extend([ROOT/"scripts/p4_uart1_control.py",VDP/"native/uart1-baud-control.json"])
     record = {
+        "paired_uart1_control": uart1_control,
         "schema_version": 1, "profile": args.profile, "lcd": False,
         "board": args.board, "board_identity": board["identity"],
         "board_profile_sha256": board_record["profile_sha256"],

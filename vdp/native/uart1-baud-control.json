@@ -1,0 +1,10 @@
+{
+  "schema": "net004-paired-uart1-control-v1",
+  "status": "experimental-source-only",
+  "uart0_baud": 1152000,
+  "uart1_baud": 576000,
+  "frame": "8N1",
+  "flow_control": "RTS/CTS",
+  "paired_firmware_required": true,
+  "ordinary_default_adoption": false
+}

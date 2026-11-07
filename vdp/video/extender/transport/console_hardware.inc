@@ -190,7 +190,8 @@ ConsoleStream *beginConsole() {
     ESP_ERROR_CHECK(gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT));
     ESP_ERROR_CHECK(gpio_pullup_dis(gpio_num_t(pin)));ESP_ERROR_CHECK(gpio_pulldown_dis(gpio_num_t(pin)));
   }
-  uart_config_t cfg{};cfg.baud_rate=1152000;cfg.data_bits=UART_DATA_8_BITS;
+  // NET-004 task-private paired576000 control; EMOS must match before use.
+  uart_config_t cfg{};cfg.baud_rate=576000;cfg.data_bits=UART_DATA_8_BITS;
   cfg.parity=UART_PARITY_DISABLE;cfg.stop_bits=UART_STOP_BITS_1;
   cfg.flow_ctrl=UART_HW_FLOWCTRL_CTS_RTS;cfg.rx_flow_ctrl_thresh=64;cfg.source_clk=UART_SCLK_DEFAULT;
   ESP_ERROR_CHECK(uart_param_config(UART_NUM_1,&cfg));
@@ -273,7 +274,7 @@ void runConsole(VDUStreamProcessor *processor) {
         portEXIT_CRITICAL(&sd_mutex);return okay;
       });
 #endif
-  printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
+  printf("ExCom console %s (%s), UART1 576000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
   printf("Board %s UART1 TX=%d RX=%d RTS=%d CTS=%d\n",console_board::kIdentity,
          console_board::kUartTx,console_board::kUartRx,console_board::kUartRts,console_board::kUartCts);
   namespace timing = agon::extender::diagnostics;
