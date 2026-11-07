@@ -1,3 +1,98 @@
+# Current — paused goals; all resources released (2026-11-07 18:57 UTC)
+
+Mech and Wolf goals are paused at their human-requested clean stopping boundary.
+No new delegated implementation, compiler reservation, packaging, installation or
+physical case is selected. All owned actors have joined. Compiler420 released
+18:54:01.175147 UTC with no successor; Wolf99 released18:56:35.331188 UTC with
+no successor. Central bench active lease is null and its queue is empty. Old
+leases are invalid. Extender target access remains stopped, SD remains mounted.
+
+The normal physical tuple is restored: P4 d9bcb1a2, full EMOS a25f1612, native
+VDP app5d65797e/full1105920-byte native-tail85f9cf31, startuped403e17 and
+listener0566e17f. Actual99 fullreadback and fresh CLI/raw0/callback0/route0,
+wholefiles/inputneutral/offlineidle/freeUSB handback passed. Source-only release
+join is agents/bench-scheduler/wolf-perf023-r02/release-joined.json.
+
+Actual98 failed native shutdown observation; host game-end524 is not a native
+completion pass. Original64KiB app window was preserved POST-RESET before next
+LOAD, then exact incominga25f rollback/fullreadback/fullhandback released98.
+Retained exact-map analysis supports renderer reply quarantine before CLOSE,
+with no recorded UART1 fault; missing reply cause remains unknown.
+
+Actual99 comparison stopped after observer SIGTERM15, sender/cause unknown.
+Control01 passed; candidate02 completed/unloaded to CLI but lost-observer guards
+refused collection/successors. No candidate performance verdict. Original325309B
+guest RAM was saved before any LOAD/reset, then exact85f9 restoration completed.
+No replay, observer restart, successor or HOLD.
+
+P4 first-connect-failure sourcee17e5e9d passed60 host steps/19 socket scenarios,
+sanitizers/OFF equivalence/two target units and the single identified native
+build420 (544.786s). App1766688B/1968d441 retained UNINSTALLED with source/archive,
+ELF/map/config and canonical validation. Private package/touched-span composition
+remain UNRUN; source commits are local. See agents/net004/p4-nm-connect-fault-r01/
+identified-r02/paused-boundary.json. UART0 no-data correction remains reference
+assessment only: NO patch/worktree/native qualification started. Earlier
+sections below are historical snapshots, not current custody or instructions.
+
+# Current — Mech delegated work stopped at pause boundary; build420 finishing
+
+Human pause relayed by Mech13:48:40: no new delegated source/build/case or
+reservation; finish/join already-running finite compiler and release normally.
+No new UART0 carry patch/worktree/qualification was started: source assessment
+and official tagged reference research only, implementation/native tests UNRUN.
+P4 first-connect-failure clean sourcee17e5e9d passed compiler418 two actual target
+units and60 hoststeps/19scenarios/sanitizers/OFF Os/O2 byte-path checks. All418
+children joined/released18:39:50UTC/no next. Identified419 precompile SDK-link
+failure retained/released; corrected ignored pinned SDK closure preflight then
+fresh420/1d268392cf05 is already running ONEidentifiedON build under original
+840s-child1200s-whole/two-worker/80C512MiB/join-release guards. No image has been
+installed; no new build/package/test after current validation/release boundary.
+
+Actual98 R09 failed original150s/noCLI after hostgame-end524; allactors joined.
+ONE Agon-only recovery restoredCLI; full64KiB040000 post-resetRAM61032 saved
+BEFORE nextLOAD/write, SDstatus/firstcarrierabsent. Existinggetter onlyafterRAM
+and freshboot proves featureABSENT/clearordered/callbackrestored/buffer0. Exact
+incominga25f ONEFLASH/automaticboot/full131072 independentreadback/freshrootCLI/
+raw0/callback0/route0/wholefiles/inputneutral/offlineidle/freeUSB PASS. Actual98
+released18:33:57.454071UTC/oldtokeninvalid. Mech exact-map retainedRAM analysis
+found no recorded U1fault, source/wireidle positive, renderer uncertain/batch
+quarantine beforeCLOSE; no nativePASS/rate/cause inferred. UART0 source assessment
+returned: no retained line-error history, concrete conditional no-data-carry
+and asymmetric reserve risks; no source patch/targetprobe/diagnostic selected.
+
+Actual99 Wolf0d70 correctionkit683/bafa rehashed/current98tuple/fullROM and
+retained97nativefull85f9 matched, newownCLI/SAVE-only state/files/inputidle and
+normal freshgrant/stoppedsolehandoff/mandatorybothforegroundargv delivered.
+Controller1490140/session18819 and observer1490178/session60408/tracer1490180
+reported positive exactattach3.125s beforeIO. Wolfgoal also PAUSED: only finish
+already-submitted operations/preservation/full85f9 restore/readback/fullcleanup/
+release, no successor/newoptimization/HOLD. Observer60408 now terminal1/SIGTERM15,
+tracer joined-15/senderUNKNOWN; originalcontroller18819 still reported LIVE in
+candidate02 original300s RUN. Firstcontrol01PASS600/INFO1748. No result/pass for
+candidate or release inferred; Wolf retains SOLE99. ALL Extender targetaccess
+STOPPED/no readers/pending. Source-only consultation, no peerdeviceaction or
+replay. SDmounted/Mechfirst/OryxONLINE. Earlierheaders historical; centralcontext
+and originaltool receipts govern current custody.
+
+# Current — actual98 sole Extender recovery; incominga25f rollback pending
+
+Actual ONE R09 original150s native observation expired/no native CLI or stopped
+result. Host independently recorded match_completed524 turns/game-end and
+native_closed, but native source/drain/CLOSE/renderer retirement remain UNKNOWN.
+Root all actors joined and target STOPPED; exact source/evidence-pinned stopped
+return verified. Extender asserted same98/8579 and assumed operatorlinux-extender/
+owner-restore, original context retained. One standing Agon-only recovery is
+active after retained unchanged setup-only startup/worker/input disposition;
+no test replay/LOAD/firmwarewrite or premature pass/cause/rate claim. Need genuine
+post-reset64KiB040000 RAM BEFORE anyLOAD, retained SDstatus/optionalfirstcarrier
+with explicit provenance, safe feature cleanup, then exacta25f ONEFLASH/automatic
+boot/full131072 independentreadback/fullfreshhandback/normalrelease. P4/native/
+startup/listener writes not selected. Installed47dadc provisional, incominga25f
+retained. Mech targetstopped; Wolf0d70 PREPARING behind same98/no new grant.
+P4firstfailure source clean4b2ab801/guards prepared, not compiled/launched; primary
+cleanup first. SDmounted/Mechfirst/OryxONLINE. Earlierheadings historical;
+centralregistry/context govern actual custody.
+
 # Current — actual98 sole Mech R09; Extender target access stopped
 
 Actual97 Wolf cleanrelease18:14:46UTC/full85f9 restoration/readback/cleanup and

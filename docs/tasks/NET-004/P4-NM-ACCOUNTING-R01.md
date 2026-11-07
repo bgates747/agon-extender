@@ -295,3 +295,51 @@ read/write rows do not cover connection establishment.
    production change or attribution of actual96's cause. Existing counters stay
    inclusive non-additive wall time; the new record is a failure witness, not CPU
    utilization or complete wire timing.
+
+
+## First-connect-failure source qualification and preparation correction
+
+Clean isolated sourcee17e5e9d passes two actual target compilations and60 host
+steps under compiler418, including19 socket/local/cancellation/success scenarios,
+sanitisers, protocol/syscall equality and OFF Os/O2 object equality. All owned
+children joined and normal418 release18:39:50.533488UTC had no successor. The
+first417 compilation caught a formatter indentation warning; source corrected
+before this fresh request. No hardware was contacted.
+
+Identified419 preparation then stopped before compilation because the new
+worktree lacked its ignored native SDK source link; all owned children joined
+and419 released18:40:40.403707UTC with no successor or artifact. Fresh identified
+preparationr02 explicitly binds the unchanged pinned SDK commit and existing
+tools/Python/dependency closure before reserving the same selected single ON
+link. Product source/host qualification remain unchanged; prior failed evidence
+and identity remain immutable. No pair rebuild, deployment, default or physical
+case is selected. Original two-worker/840s-child/1200s-whole/sensor/cleanup and
+immediate next-owner handoff guards remain.
+
+
+## Paused after completed first-connect-failure native build
+
+The human paused delegated goal work while its already-running finite native
+build completed. All owned processes joined; compiler420 released at
+2026-11-07T18:54:01.175147Z with no successor. No new build, package, deployment
+or physical case follows this boundary.
+
+1. Clean isolated source `e17e5e9d605dd047361585039bf38b4cff0999d1` passed
+   the retained compiler418 host/target controls and canonical identified native
+   validation under420 in544.786 seconds. Identified build
+   `net-003-r02-b2026-11-07-18-44-45Z` retains its source archive/input inventory,
+   SDK/config/dependencies, ELF/map and app. Source commits remain local.
+2. App size is1,766,688 bytes; SHA256
+   `1968d441c20590da28579bb572c7854835be4b22db77262cc7471da2322d6fc6`.
+   Compared with the prior identified accounting-ON artifact, app grows2,320B,
+   flash text1,600B, flash rodata712B and combined BSS56B; data and IRAM are
+   unchanged. Different build identities/link placement are included: these
+   differences are not a matched same-identity OFF/ON incremental-cost result.
+3. The artifact is retained uninstalled. No target reader, socket-failure
+   hardware case, processor-time result or production acceptance is claimed.
+   Private distributable packaging and touched-sector rollback composition
+   remain unexecuted because of the pause. Existing normal installed firmware
+   and prior immutable accounting artifact remain unchanged.
+4. The ignored owner record's `identified-r02/paused-boundary.json` binds exact
+   source, checks, artifacts and release. Resume requires human direction; this
+   closeout does not select another qualification or installation.
