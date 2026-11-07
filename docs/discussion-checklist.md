@@ -47,7 +47,8 @@ temporary agenda when all seven topics are covered.
 
 6. [ ] **VDPlet and shared development machines.** Review outstanding owner
    dependencies, priorities and compiler/bench scheduling. Oryx's manager
-   reports it back online; normal checkout and workload rules still apply.
+   reports it down for the November 7 unattended period; normal Pi compilation
+   and fresh physical bench checkout continue. Availability is time-sensitive.
 
 7. [ ] **Olimex bench.** Review the retained working firmware and choose the
    next reservation. Wolf 67 was cleanly released and the registry was empty
@@ -95,3 +96,14 @@ The large-buffer speedup does not authorize application migration. Results and
 this explicit decision are relayed to MechAgon; independent accuracy/performance
 work remains separate. This records a disposition without closing the wider
 parallel/Wolf endpoint and reliability discussion.
+
+November 7 UART follow-up: the application-owned EMOS adaptation is implemented,
+but overlapping MechAgon runs reported receive overrun twice; its cause remains
+unresolved. A later serialized-I/O control completed1078 matching frames and
+3332 accepted replies with zero reported UART faults, then closed cleanly.
+Host frame-send cadence was12.675Hz, below30Hz. Discuss that correctness/rate
+tradeoff and the separately prepared lightweight observer and paired576000
+source control; neither is an established cause/fix or production selection.
+Exact incoming EMOS was restored and independently read back after the case.
+[Current receive investigation](tasks/NET-004/EMOS-ASYNC-RX-DIAGNOSTIC-R01.md),
+[paired baud control](tasks/NET-004/UART1-BAUD-CONTROL-R01.md).

@@ -1,3 +1,32 @@
+# Current — actual88 sole Mech R05 consumer; Extender target-stopped
+
+Fresh88/43d73d6e0010 selected8de66 EMOS-only stage/fullGETcomparison/ONEFLASH/
+exact automaticboot/full131072B independentreadback PASS. Fresh mode0/callback0/
+route0/whole startup-listener/actualCLI/readEXIT/inputneutral/offlineidle/freeUSB
+PASS. All626 frozen8f00a626 inputs and actual consumer precontact() match. Context
+agents/bench-scheduler/mechagon-goal001-r05; stopped-operator-handoff.json and
+owner-install/verify-candidate/receipt.json. Actual stopped sole-Mech handoff
+sent/steered14:15UTC; Extender ALLtargetaccessSTOPPED/no pending/readers. Do NOT
+poll HTTP/native/SD/serial, reset or collect while Mech owns it. ONE selected
+serialized mainboard-phase case/original90/150/180bounds; conditional module2112
+allocation and inclusive/nested counters retained. Wait real joined/stopped return
+before same88 exacta25f rollback/fullreadback/fullcleanup/normalrelease. No replay/
+extra test/observer/PRT/baud/P4/native/startup/listener change. FutureWolf019/1fec
+READY549pins4e6612 is next only after real handback/newgrant; no activeWolfaccess.
+
+Source-only paired576 complete, NOTinstalled or physicallyselected. EMOS532a0da/
+fee5/raw130497/free575, whole nativebytesonlybaudimmediate+newtimestamp/mapBSSsame.
+P4 2496922b/28046951 app1760256 native/linkedphysicalUART1valuePASS. Freshoriginal
+source/config/compiler matches; two checked equal-content partition paths explain
+rawSDKhash difference. Generated path/date/autoprojectversion/bootID/rodata
+limits retained; not baudbytes-only images or reliability/CTS/CPU proof. Local
+15-member1095024B/fc622440 package and manifests under agents/net004/uart1-576-r01;
+completed handoff returned toMech. 370released14:08:58/allchildrenjoined, successor
+Wolf371 immediately notified,372also released. No own compiler/targetactor.
+CurrentP4d9b/EMOS8de66/native5d657/startuped403/listener0566 retained; diagnostic
+80fe/halfbaudfee5+2804 uninstalled. Exact incominga25f rollback retained. SDmounted,
+OryxDOWN, Mechfirst/Wolfsecond. Earlier headings historical; actualregistry governs.
+
 # Current — actual86 sole Mech serialized R04; Extender target-stopped
 
 Exact existing8de66 candidate/source954e3c54 staged/fullGETcompared, ONEFLASH/
