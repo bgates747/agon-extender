@@ -3,6 +3,7 @@
 #include <freertos/FreeRTOS.h>
 #include <esp_timer.h>
 #include <cstdio>
+#include <cinttypes>
 namespace agon::extender::network::messages::accounting {
 namespace {
 portMUX_TYPE mutex=portMUX_INITIALIZER_UNLOCKED;
@@ -35,7 +36,7 @@ std::string json() {
         (unsigned long long)s.epochUs,(unsigned long long)s.sampleUs,
         s.saturated?"true":"false",s.clockInvalid?"true":"false",s.lifecycleInvalid?"true":"false");if(length<0||unsigned(length)>=sizeof b)return {};out+=b;
     for(unsigned i=0;i<metricCount;++i){const auto &r=s.rows[i];
-        const int rowLength=std::snprintf(b,sizeof b,"%s{\"metric\":\"%s\",\"actor\":\"%s\",\"unit\":\"%s\",\"calls\":%llu,\"units\":%llu,\"rejected\":%llu,\"would_block\":%llu,\"closed\":%llu,\"errors\":%llu,\"inclusive_us\":%llu,\"max_us\":%llu,\"sampled_highwater\":%u,\"active\":%u}",
+        const int rowLength=std::snprintf(b,sizeof b,"%s{\"metric\":\"%s\",\"actor\":\"%s\",\"unit\":\"%s\",\"calls\":%llu,\"units\":%llu,\"rejected\":%llu,\"would_block\":%llu,\"closed\":%llu,\"errors\":%llu,\"inclusive_us\":%llu,\"max_us\":%llu,\"sampled_highwater\":%" PRIu32 ",\"active\":%" PRIu32 "}",
             i?",":"",names[i],actors[i],units[i],(unsigned long long)r.calls,(unsigned long long)r.units,
             (unsigned long long)r.rejected,(unsigned long long)r.wouldBlock,(unsigned long long)r.closed,(unsigned long long)r.errors,
             (unsigned long long)r.elapsedUs,(unsigned long long)r.maxUs,r.highwater,r.active);if(rowLength<0||unsigned(rowLength)>=sizeof b)return {};out+=b;
