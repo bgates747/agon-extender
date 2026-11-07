@@ -1,3 +1,72 @@
+# Current — actual95 sole Wolf022; Mech94 restored/released normally
+
+Actual94/e419 R08 normal result0/zeroUARTerror/positive source-drain-CLOSE/
+cleanup/end/linkidle;882NMaccepted0rejected,276decisions/256native-moduleframes/
+21coalesces; finite reliability only,30Hz NOTaccepted/noOEcure. Both getters
+ABSENT/orderedcleanup/buffer0/callbackrestored/fullconsumeridle PASS. Extender
+same94 exacta25f ONEFLASH/automaticboot/full131072 independentreadback/rootCLI/
+cursor/raw0/callback0/route0/wholefiles/inputneutral/offlineidle/worker0/freeUSB
+PASS. Clean RELEASE16:57:00.911025UTC/old94tokeninvalid/allactorsSTOPPED, no
+manualreset/replay/P4/native/startup/listenerwrite. Evidence mechagon-goal001-r08
+cleanup-result94/released/release-observation/final/verify-rollback.
+
+New normal95/793c29add4f8 granted after fresh actualCLI/readEXIT/SAVE-only state/
+wholefiles/input/idle and exact822db776 kit/dualinterpreterclosures/full85f9
+rollback/currenttuple. Context wolf-perf022-r02 operatorWolf; actual stoppedsole
+handoff/grant/exact mandatory-controller and mandatory-observer argv delivered/
+steering accepted. ALL Extender targetaccessSTOPPED/no pending/readers. Wait
+actualcontroller/observer PIDs+foregroundhandles and eventual real joined clean
+return; no separate owner HTTP/serial/SD/reset/PRT/flash/test/probing. Onlyfull
+6uncapped original/cyan/combined/combined/cyan/original600poses+7INFO/4200incl45s
+handshake/360reserve/660newguest, positive exactPID observer BEFOREdeviceIO, no
+fatalcancel suppression/parentgroupchange. OnlycontrollerdeviceIO, observerhost-
+only samelease. Exact7593 app-only/currentmatchedbootstrap/full85f9restore/
+readback/fullcleanup/normalrelease, both foregroundhandles/tracer joined, no
+HOLD/newcase/EMOS/P4/startup/listener/carrier/defaultwrite/replay. Historicalhost
+SIGTERMcauseUNKNOWN. Mech-promised finitegap; Mechfirst/Wolfsecond/OryxDOWN.
+Current incoming d9b/a25f/5d657/ed403/0566, SDmounted; oldtokensinvalid. Earlier
+headings historical; centralregistry/currentcontext govern custody.
+
+# Current — actual94 cleanly released; Wolf793 fresh admission
+
+Actual94 normal R08 result0/zeroUARTfault/positive source-drain-CLOSE-cleanup-end
+and fullconsumerhandback retained;21coalesces so30Hz notaccepted. Extender exact
+incominga25f ONEFLASH/automaticboot/full131072B independentreadback and fresh
+rootCLI/cursor/raw0/callback0/route0/wholefiles/inputneutral/offlineidle/worker0/
+freeUSB PASS; allactorsSTOPPED. Clean RELEASE16:57:00.911025UTC/old94tokeninvalid.
+Receipts mechagon-goal001-r08/released.json/release-observation.json/final and
+verify-rollback. Mandatory Mech/Wolf release notices accepted. Current baseline
+d9b/a25f/5d657/ed403/0566, SDmounted.
+
+Actualnext Wolf793c29add4f8 is fully READY822db776/808c551, both current pinned
+interpreterclosures match and exact85f9 native rollback retained. New scheduler
+CLI/readEXIT/SAVE-only admission active in wolf-perf022-r02; no test/FLASH/reset/
+LOAD/RUN/observerattach byExtender. Need freshgrant/stoppedsolehandoff, no old94
+or85 token. Qualified full6uncapped original/cyan/combined/combined/cyan/original
+rooms+7INFO/4200incl45observerhandshake/360cleanup/660newguest guards, exactnative
+7593 app-only/full85f9 restore/readback/fullcleanup/normalrelease. Two normal
+foreground hostjobs share onelease; only controllertargetaccess, positive exact-
+PID observer before deviceIO, normalfatal cancellation preserved; both joined
+before release. Mech-promised finitegap, no newcase/default/carrier/EMOS/P4write.
+Earlierheadings historical; centralregistry/currentcontext govern custody.
+
+# Current — actual94 sole Extender rollback after normal MechR08
+
+Actual joined/stopped return94/e419 verified: stage/pre/ONE live/post/idle all0,
+normal nativeCLI/result0, source/drain/CLOSE/cleanup/end/linkidle positive,
+zeroUARTerror/fault/pipe_stage,882NMaccepted/0rejected.256native/moduleframes,
+276decisions/21coalesces; finite reliability result, rateNOTaccepted/noOEcure.
+Both featuregettersABSENT/clearordered/buffer0/callbackrestored; fullraw0/route0/
+files/inputneutral/offlineidle/freeUSB pass. RootALLtargetSTOPPED/readersjoined.
+Extender asserted same94 and atomically assumed operatorlinux-extender/
+owner-restore from copied actual consumer-stopped-handoff.json; originalcontext
+preserved. Exactincominga25f ONEFLASH/automaticboot active, then full131072B
+independentreadback/freshfullhandback/normalrelease required. No manualreset/
+newLOAD/RUN/RAMclaim/replay/P4/native/startup/listenerwrite. Frozen1015cd6171/
+ownerinputs unchanged. Context mechagon-goal001-r08. Wolf793 next promisedfinite
+gap afteractual94release/freshgrant. Mechfirst/OryxDOWN/SDmounted. Earlier
+headings historical; currentcentralregistry/context govern.
+
 # Current — actual94 sole MechR08; Extender target access stopped
 
 Exact frozen1015-input230217B cd6171d5 R08 admitted fresh94/e419 after actual93
