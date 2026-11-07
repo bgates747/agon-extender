@@ -277,3 +277,34 @@ its original header/source hashes; this is a schema2 interpretation corrigendum,
 not a newly executed firmware result. A drafted endpoint-write alternative was
 never built or installed and was removed before selecting the smaller rule.
 Independent uninstrumented Mech R04/8de66 remains the current physical priority.
+
+## Source-bound installation preparation after the mainboard attribution run
+
+The consumer's mainboard-phase run returned normally with507 matching frames,
+506 decisions and zero reported UART faults; its252-byte resident profile was
+preserved before the exact incoming EMOS rollback. Extender independently
+compared the full131072-byte a25f readback and completed fresh CLI/state/files/
+input/idle cleanup before releasing actual88. This is that bounded run's closure,
+not an overrun cause,30Hz result or general reliability qualification.
+
+The next observed-overlap diagnostic remains source preparation. Extender has
+request-independent admission/install/rollback templates in its ignored owner
+record. They bind exact retained80fe/source1727fa19/map7a5965d6 and current a25f
+rollback, but deliberately omit a request, predecessor generation and consumer
+kit. No diagnostic image is installed or new physical case selected by them.
+Actual identified sysvars, mode, keyboard callback and backend addresses match
+the maintained installer's existing SAVE-only bindings; no new address guess,
+register access, hook write or duplicate firmware build is needed. Stage/fullGET
+comparison, ONE FLASH/automatic boot, fullROM comparison, fresh normal state,
+stopped handoff and same-custody rollback still precede normal release.
+
+Pointer-admission wording is precise: `emos_application_span(entry,1)` checks
+application RAM0x040000 through0x0AFFFF. It does not attest loaded executable bytes
+or instruction boundaries. The coherent caller BIN/map/source binding establishes
+its real service and marker entries and lifetime. Diagnostic OPEN7 checks the
+marker range before association; service admission checks its entry, and both
+publish under the owner lock. The installer never manually installs a marker.
+Positive CLOSE or the documented owner teardown retires the association; source
+release alone is insufficient. This clarification changes no recorder/ROM bytes,
+ABI, tests or physical qualification result. A new exact request/consumer freeze,
+fresh lease and stopped handoff are still required before deployment.

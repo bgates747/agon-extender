@@ -1,3 +1,29 @@
+# Current — actual89 sole Wolf019; Mech diagnostic source preparation
+
+Actual88 normal507-frame R05 evidence/profile retained; exactincominga25f
+full131072B rollback/readback/fresh CLI/cursor/state/wholefiles/input/idle/freeUSB
+PASS. Central release14:25:29.961525UTC; old88token invalid. Source correction to
+final receipt prose used final-r02.py, preserving original frozen helper; no
+control-flow/operation change. Actualnext/current89 Wolf019 normal fresh grant
+completed after549pins4e6612+60-file launcher closure and fresh CLI/SAVE-only
+rawmode0/callback0/route0/wholefiles/input/idle proof. SoleWolf controllerPID1415850/
+session76691 launchedONCE. Context agents/bench-scheduler/wolf-perf019-r01;
+stopped-operator-handoff.json and mandatory-launch.json. Extender ALL target
+accessSTOPPED/no pending/readers. No concurrent HTTP/serial/SD/reset/recovery.
+Only frozen six uncapped original/chains/trig/trig/chains/original600-pose rooms/
+sevenINFO/4200absolute360cleanup660admission, existing7593app-only/exactfull85f9
+restore/readback/fullcleanup/normalrelease. Await actual handback; no oldtoken.
+
+Mech next observed IRQ arm is SOURCE preparation only. Request-independent80fe/
+a25f install/admission templates under agents/net004/uart1-rx-diag-r01/install-
+preparation-r01 deliberately leave request/kit/predecessor unbound. Map sysvars/
+mode/callback/backend matches current installer; no new runtime/helper/build.
+OPEN7 checks appRAM range040000..0AFFFF, not executable-code attestation; actual
+BIN/map/lifetime must bind service/marker entries. Return sent/steered. No diag
+case/install or halfbaud change. Halfbaud532a0da+2496922b artifacts complete and
+uninstalled. Current baseline d9b/a25f/5d657/ed403/0566 retained; SDmounted,
+OryxDOWN, Mechfirst/Wolfsecond. No own compiler. Earlier headings historical.
+
 # Current — actual88 sole Mech R05 consumer; Extender target-stopped
 
 Fresh88/43d73d6e0010 selected8de66 EMOS-only stage/fullGETcomparison/ONEFLASH/
