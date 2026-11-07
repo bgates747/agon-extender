@@ -1,3 +1,22 @@
+# Current — Wolf77 restored idle and HELD for Smith; all target actors stopped
+
+Owner result3c9eb62: Smith manually started visiblefixture and confirmed both
+turns.600presentations/600poses over19.992nominalPRTseconds/20.0167MOSseconds,
+no coalescedposes, recorded33/34ms intervals. Paced30Hz target attained for
+selected enemy-free room; not uncappedmaximum/allgameplay/opticalcalibration.
+Wolf source/RESULT.md under WOLF-PERF-011 is authority for its observations.
+
+Exactincoming1105920B85f9 native/tail restored+independentfullreadback/current
+bootstrap/rootCLI/cursor/rawmode0/callback0/route0/wholefiles/neutralinput/
+offlineidle/freeUSB/joinedactors PASS per owner. P4d9bcb/EMOSa25f/native5d657
+profile8/startuped403/listener0566 retained; SDmounted. Actual77/8fd506cf5fbe
+HELD, NOT RELEASED, no nextowner or deviceaccess implied. Central read confirms
+Wolf77active. ALL Wolf actors/access stopped; Extender remains targetSTOPPED.
+No new test/check/probe/reset/release until Smith direction or explicit custody
+handoff. Source-only received result retained agents/bench-scheduler/
+wolf-perf011-manual01/mail-visible-held-result.json; source review samefolder.
+Earlier preparation/failure checkpoints below are history.
+
 # Current — Wolf77 sole manual LOAD-only preparation; Extender target-stopped
 
 Normalfresh77/8fd506cf5fbe granted after
