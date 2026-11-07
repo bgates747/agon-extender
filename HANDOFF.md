@@ -19,6 +19,12 @@ ROM unchanged), all children joined/released; publish immutable r02 SDK/
 consumer binding, then coordinate MechAgon-owned caller/trial; prepare EMOS-only
 install/readback/rollback under separate fresh normalbench after its kit ready.
 Never insert newROM into current Wolf75 or change workingUART choice.
+SDK39d4be6f r02 package/binding delivered by durable mail + accepted steering to
+MechAgon; r01 preserved. Private install.py/14-input preparation selection locally
+rehashed, seven invalid owner contexts refused (central mock), no target calls.
+Published owner plan docs/tasks/NET-004/EMOS-ASYNC-PHYSICAL-R01.md. Await consumer
+actual build/freeze/request, then bind private selection/context and normal fresh
+admission; no new approval round, no hardware entry while Wolf owns75.
 Earlier checkpoints below are historical; preserve unrelated BENCH010 dirt.
 
 # Current — MechAgon74 sole operator; provisional UART1 integration selected

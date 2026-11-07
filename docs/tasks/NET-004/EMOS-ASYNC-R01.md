@@ -141,3 +141,16 @@ A refused SUBMIT may clear NM admission without removing the app hook; progress
 and positive RELEASE must remain possible until that association is retired.
 The actual-C refusal regression and unchanged synchronous target-object control
 pass. No second buffer, queue, wire change or resident-engine change is needed.
+
+## Published binding and owner preparation
+
+SDK correction39d4be6f is checked and delivered to MechAgon as a new immutable
+r02 binding/package; r01 is retained unchanged. Compiler303 released after all
+checks/children finished. The [owner installation/rollback plan](EMOS-ASYNC-PHYSICAL-R01.md)
+is published before helper preparation. Its private helper passes syntax, exact
+candidate/rollback/inventory rehash and seven refused-context policy checks;
+central assertion was mocked and no hardware was contacted. The preparation
+selection is deliberately request-unbound and cannot authorize target access.
+MechAgon must freeze its own consumer/kit/request, followed by owner request
+binding, fresh normal admission and stopped handoffs. Current Wolf custody is
+preserved. No installation or physical readiness is claimed.
