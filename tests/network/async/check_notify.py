@@ -41,7 +41,7 @@ def run(label,argv,cwd=R):
 
 try:
     inputs=[R/'include/agon/net.h',R/'include/agon/net_async.h',a.baseline_header.resolve(),
-            Path(__file__),R/'tests/network/async/composition.c',R/'tests/network/async/notify.c',
+            Path(__file__),R/'tests/network/async/rx_scope.c',R/'tests/network/async/notify.c',
             E/'src/emos_net.c',E/'src/emos_neta.c',H/'defines.h',
             U/'src/u1_tx.c',U/'include/u1_tx.h',U/'src/u1_emit.src']
     for f in inputs:report['inputs'][str(f)]=pin(f)
@@ -59,7 +59,7 @@ try:
            '-I'+str(H),'-I'+str(E/'src')]
     for name in ('emos_net','emos_neta'):
         run(name,common+flags+['-c',str(E/'src'/f'{name}.c'),'-o',str(O/f'{name}.o')])
-    for name in ('composition','notify'):
+    for name in ('rx_scope','notify'):
         run(name+'-link',common+['-I'+str(R/'include'),'-I'+str(U/'include'),
             str(R/'tests/network/async'/f'{name}.c'),str(U/'src/u1_tx.c'),
             str(O/'emos_net.o'),str(O/'emos_neta.o'),'-o',str(O/name)])

@@ -4,7 +4,7 @@
 static void notify(void *);
 #define AGON_NETA_NOTIFY(c) notify(c)
 #define main original_composition_main
-#include "composition.c"
+#include "rx_scope.c"
 #undef main
 
 static unsigned notifications, releases, tails, idles, faults;
@@ -28,6 +28,7 @@ static void notify(void *value) {
 }
 
 int main(void) {
+    (void)notify; /* Old-header negative control still compiles before failing. */
     void *ram=mmap((void*)0x40000,0x20000,PROT_READ|PROT_WRITE,
                   MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED_NOREPLACE,-1,0);
     assert(ram==(void*)0x40000);agon_neta_client *c=ram;

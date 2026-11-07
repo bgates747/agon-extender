@@ -67,3 +67,14 @@ source branch. No compiler or target execution has occurred. Existing root SDK
 and frozen diagnostic remain unchanged. Native/host check runner requires an
 exact baseline header and explicit owner/core/toolchain paths, preserving all
 paired outputs and failing on changed default application bytes.
+
+## Host model correction before the next build
+
+The first isolated compiler tranche stopped at link time because the old generic
+lifetime harness lacks the current owner's scoped lock/unlock and RX-resume
+substitutes. No candidate notification test or native probe executed. Select the
+already maintained actual RX-scope harness for this newer owner composition;
+only test-model selection changes, with the SDK candidate unchanged. The old
+header negative control must compile and fail at its notification assertion,
+not pass through an unused-hook compile failure. Retain the brief failed-link
+receipt and use a fresh qualification output/normal compiler grant.
