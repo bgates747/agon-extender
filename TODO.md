@@ -11,9 +11,9 @@ classification does not grant new execution or waive human acceptance.
 
 ## Application networking — authorized framework preparation
 
-- [ ] **[COMMS-002 — Matched UART1 versus parallel performance](docs/tasks/COMMS-002.md)** — Separate benchmark design: same MOS/P4 workload and renderer, transport/setup/turnaround/eZ80 occupation/VDP execution/application costs reported separately. Faster MOS↔VDP communication is the primary objective. Complementary to accuracy testing, with independent executable/runs/results; no coding or measured gain yet.
+- [ ] **[COMMS-002 — Matched UART1 versus parallel performance](docs/tasks/COMMS-002.md)** — Independent corpus/timer/measurement engine and collector pass sanitizer/source/actual CLI checks and stopped eZ80 link. Actual EMOS/P4/timer binding and matched bench run remain. Faster MOS↔VDP communication is the primary objective; separate from accuracy testing, no measured gain yet.
 
-- [ ] **[COMMS-001 — Mixed-carrier communications accuracy and endurance](docs/tasks/COMMS-001.md)** — Design/task first: UART1/parallel direction matrix, VDU and data workloads, endpoint CRCs, UART1 error/repeat control, five-failure limit and Agon SD/Pi logs without sniffers. No coding or invocation yet; mixed-leg owner interface and actual filter-rejection telemetry remain design dependencies.
+- [ ] **[COMMS-001 — Mixed-carrier communications accuracy and endurance](docs/tasks/COMMS-001.md)** — Protocol/oracle/five-attempt engine, durable host journal and real Pi peer pass sanitizer/socket/CLI checks and stopped eZ80 link. Mixed-leg EMOS/P4/VDU/MOS SD adapters and overnight qualification remain; fixed hardware filter has no reviewed suppression counter. No sniffers or target invocation.
 
 - [ ] **[PARALLEL-001 — Reliable eight-bit parallel for Wolf](docs/tasks/PARALLEL-001.md)** — Active persistent goal: Extender owns pipe diagnosis/fixtures/fixes, Wolf owns the assigned consumer test. Oryx unavailable; prepare offline and share Olimex through normal fresh reservations with UART/VDPlet.
 

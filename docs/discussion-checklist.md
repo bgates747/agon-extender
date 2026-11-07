@@ -28,8 +28,10 @@ temporary agenda when all seven topics are covered.
    37.01 ms, possible adoption, and the remaining gap to 30 FPS gameplay.
    Completed fixture throughput was 24.69 FPS; this was not a parallel test.
    [Wolf result](../../Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-005/PHYSICAL67-RESULT.md).
-   Wolf's separately selected `-Os` versus `-O2` comparison has fresh sole bench
-   custody. Its lease is to be retained after clean testing for the Author’s review.
+   Wolf's separately selected `-Os` versus `-O2` comparison passes its matched
+   cohort: mean draw36.79→32.44ms,11.84% less time; completed fixture27.84FPS,
+   still below30Hz. [Result](../../Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/PHYSICAL69-RESULT.md).
+   Exact incoming image is restored; lease69 remains held for the Author’s review.
 
 4. [ ] **ESP8266 and Console8.** Review the working connection utility and the
    temporary separate-UART P4 development adapter: available header pins,
@@ -71,3 +73,8 @@ motivation; a faster renderer is a side benefit. The
 [separate design](testing/communications-performance-design.md) retain this
 objective. They are complementary to the accuracy appliance, with independent
 programs, invocations, logs and conclusions.
+
+Both designs were committed/pushed before implementation. The first independent
+source tranche now passes24 Python checks, separate C++ sanitizer suites and two
+stopped eZ80 engine links. See the linked task results; hardware adapters and
+physical qualification remain. No tests were run on Wolf's held bench.

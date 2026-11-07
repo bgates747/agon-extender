@@ -1,3 +1,28 @@
+# Current work — separate communications appliances
+
+Smith authorises commit/push then the largest independent tranche on COMMS-001
+and COMMS-002, with normal peer support. Designs pushed5f44ec49; implemented
+source through eced8513 has passing independent results:
+[accuracy](docs/tasks/COMMS-001/OFFLINE-RESULT-R01.md) and
+[performance](docs/tasks/COMMS-002/OFFLINE-RESULT-R01.md). Total24 Python checks,
+two C++ ASan/UBSan suites and two identified stopped eZ80 engine links pass.
+Compiler285 released/all owned children joined. No emulator/device/firmware/
+startup operation. Preserve distinct programs/logs/conclusions; no speed result.
+
+Next owner work: bind the live mixed-leg EMOS/P4/UART-control/VDU/MOS SD adapter
+for accuracy, and the actual EMOS-owned ExCom/ExExt VDU and timer/completion
+adapter for performance. Fixed GPIO-filter suppression counts are unavailable
+in the reviewed API/register path; do not infer events from enable flags.
+MechAgon identifies its fatal pending-decision bridge policy as the immediate
+watch stop; the underlying native stall remains unknown. Earlier observed
+communication failures and Author's long UART run remain relevant context.
+
+Actual Wolf69 remains restored-idle HELD for Smith, not released, with all
+target actors stopped. Normal registry/custody rules apply; no peer targetaccess.
+The persistent parallel/Wolf goal remains blocked on its endpoint decision,
+not silently completed by this independent source tranche. Older checkpoint
+paragraphs below are historical; consult task results and HARDWARE.local.md.
+
 # Current discussion checklist
 
 Author clarification: faster MOS↔VDP communications is the primary project
@@ -6,7 +31,8 @@ motivation, not merely a benefit alongside renderer speed. The separate
 [performance design](docs/testing/communications-performance-design.md) compare
 UART1/parallel on matched workloads with separate transport/render/application/
 CPU evidence. Keep it separate but complementary to COMMS-001, with different
-programs, runs, logs and conclusions. Both remain design-only.
+programs, runs, logs and conclusions. The source tranche above supersedes the
+earlier design-only checkpoint below.
 
 Current Author request: prepare the design and task before coding the mixed
 UART1/parallel communications accuracy appliance. See

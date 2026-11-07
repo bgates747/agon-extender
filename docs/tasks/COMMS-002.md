@@ -6,8 +6,9 @@ eight-bit parallel improves or worsens supported communication relative to
 UART1, and whether those changes improve the complete application workload.
 
 **State:** Design published before coding; Smith then authorises the largest
-independent tranche on both tasks. Separate corpus/timer/collector source is
-implemented pending offline checks; no hardware benchmark or measured gain.
+independent tranche on both tasks. Separate corpus/timer/measurement engine and
+collector pass sanitizer/source/CLI checks and an identified eZ80 link. Actual
+owner VDU/timer/receiver binding remains; no hardware benchmark or measured gain.
 **Owner:** Extender owns reusable transport benchmark and EMOS/P4 accommodations.
 Consumer-specific replays remain with their owners.
 **Design:** [Performance comparison r01](../testing/communications-performance-design.md).
@@ -83,3 +84,12 @@ donor; current networking providers alone are not the benchmark interface.
    the goal. It can provide reusable owner evidence for later consumer choices.
 3. COMMS-001 remains an accuracy/endurance design. It supplies separate failure
    knowledge; COMMS-002 supplies speed/CPU-cost evidence. Neither replaces the other.
+
+## Offline implementation result
+
+[Result r01](COMMS-002/OFFLINE-RESULT-R01.md) records nine Python/actual collector
+CLI checks, the C++ ASan/UBSan corpus/timer/measurement-order suite, four
+independent corpus families and a2,988-byte identified eZ80 core/engine link.
+Synthetic arithmetic/model controls are source tests, not a physical speed
+measurement. The dedicated benchmark still needs live EMOS/P4/timer adapters
+and a finite matched hardware plan before invocation.

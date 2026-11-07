@@ -10,9 +10,11 @@ one-to-two-hour uninterrupted UART match earlier on November 6 gives context
 for suspecting communications in the later MechAgon freeze. That freeze is an
 additional symptom, with its particular cause still unproven.
 
-**State:** Design published before coding. Smith subsequently authorises the
-largest independent tranche on both tasks; portable protocol/retry/journal and
-Pi peer source is implemented pending offline checks. No deployment/invocation.
+**State:** Design published before coding. Smith then authorises the largest
+independent tranche on both tasks. Portable protocol/retry/orchestration,
+host journal and real Pi peer pass sanitizer/source/CLI checks and an identified
+eZ80 compile/link probe. Live mixed-carrier/VDU/MOS SD adapters remain; no
+deployment, hardware invocation or overnight qualification.
 **Owner:** Extender owns reusable appliance, EMOS/P4 accommodations and Pi peer.
 Consumer owners retain their application code. This is separate from the blocked
 Wolf endpoint decision in [PARALLEL-001](PARALLEL-001.md).
@@ -51,9 +53,9 @@ conclusions from its CRC/retry/logging loop.
 |---|---|---|
 | C01-D01 | Selected by Smith | Mixed UART1/parallel directions, VDU and pure-data workloads, CRC, UART error/repeat messages, five consecutive failures, SD logs and no sniffers |
 | C01-D02 | Design interpretation | Five attempts total, not six; retry whole deterministic case with a fresh attempt ID, never silently replay an uncertain accepted transaction |
-| C01-D03 | Proposed | Fixture CRC-32/ISO-HDLC, exact metadata+payload coverage and explicit wire encoding; independent received-byte oracle and protected error reports |
+| C01-D03 | Owner implemented; source checked | Fixture CRC-32/ISO-HDLC, exact metadata+payload coverage and explicit wire encoding; independent received-byte oracle and protected error reports |
 | C01-D04 | Unresolved owner source work | Smallest EMOS/P4 supported mixed-leg service: current UART and parallel NM endpoints are mutually exclusive compositions; no existing numeric ABI is assumed |
-| C01-D05 | Unresolved hardware fact | Whether actual suppressed GPIO-filter pulses can be counted/timestamped internally without extra sensors; enable state and post-filter edges are insufficient |
+| C01-D05 | Source audit complete; telemetry gap remains | Reviewed fixed GPIO-filter API/register path exposes no rejected-pulse counter/event; correlation is unavailable, not zero. No extra sensor selected |
 | C01-D06 | Proposed | Continue after known, positively retired failures; stop on unknown ownership, broken UART control or failed durable logging; no automatic reset/restart loop |
 | C01-D07 | Proposed | Real streaming VDU observation separate from buffered validation sink; restore task-owned parser/display baseline before repeats |
 
@@ -102,12 +104,12 @@ still unresolved, so no physical retry capability is claimed.
 2. C01-02 [ ] Audit EMOS/P4 mixed-direction admission and positive UART return
    after both successful and refused parallel transfers. Document the smallest
    supported test interface and source/ROM/RAM cost before implementation.
-3. C01-03 [ ] Audit actual GPIO filter telemetry and define truthful per-endpoint
+3. C01-03 [x] Audit actual GPIO filter telemetry and define truthful per-endpoint
    counters/timestamps. Identify any requirement not measurable without probes.
 4. C01-04 [ ] Freeze protocol schema, CRC coverage, deterministic corpus, VDU
    sandbox/baseline, five-attempt state machine, finite timeout/cancel policy,
    SD journal/rotation/commit format and Pi witness contract.
-5. C01-05 [ ] Implement offline portable case/record/CRC/state-machine/logging
+5. C01-05 [x] Implement offline portable case/record/CRC/state-machine/logging
    components and meaningful negative controls, including failed reports,
    duplicated/late messages, failed log writes and unresolved owner retirement.
 6. C01-06 [ ] Implement the narrow owner adapters and real eZ80/P4/Pi endpoints;
@@ -148,6 +150,9 @@ still unresolved, so no physical retry capability is claimed.
 
 ## Results
 
-Portable source is implemented but not yet qualified. No deployed appliance,
-filter event counter or physical accuracy result exists for COMMS-001 yet.
-Existing passing cases remain their own evidence.
+[Offline result r01](COMMS-001/OFFLINE-RESULT-R01.md) and its structured record
+retain15 Python/real TCP/CLI checks, a C++ ASan/UBSan suite,96 independent
+C++/Python wire cases, modelled retirement/UART/five-attempt orchestration and
+the8,381-byte identified eZ80 core/engine link. Source checks are not physical
+qualification. No deployed appliance, rejected-pulse counter or overnight
+accuracy result exists. Existing earlier passing cases remain their own evidence.

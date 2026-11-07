@@ -1,0 +1,60 @@
+{
+  "schema": "comms-offline-result-r01",
+  "task": "COMMS-002",
+  "source_commit": "eced8513f60401f38600acf4d0734e3aa5ae1d67",
+  "scope": "host core/sanitizer/real CLI source tests and stopped eZ80 compile/link; no target execution",
+  "passed": true,
+  "python_tests": 9,
+  "cpp_sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "native_compile_probe": {
+    "kind": "performance",
+    "build_id": "comms-performance-core-r01-b2026-11-07-03-58-28Z",
+    "inputs": {
+      "tests/fixtures/comms_performance/core.hpp": "b3a2b49c67a76cf3d13c3081aa1901669d83dcc3d0c826a801c2d6028b620075",
+      "tests/fixtures/comms_performance/engine.hpp": "c9eafd344be81084d99df1c1d4c163d9674dc213a311987c4ae897a62c7a3c6d",
+      "tests/fixtures/comms_performance/selfcheck.cpp": "b8945d4eca00697ea170593b75b7b8b5938e6af486f6c9d4238d11c3cbf08728"
+    },
+    "passed": true,
+    "returncode": 0,
+    "bytes": 2988,
+    "filename": "comms-performance-core-r01-b2026-11-07-03-58-28Z.bin",
+    "sha256": "6be5f10091dbaf62576f657057a92e4605145cbfb54b1b81e0d91f047e690ce9"
+  },
+  "physical_test": false,
+  "firmware_deployed": false,
+  "compiler_group_joined": true,
+  "compiler_released": true,
+  "compiler_generation": 285,
+  "whole_shared_check_seconds": 6.317454604024533,
+  "retained_local_directory": "agents/comms-r01/qualification-r04",
+  "retained_evidence_sha256": {
+    "run.json": "aed5f3a617a4572c1141ec7a125051a38dca83b113cf022657cd2d143febf90c",
+    "performance-python.log": "8205accdace8f1042c8ed0eb895887bfbb9465c6fd9a16df4147a62a31d533b4",
+    "performance-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "performance-core.log": "4139f62188b86d461433da14fd4a6585fdd807d11b36f6de527473fad3369ea0",
+    "native/manifest.json": "952a7ea2c6c87aff6e95981ab5f5850dc0b20532a2c89d4d69a53d03d0923f2f"
+  },
+  "controlled_inputs": {
+    "scripts/comms_accuracy_peer.py": "c8f2e088cc96853abef4c4133bb64b7dd8e8822ef0eb12919a3638876e101780",
+    "scripts/comms_accuracy.py": "2ebf81c0cc5e3a8a4a228d7f70ce9681b1202b3f0e5ded53b3d5af7760c98517",
+    "scripts/comms_performance_report.py": "ceb829356d86f773aa25f942dfba06c9ef3a07e74f7253ef14af23984e6d81f7",
+    "tests/comms_accuracy/core_test.cpp": "26d23987fd443b750243a55b7cb3f78da4dcfb0c772f9086107651abb9fda4cf",
+    "tests/comms_accuracy/test_accuracy.py": "e11f837a0d829fc4432f235c1f9b28987d7abea5d014826ca623fb865a70fb33",
+    "tests/comms_accuracy/engine_model.hpp": "71fbb39b14c49761993c75a5f43af2e17112cd9d1945e7d9e2e85445f2fd3a11",
+    "tests/comms_performance/core_test.cpp": "1304e11903376d6a7f037cb4733bb6165af3647a6980d4cfcf63a85e6a4f9a7a",
+    "tests/comms_performance/test_performance.py": "358af8e506b848e61a886617ed8390772409188db3d9851d8595932abd20b78e",
+    "tests/comms_performance/engine_model.hpp": "a734e42b7e047200f99631c96177dc3bb7fe66b2f43616279344a7347d79a35d",
+    "tests/fixtures/comms_accuracy/README.md": "3897719c382ab18020d1c2777c203c02e99218f44daf47564d6fade3d1e42289",
+    "tests/fixtures/comms_accuracy/selfcheck.cpp": "4f08347b786427c665a548e93ce7c037044686cb74b4ffc9598b178f52b51c46",
+    "tests/fixtures/comms_accuracy/engine.hpp": "7f802493185c0869c72322110552da81f969c762e6c7587de658384e126672fe",
+    "tests/fixtures/comms_accuracy/core.hpp": "23e09d9a2ba929a7c3570e27befe441976d67a08dd817a1b702ab8b8aba798b1",
+    "tests/fixtures/comms_performance/README.md": "3e836f58cdee38dfba71cc2f9df930922c53517d7d82396dc99983cedd85fbd9",
+    "tests/fixtures/comms_performance/selfcheck.cpp": "b8945d4eca00697ea170593b75b7b8b5938e6af486f6c9d4238d11c3cbf08728",
+    "tests/fixtures/comms_performance/engine.hpp": "c9eafd344be81084d99df1c1d4c163d9674dc213a311987c4ae897a62c7a3c6d",
+    "tests/fixtures/comms_performance/core.hpp": "b3a2b49c67a76cf3d13c3081aa1901669d83dcc3d0c826a801c2d6028b620075",
+    "tests/fixtures/comms_build.py": "b111c8e417edb5e3a8a05c25d30d6c950a03e4d1a2b3016b588127b8a23b3177"
+  }
+}
