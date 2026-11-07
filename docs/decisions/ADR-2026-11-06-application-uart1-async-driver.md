@@ -28,7 +28,8 @@ does not gate the vanilla driver. The EMOS ownership rule above applies to
 that adaptation, not to a stock-MOS machine without EMOS.
 
 This accepted placement and ownership decision does not itself qualify a driver
-or select a firmware installation. UART has since supplied a host-tested/native-
-linked vanilla application driver; no eZ80 execution is established. Extender
+or select a firmware installation. UART has since supplied a host-tested/native-linked vanilla application driver
+and its first bounded Console8 small-command hardware pass. That result does
+not qualify full-FIFO TX, CTS, sustained performance or the EMOS adapter. Extender
 integration remains separate and current UART network submission remains
 synchronous until that adaptation is implemented and qualified.

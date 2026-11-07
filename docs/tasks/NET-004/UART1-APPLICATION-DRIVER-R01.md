@@ -187,3 +187,25 @@ action is requested. This is a fixture-specific diagnosis, not a generic driver
 pass or EMOS fault. The separate NET-007 startup run succeeds with two genuine
 pings; its MOS carry handling already uses RET C for accepted transmission.
 Corrected UART fixture native checks are not a new physical pass.
+
+
+## First vanilla hardware pass — 2026-11-07
+
+UART's returned Console8 R0002 record verifies corrected build
+`1bfe14ccd35b03aa`, source `823bb91dd4c1af5a1488e3d3361648646b601445`,
+15,258-byte fixture SHA256
+`6ac253927f4d8c1c96109be2829665ce8ffed003d8b824f5de81b90f6302f593`.
+Ordinary AT / async GMR / ordinary GMR / async AT all pass, with identical
+6-byte AT and 109-byte GMR transcripts, 230 received bytes accounted for,
+normal close and zero logged UART faults/errors/overflow. Async pass predicates
+observe a callback flag, later TEMT and complete OK reply; exact callback counts
+and independent post-close vector readback were not instrumented.
+
+This is the first vanilla application-owned driver hardware functional pass.
+Commands transmit only four/eight bytes: full 16-byte or multi-FIFO TX, CTS
+behavior, sustained rate, useful CPU progress and the EMOS adapter remain
+unqualified. The 109-byte reply exercises RX beyond one FIFO. It supersedes the
+prior pending-rerun status without relabelling the preserved first failure.
+UART owns the detailed report `docs/tasks/U1-001/console8-r02-pass.md` and raw
+receipt in its project. N04-019.03 remains Extender's separate integration work;
+do not install the vanilla vector owner over EMOS.
