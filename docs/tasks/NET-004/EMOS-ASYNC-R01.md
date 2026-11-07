@@ -173,3 +173,71 @@ production pass. UART and consumer source feedback is retained in that result.
    only after that source analysis; use fresh normal custody for any later
    physical case. Keep the working synchronous ROM baseline. This record does
    not select another invocation or a performance comparison.
+
+## Positive drain cache versus live ownership — source contract
+
+MechAgon's owner question after the first trial is resolved against unchanged
+EMOS2c47053 and checked SDK39d4be6f; this is source interpretation, not another
+physical qualification. A consumer may skip redundant foreground PROGRESS4 calls
+only after a positive per-source wire-idle result, while an IRQ-coherent snapshot
+still shows core IDLE and no fault. This retains a completed drain fact; it does
+not establish that EMOS still owns UART1 or that an NM reply is valid/present.
+
+1. `emos_neta_abort` calls the app fault hook only when resident demand is
+   nonzero. For already-idle demand0 it can clear its hook and release its writer
+   guard silently; `emos_net_reset` also clears NM admission. The application's
+   IDLE/open-valid/association fields have no guaranteed revocation notification.
+2. An IRQ-reported line error still calls the attached app fault hook, including
+   while its core is idle; fault always outranks cached drain. Source/TAIL/FAULT/
+   unknown states keep using the supported owner progress path. Initial core
+   IDLE from OPEN alone is not proof a particular submitted source drained.
+3. Every actual new SUBMIT retains the existing SDK guard before packet/query/
+   payload construction. It performs owner progress/admission validation even
+   if the caller has a cached drain fact. Prearm per-source wire-idle false for
+   the next request and preserve correlation; failed/uncertain submissions do
+   not authorize replay or buffer reuse while any borrow survives.
+4. Positive close remains owner-validated. A silent idle abort makes later
+   owner progress/close unavailable; local IDLE cannot manufacture successful
+   RELEASE, remove a separate callback chain or authorize reclaiming storage.
+   Existing cleanup/refusal handling remains conservative.
+5. While merely awaiting a correlated NM reply, a cached completed drain may
+   satisfy the caller's reciprocal TX scheduling barrier. Revocation/error can
+   still stop NM delivery; existing receive faults/deadlines must handle that.
+   This shortcut gives up immediate foreground probing of an otherwise silent
+   idle revocation and redundant foreground RX assistance. It supplies no new
+   RX-latency guarantee or explanation/cure for the observed overrun.
+
+No resident generation field, generic driver change, IRQ takeover, direct UART
+access or firmware/build/test change is selected by this clarification.
+
+## Jukebox audio-stream consumer consultation
+
+Smith requests Jukebox join the UART1 discussion for its already-selected
+Pi5→ESP8266→eZ80→mainboard-VDP audio stream. Jukebox owns its NET-001 player,
+binary parser, request cadence and PCM queues in its dedicated streaming branch;
+UART owns the generic driver, Extender the EMOS hooks, MechAgon its consumer.
+This consultation creates no duplicate implementation or qualification gate.
+
+Jukebox's selected initial receiver uses vanilla Console8 at1152008N1 without
+RTS/CTS, one bounded JPCM request at a time, counted binary +IPD framing and
+separate receive/capture/UART0 staging storage. Its accepted full-track8kHz
+U8mono result was Pi/Oryx desktop playback; device-free/native receiver checks
+do not establish ESP8266 or simultaneous-UART hardware behaviour. Higher-rate
+operation remains unqualified. Its future playback cadence belongs to VDP
+audio consumption; a timer posts flags rather than performing I/O.
+
+At576000input and1152000output8N1, fully disjoint wire windows give an ideal
+38400PCMbytes/s ceiling before protocol overhead.44.1kU8mono needs actual wire
+overlap, a faster qualified input or another change. Playback from VDP buffers
+during receive does not remove either wire cost. RC3 integer divisor behaviour
+must be matched to actual ESP baud; requested460800/921600 may become576000/
+1152000 respectively. These are arithmetic/source facts, not measured rates.
+
+Extender supplied the exact manually tested Wi-Fi-start binding and clarified
+that it creates no TCP session, chooses no +IPD/TCP mode, and also does not close
+a pre-existing module socket. Jukebox owns its explicit TCP setup and binary
+receive parser; the Wi-Fi diagnostic's printable-text sanitizer is unsuitable
+for PCM. Credentials stay in private configuration. The shared receive-service
+concern is UART0 masked/CTS service versus UART1 FIFO headroom; a larger software
+ring and a source-release callback do not prove receive safety or wire drain.
+No new generic-driver correction or physical test is selected by this note.

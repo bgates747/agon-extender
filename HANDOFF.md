@@ -1,3 +1,26 @@
+# Current — Wolf77 sole manual LOAD-only preparation; Extender target-stopped
+
+Normalfresh77/8fd506cf5fbe lease b0b9fc25fe0c44ff95a3db3a035ce712 granted after
+actual76cleanrelease/freshCLIrawfilesidle checks.163input kit5f77/exactlauncher
+matched. Context agents/bench-scheduler/wolf-perf011-manual01/context.json and
+actualstopped-operator-handoff.json; accepted immediate steering delivered.
+ALL Extender targetaccessSTOPPED; only Wolf owns targetthroughpreparation.
+
+Entry P4d9bcb/workingfullEMOSa25f/native5d657profile8/fulltail85f9/startuped403/
+listener0566 unchanged. WolfplanONLY stages/verifies14files/selectivenative7593
+app/fullreadback/currentbootstrap then LOADrotate.bin, STOPactors at actualCLI.
+NO agentRUN/static/probe/hiddenarm/automaticcollection/replay; Smithalone starts
+RUN . afterreadyquestion. Retain77 whilehumanwait and afterselectedcollection/
+exact85f9restore/fullcleanup untilSmithdirection, no automaticrelease.
+
+Jukebox nowlooped by directSmithrequest for existingNET001Pi5→ESP8266→eZ80→VDP
+audio stream. Canonicalworktree AgonJukebox/.emulator/net-001-worktree branch
+codex/net-001-pcm-stream, notoldrootTODO. UART genericU1, Jukeboxparser/PCMqueue,
+ExtenderEMOSglue, Mechcaller remain separate. WiFi-start createsNO TCPsession
+orCIPmode and doesnotclose anoldermodulelink; currentsource matches869795c
+manifest. Idle-draincache≠liveownership contract in activeEMOS-ASYNC-R01 task.
+No new build/target work selected by consultation. Earlier checkpoints history.
+
 # Current — actual76 clean released, failed U1 trial preserved, working ROM restored
 
 Actual76/1b46642ee71b RELEASE2026-11-07T07:48:31.562200UTC; oldtokeninvalid,
