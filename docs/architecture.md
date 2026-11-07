@@ -6,13 +6,15 @@ implementation remains deferred. It is not a claim of complete compatibility.
 tasks own incomplete implementation and decisions. No new architecture is
 established by a successful experiment or by this documentation reconciliation.
 
-For the current MechAgon integration, Smith selects one final parallel attempt,
-then an explicit supported UART1 application binding if that attempt fails.
-Extender continues independent parallel-fixture qualification during normally
-admitted bench intervals between consumer coding phases. EMOS still owns every
-transport; `ext.netp` has no silent fallback or uncertain-transfer replay. The
-[accepted separation decision](decisions/ADR-2026-11-06-independent-parallel-qualification.md)
-records this application-progress boundary without claiming a new installed pair.
+For the current MechAgon integration, Smith explicitly retains the supported
+UART1 application-network binding until further notice. Smith and Extender will
+revisit that choice through their joint assessment of parallel performance for
+smaller batches, if worthwhile. Large-buffer throughput gains do not select an
+application migration. Extender continues independent parallel qualification
+under normal reservations while consumer work proceeds. EMOS owns transport
+admission and routing; `ext.netp` has no silent fallback or uncertain replay.
+The [accepted separation decision](decisions/ADR-2026-11-06-independent-parallel-qualification.md)
+records this current boundary and its earlier final-test selection.
 
 ## Implementation boundary
 
@@ -51,13 +53,15 @@ shared physical transport and ordinary VDU routing. Network waits must not block
 the console parser or hold display locks. The application uses an admitted
 library interface; no raw UART/GPIO bypass is supported.
 
-The Author now requires parallel network payload in both directions, preserving
-Legacy mainboard UART0 graphics. The agreed experimental `ext.netp` foreground
-interface uses application-owned buffers and no NM interrupt callback; UART1
-retains keyboard and carrier control only. The [parallel message contract](protocols/application-network-parallel.md)
-and NET-004 distinguish this required carrier from the previously exercised
-UART1 `ext.net` implementation. Parallel networking is not yet installed or
-hardware-qualified.
+A parallel-selected development composition carries application payload in both
+directions while preserving Legacy mainboard UART0 graphics. Its experimental
+`ext.netp` foreground interface uses application-owned buffers and no NM interrupt
+callback; UART1 carries keyboard and carrier control for that selected provider.
+The [parallel message contract](protocols/application-network-parallel.md) and
+NET-004 define that separate transport. MechAgon's current explicit selection
+remains UART1 `ext.net`, as stated above; the earlier parallel-only requirement
+is superseded for this application. Bounded parallel qualification does not
+change the current carrier or establish general production acceptance.
 
 Consumer-owned Pi software handles game-specific WebSocket/JSON conversion;
 generic Extender code does not interpret game records. The [accepted connection

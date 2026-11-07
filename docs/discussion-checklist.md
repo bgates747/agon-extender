@@ -87,3 +87,11 @@ Same diagnostic360MHzP4 for botharms, current240MHzUARTpair restored.4097 remain
 unqualified after USB acquisition loss. This is a communication result separate
 from gameFPS, CPUheadroom and COMMS001 accuracy/endurance. Discuss the scope and
 remaining application-matched/reliability work; no agenda checkbox closes yet.
+
+
+November 7 carrier disposition: Smith retains MechAgon UART1 until further
+notice after joint small-batch parallel performance discussion with Extender.
+The large-buffer speedup does not authorize application migration. Results and
+this explicit decision are relayed to MechAgon; independent accuracy/performance
+work remains separate. This records a disposition without closing the wider
+parallel/Wolf endpoint and reliability discussion.

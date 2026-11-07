@@ -44,6 +44,7 @@ Consumer-specific replays remain with their owners.
 | C02-D03 | Proposed | Matched UART1 baseline and parallel arms, same P4 renderer and command/data corpus, local sink and actual VDU streams before application replay |
 | C02-D04 | Selected physical r01 | Reuse exact optimized timing EMOS and ordinary VDU P4 pair with ExCom/ExExt selection; both arms share one renderer/build. Current networking composition is not the ordinary VDU benchmark |
 | C02-D05 | Forward timer selected; CPU scope deferred | Retained PRT1 /256, nominal72000counts/s and bounded saturation checks; configured360MHz P4 shared by both arms. No CPU-headroom measurement in r01 |
+| C02-D06 | Accepted by Smith, 2026-11-07 | MechAgon continues explicit UART1 networking until further Author notice after joint small-batch parallel performance review; large-buffer gains do not authorize migration. [Accepted carrier boundary](../decisions/ADR-2026-11-06-independent-parallel-qualification.md) |
 
 The selected forward r01 uses one retained matched pair with explicit carrier
 selection and complete receiver-byte verification outside timing. Its P4 runs
@@ -143,3 +144,13 @@ UART0 itself. Preserve these distinctions when selecting a later matched replay,
 including supported transaction sizes, actual poll count and turnaround. This
 narrow source discussion does not release MechAgon's held full-cycle profiling
 campaign, select a new fixture invocation, or change the current bench owner.
+
+## Current MechAgon carrier decision — 2026-11-07
+
+Smith directs Extender to share the measured performance results with MechAgon
+and explicitly retain UART1 instead of parallel until further notice. Smith and
+Extender will revisit that application choice only through their discussion of
+making parallel faster for smaller batches, if that proves worthwhile. There is
+no automatic migration from a later bulk result or isolated passing fixture.
+Extender's independent accuracy/small-batch carrier work remains separate;
+MechAgon does not wait for it or silently fall back between carriers.
