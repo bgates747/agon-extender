@@ -1,3 +1,19 @@
+# Current — checked receive-protection APP; finite owner isolation preparing
+
+Actual92 is cleanly released15:47:24UTC, old token invalid, all target access
+stopped. Working P4d9b/EMOSa25f/native5d657/startuped403/listener0566 retained.
+New isolated EMOS6cf7a6a7 pushed: early UART0 STOP/distinct hold, RX-first tail,
+deferred-cap continuation; actual-C/linked APP checks pass393. Identified APP
+16:07:59Z/full47dadc29/raw130735/free337, +238text/+2BSS vs8de66. Diagnostic ON
+ROM overflow retained separately, not deployable. Ordinary OFF parent/current
+whole raw ROM byte-exact396, all children joined/released; Wolf397 notified.
+Private source-native package c98a2ad6/API-map contract returned to Mech; checked
+wait/notify consumer source compatible, no new public ABI/PRT/generic core change.
+New owner isolation requestdd79a9b28686 PREPARING, same176records/four sessions/
+7ad4fixture, quietUART0, fresh paths/grant/pins, exact install/readback and a25f
+rollback/fullcleanup/release. No hardware call/new lease/physical pass yet.
+Mechfirst/Wolfsecond/OryxDOWN. Earlier headings historical; registry governs.
+
 # Current — actual92 restored/released; receive-protection source tranche active
 
 Actual92 clean RELEASED15:47:24UTC; exact131072B incominga25f rollback and
