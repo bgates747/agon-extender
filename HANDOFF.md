@@ -1,3 +1,21 @@
+# Current — MechAgon74 sole operator; provisional UART1 integration selected
+
+Actual fresh74 f2aa/ASYNC-001-R02 granted after actual73 clean release and new
+CLI/readEXIT/SAVE-only state/files/input/idle observation. Frozen62input883fff7d/
+nativea959 unchanged; UARTd9bcb/fullEMOSa25f/profile8 retained. Accepted actual
+mail/steering handoff: agents/bench-scheduler/mechagon-async001-r02. All Extender
+target access STOPPED. MechAgon owns ONE finite existing scheduler case and full
+cleanup/release. No new driver, firmware, replay or parallel operation under it.
+
+Smith separately selects provisional application-owned UART1 driver integration
+and consumer trial now. [Owner plan](docs/tasks/NET-004/EMOS-ASYNC-R01.md) reuses
+UART core/emitter, new isolated EMOS owner branch, minimal opt-in admission/IRQ
+glue, preconstruction SDK borrow guard and separate positive tail/peer retirement.
+Plan/implementation/size/native link checks first, separate new physical freeze.
+No longer wait for broad vanilla benchmarking; no production acceptance implied.
+Preserve unrelated BENCH010 recovery dirt and all frozen current inputs.
+Earlier checkpoints below are historical.
+
 # Current — forward performance result; Wolf73 sole operator
 
 COMMS002 physical70 is cleanly released with exact incoming UARTd9bcb/EMOSa25f

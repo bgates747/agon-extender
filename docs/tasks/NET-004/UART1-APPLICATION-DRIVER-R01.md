@@ -209,3 +209,12 @@ prior pending-rerun status without relabelling the preserved first failure.
 UART owns the detailed report `docs/tasks/U1-001/console8-r02-pass.md` and raw
 receipt in its project. N04-019.03 remains Extender's separate integration work;
 do not install the vanilla vector owner over EMOS.
+
+## Selected provisional integration — 2026-11-07
+
+Smith now explicitly selects provisional driver reuse for EMOS integration and a
+MechAgon consumer trial, without waiting for the longer vanilla suite. Extender
+implements its separate adapter under [the bounded plan](EMOS-ASYNC-R01.md); UART
+retains generic ownership. Current synchronous provider/working firmware and the
+frozen R02 consumer scheduling test remain unchanged. An SDK refusal must occur
+before query/header/payload construction while any TX borrow/tail remains.
