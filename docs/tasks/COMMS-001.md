@@ -10,8 +10,9 @@ one-to-two-hour uninterrupted UART match earlier on November 6 gives context
 for suspecting communications in the later MechAgon freeze. That freeze is an
 additional symptom, with its particular cause still unproven.
 
-**State:** Design and task prepared; no implementation, build, deployment or
-invocation. Smith explicitly requests these documents before coding.
+**State:** Design published before coding. Smith subsequently authorises the
+largest independent tranche on both tasks; portable protocol/retry/journal and
+Pi peer source is implemented pending offline checks. No deployment/invocation.
 **Owner:** Extender owns reusable appliance, EMOS/P4 accommodations and Pi peer.
 Consumer owners retain their application code. This is separate from the blocked
 Wolf endpoint decision in [PARALLEL-001](PARALLEL-001.md).
@@ -64,6 +65,12 @@ selected. Prerequisites are shared-pin return-to-UART proof, ROM/RAM/resource
 fit and an unambiguous error channel. Its result determines the record size,
 firmware pair and actual matrix that can be frozen. C01-D05 is an independent
 source capability audit; unavailable telemetry must remain an explicit gap.
+
+[Offline r01](COMMS-001/OFFLINE-R01.md) freezes the portable fixture protocol
+and bounded source/build scope. [Source audit](COMMS-001/SOURCE-AUDIT-R01.md)
+finds no rejected-pulse count in the reviewed fixed GPIO-filter API/register
+path; record that telemetry as unavailable. The diagnostic owner interface is
+still unresolved, so no physical retry capability is claimed.
 
 ## Bounded research précis
 
@@ -119,9 +126,9 @@ source capability audit; unavailable telemetry must remain an explicit gap.
 
 ## Validation and execution gates
 
-1. No coding has begun. The first deliverable is the design/task for Smith's
-   discussion. No new hardware slot, firmware deployment or test invocation is
-   selected merely by writing these documents.
+1. Smith authorised implementation after design publication. Independent source
+   and normal queued builds/checks can proceed; hardware still requires its
+   supported adapter, exact freeze and actual custody. No test autorun.
 2. Prove both receiver checks with known CRC vectors and independently generated
    bytes; exercise all verdicts and exactly five failed attempts. A later pass
    must retain nonzero first-pass errors and the original failure records.
@@ -141,5 +148,6 @@ source capability audit; unavailable telemetry must remain an explicit gap.
 
 ## Results
 
-No code, build, deployed appliance, filter event counter or physical accuracy
-result exists for COMMS-001 yet. Existing passing cases remain their own evidence.
+Portable source is implemented but not yet qualified. No deployed appliance,
+filter event counter or physical accuracy result exists for COMMS-001 yet.
+Existing passing cases remain their own evidence.

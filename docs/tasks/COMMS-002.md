@@ -5,7 +5,9 @@ motivation, well ahead of the faster renderer as a side benefit. Determine where
 eight-bit parallel improves or worsens supported communication relative to
 UART1, and whether those changes improve the complete application workload.
 
-**State:** Separate design/task prepared; no code, build or hardware run.
+**State:** Design published before coding; Smith then authorises the largest
+independent tranche on both tasks. Separate corpus/timer/collector source is
+implemented pending offline checks; no hardware benchmark or measured gain.
 **Owner:** Extender owns reusable transport benchmark and EMOS/P4 accommodations.
 Consumer-specific replays remain with their owners.
 **Design:** [Performance comparison r01](../testing/communications-performance-design.md).
@@ -43,6 +45,10 @@ carrier selection. If current owners require separate compositions, retain
 their exact minimal delta and compare the supported paths openly. This affects
 installation/restoration, scheduling, API boundaries and interpretation; no
 new numeric ABI or dual-provider build is assumed by this task.
+
+[Offline r01](COMMS-002/OFFLINE-R01.md) defines the independent source/check
+tranche. The existing EMOS-owned ExCom/ExExt VDU stream is the relevant source
+donor; current networking providers alone are not the benchmark interface.
 
 ## Work sequence
 
