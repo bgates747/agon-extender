@@ -1,3 +1,35 @@
+# Current — actual82 released; Mech R03 first; source-only P4 build345 running
+
+Actual82 RELEASE11:41:22.995721UTC, all target actors/readers stopped. Exact
+incominga25f full131072B rollback/readback and fresh rootCLI/cursor/rawmode0/
+callback0/route0/wholefiles/inputneutral/offlineidle/worker0/freeUSB pass. Receipt
+agents/bench-scheduler/mechagon-goal001-r02/released.json and release-observation.
+Current P4d9bcb/EMOSa25f/native5d657/startuped403/listener0566 retained; SDmounted.
+Old82tokenINVALID. Mandatory Mech/currentnextWolf mail+steering delivered. Current
+benchactiveNone: Mechea08a2de2d5d R03 PREPARING first, voluntary Wolf4cdb5a4f015c
+READY second. Wolfold52d canceled by owner, no preemption. R03 templates in
+agents/bench-scheduler/mechagon-goal001-r03 deliberately fail closed until actual
+published kit/SHA/bytes/input closure and new sourcepins are bound. No grant yet.
+
+Original82 compactmodule allocation/LOAD PASS but network/game failed atquery2:
+exact retained RAMd1b57388 reply0x4beae 4e4d01820100000002000000010502 is
+CONNECT_FAILED payload2, no U1OE. Hostsource listener45s registration window
+started beforeRUN/nativeassets; Mech owns concrete startup-phase handshake fix.
+Rootstoppedreturn/RAM-beforeLOAD/postfeature/fullidle preserved, no replay/reset.
+Quiet owner79 remains bounded176recordPASS, not reliable-gameplay qualification.
+
+NativeP4 serialcontrol342 timedout at original840s after1924/1992 actions; all
+owned descendants joined, release11:40:10UTC/nextnone. No link/ON/size result.
+Sourcea66f0563 and20hostchecks remain PASS. Separate nativeR02 pair under normal
+compiler345/d38e21c8fad448798d5fa544f356b204 is RUNNING, unifiedsession62413:
+agents/net004/p4-nm-accounting-r01/native_pair_r02.py, native-r02/{checkout,
+assert,driver.log,off-native-processes.jsonl}. Fresh canonical OFF thenON, two
+compilerworkers/onebuild,80C/512MiB/sensors,840s child/1800s whole. No ccache/new
+toolchain/resumed target/generated source edits. FirstunexpectedSTOP/join/release
+actualnextnotify. Both builds UNVERSIONED-DO-NOT-DEPLOY, no diagnostic installed.
+Original342 run/log/source kept immutable. Optional build must not delay actual
+Mech ready admission/install/handoff/rollback. OryxDOWN. Earlier headings history.
+
 # Current — actual82 Mech compact consumer sole; Extender target-stopped
 
 Actual Wolf81 clean release11:22:53UTC/full85f9restore/readback/wholefinalproof

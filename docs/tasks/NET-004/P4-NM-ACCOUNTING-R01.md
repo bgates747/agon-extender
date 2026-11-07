@@ -104,3 +104,19 @@ consumer chain. MechAgon's eZ80 headroom and reliable async work stay first.
    archive/ELF linkage and effective configuration. Compare text/data/BSS and
    application size between these two builds only. Host evidence is not an
    executed P4 counter/HTTP/transport or useful-CPU result.
+
+## Native build continuation after measured timeout
+
+1. The first control build reached1924/1992 actions under one compiler worker
+   but did not link before its840-second child limit. The original guard stopped
+   and joined every descendant; compiler342 released at11:40:10UTC. No compiler
+   source error, ON image, linked size or physical result was established.
+2. Keep that attempt and its source/log/process evidence. A separately reserved
+   fresh native pair uses the same immutable source and canonical builder, fresh
+   OFF/ON outputs and exactly two compiler workers within one active Pi build
+   reservation. This changes build scheduling only. Do not install a cache or
+   toolchain, resume an uncertain target command, or edit generated products.
+3. Expected pair15–20 minutes, each child840s/whole1800s, same80C/512MiB/sensor
+   and owned-descendant cleanup guards. Both arms use the same two-worker policy.
+   Stop at the first failure and release before correction. Mech-first physical
+   handoffs remain independent and must not wait for diagnostic analysis.
