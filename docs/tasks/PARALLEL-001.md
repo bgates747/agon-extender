@@ -33,8 +33,9 @@ readback and clean release. [Repeated result](PARALLEL-001/REPEAT-RESULT-R01.md)
 and [live result](PARALLEL-001/LIVE-RESULT-R01.md) give exact scope and timing
 limits. Wolf's ordinary-carrier65 cohort stopped on its producer/package size
 mismatch, preserved RAM/restored/released; the owner corrected that binding
-and now holds fresh 67 sole custody for its separate finite cohort. Extender
-makes no target calls during 67. Wolf's selected parallel endpoint remains
+and completed its separate six-guest/seven-probe cohort on 67. Exact incoming
+restoration and clean release at 2026-11-07T00:18:33.631576UTC are reconciled;
+the central registry has no active checkout or queued successor. Wolf's selected parallel endpoint remains
 unresolved; ordinary-carrier results cannot substitute for this goal's
 integration requirement. No electrical-cause, long-reliability, optical,
 production or universal hardware claim follows.
