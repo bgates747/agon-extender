@@ -3,7 +3,7 @@
 A matched576000-baud P4/EMOS pair is feasible as an explicit experimental control.
 It doubles the nominal empty16-byte receiver interval and leaves ample raw line
 capacity for the existing small NM traffic. This is source arithmetic, not proof
-of reliable service, spare CPU or a fix for consumer83. No firmware or physical
+of reliable service, spare CPU or a fix for consumer83. No firmware installation or physical
 case is selected here; the diagnostic recorder work continues independently.
 
 1. EMOS owns mainboard UART1 setup in `src/uart.c:uart1_keyboard_open`, currently
@@ -49,3 +49,56 @@ Exact retained source baseline: EMOS954e3c54 and P4e14e0b8a. The separate option
 accounting sourceae7504c0 is a checked derivative, not installed baud authority.
 Native build duration is a preparation estimate only; no added field size or
 runtime timing is claimed until actual artifacts exist.
+
+## Selected contingency source preparation
+
+After checked serialized R04 preparation, Mech selects coherent paired576000
+source/control preparation under the existing reliability goal. Current86 live
+case takes precedence: no compiler launch or target call until actual root
+stopped return. No install, next physical case or ordinary-default change is
+selected by this preparation. Keep native observer80fe separately frozen.
+
+1. [x] Create isolated EMOS derivative of954e3c54 and P4 derivative ofe14e0b8a,
+   not the optional accounting/observer trees. Retain exact8de/d9b rollback.
+2. [x] Change only the selected owner UART1 baud setup and its identifying
+   source/build metadata to576000. Keep UART0, source/CTS/retry/IRQ algorithms,
+   P4 RX reserve and NM/keyboard/control framing unchanged. A small literal
+   task-private control is sufficient; no runtime retune or resident fallback.
+3. [ ] Strengthen the owner build guards to prove selected UART1 divisor2 and
+   unchanged UART0 divisor1, plus actual paired P4 configuration/source binding.
+   Preserve every mandatory existing check and reject mismatched declarations.
+4. [ ] After actual current-case stop, normal FIFO finite paired original/control
+   builds and identity-bound links record ROM/BSS/image/stack and exact artifacts.
+   No new SDK/client wire algorithm or unobserved source/buffer lifetime change.
+5. [ ] Only a later separately selected finite case may stage/install the pair
+   through independent recovery/current bootstrap and full readbacks. Keep the
+   old pair usable for rollback if half-installed input/SD becomes unavailable.
+
+Research baseline is the exact owner UART setup/arithmetic source described
+above and the official documentation/source baseline in the receive-diagnostic
+plan. No additional hardware tolerance or measured latency is assumed.
+
+Source-only draft is prepared in separate owner branches from954e3c54/e14e0b8a.
+EMOS changes only owned UART1 settings literal and adds source/linked divisor
+checks plus a paired-control manifest field. P4 changes only UART_NUM_1 setup/
+bootlabel and binds a task-private source declaration into its native builder
+and artifact manifest. No runtime option, fallback or ordinary default change.
+Python syntax inspected; native builds, linked settings controls and size remain
+pending. No compiler was launched during the current86 live observation.
+
+## Finite native build tranche
+
+After actual86 stopped, build the experimental matched pair under one normal
+Pi compiler lease, serially: original EMOS identity-matched byte control, new
+half-baud EMOS identified wrapper/all mandatory linked checks, original P4
+source/configuration reproduction, then new half-baud P4 native build. Retain
+full exact source closures to954e3c54/e14e0b8a and original installed8de66/d9b
+artifacts; current incominga25f is rollback, not the app-enabled comparison arm.
+The P4 original and candidate retain the existing reset endpoint by private
+configuration/hash, HDMI/USB/controller/boot/dependency settings. No optional
+accounting/observer source is selected. Use two P4 compiler workers, low priority,
+one-second thermal/resource telemetry,80C and512MiB floor; each P4 child840s,
+whole tranche2100s. Stop on first failure, join owned children and immediately
+release/notify actual compiler successor before lengthy analysis. Record ROM/
+image/sections and effective configuration differences; build success is not
+physical baud, CTS response or application performance qualification.
