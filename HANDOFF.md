@@ -1,3 +1,46 @@
+# Current — Wolf85 cleanly released; checked diagnostic source handoff
+
+Wolf85 four uncapped room ABBA/fiveINFO PASS2400records; original actor1363229/
+session69056 exited0/all children joined. Exact incoming full1105920B native/
+tail85f9 restored/independentreadback; one matched current bootstrap/fresh
+rawmode0/callback0/route0/whole startup-listener/rootCLI/inputneutral/offlineidle/
+freebothUSB PASS. Receipt Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/
+hardware01/release85.json. No queuednext at release; old85 token invalid, all
+Wolf/Extender target access STOPPED, SD mounted. Current baseline remains
+P4d9bcb/EMOSa25f/nativeprofile8 5d657/startuped403/listener0566. Future source
+work/018 qualification is not a physical grant. Mech first/Wolf second, Oryx DOWN.
+
+Actual83 repeated measured UART1 OE remains cause-unresolved. Original SDstatus
+2ac3ac64/post-resetRAM eca958f2 and exact a25f rollback/readback/release retained.
+Actual84 unknown-source SIGTERM before any room LOAD/RUN stays preserved with
+no cache/trig timing result or replay. Cleanup Escape/noEnter/SAVE-before-reset,
+full85f9 restoration/readback and release84 retained. Do not confuse84/85cases.
+
+Diagnostic source/checks now complete for a PROVISIONAL SOURCE HANDOFF, not
+native IRQ execution or hardware acceptance. Isolated EMOS1727fa19 branch
+codex/net004-uart1-rx-diagnostic-r01 pushed; identified fullROM80fe2359/free176,
+raw130896/map7a5965d6 in agents/net004/uart1-rx-diag-r01/identified-r01/firmware.
+OFF control bit-exact to retained954e3c54; optional ON cost399ROM/+3BSS. Current
+app observer include/agon/rxdiag native C/assembly links1620text/166BSS including
+128B schema2 record/providers; actual consumer delta/stack still needs its link.
+Named span flags, raw remaining/parser6/STOP/hold, bounded matching eight-tag
+nesting, pure one-time NULL init and terminal rearm ownership are implemented.
+No UART/GPIO app reads or extra LSR acknowledgment. Query/gaps/RBR unsampled
+stay unknown; observer perturbation and omitted tails explicit, no cause claim.
+Compiler362 refreshed lifecycle/source negative controls/native link/OFF exact/
+identified ON allmandatory checks PASS20.916s, released13:10:23UTC/nextnone. All
+owned children stopped, no active own build. Previous358 passed22.503s/released,
+actual359 Wolf was notified. No diagnostic physical case selected/installed.
+Package local source-artifact-r01.zip184789B/0a9e85ac, manifest in package-r01;
+consumer exact header/code binding and its finite selected case precede admission.
+
+Source-only P4 accounting ae7504c0 OFF/ON canonical fits PASS: app+4032B,
+flashtext+3120/rodata+920, aggregate DRAM0+1 BSS+760, data/IRAM unchanged. No
+installed counters, CPU or runtime-overhead measurement. Report/limits under
+NET-004/P4-NM-ACCOUNTING-R01. Separate UART1 half-baud source assessment records
+paired576000 feasibility and retained rollback, not a fallback or selected run.
+Earlier headings are history; use exact current registry and fresh grant.
+
 # Current — actual83 handed off to sole MechAgon; Extender target-stopped
 
 Actual83/ea08a2de2d5d candidate8de66 stage/readback, ONEFLASH/exactboot and

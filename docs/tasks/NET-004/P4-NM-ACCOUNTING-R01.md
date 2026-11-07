@@ -120,3 +120,71 @@ consumer chain. MechAgon's eZ80 headroom and reliable async work stay first.
    and owned-descendant cleanup guards. Both arms use the same two-worker policy.
    Stop at the first failure and release before correction. Mech-first physical
    handoffs remain independent and must not wait for diagnostic analysis.
+
+
+## Native R02 result and format portability correction
+
+1. Sourcea66f0563 control/OFF native build and validation passed534.805s;
+   enabled/ON stopped after507.551s before link. On the target ABI, uint32_t is
+   unsigned long, so two JSON fields used the wrong printf `%u` conversion.
+   Host checks use an ABI where uint32_t is unsigned int and did not expose it.
+   Preserve this first compiler diagnostic; no enabled fit/runtime pass exists.
+2. Compiler345 released12:08:01.552229UTC after every owned child joined; actual
+   automatic successor346 Wolf was notified by durable mail and steering.
+3. Correct only those two uint32 fields using standard PRIu32 formatting. Before
+   another native link, compile the actual recorder leaf with retained target
+   command/flags and a preserved original-source negative control. Original must
+   fail for the observed formatting reason; corrected leaf must pass. Re-run
+   meaningful recorder/composition host checks through the normal compiler slot.
+4. A fresh same-source OFF/ON native pair may follow those checks under a new
+   normal compiler grant, fresh output paths and original thermal/memory/process
+   limits. No prior failed output becomes a passed result; no cached/generated
+   product edit, toolchain replacement or hardware operation is selected.
+
+5. First narrow target-control checker correctly compiled the original negative
+   control to the two expected errors, then its raw-string assertion failed on
+   ANSI color escapes. It never compiled the corrected arm or ran host checks.
+   Compiler347 released12:11:26UTC with no successor. Preserve the failed raw
+   diagnostic; a fresh check strips ANSI only for classification and preserves
+   raw logs. Compiler flags and product source stay unchanged by this checker
+   correction; do not treat it as another product failure.
+
+6. Corrected sourceae7504c0 passes actual target recorder compilation, with the
+   original negative control failing precisely the two old format conversions.
+   All20 existing actual model/recorder/socket/runtime/selector/OFF-equivalence
+   sanitizer steps also pass; complete guarded group18.576s. Compiler349 released
+   12:13:56.835815UTC/allchildrenjoined/nextnone. No enabled full-link claim yet.
+7. Next fresh native R03 pair uses this committed source, canonical defaultOFF
+   thenON, fresh separate outputs, same retained IDF/dependency/toolchain and
+   two compiler workers within one normal FIFO job. Original840s per arm/1800s
+   whole,80C/512MiB/sensors and owned descendant cleanup remain. Hardware recovery,
+   rollback and consumer handoffs stay independent and first; do not access P4
+   for this build. Preserve earlier failed pairs without rewriting their results.
+
+## Native OFF/ON fit result, 2026-11-07
+
+Exact committed sourceae7504c0 passed both canonical native P4 builds and all
+profile validators under compiler350: OFF549.743s, ON542.799s, whole1092.583s.
+All owned descendants joined; actual350 release12:40:26.562409UTC assigned351
+to Mech, with immediate durable/steering notification. Completion was12:34:33;
+the later release time is retained, not described as immediate. Neither arm
+was installed or executed on P4.
+
+| Scope, bytes | OFF baseline | ON accounting | ON minus OFF |
+|---|---:|---:|---:|
+| Application image | 1,760,288 | 1,764,320 | +4,032 |
+| Flash text | 1,338,140 | 1,341,260 | +3,120 |
+| Flash read-only data | 283,716 | 284,636 | +920 |
+| DRAM0 BSS | 38,392 | 38,344 | -48 |
+| DRAM1 BSS | 11,576 | 12,384 | +808 |
+| Sum of those BSS sections | 49,968 | 50,728 | +760 |
+| DRAM initialized data | 22,348 | 22,348 | 0 |
+| IRAM text | 115,204 | 115,204 | 0 |
+
+The smaller DRAM0 BSS is placement/link composition, not free runtime memory;
+report both sections and their sum. Flash section sums and aligned application
+image deltas have distinct scopes. Both retain UNVERSIONED-DO-NOT-DEPLOY.
+Default OFF object-equivalence, twenty actual host sanitizer/composition checks
+and target linked fit are source/build evidence only. Counters remain local
+inclusive wall-time observations, not CPU time, CTS, wire occupancy or exclusive
+NM cost. A later separately frozen matched diagnostic case is still required.

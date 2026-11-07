@@ -254,3 +254,18 @@ its normal fresh grant, sole owner install/readback/stopped handoff and sameleas
 incoming-ROM rollback remain mandatory. Frozen generation79 input bytes are
 retained unchanged in its source ledger, rather than reinterpreting this later
 plan update as an input to that completed case.
+
+## Consumer83 recurrence and next diagnostic preparation
+
+Consumer83's corrected host startup registered and gameplay began, then UART1
+reported rawOE0x02. Exact consumer RAM decoding finds renderer retirement, but
+no positive UART1 drain/close; no specific interrupt, peer or electrical cause
+is established. One Agon recovery, RAM/status beforeLOAD, existing getter and
+exacta25f rollback/fullreadback/fullcleanup completed; normal release83 at
+12:19:41.071414UTC. Original failure remains failed. Wolf84 now owns the next
+qualified finite gap; Extender target access stays stopped.
+
+The [first-error diagnostic plan](EMOS-ASYNC-RX-DIAGNOSTIC-R01.md) selects source/
+build preparation using an app-RAM observer and small optional EMOS hooks,
+explicit disposablePRT1 and current/preceding-span evidence. Do not repeat the
+same uninstrumented consumer or infer a cure from the quiet owner79 pass.

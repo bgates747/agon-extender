@@ -54,7 +54,15 @@ static uint8_t agon_neta_service(uint8_t event,uint8_t sample){
     return sample&1?2:1;
 }
 static uint8_t agon_neta_open_frame(agon_net_client*c){
-    agon_net_pointer(c->input+1,(const void*)agon_neta_service);return 4;
+    agon_net_pointer(c->input+1,(const void*)agon_neta_service);
+#ifdef AGON_NETA_DIAGNOSTIC_MARKER
+    /* Only identified diagnostic EMOS accepts OPEN7. The app owns the native
+     * marker and static record. Undefined macro retains OPEN4; defined0 requests
+     * diagnostic OPEN7 with NULL marker and still requires that owner build. */
+    agon_net_pointer(c->input+4,(const void*)AGON_NETA_DIAGNOSTIC_MARKER);return 7;
+#else
+    return 4;
+#endif
 }
 /* Foreground, enabled IRQs. Only selector input[0] changes here, outside the
  * input+1 TX span. EMOS performs bounded RX/service and positive later TEMT. */
