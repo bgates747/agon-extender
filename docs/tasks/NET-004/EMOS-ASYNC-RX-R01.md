@@ -84,3 +84,25 @@ This plan extends the active NET-004 async task; TODO.md stays the only queue.
 Exact human source, private artifact paths, lease snapshots and source inventories
 remain ignored local evidence. No production promotion, emulator diversion or
 firmware installation is selected by publishing this preparation plan.
+
+## Selected first correction — foreground hold and post-service validation
+
+C1: a private one-byte foreground RX hold is entered only for an IRQ-enabled
+async gateway call and owned UART1. Its native entry masks and asserts STOP
+before owner validation/START/service. RX completion cannot lower STOP while
+held. The paired native exit checks full receiver health/demand, clears the hold
+and lowers STOP only immediately before restoring IRQs. Refused IRQ-disabled
+entry never changes an outer hold. Generic/nested keyboard locks and old
+synchronous paths remain unchanged. Abort, demandFAULT, pending keyboard fault/
+stop or owner loss must keep STOP asserted; no EI-then-C-STOP race is permitted.
+
+C2: owner PROGRESS must revalidate hook/ownership/fault after its RX-first call.
+RX may synchronously report a line error and reset/abort the hook, clearing
+resident demand to zero. That cleared demand is not positive wire-idle or
+authority for close. Preserve original first fault and return unavailable;
+never double-release a writer guard after error-driven abort.
+
+Implement/check these in an isolated EMOS worktree, preserving failed-trial
+source and binaries. They close identifiable owner contract/readiness gaps;
+neither is asserted to explain76OE. The standalone IRQ epilogue gap, unrelated
+UART0 CTS wait and unknown peer electrical response remain separate limits.
