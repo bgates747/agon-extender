@@ -1,3 +1,17 @@
+# Current — Wolf75 sole cleanup after deliberate visual stop
+
+Wolf reports its own deliberate stop, cases01–05 collected and post05 probe
+passed; no final-baseline LOAD/RUN. Exact guest draws600 hidden poses and presents
+once after timer stop; stationary VGA is expected, previous rotation announcements
+were wrong. Hidden draw capacity is not visible/gameplay FPS. Full cohort stopped/
+unqualified; source/result correction stays Wolf-owned. Extender starts no new
+investigation or target call from this notice. Exact85f9 restore/readback/current
+bootstrap/fullhandback remains Wolf's sole75 operation; actual release is NOT
+yet established. Received notice agents/bench-scheduler/wolf-perf009-r01/received-visual-stop75.json.
+MechAgon1b46642ee71b provisional U1 trial stays PREPARING behind75; finalkit and
+actual clean release/fresh admission still required. NewROM043a uninstalled.
+Earlier checkpoints below are historical.
+
 # Current — Wolf75 sole operator; provisional UART1 binding checked offline
 
 Fresh normal75/c2eb/WOLF-PERF009 actual grant and stopped handoff accepted;
