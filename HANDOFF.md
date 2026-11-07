@@ -1,3 +1,46 @@
+# Current — actual96 restored/released; Wolf023 PREPARING, no target access
+
+Actual96/2d99072a33d5 clean RELEASED17:47:58.935962UTC/oldtokeninvalid/all
+actors/readersSTOPPED. ONE L0 failed acceptedPOLL2/query2/TD_STATUS6/FAULT5
+duringconnectestablishment, zero decisions/frames/session and noUARTfault;
+causeunresolved, quietcalibrationcompleted/runtimewindowneverstarted. No
+headroom/rate/capacity result. Original65536B040000 RAM saved BEFORELOAD/reset/
+write SHAd144014b, exactoriginalstatus/spareebfaf retained. Existingpostgetter
+AFTER RAM provesABSENT/orderedclear/callbackrestored/buffer0. Exactincoming
+a25f ONEFLASH/automaticboot/full131072 independentreadback and freshrootCLI/
+cursor/raw0/callback0/route0/wholefiles/inputneutral/offlineidle/worker0/freeUSB
+PASS. No manualreset/replay/newcase/P4/native/startup/listener write. Evidence
+mechagon-headroom-l0-r01 cleanup-result96/released/release-observation/owner-
+preserve/owner-feature/verify-rollback/final. All1327 d889 frozeninputs unchanged.
+Mech/Wolf mandatoryrelease mail+steering delivered beforeofflinecloseout.
+
+Currentbaseline d9b/a25f/5d657/ed403/0566, nativefull85f9 unchanged, SDmounted.
+Wolf098fa3fae20d is normalnext PREPARING, NOT READY/granted; exactproducer/
+controller/listener/observer/finalkit required, actualcurrenttuple/newCLI/
+freshgrant beforecontact. Mechfirst retained/L1unselected/OryxDOWN. Separate
+P4accounting7a219/3f067/source35dd4606 remains source/build-only UNINSTALLED,
+no CPU%/reader/hardwarecase or substitution. Earlierheadingshistorical;
+centralregistry/currentcontext govern custody.
+
+# Current — actual96 sole Extender preservation/cleanup; incominga25f still required
+
+Verified Mech actualjoined/stoppedreturn96/2d99: ONE L0 result4/session0/zero
+decisions orframes, phase6 TD_STATUS/result5FAULT/kind2POLL/query2 duringconnect
+establishment; noUARTfault/source1/wireidle1/positiveCLOSEcleanupend. RootALL
+targetSTOPPED/no pending, normalCLI, livehostfailure prevents postgetter/EXIT.
+Extender asserted actual96 and assumed operatorlinux-extender/owner-restore;
+context-before-owner-restore retained. Current supported listener reconciled,
+originalstatus+128Bspare exactebfaf retained; original64KiB040000 SAVEd before
+anyLOAD/reset/firmwarewrite, SHA d144014bb7ec9adc114b7c74bd9d20f6a245b75ca107667f03626fb106ba07fc.
+Source native9de7/map4c5989, no immutableRAM decode claim yet. Existing exact
+postfeaturegetter cleanup active ONLY AFTER RAM; then exactincominga25f ONE
+FLASH/automaticboot/full131072 readback/fullfreshCLIstatefilesinputidle/release.
+No replay/newcase/reset/P4/native/startup/listener change. P4d9b/native5d657/
+startuped403/listener0566 retained, provisionalEMOS47dadc installed; a25frestore
+REQUIRED. Failedcase neither networkcause norheadroom/rate result. Consumer
+reports quietcalibrationcomplete/runtimewindownotstarted; exactsourceinterpretation
+consumerowned. Wolf023098fa PREPARING/noaccess, Mechfirst/OryxDOWN/SDmounted.
+
 # Current — actual96 sole Mech L0; Extender target access stopped
 
 Fresh96/2d99072a33d5 after actual95 cleanrelease/currenttuple/new ownCLI/
