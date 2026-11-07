@@ -202,6 +202,37 @@ class AccuracyTests(unittest.TestCase):
         with a, b:
             with self.assertRaises(TimeoutError): exact(a, 1, time.monotonic() - 1)
 
+    def test_actual_peer_cli_readiness_and_close(self):
+        with tempfile.TemporaryDirectory() as d:
+            directory = Path(d)
+            plan, ready, log = (directory / n for n in ('plan.json', 'ready.json', 'journal.jsonl'))
+            plan.write_text(json.dumps(PLAN))
+            child = subprocess.Popen([sys.executable, str(ROOT/'scripts/comms_accuracy_peer.py'),
+                '--port','0','--plan',str(plan),'--ready',str(ready),'--journal',str(log),'--duration','5'],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            try:
+                deadline = time.monotonic() + 3
+                while not ready.exists():
+                    self.assertIsNone(child.poll())
+                    if time.monotonic() > deadline: self.fail('CLI readiness deadline')
+                    time.sleep(.01)
+                with ready.open() as file: address = json.load(file)['endpoint']
+                with socket.create_connection(tuple(address), timeout=2) as conn:
+                    for f in case_frames(PLAN):
+                        raw=f.encode();conn.sendall(struct.pack('<I',len(raw))+raw)
+                        self.assertEqual(Frame.decode(receive(conn,time.monotonic()+2)),
+                                         dataclasses.replace(f,kind=2,direction=1))
+                    conn.shutdown(socket.SHUT_WR)
+                    self.assertEqual(conn.recv(1),b'')
+                stdout, stderr = child.communicate(timeout=3)
+                self.assertEqual(child.returncode,0,(stdout,stderr))
+                self.assertTrue(inspect_journal(log)['complete'])
+            finally:
+                if child.poll() is None:
+                    child.terminate();child.wait(timeout=3)
+                if child.stdout: child.stdout.close()
+                if child.stderr: child.stderr.close()
+
 
 if __name__ == '__main__':
     unittest.main()

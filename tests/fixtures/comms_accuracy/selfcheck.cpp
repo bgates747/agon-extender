@@ -1,5 +1,6 @@
 // Stopped core self-check, not a transport appliance. Never deploy as one.
 #include "engine.hpp"
+#include "build_identity.h"
 #include <stdio.h>
 struct LocalModel {
     bool running(){return true;}
@@ -28,5 +29,5 @@ int main(){
     Frame first;first.run=1;first.case_id=1;first.sequence=1;first.total=169;
     LocalModel model;auto result=run_case(first,model);
     if(result.outcome!=case_passed||result.verified_bytes!=169)return 5;
-    puts("COMMS-001 core self-check; no transport or hardware qualification");return 0;
+    puts(COMMS_CORE_BUILD_ID " [stopped core check; no hardware qualification]");return 0;
 }

@@ -1,5 +1,6 @@
 // Stopped target core self-check, not a benchmark or transport invocation.
 #include "engine.hpp"
+#include "build_identity.h"
 #include <stdio.h>
 struct LocalModel {
     uint32_t ticks=10;
@@ -18,5 +19,5 @@ int main(){
     if(!interval(250,5,8,30,ticks)||ticks!=11||interval(4,4,8,30,ticks))return 2;
     LocalModel model;Corpus c{sink,84,0};
     if(measure(c,24,100,model).outcome!=measured)return 3;
-    puts("COMMS-002 core self-check; no timing or hardware qualification");return 0;
+    puts(COMMS_CORE_BUILD_ID " [stopped core check; no timing qualification]");return 0;
 }

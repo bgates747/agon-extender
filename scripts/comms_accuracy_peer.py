@@ -8,11 +8,29 @@ claims physical retirement. This peer does not retry/reconnect or restart a case
 import argparse
 from dataclasses import replace
 import json
+import os
+from pathlib import Path
 import socket
 import struct
+import tempfile
 import time
 import zlib
 from comms_accuracy import CrcError, Frame, Journal, ProtocolError, case_frames
+
+
+def publish_ready(path, value):
+    """Publish complete readiness atomically and never overwrite a prior file."""
+    path = Path(path)
+    fd, temporary = tempfile.mkstemp(prefix='.comms-ready-', dir=path.parent)
+    try:
+        with os.fdopen(fd, 'w') as file:
+            json.dump(value, file)
+            file.write('\n')
+            file.flush()
+            os.fsync(file.fileno())
+        os.link(temporary, path)  # Exclusive atomic link, unlike replace().
+    finally:
+        Path(temporary).unlink()
 
 
 def exact(sock, count, deadline):
@@ -94,8 +112,9 @@ def main():
     parser.add_argument('--plan', required=True)
     parser.add_argument('--journal', required=True)
     parser.add_argument('--duration', type=float, default=60)
+    parser.add_argument('--ready', help='Exclusive host readiness JSON; optional, no device operation')
     args = parser.parse_args()
-    if not 0 < args.duration <= 3600 or not 1 <= args.port <= 65535:
+    if not 0 < args.duration <= 3600 or not 0 <= args.port <= 65535:
         parser.error('Finite duration/valid port required')
     with open(args.plan) as file:
         plan = json.load(file)
@@ -108,6 +127,9 @@ def main():
             with socket.socket() as listener:
                 listener.bind((args.bind, args.port))
                 listener.listen(1)
+                if args.ready:
+                    publish_ready(args.ready, dict(schema='comms-accuracy-peer-ready-r01',
+                                  endpoint=listener.getsockname(), monotonic_ns=time.monotonic_ns()))
                 listener.settimeout(min(args.duration, 30))
                 sock, _ = listener.accept()
                 with sock:

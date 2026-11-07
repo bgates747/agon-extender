@@ -84,6 +84,19 @@ class PerformanceTests(unittest.TestCase):
             p.write_text(json.dumps(sample())+'\n')
             self.assertEqual(len(read_samples(p)),1)
 
+    def test_actual_collector_cli_and_exclusive_output(self):
+        with tempfile.TemporaryDirectory() as d:
+            source, output = Path(d)/'samples.jsonl', Path(d)/'report.json'
+            source.write_text(''.join(json.dumps(r)+'\n' for r in (sample(),sample('parallel',end=60))))
+            argv=[sys.executable,str(ROOT/'scripts/comms_performance_report.py'),str(source),'--output',str(output)]
+            result=subprocess.run(argv,capture_output=True,text=True,timeout=3)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertIn('UART1 median ms',result.stdout)
+            self.assertEqual(json.loads(output.read_text())['rows'][0]['elapsed_reduction_percent'],50)
+            before=output.read_bytes()
+            self.assertNotEqual(subprocess.run(argv,capture_output=True,timeout=3).returncode,0)
+            self.assertEqual(output.read_bytes(),before)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -26,6 +26,7 @@ def main():
                   source_commit=subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip(),
                   started_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(), passed=False, builds=[])
     started = time.monotonic_ns()
+    stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ')
     env = dict(os.environ, PATH=str(args.toolchain_bin.resolve()) + os.pathsep + os.environ['PATH'])
     try:
         for kind in ('accuracy', 'performance'):
@@ -37,10 +38,13 @@ def main():
                 p = root / 'tests/fixtures' / ('comms_' + kind) / source
                 shutil.copyfile(p, src / target)
                 inputs[str(p.relative_to(root))] = hashlib.sha256(p.read_bytes()).hexdigest()
+            build_id = 'comms-' + kind + '-core-r01-b' + stamp
+            (src / 'build_identity.h').write_text('// Generated compile/link probe identity; do not edit.\n'
+                '#define COMMS_CORE_BUILD_ID "' + build_id + '"\n')
             (out / 'Makefile').write_text('NAME=comms-' + kind + '-core\nLDHAS_ARG_PROCESSING=0\n'
                 'LDHAS_EXIT_HANDLER=0\ninclude $(shell agondev-config --makefile)\n'
                 'CXXFLAGS += -Isrc -std=c++17 -fno-exceptions -fno-rtti -Wall -Wextra -Werror\n')
-            item = dict(kind=kind, inputs=inputs, passed=False)
+            item = dict(kind=kind, build_id=build_id, inputs=inputs, passed=False)
             report['builds'].append(item)
             with (out / 'build.log').open('x') as log:
                 result = subprocess.run(['make', '-j1', '-C', str(out.resolve())], env=env,
@@ -49,8 +53,12 @@ def main():
             if result.returncode:
                 raise RuntimeError(kind + ' native compile/link failed')
             binary = out / 'bin' / ('comms-' + kind + '-core.bin')
+            if build_id.encode() not in binary.read_bytes():
+                raise RuntimeError('Actual linked build identity missing')
+            retained = args.output / (build_id + '.bin')
+            shutil.copyfile(binary, retained)
             item.update(passed=True, bytes=binary.stat().st_size,
-                        sha256=hashlib.sha256(binary.read_bytes()).hexdigest())
+                        filename=retained.name, sha256=hashlib.sha256(binary.read_bytes()).hexdigest())
         report['passed'] = True
     finally:
         report['elapsed_ns'] = time.monotonic_ns() - started
