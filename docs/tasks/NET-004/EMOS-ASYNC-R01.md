@@ -241,3 +241,20 @@ for PCM. Credentials stay in private configuration. The shared receive-service
 concern is UART0 masked/CTS service versus UART1 FIFO headroom; a larger software
 ring and a source-release callback do not prove receive safety or wire drain.
 No new generic-driver correction or physical test is selected by this note.
+
+### First Console8 receive evidence returned by Jukebox
+
+Jukebox's NET-001-R0003 owner reports that Smith ran the standalone receiver
+and returned an 8192-byte PCM capture identical to the Pi source after offline
+comparison. The runtime used no PCM checksum. Unchanged vanilla U1 r05 at
+1152008N1/noRTSCTS, 4096-byte receive ring and32requests of256PCMbytes recorded
+result0, parsererror0, overflow0, UARTfault0, lineerrors0 and close0; sampled ring
+highwater21. UART bytes10376 include setup and framing. This is the first physical
+ESP8266 binary+IPD/JPCM receive evidence; there was no UART0/audio forwarding.
+
+The8192PCMbytes represent1.024audio seconds. Reported134MOS counts at nominal
+120counts/s give1.117s and7336PCMbytes/s, below8000PCMbytes/s consumption. This
+is a short uncalibrated receive interval; it does not isolate the credit/AT
+overhead or qualify sustained playback. Jukebox proposes larger bounded windows
+within its own task before playback; this report assigns no new build/run/baud
+change or owner work. The separate EMOS/P4 overrun remains unresolved.
