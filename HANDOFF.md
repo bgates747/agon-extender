@@ -1,3 +1,163 @@
+# Current — actual103 R10 installed and handed to MechAgon; Extender stopped
+
+Actual103/ea4224a1673d now has sole operator MechAgon, phase consumer.
+ONE c1047 FLASH/automatic boot and full independent131072-byte readback passed,
+with fresh actual CLI/rawmode0/callback0/route0/wholefiles/inputneutral/idle/freeUSB.
+Exact frozen consumer precontact passed all2224 inputs/208cf98e kit.
+Actual grant/context/stopped handoff and installed readback are under
+agents/bench-scheduler/mechagon-goal001-r10/. Durable mail and immediate steering
+returned actual custody. ALL Extender target access/readers/commands stopped.
+Only after root's original actors join and actual stopped return may Extender
+assume same103 owner restoration, exact incoming a25f/fullreadback/fullhandback
+and normal release. No concurrent observer, reset, replay or new invocation.
+P4d9b/native5d657/startuped403/listener0566 retained; SD remains mounted.
+
+HDMI visual qualification is still incomplete. Smith did not finish the wide/
+normal test-pattern campaign. Current Nov6 P4 uses centered unscaled1280x720;
+normal modes0/8 occupy640x480/320x240. No new HDMI change selected or made.
+Original GOAL/resume evidence resolved admission review through the same normal
+action; publication remains held. Earlier headers are historical.
+
+# Current — actual103 R10 owner installation; MechAgon stopped
+
+The frozen R10 kit is READY: request ea4224a1673d, SHA208cf98e,2224 inputs.
+Actual102 isolation passed and cleanly released; fresh actual CLI, mode0,
+callback0, route0, whole startup/listener, neutral input, idle transfers and free
+USB checks passed. Fresh generation103 central owner is MechAgon; Extender is
+sole operator in owner-install. Context: agents/bench-scheduler/mechagon-goal001-r10/context.json.
+Exact c1047 staging/readback is underway before ONE FLASH and full131072-byte
+verification. MechAgon has no target access until actual stopped handoff. Same
+lease exact incoming a25f rollback/fullhandback/release follows its stopped return.
+No P4, HDMI, native VDP, startup or listener change; SD remains mounted.
+
+An earlier automatic admission rejection was resolved by inspecting original
+human GOAL and resume receipts and resubmitting the same normal action for
+review. That action was approved; no alternate execution route was used.
+
+Smith reports HDMI modes0 and8 have correct4:3 shape but do not fill the usable
+monitor area, and confirms the full wide/normal test-pattern campaign was never
+completed. Exact installed P4 d9b (Nov6) uses the default1280x720 carrier and
+centered unscaled logical images: normal mode0 640x480, mode8 320x240. No AUTO or
+320PPA build option is enabled. This explains current sizing, but does not prove
+all earlier experimental profiles matched, nor full visual acceptance. No HDMI
+implementation or deployment is selected by that discussion. Read-only assessment:
+agents/hdmi-current-source-20261107/assessment.json.
+
+Source/result publication remains held; no push. Earlier headers are historical.
+
+# Current — actual102 owner isolation PASS/restored/released; R10 source preparation next
+
+Actual102/40c5 ONE176-record/foursession/352cursor invocation passed; native
+sixlineSD/ordered Pi exact-byte peer/original32B RAM witness044913 agree, all
+recorded error/release/quarantine/cursorfailure0. Original64KiB appRAM e66348de
+saved before any laterLOAD/reset; no recovery needed. Source112pins2aae62d1
+unchanged. Candidatec1047 install/full131072readback and exact incominga25f
+rollback/full131072readback both passed, each ONEFLASH/automaticboot. Fresh
+rootCLI/cursor/raw0/callback0/Legacy0/wholefiles/inputneutral/offlineidle/worker0/
+freebothUSB passed; all owned actors joined. SDmounted.
+
+Actual102 cleanrelease2026-11-07T21:58:28.109901UTC, oldtokeninvalid; ALL Extender
+targetaccess STOPPED/no compilerowned. Canonical result agents/net004/uart0-rx-carry-r01/
+actual102-result.json and physical-r01/{released,release-observation}.json.
+Tracked result docs/tasks/NET-004/EMOS-UART0-RX-CARRY-R01-ISOLATION-RESULT.md.
+No hardware forcednoDR, actual98cause, arbitrarymixedrenderer, speed or productionclaim.
+
+Actualnext Mech ea4224a1673d/R10 PREPARING, source-only owner templates already
+returned; owner-isolation-complete.json now links actualPASS/release hashes.
+Root finalfreezer ledger correction in progress, exact artifacts unchanged.
+No runnable kit/new grant/install/consumer invocation yet. No replay required.
+Current physical P4d9b/fullEMOSa25f/native5d657+full85f9/startuped403/listener0566
+preserved/restored. Wolf101 originalprofiling failedbeforeguest; cleanup and
+standingpaired recovery released101, all actors stopped; no profilingresult.
+Source/result publication hold remains; no push. Earlierheaders historical.
+
+# Current — actual102 selected UART0 carry isolation; sole Extender owner
+
+Actual101 clean release21:48:17UTC/all Wolf actors terminal/full85f9 restored;
+standing paired recovery/freshfullhandback succeeded after originalpre-guest
+admission failure. No profiling data, no replay, old101token invalid.
+
+Fresh actual102/40c5c1aa159d/leasef4cbc7ca3d8740ddbdbefe6c0bb47e77 admitted after112frozenpins/current
+tuple/newactualCLI/SAVE-onlymode0/callback0/route0/wholefiles/inputneutral/
+offlineidle/freeUSB checks. Extender soleoperatorlinux-extender, owner-install;
+context agents/bench-scheduler/net004-uart0-rx-carry-r01/context.json.
+ONE c1047 EMOS install/readback then fixed176/foursessions+352zero/nonzero cursor
+case60nominalnative/120originalobservation only. Current image staging underway,
+NO test yet; no compiler. Same102 exact incominga25f rollback/fullreadback/full
+freshhandback/normalrelease, firstunexpectedSTOP/no replay. Sourcepins2aae62d1
+unchanged. P4d9b/native5d657/startup/listener preserved; SDmounted. R10ea422
+follows only after actualpositiveownerresult/cleanrelease/finalkit/newgrant.
+Earlierheaders historical; central registry/current context authoritative.
+
+# Current — actual101 full native rollback verified, admission failed; Wolf recovery only
+
+Wolf cleanup101 exact full1105920B incoming85f9 readback independently rehashed
+by Extender from retained file. ONE restored-image matched bootstrap failed
+readyfalse/reason0, causeUNKNOWN. No guest/module/INFO/PRT LOAD/RUN ever occurred.
+Wolf retains sole101 and selects standing bounded Agon-only recovery, then only
+if failed initializedP4->Agon; no reflash/test/replay/resetloop. Extender ALL
+targetaccess STOPPED. No clean release/new grant/bench-idle claim exists yet.
+Retained source state agents/bench-scheduler/wolf-profile001/restore101-source-state.json.
+40c5 thenea422 remain queued, not physical authority. Source-only consultation
+complete; no separate Extender actor or observer launched. Earlier headers historical.
+
+# Current — Wolf PROFILE001 actual101 cleanup only; Extender target stopped
+
+Actual101 original controller1035/PID1567557 exited1 on current matched Agon
+admission timeout after exact7593/full493f readback, BEFORE any guest/module/
+INFO/PRT LOAD or RUN. Observer80813/PID1567606 exited0/tracer1567608 joined;
+all original actors terminal, no SIGTERM attribution. Original failure retained,
+no profiling/RAM/performance claim. Wolf retains sole101 restoration custody;
+all Extender target access STOPPED, no new grant/owner device action.
+
+All original341 inputs/current6latebootstrap dependencies and full493f readback
+matched source-only rehash. Exact85f9 retained rollback also rehashed. Selected
+existing cleanup is new immutable namespace/ordinary constructor, incoming85f9
+full restore/readback FIRST then ONE current matched bootstrap/full fresh
+handback/normalrelease; no pre-restore reset or benchmark replay. Current cause
+UNKNOWN. Pending40c5 carry isolation thenea422 consumer retain normal order and
+actual101 cleanrelease/currenttuple/newgrant dependencies. SDmounted.
+
+COORD-001 owner consultation sent to Pi5 manager: physical admission/cleanup,
+centralowner versus soleoperator, truthfully unknown states/event continuity,
+dashboard requirements and source references. Read-only input, no service/queue/
+process-lifetime change or architecture/migration approval. Artifact agents/coord001.
+
+# Current — Wolf PROFILE001 actual101 sole owner; carry isolation frozen READY next
+
+## R10 source-only preparation — dependency open
+
+Requestea4224a1673d follows protected Wolf101 then owner40c5. Request-local
+agents/bench-scheduler/mechagon-goal001-r10/{owner-selection,source-preparation,
+owner-preflight,template-pins}.json prepared; exactc1047/a25f14inputfile-only
+preflight PASS, no compile/grant/install/target access. Returned substantive
+mail+steering. Actual40c5 176/foursessions/352cursorPASS AND independent clean
+release remain required before runnable R10 freeze/admission; actualproof NULL.
+ONE90/150/180 and1200snewworkwindow only, no PRT/baud/IRQ/P4diagnostic/newcase.
+Wolf retainssole101, Extender targetaccessSTOPPED. Publicationhold unchanged.
+
+Wolf original controller1567557/session1035 and observer1567606/session80813/
+ownedtracer1567608 positively attached before deviceIO under actual101/b230/
+leasedd0161cdd4f643739e6aed8af30a899b; no relaunch. Extender targetaccess STOPPED.
+Only the original finite profiling test and exact native85f9 fullrestore/readback/
+fullcleanup/normalrelease; no paused optimization resumption. SDmounted.
+
+Selected owner UART0 carry isolation request40c5c1aa159d is now frozen READY
+AFTER actual101 cleanrelease/freshcurrenttuple/newgrant; no currentgrant/contact.
+112input source-pins2aae62d14567522f813739c6501a1bb8bbb0963028d93333a04f1b7cfe0f30eb
+under agents/net004/uart0-rx-carry-r01/physical-r01. Exact kernelc1047/source9dd
+and native18817B2e636766;176records/foursessions+352cursorqueries. Compiler448
+all source/helper/native/controller/defaultwrapper steps passed; wrongELF final
+inventory retained then actual map/fourinvalidmapcontrols closed file-only.
+Witness32B044913/staticend044B48 inside64KiB SAVE, no stack-peak/hardwareclaim.
+All children joined/released21:24:30UTC/no ownedcompiler. Local rootf4790a2d;
+existing publication hold preserved/no push. Task plan and READY detail shipped
+substantively to Mech. No source/kernel/default alteration of Wolf101.
+
+Actual100 SIDEBAR restoreda25f/full131072B compare/freshfullhandback/released
+21:25:15UTC, oldtokeninvalid. Original arms608/613 positiveclose/native0.
+Earlier sections historical; canonical registry and actualcontext govern.
+
 # Current — Wolf PROFILE001 actual101 sole owner; Extender target access stopped
 
 Actual100 SIDEBAR both arms returned normal result0/positive source-drain-CLOSE;

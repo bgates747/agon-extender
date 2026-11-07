@@ -161,3 +161,12 @@ both sidebar measurements and original actors stopped. The new fixture and
 actual controller checks also passed; a wrong final ELF inventory path was
 corrected separately using the actual linker map without another compile.
 Selected isolation preparation and its limits are recorded in the follow-on task.
+
+## Selected physical isolation result
+
+The [finite hardware isolation passed](EMOS-UART0-RX-CARRY-R01-ISOLATION-RESULT.md)
+under actual102, with176 exact records/four closes/352 cursor replies and
+originalRAM agreement. Incominga25f was restored/read back and the bench
+cleanly released. Candidate retained but no longer installed. The frozen
+preparation plan remains unchanged; the result records coverage and limits.
+No actual98cause or mixed renderer acceptance follows from this case.
