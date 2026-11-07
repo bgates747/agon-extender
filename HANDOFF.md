@@ -1,3 +1,42 @@
+# Current — actual83 handed off to sole MechAgon; Extender target-stopped
+
+Actual83/ea08a2de2d5d candidate8de66 stage/readback, ONEFLASH/exactboot and
+independent full131072B ROM comparison PASS. Rawmode0/callback0/route0/whole
+startup/listener/actualCLI/readEXIT/inputneutral/offlineidle/freeUSB pass. Exact
+frozen consumer precontact() and all171kit5706e12a inputs pass against actual
+handoff/readback. Context agents/bench-scheduler/mechagon-goal001-r03/context.json;
+stopped-operator-handoff.json and owner-install/verify-candidate/receipt.json.
+Durable ready mail and accepted immediate steering delivered12:05:58UTC.
+Extender ALLtargetaccessSTOPPED/no pending/readersjoined. Mech alone owns selected
+ONE finite unprofiled R03/original90/150/180s case. Wait for actual joined/stopped
+return, then same83 exacta25f rollback/fullROMreadback/fullcleanup/normalrelease.
+No extra app/echo/profiler/replay/reset/P4/native/startup/listener change.
+Wolf4cdb H02/516pins READY next only after actual83 realrestoration/release.
+SDmounted. Prior82failure and cleanrelease retained.
+
+Compiler345/session62413 source-only P4 OFF PASS534.805s; ON compiling. No target
+or diagnostic install/CPU claim. Sourcea66f0563 frozen; normal finite guard/join/
+release/actualnextnotify applies. OryxDOWN, Mechfirst/Wolfsecond. Earlier history.
+
+# Current — actual83 Extender owner-install; Mech R03 frozen; compiler345 ON build
+
+Actual83/ea08a2de2d5d normal fresh admission passed CLI/readEXIT/SAVE-only
+rawmode0/callback0/route0/wholefiles/inputneutral/offlineidle/freeUSB. R03 kit
+5706e12a/33302B/all171 inputs and own admission/helper pins independently match.
+Context agents/bench-scheduler/mechagon-goal001-r03/context.json. Extender alone
+stages/compares exact8de66 candidate and a25f rollback, then ONE candidateFLASH,
+exactboot/fullROM131072B verification and actual stopped sole-Mech handoff.
+Consumer still target-stopped; no app invocation/reset/P4/native/startup edit.
+After actual joined/stopped consumer return: same83 exacta25f/fullproof/release.
+Wolf4cdb H02/516pins READY next only after real83 handback/currenttuple/newgrant.
+SDmounted. Actual82 failure and11:41:22UTC cleanrelease remain preserved.
+
+Source-only nativeP4 compiler345/session62413: OFF canonical build/validation
+PASS534.805s/allownedchildrenjoined; ON now compiling under same finite guards.
+No diagnostic installed, runtime/CPU/fit delta not claimed until both arms pass.
+Sourcea66f0563 remains frozen; optional analysis never delays bench duties.
+OryxDOWN, Mechfirst/Wolfsecond. Earlier headings below are historical.
+
 # Current — actual82 released; Mech R03 first; source-only P4 build345 running
 
 Actual82 RELEASE11:41:22.995721UTC, all target actors/readers stopped. Exact
