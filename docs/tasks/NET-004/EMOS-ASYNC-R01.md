@@ -258,3 +258,19 @@ is a short uncalibrated receive interval; it does not isolate the credit/AT
 overhead or qualify sustained playback. Jukebox proposes larger bounded windows
 within its own task before playback; this report assigns no new build/run/baud
 change or owner work. The separate EMOS/P4 overrun remains unresolved.
+
+### Longer Console8 receive result
+
+Jukebox NET-001-R0004 corroborates the first short receive result:213760PCMbytes
+from835requests of256bytes exactly match the Pi source prefix in offline
+comparison. Unchanged vanillaU1r05/1152008N1 recorded zero UART overflow/fault/
+lineerror/parsererror and positive close; sampledRXhighwater26. No runtimePCM
+checksum, capture-time SDwrite or audio/UART0 forwarding occurred.
+
+At nominal120MOS counts/s,3602counts are30.0167s:7121.38PCMbytes/s,89.02% of the
+8000bytes/s target, or26.72audio seconds delivered in that interval. Timing is
+conditional on60Hz and uncalibrated. Timed GET-loop UART RX267200bytes is separate
+from lifetimeRX267336; its53440nonPCMbytes equal64bytes/request in aggregate,
+not an attribution to individual AT/Wi-Fi/driver costs. This is an extended
+receive-integrity pass, not sustained8kplayback. Larger bounded request windows
+remain Jukebox's proposed next comparison; no new owner work is assigned.
