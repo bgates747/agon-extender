@@ -18,8 +18,11 @@ pins, reset/P4 logs and immutable failure retained. No replay/suite restart.
 Source disposition returned; Extender remains completely target-stopped. Await
 actual joined clean release; no second operator or assumed availability.
 
-Mech next observed IRQ request21e59f934f2e remains PREPARING, no final kit or
-admission. Source-only lost-wakeup consultation returned: existing guard_leave
+Mech next observed IRQ request21e59f934f2e is READY: exact102673B kit44715c54/
+ALL475 selected consumer inputs and owner installer/80fe/a25f/source pins rehashed
+unchanged. Request-local owner-selection/source-readiness prepared under agents/
+bench-scheduler/mechagon-goal001-r06. No grant/context/admission or target call;
+wait actual89 clean release/current tuple and normal fresh grant. Source-only lost-wakeup consultation returned: existing guard_leave
 EI/RET cannot bridge to later HALT; one native bounded DI/check/EI-HALT helper
 requires IFF-enabled admission, complete producer coverage and normal callback
 lifetimes. Current private U1 source/service has no generic app wake callback.
