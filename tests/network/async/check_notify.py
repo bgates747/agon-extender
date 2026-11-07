@@ -65,6 +65,22 @@ try:
             str(O/'emos_net.o'),str(O/'emos_neta.o'),'-o',str(O/name)])
         run(name+'-run',[str(O/name)])
 
+    # The old SDK silently ignores the opt-in macro; the new actual-C oracle
+    # must fail against it. Keep this failed control separate from candidate.
+    old_inc=O/'baseline-include';(old_inc/'agon').mkdir(parents=True)
+    (old_inc/'agon/net_async.h').write_bytes(baseline)
+    shutil.copyfile(R/'include/agon/net.h',old_inc/'agon/net.h')
+    run('old-notify-link',common+['-I'+str(old_inc),'-I'+str(U/'include'),
+        str(R/'tests/network/async/notify.c'),str(U/'src/u1_tx.c'),
+        str(O/'emos_net.o'),str(O/'emos_neta.o'),'-o',str(O/'old-notify')])
+    import resource
+    def no_core():resource.setrlimit(resource.RLIMIT_CORE,(0,0))
+    with (O/'old-notify-negative.log').open('x') as log:
+        control=subprocess.run([str(O/'old-notify')],stdout=log,stderr=subprocess.STDOUT,
+                               timeout=15,preexec_fn=no_core)
+    assert control.returncode!=0,'Original SDK escaped notification oracle'
+    report['old_header_negative_control']=dict(returncode=control.returncode,expected_failure=True)
+
     # Same physical source/header paths and flags for the paired baseline/OFF
     # builds. Keep all outputs before replacing only this disposable header.
     work=O/'native-work';(work/'src').mkdir(parents=True)
