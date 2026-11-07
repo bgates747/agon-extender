@@ -50,7 +50,7 @@ checks. Verify source-release publication/client identity; source-before-return;
 real SOURCE/TAIL/IDLE/fault/error notifications; quiet/no-progress calls produce
 none; repeated retained fault produces none; failed CLOSE preserves association.
 
-NW-003 [ ] Under normal Pi FIFO, compile actual unchanged core plus adapter
+NW-003 [x] Under normal Pi FIFO, compile actual unchanged core plus adapter
 checks with sanitizers and paired native control/OFF/ON application probes.
 Inspect target symbols/listing and default code/data identity, report ON text/
 BSS/stack limits without inventing IRQ/runtime cost. Retain finite commands and
