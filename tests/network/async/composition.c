@@ -19,7 +19,7 @@ uint8_t test_ier=1,uart1_keyboard_owned=1,emos_key_source=2,emos_key_faulted;
 uint32_t user_kbvector=0x456789;
 static uint8_t irq=1,reserved,stop,lsr=0x60,error,reply_due;
 static unsigned bursts,bytes,rx_visits,forced_rx;
-static uint8_t finish_before_return,bad_open,refuse_close;
+static uint8_t finish_before_return,bad_open,refuse_close,refuse_submit;
 static uint8_t wire[512];
 static agon_neta_client *active;
 uint8_t emos_application_context(void){return 1;}
@@ -57,6 +57,7 @@ static uint32_t gateway(uint8_t*r){
     assert(r[5]==4&&!memcmp(r+41,"neta",4));
     uint8_t op=active->net.input[0];
     if(op==3&&refuse_close)return 31; /* owner refusal boundary, hook stays live */
+    if(op==2&&refuse_submit)return 35; /* refusal before source acceptance */
     uint32_t result=emos_neta_gateway(r);
     if(op==0&&!result&&bad_open)r[22]=6;
     if(op==2&&!result&&finish_before_return){
@@ -122,6 +123,11 @@ int main(void){
     irq=0;uart1_keyboard_irq();irq=1; /* still-installed hook remains callable */
     assert(agon_neta_close(c)==31&&agon_neta_active==c);
     bad_open=refuse_close=0;assert(agon_neta_close(c)==0&&!agon_neta_active&&!reserved);
+    /* A rejected SUBMIT clears NM admission, not the hook cleanup handle. */
+    fresh(c);refuse_submit=1;
+    assert(agon_net_submit(&c->net,AGON_NET_POLL,0,0)==35&&!c->net.admitted);
+    assert(agon_neta_active==c&&reserved&&c->tx.phase==U1_IDLE);
+    refuse_submit=0;assert(agon_neta_close(c)==0&&!reserved&&!agon_neta_active);
     /* One shared error sample records fault and never releases borrowed source. */
     fresh(c);stop=1;assert(agon_net_submit(&c->net,AGON_NET_POLL,0,0)==0);
     const uint8_t*borrow=c->tx.source;error=2;tick();

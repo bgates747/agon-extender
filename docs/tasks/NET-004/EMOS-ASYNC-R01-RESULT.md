@@ -11,13 +11,13 @@ an installed driver or a physical async-performance/30 Hz result.
 |---|---:|---:|---:|
 | Resident EMOS ROM used |129108|130141|1033|
 | Resident ROM free |1964|931|−1033|
-| Link-only application units, text |1157|2356|1199|
+| Link-only application units, text |1157|2346|1189|
 | Link-only application units, BSS |372|391|19|
 
 The application units include the actual submit/progress/take/close probe and
-SDK inline paths: async main/adapter1757B + unchanged generic core569B + OTIRX
+SDK inline paths: async main/adapter1747B + unchanged generic core569B + OTIRX
 leaf30B. They exclude common CRT/runtime and the consumer's existing receive/
-VDPlet callback chain. The full linked async probe has text3607B/data78B/BSS445B;
+VDPlet callback chain. The full linked async probe has text3597B/data78B/BSS445B;
 that is an actual probe executable, not MechAgon's whole program. Consumer link
 size and useful foreground work remain its separate trial evidence. Resident
 storage adds only hook3B/demand1B/provider-owner1B; no resident source/count,
@@ -52,19 +52,26 @@ transfer queue, buffer, callback engine or timeout loop is introduced.
    cleanup association/storage and blocks payload with an unvalidated token.
    A later positive RELEASE removes the hook. This synthetic ordering is not
    the cause of physical74 and does not demonstrate a generic U1 defect.
-3. Existing actual synchronous EMOS/P4/public-C peer tests pass. Default SDK
+3. A rejected SUBMIT may clear NM admission while the app service hook remains
+   attached. Progress/close now use the retained hook association, allowing
+   positive cleanup even after that refusal; payload still requires a validated
+   open token and admission. The actual-C refusal regression passes. This is an
+   application-only correction; ROM, wire and generic U1 core are unchanged.
+4. Existing actual synchronous EMOS/P4/public-C peer tests pass. Default SDK
    hooks produce a byte-identical synchronous eZ80 object versus the recorded
    pre-adaptation header, including its error/release behavior.
-4. Mandatory startup, baud/divisor, parallel-upload/common pad ownership,
+5. Mandatory startup, baud/divisor, parallel-upload/common pad ownership,
    keyboard IRQ/callback, console, guarded RFC25, UART-NM, new app-hook and
    control-TX-selection validators pass on the linked full firmware. Existing
    IRQ register saves remain; linked owner tick/reset/RX-first calls and bounded
    CTS sampling are checked; generic U1 engine symbols are absent from ROM.
-5. Compiler297 first passed host/application checks but stopped at our numeric
+6. Compiler297 first passed host/application checks but stopped at our numeric
    IER C-lvalue mistake. Source014d74a/logs preserved; a bounded native IER leaf
    corrected it. Compiler299 passed all composition/native/ROM checks11.345s;
    compiler301 passed the additional malformed-OPEN regression/native-size
-   update3.145s. Every owned child joined and compiler slot released. One queued
+   update3.145s. Compiler303 passed the rejected-SUBMIT cleanup regression,
+   sanitizer/native link and unchanged-default-object checks2.125s; its smaller
+   app probe supplies the current table. Every owned child joined and compiler slot released. One queued
    wrapper entry refused before compilation because it had no lease; no overlap.
 
 ## Remaining physical boundary

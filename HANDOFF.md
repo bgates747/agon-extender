@@ -12,9 +12,10 @@ Actual74 failedcase/RAM9828/status and supported recovery retained; cleanrelease
 06:24:51UTC, no replay/firmwarewrite. New UART1 provisional owner ROM043a is
 UNINSTALLED: source2c47053/native fullvalidators pass, app/core/EMOS-C lifetime
 checks including malformedOPEN/refusedcleanup pass. [Result](docs/tasks/NET-004/EMOS-ASYNC-R01-RESULT.md)
-reports resident+1033B/931Bfree and app probe+1199Btext/+19Bstate; no physical or
+reports resident+1033B/931Bfree and app probe+1189Btext/+19Bstate; no physical or
 usefulCPU/30Hz claim. Reuse UART823bb91 core/emitter, ext.neta explicitoptin,
-preconstruction guard, source/tail/peer retirement. Commit/publish exact SDK/
+preconstruction guard, source/tail/peer retirement. Compiler303 passed refused-SUBMIT cleanup association checks (app-only,
+ROM unchanged), all children joined/released; publish immutable r02 SDK/
 consumer binding, then coordinate MechAgon-owned caller/trial; prepare EMOS-only
 install/readback/rollback under separate fresh normalbench after its kit ready.
 Never insert newROM into current Wolf75 or change workingUART choice.

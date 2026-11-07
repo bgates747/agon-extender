@@ -97,7 +97,7 @@ clients and the already frozen consumer scheduler case remain unchanged.
 Human source IDs and exact build/network/device paths remain in ignored owner
 records; no credentials or unique-device configuration belongs in this task.
 
-## Implemented binding candidate (not yet qualified)
+## Checked provisional binding (not physically qualified)
 
 The optional build flag EMOS_UART1_APP selects provider ext.neta through the
 unchanged66B service gateway. It requires the UART-NM/guarded-RFC25 composition
@@ -128,10 +128,16 @@ provider/wire behavior. The async guard calls owner progress BEFORE query/header
 payload writes. A positive generic RELEASE also retires the app hook association;
 a refused cleanup preserves all state. No additional staging or general queue.
 
-Actual-C composition tests and target link/mandatory ROM validators are the next
-build boundary. This candidate is not installed, hardware-qualified, or yet a
-consumer SDK/ROM selection. The current failed consumer run used old synchronous
+Actual-C composition tests and target link/mandatory ROM validators pass. The
+checked SDK/ROM binding is available for the selected consumer adaptation; it
+is not installed or hardware-qualified. The current failed consumer run used old synchronous
 UART1 submission and cannot be attributed to this uninstalled adapter.
 
 [Offline result](EMOS-ASYNC-R01-RESULT.md) records the checked candidate, actual
 linked sizes, malformed-OPEN lifetime correction and remaining physical boundary.
+
+The application retains its cleanup association independently of NM admission.
+A refused SUBMIT may clear NM admission without removing the app hook; progress
+and positive RELEASE must remain possible until that association is retired.
+The actual-C refusal regression and unchanged synchronous target-object control
+pass. No second buffer, queue, wire change or resident-engine change is needed.

@@ -60,7 +60,10 @@ static uint8_t agon_neta_open_frame(agon_net_client*c){
  * input+1 TX span. EMOS performs bounded RX/service and positive later TEMT. */
 static inline uint8_t agon_neta_progress(agon_neta_client*c){
     uint8_t r;
-    if(agon_neta_active!=c||!c->net.admitted)return AGON_NET_UNAVAILABLE;
+    /* NM admission can be cleared by a failed SUBMIT while the separately
+     * attached service hook still exists. Keep progress/cleanup available via
+     * this association; only positive RELEASE retires it. */
+    if(agon_neta_active!=c)return AGON_NET_UNAVAILABLE;
     c->net.input[0]=4;AGON_NET_BARRIER();r=agon_net_exchange(&c->net,1,0);AGON_NET_BARRIER();
     return r;
 }
