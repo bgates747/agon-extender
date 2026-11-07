@@ -1,3 +1,63 @@
+# Current — actual92 sole MechR07 IRQ diagnostic; Extender target-stopped
+
+Fresh92/cbeb5e59f289 granted after actual91 cleanrelease/currenttuple/full85f9
+readback and newCLI/readEXIT/SAVE-only rawmode0/callback0/route0/whole startup-
+listener/inputneutral/offlineidle/freeUSB. All486 frozenb212 inputs/ownerpins
+match. Exact80fe/a25f stage/fullGET comparison, ONEFLASH/automatic exactboot and
+new full131072B independent80fe readback PASS. ActualCLI/rawstate/files/neutral/
+idleworker/freebothUSB PASS. Context agents/bench-scheduler/mechagon-goal001-r07
+now operator=mechagon/phase=consumer; matching stoppedsole handoff names actual
+emos_readback/receipt. Actual frozen consumer precontact(stage) passes offline.
+Substantive handoff mail sent/steering accepted. ALL Extender target access is
+STOPPED/readersjoined/no pendingcommands. No HTTP/serial/SD/PRT polling, reset,
+collection or new compiler during sole consumer case.
+
+Only frozen ONE observed-overlap IRQ-only/fulltrace R07, exact3678184/map620e/
+fa4a1896data module/80fe/UART1152000/original90/150/180 and30/45 bounds. No wake/
+baud/batch/profile/extraNULL or replay. Actual allocation/timer/health acceptance
+remain required. Wait actual joined/stoppedreturn before same92 exact incoming
+131072B a25f rollback/readback/fullcleanup/normalrelease. Current installed
+P4d9b/EMOS80fe/native5d657/startuped403/listener0566, SDmounted; rollbacka25f retained.
+Original91 SIGTERM/no candidate/no comparison retained; original liveRAM was not
+saved before ONE recovery, originalSD collection labelled after-reset. No cause/
+repair claim. Optional APP SDK notify source/native package remains separate,
+rootSDK and R07 unchanged. Mechfirst/Wolfsecond/OryxDOWN. Earlier headings are
+historical; centralregistry/currentcontext govern custody.
+
+# Current — actual92 MechR07; sole Extender EMOS installation
+
+Actual91 cleanrelease/currenttuple/full85f9 restoration independently verified.
+Fresh92/cbeb5e59f289 lease dc6136edcfb7493dbcdc79e2760d51fe granted after all486
+b212pins and new actualCLI/readEXIT/SAVE-only rawmode0/callback0/route0/wholefiles/
+inputneutral/offlineidle/freeUSB proof. Context mechagon-goal001-r07 is operator
+linux-extender/owner-install; sole stopped-owner installation scope only. Exact
+80fe candidate and a25f rollback stage/fullGET comparisons passed. ONE selected
+EMOS FLASH/boot capture is active; full131072B readback/CLI/idle remains required
+before actual stoppedsoleMechhandoff. No consumer invocation by Extender, no
+P4/native/startup/listener write or manualreset/replay. Mech remains targetstopped.
+Retain current92 until installation/consumer/stoppedreturn/normalrollback closure;
+old91tokeninvalid. No other agent/operator may contact the target. SDmounted.
+Mechfirst/Wolfsecond/OryxDOWN. Earlier headings historical; registry governs.
+
+# Current — actual91 cleanly released; MechR07 fresh admission underway
+
+Actual91 release15:28:48UTC and central active:null/headcbeb independently joined.
+Exactfull1105920B native/tail85f9 restore/readback rehashed equal; wholefiles/
+rootCLI/raw0/callback0/route0/inputneutral/offlineidle/freeUSB/fullhandback and
+joinedactors retained. Wolf alltargetSTOPPED/old91tokeninvalid. Original host
+SIGTERM causeUNKNOWN/no candidate/comparison; original liveRAM not saved before
+ONE standing recovery, original SD collected after-reset pending validation.
+No later observation rewrites that limit. P4d9b/EMOSa25f/native5d657/startuped403/
+listener0566 retained, SDmounted.
+
+Mechcbeb R07 b212/486inputs all freshly rehashed unchanged. Extender sole fresh
+CLI/readEXIT/SAVE-only admission is underway under empty central registry/head
+reconciliation; no consumer target access until actual new grant, exact80fe
+EMOS-only install/full131072B independentreadback and stoppedsolehandback.
+No test/LOAD/RUN/getter/reset/P4/native/startup/listener change in this admission.
+Same367 IRQ-only finite case, no wake/baud/batching/profile migration or replay.
+Mechfirst/Wolfsecond, OryxDOWN. Earlier headings historical; registry governs.
+
 # Current — actual91 sole Wolf cleanup after host SIGTERM; target result unknown
 
 Owner update: original300s bound expired with no captured CLI; bounded passive
