@@ -42,10 +42,10 @@ not a new physical case or a claimed fix for receiver overrun.
 
 ## Implementation and validation
 
-NW-001 [ ] Commit this plan, create isolated source branch and preserve frozen
+NW-001 [x] Commit this plan, create isolated source branch and preserve frozen
 root SDK/diagnostic input identities.
 
-NW-002 [ ] Add the smallest opt-in header splice, comments and focused actual-C
+NW-002 [x] Add the smallest opt-in header splice, comments and focused actual-C
 checks. Verify source-release publication/client identity; source-before-return;
 real SOURCE/TAIL/IDLE/fault/error notifications; quiet/no-progress calls produce
 none; repeated retained fault produces none; failed CLOSE preserves association.
@@ -59,3 +59,11 @@ joined descendants, release compiler and immediately notify its successor.
 NW-004 [ ] Return exact source/package/member hashes and limits to MechAgon and
 UART. Do not change the frozen physical diagnostic or perform a bench run.
 Root owns any later consumer selection/freeze/qualification.
+
+## Prepared candidate
+
+The opt-in splice and actual-C notification controls are prepared in the isolated
+source branch. No compiler or target execution has occurred. Existing root SDK
+and frozen diagnostic remain unchanged. Native/host check runner requires an
+exact baseline header and explicit owner/core/toolchain paths, preserving all
+paired outputs and failing on changed default application bytes.
