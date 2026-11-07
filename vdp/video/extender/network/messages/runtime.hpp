@@ -2,6 +2,7 @@
 // Console copies bounded mailboxes under a short lock, never waits on socket IO.
 #pragma once
 #include "api.hpp"
+#include "accounting.hpp"
 #include "peer.hpp"
 #include "mailbox.hpp"
 #include <atomic>
@@ -15,6 +16,9 @@ class Runtime {
     std::atomic<bool> stopping_{false},lost_{true};
     std::atomic<TaskHandle_t> worker_{nullptr};
     Peer peer_;
+#if defined(AGON_EXTENDER_NM_ACCOUNTING)
+    std::uint64_t queuedAt_{}; // mailbox mutex owns this diagnostic stamp only
+#endif
     static uint32_t now(){return uint32_t(esp_timer_get_time()/1000);}
     static void entry(void*p){static_cast<Runtime*>(p)->run();}
     void run(){
@@ -24,18 +28,28 @@ class Runtime {
             portENTER_CRITICAL(&mutex_);
             const bool close=mailbox_.takeCloseRequest();
             mailbox_.beginWork(command,n,generation);
+#if defined(AGON_EXTENDER_NM_ACCOUNTING)
+            if(n)accounting::event(accounting::Metric::QueueWait,queuedAt_,n,accounting::Outcome::Ok,n);
+#endif
             portEXIT_CRITICAL(&mutex_);
             if(close){
                 peer_.stop(socket);
                 portENTER_CRITICAL(&mutex_);mailbox_.completeClose();portEXIT_CRITICAL(&mutex_);
             }
             if(n){
-                const auto length=peer_.request(command,n,reply,socket,now(),!lost_.load());
+                unsigned length;
+                {accounting::Scope measure(accounting::Metric::PeerRequest);
+                 length=peer_.request(command,n,reply,socket,now(),!lost_.load());
+                 measure.result(length,length?accounting::Outcome::Ok:accounting::Outcome::Rejected);}
                 portENTER_CRITICAL(&mutex_);
-                mailbox_.completeWork(generation,reply,length);
+                // Attempt, not proof of retained/delivered reply: CONNECT can
+                // replace this generation while work is in progress.
+                {accounting::Scope measure(accounting::Metric::WorkCompleteAttempt);
+                 mailbox_.completeWork(generation,reply,length);measure.result(length,accounting::Outcome::Ok,length);}
                 portEXIT_CRITICAL(&mutex_);
             }
-            peer_.tick(socket,now(),!lost_.load());
+            {accounting::Scope measure(accounting::Metric::PeerTick);
+             peer_.tick(socket,now(),!lost_.load());}
             const auto ticks=pdMS_TO_TICKS(2);vTaskDelay(ticks?ticks:1);
         }
         peer_.stop(socket);worker_.store(nullptr);vTaskDelete(nullptr);
@@ -56,14 +70,21 @@ public:
         portEXIT_CRITICAL(&mutex_);
     }
     bool submit(const uint8_t*p,unsigned n) noexcept {
+        accounting::Scope measure(accounting::Metric::Submit);
+        measure.result(0,accounting::Outcome::Rejected);
         if(!p||n<AGON_NET_HEADER||n>AGON_NET_BODY||!worker_.load()||stopping_.load())return false;
         portENTER_CRITICAL(&mutex_);
         const bool accept=mailbox_.submitUart(p,n);
+#if defined(AGON_EXTENDER_NM_ACCOUNTING)
+        if(accept)queuedAt_=accounting::nowUs();
+#endif
+        measure.result(accept?n:0,accept?accounting::Outcome::Ok:accounting::Outcome::Rejected,accept?n:0);
         portEXIT_CRITICAL(&mutex_);return accept;
     }
     unsigned take(uint8_t*out) noexcept {
+        accounting::Scope measure(accounting::Metric::TakeReply);
         portENTER_CRITICAL(&mutex_);
-        const auto n=mailbox_.takeUart(out);
+        const auto n=mailbox_.takeUart(out);measure.result(n);
         portEXIT_CRITICAL(&mutex_);return n;
     }
     // Console-owner-only netp hooks. These do not acquire pads or select a
@@ -76,6 +97,9 @@ public:
     MailboxResult submitParallel(uint32_t token,const uint8_t*p,unsigned n) noexcept {
         if(!worker_.load()||stopping_.load())return MailboxResult::fault;
         portENTER_CRITICAL(&mutex_);const auto r=mailbox_.submitParallel(token,p,n);
+#if defined(AGON_EXTENDER_NM_ACCOUNTING)
+        if(r==MailboxResult::ok)queuedAt_=accounting::nowUs();
+#endif
         portEXIT_CRITICAL(&mutex_);return r;
     }
     MailboxResult canSubmitParallel(uint32_t token) noexcept {

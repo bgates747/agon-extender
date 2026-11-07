@@ -19,6 +19,9 @@
 // failed-stop containment; browser input is arbitrated by the console owner.
 #include "extender/network/wired_network_service.hpp"
 #include "extender/diagnostics/frame_timing.hpp"
+#if defined(AGON_EXTENDER_NM_ACCOUNTING)
+#include "extender/network/messages/accounting.hpp"
+#endif
 #include "extender/diagnostics/video_timing.hpp"
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #include "extender/storage/sd_target.hpp"
@@ -257,6 +260,18 @@ void WiredNetworkService::reportLease() const noexcept {
            lease.mask.c_str(), lease.gateway.c_str(), lease.dns.c_str());
 }
 
+#if defined(AGON_EXTENDER_NM_ACCOUNTING)
+namespace {
+esp_err_t nmAccountingHandler(httpd_req_t *request) {
+  const auto body=messages::accounting::json();
+  if(body.empty())return httpd_resp_send_500(request);
+  httpd_resp_set_type(request,"application/json");
+  httpd_resp_set_hdr(request,"Cache-Control","no-store");
+  return httpd_resp_send(request,body.data(),body.size());
+}
+}
+#endif
+
 #if defined(AGON_EXTENDER_FRAME_TIMING)
 namespace {
 esp_err_t timingHandler(httpd_req_t *request) {
@@ -460,6 +475,13 @@ bool WiredNetworkService::startHttp() noexcept {
 
   httpd_uri_t codec{};codec.uri="/diagnostics/rle2";codec.method=HTTP_GET;codec.handler=&rle2bench::handler;
   if(httpd_register_uri_handler(server,&codec)!=ESP_OK){http_fault_=true;stopHttp();return false;}
+#if defined(AGON_EXTENDER_NM_ACCOUNTING)
+  httpd_uri_t nmAccounting{};nmAccounting.uri="/diagnostics/nm-accounting";
+  nmAccounting.method=HTTP_GET;nmAccounting.handler=&nmAccountingHandler;
+  if(httpd_register_uri_handler(server,&nmAccounting)!=ESP_OK){
+    http_fault_=true;stopHttp();increment(http_start_failures_);return false;
+  }
+#endif
 #if defined(AGON_EXTENDER_FRAME_TIMING)
   httpd_uri_t timing{};
   timing.uri = "/diagnostics/frame-timing";

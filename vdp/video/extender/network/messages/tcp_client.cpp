@@ -1,4 +1,5 @@
 #include "tcp_client.hpp"
+#include "accounting.hpp"
 #include <cerrno>
 #include <fcntl.h>
 #if defined(ESP_PLATFORM)
@@ -50,14 +51,16 @@ Connect TcpClient::pollConnect() noexcept {
     return state_;
 }
 IoResult TcpClient::read(std::uint8_t* data, std::size_t size) noexcept {
+    accounting::Scope measure(accounting::Metric::SocketRead);measure.result(0,accounting::Outcome::Error);
     if (state_ != Connect::Connected || !data || !size) return {IoState::Error};
     const auto n = ::recv(fd_, data, size, 0);
-    if (n > 0) return {IoState::Progress, static_cast<std::size_t>(n)};
-    if (!n) return {IoState::Closed};
-    if (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR) return {IoState::WouldBlock};
+    if (n > 0) {measure.result(n);return {IoState::Progress, static_cast<std::size_t>(n)};}
+    if (!n) {measure.result(0,accounting::Outcome::Closed);return {IoState::Closed};}
+    if (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR) {measure.result(0,accounting::Outcome::WouldBlock);return {IoState::WouldBlock};}
     error_ = errno; return {IoState::Error};
 }
 IoResult TcpClient::write(const std::uint8_t* data, std::size_t size) noexcept {
+    accounting::Scope measure(accounting::Metric::SocketWrite);measure.result(0,accounting::Outcome::Error);
     if (state_ != Connect::Connected || !data || !size) return {IoState::Error};
 #ifdef MSG_NOSIGNAL
     constexpr int flags = MSG_NOSIGNAL;
@@ -65,8 +68,8 @@ IoResult TcpClient::write(const std::uint8_t* data, std::size_t size) noexcept {
     constexpr int flags = 0; // lwIP has no Unix SIGPIPE delivery.
 #endif
     const auto n = ::send(fd_, data, size, flags);
-    if (n > 0) return {IoState::Progress, static_cast<std::size_t>(n)};
-    if (n < 0 && (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR)) return {IoState::WouldBlock};
+    if (n > 0) {measure.result(n);return {IoState::Progress, static_cast<std::size_t>(n)};}
+    if (n < 0 && (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR)) {measure.result(0,accounting::Outcome::WouldBlock);return {IoState::WouldBlock};}
     error_ = n < 0 ? errno : EIO; return {IoState::Error};
 }
 } // namespace agon::extender::network::messages

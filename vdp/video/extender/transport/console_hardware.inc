@@ -54,6 +54,7 @@ constexpr char kIdentity[]="legacy-devkit";
 #include "../input/usb_cli_keyboard.hpp"
 #include "../input/usb_key_queue.hpp"
 #include "../diagnostics/frame_timing.hpp"
+#include "../network/messages/accounting.hpp"
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
 #include "../input/remote_target.hpp"
 #endif
@@ -483,7 +484,10 @@ void runConsole(VDUStreamProcessor *processor) {
       if(event.type==UART_FIFO_OVF || event.type==UART_FRAME_ERR || event.type==UART_PARITY_ERR)
         s.fail("UART receive corruption");
     if(transmitting) {
-      auto result=uart_wait_tx_done(UART_NUM_1,0);
+      esp_err_t result;
+      {using namespace agon::extender::network::messages::accounting;
+       Scope measure(Metric::TxIdlePoll);result=uart_wait_tx_done(UART_NUM_1,0);
+       measure.result(0,result==ESP_OK?Outcome::Ok:result==ESP_ERR_TIMEOUT?Outcome::WouldBlock:Outcome::Error);}
       if(result==ESP_OK) {
         timing::Scope completed(timing::Phase::TxComplete);
         transmitting=false;
@@ -513,7 +517,11 @@ void runConsole(VDUStreamProcessor *processor) {
     if(s.count) {
       timing::Scope enqueue(timing::Phase::TxEnqueue, s.count);
       unsigned n=std::min<unsigned>(128,std::min<unsigned>(s.count,sizeof(s.output)-s.read_pos));
-      int sent=uart_tx_chars(UART_NUM_1,reinterpret_cast<const char *>(s.output+s.read_pos),n);
+      int sent;
+      {using namespace agon::extender::network::messages::accounting;
+       Scope measure(Metric::TxEnqueue);
+       sent=uart_tx_chars(UART_NUM_1,reinterpret_cast<const char *>(s.output+s.read_pos),n);
+       measure.result(sent>0?sent:0,sent<0?Outcome::Error:sent==0?Outcome::WouldBlock:Outcome::Ok,s.count);}
       if (sent > 0) enqueue.units(static_cast<std::uint32_t>(sent));
       if(sent<0)s.fail("TX enqueue");
       else if(sent) {s.read_pos=(s.read_pos+sent)%sizeof(s.output);s.count-=sent;transmitting=true;tx_at=now;}
