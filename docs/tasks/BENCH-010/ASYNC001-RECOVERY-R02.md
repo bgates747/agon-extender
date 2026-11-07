@@ -24,3 +24,13 @@ Private context/handoff/source freeze and receipts are in the request-local
 scheduler recovery directory. This is existing selected consumer cleanup and
 standing monitored-recovery scope, not a new diagnostic test or driver trial.
 State: prepared; no recovery result yet.
+
+## Standing fallback after actual first recovery failure
+
+The selected one Agon reset did not restore the input epoch/reason6; its child
+joined and recovery stopped without LOAD or replay. MechAgon confirms the initial
+P4 omission was its narrower plan, not a human prohibition, and publishes its
+RECOVERY-R02-FALLBACK. Apply Smith's standing initialized-current-P4 then ONE
+Agon fallback under the same sole74 custody. No flash, driver migration, second
+case or reset loop. Preserve RAM before LOAD, then the same cleanup/release. If
+this fallback fails, stop in truthful quarantine and report the concrete blocker.
