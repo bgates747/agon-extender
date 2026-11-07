@@ -60,3 +60,11 @@ P4/Agon fallback only if needed; no reset loop or test replay. Preserve64KiB at
 when applicable. Then bounded feature/raw/files/CLI cleanup and exact retained
 a25f fullROM rollback/readback precede release. All installation/source/result
 records remain preserved, including the original failed invocation.
+
+The first Agon-only recovery failed its60s admission check and joined. The
+selected paired recovery observed exactly one retained P4 build/pad release,
+but its early HTTP readiness request timed out before any paired Agon reset
+was issued. Preserve the original failure and issued ledger. A separate bounded
+read-only initialization continuation is selected; it must not reset P4 again.
+Only after current initialization proof may it issue the not-yet-issued paired
+Agon step once. No workload deadline or test invocation is changed.
