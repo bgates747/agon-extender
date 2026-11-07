@@ -1,3 +1,32 @@
+# Current — Wolf81 sole; compact Mech consumer prepared; P4 source checks pass
+
+Wolf81/456459d1283d remains sole finite operator, PID1287358/session48884.
+Extender ALL target access STOPPED; no early reader, reset, collection or flash.
+After actual81 exact restoration/clean release, compact Mech b043da4b8156 is
+READY: source4ef9b2b, kit15f46f18/162pins independently rehashed. New owner-only
+admission/selection/preflight in agents/bench-scheduler/mechagon-goal001-r02.
+Fresh actual grant then selected exact8de66 EMOS-only install/fullROM readback
+and stopped sole consumer handoff. Same-custody a25f rollback/fullcleanup/release;
+no old80 token, extra owner case, profiling or replay. Module data1896 is not
+physically qualified yet. Prior80 failed before networking, already restored.
+
+Default-OFF P4 message accounting isolated source a66f0563 committed/pushed on
+codex/net004-p4-nm-accounting-r01. Actual20 host steps PASS15.633s under native
+ASan/UBSan/leak checks, Runtime/Peer/socket reply equality, 200 concurrent recorder
+events and default-OFF Os/O2 socket object equivalence. Compiler339 released
+11:16:21.860057UTC, actual340 Wolf successor notified/steered. Earlier337 stopped
+on sandbox LeakSanitizer/ptrace setup limit, no source assertion; native339 used
+sanitizers unchanged. Reader reports inclusive non-additive elapsed time, notCPU.
+
+Source-only native OFF/ON link/fit pair is queued52321a29b5b4 behind Wolf340,
+NOT checked out or started. Plan docs/tasks/NET-004/P4-NM-ACCOUNTING-R01.md;
+private guard agents/net004/p4-nm-accounting-r01/native_pair.py and native-r01.
+One compiler/80C/512MiB,840s child/1800s whole, two unversioned no-deploy builds,
+no resetURL or device work. Retained IDF/tools reused via ignored local pointer.
+Need actual checkout/assert then launch and immediate release/next-owner alert
+when owned descendants join. No new P4 image installed, CPU/runtime claim or
+production promotion. Mechfirst/Wolfsecond; OryxDOWN. Earlier entries history.
+
 # Current — actual81 Wolf sole finite gap; source-only accounting checks queued
 
 Actual80 failed before transport_open: moduledata2052 refused/largest2036,

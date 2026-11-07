@@ -74,3 +74,33 @@ consumer chain. MechAgon's eZ80 headroom and reliable async work stay first.
 3. Reader path and exact event schema are routine implementation choices within
    this source-only tranche. Any protocol/default behavior change is out of
    scope and must be returned to the owning task rather than hidden in tracing.
+
+## Source checkpoint and native fit tranche
+
+1. Isolated source `a66f0563` adds the option and coherent HTTP reader; it is
+   based on installed UART source `e14e0b8a`, not the current development HEAD.
+   Twenty actual-source host steps pass with address, undefined-behavior and
+   leak sanitizers, enabled/OFF reply equality, 200 concurrent recorder events
+   and default-OFF socket object equality at Os/O2. The initial sandbox run
+   stopped on LeakSanitizer's ptrace limitation; native host execution passed
+   without disabling the sanitizer. No hardware diagnostic is installed.
+2. The next finite compiler tranche links two fresh native P4 images from that
+   same committed source, OFF then ON, with one compiler child at a time.
+   Preserve the UART carrier, PC board, current USB/controller selection and
+   reciprocal boot fence. Use retained pinned native IDF/tools/dependency lock;
+   private cache/tool pointers remain ignored local records. Do not install a
+   toolchain, flash, access the target or restart another owner's work.
+3. These are fit-only `UNVERSIONED-DO-NOT-DEPLOY` builds, no reset URL configured,
+   with fresh separate output paths and retained manifests/source snapshots.
+   An eventual deployable diagnostic requires an agreed artifact identity and
+   its separate matched hardware plan. No installed component or production
+   identity is inferred from these link outputs.
+4. Expected pair 10–20 minutes, whole bound 30 minutes; each native build bound
+   14 minutes. Record one-second thermal/memory/owned-process observations;
+   stop at 80 C, unreadable sensors or below 512 MiB available memory. Stop and
+   join only owned descendants, retain the first failure and release the Pi
+   slot before correction or extended analysis. No automatic unchanged retry.
+5. Native validation must join exact selected sources, compile definitions,
+   archive/ELF linkage and effective configuration. Compare text/data/BSS and
+   application size between these two builds only. Host evidence is not an
+   executed P4 counter/HTTP/transport or useful-CPU result.
