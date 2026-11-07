@@ -25,6 +25,18 @@ rehashed, seven invalid owner contexts refused (central mock), no target calls.
 Published owner plan docs/tasks/NET-004/EMOS-ASYNC-PHYSICAL-R01.md. Await consumer
 actual build/freeze/request, then bind private selection/context and normal fresh
 admission; no new approval round, no hardware entry while Wolf owns75.
+MechAgon b78d91e actual caller tests + paired native links PASS304/released;
+whole-app delta+1976text/+24BSS, no CPU/physical result. Request1b46642ee71b
+ASYNC-001-U1 PREPARING behind actual Wolf75; final immutable kit still pending.
+Request-local preparation agents/bench-scheduler/mechagon-async001-u1-r01 has
+owner-selection-r01.json15pins; install.py/handoff.py/check_install_policy.py
+are private current owner helpers. Nine invalid ownership/return cases refused
+with central mock, no hardware calls. Future owner-install/verify-candidate/ROM.bin
+and matching receipt supply actual emos_readback to consumer handoff; original
+grant incominga25f immutable, current context updates actualinstalled043a only
+after fullverify. Restore under same lease only after actual consumer stopped
+return; a25f fullreadback/fullcleanup/normalrelease. Finalize new owner pins once
+consumer kit arrives; no target call until Wolf actualrelease/fresh admission.
 Earlier checkpoints below are historical; preserve unrelated BENCH010 dirt.
 
 # Current — MechAgon74 sole operator; provisional UART1 integration selected

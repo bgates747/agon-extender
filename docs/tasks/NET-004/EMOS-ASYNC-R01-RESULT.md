@@ -74,6 +74,29 @@ transfer queue, buffer, callback engine or timeout loop is introduced.
    app probe supplies the current table. Every owned child joined and compiler slot released. One queued
    wrapper entry refused before compilation because it had no lease; no overlap.
 
+## MechAgon consumer link evidence
+
+MechAgon's separately checked caller reports these paired whole-application
+links at b78d91e using the checked r02 SDK; compiler304 passed its actual-caller
+lifetime/scheduler tests and both native links, then released. These scopes
+include the consumer and its existing receive/VDPlet chain, unlike the small
+owner probe above. The resident ROM cost remains separate.
+
+| Consumer bytes | Synchronous UART1 baseline | Application async UART1 | Added bytes |
+|---|---:|---:|---:|
+| Text |36274|38250|1976|
+| BSS |6165|6189|24|
+| Data |87|87|0|
+| Executable file |36361|38337|1976|
+
+Async executable SHA256
+`cf910bd7e15533067f5c1cd886af0b3874258acfc4da087c1923e1bd784bfb4b`;
+map `330608002abab39fc98efe1c7aef74f8fd9de159453f285b92510423392872cb`.
+No consumer hardware invocation, useful-CPU percentage or frame-rate result
+is established by these links. The new trial is preparing behind the current
+bench owner. [Owner installation plan](EMOS-ASYNC-PHYSICAL-R01.md) bounds its
+separate firmware change and rollback.
+
 ## Remaining physical boundary
 
 The P4 source's RTS stop threshold64/128B FIFO bounds the proposed16B burst with
