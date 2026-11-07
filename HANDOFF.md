@@ -1,3 +1,44 @@
+# Current — actual103 restored and cleanly released; no queued successor
+
+Actual103/ea4224a1673d clean release22:30:47.034970UTC; old token invalid,
+actual next request null. ALL Extender target access/readers/commands stopped.
+R10 failed before networking/session/decisions/frames: original serial shows
+11164B executable allocation succeeded and2420B data allocation returnedNULL,
+status6. This is no async reliability or performance result.
+
+Original64KiB RAM4e09e85d and matching1743B native status were preserved before
+any getter LOAD or firmware write. No recovery reset. Existing feature snapshot
+matched pre-run absence; ONE incoming a25f rollback/automaticboot and full
+independent131072B readback passed. Fresh rootCLI/cursor/rawmode0/callback0/
+Legacy0/wholefiles/inputneutral/offlineidle/freebothUSB/fullhandback passed.
+All original consumer handles and owner cleanup handles are terminal. Evidence:
+agents/bench-scheduler/mechagon-goal001-r10/actual103-clean-return.json and
+released.json/release-observation.json. Complete release mail and immediate
+steering returned to MechAgon before offline closeout. No replay or new case.
+P4d9b/native5d657/startuped403/listener0566 unchanged; SD remains mounted.
+Future consumer source/fit work is Mech-owned and requires a new qualified case
+and normal fresh admission. No current physical checkout or compiler is owned.
+
+HDMI visual qualification remains unfinished; current Nov6 P4 centers logical
+images in1280x720 without enlargement. No new HDMI change selected or made.
+Publication hold persists; no push. Earlier headers are historical.
+
+# Current — actual103 stopped R10; Extender preserving and restoring
+
+MechAgon returned actual103 with all original host actors/handles joined and
+normal native CLI/graphics cleanup. R10 stopped at module load before networking:
+result4, zero sessions/decisions/frames, reported largest2036B versus module
+resident data2420B; exact allocator return not retained. No async or timing claim.
+Extender accepted the matching stopped return and is sole operator/owner-restore.
+Original64KiB040000 RAM and raw status/state preservation precedes every getter
+LOAD/reset/firmware write. Original collection listener was explicitly online;
+cleanup uses EXIT and a SAVE-only batch, no reset or case replay. Existing
+feature snapshot then exact incoming a25f rollback/full131072B readback/fresh
+fullhandback/normalrelease remains. Current context and evidence under
+agents/bench-scheduler/mechagon-goal001-r10/. No new consumer grant or case.
+P4d9b/native5d657/startuped403/listener0566 preserved; SD remains mounted.
+HDMI visual qualification remains open; no HDMI change selected or made.
+
 # Current — actual103 R10 installed and handed to MechAgon; Extender stopped
 
 Actual103/ea4224a1673d now has sole operator MechAgon, phase consumer.
