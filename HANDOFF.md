@@ -1,3 +1,46 @@
+# Current — receive-protection isolation93 PASS/restored/released; MechR08 next
+
+Actual93/dd79 clean RELEASED16:32:10.658579UTC/oldtokeninvalid/allactorsSTOPPED.
+ONE exact quiet176records/fourpositivecloses/firsterror0/nativeSD+Pi+originalRAM
+PASS. Full47dadc install/readback,64KiB RAM beforeanylaterLOAD/no recoveryreset,
+17712immutablefixturebytes exact;81inputs/79snapshots retained. Exact incoming
+131072Ba25f rollback/fullreadback/fullfresh rootCLI/cursor/raw0/callback0/route0/
+wholefiles/inputneutral/offlineidle/worker0/freeUSB PASS. SDmounted/current
+P4d9b/EMOSa25f/native5d657/startuped403/listener0566. Source6cf7/APP47dadc/map e2e/
+SDK compatibility unchanged; result doc EMOS-ASYNC-RX-PROTECTION-R01-RESULT.md.
+Mech e419 R08 actualnext, sourceprep paths mechagon-goal001-r08; needs FINALkit,
+normal fresh grant/EMOS-only install/fullreadback/stoppedsolehandoff. No target
+contact now or old93token. Wolf793 READY behind Mech. QuietPASS notmixedUART0/
+longrun/OEcure; no extra test/baud/diag/PRT/render/default substitution. Mechfirst/
+Wolfsecond/OryxDOWN. Earlier headings historical; centralregistry governs.
+
+# Current — actual93 ONE owner isolation PASS observed; collection/rollback pending
+
+Sole Extender93/dd79 exact47dadc installed/full131072 readback PASS; fixture7ad4
+fullreadback/freshCLI/state verified. Original ONE RUN16:28:29UTC returned native
+PASS/actualCLI in12.843s host; peer passed176records/fourcloses,13.429s lifetime.
+All serial readers/peer joined, no error/reset/replay. Durable SD verification
+and64KiB040000 RAM BEFORE any laterLOAD collection is active. Then same93 exact
+a25f rollback/fullreadback/fullcleanup/normalrelease remains REQUIRED; do not
+claim released/available or mixed-UART0 safety. Context net004-u1rx-protect-r01.
+Mech e419 follows actualPASS/cleanrelease and own finalfreeze; Wolf793 behind.
+All peer target access stopped; no compiler/newcase/baud/PRT/diag/render axis.
+Earlier headings historical; central registry governs custody.
+
+# Current — actual93 sole Extender receive-protection isolation
+
+Fresh93/dd79a9b28686 granted after actual92 release and new actualCLI/readEXIT/
+SAVE-only raw0/callback0/route0/wholefiles/inputneutral/offlineidle/freeUSB. Exact
+81inputs594a55 unchanged. Context agents/bench-scheduler/net004-u1rx-protect-r01,
+soleoperatorlinux-extender/owner-install. Exact47dadc candidate and a25f rollback
+staging/fullGET comparison active. NO FLASH/RUN yet. Selected ONE quiet176-record/
+four-session isolation, not mixedUART0 safety/performance; firstunexpectedSTOP,
+original150s observation, RAMbeforeLOAD/durable results, exacta25f rollback/full
+readback/fullcleanup/normalrelease required. Mech e419 R08 awaits actualPASS and
+cleanrelease/finalfreeze; Wolf793 follows. No peer target access, extra test,
+old92token/replay/baud/diag/PRT/render substitution. Current incoming d9b/a25f/
+5d657/ed403/0566, SDmounted. Earlier headings historical; registry governs.
+
 # Current — checked receive-protection APP; finite owner isolation preparing
 
 Actual92 is cleanly released15:47:24UTC, old token invalid, all target access
