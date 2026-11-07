@@ -119,3 +119,11 @@ supersedes the original stop-on-capture-failure rule above:
    component verification. The control uses the already preserved full touched
    P4 span; no new regions are written. Restore exact incoming UART pair/tail
    and normal full handback irrespective of acquisition completeness.
+
+## Executed outcome
+
+[Result r01](PHYSICAL-R01-RESULT.md) records three qualified paired size sets,
+three retained invalid acquisitions, both capture-absence controls and the
+unresolved 4097-byte pair. Exact incoming firmware/touched tail and full normal
+state restored; generation 70 cleanly released at 2026-11-07T04:57:51UTC.
+No invocation remains authorized by this completed plan.

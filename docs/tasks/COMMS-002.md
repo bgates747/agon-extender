@@ -5,10 +5,14 @@ motivation, well ahead of the faster renderer as a side benefit. Determine where
 eight-bit parallel improves or worsens supported communication relative to
 UART1, and whether those changes improve the complete application workload.
 
-**State:** Smith selects the fresh [physical forward tranche](COMMS-002/PHYSICAL-R01.md) now; preparation and normal Wolf handback are active. Design published before coding; Smith then authorises the largest
-independent tranche on both tasks. Separate corpus/timer/measurement engine and
-collector pass sanitizer/source/CLI checks and an identified eZ80 link. Actual
-owner VDU/timer/receiver binding remains; no hardware benchmark or measured gain.
+**State:** The selected [physical forward tranche](COMMS-002/PHYSICAL-R01.md)
+completed with three qualified paired size sets and an unresolved 4097-byte
+capture. [Results](COMMS-002/PHYSICAL-R01-RESULT.md): parallel reaches 3.371×
+UART1 command-stream rate at 8192 bytes on the identical 360 MHz diagnostic
+pair; UART1 wins 256 bytes. Exact incoming 240 MHz UART pair restored and
+normal lease released. Broader corpus, reverse bulk, useful CPU headroom and
+application-matched performance remain. The independent new core/engine source
+tranche is host/native-link checked, not the live executable used for r01.
 **Owner:** Extender owns reusable transport benchmark and EMOS/P4 accommodations.
 Consumer-specific replays remain with their owners.
 **Design:** [Performance comparison r01](../testing/communications-performance-design.md).
@@ -76,9 +80,10 @@ donor; current networking providers alone are not the benchmark interface.
 
 ## Evidence limits and relationship to existing tasks
 
-1. No measured UART1-versus-parallel gain exists for this task. Prior upload,
-   repeated echo and MechAgon live results have their own payload/completion
-   scopes and cannot establish a general VDU stream speedup.
+1. The physical r01 result establishes a bounded forward VDU buffer-update
+   comparison on one matched diagnostic pair, with explicit capture failures.
+   Prior upload, echo, MechAgon and rendering results retain separate scopes;
+   none establishes a general current networking/application speedup.
 2. PARALLEL-001's selected Wolf endpoint remains unresolved. This independent
    transport performance task neither silently chooses that endpoint nor closes
    the goal. It can provide reusable owner evidence for later consumer choices.
@@ -92,4 +97,14 @@ CLI checks, the C++ ASan/UBSan corpus/timer/measurement-order suite, four
 independent corpus families and a2,988-byte identified eZ80 core/engine link.
 Synthetic arithmetic/model controls are source tests, not a physical speed
 measurement. The dedicated benchmark still needs live EMOS/P4/timer adapters
-and a finite matched hardware plan before invocation.
+for the wider corpus. Physical r01 instead reuses the exact retained ordinary
+VDU timing appliance and records its narrower live comparison separately.
+
+## Selected forward tranche outcome
+
+The [physical result](COMMS-002/PHYSICAL-R01-RESULT.md) supplies bounded r01
+evidence for C02-02 through C02-07. The wider checklist remains open: r01 does
+not implement every proposed corpus, reverse or useful CPU-progress adapter.
+The 4097-byte boundary is explicitly unqualified after incomplete captures;
+existing historical numbers are not substituted for it. No promotion or new
+parallel/Wolf endpoint choice is inferred.

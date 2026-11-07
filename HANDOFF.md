@@ -1,3 +1,23 @@
+# Current — forward performance complete; MechAgon71 stopped recovery
+
+COMMS002 physical70 is cleanly released with exact incoming UARTd9bcb/EMOSa25f
+and full touched P4span restored/readback equal; mainboardprofile8 unchanged.
+[Result](docs/tasks/COMMS-002/PHYSICAL-R01-RESULT.md): 8192B 81.139→24.069ms
+senderdrain (3.371× streamrate),4096B3.202×; UART wins256B. Identical diagnostic
+P4configured360MHz for both arms, current240MHz pair restored. Three invalid
+USB acquisitions retained;4097 unqualified, not transport corruption proof.
+No reversebulk/CPUheadroom/FPS/endurance/production claim. Analysis hashes and
+raw proof retained agents/comms-performance-r01. Wider COMMS001/002 remain open.
+
+Fresh actual71 granted/stopped handoff to MechAgon async001 after39pin/fresh
+CLI/state/file/idle proof. Its ONE native returned result4/4decisions/5views,
+UNLOAD0/actualCLI; collection then lost input admission (reason6). Root reports
+all actors stopped and delegates samelease cleanup to Extender. Follow bounded
+[BENCH010 recovery](docs/tasks/BENCH-010/ASYNC001-RECOVERY-R01.md), preserveRAM
+beforeLOAD, retain failure/normal-exit distinction, no replay/firmwarewrite.
+Wolf f60e5f0fed70 follows with newly qualified419inputkit; no grant while71active.
+Old checkpoints below are historical and cannot establish current custody.
+
 # Active selected run — COMMS002 forward performance
 
 Smith says takebench/runperformance now. Plan committed74124c70; fresh Extender

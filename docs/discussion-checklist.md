@@ -31,7 +31,8 @@ temporary agenda when all seven topics are covered.
    Wolf's separately selected `-Os` versus `-O2` comparison passes its matched
    cohort: mean draw36.79→32.44ms,11.84% less time; completed fixture27.84FPS,
    still below30Hz. [Result](../../Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/PHYSICAL69-RESULT.md).
-   Exact incoming image is restored; lease69 remains held for the Author’s review.
+   Exact incoming image is restored; lease69 was subsequently released for the
+   selected communications benchmark. Consult current custody before access.
 
 4. [ ] **ESP8266 and Console8.** Review the working connection utility and the
    temporary separate-UART P4 development adapter: available header pins,
@@ -78,3 +79,11 @@ Both designs were committed/pushed before implementation. The first independent
 source tranche now passes24 Python checks, separate C++ sanitizer suites and two
 stopped eZ80 engine links. See the linked task results; hardware adapters and
 physical qualification remain. No tests were run on Wolf's held bench.
+
+
+The selected forward performance tranche now has [physical results](tasks/COMMS-002/PHYSICAL-R01-RESULT.md):
+8192-byte parallel command-stream rate3.371×UART1,4096-byte3.202×; UART wins256.
+Same diagnostic360MHzP4 for botharms, current240MHzUARTpair restored.4097 remains
+unqualified after USB acquisition loss. This is a communication result separate
+from gameFPS, CPUheadroom and COMMS001 accuracy/endurance. Discuss the scope and
+remaining application-matched/reliability work; no agenda checkbox closes yet.
