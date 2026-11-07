@@ -1,3 +1,9 @@
+# Current — optional UART0 witness source checked; physical105 sole Wolf
+
+G01-U0-001 source/native preparation complete, uninstalled: clean EMOS03e05c2/SDKd6be7212; identified r05-b2026-11-07-23-38-00Z fullROM3bb38d6c. OFF exactc1047; ON+309ROM/+3BSS,36apprecord,26ROMfree. All mandatory native guards,790 record/256 added handler cases,13 actual-C lifetime/span and default notify/core/emitter identity/negative controls pass. Local artifacts under agents/net004/uart0-rx-witness-r01/{RESULT.md,checked-result.json,package-r01,uart0-rx-witness-r01.zip}; tracked NET-004 result details exact scopes/stack/cost/lifetimes. No new physical case/install, no missing-reply/U1cause claim. Prior P4coredump producing metadata unknown; no fresh acquisition. Compiler496 released/allchildrenjoined, successor497 steered. Publication hold persists.
+
+Physical actual105/47bae is solely Wolf's separate direct-human corrected full-game profiling case; exact frozen345pin/a0a6aa96 kit, both foreground host closures and fresh current CLI/rawmode0/callback0/Legacy0/files/inputneutral/offlineidle/freeUSB passed before normal freshgrant. Context/grant/stoppedhandoff/mandatoryargv and actual actor return under agents/bench-scheduler/wolf-profile001-hardware02. Wolf controller1628081/session21627, observer1628431/session85973/tracer1628439 and positive samelease/PID attach are owner-reported; no Extender target polling or concurrent command. Wolf retains fullrestore/readback/currentmatchedbootstrap/fullhandback/normalrelease. Next prepared Agon6502 local-filesystem request8edf waits actual105 release and its own exact source/ABI/freshadmission; source-only context returned. SDmounted. No Mech successor case selected. HDMI scaling work remains unselected and visual qualification unfinished. Earlier handoff content is historical.
+
 # Current — actual104 restored and cleanly released; no next request
 
 Actual104/032e450a86b5 released23:10:15.498530UTC; old token invalid,
