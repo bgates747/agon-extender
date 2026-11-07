@@ -1,3 +1,51 @@
+# Current — actual98 sole Mech R09; Extender target access stopped
+
+Actual97 Wolf cleanrelease18:14:46UTC/full85f9 restoration/readback/cleanup and
+all original+cleanup actors terminal verified. Fresh98/8579 granted after all
+1526 frozen4640035f inputs and owner artifacts matched, new actual CLI/readEXIT/
+SAVE-only raw0/callback0/route0/wholefiles/inputneutral/offlineidle/freeUSB PASS.
+Exact47dadc/a25f stage/fullGET comparisons, ONE47dadc FLASH/exactautomaticboot,
+full131072 independent ROM readback/fresh full CLI/state/files/idle PASS.
+Context mechagon-goal001-r09 now operator=mechagon/phaseconsumer; matching stopped
+sole handoff/readback receipt and actual frozen precontact(stage) PASS. Durable
+handoff+immediate steering accepted. ALL Extender targetaccess STOPPED/readers
+joined/no pending; no independent HTTP/serial/SD/reset/flash/PRT or compiler
+launch during this consumer tranche. Wait actual joined/stopped return, then
+sole same98 exacta25f rollback/fullreadback/fullcleanup/normalrelease.
+
+ONLY ONE frozen B1a5f/normalfa4a/startup412+heartbeat405 UART1overlap/WAIT1/30TPS
+33333us Walls/outline90native150CLI180host/fulltrace. All PROFILE/PROBE/RXDIAG/
+RENDERPROFILE0/disposablePRTfalse; no PRT/calibration/runtime timer/optimized
+renderer/baud/P4/accounting/replay/defaultchange. Installed47dadc provisional;
+incominga25f retained. P4d9b/native5d657/startuped403/listener0566/SDmounted.
+Mechfirst. Oryx manager now reports ONLINE; normal policies still apply, no
+emulator selected. P4 connectfailure source-only WIP/check preparation can
+continue, but no compilation alongside Mech. Earlierheadings historical;
+centralregistry/context govern actual custody.
+
+# Current — actual97 clean release; R09 fresh admission active
+
+Wolf97 released18:14:46.382280UTC after original host missing-bootstrap pin
+failure BEFORE any room/INFO/module selection. Original cohort unmodified/no
+performance samples. Cleanup-only four unchanged95-matched source/config pins,
+exact full1105920B85f9 restore FIRST/fullreadback, ONE current matched bootstrap,
+fresh CLI/raw0/callback0/route0/wholefiles/inputneutral/offlineidle/freeUSB PASS.
+Original controller1/observer0+tracer joined, cleanup0/all actors terminal; old97
+token invalid/SDmounted. Evidence PERF023/hardware01/released.json and cleanup97.
+
+Primary Mech8579 R09 final347413B4640035f kit/ALL1526 frozen inputs independently
+match, owner47dadc/a25f retained source/binaries match, actual97 full85f9 readback
+verified. Normal fresh ownCLI/readEXIT/SAVE-only state/files admission active in
+mechagon-goal001-r09; no consumer target access. Need new central grant, sole
+47dadc EMOS-only staging/oneFLASH/automaticboot/full131072 independentreadback
+and fresh full CLI/idle before stopped sole handoff. One frozen B1a5f/normalfa4a
+UART1 overlap/WAIT1/startup412+heartbeat405, PROFILE/PROBE/RXDIAG/RENDERPROFILE0,
+no PRT/calibration/runtime timer. Exact samelease a25f rollback/readback/full
+cleanup/release after actual consumer joined/stopped return. No P4/native/
+startup/listener write/reset/replay. Mechfirst/OryxDOWN. P4 firstconnectfailure
+source WIP isolated/uncompiled; cannot delay R09. Earlier headings historical;
+centralregistry/context govern actual custody.
+
 # Current — actual97 sole Wolf023; connect-failure source preparation selected
 
 Fresh97/098fa3fae20d after actual96 cleanrelease/currenttuple/newactualCLI/
