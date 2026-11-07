@@ -244,3 +244,54 @@ The ordinary installed P4 and production selection remain unchanged.
    separately frozen matched workload, reader schedule, positive retirement and
    exact installation/rollback remain prerequisites to hardware measurement.
    This artifact adds no test or firmware substitution to L0/L1 headroom work.
+
+## Connect-fault source finding and selected bounded extension
+
+The installed UART source and identified accounting build do not export the
+socket cause behind CONNECT_FAILED. The private TcpClient error member survives
+close until a later valid start, but no supported reader consumes it. The wire
+header's diagnostic comment is not an implemented errno export. Accounting can
+count a correctly framed FAULT reply as a successful peer request; its socket
+read/write rows do not cover connection establishment.
+
+1. Exact installed source `e14e0b8a` and accounting source `ae7504c0` have identical
+   peer/header/wire logic and unchanged TCP start/poll/close failure mapping.
+   Initial link/port/channel/start rejection and asynchronous socket failures
+   collapse to payload CONNECT_FAILED2. Local1500ms timeout is a separate3;
+   link loss and idle expiry have separate5/6 codes. Explicit stop retires the
+   owner without a cancellation payload. Actual96's accepted POLL/FAULT2 proves
+   none of the underlying errno, endpoint or physical causes.
+2. Existing GOAL owner delegation selects a source/build-only extension after
+   this finding. Preserve identified7a219 and its package unchanged. Use a new
+   isolated source branch from committed ae7504c0; do not edit frozen source,
+   active Wolf inputs or current installed firmware. Wolf97 and first-priority
+   Mech consumer admission/cleanup remain independent and take precedence.
+3. Reuse the existing default-OFF recorder, lock, fixed coherent snapshot and
+   read-only HTTP reader. Retain one first unsuccessful connect attempt for the
+   boot, with attempt/token/query binding, admitted IPv4/port, origin, actual
+   operation result, immediately saved errno or SO_ERROR with validity, local
+   attempt/event timestamps and cancellation distinction. Preserve it through
+   later attempts, owner cleanup and HTTP reads; no remote clear/reset operation.
+4. Record at existing failure edges before close or subsequent calls can change
+   errno. Separate start/socket/fcntl/immediate connect, poll/SO_ERROR, local
+   deadline, admission and cancellation paths. An absent errno is explicitly
+   invalid, never zero-as-success or a stale member. Consume no additional
+   SO_ERROR, socket, UART or hardware observations. A cancellation record is not
+   a new NM fault code or proof that a packet was lost.
+5. Keep normal queue/lifecycle/framing/status/deadline/retry/ownership behavior
+   and default-OFF socket code equivalent. No per-byte logging, ring, global
+   CPU accounting, new EMOS ABI or protocol checksum. Report actual fixed state,
+   symbols, image/section/map costs after linking, without a fit assumption.
+6. Through normal finite compiler FIFO, exercise actual source start/poll and
+   EINPROGRESS/SO_ERROR/error/timeout/cancel paths, first-record retention and
+   OFF equivalence with an unchanged control. Reuse unaffected prior checks;
+   retain informative negative controls. Then one fresh identified ON build
+   with the same private reset configuration, current toolchain and previous
+   two-worker/840s-child/1200s-whole/80C/512MiB/join-release guards. No native
+   build may occupy or delay a required primary physical handoff.
+7. Freeze the exact artifact, source/reader/config/map/validation and touched
+   rollback spans for a later separately selected matched case. This selection
+   authorizes no install, target read, benchmark, new reservation, replay,
+   production change or attribution of actual96's cause. Existing counters stay
+   inclusive non-additive wall time; the new record is a failure witness, not CPU
+   utilization or complete wire timing.

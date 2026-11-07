@@ -1,3 +1,28 @@
+# Current — actual97 sole Wolf023; connect-failure source preparation selected
+
+Fresh97/098fa3fae20d after actual96 cleanrelease/currenttuple/newactualCLI/
+readEXIT/SAVE-only raw0/callback0/route0/wholefiles/inputneutral/offlineidle/
+freeUSB. All664 frozen1b4d2dd9 inputs/both actualinterpreterclosures/exact85f9
+rollback checked. Context wolf-perf023-r01/grant/stoppedsolehandoff and mandatory
+controller+observer argv delivered. ALL Extender targetaccessSTOPPED/no pending/
+readers. Owner reports controller1475693/start33329089/session95282 and observer
+1476074/start33331009/session87174/tracer1476076, positiveattach1794074340.438
+BEFOREdeviceIO; both originalforegroundhandles live. No independentprocess
+probe/resultclaim. Only fouruncappedABBA600poses/fiveINFO/4200incl45handshake/
+360cleanup/300guest/>660dispatch, exact7593/full85f9restore/readback/fullhandback/
+both originalhandles+tracerjoined/normalrelease. No HOLD/replay/newaxis.
+Current incomingd9b/a25f/5d657/ed403/0566/SDmounted, old96invalid. Mechfirstgap
+explicitlyallowedwhileconsumerpreparessource, no primaryREADYcasepreempted.
+
+ExistingGOAL source selection: minimal defaultOFF firstTCPconnectfailure in
+existing accounting recorder/reader, errno+origin/rc/endpoint/attempt/timestamps/
+validity/retention, sourcecontrols+identifiedbuild only. Precodeplan in tracked
+P4-NM-ACCOUNTING-R01.md. Existing7a219/3f067 immutable/uninstalled; newisolated
+branchfromae7504 required, no currentROM/default/wireABI/targetcase. Source
+finding returned toMech: privateerror_ notexported, FAULTreply maycount asOk,
+noexistingconnectcause reader. No96cause/cure/CPUclaim. Preserveactual96rawRAM
+androllbackproof. Earlierheadingshistorical; centralregistry/contextgovern.
+
 # Current — actual96 restored/released; Wolf023 PREPARING, no target access
 
 Actual96/2d99072a33d5 clean RELEASED17:47:58.935962UTC/oldtokeninvalid/all
