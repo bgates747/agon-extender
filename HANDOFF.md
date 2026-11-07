@@ -1,3 +1,20 @@
+# Active selected run — COMMS002 forward performance
+
+Smith says takebench/runperformance now. Plan committed74124c70; fresh Extender
+requeste832a8526835/generation70 after actualWolf69 release. Exact retained
+ordinaryVDU pair and timing MOSlet selected;15 host checks/artifact rehash PASS,
+compiler286 released. EMOSboot/P4selectivewrite+independentreadback/input+CLI
+pass; fullROMverify ongoing in private prepare_pair.py session53873. NO test
+RUN yet at this checkpoint. Both arms use retained P4configured360MHz, unlike
+currentUART240MHz. CurrentnetworkP4 has ExExt disabled, so matched diagnostic
+pair is needed. Eightinvocations/48rawrows/full8192byteproof each, noCRCsoak.
+Private source/operations/evidence agents/comms-performance-r01, ignored
+HARDWARE.local.md current header. Exact1830912B incomingP4restore6f68edfe
+includes only65536B newlypreserved unresolvedtail beyond known1765376B.
+Restore incomingd9bcb/a25f+extraP4tail, leave mainboard5d657/profile8/startup
+ed403/normal listener0566 unchanged; fullcleanup/normalrelease. No peer target
+access until actual release. Earlier custody/source checkpoints historical.
+
 # Current work — separate communications appliances
 
 Smith authorises commit/push then the largest independent tranche on COMMS-001

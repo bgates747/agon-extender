@@ -18,7 +18,9 @@ appliance, network-message tests, game rendering and historical measurements.
 2. P4 source `dddc10a2a31d993af577be436b5d14f6aee9de15`, identified
    `port-008-stream-r19-b2026-11-02-13-28-51Z`, application SHA256
    `102014003d771e1c917782e281bdde607da4632d7b255e0c2ba8285bd8c0fd45`,
-   supplies both ExCom UART1 and ExExt format4 ordinary VDU paths, on P4-PC.
+   supplies both ExCom UART1 and ExExt format4 ordinary VDU paths, on P4-PC,
+   at its retained configured360MHz (current network build is240MHz). Both
+   arms share360MHz; this is not a current240MHz application comparison.
    The current network UART composition has ExExt disabled and is not silently
    treated as this matched pair. Both measured arms use this same diagnostic
    renderer/configuration; results do not qualify the current network carrier.

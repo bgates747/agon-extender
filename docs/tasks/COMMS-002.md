@@ -38,14 +38,14 @@ Consumer-specific replays remain with their owners.
 | C02-D01 | Selected by Smith | Separate performance test; faster MOS↔VDP communication is the primary project objective, faster renderer a secondary benefit |
 | C02-D02 | Selected by Smith | Separate but complementary to accuracy/endurance testing; no conflation of their runs or conclusions |
 | C02-D03 | Proposed | Matched UART1 baseline and parallel arms, same P4 renderer and command/data corpus, local sink and actual VDU streams before application replay |
-| C02-D04 | Unresolved source binding | Identify actual supported VDU/data paths, exact pair or transport-only composition delta and receiver completion contract |
-| C02-D05 | Unresolved measurement binding | Select qualified timer/batch sizes and supported eZ80 occupation/progress instrumentation without mistaking elapsed time for CPU cost |
+| C02-D04 | Selected physical r01 | Reuse exact optimized timing EMOS and ordinary VDU P4 pair with ExCom/ExExt selection; both arms share one renderer/build. Current networking composition is not the ordinary VDU benchmark |
+| C02-D05 | Forward timer selected; CPU scope deferred | Retained PRT1 /256, nominal72000counts/s and bounded saturation checks; configured360MHz P4 shared by both arms. No CPU-headroom measurement in r01 |
 
-Next decision C02-D04: prefer a single matched firmware pair with explicit
-carrier selection. If current owners require separate compositions, retain
-their exact minimal delta and compare the supported paths openly. This affects
-installation/restoration, scheduling, API boundaries and interpretation; no
-new numeric ABI or dual-provider build is assumed by this task.
+The selected forward r01 uses one retained matched pair with explicit carrier
+selection and complete receiver-byte verification outside timing. Its P4 runs
+at configured360MHz; current network/application firmware runs240MHz and is
+restored after acquisition. Reverse bulk, the broader corpus and useful CPU
+progress remain separate future bindings; r01 does not invent those results.
 
 [Offline r01](COMMS-002/OFFLINE-R01.md) defines the independent source/check
 tranche. The existing EMOS-owned ExCom/ExExt VDU stream is the relevant source
