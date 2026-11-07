@@ -1,4 +1,4 @@
-# Current — actual89 sole Wolf019; Mech diagnostic source preparation
+# Current — actual89 sole Wolf cleanup; Mech source-only wait contract
 
 Actual88 normal507-frame R05 evidence/profile retained; exactincominga25f
 full131072B rollback/readback/fresh CLI/cursor/state/wholefiles/input/idle/freeUSB
@@ -10,9 +10,22 @@ rawmode0/callback0/route0/wholefiles/input/idle proof. SoleWolf controllerPID141
 session76691 launchedONCE. Context agents/bench-scheduler/wolf-perf019-r01;
 stopped-operator-handoff.json and mandatory-launch.json. Extender ALL target
 accessSTOPPED/no pending/readers. No concurrent HTTP/serial/SD/reset/recovery.
-Only frozen six uncapped original/chains/trig/trig/chains/original600-pose rooms/
-sevenINFO/4200absolute360cleanup660admission, existing7593app-only/exactfull85f9
-restore/readback/fullcleanup/normalrelease. Await actual handback; no oldtoken.
+Original89 controller exited1 during native7593 post-flash boot admission, BEFORE
+entryINFO/module selection/roomLOAD/RUN; zero room cases, cause UNKNOWN. Wolf
+retains sole89 for cleanup only: exact incoming85f9 native/tail restore/readback
+FIRST, then selected matched bootstrap/fullhandback/normalrelease. Original549
+pins, reset/P4 logs and immutable failure retained. No replay/suite restart.
+Source disposition returned; Extender remains completely target-stopped. Await
+actual joined clean release; no second operator or assumed availability.
+
+Mech next observed IRQ request21e59f934f2e remains PREPARING, no final kit or
+admission. Source-only lost-wakeup consultation returned: existing guard_leave
+EI/RET cannot bridge to later HALT; one native bounded DI/check/EI-HALT helper
+requires IFF-enabled admission, complete producer coverage and normal callback
+lifetimes. Current private U1 source/service has no generic app wake callback.
+No code/build/test or frozen R06 change. Evidence/manual/source hashes and sent/
+accepted steering receipts under install-preparation-r01/lost-wake-*; this is
+a proposed contract, not an existing EMOS API or measured cause/cure.
 
 Mech next observed IRQ arm is SOURCE preparation only. Request-independent80fe/
 a25f install/admission templates under agents/net004/uart1-rx-diag-r01/install-
