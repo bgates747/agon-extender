@@ -1,6 +1,6 @@
 # Current — Wolf77 sole manual LOAD-only preparation; Extender target-stopped
 
-Normalfresh77/8fd506cf5fbe lease b0b9fc25fe0c44ff95a3db3a035ce712 granted after
+Normalfresh77/8fd506cf5fbe granted after
 actual76cleanrelease/freshCLIrawfilesidle checks.163input kit5f77/exactlauncher
 matched. Context agents/bench-scheduler/wolf-perf011-manual01/context.json and
 actualstopped-operator-handoff.json; accepted immediate steering delivered.
