@@ -1,3 +1,16 @@
+# Current — actual92 R07 host reset; Mech original observation still sole
+
+Owner reports ONE nativeRUN15:37:20UTC/1794065840.46729 after stage/pregetter/
+corrected stale-result clear and module11040text/1896data LOAD passed. Hostsession
+960356757 sent3scenes/2intents then ConnectionResetError104. This is a hostTCP
+observation; UART/P4/nativecause UNKNOWN, no fresh nativeRAM/status/IRQ record.
+Original150s CLI observation/session24802 still active when reported, no CLI.
+No custody handoff yet. Mech remains SOLE92; Extender ALLtargetaccessSTOPPED,
+no device poll/reader/SD/getter/LOAD/reset/replay or compiler. Wait actual joined
+stoppedreturn/context exchange for supported originalRAM/status-beforeLOAD and
+same92exacta25f rollback/readback/fullcleanup/release. Frozen486b212/367/80fe
+unchanged; no newcase/wake/baud/batch/profile arm. Earlier headings historical.
+
 # Current — actual92 sole MechR07 IRQ diagnostic; Extender target-stopped
 
 Fresh92/cbeb5e59f289 granted after actual91 cleanrelease/currenttuple/full85f9
