@@ -153,8 +153,9 @@ interval; no latency/throughput improvement or76 cure is assumed.
    not exercise C3 blocked CTS physically; linked/source checks remain explicit.
 4. Record entry mode, conditionally select mode20, settle at least one second,
    restore entry mode and visible cursor/CLI. Escape is checked between bounded
-   calls. Native case ceiling14400 nominal120Hz MOS counts; independent loop
-   fuses and peer's150-second original envelope stop missing progress. Startup
+   calls. Native record-dispatch limit14400 nominal120Hz MOS counts; bounded in-flight
+   request/close, SD and mode restoration stay within the unchanged150-second
+   original host/peer envelope. Independent loop fuses stop missing progress. Startup
    is untouched; one explicit LOAD/RUN only, no automatic restart on reset.
 5. The Pi runner stages and verifies one new identified app and peer, installs
    and independently reads back the exact combined candidate ROM only, retains
@@ -228,3 +229,14 @@ Actual C close-state output joins the validator contract; host-only CLI negative
 controls reject a delayed preceding prompt. Ordinary setup text/query tails are
 not externally timed: the case excludes issued UART0/RFC25 work while NM is
 active, not a proven global UART0 electrical-quiescence interval.
+
+
+The SD elapsed counter is not a speed-pass threshold: it includes completed
+session logging/positive close before final mode restoration. The native
+14400-count guard stops subsequent record work; in-flight cleanup remains
+bounded separately under the original150-second host/peer deadline. Collection
+validates the24-bit counter shape and host/native/peer completion, without
+incorrectly rejecting good data because cleanup extended past dispatch cutoff.
+The host runner records native dispatch epoch and observed duration (including
+command delivery/terminal observation), separately from the Pi peer duration.
+No timeout or physical execution was changed by this clarification.

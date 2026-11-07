@@ -37,7 +37,7 @@ class RxControl(unittest.TestCase):
   text+='\n'+m.BUILD_ID+' result=PASS first_error=0 records=176/176 opened=4/4 closed=4/4 release=0 restore=1 elapsed_ticks=500 tick_hz_nominal=120 carrier=uart1-async irq_complete=0\n'
   m.validate_durable_result(text)
   for bad in (text.replace('closed=4/4','closed=3/4'),text.replace('source_phase=4','source_phase=3'),text.replace('source_phase=4','source_phase=0'),
-              text.replace('elapsed_ticks=500','elapsed_ticks=14400'),text.replace('restore=1','restore=0'),
+              text.replace('elapsed_ticks=500','elapsed_ticks=16777216'),text.replace('restore=1','restore=0'),
               text.replace('records=176/176','records=175/176'),text+'extra\n'):
    with self.assertRaises(RuntimeError):m.validate_durable_result(bad)
  def test_load_boundary_requires_prior_prompt(self):

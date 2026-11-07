@@ -107,7 +107,7 @@ def validate_durable_result(text, case='async-rx'):
                 release='0',restore='1',tick_hz_nominal='120',carrier='uart1-async',irq_complete='0')
     if any(fields.get(key)!=value for key,value in wanted.items()):
         raise RuntimeError('Native exact-byte/close/mode matrix incomplete')
-    if not 0<=int(fields['elapsed_ticks'])<14400:raise RuntimeError('Native case bound')
+    if not 0<=int(fields['elapsed_ticks'])<(1<<24):raise RuntimeError('Invalid native clock')
     return fields
 
 
@@ -172,6 +172,7 @@ def run(context_path, prepared_path, output):
     peer = None
     requested = invoked = cli = passed = False
     failure = None
+    began = ended = dispatch_utc = None
 
     def wait(predicate, deadline, label):
         while not predicate():
@@ -230,12 +231,14 @@ def run(context_path, prepared_path, output):
                     own()
                     requested = True
                     began = time.monotonic()
+                    dispatch_utc = time.time()
                     mark = len(raw)
                     line('run-once', 'RUN . ' + ip + ':' + str(port) + ' ' + prepared['result_remote'])
                     invoked = True
                     wait(lambda: (b'Async UART1 probe PASS' in raw[mark:] or
                                   b'Async UART1 probe FAIL' in raw[mark:] or b'Close refused' in raw[mark:])
                                   and prompt(raw[mark:]), began + 150, 'Native terminal CLI')
+                    ended = time.monotonic()
                     cli = True
                     passed = b'Async UART1 probe PASS' in raw[mark:] and b'Async UART1 probe FAIL' not in raw[mark:]
                     peer.wait(timeout=10)
@@ -262,7 +265,9 @@ def run(context_path, prepared_path, output):
             except subprocess.TimeoutExpired:
                 peer.kill()
                 peer.wait(timeout=3)
-        save(output / 'actors.json', dict(epoch=time.time(), run_requested=requested, run_delivery_returned=invoked, native_invoked_once=invoked,
+        save(output / 'actors.json', dict(epoch=time.time(), native_dispatch_epoch=dispatch_utc,
+            native_observed_seconds=None if began is None else (ended if ended is not None else time.monotonic())-began,
+            clock='host monotonic; includes command delivery/terminal observation, not exclusive CPU', run_requested=requested, run_delivery_returned=invoked, native_invoked_once=invoked,
             actual_native_cli=cli, serial_readers_joined=all(not thread.is_alive() for thread in threads),
             peer_joined=peer is None or peer.poll() is not None, passed=passed, error=failure,
             collection_pending=True, full_handback_pending=True,

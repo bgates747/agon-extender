@@ -1,3 +1,30 @@
+# Current — Wolf78 sole finite gap; async isolation is next
+
+Actual78 belongs solely to Wolf. Its original finite sprite comparison is
+running under PID1267735/session91445; cases01–04 passed and05 was active at
+10:18UTC. No Extender target access while Wolf owns78. Context/handoff:
+agents/bench-scheduler/wolf-perf013-r01. Wait for actual clean restoration and
+release, then obtain a new normal grant; no78 token reuse or idle inference.
+
+Owner84aff9223ed6 four-session/176-record isolation is next. Final candidate
+source954e3c5/fullROM8de66/map6c25, raw130497/free575, is uninstalled. It includes
+C1 scoped RX STOP hold, C2 post-RX ownership recheck and C3 bounded UART0 CTS
+retry plus atomic complete owned/pending/IER/TEMT observation preserving IFF/BC.
+Previous d431/r03 is WITHDRAWN, source baseline only. Compiler327 passed actual
+native checks;328 passed fixture composition/DETACHED4/CLI-boundary negatives.
+Private phase scripts: agents/net004/uart1-rx-r01/physical-r01. Finish exact
+source-pins/offline-preflight before admission; candidate stage/flash/fullROM
+readback, ONE explicit netasync case, RAM-before-LOAD/result collection, exact
+incominga25f rollback/fullROM readback/fullcleanup/release. No P4/native/startup
+or listener write, replay, cancellation invention,76 cause or speed claim.
+
+Mech339610ada316 is READY only after isolation PASS, kitd39e185b/160inputs,
+source3d28885. ONE finite unprofiled30TPS consumer then same-lease ownera25f
+rollback; normal fresh grant and exact installed-ROM stopped handoff required.
+Separate nonblocking P4 source-accounting consultation remains; do not delay
+isolation/consumer or add firmware profiling now. Oryx DOWN, normal Pi FIFO;
+Mech first/Wolf second. Earlier checkpoints are historical, not current custody.
+
 # Current — Wolf77 sole uncapped-visible preparation, human RUN only
 
 New directSmith steering selects fastest visible result, not prior30Hz cap.
