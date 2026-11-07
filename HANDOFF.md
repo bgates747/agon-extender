@@ -1,5 +1,14 @@
 # Current — actual91 sole Wolf cleanup after host SIGTERM; target result unknown
 
+Owner update: original300s bound expired with no captured CLI; bounded passive
+capture returned0bytes, not target completion. No Escape/listener/SAVE was sent,
+and no original live RAM was saved. Wolf selects ONE standing ordinary Agon
+recovery after setup-only startup/reset-ledger checks; no recovery-specific pulse
+was previously attempted. Extender does NOT issue it or add an operator. Original
+guest extent325309B at040000..08F6BD is retained as source identity; any RAM after
+reset is post-reset, original SD collection must be labelled after-reset. Exact
+85f9 restore/readback/fullhandback/release still pending; R07 must keep waiting.
+
 Original Wolf021 PID1425962/session35512 exited1 on SIGTERM15 at1794064613.198
 (493.728s from launch). Native7593 install/bootstrap and entryINFO passed. First
 original control RUN issuedONCE1794064583.4257736; original keyboard journal is
