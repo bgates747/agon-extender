@@ -34,3 +34,11 @@ RECOVERY-R02-FALLBACK. Apply Smith's standing initialized-current-P4 then ONE
 Agon fallback under the same sole74 custody. No flash, driver migration, second
 case or reset loop. Preserve RAM before LOAD, then the same cleanup/release. If
 this fallback fails, stop in truthful quarantine and report the concrete blocker.
+
+The paired helper captured the exact current P4 build/pad-release marker, then
+its first HTTP initialization observation timed out before issuing the Agon
+reset. Preserve that failure; do not reset P4 again. Complete only the existing
+interrupted sequence: bounded read-only current display readiness, then its
+not-yet-issued ONE Agon reset and actual CLI/RAM preservation. Failure to
+establish current initialization stops before another pulse. No repeated test
+or transfer follows this host-observation correction.
