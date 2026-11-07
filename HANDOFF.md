@@ -1,3 +1,25 @@
+# Current — actual76 MechAgon sole provisional UART1 consumer
+
+Actual Wolf75 cleanrelease independently verified. New76/1b46642ee71b fresh CLI/
+SAVE-only admission passed. Extender staged/fullcompared both131072B ROMs, one
+candidateFLASH observed exactnewboot; independent fullROM SAVE/GET SHA043a
+matched. New rawmode0/callback0/Legacy0/wholefiles/CLI/inputneutral/offlineidle/
+worker0/freebothUSB pass. Actual stopped handoff + durablemail/acceptedsteering
+delivered; context now Mechoperator/consumer, ALL Extender targetaccessSTOPPED.
+
+Current P4d9bcb/newEMOS043a/mainboard5d657profile8/startuped403/listener0566.
+Originalgrant incominga25f immutable; rollbacka25f staged+fullcompared. Request
+records agents/bench-scheduler/mechagon-async001-u1-r01: grant/context/stopped-
+operator-handoff plus owner-install/verify-candidate/{ROM.bin,receipt.json}.
+RootONE selected90s U1 case under116kit0112d4fc, no extra owner smoke/app test.
+After actual Mech stopped return, Extender resumes same76 owner-restore ONLY:
+preserve failureRAM-beforeLOAD/supportrecovery ifneeded, singlea25fFLASH/full
+ROMreadback/fullcleanup/normalrelease; no earlyrelease or sharedtargetcalls.
+install.py rollback uses actual new consumer-stopped-handoff and owner-restore
+context, not the old owner-install handoff. NewROM is physically installed and
+verified, but no async workload/CPU/30Hz pass is yet established.
+Earlier checkpoints below are historical.
+
 # Current — Wolf75 restored bytes, boot admission unresolved; U1 kit ready
 
 Wolf's exact1105920B85f9 restored span independently matches. Its normal cleanup

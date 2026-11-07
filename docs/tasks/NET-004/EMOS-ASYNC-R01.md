@@ -78,7 +78,7 @@ clients and the already frozen consumer scheduler case remain unchanged.
    checks and native linked EMOS validators/actual application link. Record full
    application text/BSS, adapter overhead, resident ROM delta and remaining space.
    Do not waive validators, drop features or claim physical behaviour from host.
-5. [ ] Publish exact SDK/ROM/map/capability and rollback pins to consumer before
+5. [x] Publish exact SDK/ROM/map/capability and rollback pins to consumer before
    its adaptation. Prepare a separate finite trial/immutable kit/current tuple,
    fresh normal checkout and explicit stopped sole-operator handoffs. Current
    frozen scheduler case is independent; no new driver inserted there.
@@ -154,3 +154,8 @@ selection is deliberately request-unbound and cannot authorize target access.
 MechAgon must freeze its own consumer/kit/request, followed by owner request
 binding, fresh normal admission and stopped handoffs. Current Wolf custody is
 preserved. No installation or physical readiness is claimed.
+
+[First physical installation](EMOS-ASYNC-PHYSICAL-R01-RESULT.md) records exact
+ROM staging, one FLASH, independent full readback and stopped consumer handoff.
+The selected workload and same-lease working-ROM rollback remain pending;
+installation is not an async workload, performance or production pass.
