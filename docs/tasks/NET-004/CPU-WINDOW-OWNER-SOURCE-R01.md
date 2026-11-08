@@ -240,3 +240,42 @@ declaration, late baseline execution and extra candidate LOAD. The26816-byte
 packet52dc4db8 contains68 nested inputs. This is source qualification only;
 current predecessor reconciliation, coherent caller freeze, actual grant,
 installation and real runtime proof still precede any physical invocation.
+
+## Normal R04 entry passed; original live collector failed
+
+Actual140 exercised the corrected normal path. Owner45899 returned0 after PRE20,
+exact baseline getter/feature preservation, f05c/full131072-byte readback and all
+16 entry proofs. The unchanged real R06 admission accepted the generated ENTRY3
+and original stage budget before immediate stopped handoff. The consumer used
+MechAgon's project interpreter; original stage79060 and pre99814 returned0.
+
+Original live99015 returned1 after96.144339s. Its terminal regex allowed at most
+one carriage return, while the retained637-byte serial ends the native result0
+line with CR CR LF. Mech retained the failed phase, original regex and serial;
+Extender did not repair a positive phase or replay it. Separate serial forensics
+and the saved current status show995 decisions/999 view records and positive
+CLOSE, cleanup and END. CPU window validity remained unknown at release.
+
+Under returned sole custody, preservation1182 returned0. Before any later LOAD,
+reset or file restoration, Extender used SAVE-only to retain original128KiB
+040000..060000 RAM and independently preserved every current PRE20 file/status/
+attribute/known absence. The original96-byte CPU record,128-byte context and
+1828-byte native status remain separate from application RAM. Their hashes begin
+e88c49a0,36160c09 and4daacc26 respectively. No encoded-product decode, reconstructed
+RAM, new getter, PRT operation or fabricated cold-collector result occurred.
+
+Cleanup19314 returned0. All original20 file bytes/attributes/absences and both
+directories were restored; shared old backups stayed untouched. Original feature
+absence is supported by the exact native source, absent run argument, saved
+positive END/status and ordered CLEAR/fence/MODE reply. No independent postgetter
+feature query is claimed. Exact incoming a25f/full131072-byte independent readback,
+fresh root CLI/cursor/rawmode0/callback0/Legacy0/whole startup/listener/neutral
+input/offline idle/freeUSB and all original/root/cleanup actor joins passed.
+Native/P4 stayed unchanged, SD mounted, no reset or replay. Combined preservation
+and cleanup stayed within the original600-second cleanup and2400-second grant.
+
+Normal release13:41:14.376773UTC invalidates140 token. Root receives the exact
+original artifacts for saved-only decoding after release; malformed, missing or
+invalid CPU products must remain unknown. The original live phase remains failed
+regardless of later data interpretation. FSIM's prepared successor requires a
+new normal admission and receives no implicit target access from this release.

@@ -408,3 +408,36 @@ The prepared next CPU R04 final550/b050 closure rehashed unchanged. Root actual
 READY132/zeroactors was read before fresh140 admission; original600 entry bound,
 normal16 proofs, all PRE20/getter/lifetime contracts remain. No CPU result follows
 from admission or source qualification.
+
+## Actual140 original CPU evidence preserved after collector framing failure
+
+Corrected normal owner45899 returned0, with exact PRE20/baseline5ab/feature/f05c
+full readback and all16 ENTRY3 proofs. Real R06 admission and original stage
+budget passed before immediate stopped handoff137; actual observation age38.49s,
+project-specific MechAgon interpreter corrected before publication. No additive
+runtime proof, source550 edit or original600-entry extension was needed.
+
+Stage79060/pre99814 returned0; original live99015 failed96.144339s because its
+frozen terminal regex rejected actual result0 CR CR LF. Original637Bserialc488,
+FAILED and failed phase remain immutable. Source-bound serial995decisions/
+999viewrecords plus current statuscleanup5/close1/cleanup1/end1 establish native
+retirement separately; CPU window validity was unknown, no later post/idle or
+cold collector ran, and no consumer phase was repaired or replayed.
+
+Sole preservation1182 returned0 before any later LOAD/reset/restoration: original
+128KiB040000..060000 application RAM,96B CPUrecorde88c49a0,128B context36160c09,
+1828B status4daacc26 and all currentPRE20 metadata/bytes/known absences retained.
+Application RAM and encoded products are distinct; Extender performed no decode,
+getter/RUN/query/PRT or source-only reconstruction. Known actual CLI and normal
+listener EXIT were established without reset or SAVE into a running application.
+
+Restore19314 returned0: exact original20files/attrs/absences/twodirs, featureabsence
+via exact651 native CLEAR/fence/MODE positiveEND source/status/argv join (no new
+postgetter query claimed), incominga25f/full131072 independentreadback and fresh
+rootCLI/cursor/rawmode0/callback0/Legacy0/whole45Bstartup24753Blistener/inputneutral/
+offlineworker0/freeUSB/allactors. Native/P4 unchanged/SDmounted/no reset/replay;
+combined original600cleanup and2400whole honored. Normal release
+13:41:14.376773UTC; original owner/root/preservation/restore actors joined, oldtoken
+invalid. Exact original artifact descriptors and real release sent to root140;
+next FSIM2d7/STOP38 notified141 with immediate steering. Saved-only root decoding
+begins only after this real release; no CPU percentage or capacity pass claimed.
