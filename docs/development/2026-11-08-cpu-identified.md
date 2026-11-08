@@ -155,3 +155,21 @@ foreground argv/current grant/layout and stopped sole handoff sent79/immediate
 steering; Extender target access stopped. Original2400s shared clock/600cleanup,
 three selected arms and firstunexpected stop remain. No FSIM execution/result is
 claimed by scheduler admission; Mech CPU window retains its queued turn.
+
+## Foreground recording correction and independent next-source checks
+
+FSIM correctly refused my incompatible instruction to record a tool handle
+before launching its unchanged foreground runner. The tool handle exists only
+after launch and the qualified runner has no registration barrier. I withdrew
+that timing requirement explicitly; actual126's maintained launch-once/register-
+immediately-after method applies, with honest after-launch provenance. No new
+launcher/runner/debugger/source edit or clock renewal. FSIM original62231/
+PID1915655 then launched once within the original300s window; no result claimed.
+
+Root final CPU kit43e49d2f/78098B/all331 descriptors independently rehashed and
+source-only preflight passed, no target or build. UART's corrected explicit-hex
+completion kit6d467b51 is now bound by separate SOURCE4 bb3c8bae/49 inputs; same
+application/firmware, fresh directory/output, real offline manifest checks and
+six short stage controls pass. New reservation/grant remain UART-owned future
+work after FSIM/Mech. Source return81/immediate steering delivered. Original
+R03/129 packets and failures remain unchanged; no new RX execution.

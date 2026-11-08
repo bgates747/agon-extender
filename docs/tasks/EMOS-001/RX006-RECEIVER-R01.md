@@ -111,3 +111,13 @@ source analysis identifies its command-file SAVE address/length radix mistake:
 unprefixed0447CF/+000020 fails decimal-default parsing and cannot provide the
 intended32-byte witness. Original host/completion failure and postreset evidence
 limits remain; correction and any separately admitted confirmation belong to UART.
+
+The separate R04 source-only packet binds the corrected explicit-hex kit and
+fresh test directory/host namespace to a new task. Exact application, firmware,
+bootstrap, host runner and analyzer remain unchanged. All49 inputs and real
+manifest preflight match; six file-only original-stage controls pass. Request
+and grant are NULL until UART reserves a new normal FIFO turn; the metadata
+binder then creates a distinct runtime packet. Whole1800/owner540/consumer420/
+app180/cleanup600/min1020 remain. No build, device operation, replay or current
+physical readiness follows from source preparation. FSIM and queued Mech retain
+priority. One finite corrected completion gate remains UART-owned.
