@@ -8,12 +8,14 @@ def main():
  p.add_argument('--toolchain',type=Path,required=True)
  p.add_argument('--uart-source',type=Path,required=True)
  p.add_argument('--output',type=Path,required=True)
- p.add_argument('--uart0-carry',action='store_true',help='Build separately selected finite UART0 cursor isolation; old fixture unchanged')
+ select=p.add_mutually_exclusive_group()
+ select.add_argument('--uart0-carry',action='store_true',help='Build separately selected finite UART0 cursor isolation; old fixture unchanged')
+ select.add_argument('--uart0-reserve',action='store_true',help='Build new MODE/cursor logical overlap owner isolation; no GP')
  a=p.parse_args();root=Path(__file__).resolve().parents[3]
  output=a.output.resolve();output.mkdir(exist_ok=False,parents=True)
  work=output/'work';src=work/'src';(src/'agon').mkdir(parents=True)
  inputs={
- 'main.cpp':root/('tests/fixtures/network/uart0_carry_repeat.cpp' if a.uart0_carry else 'tests/fixtures/network/async_repeat.cpp'),
+ 'main.cpp':root/('tests/fixtures/network/uart0_reserve_repeat.cpp' if a.uart0_reserve else 'tests/fixtures/network/uart0_carry_repeat.cpp' if a.uart0_carry else 'tests/fixtures/network/async_repeat.cpp'),
  'async_carrier.hpp':root/'tests/fixtures/network/async_carrier.hpp',
  'endpoint.hpp':root/'tests/fixtures/network/endpoint.hpp',
  'repeat_matrix.hpp':root/'tests/fixtures/network/repeat_matrix.hpp',
@@ -27,15 +29,16 @@ def main():
  'u1_emit.src':a.uart_source/'src/u1_emit.src',
  }
  if a.uart0_carry:inputs['uart0_cursor.hpp']=root/'tests/fixtures/network/uart0_cursor.hpp'
+ if a.uart0_reserve:inputs['uart0_reply_burst.hpp']=root/'tests/fixtures/network/uart0_reply_burst.hpp'
  for name,file in inputs.items():shutil.copyfile(file,src/name)
  stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ')
- identity=('netasync-uart0-carry-r01-b' if a.uart0_carry else 'netasync-r01-b')+stamp
+ identity=('netasync-uart0-reserve-r01-b' if a.uart0_reserve else 'netasync-uart0-carry-r01-b' if a.uart0_carry else 'netasync-r01-b')+stamp
  (src/'build_identity.h').write_text('#define NETPROBE_BUILD_ID "'+identity+'"\n')
  (work/'Makefile').write_text('NAME=netasync\nLDHAS_ARG_PROCESSING=1\nLDHAS_EXIT_HANDLER=0\nAGONDEV_TOOLCHAIN='+str(a.toolchain.resolve())+'\ninclude $(AGONDEV_TOOLCHAIN)/config/makefile.inc\nCFLAGS += -Isrc -Wall -Wextra -Werror\nCXXFLAGS += -Isrc -std=c++17 -fno-exceptions -fno-rtti -Wall -Wextra -Werror\n')
  report=dict(build_id=identity,scope='native compile/link only, no invocation',
   source_commit=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip(),
   inputs={str(file):hashlib.sha256(file.read_bytes()).hexdigest() for file in inputs.values()},
-  records=176,sessions=4,irq_complete=0,uart0_cursor_queries=(352 if a.uart0_carry else 0),native_budget_nominal_seconds=(60 if a.uart0_carry else 120))
+  records=176,sessions=4,irq_complete=0,uart0_cursor_queries=(352 if a.uart0_carry else 0),uart0_reply_bursts=(352 if a.uart0_reserve else 0),query_kinds=(["MODE","cursor"] if a.uart0_reserve else []),native_budget_nominal_seconds=(60 if a.uart0_carry or a.uart0_reserve else 120))
  start=time.monotonic()
  try:
   with (output/'build.log').open('w') as log:

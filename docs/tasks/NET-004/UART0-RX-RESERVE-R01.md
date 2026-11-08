@@ -1,6 +1,6 @@
 # NET-004 — UART0 receive reserve source preparation
 
-Prepare a small EMOS-owned receive-protection correction after actual108 captured a positive UART0 overrun witness. The failed renderer reply still has no assigned cause. Current working components stay installed; this task selects source/contract closure, implementation and qualification, followed by an exact finite isolation proposal for MechAgon selection. No hardware probe, test, deployment or default adoption is selected.
+The bounded UART0 receive-reserve candidate passed a new four-session owner overlap case and was then rolled back cleanly. The new fixture checked ordinary MODE/cursor completions while UART1 requests were logically active. This supports finite functional health, with electrical timing margin and the original renderer failure's cause still unresolved. A subsequent consumer case requires its own exact freeze and fresh custody; the candidate remains experimental and default-OFF.
 
 ## Scope and ownership
 
@@ -27,7 +27,7 @@ Actual108 raw[2,6,7] is the software BODY/MODE-index6/seven-remaining state befo
 
 ## State
 
-Selected source-only owner tranche under existing verified human GOAL/resume delegation. Exact retained native5d657/e9d709 sender and dependency pins independently match the VDP owner return. EMOS requests full-duplex0101/value1 after GP; native hardware CTS is supported but actual runtime mode/polarity reaction and numeric post-STOP bytes are unobserved. Root explicitly selects bounded functional owner qualification for those limits, not indefinite waiting or an invented margin. Isolated EMOS source7e1c7a3 implements default-OFF scoped RTS ownership and bounded IRQ-only UART0 bursts. Foreground and shared UART1 leaves hold only; no new foreground UART0 parser callback dispatch. Compiler545 now checks exact OFF identity, witness-ON fit and explicit APP-only candidate; qualification is in progress, no image/case admitted. Actual110 card-only deployment is cleanly released and the physical bench is idle. Publication hold persists.
+The source/native candidate and new MODE/cursor overlap appliance passed their selected checks. Actual112 completed ONE four-session case, preserved original application RAM before later LOAD/reset, restored the exact incoming ROM with full independent readback, and released after fresh complete handback. All owner target access is stopped. MechR13 source-only templates and the physical dependency record were returned; its final coherent kit and new admission remain separate. No default adoption or cause/performance claim. Publication hold persists.
 
 
 ## Checked source/native result and selected next fixture
@@ -36,5 +36,29 @@ Compiler545 reproduced the exact old witness ROM with reserve OFF. Reserve+witne
 
 Source7e1c7a3; full ROM1e4e54dda8692f141a56114147eb775e315295cd68e3ac409484ca127d6fd830; private23-member archive52abd7c3ad77121f2b4c0cf12006a3c793f25e2b6f100bfbab37ec2a218defd3 independently verifies every member. Source/native package and a bounded physical proposal returned by durable mail and immediate steering. Root selected the next owner fixture/case after complete closure; admitted6502 actual111 remains protected and Extender target-stopped.
 
-6. [ ] Prepare and qualify a NEW four-session176-case overlap fixture and actual controller: UART0 mode/cursor/owner-GP burst while UART1 transaction is pending, independent flag/value oracles, zero/nonzero, continued IRQ/VBlank/cap service, source/TEMT/reply storage lifetime and four positive CLOSEs. The serialized old176 comparator is insufficient. Official GP is MOS startup traffic and has no completion flag: any deliberate owner-only diagnostic use must be explicit, with changed echo-value oracle; do not invent a public GP flag/API. Count logical pending and sampled nonidle engine state separately from physical wire overlap. Freeze all dependencies and negative controls before READY; no target access from PREPARING.
-7. [ ] Run only the selected ONE finite owner case after normal actual111 restore/release, fresh current tuple/admission/sole install and full readback. Apply60nominal native/120host/600whole incl180cleanup reserve, firstfault/evidence/RAM preservation/standing bounded recovery, exacta25f rollback/fullreadback/fullhandback/release. Functional finite hold/resume is the supported claim; numerical electrical reserve/108cause/30Hz/default adoption remain unproved. Fresh MechR13 depends on owner actualPASS and cleanrelease, then its own final coherent kit.
+6. [x] Prepare and qualify a NEW four-session176-case overlap fixture and actual controller: UART0 MODE/cursor burst while UART1 transaction is pending, independent flag/value oracles, zero/nonzero, continued IRQ/VBlank/cap service, source/TEMT/reply storage lifetime and four positive CLOSEs. The serialized old176 comparator is insufficient. The root corrigendum removes startup-reserved GP completely; only documented MODE and cursor flags/values are used. Count logical pending and sampled nonidle engine state separately from physical wire overlap. Freeze all dependencies and negative controls before READY; no target access from PREPARING.
+7. [x] Run only the selected ONE finite owner case after normal actual111 restore/release, fresh current tuple/admission/sole install and full readback. Apply60nominal native/120host/600whole incl180cleanup reserve, firstfault/evidence/RAM preservation/standing bounded recovery, exacta25f rollback/fullreadback/fullhandback/release. Functional finite hold/resume is the supported claim; numerical electrical reserve/108cause/30Hz/default adoption remain unproved. Fresh MechR13 depends on owner actualPASS and cleanrelease, then its own final coherent kit.
+
+
+## New overlap appliance and runtime closure
+
+The root query corrigendum omits GP entirely. Compiler552 built the19505-byte new appliance and passed actual helper sanitizer controls, five compiled bad-code controls and actual controller admission/result negatives in8.110host seconds. Four sessions contain176 byte-pattern records and352 MODE/cursor query bursts. Each burst expects two independent documented completions; MODE10 plus cursor4 are14 logical response bytes, not FIFO occupancy or a cap-hit measurement. The foreground samples pending-without-ready and nonidle serializer state before issuing the ordinary VDU query; neither sample proves physical simultaneity. Positive source release/laterTEMT/reply and four positive CLOSE boundaries still govern storage/callback reuse. Continued clock/IRQ service is required; no numerical electrical reserve is assumed.
+
+The linked48-byte application witness and all static appliance storage fit the selected040000–04FFFF SAVE window; stack peak remains unmeasured. The immutable runtime freeze has124 inputs, including explicit dynamic bootstrap/reset dependencies and exact source/config controls. Compiler552 released with all owned children joined and no next request. The historical serialized comparator and all old evidence stay unchanged. Request-local R13 source templates were returned with OPEN4 binding; root final freeze and physical admission remain conditional on owner functional PASS and clean rollback/release.
+
+
+## Actual112 result
+
+| Check | Required | Observed |
+|---|---:|---:|
+| Exact echoed payload records |176|176|
+| Positive session/CLOSE retirements |4|4|
+| MODE/cursor query pairs |352|352|
+| Zero/nonzero cursor positions |176/176|176/176|
+| Pending-without-ready samples |Positive, at most352|352|
+| Nonidle serializer samples |Positive, at most352|352|
+| Query failures |0|0|
+
+The durable result and independent48-byte linked RAM witness agree. Original64KiB application-window RAM was saved before any later LOAD or reset, with no recovery reset needed. Native elapsed270ticks uses nominal120Hz; the14.202host seconds include command delivery and terminal observation, not exclusive processor time. Logical state samples are not simultaneous-wire measurements, numeric CTS reaction/inflight reserve, measured cap hits, a proof of the actual108 cause or30Hz qualification.
+
+Exact selected candidate ROM installation and incoming rollback both passed independent full131072-byte readbacks. Fresh final rootCLI/cursor/mode0/callback0/route0, whole startup/listener, neutral input, offline listener/idle worker/free USB and joined actors passed. The full493.970second owner window stayed within600seconds. Native VDP, P4, startup and listener were unchanged; SD remains mounted. Normal release preceded offline reporting and the next Mech consumer received immediate steering. Machine-local exact evidence is retained outside tracked source.
