@@ -175,3 +175,38 @@ exacta25f/full131072-byte readback and full fresh handback passed. Final tool368
 returned0; every original/read/cleanup actor joined, outer12288-byte suffix stayed
 untouched, SD remained mounted. The helper stays UNRUN; no sender/cause claim is
 made for the interruption. The normal queued6502 helper is next.
+
+## Selected 6502 helper installed handoff
+
+The existing queued real-client helper received fresh actual136 after135 release.
+Its unchanged20518-byte application and e0c2516e host kit retain the historical
+descriptor/payload input, 69 tagged requests versus two counted requests and
+the original finite bounds. The request-local owner packet checks85 source
+inputs, with a separate admission amendment pointing to135's successful readback.
+
+Actual installer1719 returned0; stage, flash, verify and native phases passed.
+Exact171c full ROM and7d09 full native-prefix readbacks, matched bootstrap and
+fresh CLI/rawmode0/callback0/Legacy0/wholefiles/neutral/offlineworker/freeUSB pass;
+all registered groups joined. A real consumer READY response preceded the final
+observation. Stopped sole-consumer handoff113 was delivered promptly with1405s
+remaining; all Extender target access stopped. No helper result is claimed here.
+Original1800whole/420consumer/120app/600cleanup and same-lease exact native-FIRST/
+a25f restoration/fullhandback remain mandatory. No game, persistence, tuning or
+production adoption is selected by this integration trial.
+
+The single actual136 invocation passed in20.85 host seconds. Saved584-byte result
+and32-byte witness state3, exact40/40/512/512 announced/actual lengths, two callbacks,
+full descriptor/payload bytes and guards passed. The control issued69 tagged
+pulls; counted issued two. Raw callback, mode and Legacy route were0, followed by
+normal listener EXIT/offline. These counts do not establish CPU, FPS or wire rate.
+Original consumer52480 returned0; supervisor/controller groups and all client
+journals were independently terminal before owner restoration.
+
+Extender restored the exact1105920-byte85f9 native prefix FIRST/full readback,
+then the matched bootstrap and exacta25f/full131072-byte ROM readback. Fresh CLI,
+cursor, rawmode0/callback0/Legacy0, complete startup/listener, neutral input,
+offline idle worker and free USB checks pass. Original restoration38035 returned0
+and all groups joined. Normal release12:30:43.327754UTC invalidates136 token;
+outer12288 bytes remain untouched, SD mounted, all target access stopped. Mech9267
+is next under a fresh grant. No repeat invocation, game port, persistence/ACK test,
+tuning or production adoption follows; UART/consumer own practical interpretation.

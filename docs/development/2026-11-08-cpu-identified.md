@@ -332,3 +332,50 @@ Next6502 source-only85-input packet binds the reviewed real-client helper,
 unchanged171c/7d09/source60002 and selected1800/540/420/120/600 budgets. A separate
 SOURCE2 amendment points admission to the successful actual135 read-only proof,
 preserving the original source packet. No consumer/app changes or extra build.
+
+## Selected 6502 trial completed and restored
+
+Fresh136 admission48781 and owner1719 returned0. Four setup phases0, exact171c
+full ROM/7d09 prefix readbacks and bootstrap/fresh facts/actor closure pass.
+Actual consumer READY before final observation and prompt handoff113 avoided
+the earlier delivery expiry. Original52480 launched once, returned0 after20.85s,
+saved584B/32Bstate3/full40+512 bytes/callback2/69old versus2counted/raw0/normal
+EXIT passed. Supervisor/controller groups absent and client journals terminal.
+No CPU/FPS/wire/game/persistence/ACK conclusion.
+
+Same136 native85f9 prefix FIRST/fullreadback, current matched bootstrap, exacta25f
+full ROM/fresh fullhandback completed38035 return0. Normal release12:30:43.327754
+UTC/allactorsjoined/oldtokeninvalid/SDmounted, outer12288 unchanged. Owner117,
+UART118 and actualnextMech116 messages immediately steered. Final dual-getter
+R03 source502 rehashed unchanged; root READY115 received before future owner
+observation. Fresh admission for existing9267 follows136 full release, no source
+or consumer scope change and no additional runtime result inferred.
+
+## Unrun137 projection correction and queued consumer continuity
+
+Actual137 owner92182 completed PRE20/baseline5ab/feature/f05c full verification.
+The immutable projection omitted two checks already required by consumer R05;
+admission refused its14-check record. Supported additive proof and actual
+refresh35134 were retained, but the unchanged original600 entry deadline expired
+before complete entry/handoff/argv/CPU application/match/timer. No CPU result.
+SAVE-only post-install owner RAM was preserved before later LOAD/reset, with its
+non-CPU provenance explicit. Restore63177 returned0: all original20 files/attrs/
+absences/bothdirs/feature, exacta25f/fullreadback/fresh fullhandback/all actors.
+Normal release12:49:32.270758UTC; native/P4 unchanged, SD mounted.
+
+FSIM138 admission44896 passed, but finalizer found its initial observation stale.
+One actual narrow refresh85164 passed; exact stopped handoff125 was published
+and immediately steered at12:57:31. FSIM's one normal foreground launch then
+refused the original300 dispatch deadline before any target I/O. No PID was
+observed and none invented; candidate writes/reset/guest invocation all unrun.
+Same138 actual SAVE-only reconciliation10144 passed rawstate/wholefiles/CLI/input/
+idle/freeUSB, all actors stopped. Normal release13:00:38.217260UTC; no unnecessary
+firmware rollback. Source/dispatch delay is not a STOP or hardware verdict.
+
+New separate CPU R04 source94cf binds real qualified R06 and all16 normal checks.
+Actual driver and inert controls share complete entry composition and getter
+ordering proof. Packet52dc4db8/26816B/68inputs, real freezer71 joins;13 existing
+owner and9 composition checks pass. No old frozen input changed, hardware proof
+fabricated, schema migration, API/firmware change or clock extension. Source128
+returned with immediate steering; future caller freeze and actual entry remain.
+Protected Rally19e consumer reports actual READY before its fresh admission.

@@ -200,3 +200,43 @@ with 502 inputs. This is source readiness only: normal FIFO predecessors must
 finish restoration/release before fresh admission. No grant, install, CPU window
 or capacity result follows. One old ENTRY2 label in the frozen restoration text
 is a documented typo; executable interfaces and admission require ENTRY3.
+
+## R03 projection refusal and exact unrun closeout
+
+Actual137 installed and independently verified f05c after preserving PRE20 and
+using the exact baseline getter under a25f. The frozen owner projection declared
+14 checks; the unchanged consumer required16, including baseline getter execution
+before installation and no candidate getter invocation before handoff. Runtime
+admission correctly refused the incomplete owner record. A supported additive
+proof and genuine narrow observation were prepared, but the original600-second
+entry deadline expired before a new entry or handoff could be published. The
+CPU application, match and timer remained entirely unrun. This is an owner
+composition defect, with no CPU or firmware performance result.
+
+Extender retained the original incomplete records, all50/502 frozen inputs and
+actual tool results. SAVE-only preservation captured current post-install owner
+RAM before later LOAD/reset; it is not CPU application RAM. All20 original file
+bytes, attributes and absences, both directories and the original absent feature
+were restored. Exact incoming a25f/full131072-byte independent readback, fresh
+root CLI/cursor/rawmode0/callback0/Legacy0/whole startup/listener/neutral input/
+offline idle/free USB and all actor joins passed. Native/P4 stayed unchanged.
+Actual137 normally released12:49:32.270758UTC; no replay or clock extension.
+
+## Corrected normal R04 source composition
+
+The separate request94cf source packet preserves SOURCE3/ENTRY3/PROJECTION3/KIT3,
+PRE20, exact getter roles, full8519 native span and original timing/lifetime
+contracts. Its normal projection includes all16 existing checks. A shared pure
+entry composer is used by the actual owner driver and inert composition checks;
+getter ordering joins the executed baseline command/return receipts to candidate
+FLASH and refuses an extra LOAD/RUN. Exclusive owner source and actor provenance
+bounds this check; it is not a general execution monitor.
+
+The real R06 consumer freezer reads the actual packet and projection, joining71
+bindings. Thirteen existing inert owner checks and nine composition controls
+pass, including acceptance of the complete generated entry by the unchanged
+consumer admission and rejection of either missing getter proof, a missing source
+declaration, late baseline execution and extra candidate LOAD. The26816-byte
+packet52dc4db8 contains68 nested inputs. This is source qualification only;
+current predecessor reconciliation, coherent caller freeze, actual grant,
+installation and real runtime proof still precede any physical invocation.
