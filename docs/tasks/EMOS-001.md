@@ -171,3 +171,9 @@ blocks the remaining mode checks and raw-SD. No firmware/startup changes occur.
 Standing recovery and explicit cleanup restore healthy mode0/Legacy for the
 Author-priority FSIM mainboard work. Qualification remains failed/open; this is
 not an EMOS regression diagnosis or acceptance/promotion.
+
+## Temporary counted-receiver sweep dependency
+
+The [bounded receiver preparation](EMOS-001/RX006-RECEIVER-R01.md) follows UART
+owner's direct human correction requiring the finite Olimex size sweep. It uses
+an isolated exact-donor composition; no production promotion or unrelated work.
