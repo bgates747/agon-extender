@@ -1,3 +1,23 @@
+# Current — actual107 sole Agon6502; R12 source rebound
+
+Actual107/request899e77cf7eba is granted solely to agon-6502 for ONE frozen
+native eZ80 write-helper13-check case. All27inputs/3029ee33 freeze, prior106
+cleanrelease and fresh CLI/readEXIT/SAVE-only mode0/callback0/Legacy0/wholefiles/
+inputneutral/offlineidle/worker0/freebothUSB pass. Grant/context/stoppedsolehandoff
+under agents/bench-scheduler/dsk001-write-core-r01; delivered by durable mail and
+immediate steering. ALL Extender targetaccess/readers/pendingcommands STOPPED.
+No scheduler appLOAD/RUN/reset/flash or nativeVDPlet/mode/timer/firmware change.
+Consumer owns original180s/600s finite case, exact13-result/CLI/state/files/cwd/
+input/resources cleanup, actorjoin and fresh normalrelease/immediateactualnext.
+No replay/HOLD; d9b/a25f/5d657/ed403/0566 retained, SD mounted.
+
+Mech voluntarily canceled ungranted4dede and re-reserved eedc220f00af behind107.
+New source-only owner/map/rollback/predecessor packet20input preflight passes
+under agents/bench-scheduler/mechagon-goal001-r12-eedc; returned by mail+steering.
+Same3bb38d/a25f bytes, no helper/runtime source change or physicalqualification.
+Final consumer caller/native/map/decoder/kit pending, no R12 grant or bench hold.
+Old4dede packet/history preserved. Publication hold remains; earlier headers historical.
+
 # Current — actual106 released; bench idle, Mech R12 preparing
 
 Actual106 released 2026-11-08T00:01:40.837962Z. Central active is null;
