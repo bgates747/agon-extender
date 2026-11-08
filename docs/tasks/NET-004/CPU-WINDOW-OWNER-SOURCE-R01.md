@@ -101,3 +101,25 @@ case-local state/legacy scripts for a future R02 namespace. It does not modify
 identified646/SOURCE1 or the failed131 packet. Request/qualified derivative/kit
 and runnable driver closure remain unbound until actual corrected source
 qualification and normal preparation. No new CPU case or grant is inferred.
+
+## Corrected request-local source closure
+
+The separately qualified caller R04 passed72 inert controls under compiler661.
+New normal request596 binds SOURCE2 to PRE19, case-local state/legacy EXEC files,
+OWNERENTRY2 and KIT2. The request-independent646/SOURCE1, identified f05c ROM,
+API2/OPEN5, original capture and2400/600entry1200consumer600cleanup limits remain
+unchanged. Source wrappers rebind actual URL/mainboard/P4 before preservation;
+the finalizer validates actual facts through the corrected caller admission.
+
+Nine inert owner controls pass, including exact ROM/map preflight, refusal of
+old callback addresses and invalid routes, and execution of the real restoration
+function against simulated file transactions. Unchanged shared helper/unknown
+backup stay untouched. A changed target with a pre-existing unknown backup is
+archived and refused before any upload/deletion. Only a newly created restoration
+backup independently equal to the preserved current target can be retired.
+
+The16656-byte73a13359 packet contains41 nested inputs; the real caller freezer
+accepted all44 joined inputs. No actual grant/context/entry/handoff, target access,
+compiler, timer invocation or readiness claim was produced. Source packet93 was
+returned after actual132 clean release. Final caller freeze and normal fresh
+admission remain necessary; no131 replay or unknown-sidecar cleanup is authorized.

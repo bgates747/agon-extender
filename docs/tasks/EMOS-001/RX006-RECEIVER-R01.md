@@ -121,3 +121,28 @@ binder then creates a distinct runtime packet. Whole1800/owner540/consumer420/
 app180/cleanup600/min1020 remain. No build, device operation, replay or current
 physical readiness follows from source preparation. FSIM and queued Mech retain
 priority. One finite corrected completion gate remains UART-owned.
+
+## Actual132 corrected completion and clean release
+
+The separate R04 attempt used the unchanged temporary171c receiver and7d09
+producer, unchanged application and corrected explicit-hex SAVE command. The
+original installer returned0, exact full ROM/native-prefix readbacks and normal
+bootstrap passed, and its actors joined before sole UART consumer handoff.
+
+UART's ONE explicit suite EXEC passed all ten correctness sizes and36 comparison
+cells. The32-byte witness reports state3, next2 was retained, and the normal
+terminal listener EXIT/offline gate passed. Original consumer72988 returned0;
+its PID/group joined. This closes the corrected batch-completion confirmation,
+without rewriting129's original wrapper failure or postreset evidence limits.
+UART retains result interpretation and subsequent selected-consumer scope.
+
+Extender restored the incoming1105920-byte85f9 native prefix FIRST and compared
+its complete independent readback. The outer12288-byte suffix stayed untouched,
+retaining8519 full-span lineage. One maintained matched bootstrap then exact
+incominga25f/full131072-byte readback and fresh rootCLI/cursor/rawmode0/callback0/
+Legacy0/whole startup-listener/neutral input/offline worker/freebothUSB passed.
+Original installer77380, consumer72988 and restoration99564 all returned0; all
+registered descendants/groups joined. Actual132 normally released11:13:34UTC,
+old token invalid, all target access stopped, SD mounted. No replay, tuning,
+production promotion or new test was selected by cleanup. Both129 and132 evidence
+remain in their original ignored records; the next normal request is Mech596.
