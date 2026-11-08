@@ -1,3 +1,39 @@
+# Current — actual108 installed and solely handed to MechAgon R12
+
+Actual108/eedc220f00af is centrally MechAgon's, phaseconsumer/operatorMechAgon.
+ONE final3bb38d EMOS FLASH/automaticboot and fullindependent131072B readback pass.
+Fresh rootCLI/readEXIT/rawmode0/callback0/Legacy0/wholefiles/inputneutral/offlineSD/
+worker0/freebothUSB pass. Frozen R12 kit743086B/3c4ebc49/3361inputs and actual
+adapter precontact/newnative/map/36Brecord/decoder binding pass with real108context.
+Original admission18006/install79273 exited0/allownerreadersjoined. Grant/context/
+stoppedsolehandoff/ROMproof under agents/bench-scheduler/mechagon-goal001-r12-eedc,
+returned by durable mail and immediate steering. ALL Extender targetaccess/
+readers/pendingcommands STOPPED; no parallelobserver or testinvocation by owner.
+
+Root alone runs ONE frozen90/150/180 case within original1200sgrantwindow.
+After actualjoinedstoppedreturn only, owner handles preservation/featurecleanup/
+exactincominga25frollback/fullreadback/freshhandback/normalrelease under SAME108.
+No replay/HOLD/P4/native/startup/listener/baud/PRTaxis; IRQ-only rawerror coverage
+is not globalUART0noerrors/loss. P4d9b/native5d657/startuped403/listener0566 retained,
+SDmounted. Next queued6502 originalDOS8f797545f81d has no grant; its sourceABI/
+actualfit/currenthandback admission is pending. Publication hold remains;
+earlier headers historical.
+
+# Current — actual108 sole Extender installation for R12
+
+Fresh actual108/eedc220f00af belongs centrally to MechAgon with Extender sole
+hardware operator phaseowner-install. Final743086B/3c4ebc49/3361input R12 kit,
+new checked523 native/map/36Brecord/decoder, owner20input/final3bb+a25f artifacts
+and actual107 release matched before freshCLI/SAVE-onlymode0/callback0/Legacy0/
+wholefiles/inputneutral/offlineidle/freeUSB admission. Mech consumer remains
+stopped until verified actualsolehandoff. Original one-pass stage/oneFLASH/full
+131072Bverify helper only; no testLOAD/RUN/P4/native/startup/listener/baud/PRTaxis,
+no retry/reset or c1047 physicalqualification transfer. Evidence and original
+live helper log under agents/bench-scheduler/mechagon-goal001-r12-eedc.
+Same1200soriginalgrantwindow/ONE90/150/180consumercase then rootjoinedstoppedreturn
+for sameleasea25f rollback/fullreadback/freshhandback/release. SDmounted; no
+publication. Earlier headers historical.
+
 # Current — actual107 released; idle bench, Mech R12 preparing
 
 Actual107 released 2026-11-08T00:20:54.604995Z. Central active=null;
