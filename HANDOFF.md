@@ -1,3 +1,31 @@
+# Current owner continuation — UART0 reserve, 2026-11-08
+
+Actual112 new MODE/cursor-only/UART1 logical-overlap case PASS176records/
+4sessions/352querypairs; originalRAM/witness/peer/durable results independently
+join. Fullincominga25f rollback/readback/fullhandback/release02:02:20UTC;
+source fixture/control/docs localcommitaf961d34, no push. Firmware source7e1c7a3/
+ROM1e4e/Open4, defaultOFF, source/nativeZIP52abd7c3; witness+reserve overflow
+retained. No numeric CTS reserve, measuredcap-hit,108cause,30Hz/defaultclaim.
+
+Actual113/3540 MechR13 now installed1e4e/fullROMreadback/freshstate and exact
+2675/fea5 frozenconsumerprecontact PASS. Context/grant/stoppedhandoff under
+agents/bench-scheduler/mechagon-goal001-r13; originalinstalltool84012exit0.
+Mech operator/consumer sole untilactualjoinedstoppedreturn. ALL Extender
+targetaccess/readers/commandsSTOPPED. Originalgrant02:06:44.898485UTC,
+ONE90native/150CLI/180host case/1200originaldispatchwindow, no replay/HOLD.
+When realreturn arrives: verifyactual113token/evidence, thensoleownerpreservation/
+standingboundedrecovery ifneeded, same113 exacta25frollback/readback/fullcleanup/
+release. Prepared assume-return.py/recover113.py/feature113.py are NOT executed.
+Choose phases fromactualreturn; preserveRAM beforegetterLOAD; no unknownborrow
+retirement claim. OriginalorpostresetRAM must be labelled honestly.
+
+Next6502two-drive294ca is sourcequalified220/808032fb (all149oldpins unchanged),
+source-admission.json under agents/bench-scheduler/dsk001-two-drive-r01. No grant
+or targetaccess; waitreal113cleanhandoff. Same temporaryF6 retained-lineage
+limit and explicitapp-onlyinstall/full7f46readback/exact85f9restore/freshinput+CLI
+required when itsturnopens. Current P4/native/startup/listener unchanged, SDmounted.
+Publicationhold and unrelateddirtyTODO/2026-11-04/BENCH-010 work preserved.
+
 # Current — actual111 sole Agon6502, temporary F6 graphical DOS scope
 
 Fresh actual111/8427f9f845d1 is centrally agon-6502, sole operator through exact
