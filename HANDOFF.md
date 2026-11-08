@@ -1,4 +1,30 @@
-# Current owner continuation — actual114 released, next source closure
+# Current owner continuation — actual115 sole Agon6502
+
+Fresh actual115/request0d02485aedb0 is centrally agon-6502, soleoperator. Exact114
+fullrestoration/release/currenttuple and freshCLI/readEXIT/SAVE-onlystate/files/
+inputneutral/offlineidle/freeUSB passed. Originaladmission62606exit0, all Extender
+targetaccess/readers/commands STOPPED. Grant/context/stoppedsolehandoff under
+agents/bench-scheduler/dsk001-retained-error-r01; immediate durable+steer delivered.
+All215/d0e7inputs unchanged. Dedicatedoperator8765 records/reaps18s owned child
+plusTERM1/KILL1 withinouter30s; four nativeprocesscontrols joined. Exactactual
+operator-binding lease/URL/evidence and originalpendingkey/incarnation receipts
+required, no resubmit/extraF7/replay. No oldgeneric180sop. One finite synthetic
+openrefusal/realEscape-F1-F3-F4-F7/RetrySave-RetryLoad pair/privatewc06;1200whole
+and180perapp. TemporaryF6install/full7f46readback/exact85f9restore/nativeprefix
+5d657/fullfreshhandback/join/release/cardmounted; sourceprunedlineagelimit stays.
+Mech31ab next after115actualcleanrelease; no preemption/HOLD/implicitgrant.
+
+Sourceconsultations answered withouttargetaccess: exact1e4e has no PRT1 owner/
+vector dependency, so prospective sole451 preOPEN disposable inactivePRT1 scope
+canbe assigned; actualcontext/runtime/selection stillrequired, calibrationfailure
+onexact451 continues ordinaryOPEN withdisabledcertificate/dose. Separately exact
+retaineda25fKEYdispatcher admits4genuinekeys or10P3DR/VDPL and rejects16before
+callback, so unchangedFSIM6adphysicalkit NOTREADY. READ16 framingpossible only
+withnativeownerAPI/nonce/status/coherence/lifetimeclosure; no firmwareedit/case.
+Records agents/net004/headroom451-prt1-owner-r01 and bench-scheduler/
+fsim-p071-consumer18-source. Localcommit/no-push boundary preserved.
+
+# Previous owner continuation — actual114 released, source closure
 
 Actual114 cleanly released02:52:44.366581UTC within1200s/allactorsjoined/oldtoken
 invalid. Exact incoming1105920B85f9 native/tail readback and1104176B5d657 prefix
