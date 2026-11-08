@@ -379,3 +379,32 @@ owner and9 composition checks pass. No old frozen input changed, hardware proof
 fabricated, schema migration, API/firmware change or clock extension. Source128
 returned with immediate steering; future caller freeze and actual entry remain.
 Protected Rally19e consumer reports actual READY before its fresh admission.
+
+## Rally delivery correction passed and restored
+
+Actual139 new19e owner packet04ed196f/22980B/105inputs bound corrected hostf2de,
+explicit canonical request and unchanged app/twoSDfiles. Admission79160 and
+installer18235 returned0; all four phases/registered groups joined, full171c ROM
+and7d09 native-prefix readbacks/current bootstrap/fresh state passed. Actual
+Rally READY before final observation and immediate handoff130 retained about1430s;
+observed handoff age was under20s. No stale135 token, replay or renewed clock.
+
+One consumer4514 returned0/22.1722hostseconds: both584B exact, chunks256/256/72,
+callback3/witnessstate3phase5RX2/guards/header/EOF/reopen/sourceclear/normalEXIT.
+Legacy292 versus counted3 requests, coarse complete-export MOS30 versus6 only;
+no CPU/wire/FPS/game/robustthroughput result. Original actor/group1947147 absent,
+all children joined and actual stopped custody returned before owner access.
+
+Restore69100 returned0: exactnative85f9 prefixFIRST/full independent readback,
+outer12288 untouched/full8519 lineage, current matched bootstrap, a25f/fullROM,
+fresh full CLI/state/files/input/idle/freeUSB handback. File-only release metadata
+shadowed its fresh-receipt variable with an artifact descriptor and stopped before
+central mutation. First metadata record/source retained; separate correction used
+the same fresh actual facts, no target action/restamp. Normal139 release
+13:20:32.519644UTC/oldtokeninvalid/alltargetSTOPPED/SDmounted. Owner133/UART134/
+nextMech135 durable notices and immediate steering completed.
+
+The prepared next CPU R04 final550/b050 closure rehashed unchanged. Root actual
+READY132/zeroactors was read before fresh140 admission; original600 entry bound,
+normal16 proofs, all PRE20/getter/lifetime contracts remain. No CPU result follows
+from admission or source qualification.

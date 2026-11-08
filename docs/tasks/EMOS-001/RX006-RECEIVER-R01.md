@@ -210,3 +210,37 @@ and all groups joined. Normal release12:30:43.327754UTC invalidates136 token;
 outer12288 bytes remain untouched, SD mounted, all target access stopped. Mech9267
 is next under a fresh grant. No repeat invocation, game port, persistence/ACK test,
 tuning or production adoption follows; UART/consumer own practical interpretation.
+
+## Rally helper completed with corrected delivery
+
+Fresh actual139 used the separately qualified explicit-request host binding and
+unchanged Rally application/two staged files. Actual consumer READY preceded the
+final genuine installed observation; immediate handoff retained about1430s of
+its original1800s grant. Installer18235 returned0, including exact171c full ROM,
+7d09 full native-prefix readback, matched bootstrap and joined fresh CLI/state.
+
+Original consumer4514 returned0 after one invocation/22.1722 host seconds including
+staging and retrieval. Both584-byte exports match the retained input exactly;
+three chunks256/256/72, callbacks3, witness state3/phase5/RX2, guards, header,
+retained field, EOF/reopen, source clearing and normal listener EXIT/offline pass.
+
+| Retained metric | READ16 control baseline | Counted helper | Change from baseline |
+|---|---:|---:|---:|
+| Read requests | 292 | 3 | −98.97% |
+| Exported bytes | 584 | 584 | 0% |
+| Complete-export public MOS count delta | 30 | 6 | −80% |
+
+Changes are `(counted − control) / control × 100`. The count deltas are one
+ordered coarse fopen-through-fclose pair, including counted guard/byte checks.
+They do not measure CPU occupancy, wire rate, game FPS or robust throughput.
+
+After the original actor/group and children joined, Extender restored exact
+incoming85f9 native prefix FIRST/full independent readback, leaving the outer
+12288 bytes unchanged. Current matched bootstrap, exacta25f/full131072-byte
+readback and fresh root CLI/cursor/rawmode0/callback0/Legacy0/wholefiles/neutral
+input/offline idle/freeUSB passed; original restoration69100 returned0. A local
+release-metadata variable collision stopped before central release; its source
+and record were retained, then corrected without target action or restamping.
+Normal release13:20:32.519644UTC invalidates139 token; SD remains mounted, all
+target access stopped. This completes the one selected helper trial, with no
+replay, tuning, game port or production adoption. Actual135 stays unrun.
