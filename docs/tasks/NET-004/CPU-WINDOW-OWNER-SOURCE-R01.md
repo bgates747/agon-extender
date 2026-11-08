@@ -123,3 +123,20 @@ accepted all44 joined inputs. No actual grant/context/entry/handoff, target acce
 compiler, timer invocation or readiness claim was produced. Source packet93 was
 returned after actual132 clean release. Final caller freeze and normal fresh
 admission remain necessary; no131 replay or unknown-sidecar cleanup is authorized.
+
+## Corrected actual133 installed entry
+
+Fresh generation133 granted11:19:33UTC after132 exact restoration/release.
+Frozen362-input c0728b58 kit and complete SOURCE2 closure matched. Extender
+preserved all19 PRE files (ten present/nine absent), both originally absent
+directories and original absent feature before helper writes. Original owner21491
+returned0; its exact structured tool return is directly retained. Stage/flash/
+verify children and owner PID/group joined, actual character USB ports free.
+
+Exact identified f05c matches the complete131072-byte independent readback;
+candidate-map rawmode0/callback0/Legacy0, whole startup/listener, actual CLI,
+neutral input and offline idle worker passed. Actual OWNERENTRY2 and original
+stage budget passed the corrected caller admission before stopped sole-Mech
+handoff95. No CPU/timer result follows from installed readiness. Native/P4 and
+shared scripts/backups remain unchanged; original2400 clock and same-lease
+incominga25f/PRE19/feature/directory/fullhandback obligations remain active.
