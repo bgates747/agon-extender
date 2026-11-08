@@ -1,6 +1,6 @@
 # NET-004 — Optional UART0 receive witness R01
 
-EMOS will optionally retain a small receive witness in application RAM so a stopped consumer can distinguish bytes received, packet framing, and callback acceptance. The missing FRAME reply in actual104 and the later UART1 error remain separate unresolved observations. This preparation authorizes source and native checks only; no physical case, deployment or new reservation is selected.
+EMOS will optionally retain a small receive witness in application RAM so a stopped consumer can distinguish bytes received, packet framing, and callback acceptance. The missing FRAME reply in actual104 and the later UART1 error remain separate unresolved observations. The checked preparation was subsequently selected for one R12 diagnostic consumer, actual108, as recorded below; no successor is implied by that historical selection.
 
 ## Scope and ownership
 
@@ -32,3 +32,10 @@ Official read-only baseline checked2026-11-07: MOSv3.0.2/8336409351ee5314e02801a
 Source/native preparation complete under direct human GOAL/resume and owner delegation G01-U0-001. The [checked result](EMOS-UART0-RX-WITNESS-R01-RESULT.md) records exact costs, controls, map/lifetime and limits. No physical case or deployment selected. Component/hardware/production selection unchanged; generated artifacts remain local and publication hold persists.
 
 Coverage is IRQ-only, before parser consumption and before raw completion filtering. It does not cover polling receive or callback acceptance. Command/remaining may be stale outside their valid parser states. Record must not alias client/source/code; span checking does not establish alias safety.
+
+
+## Actual108 diagnostic outcome
+
+The separately frozen R12 caller used the final3bb38d witness image and exact f1de native/map. Full131072-byte installation/readback and stopped sole handoff passed. The one original run failed its150s CLI observation after318 host frames/317 intents and TCP EOF. Root actors joined before owner recovery. One Agon recovery restored CLI; the64KiB RAM image is explicitly post-reset and was saved before any later LOAD/write. It matches immutable caller bytes and contains raw UART0 LSR0x63/OE+DR with pre-parser[2,6,7]; this software label does not authenticate a MODE packet after possible earlier loss. First renderer reply deadline and error witness have no common timestamp or proven causal order. No original hook retirement, coherent live snapshot, global no-error or timing pass is inferred.
+
+Exact incominga25f rollback, full readback and fresh normal CLI/state/files/input/resources passed; actual108 released00:45:33.630970UTC. Frozen source/package evidence remains unchanged. Further owner source work is tracked separately in [UART0 receive reserve](UART0-RX-RESERVE-R01.md); this result selects no replay, installation or successor case.

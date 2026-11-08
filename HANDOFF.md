@@ -1,3 +1,110 @@
+# Current — actual111 sole Agon6502, temporary F6 graphical DOS scope
+
+Fresh actual111/8427f9f845d1 is centrally agon-6502, sole operator through exact
+native restoration and release. All Extender targetaccess/readers/commandsSTOPPED.
+Grant/context/stoppedhandoff under agents/bench-scheduler/dsk001-ui-dos-r01.
+Frozen149/cf2aeb56/21files and current110release/d9b/a25f/native5d657/ed403/0566
+reconciled; freshCLI/rawmode0/callback0/Legacy0/files/inputneutral/offlineidle/
+freeUSB pass. Explicit temporary retainedF6 f2c083 app-only0x10000 scope after
+actualboard/partition/image binding, full1105920B installedexpected7f46readback;
+ONE graphical UiSave/UiReload privatewc04 pair, original180s perapp/1200swhole.
+PartiallyprunedoriginalF6source is an explicit retainedlineage/no-rebuild limit,
+notproduction acceptance. Exact85f9 fullapp/tail restore/readback/nativeprefix5d657
+and fresh input+CLI/state/files/resources/allactorsjoined/normalrelease required.
+No P4/MOS/startup/listener change, no replay/HOLD/newcase; SDmounted.
+
+UART0 reserve source/native7e1c7a3/ROM1e4e54dd/Open4 complete, package52abd7c3
+verified; compiler545 released and546 steered. Root now selects new owner overlap
+fixture/controller preparation then ONE case only after fullqualification/freeze,
+normalfreshadmission after111. Old serialized176comparator is not that case.
+No UART0 physicalrequest/grant yet; sourcepreparation continues only, no parallel
+benchaccess. Publicationhold persists; earlier headers historical.
+
+# Current — actual110 card deployment released; UART0 source/native qualification
+
+Actual110 cleanly released2026-11-08T01:12:40.005997Z, nextnull. The three
+human-requested MoonPatrol files at /mystuff/arcade/moonpatrol independently
+read back byte-identical (MP003.bin147631B/eab950f8). No program invocation,
+firmware/reset/mode/route/startup change or unmount. Whole startuped403 and
+listener0566 preserved; fresh listenerEXIT/CLI/inputneutral/offlineworker/freeUSB.
+Receipt agents/deploy/mp003-card-r01/receipt.json returned to Rally+steering.
+Actual109 DOS handback independently reconciled before this checkout. All
+Extender targetaccess STOPPED; currentd9b/a25f/native5d657 retained, SDmounted.
+
+Selected source-only UART0 reserve work now has isolated source7e1c7a3 and
+compiler545. New default-OFF scoped RTS ownership and bounded IRQ-only UART0
+bursts preserve foreground callback context; shared UART1/foreground leaves
+hold only. Exact old witness ROM reproduction passes; witness+reserve exceeds
+physicalROM and the explicit APP-only fit/check is in progress. ABI decision
+is not yet final/qualified, no physicalcase/install/defaultadoption. Exact native
+CTS support intended, numeric postSTOP/inflight reserve remains unproved.
+Source/evidence agents/net004/uart0-rx-reserve-r01; publicationhold persists.
+Earlier headers historical.
+
+# Current — actual109 released; idle bench, source-only RX correction active
+
+Actual109 cleanreleased2026-11-08T00:57:29.851429Z/nextnull/allactorsSTOPPED.
+Both originalDOS app logs reportstatus0;73frozeninputs/wholefiles/native0/callback0/
+Legacy0 and originalfreshrootCLI/inputneutral/offlineidle/freeUSB handback reconcile.
+Full6Bprogramrecord/234496BWOZ retained; consumer independentcatalog analysis is
+separate, not inferred from logs. No reset/replay/firmware/mode/graphicsaxis.
+Record agents/bench-scheduler/dsk001-original-dos-r01/reconciled109.json.
+Currentd9b/a25f/native5d657/ed403/0566 unchanged, SDmounted, targetaccessSTOPPED.
+
+Actual108 failedoriginalR12 remains historical: oneAgonrecovery, explicitpostreset
+RAMdcccfee8 beforelaterLOAD/write, exacta25frollback/fullreadback/release00:45:33Z.
+Root selected source-only UART0RX-first/hold correction; exactnative5d657/e9d709
+source/ELF/SDK facts pinned, intendedduplex0101/value1 but no certifiednumericCTS
+reactionmargin. Concrete boundedqual proposal follows source/nativechecks; no
+currentprobe/physicalcase/default or genericRX-005prototype selected. New clean
+source03e05c2 clone under agents/net004/uart0-rx-reserve-r01/source; no codebuildyet.
+Publicationhold remains, earlierheadershistorical.
+
+# Current — actual108 restored/released; actual109 sole Agon6502
+
+Actual108 cleanreleased2026-11-08T00:45:33.630970Z after ONE ordinaryAgon recovery
+(no pairedP4reset), explicitPOSTRESET64KiB040000 RAMdcccfee8 preserved before
+laterLOAD/write, originalnamespacedSDdiagnostics absent, existingfeaturecleanup,
+ONE exactincominga25frollback/full131072Breadback/freshcompletehandback. Original
+R12CLI150/TCP EOF outcome/cause remainunknown. RawUART0OE sourceassessment
+returned, no causal/lifetime/coherentrecord or performance acceptance.
+
+Fresh actual109/8f797545f81d now solely agon-6502 for ONE ordered originalDOS
+DosSave thenfreshDosReload pair, privatewc03/WOZ only. All73frozeninputs/1c8c
+and keyboard/file/corebridge sourceABI/placement reviewed; freshCLI/readEXIT/
+mode0/callback0/Legacy0/files/inputneutral/offlineidle/freeUSB pass. Grant/context/
+stoppedsolehandoff under agents/bench-scheduler/dsk001-original-dos-r01 delivered
+bydurablemail+steering. ALL Extender targetaccess/readers/commands STOPPED.
+Originalperapp180s/600swhole/instruction+MOStick bounds, firstfailurestops successor,
+no replay/HOLD/graphics/VDPlet/F6/firmware/reset/mode/timer/asyncaxis. Ownerretrieves
+bothlogs/programrecord/wholeWOZ/offlineobserver thenfullstate/files/cwd/CLI/input/
+resources/allactorsjoined/normalrelease. d9b/a25f/native5d657/ed403/0566 retained,
+SDmounted. Publicationhold remains.
+
+Selected nextMech ownerwork is SOURCEONLY UART0receive reserve/boundedRX-first:
+closeexactnativeRTS/CTS/wiring/polarity/inflight/ownership first, then smallest
+qualifiedderivative andfiniteisolationproposal; no newphysicalcase/defaultadoption.
+Include repeatedoneUART0byte→fullUART1exit-tail servicecost, notonlysingleDIspan.
+GenericUART RX-005 remains stopped for its review; no genericprototype selected.
+Earlier headers historical.
+
+# Current — actual108 sole Extender recovery/restoration
+
+Mech R12 actual108 originalCLI150 expired after318hostframes/317intents/TCP EOF.
+All original tool/hostactors/readers joined; exact stoppedreturn/evidence accepted,
+context owner-restore/operatorlinux-extender. First bounded originalCLI check
+received no prompt; no originalliveRAM or coherentstoppedrecord claim. ONE
+standing Agon recovery is in progress, no replay/newcase/firmwarewrite. Onlyif
+thatfails may standingpairedcurrentrecovery follow. Then explicitpostreset64KiB
+040000 RAM and namespaced SD evidence must be preserved BEFORE any laterLOAD/
+firmwarewrite, followed by existingfeaturecleanup/exactincominga25frollback/
+fullreadback/freshhandback/normalrelease under SAME108. Root targetSTOPPED.
+Evidence agents/bench-scheduler/mechagon-goal001-r12-eedc. Originalkit3c4e and
+failures retained; current3bb remains installed until verifiedrollback. P4d9b/
+native5d657/startuped403/listener0566 unchanged, SDmounted. No root performance/
+retirement/causeclaim, no HOLD. Nextqueued6502 originalDOS case has no grant.
+Publication hold remains; earlier headers historical.
+
 # Current — actual108 installed and solely handed to MechAgon R12
 
 Actual108/eedc220f00af is centrally MechAgon's, phaseconsumer/operatorMechAgon.
