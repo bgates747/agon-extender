@@ -441,3 +441,17 @@ combined original600cleanup and2400whole honored. Normal release
 invalid. Exact original artifact descriptors and real release sent to root140;
 next FSIM2d7/STOP38 notified141 with immediate steering. Saved-only root decoding
 begins only after this real release; no CPU percentage or capacity pass claimed.
+
+## Actual140 saved-only CPU interpretation returned
+
+Mech published411a566 after real release: unchanged reader653 accepts the
+original96/128-byte products through its fifteen separately documented external
+associations. Reviewed RESULT140.md and DECODED140.json; retained peer return51.
+This adds a genuine partial sample, leaving the original CRCRLF phase FAILED.
+Observed35251 counts/489.597 nominalms retain PARTIAL_BOUNDARIES|UNKNOWN_GAP.
+Recorder3329 counts/46.236 nominalms/9.44% materially perturbs that sample; nested
+UART IRQ counts are not added again, and logicalHALT is not usable bot capacity.
+Mech's995 native/module/encoded host turns join exactly, while host mean
+29.9990904Hz remains strictFAIL. No full CPU percentage, headroom, optical result,
+replay, owner implementation or new physical case follows. FSIM actual141 remains
+sole target owner; Extender performed only local evidence/document review.

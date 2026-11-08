@@ -279,3 +279,27 @@ original artifacts for saved-only decoding after release; malformed, missing or
 invalid CPU products must remain unknown. The original live phase remains failed
 regardless of later data interpretation. FSIM's prepared successor requires a
 new normal admission and receives no implicit target access from this release.
+
+## Saved-only actual140 interpretation returned
+
+After release, Mech published411a566 with its unchanged653 reader accepting the
+original96-byte record and128-byte context through fifteen documented external
+source/lifecycle associations. Extender reviewed the returned result and decoded
+record; this is retrospective analysis of the original products, not a repaired
+collector phase or another target operation. The flags remain
+PARTIAL_BOUNDARIES|UNKNOWN_GAP, with omitted boundary time unquantified.
+
+The observed35251 descending counts correspond to489.597 nominal milliseconds
+at72000 counts/s: foreground12343, gateway1713, IRQ8935, logicalHALT8931 and
+recorder3329. UART0/UART1/VBlank subdivisions are already inside IRQ. The
+recorder's46.236 nominal milliseconds constitute9.44% of the observed span and
+materially perturb the sample; they are not a full overhead correction. Neither
+logicalHALT nor foreground establishes useful bot capacity or full CPU occupancy.
+
+Mech's encoded host/native/module association covers995 matching turns without
+gaps, repeats or coalescing; the999 console view records include non-FRAME
+records. Host mean29.9990904Hz still fails the strict mean-at-least30 rule.
+Original live99015 remains FAILED on CRCRLF; no post/idle/cold-collector receipt,
+replay, physical acceptance or new case is inferred. The peer result resides at
+MechAgon docs/tasks/GOAL-001/cpu-window-result140-r01/RESULT140.md; the complete
+return is retained with the owner evidence. FSIM retains sole actual141 custody.
