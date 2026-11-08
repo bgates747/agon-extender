@@ -1,4 +1,38 @@
-# Current owner continuation — actual116 sole Mech cached replay
+# Current owner continuation — actual117 sole Agon6502
+
+Actual116 ONE902scene replay passed allthreeoriginalphases,31calls/936B product,
+positiveCLI/source-drain-callback retirement/postgetter/fullidle. Exactincoming
+8files andbothfeaturepre/postaux restored/independentGETcompared, originalabsences
+restored onlyaftercurrentbytes matchedretainedsource/results. FreshrootCLI/cursor/
+mode0/callback0/Legacy0/wholefiles/inputneutral/offlineworker/freeUSB pass. No new
+LOAD/reset/firmwarewrite/replay duringcleanup. Actual116 clean RELEASED03:37:50Z,
+original74240exit0/allExtendertargetactorsstopped/oldtokeninvalid. Native85f9
+honestlyjoins115restoration; fresh116entryfulla25f retained. Nominalthroughput
+remains nonoptical/nonCPU/nonuniversalmax; independentrootanalysis separate.
+Evidence/released.json under agents/bench-scheduler/mechagon-replay-r01. Normal
+release/actualnext notifiedbothowners before nextadmission/offlinework.
+
+Fresh actual117/cd8c0fb7508c soleagon-6502 afterall283/f36c/current116handback and
+freshCLI/readEXIT/SAVE-onlymode0/callback0/Legacy0/files/inputneutral/offlineidle/
+freeUSB. Originaladmission55736exit0. Context/grant/stoppedsolehandoff under
+agents/bench-scheduler/dsk001-two-drive-wait-r02; grant16 durable/immediatesteer
+accepted. ALL Extender targetaccess/readers/pendingcommands STOPPED.
+ONE separatewc07pair/22files samecontroller/oracles/19unchangedassets, only
+sourceguard18000->36000 units (compiledthreshold17999->35999 twoimmediatebytes
+perapp),360sexternalperapp/67Minstructions/1800whole fromoriginalnewgrant.
+No furtherautomaticboundescalation/replay/HOLD/newcase/114PASSrelabel. Same
+narrowtemporaryF6/7f46installedspan/exact85f9restore/nativeprefix5d657/current
+inputepoch+actualCLI/fullhandback/allactorsjoined/normalrelease/cardmounted.
+OriginalF6partialsourceexportlimits remain. No P4/EMOS/startup/listener/PRT/
+baud/async/audioaxis. Waitactualjoinedreturn/release before anynexttargetaction.
+
+FSIM394 READ16/emulator580kit milestones retained/source-only. No newer generic
+Benchfacade selected; maintainedclients/procedures and concrete stagedPUT-versus
+fixturebyteverification limits returned. Its supervisor/finalkit/layout/unknown
+tail/physicalqualification/admission remain future, no FSIMreservation/grant.
+Localcommits/no-push; preserve unrelateddirtyTODO/2026-11-04/BENCH-010 work.
+
+# Previous owner continuation — actual116 sole Mech cached replay
 
 Actual115 normal release03:17:50.294335UTC independently reconciled: bothoriginal
 retained-error apps PASS afterfiveactualmodalkeys, allfiveoperators/children/
