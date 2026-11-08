@@ -83,3 +83,31 @@ requires a real normal R03 reservation and creates a new sibling runtime packet.
 Actual admission, complete source/current tuple, installation/readbacks, original
 window and joined stopped handoff remain necessary before the UART-owned suite.
 The own hardware comparison and later selected consumer trials remain outstanding.
+
+## Actual129 bounded attempt and restoration
+
+R03 installation completed the selected full EMOS/native readbacks and corrected
+bootstrap. The original host tool returned143 despite all four target phases
+returning0 and writing completed receipts; that discrepancy remains unresolved.
+A separate narrow fresh CLI/files/read/EXIT/input/idle exchange returned0 within
+the original owner window, without reinstall/reset/test. All original groups
+were independently terminal before the actual sole UART handoff.
+
+UART staged four files with exact readbacks and sent one suite EXEC. Its original
+180s terminal-listener observation expired; the original consumer exited1 and
+returned joined custody. Extender retained passive pre-reset evidence, but could
+not authenticate a safe original-RAM CLI path. Exact incoming native prefix was
+restored FIRST/full independent readback. Ordinary Agon admission failed; the
+standing single paired P4-init/Agon recovery succeeded. Available original
+fsynced log/next files were retrieved. The131072-byte RAM capture is explicitly
+postreset before later LOAD, not original failure RAM. Exact incominga25f full
+ROM/readback and fresh whole-file/CLI/cursor/rawmode0/callback0/Legacy0/input/idle/
+freeUSB handback passed; all original and cleanup actors/groups joined.
+
+Actual129 normally released10:10:35UTC before its original whole deadline. No
+replay or firmware-cause claim follows. The recovered original log does contain
+all ten correctness passes,36 benchmark cells and terminal SUITE PASS. UART's
+source analysis identifies its command-file SAVE address/length radix mistake:
+unprefixed0447CF/+000020 fails decimal-default parsing and cannot provide the
+intended32-byte witness. Original host/completion failure and postreset evidence
+limits remain; correction and any separately admitted confirmation belong to UART.

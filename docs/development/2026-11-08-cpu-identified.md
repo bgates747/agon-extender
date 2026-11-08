@@ -125,3 +125,33 @@ Request/grant remain NULL; the source binder requires an actual new normal R03
 reservation and creates a sibling runtime packet. Full source mail71/immediate
 steering returned to UART, which owns reservation after rehash. No bench access,
 new installation, consumer execution or replay occurred during this preparation.
+
+## Request-local CPU source and actual129 closure
+
+Prepared the separate CPU-window request-local30-input wrapper, identified-map
+installer, PRE17/feature/directory preservation, stopped handoff finalizer and
+restoration contract. Actual context URL/MAIN/P4 now replace imported historical
+routes before preservation/getter. Short inert controls confirm replacement and
+reject missing URL/duplicate ports; original SOURCE1/646 artifacts remain frozen.
+No new build, runtime timer, firmware install or CPU observation. Final45eb3c53
+packet returned with durable mail78/immediate steering; caller owns final freeze.
+
+RX006 actual129 original installer returned143 after completed target phases0;
+independent actor closure and a separate fresh CLI/files/idle exchange0 supplied
+the honest handoff. Consumer one-EXEC terminal-listener timeout returned stopped;
+original tool51504 exit1 retained. Exact85f9 native prefix restored FIRST/readback,
+then Agon-only admission failed. Standing paired current recovery passed. Partial
+fsynced log/next retrieved;128KiB capture explicitly postreset before later LOAD.
+Remaining-only continuation restoreda25f/fullROM and fullfreshhandback; cleanup
+7959 exit1 and46276 exit0 retained, no repeated native write or suite. Normal
+release10:10:35.784715UTC/allactorsjoined/freeactualUSB/SDmounted; old token invalid.
+Recovered original log includes10 correctness passes/36 cells/SUITEPASS. UART
+identifies its SAVE radix wrapper defect; failed completion is not rewritten.
+
+Canonical FSIM next received fresh130 at10:12:52.682025UTC after CLI/rawstate/
+wholefiles/input/idle/freeUSB admission66134 returned0. Qualified matched three-arm
+source/current tuple/full8519 suffix continuity were bound file-only. Exact normal
+foreground argv/current grant/layout and stopped sole handoff sent79/immediate
+steering; Extender target access stopped. Original2400s shared clock/600cleanup,
+three selected arms and firstunexpected stop remain. No FSIM execution/result is
+claimed by scheduler admission; Mech CPU window retains its queued turn.
