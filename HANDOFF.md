@@ -1,4 +1,35 @@
-# Current owner continuation — actual115 sole Agon6502
+# Current owner continuation — actual116 sole Mech cached replay
+
+Actual115 normal release03:17:50.294335UTC independently reconciled: bothoriginal
+retained-error apps PASS afterfiveactualmodalkeys, allfiveoperators/children/
+groups and driver/readers/programmers/staging joined, exact85f9fullreadback/
+nativeprefix5d657/fresh6216/CLI/state/files/resources pass. Offlineobserver remains
+consumer-owned; no performance/production/human or normal-app-fit claim.
+
+Fresh actual116/request31ab centrallyMech, originalgrant03:21:41.313421UTC,
+operatorMech/consumer after ownerprep92911exit0. ALL Extender targetaccess,
+readers and pendingcommands STOPPED. Sourcekit504/3fd9 unchanged. Context/grant/
+stopped-operator-handoff and actual-binding under agents/bench-scheduler/
+mechagon-replay-r01; grant26 durablemail/immediatesteer delivered. Rootsole ONE902
+uncapped pass through exactfrozen phases;3000whole/600cleanup/remainingfloors,
+no firmware/reset/network/U1/sourceaxis/replay/HOLD. Do not accessuntilactual
+joinedstoppedreturn; nextownerpreservation/feature/files/native-spanverification/
+fullhandback/release on same116 afteractualoutcome.
+
+Immutable MGREPLAYOWNERENTRY1 retains incoming8files+auxfeaturepre, explicit
+supportedgetterutility LOAD/RUN4999pre/positive snapshotfeatureabsent, freshfull
+a25fROM/state/wholefiles/CLI/input/idle/freeUSB. Whole85f9native-span descriptor
+joins actual115 independentrestoration honestly, not invented newbackup. Frozen
+collector.binding/phase.entry_proof and preparephasefloor passed elapsed88.777s.
+Incomingfournew replayassets/native/module/clip andcompiledreplay-native.bin were
+absent; getter/startup/listener were present/preserved. Finalownerrestore must
+use entry.files and auxiliary-files plus root-preserved priorpostgetter artifacts;
+do not overwriteunknown userfiles or repeatcoldSAVE/uncertainRUN.
+
+Source451 prospectivePRT1 andFSIMKEY10/READ16 constraints remain recorded, no
+newcase or componentchange. Localcommits/no push; unrelateddirtpreserved.
+
+# Previous owner continuation — actual115 sole Agon6502
 
 Fresh actual115/request0d02485aedb0 is centrally agon-6502, soleoperator. Exact114
 fullrestoration/release/currenttuple and freshCLI/readEXIT/SAVE-onlystate/files/
