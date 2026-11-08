@@ -146,3 +146,32 @@ registered descendants/groups joined. Actual132 normally released11:13:34UTC,
 old token invalid, all target access stopped, SD mounted. No replay, tuning,
 production promotion or new test was selected by cleanup. Both129 and132 evidence
 remain in their original ignored records; the next normal request is Mech596.
+
+## First selected Rally consumer preparation
+
+After FSIM134's full-span restoration, release and original actor closure,
+Extender admitted a separately queued Rally helper comparison as actual135.
+One owner installation passed all four phases, full171c ROM and7d09 native-prefix
+readbacks, matched bootstrap and fresh CLI/state/files/input/resource checks.
+Original installer35029 returned0 and all registered groups joined.
+
+The stopped handoff's steering delivery was delayed during session recovery.
+Rally received an expired observation and correctly did not launch its consumer:
+no process, output directory, staging or target action. The remaining original
+budget could not fit a genuine fresh check plus the required launch allowance.
+Actual135 is therefore entirely UNRUN, with no hardware-failure verdict. Extender
+retains sole custody for exact native-FIRST/a25f restoration and full handback;
+the original clock and queued successors remain unchanged. No pass, replay or
+production adoption follows from the successful installation.
+
+Actual135 normally released12:14:18UTC. The exact native rollback write returned0;
+its first independent read was interrupted with parent143/read child-15 and all
+registered groups joined. A local continuation stopped at keyboard readiness
+while the native processor remained in programmer state, before programming.
+Automatic review rejected a combined continuation; it was not executed. A
+smaller supported read-only operation then returned0 and compared the entire
+1105920-byte prefix, without repeating the write. The final maintained bootstrap,
+exacta25f/full131072-byte readback and full fresh handback passed. Final tool36886
+returned0; every original/read/cleanup actor joined, outer12288-byte suffix stayed
+untouched, SD remained mounted. The helper stays UNRUN; no sender/cause claim is
+made for the interruption. The normal queued6502 helper is next.

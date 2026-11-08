@@ -296,3 +296,39 @@ Request/kit/qualifiedR05 NULL/notrunnable; no newbuild/targetcase. Returned with
 immediate steering. RX001 future controller original1800/540/420/600/min1020/
 EXEC780 bounds selected source-only101, same171c/7d09/provenance/afterlaunchactor
 contract, no activeextension; normal requestdfcc follows protectedFSIM/Rally.
+
+## Qualified dual-getter closure and uninvoked Rally attempt
+
+Actual668 caller R05/88 controls binds request9267 to final owner SOURCE3
+bf1ebf5b/21023 bytes/50 inputs. Thirteen inert owner controls and the actual
+freezer's53 joined bindings pass. Baseline global5ab/a25f PRE checks run before
+any getter LOAD; scoped fad610/f05c belongs only to the later consumer. PRE20,
+ENTRY3 and original API/firmware/protection contracts are preserved. Root's
+KIT3 f9f0c850/111968 bytes/502 inputs is source-ready behind protected peers,
+with no runtime or capacity claim.
+
+FSIM134 normally released11:48:23UTC after full8519 restoration/readback and
+full handback; original33684 returned0 and actors/groups joined. Fresh Rally135
+admission and one temporary171c/7d09 installation passed, original35029 returned0
+and all four phases/groups joined. A session-recovery delay prevented prompt
+handoff steering. Rally received stale evidence and never launched or contacted
+the target. With insufficient original launch allowance for a genuine recheck,
+the helper is UNRUN and sole Extender exact native-FIRST/a25f restoration is
+selected. No installation failure, consumer result, clock extension or replay.
+
+Actual135 cleanup wrote the native prefix once/return0. The first read stopped
+with parent143/readchild-15/alljoined; no sender cause established. A continuation
+required unavailable keyboard admission in programmer state and stopped before
+programming. Automatic review rejected a combined bypass; that rejected script
+never ran. Separate read-only55620 returned0/full85f9 comparison, then supported
+bootstrap/exacta25f/full131072 readback/fresh fullhandback completed36886 return0.
+All actors/groups joined, outer12288 unchanged/8519 lineage, SD mounted. Normal
+release12:14:18.642869UTC invalidates135 token; Rally110/next6502-111 substantive
+mail and immediate steering sent. The helper remains UNRUN from expired delivery.
+Future correction requires real consumer READY before final owner observation
+and separately bound expected new request, preserving original app/SD bytes.
+
+Next6502 source-only85-input packet binds the reviewed real-client helper,
+unchanged171c/7d09/source60002 and selected1800/540/420/120/600 budgets. A separate
+SOURCE2 amendment points admission to the successful actual135 read-only proof,
+preserving the original source packet. No consumer/app changes or extra build.

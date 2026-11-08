@@ -183,3 +183,20 @@ Request, kit and qualified caller derivative remain NULL; no runnable source
 closure or actual grant/readiness is claimed. Exact qualified R05 interface and
 normal reservation still precede wrapper/restorer binding and final freeze.
 Source return102 and immediate steering preserve active FSIM134 and later FIFO.
+
+## Bound R03 source closure
+
+The separately reserved R03 request now binds qualified caller R05/668 to a
+SOURCE3 packet: 21023 bytes, SHA256 beginning bf1ebf5b, with 50 nested inputs.
+The real caller freezer validates 53 joined bindings; 13 short inert owner
+controls pass. Actual getter roles are flattened descriptors from the qualified
+caller. Owner PRE refuses a candidate-ROM context, absent global getter or changed
+baseline bytes before LOAD. ENTRY3 preserves those roles and PRE20. The consumer
+alone stages the case-local candidate getter after f05c verification and stopped
+handoff. Original SOURCE1, frozen earlier cases and public baseline stay unchanged.
+
+The caller's final immutable KIT3 is 111968 bytes, SHA256 beginning f9f0c850,
+with 502 inputs. This is source readiness only: normal FIFO predecessors must
+finish restoration/release before fresh admission. No grant, install, CPU window
+or capacity result follows. One old ENTRY2 label in the frozen restoration text
+is a documented typo; executable interfaces and admission require ENTRY3.
