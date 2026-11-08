@@ -1,33 +1,39 @@
-# Current owner continuation — actual114 sole Agon6502, 2026-11-08
+# Current owner continuation — actual114 released, next source closure
 
-Actual113 R13 cleanly released02:27:00.598987UTC. Original native/game result0,
-786frames/789decisions/positive source/TEMT/CLOSE; later coldSAVE after-marker
-capture incomplete (observed DU/Invalidcommand), cause unknown. Original64KiB
-RAM4284f928 and existing64B poisonf5a5fd42 independently match before getterLOAD;
-no recovery reset or replay. Qualified preservation113-qualified.json corrects
-inherited conservative exitunknown wording without changing the raw receipt.
-Featureabsence and declared legacy file restoration passed. Exact incominga25f
-full131072B readback and fresh CLI/cursor/state/wholefiles/resources passed.
-Original restoration tool56919 exited0, old113 token invalid. Evidence under
-agents/bench-scheduler/mechagon-goal001-r13; fullrelease notified both owners.
+Actual114 cleanly released02:52:44.366581UTC within1200s/allactorsjoined/oldtoken
+invalid. Exact incoming1105920B85f9 native/tail readback and1104176B5d657 prefix
+independently rehashed. Fresh6212/rootCLI/cursor/mode0/callback0/Legacy0/wholefiles/
+inputneutral/offlineworker0/freebothUSB handback passed, SDmounted. Retained
+working tuple d9b/a25f/native5d657/ed403/0566, no P4/EMOS/startup/listener change.
 
-Fresh actual114/request294ca96301fa centrally agon-6502, sole hardware operator.
-Grant/context/stoppedhandoff under agents/bench-scheduler/dsk001-two-drive-r01.
-All220/808032fb inputs and actual113 release/currenttuple independently joined;
-freshCLI/readEXIT/SAVE-onlymode0/callback0/Legacy0/files/inputneutral/offlineidle/
-freeUSB admission passed. Original86761 exited0. ALL Extender target access,
-readers and commands STOPPED. One frozen graphical originalDOS TwoSave/TwoReload
-pair/privatewc05/22files,180sperapp/1200swhole from originalgrant. Temporary exact
-F6 app-only scope retains actualboard/partition binding, full7f46 readback and
-exact85f9 fullapp/tail restore/readback/nativeprefix5d657. Partly pruned source
-lineage is not a reproducible rebuild or production acceptance. No replay/HOLD.
-6502 owns restoration/freshhandback/allactorsjoined/normalrelease, SD mounted.
+Original TwoSave failed its execution bound atDrive2LOAD/phase7/key17/status15,
+after bothSAVEs and exactDrive1LOAD. MOS Volume timeout labels returnedstatus15,
+not an established physicalSDfault. TwoReload UNRUN/no replay. Five original
+RAM captures, both234496B images and864B log independently retained; see
+agents/bench-scheduler/dsk001-two-drive-r01/reconciled114.json. Source/data failure
+analysis stays with6502, no owner/device rerun requested.
 
-Next retained-error0d024 is separately prepared; Mech cached replay31ab follows,
-source templates only until finalkit/currentpredecessor/freshgrant. Working tuple
-after restoration is d9b/a25f/native5d657/ed403/0566. UART0 reserve owner112 finite
-health PASS remains distinct from113's strict30Hz/pose-coverage limits and cause.
-Local commits only, no push. Preserve unrelated dirty TODO/2026-11-04/BENCH-010.
+Centralidle; next0d024 retained-error then sourceREADY Mech31ab. Source-qualified
+retained-error215/d0e7 needs concrete nestedkey child timeout/join operator closure
+BEFORE its1200s grant starts. Frozen driver30s versus oldop180s could leave a
+nestedkeyboard process when onlywrapper killed; sourcequestion11 sent/steered to
+owner, no targetcall. Prepared admit.py under dsk001-retained-error-r01 refuses
+without exact operator-source-ready.json. No grant/HOLD/preemption/newcase.
+When actualoperator source arrives, review no-replay/pendingkey and groupjoin,
+then freshcurrenttuple/CLI/state/files/resources and actualnewgrant/stoppedsole
+handoff. ExistingtemporaryF6/7f46install/exact85f9restore/prunedlineagelimit apply.
+
+Replay31ab exact504/3fd97a91 and12finalcontrols independently verified; source
+assessment under agents/bench-scheduler/mechagon-replay-r01. Getterutility scope
+explicit, workinga25f/no firmwarewrite. Actualsamegrant MGREPLAYOWNERENTRY1,
+fullincomingfiles/feature/native-span/ROMproof and stoppedhandoff still required
+at its normalturn after6502. Original3000whole/600cleanup and phasefloor budgets
+unchanged. No sourcekit mutation, replay or extra approvalgate.
+
+UART0 reserve112 finitehealth and113 positivegame/strictcoverage/coldcollector
+limits remain recorded. Clock clarification:120counterunits/s derives2/VBlank,
+not120servicecalls/s; atnominal60Hz VBlank fallbackopportunities60/s. Localcommits
+only/no push; preserve unrelated TODO/2026-11-04/BENCH-010 dirt.
 
 # Current — actual111 sole Agon6502, temporary F6 graphical DOS scope
 
