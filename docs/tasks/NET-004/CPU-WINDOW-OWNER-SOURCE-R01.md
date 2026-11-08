@@ -58,3 +58,22 @@ The original request-independent packet remains unchanged. The request wrapper
 adds full1118208-byte native/tail rollback provenance and explicit restoration
 contracts. Native VDP and P4 remain unchanged for this CPU window. No compiler,
 installation, timer runtime, new firmware API or CPU measurement was performed.
+
+## First installed owner entry
+
+After FSIM's three-arm case normally restored/released, fresh generation131
+admission passed against the exact331-input frozen consumer kit. Extender
+preserved PRE17 whole-file byte/attribute/absence records, both original absent
+directories and original absent feature before helpers. The identified f05c
+EMOS installation independently matches all131072 bytes. Candidate-linked-map
+rawmode0/callback0/Legacy0, whole startup/listener, actual CLI/read/EXIT, neutral
+input, offline worker and free character USB ports passed. Native VDP/P4 and
+startup/listener remained unchanged; full native/tail rollback continuity joins
+FSIM's actual1118208-byte8519 restoration readback.
+
+Original admission and owner tools returned0; owner PID/group and all registered
+stage/flash/verify descendants joined. The frozen finalizer passed the actual
+PRE projection and original stage budget through the unchanged consumer
+admission before publishing stopped sole-Mech custody. No match, timer epoch,
+CPU result, production acceptance or performance claim follows from this entry.
+The original2400-second clock and same-lease restoration obligations remain.

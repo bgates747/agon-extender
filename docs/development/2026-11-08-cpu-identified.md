@@ -173,3 +173,28 @@ application/firmware, fresh directory/output, real offline manifest checks and
 six short stage controls pass. New reservation/grant remain UART-owned future
 work after FSIM/Mech. Source return81/immediate steering delivered. Original
 R03/129 packets and failures remain unchanged; no new RX execution.
+
+## Actual130 clean release and first CPU owner installation
+
+FSIM's matched three-arm case normally released10:37:56.919284UTC. Original
+62231 exited0; PID/group absent and children joined. Full1118208-byte8519 restore
+readback/current tuple/full CLI/state/files/input/resource handback independently
+joined; no speed/adoption result inferred by scheduler. Mech1282 became head.
+
+Rehashed exact43e49d2f/all331 inputs. Fresh incoming admission75274 returned0
+and normal131 granted10:40:24.918716UTC. Frozen owner22779 preserved PRE17
+(10 present/seven known absent), both original absent dirs and original absent
+feature before helper writes. Stage/one f05c FLASH/full131072 independent ROM
+comparison passed; candidate modeBC34D/callbackBC392/LegacyBCB29 raw states and
+whole startup/listener/rootCLI/input/idle/freeUSB passed. No native/P4 write,
+extra reset, match or timer probe. The tool returned0/all registered groups
+joined; frozen owner finalizer validated actual MGCPUWINDOWOWNERENTRY1 and
+original stage suffix budget against unchanged consumer admission.
+
+Actual stopped sole-Mech handoff84/exact five normal phase argv delivered with
+immediate steering. Original2400/600entry1200consumer600cleanup and phase caps/
+floors unchanged; one90/150/180match/one exclusive inactive-disposable PRT1
+epoch<=54000/no rearm remains consumer scope. All Extender target access stopped.
+Same131 a25f/allPRE17/feature/directory/fullhandback/release still mandatory,
+UARTe4d next. SD mounted. This records installed readiness, not CPU validity,
+capacity,30Hz or production acceptance. Existing failed and frozen work retained.
