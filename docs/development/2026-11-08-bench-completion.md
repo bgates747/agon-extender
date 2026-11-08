@@ -49,3 +49,28 @@ must produce a visible actionable block rather than fabricated success or a
 silent queue hold. No unattended polling daemon, force-release or blanket
 recovery permission was introduced. No commit, tag, firmware promotion or
 publication is claimed.
+
+
+## Subsequent live completion and queue progress
+
+Actual147 completed human-only staging and Smith's review, including a bounded
+key-detection repair and binary redeployment; FSIM released it normally after
+genuine human exit. Future FSIM hardware application invocation stays reserved
+to Smith.
+
+Actual148 then exercised the separate corrected 6502 quit/save/reload cohort.
+Both pixel/map probes, same-session DOS save, corrected quit and fresh app reload
+passed. Both saved-image analyses recovered the exact 58-byte guest program.
+These are finite functional checks, not optical or performance acceptance.
+
+Extender independently reconciled the consumer's parent-written wait-zero,
+reader-zero, 23 absent groups and terminal input journals. The selected cleanup
+ran through the maintained supervisor, restored the exact original native VDP
+prefix first, independently compared all 1,105,920 bytes, preserved the saved
+private disk, and verified normal boot, the full unchanged EMOS ROM and current
+CLI/input/resource state. Its actual parent-written wait-zero and joined groups
+were consumed directly by normal release; no duplicate successful-tool receipt
+was needed. Release completed at 22:27:56.830150 UTC with no next request, and
+Extender immediately mailed and steered the consumer. All target access stopped;
+the SD card remains mounted. No rejected operation, application or test was
+replayed. This provides live use of the repaired completion workflow.

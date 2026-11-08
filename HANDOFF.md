@@ -1,6 +1,28 @@
 # Local project handoff
 
-## Current — actual147 loaded for Smith's human review
+## Current — actual148 passed, restored and released
+
+The corrected 6502 cohort passed both pixel/map probes, DOS save, quit and a
+fresh application reload. Both disk analyses recovered the exact 58-byte guest
+program. These are bounded functional results; no optical or performance
+acceptance is implied. The consumer stopped all target access and its original
+parent-written wait results and 23 process groups were independently reconciled.
+
+Extender restored the exact original native VDP prefix first and independently
+compared all 1,105,920 bytes. Normal boot, full unchanged EMOS ROM, mode zero,
+zero callback/backend, preserved startup/listener, root CLI, neutral input,
+offline listener, idle worker and free serial ports passed. The saved private
+disk and original captures remain preserved; no additional application ran.
+Normal actual148 release completed at 22:27:56.830150 UTC with no next request.
+All target access is stopped and the SD card remains mounted. The consumer
+received durable mail and immediate steering. Exact custody and private evidence
+remain in the central registry and ignored local records.
+
+Actual147 had already completed Smith's human review, including the key repair,
+and released normally. Future FSIM hardware applications remain human-started
+only. Earlier sections below are historical and do not supersede this header.
+
+## Historical — actual147 loaded for Smith's human review
 
 FSIM reports the two background-only files staged and `CD`/`DIR`/`LOAD` returned
 to the actual prompt. Printer is off, input neutral, listener/worker idle and
