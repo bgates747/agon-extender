@@ -85,6 +85,13 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 
 ## Retained development and test helpers
 
+[`native_bootstrap.py`](native_bootstrap.py) is the source-bound experimental
+P4/Agon bootstrap candidate described by
+[its bounded correction record](../docs/tasks/BENCH-010/BOOTSTRAP-HTTP-R01.md).
+It requires an admitted owner and exact caller component binding; it is not a
+standalone command or a replacement for the reset procedure. Host controls pass;
+the corrected physical path remains unrun.
+
 These tools belong to their original bounded fixtures or studies. Before reuse,
 review source, selected payloads, paths, mode setup, current input/service handover
 and required observations in the owning task. Old LOAD/RUN listener recipes may
