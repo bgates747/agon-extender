@@ -1,3 +1,20 @@
+# Current — actual107 released; idle bench, Mech R12 preparing
+
+Actual107 released 2026-11-08T00:20:54.604995Z. Central active=null;
+Mech eedc220f00af is next, still PREPARING final caller/native/map/decoder/kit.
+No grant, install, hold or successor case inferred. Request-local source packet
+is ready under agents/bench-scheduler/mechagon-goal001-r12-eedc.
+
+Extender independently matched all27 frozen inputs, all13 named source checks
+against retrieved522B PASS13/0 result and serial, exact startup/listener and
+saved mode0/callback0/Legacy0. Original fresh CLI/cwd/input/offlineidle/freeUSB/
+allactorsjoined handback and centralrelease agree. Reconciliation evidence:
+agents/bench-scheduler/dsk001-write-core-r01/reconciled107.json. No new target
+contact or restamped observation; ALL Extender targetaccess stopped. No guest
+DOS/P6/powerloss/performance claim. d9b/a25f/5d657/ed403/0566 retained, SDmounted.
+Fresh new admission waits exact final qualified R12 kit. Publication hold remains;
+earlier headers historical.
+
 # Current — actual107 sole Agon6502; R12 source rebound
 
 Actual107/request899e77cf7eba is granted solely to agon-6502 for ONE frozen
