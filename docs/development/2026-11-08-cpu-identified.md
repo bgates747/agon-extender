@@ -259,3 +259,40 @@ stopped sole-Mech handoff95/normal five phase argv and immediate steering delive
 All Extender target access stopped, original2400/600cleanup retained; samelease
 exacta25f/PRE19 restoration mandatory. No owner match/timer probe or CPU result.
 Shared old scripts/backups/native/P4 unchanged, SD mounted, FSIMf7ba next.
+
+## Actual133 failed PRE getter, preservation and clean release
+
+Stage16311 passed53.061s, PRE71805 failed13.949s: baselinegetter5ab still embeds
+BC38E while f05c usesBC392. Status65529 follows the early null-handler check before
+INFO/VDP/buffer/feature traffic; no CPUapp/host/match/timer ran. Root source error,
+not an attributed EMOS/CPU/UART/filesystem failure. Root owns a separate candidate
+getter while preserving the baseline getter for owner PRE/afterrollback.
+
+Preservation16794 actual0: originalgetter128KiB040000..060000 SAVE-only before
+laterLOAD/reset, SHA1a285f1b; failedfeature/current19/source/serial retained. No
+CPUappRAM claim. Restore79492 actual0: original19/attrs/absence/two absentdirs,
+old sharedbackups untouched, exacta25f fullROM independentreadback and freshCLI/
+cursor/rawmode0/callback0/Legacy0/wholefiles/neutral/offlineidle/freeUSB. Original
+featureabsent via positive ownerPRE/no intervening feature setter/source branch;
+no wrongaddress callback proof. All84recorded rootIDs/knownparents absent with
+originaluntrackedUNKNOWN limit retained; all ownergroups joined. No reset/new
+getter/native/P4write/replay. Normal release11:35:54.553455UTC, notices98/99 and
+immediate steering delivered; SDmounted/oldtokeninvalid.
+
+FSIM witness35 source662 prepared pins/controller/package/native547ON validated.
+After133 release, fresh admission39187 actual0 and separate134 lease, actual
+layout/full8519rollback lineage/boundready/foregroundargv/stoppedsolehandoff100
+passed/delivered. Exact native app0 selected-span readback and full1118208B8519
+restoration/fullhandback/release remain FSIM scope under original1800/600cleanup;
+no scheduler firmwarewrite/reset/guest invocation. Author fast-assets limit
+preserved, afterlaunch actorregistration timing retained. All Extender target
+access stopped; Rallycaeae remains next after FSIM's actual release/admission.
+
+Source-only follow-up102: actual667 baseline5ab and candidatefad610 both13713B,
+exactly three map lowbytes8E→92 at2245/2275/2477 independently checked. Unbound
+R03 owner template34a63d8b/5588B separates baseline global/a25f PRE/rollback from
+candidate local/f05c consumer, projects PRE20/ENTRY3 and preserves old source/API.
+Request/kit/qualifiedR05 NULL/notrunnable; no newbuild/targetcase. Returned with
+immediate steering. RX001 future controller original1800/540/420/600/min1020/
+EXEC780 bounds selected source-only101, same171c/7d09/provenance/afterlaunchactor
+contract, no activeextension; normal requestdfcc follows protectedFSIM/Rally.

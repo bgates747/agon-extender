@@ -140,3 +140,46 @@ stage budget passed the corrected caller admission before stopped sole-Mech
 handoff95. No CPU/timer result follows from installed readiness. Native/P4 and
 shared scripts/backups remain unchanged; original2400 clock and same-lease
 incominga25f/PRE19/feature/directory/fullhandback obligations remain active.
+
+## Corrected case failed before CPU invocation; original state restored
+
+Actual133 stage passed, but PRE's separate feature getter failed before the CPU
+application, host, match or timer ran. The selected baseline getter embeds
+BC38E three times; f05c's actual callback is BC392. Its saved status65529 selects
+the early null-handler branch before INFO/VDP/buffer/feature requests. Root owns
+the consumer-specific correction and must distinguish the unchanged baseline
+getter used before installation from a case-local candidate-map getter afterward.
+No generic EMOS/CPU accounting defect or filesystem cause follows from this failure.
+
+Extender preserved the failed getter's original128KiB040000..060000 by SAVE-only
+before any later LOAD/reset, plus its feature, serial and exact source/binary.
+This is getter RAM, never CPU-app/match RAM. All19 current files were preserved,
+all original bytes/attributes/absences and directory state restored, shared old
+backups left untouched. Original positive absent feature plus the exact pre-VDP
+failure path supplies the no-intervening-setter provenance; the wrong-address
+restored flag is not accepted as actual callback proof.
+
+Exacta25f/full131072 independent readback and final actual baseline-map callback0,
+mode0/Legacy0/wholefiles/rootCLI/cursor/neutral/offlineidle/freeUSB passed. Original
+owner21491, preservation16794 and restoration79492 returned0; their structured
+results and registered group closure are retained. All84 recorded root IDs and
+known parent groups are absent; original untracked completeness UNKNOWN remains.
+No reset, new getter, native/P4 write or replay. Actual133 normally released
+11:35:54UTC; all target access stopped and SD mounted. FSIM's prepared successor
+received a separately fresh generation134 admission and stopped sole handoff.
+
+## Future dual-getter template
+
+Root qualification667 exactly reproduces the old13713-byte baseline5ab and
+source-builds the same-size candidatefad610. Independent owner byte comparison
+confirms only2245/2275/2477 change8E to92. An unbound5588-byte34a63d8b template
+separates global baseline/a25f/BC38E from case-local candidate/f05c/BC392 and
+projects PRE20/ENTRY3 for a future R03 namespace. Owner PRE/global-file checks
+must compare to the baseline descriptor; the consumer uses the candidate only
+after genuine f05c readback and stopped handoff. Original identified source/API
+and prior frozen cases remain unchanged.
+
+Request, kit and qualified caller derivative remain NULL; no runnable source
+closure or actual grant/readiness is claimed. Exact qualified R05 interface and
+normal reservation still precede wrapper/restorer binding and final freeze.
+Source return102 and immediate steering preserve active FSIM134 and later FIFO.
