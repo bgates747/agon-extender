@@ -17,6 +17,7 @@ currently installed firmware or a ready-to-run qualification procedure.
 | [serial_monitor.py](serial_monitor.py), [passive_serial.py](passive_serial.py) | Bounded capture and reusable joined-DTR/RTS opener; [serial capture guide](../docs/serial-monitor.md) explains the Agon USB reset hazard and tested scope |
 | [reset_agon_usb.py](reset_agon_usb.py) | One intentional reset through the commissioned Agon USB RTS/Q4 circuit; exact adapter identity, joined release and optional fresh-admission verification. The [reset guide](../docs/bench-reset.md) owns startup checks and actual CLI handback |
 | [agentcoms.py](agentcoms.py) | Durable agent mailbox; machine-local `agentcoms.md` supplies participants/endpoints. Messages do not expand Author authorization |
+| [bench_process.py](bench_process.py) | Host-only durable child results, bounded cancellation, status and unattended failure notification; [completion and recovery](../docs/procedures/bench-completion.md). Tool handles are correlation, not a second process-result requirement; physical release checks remain separate |
 
 Use the local project's Python environment on Linux. The operation guide covers
 Mac clients and local journal paths. A command's `--help` describes syntax, not

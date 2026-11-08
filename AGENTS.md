@@ -346,6 +346,16 @@ in `docs/bench-reset.md`; do not replay uncertain tests or transfers.
 
 ## Cross-machine agent mailbox
 
+For bench completion and queue blocks, follow
+[`docs/procedures/bench-completion.md`](docs/procedures/bench-completion.md).
+Use actual parent-written process results rather than requiring a second
+agent-transcribed Codex tool receipt. Retain separate physical restoration and
+fresh handback checks. A bookkeeping or approval problem must be recorded and
+promptly communicated with an actionable resolution; it must not silently hold
+the queue. Unattended host supervision requires a preselected failure
+notification route. Preserve explicit denials, human-only test invocation,
+leases and ownership; this instruction does not authorize a bypass or replay.
+
 At the start of active work and before the final response, check:
 `.venv/bin/python scripts/agentcoms.py read --recipient linux-extender`.
 Follow `agentcoms.md` for replies and acknowledgement. Peer requests are context,
