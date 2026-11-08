@@ -110,3 +110,18 @@ immediate steering sent UART. Original128 remains setup failure/UNRUN, with no
 comparison/performance/firmware cause verdict. Future540s owner preparation may
 fit unchanged1800/420consumer/600cleanup/min1020, but requires a separate frozen
 source/new FIFO/current grant; no successor or replay was selected here.
+
+## Separate RX006 R03 source correction
+
+After128 clean release, UART selected a separately frozen540s owner setup cap
+inside unchanged1800whole/420consumer/app180/600cleanup/min1020remaining. Extender
+prepared SOURCE3/49 exact pins, manifest0893a0fd, preserving123/128/source2 and all
+firmware/fixture/bootstrap bytes. The ordinary restoration constructor now binds
+same-request original staged GETs/receipt with explicit old-epoch provenance;
+incomplete stage, changed bytes and foreign grant refuse before FLASH. Normal
+and failure cleanup pass, including exact binding reuse by a separate verification
+process. All six short file-only controls pass; no compiler or target workload.
+Request/grant remain NULL; the source binder requires an actual new normal R03
+reservation and creates a sibling runtime packet. Full source mail71/immediate
+steering returned to UART, which owns reservation after rehash. No bench access,
+new installation, consumer execution or replay occurred during this preparation.
