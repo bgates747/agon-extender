@@ -1,30 +1,33 @@
-# Current owner continuation — UART0 reserve, 2026-11-08
+# Current owner continuation — actual114 sole Agon6502, 2026-11-08
 
-Actual112 new MODE/cursor-only/UART1 logical-overlap case PASS176records/
-4sessions/352querypairs; originalRAM/witness/peer/durable results independently
-join. Fullincominga25f rollback/readback/fullhandback/release02:02:20UTC;
-source fixture/control/docs localcommitaf961d34, no push. Firmware source7e1c7a3/
-ROM1e4e/Open4, defaultOFF, source/nativeZIP52abd7c3; witness+reserve overflow
-retained. No numeric CTS reserve, measuredcap-hit,108cause,30Hz/defaultclaim.
+Actual113 R13 cleanly released02:27:00.598987UTC. Original native/game result0,
+786frames/789decisions/positive source/TEMT/CLOSE; later coldSAVE after-marker
+capture incomplete (observed DU/Invalidcommand), cause unknown. Original64KiB
+RAM4284f928 and existing64B poisonf5a5fd42 independently match before getterLOAD;
+no recovery reset or replay. Qualified preservation113-qualified.json corrects
+inherited conservative exitunknown wording without changing the raw receipt.
+Featureabsence and declared legacy file restoration passed. Exact incominga25f
+full131072B readback and fresh CLI/cursor/state/wholefiles/resources passed.
+Original restoration tool56919 exited0, old113 token invalid. Evidence under
+agents/bench-scheduler/mechagon-goal001-r13; fullrelease notified both owners.
 
-Actual113/3540 MechR13 now installed1e4e/fullROMreadback/freshstate and exact
-2675/fea5 frozenconsumerprecontact PASS. Context/grant/stoppedhandoff under
-agents/bench-scheduler/mechagon-goal001-r13; originalinstalltool84012exit0.
-Mech operator/consumer sole untilactualjoinedstoppedreturn. ALL Extender
-targetaccess/readers/commandsSTOPPED. Originalgrant02:06:44.898485UTC,
-ONE90native/150CLI/180host case/1200originaldispatchwindow, no replay/HOLD.
-When realreturn arrives: verifyactual113token/evidence, thensoleownerpreservation/
-standingboundedrecovery ifneeded, same113 exacta25frollback/readback/fullcleanup/
-release. Prepared assume-return.py/recover113.py/feature113.py are NOT executed.
-Choose phases fromactualreturn; preserveRAM beforegetterLOAD; no unknownborrow
-retirement claim. OriginalorpostresetRAM must be labelled honestly.
+Fresh actual114/request294ca96301fa centrally agon-6502, sole hardware operator.
+Grant/context/stoppedhandoff under agents/bench-scheduler/dsk001-two-drive-r01.
+All220/808032fb inputs and actual113 release/currenttuple independently joined;
+freshCLI/readEXIT/SAVE-onlymode0/callback0/Legacy0/files/inputneutral/offlineidle/
+freeUSB admission passed. Original86761 exited0. ALL Extender target access,
+readers and commands STOPPED. One frozen graphical originalDOS TwoSave/TwoReload
+pair/privatewc05/22files,180sperapp/1200swhole from originalgrant. Temporary exact
+F6 app-only scope retains actualboard/partition binding, full7f46 readback and
+exact85f9 fullapp/tail restore/readback/nativeprefix5d657. Partly pruned source
+lineage is not a reproducible rebuild or production acceptance. No replay/HOLD.
+6502 owns restoration/freshhandback/allactorsjoined/normalrelease, SD mounted.
 
-Next6502two-drive294ca is sourcequalified220/808032fb (all149oldpins unchanged),
-source-admission.json under agents/bench-scheduler/dsk001-two-drive-r01. No grant
-or targetaccess; waitreal113cleanhandoff. Same temporaryF6 retained-lineage
-limit and explicitapp-onlyinstall/full7f46readback/exact85f9restore/freshinput+CLI
-required when itsturnopens. Current P4/native/startup/listener unchanged, SDmounted.
-Publicationhold and unrelateddirtyTODO/2026-11-04/BENCH-010 work preserved.
+Next retained-error0d024 is separately prepared; Mech cached replay31ab follows,
+source templates only until finalkit/currentpredecessor/freshgrant. Working tuple
+after restoration is d9b/a25f/native5d657/ed403/0566. UART0 reserve owner112 finite
+health PASS remains distinct from113's strict30Hz/pose-coverage limits and cause.
+Local commits only, no push. Preserve unrelated dirty TODO/2026-11-04/BENCH-010.
 
 # Current — actual111 sole Agon6502, temporary F6 graphical DOS scope
 
