@@ -1,4 +1,1073 @@
+# Local project handoff
+
+## Current — actual147 loaded for Smith's human review
+
+FSIM reports the two background-only files staged and `CD`/`DIR`/`LOAD` returned
+to the actual prompt. Printer is off, input neutral, listener/worker idle and
+all staging children joined; serial ports are free. Smith alone starts `RUN`.
+FSIM retains legitimate review custody until genuine human exit and its normal
+handback/release; Extender performs no target access. The next6502 correction
+is queued normally. Actual146 restoration/release and the completion-evidence
+workflow repair are complete. Earlier sections retain historical states and do
+not supersede this current header. Exact custody and private evidence remain
+in the central registry and ignored machine-local bench records.
+
+## Actual146 released; actual147 sole FSIM human-review staging
+
+User-directed evidence/queue repair resolved block: genuine original parent-written worker wait0/alljoins, new bounded no-reset reconciliation71764actual0/fullfresh131072a25f/rawmode0callback0Legacy0/wholefiles/rootCLI/inputneutral/offlineworker0/freeUSB. Exactnative85f9prefix independent readback/full8519lineage unchanged; privateDOS and originalcaptures preserved. Canonical146 normally RELEASED21:28:59.692321UTC/oldtokeninvalid; rejectedmanualtoolreceipt NOTcreated, originalquitFAIL/reloadUNRUN retained. Normal first351 source/2files/operatorpinsmatched/currentREADY3; fresh147 grant/handoff178+immediateSteer delivered. FSIMalone stage+CD/DIR/LOAD background.bin ONLY; SmithaloneRUN, no agenttest/reset/flash/newhelper. ExtenderALLtargetSTOPPED through actualhumanreview and genuine ownerfullhandback/release. SDmounted. Evidence io003-playable-r02/{release-block-resolved,reconciled-released}.json and fsim-p072-human-r01/handoff.json.
+
+## Actual146 hardware restored; administrative release review blocked
+
+Exact1105920 native85f9PREFIX FIRST/readback/outer12288untouched/full8519lineage, matchedbootstrap/fullfresh131072a25f/rawmode0callback0Legacy0/wholefiles/rootCLI/cursor/inputneutral/offlineworker0/freeUSB passed. PrivateDOS234496B preserved SHA0487a55d, originalSDfile unchanged; nine originalhostcaptures/log retained. Original restore2225 returned actual0/chunkfb1871; allregisteredchildrenjoined/nativeparentabsent. Automaticapprovalreview rejected writing terminalreceipt twice despite actualtoolresult/app corroboration; no bypass/release. Canonical146 lease STILLACTIVE, ALLtargetSTOPPED; await explicit Author approval for recording observed terminal and normalrelease, freshphysicalrecheck if needed. OriginalquitFAIL/freshreloadUNRUN immutable. FSIM351 normalnext awaiting prepared human-only stage+LOAD packet; no grant/RUN/contact. Evidence agents/bench-scheduler/io003-playable-r02/release-review-block.json.
+
+## Actual146 joined quit failure; sole Extender restoration active
+
+Original66928exit1/all20groups natively absent/reader0/keyjournals terminal verified. Both pixel/map probes and same-sessionDOS/Fkeys passed; frozen vkey106 cannot match actual107, originalFAIL/freshreloadUNRUN preserved. Sole restoration2225 selected600/original3000, no replay/new quit. SDoffline/foregroundunknown: no commands into app. Exact85f9nativePREFIX FIRST/fullreadback/bootstrap/privateDOSimage preservation/fullfresha25f/rawstate/CLI/input/resources/alljoins/release underway. Other agents targetSTOPPED; SDmounted. Future FSIM invocation human-only restriction remains. Evidence agents/bench-scheduler/io003-playable-r02.
+
+Originalnewhw_supervise launchedONCE: actualtool66928/nativePID2007436/PGID2007436/start42801850/PPID1750/boot/exactargv immediatelyAFTERlaunch registered consumer-actor.json. Newimmutable df25/hw_controller/newnamespace canonical1465b51 source6f37600d/actualhandoff guards passed; existingoriginal3000whole/1600consumer600cleanup and allphasefloors unchanged. AllExtendertargetaccessSTOPPED; 6502alone retains originaltool through stages/probes/save/reload orfirstfault, joinsallreader/key/controllergroups then realstoppedreturn. Noresultclaimed; do not pollpeerhandle66928 orparallelprobe/reset. Afterrealreturn same146 owner exact85f9nativePREFIX FIRST/fullreadback/bootstrap/freshfulla25f/CLI/state/files/input/resources/release. SDmounted.
+
+Actual145FSIM normally released20:06:59/full1118208 independent8519 rehash/original31313actual0/native1996025groupabsent/alljoined. Directhuman futureFSIMapplicationtests HUMAN-STARTED ONLY restriction verified andrecorded human-start-only.json; no automaticFSIMcohort/replay/HOLD/reservation. Explicit release-to-next preserved. This new6502cohort retains its existingindependent combinedC8scope. Original144 observerfailure/UNRUNlatercases sealed. Evidence agents/bench-scheduler/io003-playable-r02 and fsim-p071-phase47-r01. Earlierheadershistorical.
+
+## Actual146 corrected IO003 installed sole6502 handoff delivered
+
+Originalinstaller89487actual0/nativePID2005026/allregisteredworker-programmer groups nativelyjoined/USBfree. ExactF6 f2c1098112/knownsuffix1105920prefix126633b3 independentfullreadback/currentmatchedbootstrap/fullfresh131072a25f/rawmode0callback0Legacy0/wholefiles/rootCLI/cursor/inputneutral/offlineworker0 passed. CurrentconsumerREADY16/171 received beforefinalfacts; source6f37600d/kitdf25 unchanged; actualhw_controller.validate handoff accepted. Original146grant 2026-11-08T20:11:42.445109+00:00; original3000whole/540setup/1600consumer/600cleanup/2200entry/allphasefloors unchanged. Fileonlyhandoff/dispatch0/mail170published/immediateSteeraccepted; ownerALLtargetSTOPPED. 6502alone exactnewhw_supervise once; actualafterlaunchhandle/PID/start/parent/group/boot/argv registration and originalhandle retained to actualterminal/joinedstoppedreturn. Noresultclaimed yet. CurrenttemporarynativeF6/P4d9b/EMOSa25f/startuped403/listener0566/SDmounted. Same146 exact85f9nativePREFIX FIRST/fullreadback/bootstrap/freshfulla25f/state/files/CLI/input/resources/release afterrealreturn; no replay/newcase. Actual145FSIM release20:06:59/full8519/original31313actual0/alljoined retained; futureFSIM tests HUMAN-STARTED ONLY per verified directhuman source, no FSIM HOLD/autorun/reservation. Earlierheadershistorical.
+
+## Actual146 sole Extender corrected IO003 native installation active
+
+New5b51/IO-003-playable-physical-r02 granted 2026-11-08T20:11:42.445109+00:00; original3000whole/540owner/1600consumer/600cleanup/2200entry and phasefloors unchanged. Full40host/26payload df25 pins and newhw_controller.validate shape passed; request-local source6f37600d frozen BEFORE grant. Freshadmission18584actual0/nativePID2004905joined/raw0callback0Legacy0/wholefiles/actualCLI/input/offline/freeUSB. Originalinstaller89487/nativePID2005026 active; sameexactnativeF6 f2c1098112 +retainedsuffix1105920prefix126633b3 only, independentfullreadback then currentmatchedbootstrap/freshfulla25f/rawstate/CLI/input, no owner workload. No EMOS/P4/boot/table/OTA/app1/startup/listenerwrite. Corrected hardware-only publicprintertrace app/probe are consumerpayloads, not productionC8. CurrentconsumerREADY15/169 received; request currentREADY before finalgenuineobservation/deliver170 promptly. 6502targetSTOPPED until realjoinedhandoff. After actualconsumerjoinedreturn same146 exact85f9 nativePREFIX FIRST/fullreadback/bootstrap/freshfulla25f/handback/release. Fullrollback retained actual1451118208 independent8519 rehash/outer12288 untouched; no newincomingbackup. SDmounted.
+
+Actual145 FSIM released20:06:59/full8519/freshhandback/original31313actual0/native1996025groupabsent/alljoined. Directhuman FSIMthread turn01a1bcb1/message01a1bcc3-7538-7851-ac35-5393e461f691 verified: FUTURE FSIM HARDWARE/APPLICATION TESTS HUMAN-STARTED ONLY, no automaticcohort/replay/HOLD/reservation; subsequentmessage01a1bcc3-e950-7c51-9e3f-d96d92be6df0 explicitlyrelease-to-next. Evidence fsim-p071-phase47-r01/human-start-only.json/mail168. Existing6502 combinedC8scope unaffected; no newFSIMtestselected. Earlierheadershistorical.
+
+## Actual145 FSIM original foreground active — Extender target STOPPED
+
+FSIM normal phase_cohort execute launchedONCE: originaltool31313/nativePID1996025/PGID1996025/start42629091/PPID1750/boot/exactargv registered immediately AFTERlaunch, substantive originalactor31 retained. Canonical145 solefsim-pingo4d4/currentoriginal2400whole600cleanup600dispatch/allguards unchanged. FSIMalone retains originaltool to actualterminal/full8519restore/readback/bootstrap/freshhandback/allactorsjoined/normalrelease/immediatenext beforeofflineanalysis. ExtenderALLtargetaccessSTOPPED; no peerhandlepoll/liveprobe/reset/getter/parallelaccess. No145resultclaimed. Actual144 nativePREFIXfirst exactrestoration/release19:45:04 remainscomplete, originalport30observerFAIL/latercasesUNRUN preserved.
+
+Next6502 normal5b51d3a37139/IO-003-playable-physical-r02 queued, correcteddf25hardware-onlyprintertrace source review167 returned: exact21+4pins/singleleaf publicVDU2/1/c/3 substitution no materialsourceconflict, entryprinterOFF/final03ordered(notRETack)/soleforeground/nointerleaving/lifetime/tailrefusal preserved; physicalUNRUN. New hw_controller validator/namespace/kit/task required; do not reuse144frozencommon/oldvalidator unchanged. No new6502grant or targetaccess while145active. CurrenttupleP4d9b/EMOSa25f/startuped403/listener0566, nativechangesownedbyFSIM145; SDmounted. Evidence agents/bench-scheduler/fsim-p071-phase47-r01 and agents/consultations/io003-current-tx/HARDWARE-TRACE-R02-REVIEW.json. Earlierheadershistorical.
+
+## Actual145 sole FSIM PHASE47 fresh stopped handoff delivered
+
+Canonical4d4c2b7c709c/PINGO-071-phase47 actual145 grant 2026-11-08T19:47:47.196324+00:00. Original2400whole/600cleanup/600initialdispatch/all suffix/firstfault guards retained. All independent source/tool/bootstrap/payload335894a5 pins validated; request-local preparation complete BEFORE genuineadmission. Original39687actual0/PID1995919/group nativelyabsent/allreadersclosed/freebothUSB; freshactualCLI/readEXIT/rawmode0callback0Legacy0/wholefiles/neutralinput/offlineworker0 passed. Normalphase_cohort.bind accepted currentcontext/layoutapp0/full8519 knownrollback; fileonlyfinish0/write-dispatch0/physicalage17.73s, mail165published+immediateSteeraccepted. ExtenderALLtargetaccessSTOPPED; FSIMalone exact normal phase_cohort.py execute bound145/ready.json ONCE, immediately AFTERlaunch actual originalhandle/PID/start/PPID/group/boot/exactargv registration, retainoriginalhandle to actualterminal/allchildren/fullnative8519restore/readback/bootstrap/fullhandback/release/immediatenext beforeanalysis. No newbarrier/armclock/replay/contact/controllerredesign/extraexperiment. Original judder unresolved; diagnosticelapsed/timing notCPU/optical/smallFPS proof. CurrenttupleP4d9b/EMOSa25f/native5d657/startuped403/listener0566 until FSIM candidate operation; no145workloadresultclaimed. Actual144 originalobserverfailure/latercasesUNRUN/exactnativePREFIXrestoration/release19:45:04 preserved, all144actorsjoined. SDmounted. Evidence agents/bench-scheduler/fsim-p071-phase47-r01. Earlierheadershistorical.
+
+## Actual144 clean released; FSIM4d4 next
+
+Actual144 released 2026-11-08T19:45:04.078778+00:00. Originalcleanup22607actual0/nativePID1994601groupabsent/allregisteredchildrenjoined. Exact85f9native1105920PREFIX FIRST/fullindependentreadback/outer12288untouched/full8519lineage/currentmatchedbootstrap/fullfresha25f/rawmode0callback0Legacy0/wholefiles/rootCLI/cursor/inputneutral/offlineworker0/freeUSB passed. AlltargetSTOPPED/oldtokenINVALID/SDmounted. Consumer97184actual1 sourceport30observerfailure; firstprobe0returned viaactual existinglistener and fouroriginalcaptures preserved BEFOREreset/write, functionalverdictUNKNOWN/laterprobe1/save/reloadUNRUN/no replay. Privatecase/evidence retained; otheruserfiles unchanged. NormalnextFSIM4d4c2b7c709c/PINGO-071-phase47 notified164+immediateSteer; normalfreshsource/admission stillrequired, no145grant yet. Sourcepacket preparation agents/bench-scheduler/fsim-p071-phase47-r01; currenttupleP4d9b/EMOSa25f/native5d657/startuped403/listener0566. Actual144evidence agents/bench-scheduler/io003-playable-r01. Earlierheadershistorical.
+
+## Actual144 sole Extender preservation/cleanup active
+
+Consumer97184actual1/all supervisor1991265/controller1991266/reader1991268 groups natively absent, reader0/keyjournalinactivependingnull/ALL6502targetSTOPPED. Firstprobe0 observer timeout: source trace_char port30 isFabstdout, nothardwareUART1; physicalfunctionalverdictUNKNOWN/no successors. Original26filesverified and oneprobe0EXEC retained. Realstoppedreturn boundsame144. Sole cleanup22607/PID1994601/worker1994604 active under original600 cleanup AND original3000 grant, no replay/newclock. Actual listenerONLINE389883649, directexistinglistener GET four originalprobe0 captures BEFORE anyreset/write, whole startup/listener read+actualEXIT/offline; no extraSAVE/LOAD/keys into unknown. Exactnative85f9PREFIX FIRST/readback/currentbootstrap/freshfulla25f/raw0/files/CLI/input/offline/freeUSB/joins/release only. Outer12288untouched/full8519lineage retained; P4/EMOS/startup/listener nofirmwarewrite. Currentcase targetexclusive, othersstaySTOPPED until realrelease. SDmounted. Evidence agents/bench-scheduler/io003-playable-r01/{consumer-stopped-return.json,restore-authority.json,cleanup-source.json,owner-restore/preservation.json}. Earlierheadershistorical.
+
+## Actual144 installed sole6502 handoff delivered — Extender target STOPPED
+
+Originalowner86653 actual0/nativePID1989306 and all registeredworker/programmer groups independently joined. Exact F6f2c1098112 +knownsuffix1105920prefix126633b3 full independent readback PASS; outer12288untouched/full8519lineage retained. One matchedbootstrap/freshfull131072a25f/rawmode0callback0Legacy0/whole45Bstartup24753Blistener/rootCLI/inputneutral/offlineworker0/freeUSB passed. ActualcurrentREADY162 beforefinalfacts; source0411330b/kit39697361 unchanged, frozen consumer validate exactactualhandoff accepted. File-onlyfinalizer/dispatch0; mail161 published/immediateSteeraccepted within120s. ExtenderALLtargetaccessSTOPPED NOW; 6502alone one originalforeground supervise command from consumer-argv.json, actualactorregistration immediately AFTERlaunch and originalhandle retained to terminal/joinedstoppedreturn. No result/invocationclaimed yet. Actual144 originalgrant 2026-11-08T19:28:51.974785+00:00; original3000whole/540owner/1600consumer/600cleanup/2200entry and allphasefloors unchanged. CurrenttemporarynativeF6, P4d9b/EMOSa25f/startup/listenerunchanged. Same144 native85f9PREFIX FIRST/fullreadback/matchedbootstrap/freshfulla25f/state/CLI/files/input/resources/release follows realreturn; no replay/newcase. SDmounted. Evidence agents/bench-scheduler/io003-playable-r01. Earlierheadershistorical.
+
+## Actual144 sole Extender IO003 native installation active
+
+Canonical fae913dfe90e/IO-003-playable-physical-r01 granted 2026-11-08T19:28:51.974785+00:00. Original3000whole/540owner/1600consumer/600cleanup/2200entry and all phase floors retained. Exact corrected39697361 kit/26unchangedpayloads source reviewed; owner-source0411330b prepared BEFORE grant. Fresh admission49681 actual0/nativePID1988967 absent; rawmode0/callback0/Legacy0/wholefiles/CLI/input/offline/freeUSB. Originalinstaller86653/nativePID1989306/worker1989308 active, actual registered. Native-only F6f2c1098112 composedwithknownsuffix into1105920 prefix126633b3, independent wholeprefix readback then maintained matchedbootstrap/freshfulla25f+state/CLI; no EMOS/P4/boot/table/OTA/app1/startup/listenerwrite or owner workloadinvocation. Consumer actualREADY160 received before observation; requested currentREADY162 beforefinalfacts. Otheractors targetSTOPPED until actual joined installed handoff161; do not contact concurrently. After realconsumer joinedreturn exact85f9 nativePREFIX FIRST/readback/bootstrap/freshfulla25f/handback/release, outer12288untouched/full8519 retained. SDmounted. Evidence agents/bench-scheduler/io003-playable-r01. Earlierheadershistorical.
+
+## Actual143 clean release reconciled; current queue empty
+
+Actual143 FSIM COMPUTE43 completed all three original/diagnostic/original arms and normally released 2026-11-08T18:56:52.514875+00:00. Complete1118208-byte final native8519 restoration readback independently rehashed locally and matches retained incoming bytes. Release evidence confirms raw mode0/callback0/Legacy0/whole startup-listener/rootCLI/cursor/neutral input/offline listener/worker0/free ports. Original PID1973090 and parent process group independently absent; direct peer original tool terminal receipt not yet supplied, not invented. Original tool47159 is peer-owned; do not poll it. Current registry activeNULL/reservationsEMPTY/next_requestNULL. SDmounted/all target access stopped. No new grant, live probe or physical operation by Extender in reconciliation. Measurement interpretation remains FSIM offline work; no speed/optical/CPU claim. Evidence agents/bench-scheduler/fsim-p071-compute43-r01/{release143-mail.json,release-reconciled.json,bound143/release.json}.
+
+## Actual143 original FSIM foreground launched once
+
+FSIM original tool47159/live PID1973090 reported, exact afterlaunch actor registration at agents/bench-scheduler/fsim-p071-compute43-r01/bound143/consumer-actor.json; substantive mail27 retained locally. Canonical143 FSIM owner confirmed. Original frozen normal compute_cohort once-only operation is active; no result yet. Extender ALL target access STOPPED until actual original tool/actors/readers join and fullrestore/release or explicit stopped recovery handback. Do not poll peer handle47159 or probe target concurrently. Original shared2400/600cleanup/600dispatch and exact original/diagnostic/original90ticks/full8519 restoration unchanged; SDmounted. User idle-bench scheduling request fulfilled with actual foreground invocation.
+
+## Actual143 COMPUTE43 sole FSIM handoff delivered
+
+User instructed us to get the ready idle bench moving. Canonical first c64 admitted through genuine fresh CLI/listener/raw mode0/callback0/Legacy0/whole startup-listener/inputneutral/offline worker0/freeUSB. Original60897 admission actual0/PID1972079 group joined. Normalgrant143/currentlease in fsim-p071-compute43-r01/grant.json; original2400whole/600cleanup/600dispatch. Immutable source679/prepared4d7b4962 validated and bound with actual context/layout/app0/full8519 rollback; finish actual0, dispatch physicalage34.5s, mail154 published and IMMEDIATEsteer accepted. Extender ALL target access STOPPED; FSIM alone exact normal foreground compute_cohort.py execute bound143/ready.json once; immediately afterlaunch actualhandle/PID/start/parent/group/boot/argv registration, original tool retained to terminal/join/restore/release. No preIO barrier or renewed arm clock. Exact original/diagnostic/original90tick scope and first-failure/unknown custody guards retained; full1118208 original8519 restore/readback/matched bootstrap/fullfreshhandback/release before analysis, SDmounted. Await actual launch receipt; no test result yet. Actual142 cleanup/release remains complete. Evidence agents/bench-scheduler/fsim-p071-compute43-r01.
+
+## Actual142 human-approved cleanup complete and bench released
+
+Actual142 released 2026-11-08T18:21:02.593947+00:00. Human-approved separate600 cleanup completed in 153.691s. Exact PRE15 tenpresent/fiveabsent bytes/attrs and originaldirectories restored; positive featureabsence proof retained/no interveningwriter. Fresh131072 a25f wholeROM SAVE readback, mode0/callback0/Legacy0, whole startup/listener unchanged, rootCLI/cursor/inputneutral/offlineworker0/freebothUSB/allactorsjoined. Full1118208 native8519 no-write lineage locally rehashed; no new nativebackup/read/flash. No test/getter/reset/firmware invocation. Prior test stage/transition failure, cleanup600/420 failures and approval block remain recorded; replayUNRUN/no rate/CPU claim. All ExtendertargetaccessSTOPPED; old142tokenINVALID. SDmounted. ActualnextFSIMc64be52069db needs fresh normalgrant; no nextowneraccess conveyed. Evidence agents/bench-scheduler/mechagon-replay-cohort-r01/{released.json,owner-authorized-cleanup}.
+
+## Actual142 human-approved cleanup ACTIVE
+
+Human explicitly approved clean up the hardware after the one-new-10-minute cleanup proposal. Originaltool5947/actualactor in owner-authorized-cleanup/actor.json launched once using approved_cleanup142.py; new600 clock in cleanup-start.json, historical test/600/420 failures unchanged. Remaining exact PRE15 bytes/attrs/known created-file removal, same positive feature proof/no writer, fresh fulla25f/raw0/callback0/route0/rootCLI/input/idle/freeUSB/joins/release only. No test/getter/reset/firmware operation. Actual142 remains sole Extender operator/mechagon central owner until genuine final release; other actors remain stopped. Source/explicit human wording in human-cleanup-approval.json; approval-block historical evidence retained.
+
+## Actual142 original whole deadline expired — cleanup approval still pending
+
+At15:06:45UTC local records confirm original3000 whole deadline15:06:25.004423UTC expired. No hardware action followed the automatic approval rejection; original420 expired as recorded. Actual142 remains active/unreleased in canonical registry; partial exact restoration prefix retained, full handback incomplete. No other owner may access. A peer readiness message supplies no cleanup authorization or renewed clock. Human approval question from prior final remains pending. FSIM compute43 normalc64 readiness mail retained/source readiness hash matched only; no grant/current hardware observation. See approval-block142.json and agents/consultations/fsim-compute42/compute43-received.json.
+
+## Actual142 restoration BLOCKED by automatic approval review
+
+Remaining PRE15 restoration was rejected before execution: reviewer could not verify trusted human authorization for hardware-backed file writes/deletions and release. No workaround or target operation followed. Original87542 stopped after exact files0/1 restored; pending read resolved, settled session pendingNULL; file2 RECOVER00 is coherent independently proved absence. Local remaining-only source prepared/AST parsed, NOT executed; original420 deadline14:49:45.222301UTC unchanged, original whole15:06:25UTC unchanged. Do not release custody or launch another case: exact restoration/fresh handback incomplete. Original failures and all evidence retained; no firmware/reset/replay. Approval blocker at agents/bench-scheduler/mechagon-replay-cohort-r01/approval-block142.json.
+
+## Actual142 necessary PRE15 corrective restoration active
+
+Originalarm1transition15censor/replayUNRUN and normalcleanup600censor14:35:30 remain FAILED. Original81763 CLI-sentinel failure and8439 duplicateREAD guard stop retained/allgroupsjoined. OriginalutilityRAM1310727cef0e78/fulla25fROM/allcurrent15 were preserved BEFORElaterLOAD; positivepostfeatureabsent proof retained. Rootsource59 confirms already-authorized necessaryPRE15-only correction/no furtherrootactor. Separatelyrecorded repair_cleanup142.py original87542 active under same142lease/originalgrant14:16:25/absolute3000end15:06:25; one420 correctivebound in owner-corrective/cleanup-start.json, no reset ofold600result/newconsumerclock. OriginalpendingOP4READ/scenesoffset4104 journal immutable; copy sameboot/session/exactread resolve only, then freshstat/RECOVER and preservedwholecurrent/no-intervening-writer proof instead ofredundantlargeassetGETs. Restore exactoriginalPRE15/attrs/absences/dirs, reusevalidfeatureproof, freshfulla25f/rawCLI/input/offlinefreeUSB/joins/normalrelease. Unknownbackup/stat/read stops; no purge/getter/RUN/reset/firmware/replay/newcase. ROOTALLtargetSTOPPED; Extenderalone necessaryrecovery. SDmounted; original135kit/source35 unchanged. Evidence agents/bench-scheduler/mechagon-replay-cohort-r01; earlierheadershistorical.
+
+## Actual142 first-fault replay UNRUN; sole Extender cleanup — 2026-11-08 14:26 UTC
+
+Original624 parent49628 actualexit1; stagePASS56.546s, arm1-transition15s censor/forcedgroupretirement/joined, alleightlaterphasesdisposed, NO consumerreplayLOAD/RUN. RootALLtargetSTOPPED/PIDs1956852,1956853,1957055/groupsabsent/bothUSBfree; originalchildstartunknownretained. ActualROOTSTOPPEDRETURN57 bound tosame142lease. Local getterserialsnapshotPASS+CLI, featureabsent, oldstate/EXITRPCpendingnull, transferjobnull/delivered, statequerykeyboardpendingnull; noCLIquiescenceinferreduntilnewactualadmission. Sole originalrestore81763 nowbounded600fromcleanup-start.json AND original3000grant; actualCLI thenSAVE-only originalutility128KiBRAM/fullROM/rawstate BEFORElaterLOAD/reset, current15preservation, samePRE_COHORT15/attrs/absence/directories/feature/freshfullhandback/release only. No replay/transitionredo/firmware/reset/clockextension. Original135kit/source35/budgets immutable. Otherowner/rootstaysSTOPPED; SDmounted. Evidence agents/bench-scheduler/mechagon-replay-cohort-r01/owner-restore; earlierheadershistorical.
+
+## Actual142 ONE original replay cohort live — 2026-11-08 14:20:57 UTC
+
+Mech source-bound live56 return retained: original624cohort launchedONCE after actual normalENTRY1/fulla25f/binding/budget/canonicalassert, entryelapsed200.864s under original14:16:25grant. Originaltool49628/nativeparentPID1956852/start40656247/PPID1750/PGID1956852/bootb6519306 and exactargv recorded immediately AFTERlaunch in root original-launch142.json, copiedlocally as consumer-original-launch142.json. Root alone retains originalhandle through tenboundedphases; no beforeIObarrier/relaunch/newwrapper/armresult claimed. ExtenderALLtargetaccessSTOPPED pending realjoinedreturn; do not poll peerowned49628 or openports/probe/getter/reset/replay/parallelowner. Original3000/2100consumer600cleanup/allten624bounds unchanged, firstfaultdisposeslaterphases. Same142 fullPRE_COHORT15/feature/native8519/a25f/freshwholehandback/release remains afterward. SDmounted. Evidence agents/bench-scheduler/mechagon-replay-cohort-r01; earlierheadershistorical.
+
+## Actual142 normal ENTRY1 sole Mech replay handoff — 2026-11-08 14:18 UTC
+
+Canonical8c4grant14:16:25.004423UTC/original3000=300entry2100consumer600cleanup/allten624caps retained. Freshadmission54833actual0 and originalowner81243actual0/PID1956353groupabsent/allreadersclosed/normalunchanged624binding+entry_proof+stagebudget PASS. ActualROOTREADY55 read BEFORE finalphysicalfacts; final135/bf404c3a/source35/82ceff49 unchanged. ExactPRE15 regularbytes/attrs/explicitabsences/directories and feature saved BEFORE helpers; positive5ab LOAD/RUN4999pre utility explicitly admitted, no replayworkload byowner. Fullfresh131072a25fSAVE/rawmode0/callback0/Legacy0/wholefiles/actualCLIreadEXIT/neutralinput/offlineworker0/realcharUSBfree passed. Whole1118208B8519 independent141restoration/readback retained+rehashed/no nativewriter; no redundant backup/newnative read claim. finalize_handoff actual0 normalENTRY1, dispatch_actual actual0, mail145published+IMMEDIATEsteeraccepted with freshphysicalepoch. ExtenderALLtargetaccessSTOPPED NOW; Mechalone exact run_cohort.py once through ten phases, originalhandle+afterlaunchactualactorregistration/allgroupsjoined then stoppedreturn. No firmware/reset/U1/server/PRT/CPUobserver. Same142 originalPRE_COHORT/fullnative/feature/a25f/freshfullhandback/normalrelease remains afteractualconsumerreturn; firstfaultdisposeslaterarms, no replay/clockextension. SDmounted. Source/evidence agents/bench-scheduler/mechagon-replay-cohort-r01; priorheadershistorical.
+
+## Actual142 sole Extender replay owner preparation — 2026-11-08 14:16 UTC
+
+Canonical8c4grant14:16:25.004423UTC; original3000whole300entry2100consumer600cleanup/allten624bounds unchanged. Freshadmission54833actual0/originalgroupsjoined/raw0/callback0/Legacy0/wholefiles/CLI/input/idle/freeUSB, actualROOTREADY55read beforefinalfacts. Originalowner81243 active, PRE_COHORT15/dirs/feature/full8519 lineage and positive5abutility/fulla25fSAVE actualENTRY1 only. NO replay/reset/firmware/U1/server/PRT/CPUoperation. Parent0+actualgroupjoin thenfinalize_handoff.py, dispatch_actual.py, publish145+IMMEDIATEsteer within original14:21:25entry; do not perform optionalwork/compaction inthatwindow. Source35/82ceff49/final135/bf404c3a immutable. RoottargetSTOPPED until realjoinedstoppedhandoff. Same142 PRE_COHORT/fullnative/feature/a25f/fullfreshhandback/release afteractualconsumerreturn. SDmounted. Evidence agents/bench-scheduler/mechagon-replay-cohort-r01; earlierheadershistorical.
+
+## Current — replay cohort8c4 source READY, admission not yet invoked
+
+Actual141 FSIM normally released13:56:19.619113UTC; original21285actual0/allownedgroupsjoined, exactfull1118208B8519restore/readback and fullfreshCLI/state/files/input/offline/freeUSB pass. Central activeNULL; Mech8c4 actualhead. Final135/bf404c3a kit and SOURCE1/35pins82ceff49 exact. Requestlocalnormal624ENTRY1/PRE15/feature/full8519/actuala25freadback/solehandoff and original3000=300entry2100consumer600cleanup/alltenbounds retained. Admission/dispatch files prepared BEFORE physical observation. PREPARE-DISPATCH144 sent/steered; waiting actualcurrentROOTREADY beforefinalfacts. NO142grant yet/no replay/utility/targetaction byExtender inthisnewturn; no firmware/reset/U1/server/PRT/CPUcase selected. CurrentP4d9b/EMOSa25f/native5d657/startuped403/listener0566/SDmounted. Evidence agents/bench-scheduler/mechagon-replay-cohort-r01; earlier custody headers historical.
+
+## Actual141 clean release reconciled — 2026-11-08 13:56 UTC
+
+FSIM normally released13:56:19.619113UTC; central activeNULL, old141tokenINVALID. Whole1118208B native restore independently read back8519e13d; Extender locally rehashed retained read.bin to exact8519, no target operation. Fresh release receipts establish rootCLI/cursor/mode0/callback0/route0/whole startup/listener/neutralinput/offlineworker0/freeports; P4d9b/EMOSa25f/native5d657 retained, SDmounted. Original21285 actualterminal0 received in peer terminal.json; PID1951838/group independently absent, allownedchildrenjoined/ALLFSIMtargetSTOPPED. Runner complete/stopped-file consistency retained; no full-wire/rate/optical/human qualification inferred. Release next_requestNULL was accurate at release; subsequent Mech8c4e085c86a7 is PREPARING and ungranted, activeNULL. No new grant or target operation selected. Evidence agents/bench-scheduler/fsim-p071-stop38-r01/{release-mail.json,final-actors-mail.json,release-reconciled.json,bound141/release.json}. Earlier custody headers are historical.
+
+## Actual141 STOP38 sole FSIM stopped handoff — 2026-11-08 13:47 UTC
+
+Newnormal request2d7c84533877/PINGO-071-stop38, actual141/currentlease inagents/bench-scheduler/fsim-p071-stop38-r01/grant.json; originalgrant2026-11-08T13:46:59.960074+00:00. Source673/prepared221e/controller6c45/package4efb/OFF93ce/appdaa70189/cap513unchanged, new600initialdispatch/original1800absolutewhole600cleanup/allsuffixguards retained, no138replay/clockrenewal. Wholeowner47-inputpacket7564b3a6 preparedBEFOREfinalobservation; currentREADY20readbeforegrant. Admission97718actual0/realparentgroupabsent/no readers/freeUSB/genuineCLIrawmode0callback0Legacy0/wholefiles/neutralinput/offlineworker0; observationstate usesactualnewkeyboard/sd/workerfacts, no copiedstateepochs. Offlinefinish.py actual0/bound141ready/layoutfull1118208B8519retainedrollback; write-dispatchphysicalage24.56s; mail142published+immediatesteeraccepted. ExtenderALLtargetaccessSTOPPED. Exactnormalforeground stop_case38.py execute bound141/ready.json ONCE, immediateafterlaunchactualhandle/PID/start/PPID/group/boot/argv registration (runnerdoesnotselfregisterbeforeIO; no newbarrier/fictitiousPID). FSIMalone native-onlyinstall/independentverify/onefixedlocal12MOS-count firstjobheldSTOP/exactWHOLE8519restore/readback/matchedbootstrap/fullfreshhandback/allactorsreleasebeforeanalysis. CurrentP4d9b/EMOSa25f/native5d657/startuped403/listener0566 untilFSIMoperation; no newselectionread/redundantbackup. Fastassets/noassetGET, independentfirmwareverificationretained. No sweep/retry/ON/quiet/FPS/contact/controllerfusion/CPUdecode. SDmounted. Prior140originalCPUevidence+failedcollector/exactcleanup/release13:41:14 immutable.
+
+## Actual140 normally clean released — 2026-11-08 13:41:14 UTC
+
+Originalnormal16entry/stage/prePASS; live99015FAILED96.144sCRCRLF terminalregex, originalphase/failure/637Bc488serialretained. Separateoriginalserialnative995decisions999viewrecords/result0/CLI andsavedstatuscleanup5close1cleanup1end1; CPUwindowvalidityUNKNOWNuntilrootafterrelease saved-onlydecode. Preservation1182actual0 original128KiB040000..060000RAM SAVE-onlyBEFORElaterLOAD/reset, CPU96e88c/context1283616/status1828/currentPRE20bytes/attrs/absence retained, no getter/RUN/reset/coldcollectorrepair/decode. Cleanup19314actual0: exactPRE20/twodirs/featureabsence viaoriginalnativeCLEAR/fence/MODEsource+positiveEND proof(noindependentpostgetterqueryclaimed), exacta25f/full131072readback/freshrootCLI/cursor/rawmode0/callback0/Legacy0/whole45Bstartup24753Blistener/inputneutral/offlineworker0/freeUSB/allactorsjoined. Native5d657/P4d9b unchanged/139full8519lineage. Normalrelease13:41:14.376773UTC/oldtokenINVALID/SDmounted/ALLtargetSTOPPED. CurrentP4d9b/EMOSa25f/native5d657/startuped403/listener0566. CanonicalnextFSIM2d7c84533877/PINGO-071-stop38 needsnormalfreshadmission; no141grant yet. Evidence agents/bench-scheduler/mechagon-cpu-window-r04-bound-94cf5139e671/{released.json,preserve140,restore140}.
+
+## Actual140 Mech live phase owns target — 2026-11-08 13:29:23 UTC
+
+Substantive root progress49 read/retained at bound94cf/consumer-progress49-mail.json. Mech independently passed canonical grant/normal16ENTRY3/PRE20/fullf05c/map/550 gates; originalstage79060actual0/54.754s andpre99814actual0/29.016s/allrecordedgroupsjoined. Correct scopedfad610 getter and MechAgon projectvenv used. ONE live original99015 reported running/PID1949218group1949218/worker1949219group1949219. No cold/window/CPUresult yet. Rootsole140; ALL Extender targetaccessSTOPPED until actualrootjoinedreturn, no probe/getter/reset/replay/nextgrant. Originalgrant13:22:23.474351UTC/2400whole600cleanup and allphasebounds retained. Same140 incominga25f/PRE20+dirs+feature/fullfreshhandback/release remainsafterconsumerreturn. Temporaryf05c currentlyinstalled, native5d657/P4d9b unchanged/SDmounted.
+
+## Actual140 normal16 ENTRY3 installed sole Mech handoff — 2026-11-08 13:26 UTC
+
+Originalowner45899actual0/stage-flash-verifychildren0/allregisteredgroupsjoined/freeUSB. PRE20/dirs/globalbaseline5ab+positivefeature beforecandidateFLASH preserved. Exactf05c/full131072readback/properrawmapmode0/callback0/Legacy0/wholefiles/actualCLIreadEXIT/inputneutral/offlineworker0 passed; native5d657/P4d9b unchanged. Normalsharedcomposer all16facts incl baseline-beforeinstall/no-candidate-invocation, realR06admission.entry+originalstagebudget PASS beforepublish. Finalizer actual0; prepare-dispatch physicalage38.49s, correctedMechAgonvenv fiveordinaryargv; mail137published+immediatesteeraccepted. ActualROOTREADY140 read beforeobservation. ExtenderALLtargetaccessSTOPPED; Mechalone runs stage/pre/live/post/idle once and registers originalhandles/actors afterlaunch. Originalgrant13:22:23.474351UTC/2400=600entry1200consumer600cleanup/floors unchanged, no137replay/restamp/extension. No CPU/runtime result yet. CurrenttemporaryEMOSf05c, P4d9b/native5d657/startup/listenerunchanged/SDmounted. Same140 original128KiBRAMbeforelatergetterLOAD/reset onfault under supportedownerpath; noSAVEintoHALT. Afterrealjoinedstoppedreturn soleExtender exacta25f/fullreadback/PRE20+dirs+feature/fullhandback/release required. Evidence agents/bench-scheduler/mechagon-cpu-window-r04-bound-94cf5139e671. Prior139RallyPASS/exactrestoration/cleanrelease13:20:32 retained.
+
+## Actual140 sole Extender CPU owner preparation — 2026-11-08 13:25 UTC
+
+New94cf/taskGOAL-001-CPU-WINDOW-R04/grant13:22:23.474351UTC, original2400=600entry1200consumer600cleanup/allfloors unchanged. Originalowner45899 active; PRE20/twodirs/globalbaseline5ab/positivefeature first, exactf05c/fullROM/correctmap thennormalENTRY3all16/sharedcomposer/finalizer. No CPUapp/match/timer/native/P4write/consumer invocation yet. RootcurrentREADY140 read before finalobservation, ALLroot targetSTOPPED. All550b050/frozen68SOURCE352dc unchanged. File-only Mech interpreter correction48 read/applied beforedependentdispatch; exact5normalR06 argv use MechAgon/.venv/bin/python. On originalparent0/childjoin/freshverification, finalize-handoff.py thenprepare-dispatch.py thenmail137+IMMEDIATEsteer; no optionalwork orcompaction in freshwindow, no137replay/restamp/extension. Same140a25f/PRE20/dirs/feature/fullhandback/normalrelease followsactualjoinedconsumerreturn. Current139alreadycleanreleased/P4d9b/native5d657 unchanged/SDmounted. Source/evidence agents/bench-scheduler/mechagon-cpu-window-r04-bound-94cf5139e671.
+
+## Actual139 normally clean released — 2026-11-08 13:20:32 UTC
+
+ONE RallyhelperPASS22.1722s/both584B exact/witnessstate3phase5RX2/callback3/chunks256+256+72/normalEXIT-offline, original4514actual0/PID+groupabsent/allchildrenjoined. Exactnative85f9prefix FIRST/fullindependentreadback/outer12288untouched/8519lineage/currentmatchedbootstrap/a25f/full131072readback/freshrootCLI/cursor/rawmode0/callback0/Legacy0/wholefiles/inputneutral/offlineworker0/freeUSB/allactorsjoined, restore69100actual0. First file-only release metadata variablecollision retained/corrected separate source; no extra targetaction/restamp, normalrelease13:20:32.519644UTC/oldtokenINVALID. CurrentP4d9b/EMOSa25f/native5d657/startuped403/listener0566. SDmounted/alltargetSTOPPED. Mech94cf/cpuR04 normalnext/550b050/final16source52dc/actualROOTREADY read; freshadmission only. No new140grant yet. Evidence agents/bench-scheduler/rally-rx006-helper-r02/released.json and restore139.
+
+## Actual139 installed sole Rally handoff — 2026-11-08 13:11:40 UTC
+
+Originalinstaller18235actual0/all4phases0/allregisteredgroupsjoined, exact171c/full131072ROM+7d09/full1105920prefix9d005680 readbacks/currentmatchedbootstrap/freshrootCLI/rawmode0/callback0/Legacy0/wholefiles/inputneutral/offlineworker0/freeUSB passed. GenuinecurrentconsumerREADY beforefinalobservation; handoff.py passed1429.69sremaining, write-dispatch-mail.py freshage16.85s, mail130published/immediatesteer accepted. ExtenderALLtargetaccessSTOPPED; Rallyalone executesexactrun_physical_r02 --request19e9824cf0fe --handoff agents/bench-scheduler/rally-rx006-helper-r02/consumer-handoff.json thenafterlaunchactualhandle/actorregistration. Original1391800whole/420consumer120app600cleanup/min1020/120fresh unchanged, no135replay/extra case. Currenttemporary171c/7d09; P4d9b/startuped403/listener0566 unchanged. AfterALLRallyactorsjoined/stoppedreturn, Extenderalone exactnative85f9FIRST/fullreadback/currentmatchedbootstrap thena25f/fullreadback/fullhandback/normalrelease, outer12288untouched/8519lineage. SDmounted. Source/evidence agents/bench-scheduler/rally-rx006-helper-r02.
+
+## Actual139 active sole Extender installation — 2026-11-08 13:08 UTC
+
+Rally request19e9824cf0fe/RX6-HLP-physical02 freshgrant13:05:23.351223UTC, centralownerRally/operatorlinux-extender owner-install. Originalinstaller18235 remains active; stage58.414s/flash36.976s/verify26.664s all0, native phase pending. No consumer invocation or parallel target access. Current READY afterPREPARE-DISPATCH129 read before final installed observation. Separate sourcepacket04ed196f/22980B/105inputs correctedhostf2de/unchangedapp/twoSDfiles, exact171c/7d09/source50307. Original1800whole/540owner/420consumer/120app/600cleanup/min1020/120fresh unchanged. Parent must exit0/allregisteredchildrenjoined before handoff.py -> write-dispatch-mail.py -> mail130 publication -> immediate steer. No optional work in final fresh window; preserve direct actual originaltoolreceipt. Exactnative85f9FIRST/a25f restoration remains after consumer joinedreturn. SDmounted. Source/evidence agents/bench-scheduler/rally-rx006-helper-r02.
+
+## Actual138 normally released — 2026-11-08 13:00:38 UTC
+
+STOP case UNRUN: one exact foreground command terminal1/preIO originaldispatchdeadline, no observedPID/no fictional actor; no candidate/native/EMOS/P4/file/reset/guest operation. Genuine same138 SAVE-only reconciliation10144actual0/freshrawmode0/callback0/Legacy0/wholefiles/rootCLI/inputneutral/offlineidle/freeUSB/allactorsjoined passed; normalrelease13:00:38.217260UTC/oldtokenINVALID. No firmware rollbackneeded because tupleunchanged. Canonicalnext Rally19e9824cf0fe/RX6-HLP-physical02 needs newnormalgrant. Sourcepacket105inputs rehashed, exactf2de correctedhost/unchangedapp; currentconsumerREADY received before futurefinalobservation. No new139grant yet. Evidence agents/bench-scheduler/fsim-p071-stop37-r01/released.json.
+
+## Current actual138 sole FSIM handoff — 2026-11-08 12:57:31 UTC
+
+Actual138 request58e286603526/PINGO-071-stop37 is sole fsim-pingo custody. Original grant12:52:48.225843UTC; unchanged1800whole/600cleanup/dispatch<300s. Admission44896actual0; originalfreshness finalizer refused before binding, genuine narrowrefresh85164actual0/newfacts; finish-refresh138 passed. Mail125 published and immediate steer accepted12:57:31. No scheduler firmware/reset/guest invocation. Extender ALL target access STOPPED until real FSIM stopped return/release. FSIM exact normal foreground argv and afterlaunch actor registration in agents/bench-scheduler/fsim-p071-stop37-r01. Installed P4d9b/EMOSa25f/native5d657 until FSIM owns native-only candidate; full1118208B8519 retained rollback lineage. SD mounted. Actual137 clean released12:49:32; CPU case entirelyUNRUN/projection omission/deadline retained.
+
+# Current — actual137 CPUUNRUN/entryexpired; sole Extender cleanup
+
+Owner92182 actual0/PRE20tenpresenttenabsent/baseline5ab positivefeatureabsent/
+f05c fullROM/rawstate/wholefiles/CLI/input/idle passed, allgroupsjoined. Original
+finalizerrefused14-fieldprojectionmissing2getterproofnames; originalrecords and
+all50/502frozen inputsretained. Rootsupported additiveevidencebeforeRUN, narrow
+refresh35134actual0; finaladdendumguardthenrefused original600entrydeadline. No
+newentry/handoff/context/argv/mail120/CPUapp/match/timer/rootactor created.
+Same137 originalclock/no extension/reinstall/replay. Soleowner63177 SAVE-only
+currentownerRAM beforelaterFLASH, preservecurrent20 thenexactPRE20/dirs/feature/
+a25f/fullROM/fullfreshhandback/release. No native/P4write/newgetter. RootSTOPPED;
+FSIM58e next normalfreshgrant; SDmounted. Source00916-checkcorrection onlyafter
+safecleanup/newcoherentfreeze, no newcase selected. Evidence agents/bench-scheduler/
+mechagon-cpu-window-r03-bound-9267eb67eb7c. Earlierheadershistorical.
+
+# Current — actual137 sole Extender corrected dual-getter CPU preparation
+
+Actual136 real6502 helperPASS20.85s/oneinvocation thennative85f9FIRST/fullreadback/
+a25f/fullfreshhandback/allactorsjoined/normalrelease12:30:43UTC. Fresh1379267
+admission92203actual0/rawmode0/callback0/Legacy0/wholefiles/CLI/input/idle/freeUSB;
+sourcef9f0/all502 exact. ActualrootREADY115 before futurefinalfacts. Extenderalone
+preservesPRE20/roles/baselineglobal5abonincominga25f beforehelpers, one exactf05c
+fullROM independentreadback/freshstate/joinedENTRY3. No CPUapp/match/timer/native/
+P4/startup/listenerwrite. Original2400/600entry1200consumer600cleanup/allfloors
+retained, no rearm/replay. Incominga25f/PRE20/dirs/feature/fullhandback/release
+mandatory, outer8519native lineageunchanged, SDmounted. LaterFSIM58e thenRally19e
+normalqueue. Evidence agents/bench-scheduler/mechagon-cpu-window-r03-bound-9267eb67eb7c.
+Earlierheadershistorical.
+
+# Current — actual136 helperPASS; sole Extender exact restoration
+
+Originalconsumer52480 actual0/20.85s, supervisor1940752/controller1940753 and
+groups independentlyabsent/alljournals terminal/no pending commands; 6502ALL
+targetSTOPPED/custodyreturned. Exact584B/32Bstate3, announced+actual40/40/512/512,
+callback2/fullbytes/guards/69oldvs2counted/rawcallback-mode-Legacy0/normalEXIT pass.
+No diskpersistence/ACK/game/tuning/FPS/CPU claim. Sole owner38035 exact85f9native
+FIRST/readback/currentbootstrap thena25f/fullreadback/fullfreshhandback/release.
+Original136clock/600cleanup unchanged, outer12288untouched/8519lineage, SDmounted.
+Mech9267 nextsourceREADY/active before finalfacts, no currentgrant/contact.
+Evidence agents/bench-scheduler/rx001-6502-helper-r01. Earlierheadershistorical.
+
+# Current — actual136 sole 6502 RX001 consumer; Extender target-stopped
+
+Original1719 actual0/allfourphases0/driver+registeredgroupsjoined. Exact171c full
+ROM and7d09 full1105920prefix readbacks/currentmatchedbootstrap/freshrootCLI/
+rawmode0/callback0/Legacy0/wholefiles/neutral/offlineworker/freeUSB pass. Actual
+consumerREADY114 preceded finalfacts; RX001 actualhandoff113/context/exactargv
+steered promptly, 1406sremaining/min1020. Source60002/noarm andnormalroute/
+noPrinter/noecho fromnativeinit+finalVDU3/nointerveningproducer, notfictionalquery.
+ExtenderALLtargetaccessSTOPPED until realjoinedreturn. One unchangedrealclient
+helper69legacyvs2counted, no game/tuning. Same136 exact85f9nativeFIRST/a25f/full
+readbacks/fullhandback/release mandatory; original1800/420/120/600 unchanged,
+SDmounted. Mech9267 next. Evidence agents/bench-scheduler/rx001-6502-helper-r01.
+Earlierheadershistorical.
+
+# Current — actual136 sole Extender RX001 helper installation
+
+Actual135 UNRUN/cleanrelease12:14:18UTC, exact85f9nativeFIRST/readback/a25f/full
+freshhandback/allactorsjoined/oldtokeninvalid. Fresh136 dfcc admission48781 actual0
+verified CLI/rawmode0/callback0/Legacy0/wholefiles/input/idle/freeUSB, all source85
+SOURCE2e198054e pins/kit e0c2516e match. Consumer actualREADY111 before finalfacts,
+no prior RX001actors/contact. Extender alone installs171c/7d09 once/fullreadbacks/
+matchedbootstrap; no helper invocation/P4/startup/listenerwrite. Original1800whole/
+540owner/420consumer/120app/600cleanup/min1020/EXEC780 retained. Exact85f9native
+FIRST/a25f/fullhandback/normalrelease mandatory. Mech9267 next, SDmounted.
+Evidence agents/bench-scheduler/rx001-6502-helper-r01. Earlierheadershistorical.
+
+# Current — actual135 UNRUN; sole Extender final restoration
+
+Rally confirms zero launches/processes/target actions; stale handoff delivery, no
+hardware-test failure. Original native rollback write0/read interruption143 with
+joined child-15 preserved. Local continuation stopped at programmer-state keyboard
+precondition before programming. Separate bounded read-only55620 returned0 and
+independently matches exact1105920B85f9; no repeated nativewrite. Remaining final
+bootstrap then a25f/fullreadback/fullfreshhandback/release underway, readiness
+assertions retained before CLI/FLASH. Original11:52:10grant/1800whole unchanged,
+SDmounted, protected6502dfcc next thenMech9267. No consumer/replay/clockextension.
+Evidence agents/bench-scheduler/rally-rx006-helper-r01. Earlierheadershistorical.
+
+# Current — actual135 sole Rally RX helper consumer; Extender target-stopped
+
+Originalowner35029 actual0/all4phases0/allregisteredgroups+driver terminal.
+Exact171c full131072 and7d09/full1105920prefix readbacks/matchedbootstrap/fresh
+rootCLI/rawmode0/callback0/Legacy0/wholefiles/neutral/offlineworker/freeUSB pass.
+Source50307/noRXarm availability from freshnativeinit/no later creation/arm, not
+fictionalquery. ActualRX6HLP handoff/context/exactnormalargv/actorbinding105 sent;
+1372sremaining/min1020, original1800whole/420consumer/120app/600cleanup retained.
+Rally alone one584B control/counthelper; no newrace/timer/FPS/CPUclaim. All Extender
+targetaccessSTOPPED until realjoinedreturn. Same135 exact85f9nativeFIRST/readback/
+a25f/fullreadback/fullhandback/release required, outer12288untouched. SDmounted.
+6502dfcc thenMech9267 queued. MechSOURCE3/bf1ebf5b50pins/R05freezer53/13controls
+sourceonly returned104, no independenttargetcase. Evidence agents/bench-scheduler/
+rally-rx006-helper-r01. Earlier headers historical.
+
+# Current — actual135 sole Extender Rally RX helper owner installation
+
+Freshcaeae/135 after134 full8519/native/readback/fullhandback/33684actual0/
+actor-group terminal. Admission86971 actual0/rawmode0/callback0/Legacy0/wholefiles/
+CLI/neutral/offlineidle/freeUSB. Exact3c0503df hostkit/app595f and66 ownerpins pass.
+Original35029 alone one171c EMOS/fullreadback and7d09 native app0/preservedprefix/
+fullreadback/matchedbootstrap/freshfacts. No helper/game/timer/P4/startup/listener/
+boot/table/OTA/app1 write/replay. Original1800/540owner/420consumer/120app/600cleanup/
+min1020handoff retained. Rally stopped until actualjoined RX6HLP handoff. Existing
+normalforeground selfsummary/AFTERlaunch originaltool registration, no newbarrier.
+Same135 exact85f9nativeFIRST/a25f/fullhandback/release required, SDmounted.
+6502dfcc thenMech9267 queued. Evidence agents/bench-scheduler/rally-rx006-helper-r01.
+Earlier headers historical.
+
+# Current — actual134 sole FSIM witness35; Extender target-stopped
+
+Fresh f7ba/134 granted after133 clean release. Original admission39187 actual0/
+rawmode0/callback0/Legacy0/wholefiles/CLI/input/idle/freecharUSB and actor/group
+closure pass. Actual bound134 ready/layout/current full8519 rollback lineage/
+normalforeground argv/afterlaunch actorbinding sent100. FSIM sole ONEneutral90tick
+ON case/original1800whole/600cleanup/dispatch<300s, no FPS or CPU claim. Scheduler
+performed no reset/firmwarewrite/guestinvocation; all Extender targetaccessSTOPPED.
+Exact newlywritten native span readback and incomingfull1118208B8519 restoration/
+matchedbootstrap/fullhandback/allactorsjoined/normalrelease mandatory. Other
+components/boot/table/OTA/app1/startup/listener unchanged; SDmounted. Rallycaeae
+next only after actualrelease/freshadmission. Evidence agents/bench-scheduler/
+fsim-p071-witness35-r01. Earlier headers historical.
+
+# Current — actual133 clean release; all target access stopped
+
+Released11:35:54.553455UTC. OriginalCPU caseFAILEDpre getter65529/oldBC38Evsf05c
+BC392 before VDPrequests; CPUapp/match/timerUNRUN. Originalgetter128KiB saved
+BEFORELOAD/reset/1a285f1b, notCPUappRAM. Exactall19 originalfiles/attrs/absence/
+two absentdirs restored, sharedoldbackups untouched, originalabsentfeature via
+sourcebeforeVDPrequests/no setter. Exacta25f/full131072readback/freshrootCLI/
+cursor/rawmode0/callback0/Legacy0/wholefiles/neutral/offlineidle/freeUSB/allowner
+actors joined. Original21491/16794/79492 actual0;84recordedrootIDs+parents absent,
+untrackedcompletenessUNKNOWN retained/nohostinvoked. No native/P4write/reset/
+retry/newcase. Full8519native lineage from132prefixrestore/untouchedsuffix.
+SDmounted/oldtokenINVALID. CanonicalnextFSIMf7ba requiresfreshadmission, Rallycaeae
+after. Evidence agents/bench-scheduler/mechagon-cpu-window-r02-bound-596fc6eaf183/
+released.json and restore133. Earlier headers historical.
+
+# Current — actual133 sole Extender failed-getter restoration
+
+Root stage16311actual0/pre71805actual1 before CPUapp/match/timer. All84recorded
+identities+knownparents/groups absent; untrackedcompletenessUNKNOWN preserved.
+Originalgetter128KiB saved BEFORElaterLOAD/reset viaSAVE-only, hash1a285f1b;
+notCPUapp/matchRAM. Original failedfeature and exactoldmap5ab source preserved:
+BC38E getter vsactualf05cBC392/status65529 before VDP/featuretraffic. No newgetter.
+Knownlistener/current19/normalEXIT preservation16794actual0. Sole restoration
+79492 restoresPRE19/dirs, exacta25f/fullreadback/correctrawcallback/fullhandback/
+normalrelease. No native/P4write/reset/replay/newcase. Original2400/shared600
+cleanup retained, FSIMf7ba next. SDmounted. Evidence agents/bench-scheduler/
+mechagon-cpu-window-r02-bound-596fc6eaf183/restore133. Earlier headers historical.
+
+# Current — actual133 sole Mech corrected CPU consumer; Extender stopped
+
+Exactf05c full131072 readback/rawmode0/callback0/Legacy0/wholefiles/CLI/input/
+idle/freecharUSB passes. PRE19 tenpresent/nineabsent, original feature absent,
+both dirs absent preserved BEFORE helper writes; shared old backups untouched.
+Original21491 actual0/direct rawtoolreturn preserved; PID1927463+PGID1927462 and
+all registered groups terminal. Actual ENTRY2/corrected admission+stagebudget
+validated, exact normal5phase argv/stoppedsolehandoff95 delivered. Extender ALL
+targetaccess stopped. Mech alone one frozen362/c072 case/original11:19:33grant/
+2400whole/600cleanup, one exclusive inactivePRT1epoch/no rearm. Samea25f/PRE19/
+feature/directories/fullhandback/release mandatory; FSIMf7ba next. SDmounted.
+Evidence agents/bench-scheduler/mechagon-cpu-window-r02-bound-596fc6eaf183.
+Earlier headers historical.
+
+# Current — actual133 sole Extender corrected CPU owner installation
+
+Fresh request596 granted11:19:33UTC after132 clean release. Saved fresh admission
+CLI/rawmode0/callback0/Legacy0/wholefiles/neutral/offlineidle/freeUSB passes.
+Frozen362/c0728b58 matches. Originalforeground21491/actor1927463 alone preserves
+PRE19/feature/two dirs BEFORE helper writes, one exactf05c install/fullROM readback
+and freshfacts. Root stopped until actual joined ENTRY2/handoff. Original2400/
+600entry1200consumer600cleanup retained; unknown sidecars stop, shared oldbackups
+untouched. Samea25f/PRE19/fullhandback/normalrelease mandatory. FSIMf7ba follows.
+SDmounted. Evidence agents/bench-scheduler/mechagon-cpu-window-r02-bound-596fc6eaf183.
+Earlier headers historical.
+
+# Current — actual132 clean release; all target access stopped
+
+Released 2026-11-08T11:13:34.330066UTC. Corrected RX006 one explicit suite
+passed ten correctness sizes,36 cells,32B witness state3,next2 and normal listener
+EXIT. Original installer77380/consumer72988/restoration99564 returned0; all owned
+actors/groups/registered leaves terminal and both actual USB ports free. Exact
+incoming1105920B85f9 native prefix restored FIRST/full independent readback;
+outer12288B untouched/8519 lineage. One maintained matched bootstrap then exact
+a25f/full131072 readback/freshrootCLI/cursor/mode0/callback0/Legacy0/wholefiles/
+neutralinput/offlineworker0 pass. P4/startup/listener unchanged; SD mounted.
+Both129 and132 evidence retained; no replay/newcase/tuning. Canonical next is
+Mech596 CPU R02, still source preparation until final kit; no token conveyed.
+Evidence agents/bench-scheduler/rx006-matched-r04-bound-e4d3981a89ae/released.json.
+Earlier headers historical.
+
+# Current — actual132 sole UART R04 consumer; Extender target-stopped
+
+Exact171c full131072 and7d09 full1105920prefix9d005680 readbacks/positive
+matchedbootstrap/freshrootCLI/rawmode0/callback0/Legacy0/whole45Bstartup+24753B
+listener/neutral/offlineworker/freeactualUSB pass. Four missing display samples
+retained inside original bootstrapdeadline; positive gates passed. Original
+77380exit0/allphases0/driver+registeredgroups terminal. ActualRX006-OWNER-HANDOFF1/
+context/token/exactforegroundargv/actorbinding sent90. All Extender target access
+stopped. UART alone ONE fourfile stage/explicit correctedSAVEkit6d46 r02 EXEC,
+32Bwitness/return/listener gate; no old129replay. Original10:56:08grant/1800clock/
+1392remainingat handoff/min1020/consumer420/app180/600cleanup. Same132 exact85f9
+nativeFIRST/a25f/fullreadbacks/fullhandback/actorjoin/release mandatory.
+MechfutureCPU596 PREPARING. SDmounted. Evidence
+agents/bench-scheduler/rx006-matched-r04-bound-e4d3981a89ae. Earlier headers historical.
+
+# Current — actual132 sole Extender RX006 R04 installation
+
+Fresh e4d/132 granted10:56:08.319718UTC after131 exacta25f/PRE17/feature/
+directories/fullhandback/release. Sourceb72a/all49+kit6d46 explicithex/freshr02
+matched; incomingadmission39064 returned0/rawmode0/callback0/Legacy0/wholefiles/
+CLI/neutral/offlineidle/freeUSB. Extender alone original77380 registers driver/
+leaves, installs exact171c/fullROM and7d09 app0/full1105920prefix readback then
+matchedbootstrap/freshfacts. No fixture/timer/P4/startup/listener/bootroute change.
+Original1800/owner540/consumer420/app180/cleanup600/min1020 remains. UART stopped
+until actual joined handoff. Known85f9prefix/8519suffix retained; samenativeFIRST/
+a25f/fullhandback/actorjoin/release required. SD mounted. Evidence
+agents/bench-scheduler/rx006-matched-r04-bound-e4d3981a89ae.
+Earlier headers historical.
+
+# Current — actual131 clean release; all Extender target access stopped
+
+Released10:53:47.416535UTC. Original firststage52729 exit1/error4/remote8 before
+any native deployment/pre/host/match/LOAD/RUN/PRT/window; no CPU result. Terminal
+failedP4spool preserved/discarded only, no replay. RECOVER09 target+backup/no
+part/meta, old111B target unchangedPRE and backup archived/leftINPLACE. Exact
+original17 files/attrs/absences and both absentdirs restored, original absent
+feature positivePRE/nointerveningsetter. Exacta25f full131072 readback/freshCLI/
+cursor/rawmode0/callback0/Legacy0/wholefiles/neutral/offlineidle/freebothUSB pass.
+Owner22779/reconcile42272/restore95431 terminal0; root recordedgroups+parent
+absent/untrackedcompletenesslimit retained. No native/P4write/reset/newguest.
+Canonical next UARTe4d/RX006R04 requires fresh admission. SD mounted. Evidence
+agents/bench-scheduler/mechagon-cpu-window-r01/released.json and restore131.
+Earlier headers historical.
+
+# Current — actual131 sole Extender failed-stage restoration
+
+Root originalstage52729 exited1 before native deployment/pre/getter/match/PRT;
+all recordedgroups and parent absent, untracked completeness limit retained.
+Failed PUT render-state bytes0/error4/remote8 preserved. Same listener known/
+online/pendingfalse; terminalP4spool explicitly discarded without resubmission.
+ActualRECOVER09 target+backup/no part/meta; both111B oldhelper retained, target
+equalsPRE17. Original backup left in place, archived. Reconcile42272 returned0/
+current17 captured/normalEXIT/idle. Restore95431 alone restores17/directories/
+feature then exacta25f/fullROM/freshfullhandback/release. No native/P4write/reset/
+guest/load/timer or replay. Original2400/600cleanup; UARTe4d next. SD mounted.
+Evidence agents/bench-scheduler/mechagon-cpu-window-r01/restore131.
+Earlier headers historical.
+
+# Current — actual131 sole Mech CPU-window consumer; Extender target-stopped
+
+Exactf05c full131072B installed readback and identified-map rawmode0/callback0/
+Legacy0/wholefiles/CLI/input/idle/freeactualUSB pass. PRE17 byte/attribute/absence,
+original two absentdirs, originalfeature absent and full8519 native descriptor
+joined. Owner22779 exit0/PID1918979/group1918974 and registeredchildren terminal.
+Frozen finalizer validated actualMGCPUWINDOWOWNERENTRY1 and originalstagebudget
+against unchanged43e49d2f/331 kit. Actualcontext/stoppedhandoff/exact5phaseargv
+sent84. Mech alone may execute stage/pre/live/post/idle once/firstfailurestop,
+original10:40:24UTC+2400/600cleanup, one90/150/180match and onePRT1epoch/no rearm.
+No timer/window/CPU result claimed by install; all Extender target access stopped.
+Same131 originala25f/allPRE17/feature/directories/fullhandback/release required,
+UARTe4d next. SD mounted. Evidence agents/bench-scheduler/mechagon-cpu-window-r01.
+Earlier headers historical.
+
+# Current — actual131 sole Extender CPU-window installation
+
+Fresh1282 grant131 at10:40:24.918716UTC after FSIM130 exact8519 fullspan
+restoration/fullhandback/release and original62231/PID+group terminal0.
+Source kit43e49d2f/all331 pins match. IncomingCLI/rawmode0/callback0/Legacy0/
+wholefiles/neutral/offlineidle/freeUSB admission75274 returned0. Extender alone
+runs frozen PRE17/feature/directories then f05c stage/FLASH/full131072readback/
+freshfacts, original22779/registeredowneractor. No match/timerprobe/native or
+P4 write/reset. Original2400s/600entry1200consumer600cleanup; Mech remains
+target-stopped until actual joined stopped handoff. Same131 exacta25f rollback
+alloriginalfiles/feature/fullhandback/release mandatory. UARTe4d queued.
+SD mounted. Evidence agents/bench-scheduler/mechagon-cpu-window-r01.
+Earlier headers historical.
+
+# Current — actual130 FSIM original foreground running; Extender target-stopped
+
+FSIM reports original tool62231/PID1915655/start39198562/PGID1915655, launched
+ONCE inside unchanged300s dispatch window. Actual argv matches bound130;
+actor registered honestly AFTER launch per timing correction80. No runner or
+launcher edit/barrier, grantclock renewal or result claim. Original grant
+10:12:52UTC/2400shared/600cleanup retained; FSIM sole through closure/restore.
+Mech1282 final43e49d2f/331 source inputs rehashed, source-only preflight passes;
+no CPU target contact/grant. UART R04 source49 bb3c8bae returned81 for future
+normalFIFO corrected explicit-hex completion case, same app/firmware; no current
+reservation/grant from source. SD mounted. All Extender target access stopped.
+Evidence agents/bench-scheduler/fsim-p071-poll33-r01 and CPU/R04 source folders.
+Earlier headers historical.
+
+# Current — actual130 sole FSIM matched cohort; Extender target access stopped
+
+Normal request8cc received generation130 at2026-11-08T10:12:52.682025UTC.
+Fresh admission66134 returned0; rawmode0/callback0/Legacy0/wholefiles/CLI/
+neutral/offline/idle/freeactualUSB and original scheduler PID/group closure pass.
+Qualifiedf355 source and current129 restored tuple/full8519 suffix continuity
+validated; metadata bound130 ready/currentlayout/exactforegroundargv sent79.
+FSIM alone may execute the selected fixed controlA/quietB/controlC1800tick
+cohort with one original2400s sharedclock/600cleanup, no late>=300s dispatch.
+All Extender target commands/readers stopped; no scheduler firmwarewrite/reset/
+guest invocation. Exactoriginal8519 fullspan restoration/readback/fullhandback/
+allactorsjoined/normalrelease mandatory, Mech1282 retains FIFO. SD mounted.
+Evidence agents/bench-scheduler/fsim-p071-poll33-r01. Earlier headers historical.
+
+# Current — actual129 clean release; all Extender target access stopped
+
+Released2026-11-08T10:10:35.784715UTC; old token invalid. Original RXconsumer
+51504 exited1 after ONE EXEC/terminal-listener180s timeout; unknown original
+guest state/no performance verdict/no replay. Exact85f9 native prefix restored
+FIRST/full independent readback, outer12288B untouched/8519 lineage. Agon-only
+admission failed; standing paired recovery passed. Partial log/next retained;
+131072B RAM explicitly POSTRESET before later LOAD, not original failure RAM.
+Exacta25f fullROM readback/freshrootCLI/cursor/rawmode0/callback0/Legacy0/whole
+startup-listener/neutral/offline/idle/freebothUSB/allactorsjoined passed.
+Canonical next_request FSIM8cc/PINGO-071-poll33 requires fresh admission.
+No retained target commands/readers/HOLD. SD mounted. Evidence
+agents/bench-scheduler/rx006-matched-r03-bound-8ff7f0739f0e/released.json.
+Earlier headers historical.
+
+# Current — actual129 sole Extender necessary restoration
+
+UART consumer51504 exited1 after ONE suite EXEC and terminal-listener180s
+timeout; all consumer actors joined. Original guest state remains unknown,
+no replay or performance verdict. Native85f9 prefix restored FIRST and full
+readback passed; outer12288B suffix untouched/8519 lineage. Ordinary Agon
+admission failed, standing paired P4-init/Agon recovery passed. Remaining
+cleanup actor46276 alone captures explicitly postreset RAM before later LOAD,
+then restores a25f/full readback/full fresh handback and normal release.
+Whole deadline10:13:48UTC, no new case. FSIM8cc then Mech1282 retain FIFO.
+SD mounted. Evidence agents/bench-scheduler/rx006-matched-r03-bound-8ff7f0739f0e/cleanup129.
+Earlier headers historical.
+
+# Current — actual129 sole UART consumer; Extender target access stopped
+
+Fresh R03 generation129 granted09:43:48UTC. Both exact171c full ROM and7d09
+native prefix readbacks and corrected b6d bootstrap passed. All four installer
+phases returned0. Original tool95435 nevertheless returned143 after completion;
+that discrepancy is preserved, cause unknown. Original driver/group and all
+registered child groups independently terminal. Narrow fresh CLI/whole files/
+read/EXIT/neutral/offline/idle check61302 returned0 inside original540s; retained
+raw mode0/callback0/Legacy0 snapshot has no intervening setter/guest, provenance
+is explicit. Actual RX006-OWNER-HANDOFF1 and exact foreground argv/actor binding
+sent74. All Extender target commands/readers stopped, actual USB ports free.
+UART alone may run the selected unchanged ten-size/36-cell comparison, original
+1800clock/420consumer/app180/600cleanup/min1020 at handoff (1241.932s remained).
+No owner replay/reset/new fixture. Same129 incoming85f9 native-FIRST/a25f and
+full handback remain; original stage binding now automatic for normal/failure
+cleanup. FSIM8cc then Mech1282 queued normally. SD remains mounted. Evidence:
+agents/bench-scheduler/rx006-matched-r03-bound-8ff7f0739f0e. Earlier headers historical.
+
+# Current — actual129 sole Extender RX006 R03 installation
+
+New request 8ff7f0739f0e received generation129 at09:43:48UTC after actual128
+normal restoration/release. The independent R03 template and all49 pins were
+reviewed by UART; the real request-bound packet is bef79b99. Fresh CLI/raw state/
+whole files/neutral input/offline worker/free USB passed before admission.
+Extender alone runs original installer95435 under original540s owner cap and
+1800s whole clock. Same171c EMOS/full ROM and7d09 native app0/full prefix readbacks,
+corrected b6d bootstrap, actual CLI/state/source60001 provenance must finish
+before a joined stopped handoff. UART remains target-stopped. Consumer420/app180,
+cleanup600 and minimum1020 remaining are unchanged. Original a25f/85f9 prefix/
+8519 outer suffix are retained; P4/startup/listener/boot layout stay unchanged.
+No consumer run or replay. SD remains mounted. Evidence: agents/bench-scheduler/
+rx006-matched-r03-bound-8ff7f0739f0e. Earlier headers are historical.
+
+# Current — actual128 cleanly released; all Extender target access stopped
+
+Actual128 RELEASED2026-11-08T09:34:48.523926UTC, next_requestNULL/oldtokeninvalid.
+RX suite entirelyUNRUN: originalowner360 expired duringfinalreadonlylistener
+READ after171c/fullROM and7d09/fullnativeprefix readbacks + correctedbootstrap
+passed. PendingoriginalREAD resolved/normalEXIT, no replay. Native85f9prefix
+restoredFIRST/full1105920 readback; outer12288 suffix unchanged8519lineage. One
+ordinaryAgonreset/CLI then exacta25ffullROMrollback/fullreadback; whole45Bstartup/
+24753Blistener/rootCLI/cursor/rawmode0/callback0/Legacy0/neutral/offlineworker0/
+realcharUSBfree/alloriginal-cleanupgroupsjoined pass. Initialcleanup stage-receipt
+omission stoppedbeforeFLASH; only remainingEMOSrollback continued withoriginal
+stageprovenance, no repeatednativewrite/reset. Original52654exit1/cleanup94452exit1/
+final44411exit0 retained. No RXperformance/firmwarecause claim, P4flash/HOLD or
+successorselected; SDmounted. Currentd9b/a25f/native5d657/ed403/0566. Evidence
+agents/bench-scheduler/rx006-matched-r02-source2/released.json, all-actors-terminal,
+cleanup128/evidence/native-restore/read.bin andcleanup128/emos-final. Earlier
+headers historical. CPUwindow source-only packet68 returned; no hardwarekit.
+
+# Current — actual128 RX comparison unrun; sole Extender necessary cleanup
+
+Original installer52654 exited1 at absolute360s final read-only listener-file
+READ. Both exact171c fullROM and7d09 fullprefix9d005680 readbacks pass; corrected
+b6d bootstrap passes/four missing display samples retained. Rawmode0/callback0/
+Legacy0 captured, final wholefile/readEXIT incomplete. No consumer handoff or
+RUN/EXEC; all original registered actors/programmers/groups terminal. Pending
+original READ is preserved for supported exact resolution/normalEXIT. Necessary
+same128 cleanup94452 active: exact85f9nativeprefix FIRST/fullreadback, one ordinary
+Agon reset after originalpositiveP4init, a25ffullROM/readback/fullfreshhandback/
+allactorsjoined/normalrelease. Original1800/cleanup600, no replay/P4flash/HOLD.
+UART remains targetSTOPPED. SDmounted. Evidence agents/bench-scheduler/
+rx006-matched-r02-source2/cleanup128. Earlierheaders historical.
+
+# Current — actual128 sole Extender RX006 installation; UART stopped
+
+Fresh ccb5/128 granted09:21:54UTC after127 exacta25f restoration/fullhandback/
+release. Source2 all45 pins and unchanged e220 consumer kit match. Extender
+alone stages/installs171c EMOS/full131072 readback and7d09 native app0/preserved
+prefix/full1105920 readback then corrected b6d setup-only bootstrap/fresh actual
+CLI/rawstate/wholefiles/input/idle. Original foreground installer52654 active;
+UART consumer has no handoff and remains stopped. Whole1800/owner360/consumer420/
+app180/cleanup600/min1020remaining retained. No fixture invocation/P4 flash/
+startup-listener edit/boot-route change/replay. Incominga25f and known85f9prefix/
+8519outer suffix retained, native restoration FIRST if needed. SDmounted.
+Evidence agents/bench-scheduler/rx006-matched-r02-source2. Earlier headers historical.
+
+# Current — actual127 cleanly released; all Extender target access stopped
+
+Actual127 released2026-11-08T09:15:27.416349UTC. Both BASE/TAIL normal native/
+cold/postfeature/idle gates passed,10 original tools0/661 recorded actors+groups
+absent. Both strict30FAIL and null conditional tail exposure retained; no gain,
+cure/CPU/capacity/optical claim. All21 original PRE_PAIR complete bytes/attrs/
+absence independently restored/checked; original absentfeature matches both
+positive postgetters, no later setter/newgetter/LOAD. Exactincominga25f fullROM
+rollback/readback and freshrootCLI/cursor/mode0/callback0/Legacy0/whole45Bstartup/
+24753Blistener/inputneutral/offlineworker0/freebothUSB passed. Original18187exit0/
+PID1902745+PGID1902740 absent/allchildren-readersjoined. No reset/newcase/replay/
+P4/native/startup/listenerwrite or CPUinstall; native8519 provenance unchanged
+from126fullreadback. SDmounted, oldtokeninvalid, ALL targetaccessSTOPPED. Actual
+next UARTccb5 needs normalfreshadmission, no grant inferred. Evidence agents/
+bench-scheduler/mechagon-tail-service-r01/released.json, owner-install/verify-rollback,
+file-restore/receipt.json and restore-tool-terminal.json. Earlierheaders historical.
+
+# Current — actual127 sole Extender owner restoration; Mech stopped
+
+Actual127 both BASE/TAIL native/cold/postfeature/idle gates pass; all10 original
+phase handles terminal0,661 recorded PID/start/groups absent and actualcharUSB
+free. Both strict30FAIL/null conditional tail exposure retained, no speed/cure
+claim. Mech alltarget/readers/pendingcommandsSTOPPED. Extender same127 owner
+restoration18187 is active: independently match lastwriters, restore all21
+ORIGINAL PRE_PAIR bytes/attrs/absence, exacta25f EMOS FLASH/fullROM readback and
+fresh fullCLI/state/files/input/idle/freeUSB/release. Incoming absentfeature
+matches both positive postgetters; no furthergetter/LOAD/nativeRAMclaim or
+newtest/reset/P4/nativewrite. Original2400clock08:49:18UTC/600cleanup retained.
+SDmounted. Evidence agents/bench-scheduler/mechagon-tail-service-r01/restore127.log.
+Earlierheaders historical.
+
+# Current — actual127 sole Mech tail comparison; Extender target stopped
+
+Fresh9562/127 original grant08:49:18.075900UTC. Exact08ef/1115 rootkit validated;
+all21 PRE_PAIR original completebytes/attributes/absence preserved BEFORE helper
+writes, original feature snapshot from supported positive getter. ONE exact1e4e
+EMOS install/full131072 independentreadback/rawmode0/callback0/Legacy0/wholefiles/
+CLI/neutral/offlineworker/freeUSB pass. Original owner49284 exit0/PID+groupabsent/
+all children-readersjoined. ActualMGTAILPAIROWNERENTRY1, matching context/handoff
+preservation/capture descriptors, both frozen arms and original budget PASS at
+elapsed187s. Grant64+immediate steering delivers mandatory normal10phase argv.
+ALL Extender targetaccess/pendingcommands STOPPED; Mech sole127 through selected
+BASE→TAIL and original2400whole/600cleanup. Incoming rollbacka25f and21PRE_PAIR
+originals+feature retained; no P4/native/startup/listenerwrite, CPUinstall, timer
+probe/replay/HOLD. SDmounted. Evidence agents/bench-scheduler/mechagon-tail-service-r01.
+Earlierheaders historical.
+
+# Current — actual127 sole Extender owner installation for queued tail956
+
+Fresh9562/127 grant08:49:18.075900UTC after actual126 full8519/readback/handback/
+release/allactorsjoined. Consumer kit08ef/1115 unchanged. Extender alone under
+actual127 preserves all21 PRE_PAIR file bytes/attributes/absence BEFORE helpers,
+actual feature snapshot, then ONE exact1e4e EMOS stage/FLASH/fullROM verification.
+Original owner tool49284 is active; Mech consumer remains STOPPED. Original
+2400whole/300ownerentry1500consumer600cleanup and BASE/TAIL suffix floors apply.
+No P4/native/startup/listener write, CPU package installation, runtime timer,
+consumer invocation or replay. Join original owner actor before stoppedsole
+handoff. SDmounted. Evidence agents/bench-scheduler/mechagon-tail-service-r01.
+Identified accounting646 packet sent63/source-native only; no new ownerchange
+needed for Mech647 reader correction. Earlier headers historical.
+
+# Current — actual126 released; Extender reconciling queued tail956
+
+Actual126 full1118208B8519 restore/readback/matchedbootstrap/fullhandback passed;
+normalrelease08:44:34.443728UTC, original37771 exit0/PID1891506+groupabsent/all
+children joined and all FSIM targetaccessSTOPPED. Canonical9562 tail comparison
+head/source1115pins08ef freshly matched. Extender fresh bounded admission23938
+is active; no consumer invocation. If granted, Extender alone preserves21
+PRE_PAIR file bytes/attributes/absence and feature BEFORE helpers, exact1e4e
+EMOS install/fullROM readback, joins then stopped sole Mech handoff. Same2400
+whole/300entry1500consumer600cleanup and all phase suffix floors. No CPU build,
+new runtime profile, P4/native/startup/listener write or replay. SDmounted.
+Identified CPU source/native package646 complete131060/free12/fullROMf05cfbe4/
+382member ZIP2c5bdc3a/5815b18, sent63; no target/timer/install selected. Earlier
+headers historical. Evidence agents/bench-scheduler/mechagon-tail-service-r01.
+
+# Current — actual126 sole FSIM; Extender target stopped
+
+Fresh7e638/126 grant08:32:56.947940UTC after actual125 full14file/feature/state/
+CLI/idle restoration and clean release. Source629/physical30 prepared7f1e plus
+all25 inputs/tool pins match; fresh actualCLI/listener/readEXIT/rawmode0/
+callback0/Legacy0/whole startup-listener/neutral/offlineworker0/freecharUSB pass.
+Admission71745 exit0/PID1890940 absent/allchildren/readersjoined; producerbind
+bound126/ready.json PASS. Current app0@10000/touched1118208 and exactknownfull
+8519 rollback continuity admitted; no redundantbackup/boot-selectionread claim.
+ALL Extender target access and pending commands STOPPED. FSIM sole126 through
+ONE frozen1800tick finite OFFcase, exactinstall/readback/restore/fullhandback/
+normalrelease. Original1800whole/600cleanup unchanged; no schedulerreset/flash/
+workload. SDmounted. Evidence agents/bench-scheduler/fsim-p071-consumer30-r01.
+Earlier headers historical.
+
+# Current — actual125 cleanly released; target access stopped
+
+Actual125 released2026-11-08T08:30:16.658746UTC. ONE natural606 token audit and
+cold collection passed; all original consumer tools0/six actors/groups joined.
+Same125 restoration97964 exit0/PID1889969 absent. All14 PRE-case file bytes,
+attributes and absence independently restored/checked; positive postgetter
+feature matches original absent state. Fresh rootCLI/cursor/mode0/callback0/
+Legacy0/wholefiles/inputneutral/offlineSD/worker0/freebothUSB pass. No firmware
+write/reset/newLOAD/test/replay incleanup. Exact d9b/a25f/5d657/ed403/0566 and
+retained8519 fullspan provenance unchanged. SD mounted, old token invalid.
+Canonical actualnext FSIM7e638 needs normalfreshadmission; no grant inferred.
+Evidence agents/bench-scheduler/mechagon-token-natural-r01/released.json and
+owner-final. CPU C9 body fits131060/12free but full wrapper stopped at stale
+keyboard marker guard; no fully qualified/identified runtime artifact yet.
+RX006 source2 four actual host cancellation controls PASS642/released, no target.
+Earlier headers historical.
+
+# Current — actual125 sole Extender owner restoration under Mech lease
+
+Mech returned the ONE native audit/cold collection PASS with all three original
+tools exit0, six actors/groups joined and actual ports free. Same125 delegated
+owner restoration is active, original lease/time budget unchanged; no peer target
+access. Restore all14 PRE-case original file bytes/attributes/absence, preserve
+matching original/post feature state, fresh CLI/rawstate/files/idle/freeUSB then
+normal release and actual-next notice. No new workload, getter, firmware or reset.
+Evidence agents/bench-scheduler/mechagon-token-natural-r01/restore-release.py and
+restore-release.log; original tool97964. SD mounted. Optional CPU/RX source work
+holds no compiler or target resource. Earlier headers are historical.
+
+# Current — actual125 soleMech natural token; Extender target stopped
+
+Freshc976/125 grant08:13:33UTC after actual124 exact85f9/fullreadback/wholefiles/
+state/CLI/resources/release. Owner86428 EXIT0/actualPIDabsent, all synchronous
+children/readersjoined. Exact258/964c kit, all14 PRE-case original files/absence/
+attributes BEFORE helpers, feature snapshot, independent full131072Ba25f and
+knownfull1118208B8519 + actual124prefix/suffixuntouchedlineage, freshCLI/rawmode0/
+callback0/Legacy0/whole startup-listener/neutral/offlineworker/freebothUSB PASS.
+Actual MGTOKENOWNERENTRY2/context identicaltoken_preservation/frozenbinding and
+originalpreparefloorPASS; grant55/immediateacceptedsteer delivered. ALL Extender
+targetaccess/pendingcommands/readersSTOPPED. Mech sole125 for exactly one
+natural606token audit, sequential prepare/run/collect, original1500 clock
+300entry600consumer600ownerrestore, floors1200/1071/880. No ownerfirmwarewrite/
+reset/UART1/PRT/consumer invocation. Wait actualjoinedstoppedreturn then restore
+all14 PRE-case originals and feature/state/fullhandback/release/actualnext.
+SDmounted; no replay/HOLD/defaultadoption. Evidence agents/bench-scheduler/
+mechagon-token-natural-r01. OptionalCPUbest C7 ON131095/23Bover, compiler639
+released/Mech640notified; no deployable/runtime claim. RX006newccb5 source2
+child-cancellation closure/tasklabel correction prepared, controls pending; old
+37pin packet immutable/no grant. Tail956 final08ef/1115READY behindexistingFIFO.
+
+# Current — actual124 sole6502 normal R03; Extender target stopped
+
+Fresh a8e/124 admission74012 returned0 after actual123 exacta25f/fullROM and
+85f9prefix/fullreadback/wholefiles/rawstate/fullhandback/release.402/88894967
+inputs match, actual fresh CLI/listener/readEXIT/rawmode0/callback0/Legacy0/
+whole startup/listener/neutral/offlineworker/freeactualUSB pass. Actual grant/
+context/programmer-binding and stoppedsolehandoff sent48/immediate steering.
+ALL Extender targetaccess/readers/pendingcommands STOPPED;6502 sole124. Original
+2400whole/800setup/1180beforeEACH/350cleanup; only same normal9652wc10 empty
+chooser thenDOS/BASIC/Fkey, frozen16+2conditionalcleanup actions and five115200
+boundednativeleaves. SameF6 app0 only/full1105920comparison7f46/exact85f9restore/
+known8519suffixuntouched; frozen Agon-only reset, no P4/display-bootstrap change.
+No scheduler flash/reset/test, no LR/protectedcase/replay/HOLD or unrelated
+component/startup/listener/OTA/table/app1 change. SDmounted. Rootc976 actualnext
+after normal124cleanrelease. CPU R03 completed631/released: OFF exact1e4e, ON131129/57B excess (78B
+saved), sanitizerC9+11/linked116/receiveguards PASS. Exact110pin manifest
+fd4ada1a; source EMOS4c2a600/Extenderf30a5635 localonly/no push; result50 sent
+Mech. Bootstrap timeout candidate e4929b46/8pins7614/11hostcontrols PASS,
+physicalpathUNRUN; returned51 toUART, oldd04f/123immutable. No compiler hold.
+Evidence agents/bench-scheduler/dsk001-normal-smoke-r03. Earlierheadershistorical.
+
+# Current — actual123 cleanly released; Extender target stopped
+
+Original RX006 owner installation failed at bootstrap HTTPdisplay request after
+171c/7d09 independent readbacks passed; consumer entirely UNRUN. Exact85f9prefix
+restore FIRST/full readback, standing ONE Agon-only recovery, exacta25f ROM
+rollback/full readback and freshrootCLI/cursor/rawmode0/callback0/Legacy0/whole
+files/inputneutral/offlineworker/freeUSB passed. Both original15175 and cleanup
+93551 terminal/all children joined. Released07:41:35UTC; SDmounted, oldtoken
+invalid. Evidence agents/bench-scheduler/rx006-matched-r01/released.json and
+cleanup123. Actualnext6502a8e needs normalfreshadmission/currenttuple/programmer
+binding; rootc976 behind it. No new RX006 case/replay selected. CPU R03 remaining
+135B source correction selected and isolated, no currentcompiler or target hold.
+
+# Current — actual123 RX006 owner installation; UART target stopped
+
+Fresh actual123/92f admission10711 returned0 after actual122 full8519 restoration/
+readback/release and rehashed e220 fixture/source closure. Original sole owner
+installer15175 is active; Extender alone stages exact171c EMOS, one FLASH/full
+readback and selected7d09 app0 producer/full1105920B prefix readback, then ONE
+current matched bootstrap/fresh CLI/rawmode/callback/Legacy/fullfiles/inputidle/
+freeUSB. No consumer EXEC/LOAD/RUN or PRT. UART and other agents targetSTOPPED
+until real owner joined/stopped handoff. Whole1800 anchored original grant,
+owner install360, consumer420, cleanup600/min1020 before dispatch. Incominga25f/
+85f9 prefix with known8519 suffix retained; no redundant backup. New native
+write leaves at115200/180s+5joined, no replay. No P4/startup/listener/OTA/table/
+bootloader/app1 change. SDmounted. Source60001 availability requires actualfresh
+native bootstrap/empty registry provenance. Evidence agents/bench-scheduler/
+rx006-matched-r01. Following6502a8e thenrootc976 preserved. CPU fit623 released
+with135B remaining; next source correction deferred during this installation.
+
+# Current — actual122 FSIM sole Consumer27; Extender target stopped
+
+Fresh fe69/122 admission31606 exited0 after source28/all25 frozen inputs,
+actual CLI/listener/readEXIT/rawmode0/callback0/Legacy0/wholefiles/neutral/offline/
+worker0/freebothrealcharUSB pass. Normal fresh token/context/layout admission +
+known1118208B8519 rollback lineage119→120prefix85f9/suffixuntouched→121native
+untouched validated. Producer bound122 ready; mandatory ONE foreground FSIM
+execute argv delivered grant38/immediate accepted steering. FSIM owns122 through
+selected finite case/firstresult preservation/exactfull8519 restore/readback/
+currentbootstrap/fullfreshhandback/actorjoin/normalrelease/immediate actualnext.
+ALL Extender targetaccess/readers/pendingcommands STOPPED. SDmounted. No scheduler
+flash/LOAD/RUN/reset/PRT. Following MOS92f/6502a8e/rootc976 protected. Current
+P4d9b/EMOSa25f/native5d/startuped403/listener0566 at handoff. CPU compact fit623 completed/released: OFF exact1e4e PASS; ON131207/+135
+excess (116B saved), actual C9+8/native link/116 linked leaf and receive guards
+PASS; no deployable image, timer/device or next fit iteration. C1 preserved.
+Evidence agents/net004/cpu-accounting-fit-r02; no compiler or bench hold. Evidence agents/bench-scheduler/
+fsim-p071-consumer27-r01. Earlier headers historical.
+
+## CPU accounting source-fit return — 2026-11-08 06:47 UTC
+
+Isolated owner implementation local713633b6 / EMOS0d39f8f. Exact OFF1e4e and
+mandatory checks PASS; ON131323B exceeds physical ROM by251B (+371ROM/+3BSS).
+App/provider link2940text/284BSS, C lifecycle/admission and linked guards pass;
+no native IRQ/timer or recorder-arithmetic execution. Result/pins in ignored
+agents/net004/cpu-accounting-r01. No runnable kit, timer/target/emulator/bench
+operation or push. Final compiler614 released06:46:50UTC/all children joined,
+nextnull. Existing physical scheduling and unrelated dirty work preserved.
+
+# Current — actual121 cleanly released; all Extender target access stopped
+
+Source-only CPU-accounting consultation36 returned toMech and immediately
+steered:38 sourcepins/exact old observerC+ASM reuse, all-maskable boundaries/
+missingtails/nesting/IFF/HALT/epoch/runtimePRT1/protection/fit inventory and safe
+released-tail/laterTEMT/wake contract. No implementation/build/timer/device/
+reservation or newcase; currentbench/custody facts are otherwise unchanged.
+Evidence agents/net004/cpu-accounting-contract-r01/{CONTRACT.md,SOURCE-REVIEW.json}.
+
+Released2026-11-08T05:54:50.158001UTC. Same121 restoration controller40030exit0,
+nativePID/group absent/readers/children joined. All17 wholepair files restored to
+incoming preT0 bytes/absence, finalwriters checked; unknown oldownedbackup bytes
+preserved before supportedcleanup. ONEa25f131072B rollback/full independent
+readback passed; finalactualrootCLI/cursor/rawmode0/callback0/Legacy0/wholefiles/
+inputneutral/offlineworker0/realcharacterUSBfree passed. No reset/replay/newcase/
+P4/native/baud/startup/listenerwrite. Old121token invalid; SDmounted. Both exact588
+MGTURN02 rawrecords valid/normalnative teardown/noU1fault, but T0 sparse/server/
+scene/chain and T1server-skip strictFAIL retained. Original coldproducts before
+postgetterLOAD preserved; currentRAM never called originalnativeRAM. No capacity/
+CPU/optical/30Hz acceptance. Release35+immediatesteering delivered FSIM andMech.
+
+ActualNEXT FSIMfe69ca829ddc requires normalfreshsource/currenttuple/layout/
+rollback/admission/grant. UART92f then6502a8e preservequeue. All target access
+STOPPED/no hold/no ownedcompiler. Currentd9b/a25f/native5d657/ed403/0566; last
+fullnative1198519 known1118208 plus120exact85f9prefix restore and121nativeuntouched
+lineage retain rollback without redundantdevicebackup. Actual121 evidence under
+agents/bench-scheduler/mechagon-headroom-pair-r02: released.json, release-
+observation.json, file-restore/receipt.json, owner-install/verify-rollback, final/
+fresh.json, native-stopped-proof.json and restore-actors-terminal.json. Earlier
+headershistorical.
+
+# Current — actual121 Extender sole whole-pair restoration
+
+Actual Mech stoppedreturn verified: ten original phases terminal0,641 exact
+native actoridentities and host/server/Walls groups absent, realcharacterUSBfree.
+Both original2240+128B rawMGTURN02 products rehashed; normalteardown and existing
+postgetter featureabsence pass. CurrentRAM is postgetter, not originalnative.
+Context is linux-extender/owner-restore under same121/f456 lease. Original
+restore40030 is active: compare all17 finalwriter files then restore incoming
+preT0 sharedbytes/absence, preserve owned sidecarbackups before supported cleanup,
+ONE incominga25f rollback/full131072B independentreadback/freshfullhandback/
+normalrelease. No new getter/test/reset/P4/native/startup/listenerwrite. Mech and
+all other agents targetSTOPPED. T0 sparse/server/scene/chain and T1server-skip
+strict failures retained, no performance/capacity acceptance. Original2400clock/
+600cleanup reserve retained; SDmounted. FollowingFSIMfe69/RX92f/6502a8e awaitfresh
+grant afteractualrelease. No ownedcompiler. Earlierheadershistorical.
+
+# Current — actual121 Mech sole corrected headroom consumer
+
+Fresh admission23690exit0 and original owner installer20433exit0: one selected
+1e4e FLASH/automatic identity/full131072B independentreadback plus actualfresh
+CLI/readEXIT/rawmode0/callback0/Legacy0/wholefiles/inputneutral/offlineworker0/
+freebothUSB passed. Original owner PID/group absent; allownedreaders joined.
+Context is mechagon/consumer; actualtoken/context/wholepairbotharmbinding and
+stoppedhandoff delivered by grant34 plus immediate accepted steering. ALL Extender
+targetaccess/readers/pendingcommands STOPPED until actual joinedstoppedreturn.
+No scheduler consumer invocation or PRT/P4/native/startup/listener operation.
+
+Requestc987079e4c24/actual121 leasef45645d65dc6495fbbabbe12319c79f4, originalgrant
+2026-11-08T05:26:27.990688UTC, whole2400 includes300install/1500consumercaps/
+600cleanup; no restamp. Exact588 MGTURN02 T0 then plannedT1, OPEN4/e98ccWAIT1/
+compact01ff1936/assets3cdf. ActualtimerinactiveIRQoff/disposablePRT1 remains
+consumer runtime guard, no owner timerprobe. Unexpectedfault stops successors;
+valid sparseT0 strict30miss staysFAIL while selectedpolicy may admit oneT1.
+Wholepair restoration uses incoming preT0 sharedstate and finalactualwriter
+expectedcurrent, never T1 intermediate priors as original. Same121 ownera25f
+fullreadback/fullfiles/features/state/CLI/inputidle/actors/release follows actual
+stoppedreturn. SDmounted. FollowingFSIMfe69 thenRX92f then6502a8e preserve order/no access.
+6502R03 source402/88894967 matched original355/all22payloads, only2privatepath
+script edits; new2400window retains1180 beforeeach. Sourcequalified25sent/steered;
+actualfuture tuple/programmer/grant binding waits normal predecessorrelease.
+No ownedcompiler and no builds/sourcechecks during measurements. Earlierheaders
+historical. Records agents/bench-scheduler/mechagon-headroom-pair-r02.
+
+# Current — actual121 Extender sole Mech R02 owner installation
+
+Actual1206502 normalrelease05:23:13UTC independently joined exact1105920B85f9/
+native5d restoration/rawstate/files/fullhandback; both applicationcases UNRUN by
+frozen remaining-budget floor. New admission23690exit0: all1238 whole841fc017
+pairinputs matched, realcharacterUSBfree, freshCLI/listenerreadEXIT/rawmode0/
+callback0/Legacy0/wholefiles/neutral/offlineworker0 passed. Fresh actual121/c987
+grant f45645d65dc6495fbbabbe12319c79f4, soleoperatorlinux-extender/owner-install.
+Original installer20433 is active; stage exact1e4e+a25f, ONE FLASH, full131072B
+independentreadback/freshhandback then actualstoppedsoleMechhandoff. Mech remains
+STOPPED until that handoff. No consumer invocation/timerprobe/P4/native/startup/
+listener change. Whole2400 originalgrant includes300install/1500consumercaps/
+600cleanup; do not restamp/extend. T0thenplannedT1 exact588 MGTURN02 only; incoming
+sharedfiles preserve preT0 state, not T1 intermediate priors. SDmounted. Following
+FSIMfe69 and RX92f retain order/no access. No ownedcompiler. Earlierheadershistoric.
+
+# Current — actual120 sole Agon6502 normal-app case
+
+Fresh actual120/b02fed admission29067exit0 after actual119 independent full8519
+restoration/readback/release. Amended355/2175 and original337/all22files matched;
+11r08->r10 script changes independently root-only. ActualfreshCLI/readEXIT/
+mode0/callback0/Legacy0/startup45B/listener24753B/inputneutral/offlineworker0/
+actualcharacterUSBfree pass. Grant22/context/programmerbinding/stoppedhandoff sent
+and immediately steered. ALL Extender targetaccess/readers/pendingcommands STOPPED.
+6502 owns120 until cleanrelease; no parallel polls/reset/source-probe. SDmounted.
+OnlysameF6/narrow1105920span115200programming, exact9652normalemptychooser then
+DOS/BASIC/Fkey/cleanexit and frozen16+2conditionalcleanup input tags.1800whole
+originalgrant/manualremaining1180 beforeeachinvocation. NoLR/protectedcase/replay/
+HOLD/EMOS/P4/startup/listener/partition/OTA/bootloader/app1write. Known8519 suffix
+12288B remainsuntouched; exact85f9prefixrestore/fullreadback/matchedbootstrap/
+freshhandback/allactorsjoined/normalrelease/immediatenext required. No physical
+result or temporaryF6installation claimed by scheduler after stoppedhandoff.
+Actual paths bench-scheduler/dsk001-normal-smoke-r01; source355/grant120/context/
+programmer-binding.json/grant-mail22*.
+
+FollowingMechc987 R02 reports frozenREADY841fc017/1238pins; finalactualreview waits
+120return/currenttuple. Rootnote: restore original preT0 sharedfiles, not T1 priors
+which may be T0intermediates. FollowingFSIMfe69 source28 reports ready53fa843c,
+adds owner-admitted known-full-span reuse; no newbackup when1198519lineageholds.
+Both remain targetSTOPPED/no token until own actualfreshgrant. FollowingRX006
+92f source-frozen app0208015a matches171c/7d09; request-local ownerpacket27pins,
+EMOSinstallerOFFguardpreflight and native1101824sector/full1105920comparison
+composition pass file-only. No fixture change/grant/installation. Ownernative
+programmer/actor registration and actualhandoff facts bind at own fresh turn.
+Noownedcompilerlease. Earlierheadershistorical.
+
+# Current — actual119 clean release; no Extender target access or compiler lease
+
+Actual119 normal FSIM comparison UNRUN: original independent candidate460800
+readback failed before guestLOAD/RUN. Necessary sole-FSIM cleanup restored exact
+1118208B8519 at115200 with independent fullsame-span comparison, matchedbootstrap
+and fullfresh mode0/callback0/Legacy0/files/rootCLI/inputneutral/offlineworker/freeUSB.
+Released2026-11-08T04:53:25.038911UTC/allactorsjoined; old119tokeninvalid. SDmounted.
+CurrentP4d9b/EMOSa25f/native5d657/startuped403/listener0566 unchanged. Currentnative
+full8519 contains exact1105920B85f9prefix plus12288B restored suffix. Evidence
+agon-fsim/.../p071-physical25-actual119/release.json and cleanup-evidence; source
+binding bench-scheduler/dsk001-normal-smoke-r01/actual119-span-binding.json.
+Actualnext6502b02fed needs preservation-only sourceamendment/115200 programming
+route and freshgrant; sameF6 may keepnarrow1105920B writes/restoration and leave
+knownsuffixuntouched. FollowingMechc987 sourcepacket ready129pins, no actualkit/grant.
+
+RX006 source595 native qualification PASS/released04:51:23UTC/allchildrenjoined,
+noownedcompilerlease. ExacttemporaryROM171c7880/131072B,129605used1467free,
++497ROM22BSS; OFFfulla25f exact, allmandatorychecks/actualC7/linked16+OFFpositive15
+negative pass. LocalEMOSworktree branchcodex/rx006-counted-receiver commitb581ac8,
+no push. Manifest agents/rx006-receiver-r01/manifest.json. SentUART exactROM/map/
+ABI and ONE normalUARTFIFO/Extenderinstall+restore/stoppedconsumer arrangement.
+NO RX006hardwareinstallation/reservation/grant yet; UART finishes exactfixture
+binding first. Sourcepublicclock/noPRT, actualkbslotNULLguard/restore, legacy16/10/4,
+26h/90h withseparateTXadmission. Existingconsumertrialscope remainsUART-owned.
+Earlierheadershistorical.
+
+# Current — actual118 cleanly released; all Extender target access stopped
+
+Released2026-11-08T04:33:43.370465UTC after originalRAM2fd5f16f/56712 immutable
+bytes qualification, matched featureabsence, exact incoming14file map and full
+a25f131072B independentreadback; fresh rootCLI/cursor/mode0/callback0/Legacy0/
+whole startup/listener/inputneutral/offlineworker0/freeUSB passed. Original
+listener-EXIT diagnosis, filebackup refusal and explicit preserved-backup
+RECOVER reconciliation retained; no reset/replay/T1/newcase. Original reconciliation
+53395exit0/all childreaders/processes joined. Old118tokeninvalid; SDmounted.
+Mandatory release32 mail+steer delivered to actualnext FSIMd44b and Mech.
+FSIM concrete prepared6390 probe reuses CREATE_NEW SAVE paths across incoming/
+candidate/restore and repeated script backups; sourceblocker mail9 delivered.
+No nextgrant before qualified source correction/currentadmission. Following
+6502b02fed retained, no preemption. Currenttuple d9b/a25f/5d657/ed403/0566 plus
+fullnative85f9 lineage unchanged. Evidence bench-scheduler/mechagon-headroom-pair-r01.
+RX006 owner subsequently reopened finite Olimex sweep by direct human correction;
+minimal EMOS26h/90h composition/sourcefit preparation is pending, no splice/build/
+reservation/deviceoperation yet. Earlierheadershistorical.
+
+# Current — actual118 preserved original RAM; feature cleanup passed; restoration active
+
+First owner CLI observation failed because the cold collector left its idle
+foreground SD listener online. Fresh metadata normal EXIT plus actual CLI passed;
+no reset or replay. Original 65536B RAM2fd5f16f retained before later getter LOAD,
+56712 immutable program bytes match exact451 T0. MGTURN/MGSPARE match original
+raw products. Existing getter proves feature absence after positive native
+closure/callback zero. Original failure and T1-unrun boundary remain unchanged.
+Original restore118 actor owns source-checked incoming files then exact131072B
+a25f rollback/full independent readback/fresh handback/release. Sole Extender118;
+all peer target access STOPPED. SD mounted. No RX006 splice/build/bench begun;
+owner closed bounded feasibility from existing integrity and source acceptance.
+Evidence: agents/bench-scheduler/mechagon-headroom-pair-r01. Earlier headers historical.
+
+# Current — actual118 Extender sole original-RAM preservation / restoration
+
+Mech T0 native functional0/741decisions/740module/zero recordedU1fault/positive
+source/TEMT/CLOSE/cleanup/end. Frozen certificate coverage flag32/first82 caused
+original live59017exit1; T1 UNRUN, no postgetter/LOAD/reset/replay. All187 original
+actoridentities+registeredhost/server/Walls groups and realcharacterUSB free
+independently checked before same118context owner-restore/linux-extender.
+Original SAVE-onlypreservation is active: proveCLI then64KiB040000 plus current
+status/carrier/MGTURN/MGSPARE BEFORE any laterLOAD/reset. No reset justified by
+normalstoppedcase. Original frozenkit/rawproducts/failure remain unchanged.
+After preservation/positivecallbackretirement, existingmatchedfeaturecleanup,
+exactincominga25f full131072Brollback/readback/fullfiles/state/rootCLI/inputidle/
+actors/normalrelease and immediateactualnext. No T1/replay/newcase/HOLD. Allpeer
+targetaccessSTOPPED; Extender sole118 until cleanrelease. SDmounted.
+Evidence/context under agents/bench-scheduler/mechagon-headroom-pair-r01.
+Earlierheadershistorical.
+
+# Current — actual118 Mech sole paired headroom consumer
+
+Originalfreshadmission30516exit0, originalownerinstall98505exit0; ONE1e4eFLASH/
+automaticboot/full131072Breadback/freshCLI/readEXIT/rawmode0/callback0/Legacy0/
+whole startup/listener/inputneutral/offlineworker/freebothUSB PASS. Actualbinding
+validates BOTH exact451 arms against WHOLE903/f84cpairdigest. Contextoperator
+mechagon/consumer, stoppedsolehandoff/grant30delivered+immediatesteer accepted.
+ALL Extender targetaccess/readers/pendingcommands STOPPED until actualjoined
+stoppedreturn. No ownerconsumerRUN/getter/timerprobe or P4/native/startup/listener
+write. Source/appPRT1 noninterference explicitly bound; consumer actualinactive
+IRQoffguard/calibration remains required, no runtimecalibration claim.
+
+Request7770fb6904ee, actual118 lease/context under agents/bench-scheduler/
+mechagon-headroom-pair-r01; originalgrant04:06:14.323250UTC,2400whole includes
+300install+1500consumerphasecaps+600cleanup. FrozenT0thenplannedT1 only, first
+unexpectederrorstop/no replay/HOLD/restamp. Same118a25frollback/fullreadback/
+fullfiles/features/state/CLI/idle/actors/release onlyafter rootactualstoppedreturn.
+Actual117cleanreleased/full85f9native+5d657 restored; old117tokeninvalid. Native
+layout/selectedapp lineage now originalNov5full696755/seq5app0/boot81f/tablef313,
+not olderNov4app1; no newdevice read. SDmounted.
+
+FutureFSIM d44b3cb00567 normalqueue, sourceprepared14f8/all29unique input/tool/
+bootstrap hashes matched. No FSIMgrant, targetcontact or newhelper. Wait118actual
+cleanreturn/exacta25frollback/fullhandback/release/currenttuple before nextadmission.
+Following6502 b02fed09598b normal-app smoke337/3b0f/22files also rehashed;
+source-admission.json/source-mail18* under bench-scheduler/dsk001-normal-smoke-r01.
+Exact9652 normalentry/16regularactions+2conditionalcleanupquittags and joined8765
+child source assessed; no r08context/grant/devicecontact, no LRrun. It follows
+current118 and priorFSIM d44b; futureactualROM/map/keyboard/F6 restoration source
+must reconcile rather than assume a25f while current1e4e consumer is active.
+Earlierheadershistorical.
+
+# Current owner continuation — actual118 Extender sole EMOS installation
+
+Actual117 cleanrelease04:00:46.173249UTC independently reconciled, bothwc07 apps
+PASS, full85f9/nativeprefix5d657 restored/readback, state/files/CLI/idle/actors
+joined. Fresh118/7770 grant/context/source under bench-scheduler/mechagon-headroom-
+pair-r01; originaladmission30516exit0, originalinstall98505 active. Extender sole
+owner-install for ONE1e4eFLASH/automaticboot/full131072Breadback/freshhandback;
+Mech target-stopped until actualstoppedsolehandoff. Frozen903/f84c exact451pair,
+e98ccWAIT1/OPEN4/compact01ff1936/assets3cdf, new2400whole300/1500/600 originalgrant.
+No P4/native/startup/listenerwrite/testRUN/timerprobe/replay/HOLD. Sameleasea25f
+rollback onlyafter actualjoinedstoppedreturn/fullcleanup/release. SDmounted.
+
+FSIM later retained original Nov5 full696755 found after manual6502 testing:
+OTAseq5/4/state2/2 app0text962002 at0x10000, not old17caa/app1 seq4. Both full
+snapshots rehashed; boot0x1000..0x8000 identical81f4010f and partitionf313 exact.
+installed-selection-continuity.json/selection-mail7* correct earlier bounded
+layout-source search. No redundant OTA read when actual uninterrupted selection
+lineage holds; minimalread onlyconditional on real gap. No FSIMtargetaccess or
+newhelper/grant, fastasset/no wholefileassetGETexception remains honored.
+
 # Current owner continuation — actual117 sole Agon6502
+
+Source-only follow-up: Mech request7770fb6904ee owner packet is ready for its
+consumer freeze under agents/bench-scheduler/mechagon-headroom-pair-r01.
+All128 selected inputs rehashed, exact451 T0/T1 BIN/maps, e98cc notify/WAIT1,
+1e4e/a25f and disposable inactive preOPEN PRT1 contract matched. No new build,
+timer probe, install or grant. New2400s original-grant budget300/1500/600 and
+both-arm lifecycle remain distinct from completed replay116. Actual117 sole
+6502 finishes normally before any fresh admission. Final Mech pair kit is now
+READY:595142B/f84c98fc, all903 inputs plus130 owner descriptor inputs independently
+rehashed unchanged. final-readiness-source.json and ready-mail29* retain proof;
+normalfresh admission/install/readback/stoppedhandoff waits actual117 clean release.
+
+FSIM asset staging correction: its AGENTS.md records the Author's explicit fast
+PUT/no whole-file stage or activated asset readback instruction. Earlier generic
+TE01-derived readback condition in operation-mail4 is withdrawn for that scope;
+no equivalent integrity workload is required. Source hashes/length/PUT completion
+are not actual target byte equality. Small executable/command checks stay scoped
+separately; independent complete firmware-write/readback/restoration remains.
+Immutable correction and immediate steer retained under bench-scheduler/
+fsim-p071-consumer18-source/asset-staging-correction.json and asset-mail5*.
+FSIM installed-layout answer retained in installed-layout-source.json/layout-mail6*:
+actual111 4096B partition read f313 proves app0@0x10000/size0x140000, carried
+through app-only restores; direct selected-app/OTA witness remains unresolved.
+Future explicit sole admission may read only two32B OTA records (smallest single
+contiguous existing-tool read0xe000/0x1020), with native ROM/stub/reset/boot effects
+declared. No current read or extra helper, no installed bootloader policy inferred
+from unrelated IDF source. Unknown12288B tail/full1118208B restoration unchanged.
 
 Actual116 ONE902scene replay passed allthreeoriginalphases,31calls/936B product,
 positiveCLI/source-drain-callback retirement/postgetter/fullidle. Exactincoming

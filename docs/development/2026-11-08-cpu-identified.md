@@ -455,3 +455,36 @@ Mech's995 native/module/encoded host turns join exactly, while host mean
 29.9990904Hz remains strictFAIL. No full CPU percentage, headroom, optical result,
 replay, owner implementation or new physical case follows. FSIM actual141 remains
 sole target owner; Extender performed only local evidence/document review.
+
+## Request-local replay cohort owner source returned
+
+After actual141 normal release/full8519 readback and original21285 terminal0/
+actor joins, the new replay cohort reservation remains ungranted. Prepared
+MGREPLAYCOHORTOWNERSOURCE1 packet11992B/82ceff49 with35 exact source inputs and
+concrete owner preparation/finalization/restoration templates. Unchanged633
+file-only prepare accepts a temporary selection, joining135 inputs/36 owner
+inputs; no consumer kit published, no compiler checkout or target operation.
+PRE15/full1118208B8519/feature and original3000=300entry2100consumer600cleanup,
+all ten existing624 phase caps/floors, no-firmware/server/U1/PRT and first-fault
+disposal remain. Explicit positive-return getter utility scope is retained.
+Normal actual entry and finalizer bind original actor/tool joins, fresh readback,
+current route and real unchanged consumer checks. Same-lease cleanup preserves
+failure RAM before later LOAD and restores full PRE_COHORT, never arm state.
+Mail143 published09:08:26EST and immediate steering completed. No physical result
+or accounting change is inferred; final root freeze/current admission remains.
+
+## Human-approved cleanup of the failed replay cohort
+
+The Author explicitly approved one new ten-minute hardware cleanup after the prior restoration was blocked by automatic approval review. The owner restored all fifteen original file states and directories, independently verified the present-file bytes and absences, checked the full EMOS ROM, ordinary CLI, input and idle resources, and released the bench. The cleanup took 153.691 seconds. Startup, listener and firmware were unchanged; the SD card remains mounted. Original test and earlier cleanup failures remain failures, and the replay workload remained unrun. Frozen source and evidence were preserved. This closes cleanup only and makes no measurement or qualification claim.
+
+
+## IO-003 physical observation boundary and clean restoration
+
+The prepared combined async/disk cohort installed the retained F6 native application with independent full written-prefix comparison, preserved EMOS and P4, then handed off to one consumer controller. All26 private files compared exactly; only the synchronous first probe was invoked. Its expected trace used an emulator stdout port rather than hardware UART1, so the observer timed out and all successor cases remained unrun. This does not establish an async, guest-core or pixel failure/pass. The consumer joined all actors before owner reconciliation.
+
+The owner retrieved four already-produced probe captures through the actual returned listener before any reset or rewrite. Exact incoming native prefix restoration/readback, matched normal bootstrap, full unchanged EMOS ROM verification and complete CLI/state/files/input/resource handback passed; normal release preceded subsequent analysis. No test replay, P4/EMOS firmware replacement or startup change occurred. The consumer owns any separately prepared hardware-visible observation correction; existing qualification limits remain.
+
+
+## FSIM human invocation boundary and bench succession
+
+The Author requires future FSIM physical/application tests to be human-started on Olimex and explicitly directed release to the next queued owner. Extender independently read the original human messages, retained exact source references privately, and recorded the restriction in the current bench handoff. The completed FSIM cohort retained exclusive custody through exact native restoration, independent full-span verification and complete clean handback; normal release and original actor joins were confirmed before succession. No additional FSIM test or review hold was selected. The next separately authorized consumer received a fresh source-qualified physical admission and stopped installation handoff. No production adoption, optical result or changed general test authorization follows.

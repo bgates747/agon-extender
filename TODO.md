@@ -52,7 +52,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — Bounded staged transfer and sequential-reader passes:1.1MB upload43.24s; new download43.57s versus250.92s matched control (5.759×), exact bytes and clean CLI/released custody. Faster listener accepted/installed with verified rollback, immutable archives and current tool selection. Paired production/version closeout and broader qualification remain; per-record UART replies remain explicit.
 
-- [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired and bounded hardware checks pass without firmware changes. Author review/fsim helper adoption and broader USB loss/paired-reset investigation remain; see R02 results.
+- [ ] **[BENCH-010 — Paired-reset admission and USB capture reliability](docs/tasks/BENCH-010.md)** — Host serial-open reset repaired. [FSIM recovery R03](docs/tasks/BENCH-010/FSIM-RECOVERY-R03.md) restores verified Legacy CLI/read/EXIT and returns clean custody; overlapping Author recovery prevents sole-agent causality. Broader admission/reset investigation and prior bounded R02 limits remain.
 
 ## Physical keyboard support — active
 

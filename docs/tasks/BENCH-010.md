@@ -16,6 +16,12 @@ retain their actual combinations and unresolved broader investigation scope.
 
 ## Authorized repair tranche — R02
 
+Current self-assigned consumer recovery: [FSIM admission R03](BENCH-010/FSIM-RECOVERY-R03.md),
+2026-11-04. Bounded reset-only recovery and actual CLI/read/EXIT passed; clean
+custody returned to the same FSIM reservation. Author recovery overlapped the
+agent sequence, so sole-agent causality is not established. Exact selected
+firmware/startup were preserved; no application replay or firmware change.
+
 Author authorized diagnosis/repair and handed over the bench on 2026-10-12.
 Preserve the installed Pingo2/EMOS/EDP identities established in R01. Do not
 substitute current development HEAD, launch games from startup, or reflash a
