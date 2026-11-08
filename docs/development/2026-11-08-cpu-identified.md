@@ -41,3 +41,25 @@ all Extender target access stopped. Original2400whole/600cleanup and suffix
 floors apply without restamp. No consumer invocation, P4/native/startup/listener
 write or CPU-package installation by Extender; Mech owns the finite comparison.
 Incominga25f/all21 original files+feature remain retained for same127 restoration.
+
+## Actual127 comparison restored and released
+
+Mech returned both arms/all10 original phases terminal0, with661 recorded actors/
+groups absent and actual USB free. Positive original source/TEMT/reply/CLOSE/
+graphicsEND, encoded cold products, postfeature and idle gates were independently
+joined. Both strict30 failures and null conditional tail exposure are retained;
+no performance gain or cure is claimed. Current RAM was already postgetter and
+is not represented as an original native capture.
+
+Extender restored every one of21 PRE_PAIR original file byte sets, attributes
+and absences against the final actual writers, preserving target backup bytes
+before supported transaction cleanup. Existing positive postgetters match the
+original absent feature. Same127 exact incominga25f rollback and independent
+full131072-byte readback pass, followed by fresh rootCLI/cursor/mode0/callback0/
+Legacy0/whole startup-listener/neutral/offlineworker/freebothUSB. No additional
+getter, LOAD, test, recovery reset, P4/native/startup/listener write or CPU image
+installation. Original restoration18187 exit0/PID+group absent/all children and
+readers joined. Canonical release09:15:27.416349UTC invalidates old token; SD
+remains mounted and all Extender target access stopped. Mandatory actual-next
+UARTccb5 and Mech release receipts65 were immediately delivered and steered.
+New owner still requires normal fresh admission; no token/access transferred.
