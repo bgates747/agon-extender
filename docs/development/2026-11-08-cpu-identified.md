@@ -198,3 +198,29 @@ epoch<=54000/no rearm remains consumer scope. All Extender target access stopped
 Same131 a25f/allPRE17/feature/directory/fullhandback/release still mandatory,
 UARTe4d next. SD mounted. This records installed readiness, not CPU validity,
 capacity,30Hz or production acceptance. Existing failed and frozen work retained.
+
+## Actual131 first-stage failure, restoration and release
+
+Original Mech stage52729 exited1 at first111B render-state PUT/error4/remote8,
+before deployments/pre/getter/host/match/LOAD/RUN/PRT. Recorded groups and known
+parent independently absent; untracked-descendant completeness remains UNKNOWN
+as reported, no host invoked. Same listener known online/pendingfalse; terminal
+failed job bytes0/111 and exact journals/input retained. Reconcile42272 returned0
+after explicit P4-spool-only discard, metadata/current17 preservation and normal
+EXIT/idle. No uncertain transfer replay or reset.
+
+Actual RECOVER09 proves target+backup/no part/meta. Both111B old a25f-map helpers
+equal PRE, so the new f05c-map helper could not use the same-content fast path;
+BEGIN's retained-backup refusal explains the staging boundary. Backup archived
+and left in place. Restore95431 returned0: exact17/attrs/absence and original
+absent dirs/feature scope, exacta25f fullROM readback, freshrootCLI/cursor/raw0/
+callback0/Legacy0/wholefiles/neutral/offlineidle/freecharUSB. No native/P4write,
+reset, new getter, guestRAM or CPU result. Normal release10:53:47.416535UTC,
+old token invalid; UARTe4d actualnext, complete handback86/87+immediate steering.
+
+Current source-only corrected R02 template defines PRE19/ENTRY2 and case-local
+state/legacy scripts, preserving shared globals and all failed131/SOURCE1/API.
+Unbound bee3043c/3598B has NULL request/kit/qualified derivative and explicitly
+no runnable/final source-ready claim; exact checked derivative and real request
+still needed for full wrapper closure. Returned89/immediate steering. It did not
+interrupt the queued corrected RX006 admission/install or change hardware.

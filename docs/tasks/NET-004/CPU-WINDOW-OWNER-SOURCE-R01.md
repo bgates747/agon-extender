@@ -77,3 +77,27 @@ PRE projection and original stage budget through the unchanged consumer
 admission before publishing stopped sole-Mech custody. No match, timer epoch,
 CPU result, production acceptance or performance claim follows from this entry.
 The original2400-second clock and same-lease restoration obligations remain.
+
+## First case stopped during staging
+
+Actual131 stopped at the first state-script PUT, before native deployment, pre
+getter, match, LOAD/RUN or timer execution. The selected candidate map changes
+the shared helper bytes; its normal same-content reuse path did not apply.
+Preserved physical inspection found target+backup state09 with no part/metadata,
+both111-byte old-map copies unchanged from original PRE. BEGIN correctly refused
+that retained backup. The case remains failed; no firmware/timer result follows.
+
+Extender preserved the terminal failed job/input/journals and current17, discarded
+only the failed P4 spool without resubmitting, exited the known listener, restored
+all original17 bytes/attributes/absences and original directory/feature scope,
+then exacta25f/full131072 readback and fresh full CLI/state/files/input/resources.
+The original shared-helper backup remains in place and is archived. No native/
+P4 write, extra reset, getter or test replay. Actual131 normally released
+10:53:47UTC; all recorded root groups/parent and owner actors are absent, with
+the root's original untracked-descendant completeness limit retained explicitly.
+
+The separately selected unbound source template uses PRE19/OWNERENTRY2 and
+case-local state/legacy scripts for a future R02 namespace. It does not modify
+identified646/SOURCE1 or the failed131 packet. Request/qualified derivative/kit
+and runnable driver closure remain unbound until actual corrected source
+qualification and normal preparation. No new CPU case or grant is inferred.
