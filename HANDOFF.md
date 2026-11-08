@@ -1,3 +1,21 @@
+# Current — actual106 released; bench idle, Mech R12 preparing
+
+Actual106 released 2026-11-08T00:01:40.837962Z. Central active is null;
+MechAgon request 4dede2220dc4 is next, still PREPARING pending its final native,
+map, decoder and immutable consumer kit. No R12 grant, installation or bench
+hold. Request-local owner source templates remain prepared and returned.
+
+Extender independently reconciled the original release/observation and all25
+frozen inputs: LocalFlush PASS8, all24576 output bytes equal expected, whole
+startup/listener match, saved mode0/callback0/Legacy0. Consumer's fresh final
+CLI/input/offline listener/idle worker/freeUSB checks passed and all owned actors
+joined. Evidence: agents/bench-scheduler/dsk001-local-flush-r01/reconciled106.json.
+No firmware/reset/mode change; d9b/a25f/5d657/ed403/0566 retained, SD mounted.
+No new target contact or restamped observation during this reconciliation.
+ALL Extender target access/readers/pending commands stopped. Fresh admission
+is required only after the next exact consumer kit is READY. Publication hold
+remains. Earlier headers are historical.
+
 # Current — actual106 sole Agon6502; R12 source templates returned
 
 Actual105 Wolf cleanrelease23:50:55.967071UTC independently reconciled: original
