@@ -27,6 +27,14 @@ Existing hardware permissions and human-only invocation restrictions remain.
    standard is VDPlet **v0.1.2-alpha**, including its UART RX recovery repair.
    Verify the release's `SHA256SUMS` before using its firmware. Never replace
    the pinned tag with an arbitrary branch head or similarly named private image.
+   Smith directed a same-tag release amendment on2026-11-08: selection
+   `0.1.2-alpha-async-r1` replaces the original async-disabled image. The
+   selector now pins1115568 bytes, SHA256 `dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab`,
+   including ordinary async rendering. Download into a separate retained
+   directory and verify current checksums; the unchanged version/tag alone
+   cannot distinguish these releases. Preserve old artifacts and frozen controls.
+   Private overlap witnesses, counted return, quiet polling and PCM remain
+   excluded. The EMOS selector is unchanged.
 2. The EMOS standard tracks the latest approved complete project-owned integration of
    the current Eirene public functions. Extender records its exact full-ROM
    identity, source/profile, map, [function inventory](../olimex-emos-functions.md)
@@ -116,6 +124,11 @@ Keep the current record accurate during a job, not merely its incoming identity.
    new target and remaining allowed cleanup scope/time; do not silently rewrite
    the frozen run or its evidence. An explicit stop/no-monitoring boundary and
    actual permissions still govern all further operations.
+   For an already-running frozen comparison, the operator finishes the original
+   worker and returns terminal/joined custody before Extender reconciles a
+   separately identified amended-standard handback. No mid-arm substitution, replay or
+   clock extension is authorized. An old image may remain a valid comparison
+   result while being superseded as the default; record those facts separately.
 3. Independently verify changed bytes and record the resulting installed identity;
    then verify normal boot, CLI/input, original route/mode and services, preserved
    files and joined actors through maintained procedures. Unchanged components

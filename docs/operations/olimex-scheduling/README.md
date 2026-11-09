@@ -54,6 +54,14 @@ and cleanup restores current standards rather than obsolete incoming images.
 Resolve an incomplete EMOS binding with Extender; do not silently use a subset.
 No routine full unchanged-device backup, reflash or new per-job approval gate.
 
+The same v0.1.2-alpha tag was explicitly amended to `0.1.2-alpha-async-r1`.
+Use the selector's exact bytes/hash and separate retained assets; a cached
+same-version file is insufficient. Ordinary async is now enabled; private
+witnesses/count-return/quiet-poll/PCM remain excluded. Preserve live frozen jobs
+and their original clocks. Coordinate a changed cleanup target with Extender
+before release, after the original operator's terminal/joined return; do not
+substitute firmware during an active guest arm or race its inventory writer.
+
 1. Read the forwarded original mail and live registry. Separate a proposed job,
    source readiness, prepared run readiness, admission, running, stopped,
    restored and released states. State only the observed stage.

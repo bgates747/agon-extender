@@ -24,6 +24,12 @@ production promotion or other-project source edit was performed.
 
 ## Default identities
 
+These tables and the frozen inventory record the original audit's b004
+selection. The [same-tag amendment](RELEASE-AMENDMENT.md) subsequently replaces
+that default with dc43 and supersedes only the async-disabled finding. Consult
+the [current selector](../../olimex-firmware-standard.json) for future admission;
+the original audit and live actual149 comparison inputs remain unchanged.
+
 | Platform/component | Required identity | Audit evidence / limit |
 |---|---|---|
 | All three mainboard VDPs | VDPlet v0.1.2-alpha;1100304B; `b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3` | Nine release SHA256SUMS entries pass; published feature manifest checked; no new physical pairing claimed |

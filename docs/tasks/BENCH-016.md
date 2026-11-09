@@ -35,3 +35,19 @@ and the released RC3-style guarded 25h path; 61h/62h remain open proposals, and
 retained a25f build for merged/released functionality and lists exclusions
 explicitly. It does not claim unmerged proposals are present or infer exhaustive
 behavioral parity from table entries. Exact ROM/map were locally rehashed.
+
+## Same-tag async amendment — 2026-11-08
+
+Smith directed the release owner to replace the v0.1.2-alpha assets with
+selection `0.1.2-alpha-async-r1`:1115568-byte dc43 image and source60e5b4e.
+Extender downloaded all13 assets into a separate retained directory and checked
+all12 SHA256SUMS entries and remote sizes. The selector now enables ordinary
+async; private witness/count-return/quiet-poll/PCM remain excluded. No hardware
+was accessed and no new physical acceptance is claimed. See the
+[bounded audit amendment](AUDIT-012/RELEASE-AMENDMENT.md).
+
+Actual149 was already running its frozen original F6/b004 cohort. Preserve that
+worker and original clocks, then reconcile the current-standard handback after
+the scheduler's actual terminal/joined custody return. Do not edit its live
+inputs, relaunch it or record b004 as the amended standard. First amended-image
+installation and physical pairing remain under item5 above.
