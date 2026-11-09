@@ -58,5 +58,38 @@ lease, verifies stopped identity with STATUS, submits START once, retains raw
 bytes and validates all five commands and retirement. It never flashes, resets
 or releases custody. Each command has a2s bound, GMR3s; the host uses8s readiness
 and25s after explicit START. Source/validator checks precede native compilation.
-Exact compiled-image/installation/invocation/restoration evidence remains pending
-in the ignored NET-008 operating record; source existence is not a runtime pass.
+The identified P4-PC build now passes with the pinned ESP-IDF5.5.5 source and
+documented Pi-native compiler/Python environment. Installation, invocation and
+restoration evidence remain pending; compilation is not a runtime pass.
+
+## Preparation result and current stop boundary
+
+1. Source commit `5e2540ad9a70c4fc303694aaff6b3e834d2a5b05`, build
+   `net008-uart2-probe-b2026-11-09-19-40-46Z`,199584-byte application SHA256
+   `20469b02247e08dee4bbecf8a1ec412285b8a82d67ea0f8e1f5137766fcaae73`.
+   Normal application offset0x20000; generated partition bytes equal the
+   retained installed layout. No bootloader/partition/NVS update is selected.
+2. One valid transcript and eight negative validator controls pass: missing or
+   duplicate results, wrong GPIO/command, UART error, absent retirement, false
+   OK and missing modem identity are refused. The final native build takes
+   44.044 host seconds; its real parent wait0 and empty owned process groups
+   are retained. Compiler custody was normally released and its successor
+   notified. Initial stale-host-environment and strict-indentation failures
+   were corrected before this clean identified build; no device was involved.
+3. Exact incoming P4 rollback is locally retained:1760160 bytes SHA256
+   `d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e`,
+   build `net-003-r02-b2026-11-06-09-03-07Z`. Retained bytes are rehashed, not
+   downloaded again from the unchanged device. Selective application install
+   and independent readback must preserve sector tails and unrelated storage.
+4. The dedicated manager has reserved the Author-requested hold, but actual
+   fresh admission/grant is blocked by automatic review: the reviewer rejected
+   the pregrant CLI/read/EXIT checks because no lease had yet been granted,
+   while the current grant protocol requires that fresh physical evidence.
+   This is an unresolved admission boundary, not a test failure or hardware
+   observation. Do not fabricate fresh evidence, grant from an old receipt,
+   switch operator/transport to evade the rejection or access the target.
+5. No firmware has been installed, no modem command sent and no electrical or
+   AT pass claimed. The queued hold remains for Smith; actual manager approval
+   resolution and genuine handoff precede all physical work. Continue with this
+   prepared test after that boundary is resolved, then retain custody until
+   Smith explicitly requests release.
