@@ -48,6 +48,13 @@ answering them.
    continuation and exact input addendum. Preserve the failed run and its old
    clocks. Ordinary implementation of the authorized addition needs no repeat
    permission loop; an agent's bare assertion cannot create that human scope.
+5. Exercise the actual projected consumer context against its real constructor
+   before freezing a changed handoff. Owner helpers accepting `ports[]` did not
+   establish that the consumer's constructor also received its required singular
+   `port`. Check their relation using saved host files with target methods
+   forbidden. Keep a disposed attempt immutable; a corrected request gets its
+   own source packet and normal admission. This interface check needs no extra
+   firmware write or hardware workload.
 
 These are operational lessons, not another per-job paper assessment or a claim
 that the combined continuation has run.
