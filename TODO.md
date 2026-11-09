@@ -7,6 +7,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
+- [ ] **[AUDIT-012 — Audit current candidates against pinned firmware defaults](docs/tasks/AUDIT-012.md)** — Freeze and publish the audit task first, then assess current Alexe, Olimex and Console8 test and production candidates against the Author-selected firmware defaults and record justified exceptions.
+
 - [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests.
 
 ## Application networking — authorized framework preparation
