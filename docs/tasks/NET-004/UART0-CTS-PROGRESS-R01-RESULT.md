@@ -17,3 +17,23 @@ The isolated correction passes the full native wrapper and preserves the old ROM
 6. No witness is included: the causal mechanism remains45bytes; a new game-epoch reset/read ABI and recorder would be another coupled change in75bytes of remaining ROM. This package reports no incidence, CTS duration, event timestamp or game-versus-setup witness. There is no runtime cost number; elapsed hardware service/IRQ and optical acceptance remain unmeasured.
 7. Exact package/source/ROM/map/SDK/readback descriptors are retained in the ignored owner package; full versioned source archive and patch are included. All19archive members independently rehashed. Finite Pi compiler769 passed all3original children with native groups absent, original waits0, released12:25:03UTC/nextnull. The build/check portion took27.482s. No emulator/device/reset/install/reservation/default selection or physical readiness claim.
 8. Separate coexistence disposition: existing owner admission does not demand completed NM semantic reply before UART0 submit. A later consumer may narrow its render-start guard after genuine NM source+positive TEMT/IDLE/no fault while retaining immutable pending reply, callback routing, queued-intent ordering and owner validation. Full quiet stays mandatory for finish/CLOSE/teardown; no overlapping new NM request or early source reuse. This source-backed option is not implemented or physically qualified by the CTS correction.
+
+## Subsequent physical consumer result — actual159, 2026-11-09
+
+MechAgon's committed450bb27 report supplies the first runtime result for the exactd3a4524a image. Extender read its report, structured summary and qualified owner-release join, checked the image/count/limit fields and pinned all nine retained result files locally. This is a review of consumer evidence, not a new independent run or full raw case re-decode.
+
+| Recorded software observation | Actual158 baseline | Actual159 CTS-edge candidate | Change versus158 |
+|---|---:|---:|---:|
+| RFC submit to first SOURCE observation, nominal ms mean |16.640|0.057|-99.66% nominal mean|
+| RFC submit to retirement observation, nominal ms mean |33.652|24.752|-26.45% nominal mean|
+| Native completion, nominal Hz |29.6902|30.034642|+1.16% nominal rate|
+| Native coalesces |6|0|Per-run count|
+| Host source omissions |1|0|Per-run count|
+| Server skip notices |10|0|Per-run count|
+
+Percentage change is `(159−158)/158`; these compare recorded nominal aggregate means/rate, not calibrated physical UART latency. Counts refer to different run lengths and are not normalized rates.
+
+1. Actual159 completed all868 authoritative source frames through matched host/native/module software fences and applied all867 submitted commands on their required next-model turn. Terminal868 intent was intentionally unsubmitted. All six original phases and positive source/drain/tagged reply/CLOSE/END passed; the29.1667-nominal-second observed round retained all original actor joins and raw products.
+2. Candidate ROM was the sole intended runtime change; caller/module/bridge/full-NM gate/observer stayed pinned. The unseeded game geometry differed, so drawing-time changes are not another firmware optimization claim. The large reduction in source FIRST OBSERVATION is consistent with the source-corrected VBlank dependency; it is not a physical0.057ms serialization measurement, a measured CTS incidence or a microsecond causal attribution. The clock advances only at VBlank and usually records SOURCE in the same bucket as submit.
+3. Host send29.994978Hz and rolling29.989561Hz keep the numerical30 gate false. Overall strict longer-window acceptance remains false, despite complete per-turn delivery in this round. Optical visibility, clock calibration, exclusive CPU/headroom and recorder perturbation remain unmeasured. MechAgon owns the longer source-rate-margin and separate recorder-control follow-up; no extra Extender implementation or physical case is assigned by this return.
+4. Consumer owner join records exact PRE18/feature/currentstandard a25f independent full-ROM readback and retaineddc43, fresh fullhandback and normal release13:04:21.510279UTC/nextnull. No standard promotion follows; optionald3a452 remains an experimental exception. All target access stopped and old token invalid. Immutable exact report/raw/summary/join remain in the consumer's `docs/tasks/GOAL-001/live30-case-r02/result159-source/` directory; Extender's ignored package records their local descriptors.
