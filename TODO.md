@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-017 — Mainboard VDP text observation for robot operators](docs/tasks/BENCH-017.md)** — Author-requested task after failed-run cleanup: read actual Legacy errors/prompts, preserve the loaded application and replace blind listener-only waits. Reuse the historical public character-query prototype with a bounded host interface and explicit limits. Task recorded only; owns BENCH-006's former deferred Legacy S04.
+- [ ] **[BENCH-017 — Mainboard VDP text observation for robot operators](docs/tasks/BENCH-017.md)** — Read existing mainboard text on demand through one host request, without prior mirroring, application instrumentation or per-read helper staging/invocation. Preserve the loaded application and replace blind listener-only waits. Supported request path/query ownership remain to be resolved; owns BENCH-006's former deferred Legacy S04.
 
 
 - [ ] **[BENCH-015 — Dedicated Olimex scheduling agent](docs/tasks/BENCH-015.md)** — Train and create GPT-6.1 Terra / medium; Extender forwards initial requests and supervises the first rounds. First assigned execution is 6502's frozen PERF-022 original-r04 fixtures;75 input records and standard/exception bindings reviewed, platform operator preparation and normal admission remain; central FIFO and technical ownership preserved.
