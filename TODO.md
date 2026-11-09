@@ -7,7 +7,6 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-016 — Reuse standard Olimex firmware](docs/tasks/BENCH-016.md)** — VDPlet v0.1.2-alpha checksums and retained a25f EMOS/map verified, released/merged Eirene functions inventoried; protocols select reuse and standard restoration after firmware/compatibility exceptions. Initial authorized standard VDP installation/pairing remains; no hardware changed by policy editing.
 
 - [ ] **[BENCH-015 — Dedicated Olimex scheduling agent](docs/tasks/BENCH-015.md)** — Train and create GPT-6.1 Terra / medium; Extender forwards initial requests and supervises the first rounds. First assigned execution is 6502's frozen PERF-022 original-r04 fixtures;75 input records and standard/exception bindings reviewed, platform operator preparation and normal admission remain; central FIFO and technical ownership preserved.
 

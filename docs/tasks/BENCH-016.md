@@ -18,9 +18,11 @@ This removes unnecessary per-run flashing without obscuring actual firmware.
 4. [x] Refresh the shared scheduling protocol and dedicated scheduler guidance;
    require ordinary jobs to reuse standards and explicit exceptions to restore
    them. Preserve live custody and frozen evidence; no global state migration.
-5. [ ] At the next authorized physical preparation, establish the selected
-   standard once, independently verify changed bytes and record installed state.
-   This task's policy editing does not itself authorize a new hardware session.
+5. [x] Establish the selected standard once during authorized physical cleanup,
+   independently verify changed bytes and record installed state. The amended
+   dc43 image is installed and independently verified; ordinary paired boot/CLI
+   and resource handback pass. No fixture performance or production acceptance
+   is inferred. Policy editing itself did not authorize a new hardware session.
 
 Source instruction:2026-11-08, Smith's pinned-release announcement plus direct
 request to modify Olimex protocols. Other agents receive the announcement from
@@ -49,5 +51,25 @@ was accessed and no new physical acceptance is claimed. See the
 Actual149 was already running its frozen original F6/b004 cohort. Preserve that
 worker and original clocks, then reconcile the current-standard handback after
 the scheduler's actual terminal/joined custody return. Do not edit its live
-inputs, relaunch it or record b004 as the amended standard. First amended-image
-installation and physical pairing remain under item5 above.
+inputs, relaunch it or record b004 as the amended standard. At the time of that amendment, first amended-image installation and physical
+pairing remained pending under item5; the completion below records the later
+scoped installation.
+
+## First amended-standard installation — 2026-11-09
+
+After the original delegated benchmark timed out, Extender accepted explicit
+exclusive repair custody and preserved supported evidence before firmware
+replacement. The current dc43 application1115568B was independently compared
+within its1118208B rounded extent, preserving the retained final2640B sector
+suffix. Exact extent SHA256 is
+`10e11cc4d736151fb4874688748dbaa83850190ce6ca57fb30edaa8d33375c0d`.
+Normal bootstrap, actual CLI/raw0/callback0/backend0, unchanged startup/listener,
+neutral input, offline idle services, free USB and original parent/programmer
+joins pass. EMOS/P4 firmware were retained. Installed identity and receipts
+are in the machine-local inventory; no whole unchanged-device backup was made.
+
+The protocol and initial installation work is complete. This records basic
+installation/handback only, not a benchmark, async-session qualification, optical
+review, production promotion or permission for a new workload. The original
+Row failure and Apple UNRUN remain separate; Smith subsequently selected a
+combined continuation under the scheduler's existing reservation.

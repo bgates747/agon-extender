@@ -28,6 +28,30 @@ answering them.
 | T18 | Authorized version-comparison test uses an older candidate; incoming firmware was also obsolete | Bind exact current standard cleanup target and restore it afterward; do not automatically restore the obsolete incoming candidate |
 | T19 | Desired VDP standard changed but installed inventory still shows old firmware; latest full-function EMOS artifact is unresolved | Record actual old state honestly; resolve artifact and authorized standard preparation, no false installed claim or incomplete silent fallback |
 
+## Lessons from the first live round
+
+1. Before a long quiet phase, record its actual start, fixed deadline, expected
+   completion signal and whether application progress is observable. Keep the
+   host wait status current using already-owned read-only samples; silence or
+   an unchanged screen is not proof of progress or failure. Report a phase
+   timeout promptly with the last concrete observation and responsible actor.
+   No periodic idle-session polling daemon or extra guest probe is introduced.
+2. Same-tag release replacement requires exact identity handling, not a generic
+   corruption diagnosis. Preserve a running comparison, coordinate the changed
+   handback with Extender and record the actual installed image separately.
+3. Distinguish a helper's pre-target local-path refusal, an error after evidence
+   collection and a device operation failure. Correct a pre-target dependency
+   before one actual invocation; reconcile already-collected evidence on the
+   host instead of replaying resets, SAVE, transfers or tests.
+4. When Smith directly adds ready work to the current reservation, verify and
+   retain the direct instruction, then prepare a separately recorded finite
+   continuation and exact input addendum. Preserve the failed run and its old
+   clocks. Ordinary implementation of the authorized addition needs no repeat
+   permission loop; an agent's bare assertion cannot create that human scope.
+
+These are operational lessons, not another per-job paper assessment or a claim
+that the combined continuation has run.
+
 ## Initial output
 
 Write a concise report in your ignored agent directory containing:
