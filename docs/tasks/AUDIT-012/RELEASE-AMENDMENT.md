@@ -25,6 +25,10 @@ release-manifest SHA256 is
 `23036cfdd5d12c9ed54d197ab5184f2227dd635e4c09647a5c9efda95f129f5d`.
 Old assets remain retained. The release's superseded-release.json matches the
 previous selector. No source branch or cached tag was reset for this upkeep.
+The release owner's subsequent Smith-requested priority clarification confirms
+the replacement was intentional: disagreement with old b004 guidance alone is
+not corruption. Verification against the current selected checksums remains
+mandatory; a discrepancy against those current assets still requires investigation.
 
 ## Bounded compatibility correction
 

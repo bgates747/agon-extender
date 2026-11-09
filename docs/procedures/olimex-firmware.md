@@ -33,6 +33,9 @@ Existing hardware permissions and human-only invocation restrictions remain.
    including ordinary async rendering. Download into a separate retained
    directory and verify current checksums; the unchanged version/tag alone
    cannot distinguish these releases. Preserve old artifacts and frozen controls.
+   Disagreement with the superseded b004 hash is expected for this intentional
+   amendment. Continue checksum verification: a mismatch against the current
+   selected release remains a discrepancy to investigate.
    Private overlap witnesses, counted return, quiet polling and PCM remain
    excluded. The EMOS selector is unchanged.
 2. The EMOS standard tracks the latest approved complete project-owned integration of
