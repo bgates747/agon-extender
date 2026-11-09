@@ -199,3 +199,32 @@ Both original host supervisors and all owned child groups join successfully;
 reset holder is released, UART pins are retired, and the identified development
 image remains installed. Product P4 input/HTTP/SD services are absent in this
 isolated image. Smith's actual164 hold remains; no bench release is requested.
+
+## Earlier credential provisioning investigation
+
+Smith recalls a bench provisioning script that read private credentials and
+programmed them into a module after a button-assisted programming entry. This
+report is retained as a lead, not dismissed because the modem is disconnected.
+STATUS5/IP0.0.0.0 establishes current disconnection only; it does not establish
+absence or erasure of saved credentials. No ESP8266 flash write occurred during
+this NET-008 work; the new application writes targeted P4 only.
+
+The archived WROOM reference at commitc200d97fac4027da386c24aecba1f367dd74d329
+contains two distinct earlier paths:
+
+1. Commitbcb97cd1f35ff51a5dbfbdee3224c238ffcdf1a1 (August6) compiled a private,
+   ignored `wifi_credentials.h` into the ESP32-WROOM Wi-Fi application and
+   recorded an actual WROOM flash/connect pass. This fits the remembered
+   credentials-in-firmware mechanism but identifies a different processor.
+2. `extender/scripts/store_wifi_credentials.py` stores one private packet in
+   the desktop login keyring. `run_wifi_join_probe.py` supplies it through the
+   WROOM to the ESP8266; `wroom_wifi_join/src/esp_at_core.cpp` uses
+   AT+CWJAP_CUR. The August10 retained record explicitly describes temporary
+   association followed by verified disconnect, without persistent modem
+   setting changes. The later C8 setup also uses AT+CWJAP_CUR.
+
+These findings do not prove no other ESP8266 provisioning ever occurred. The
+exact remembered secrets-file-to-ESP8266-flash script has not been located.
+Saved modem configuration has not yet been queried by this torture appliance;
+its bounded INFO currently queries only connection status and current address.
+Do not ask for credentials on the premise that STATUS5 proved they were erased.
