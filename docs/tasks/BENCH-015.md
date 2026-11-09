@@ -5,6 +5,12 @@ does not delay scheduling. Smith selected GPT-6.1 Terra with medium reasoning,
 then authorized creation, training/reference materials and supervised request
 forwarding. The existing central FIFO remains authoritative.
 
+**Closed2026-11-09:** Smith explicitly transferred bench management to the
+dedicated agent. Its maintained role guide governs direct intake and normal
+management; Extender remains technical support. This supersedes the initial
+three-round expectation without claiming three successful rounds or changing
+any benchmark outcome.
+
 ## Human direction and current scope
 
 Smith's instructions on 2026-11-08:
@@ -33,21 +39,20 @@ no additional per-message human permission is needed within that scope.
 3. [x] Create the named persistent agent at GPT-6.1 Terra / medium and record its
    actual thread identity in ignored local continuity records.
 4. [x] Receive its training report and correct any material misunderstanding.
-5. [ ] Complete round 1: the 6502 request has been forwarded and its initial
-   intake reviewed. The agent coordinates readiness,
-   then operates the exact admitted original-fixture job; Extender supplies
-   component/interface decisions and physical preparation/recovery support.
-6. [ ] Review the first three completed rounds using actual evidence. Three is
-   the initial interpretation of “first few”, not an automatic authority switch.
-   Extend supervision if needed; record any later routing transition explicitly.
+5. [x] Review actual first-job operation and handback evidence: intake and
+   operator preparation completed; failed original/combined attempts and technical
+   reconciliation were retained, with normal cleanup/release. This is operating
+   experience, not a claim the benchmarks passed.
+6. [x] Close supervision by Smith's explicit2026-11-09 handover; update routing
+   and transfer sole management while preserving the existing queue.
 
 ## Roles and ownership
 
 | Actor | Responsibility |
 |---|---|
 | Smith | Selects test scope, model and later material authority changes |
-| Extender primary | Receives requests during supervised rounds; forwards substantive mail; owns technical platform review and current scheduler helper mutations |
-| Olimex scheduling agent | Dedicated queue coordination, request completeness, timely handoffs, visible exceptions and per-round records; operates the first specifically delegated finite benchmark |
+| Extender primary | Technical platform/source/firmware support and coordinated exclusive repairs; forwards misrouted scheduling mail |
+| Olimex scheduling agent | Direct intake, normal admission/preparation/handback coordination, grant/release, timely notifications and visible exceptions; operates specifically delegated workloads |
 | Consumer/component owners | Prepare exact source/artifacts/commands/oracles/budgets, explain contracts and own corrections to their source |
 | Central lease helper | Serializes FIFO and custody; its live registry is the sole queue authority |
 
@@ -55,11 +60,12 @@ The first-job execution delegation is specific. It does not turn the agent into
 a general developer, firmware owner or autonomous test generator. Other test
 execution needs a separately recorded assignment within Smith's authority.
 
-No scheduler contact, canonical mailbox, registry identity or live lease is
-migrated merely by creating this agent. Extender remains the single writer for
-grant/release/repair administration during the supervised phase. The new agent
-can operate its explicitly handed-off run while Extender stays target-stopped;
-there must never be parallel physical operators.
+Creation alone did not migrate authority. Smith's later explicit handover does:
+the dedicated agent becomes the single management writer and scheduling contact.
+The helper's compatibility identifier stays `linux-extender`; no registry
+reinitialization, queue renumbering or frozen-helper change is needed. That service
+label no longer identifies the primary chat. Extender coordinates exclusive
+technical repair with the manager; there must never be parallel physical operators.
 
 ## Creation and initial training result
 
@@ -74,9 +80,10 @@ Extender forwarded the original 6502 message by substantive mail plus immediate
 steering and supplied retained platform/component and async-policy facts to the
 consumer. The ready first-job fixtures and finite operator strategy are now
 reviewed; Extender's platform operator binding and normal fresh admission remain.
-No new reservation, grant or target action was
-performed while creating or training the agent. No live scheduler contact or
-registry authority changed.
+No new reservation, grant or target action occurred while creating/training the
+agent. The later management handover changes routing/authority while custody is
+idle, retaining the prepared head request and installed identities. The new
+manager obtains its own fresh admission.
 
 ## Maintained materials and validation
 
@@ -87,6 +94,6 @@ registry authority changed.
 
 Validate setup with document links, actual created thread/model configuration,
 the agent's read-only training answers and its accurate first-request intake.
-No hardware test is needed to validate agent creation. Actual round 1 must wait
-for the concrete package and normal current admission; its result cannot be
-claimed from agent creation or training success.
+No hardware test is needed to validate agent creation or the host-only management
+handover. Job outcomes remain in their retained run records and cannot be inferred
+from training success or appointment.

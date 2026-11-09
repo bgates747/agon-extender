@@ -40,6 +40,14 @@ provides its explicit private-listener invocation, exact matched component pins,
 measured improvements and rollback boundary. The Author reviewed the installed trial and authorized Wolf consumer bench
 access through the central scheduler; this does not select a production release.
 
+## Bench management
+
+The dedicated Olimex scheduling agent owns normal bench management. Send
+requests and handbacks to `olimex-scheduler`; the central scheduler contact
+record supplies its current chat. Extender remains technical support. The
+[operating guide](operations/olimex-scheduling/README.md) records the authority
+and preserved helper identity. There is one queue and one manager.
+
 ## Before operational work
 
 Agents must use the [operation-protocol index](procedures/README.md) to select

@@ -10,7 +10,6 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[BENCH-017 — Mainboard VDP text observation for robot operators](docs/tasks/BENCH-017.md)** — Read existing mainboard text on demand through one host request, without prior mirroring, application instrumentation or per-read helper staging/invocation. Preserve the loaded application and replace blind listener-only waits. Supported request path/query ownership remain to be resolved; owns BENCH-006's former deferred Legacy S04.
 
 
-- [ ] **[BENCH-015 — Dedicated Olimex scheduling agent](docs/tasks/BENCH-015.md)** — Train and create GPT-6.1 Terra / medium; Extender forwards initial requests and supervises the first rounds. First assigned execution is 6502's frozen PERF-022 original-r04 fixtures;75 input records and standard/exception bindings reviewed, platform operator preparation and normal admission remain; central FIFO and technical ownership preserved.
 
 - [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests.
 

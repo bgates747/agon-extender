@@ -1,6 +1,10 @@
-# Supervised request forwarding and round records
+# Request routing and handoff records
 
-Extender remains the public scheduling inbox during training. A forwarded packet
+The Olimex scheduling agent is the public scheduling inbox after Smith's
+2026-11-09 handover. Send requests and handbacks directly to `olimex-scheduler`,
+using the chat in the central scheduler contact record. Extender forwards
+stragglers from its technical inbox; it does not grant them or remain a second
+scheduling gate. A forwarded packet
 preserves the original request and direct human scope, so the scheduling agent
 does not reconstruct authority from compressed alerts or interpret a forwarded
 message as permission for unrelated work. The central registry remains the sole
@@ -21,8 +25,9 @@ queue; round records are evidence, not an alternative reservation system.
 | Next action | Concrete bounded action and responsible actor, no assumed grant |
 
 Extender publishes the packet as substantive mail to `olimex-scheduler`, then
-immediately steers the created thread. The scheduler replies to `linux-extender`
-with the same subject/thread and backward mail reference, plus immediate steering.
+immediately steers the created thread. The scheduler contacts `linux-extender`
+for concrete technical support, with the same subject/thread and backward mail
+reference, plus immediate steering.
 Both identities share the existing immutable-mail infrastructure; neither edits
 the other's published messages or acknowledgement state.
 
