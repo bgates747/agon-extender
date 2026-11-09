@@ -7,7 +7,8 @@ IDF=ROOT/'agents/build001/native-tools/esp-idf'
 PIN='b774170ff46c393eeb5e495ea37936038d3f4f4f'
 def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);p.add_argument('--build-id',required=True);a=p.parse_args()
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);p.add_argument('--build-id',required=True)
+ p.add_argument('--tools-path',required=True,type=Path);p.add_argument('--python-env',required=True,type=Path);a=p.parse_args()
  commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
  if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True):raise SystemExit('Commit inputs before identified build')
  assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=IDF,text=True).strip()==PIN
@@ -16,7 +17,10 @@ def main():
  files=[*sorted((ROOT/'vdp/fixtures/esp8266_uart').rglob('*')),Path(__file__).resolve(),ROOT/'vdp/partitions.csv',ROOT/'vdp/build/boards/p4-pc.json']
  inputs={str(x.relative_to(ROOT)):digest(x) for x in files if x.is_file()}
  sdk=out/'sdkconfig';sdk.write_text((project/'sdkconfig.defaults').read_text()+f'\nCONFIG_PARTITION_TABLE_CUSTOM=y\nCONFIG_PARTITION_TABLE_CUSTOM_FILENAME="{ROOT / "vdp/partitions.csv"}"\n')
- tools=ROOT/'agents/build001/native-tools/espressif';pyenv=ROOT/'agents/build001/native-tools/python-env'
+ # Use explicit host-native overrides, as the maintained P4 builder does.
+ # The historical native-tools compiler is x86-64 and its Python env is stale
+ # after Pi migration; neither is a valid implicit build environment.
+ tools=a.tools_path.resolve();pyenv=a.python_env.resolve()
  env=os.environ.copy();env.update(IDF_PATH=str(IDF),IDF_TOOLS_PATH=str(tools),IDF_PYTHON_ENV_PATH=str(pyenv),ESP_IDF_VERSION='5.5',IDF_COMPONENT_MANAGER='0')
  env['PATH']=os.pathsep.join([str(pyenv/'bin'),*[str(p) for p in tools.glob('tools/**/bin') if p.is_dir()],env['PATH']])
  env['ESP_ROM_ELF_DIR']=str(next(tools.glob('tools/esp-rom-elfs/*')))
