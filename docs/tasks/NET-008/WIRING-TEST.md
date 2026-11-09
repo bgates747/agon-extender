@@ -93,3 +93,22 @@ restoration evidence remain pending; compilation is not a runtime pass.
    resolution and genuine handoff precede all physical work. Continue with this
    prepared test after that boundary is resolved, then retain custody until
    Smith explicitly requests release.
+
+## Author correction: grant before hardware checks
+
+Smith explicitly supersedes the circular admission sequence: exclusive bench
+custody must be granted before the operator checks physical readiness. The
+dedicated Olimex scheduler owns correction of the canonical scheduling guide,
+its enforcing helper and affected current operating references. The original
+denied pregrant probe remains historical and must not be retried as such.
+
+The corrected sequence must establish FIFO custody through host-only registry
+and predecessor-handback reconciliation, perform actual readiness checks under
+that lease, and permit the selected wiring test only after readiness succeeds.
+A grant establishes ownership, not a hardware-ready claim. Unknown occupancy
+still requires reconciliation; failed readiness retains exclusive custody.
+No fabricated observation, alternate registry or restamped historical receipt
+is part of this correction. The existing hold and test scope remain unchanged.
+
+The owner correction has been requested; implementation, device-free validation
+and actual grant/admission are still pending. Extender has not accessed hardware.
