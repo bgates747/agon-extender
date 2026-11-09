@@ -93,7 +93,8 @@ void run() {
       unsigned char prelude[1024];size_t n=0;auto end=esp_timer_get_time()+250000;
       while(n<sizeof(prelude) && esp_timer_get_time()<end) {
         int got=uart_read_bytes(modem,prelude+n,sizeof(prelude)-n,pdMS_TO_TICKS(20));
-        if(got<0)break;n+=size_t(got);
+        if(got<0)break;
+        n+=size_t(got);
       }
       hex("prelude",0,prelude,n);
       if(n<sizeof(prelude) && healthy()) {
