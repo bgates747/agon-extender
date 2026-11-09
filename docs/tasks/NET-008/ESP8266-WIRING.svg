@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <svg xmlns="http://www.w3.org/2000/svg" width="2700" height="1540" viewBox="0 0 2700 1540" font-family="DejaVu Sans, sans-serif">
-  <title>NET-008 task proposal — full existing harness plus ESP8266 UART</title>
-  <desc>Task-only derivative. All existing harness paths retained. Proposed GPIO47 TX and GPIO48 RX, candidate P4 3.3V power and shared ground. No installed-wiring claim.</desc>
+  <title>NET-008 wiring record — full existing harness plus ESP8266 UART</title>
+  <desc>Task-only derivative. All existing harness paths retained. Author-reported GPIO47 TX and orange GPIO48 RX; supply current remains unqualified.</desc>
   <rect width="2700" height="1540" fill="white" />
-  <text x="40" y="40" font-size="28" fill="#20242b" text-anchor="start" font-weight="bold">Agon Light 2 → P4-PC Rev C + proposed ESP8266 branch</text>
-  <text x="40" y="69" font-size="16" fill="#56606e" text-anchor="start" font-weight="normal">NET-008 task-only proposal · Existing harness retained · New connections highlighted</text>
+  <text x="40" y="40" font-size="28" fill="#20242b" text-anchor="start" font-weight="bold">Agon Light 2 → P4-PC Rev C + ESP8266 branch</text>
+  <text x="40" y="69" font-size="16" fill="#56606e" text-anchor="start" font-weight="normal">NET-008 task-only record · Author reports wiring complete · Orange RX matches Console8</text>
   <text x="40" y="99" font-size="17" fill="#20242b" text-anchor="start" font-weight="normal">Board-side views: look down onto the connector pins. Pin 1 is outlined; wiring-side socket views are mirrored.</text>
   <text x="60" y="145" font-size="20" fill="#20242b" text-anchor="start" font-weight="bold">Complete Agon GPIO header — 2 × 17</text>
   <text x="60" y="169" font-size="14" fill="#56606e" text-anchor="start" font-weight="normal">Rotate the official horizontal pinout 90° counterclockwise; no mirror.</text>
@@ -118,7 +118,7 @@
   <text x="1208" y="470" font-size="13" fill="#20242b" text-anchor="start" font-weight="bold">18  GPIO46 / D7</text>
   <rect x="945" y="477" width="245" height="28" fill="#e4f6f5" stroke="#008b8b" stroke-width="3" id="pc-overview-pin19" />
   <text x="953" y="500" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">19  GPIO47 / modem TX</text>
-  <rect x="1200" y="477" width="245" height="28" fill="#fce7f2" stroke="#d4147c" stroke-width="3" id="pc-overview-pin20" />
+  <rect x="1200" y="477" width="245" height="28" fill="#fff0da" stroke="#e07800" stroke-width="3" id="pc-overview-pin20" />
   <text x="1208" y="500" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">20  GPIO48 / modem RX</text>
   <text x="310" y="587" font-size="14" fill="#20242b" text-anchor="middle" font-weight="bold">Pin 33 GND / pin 34 +3.3 V end</text>
   <text x="1248" y="529" font-size="14" fill="#20242b" text-anchor="middle" font-weight="bold">↓ Four USB-A keyboard ports</text>
@@ -267,7 +267,7 @@
   <text x="1068" y="1208" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 4  +5 V</text>
   <rect x="1060" y="1220" width="235" height="24" fill="#f5f6f8" stroke="#c2c8d0" id="agon-bank-pin2" />
   <text x="1068" y="1237" font-size="14" fill="#20242b" text-anchor="start" font-weight="normal"> 2  +5 V USB</text>
-  <rect x="1480" y="872" width="255" height="24" fill="#fce7f2" stroke="#d4147c" id="pc-bank-pin20" stroke-width="3" />
+  <rect x="1480" y="872" width="255" height="24" fill="#fff0da" stroke="#e07800" id="pc-bank-pin20" stroke-width="3" />
   <text x="1488" y="889" font-size="13" fill="#20242b" text-anchor="start" font-weight="normal">20  GPIO48 / modem RX</text>
   <rect x="1480" y="901" width="255" height="24" fill="#388e3c" stroke="#555555" id="pc-bank-pin18" />
   <text x="1488" y="918" font-size="13" fill="white" text-anchor="start" font-weight="bold">18  GPIO46 / D7</text>
@@ -346,11 +346,11 @@
       <path d="M 0 0 L 8 4 L 0 8 Z" fill="#008b8b" />
     </marker>
     <marker id="arrow-rx" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#d4147c" />
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#e07800" />
     </marker>
   </defs>
   <path d="M 1820 24 V 1516" stroke="#d3dce5" fill="none" stroke-width="2" />
-  <text x="1870" y="50" font-size="28" fill="#20242b" font-weight="bold">Proposed modem branch</text>
+  <text x="1870" y="50" font-size="28" fill="#20242b" font-weight="bold">ESP8266 modem branch</text>
   <text x="1870" y="84" font-size="18" fill="#20242b" font-weight="normal">P4 UART2 · 115200 baud · 8N1 · TX/RX only</text>
   <text x="1870" y="113" font-size="17" fill="#20242b" font-weight="normal">Existing mainboard UART1 and all harness wires stay in place.</text>
   <rect x="1998" y="194" width="636" height="374" fill="#f5fafc" stroke="#64788a" rx="14" />
@@ -359,24 +359,24 @@
   <text x="2040" y="266" font-size="21" fill="#c62828" font-weight="bold">VCC / 3.3 V</text>
   <circle cx="2010" cy="340" r="5" fill="#008b8b" />
   <text x="2040" y="346" font-size="21" fill="#008b8b" font-weight="bold">RXD  ←  P4 TX</text>
-  <circle cx="2010" cy="420" r="5" fill="#d4147c" />
-  <text x="2040" y="426" font-size="21" fill="#d4147c" font-weight="bold">TXD  →  P4 RX</text>
+  <circle cx="2010" cy="420" r="5" fill="#e07800" />
+  <text x="2040" y="426" font-size="21" fill="#e07800" font-weight="bold">TXD  →  P4 RX</text>
   <circle cx="2010" cy="500" r="5" fill="#111111" />
   <text x="2040" y="506" font-size="21" fill="#111111" font-weight="bold">GND</text>
   <text x="2030" y="548" font-size="16" fill="#20242b" font-weight="normal">Logical terminals; module pin order is not assumed.</text>
   <path d="M 945 222 H 900 V 177 H 1770 V 260 H 2010" fill="none" stroke="white" stroke-width="8" />
-  <path id="modem-vcc" d="M 945 222 H 900 V 177 H 1770 V 260 H 2010" fill="none" stroke="#c62828" stroke-width="3" stroke-linejoin="round" data-pc-pin="1" data-status="proposed" stroke-dasharray="9 5" />
+  <path id="modem-vcc" d="M 945 222 H 900 V 177 H 1770 V 260 H 2010" fill="none" stroke="#c62828" stroke-width="3" stroke-linejoin="round" data-pc-pin="1" data-status="supply-unqualified" stroke-dasharray="9 5" />
   <circle cx="945" cy="222" r="4" fill="#c62828" />
   <path d="M 945 492 H 920 V 538 H 1860 V 340 H 2010" fill="none" stroke="white" stroke-width="8" />
-  <path id="modem-tx" d="M 945 492 H 920 V 538 H 1860 V 340 H 2010" fill="none" stroke="#008b8b" stroke-width="3" stroke-linejoin="round" data-pc-pin="19" data-status="proposed" marker-end="url(#arrow-tx)" />
+  <path id="modem-tx" d="M 945 492 H 920 V 538 H 1860 V 340 H 2010" fill="none" stroke="#008b8b" stroke-width="3" stroke-linejoin="round" data-pc-pin="19" data-status="author-reported" marker-end="url(#arrow-tx)" />
   <circle cx="945" cy="492" r="4" fill="#008b8b" />
   <path d="M 2010 420 H 1910 V 492 H 1445" fill="none" stroke="white" stroke-width="8" />
-  <path id="modem-rx" d="M 2010 420 H 1910 V 492 H 1445" fill="none" stroke="#d4147c" stroke-width="3" stroke-linejoin="round" data-pc-pin="20" data-status="proposed" marker-end="url(#arrow-rx)" />
-  <circle cx="1445" cy="492" r="4" fill="#d4147c" />
+  <path id="modem-rx" d="M 2010 420 H 1910 V 492 H 1445" fill="none" stroke="#e07800" stroke-width="3" stroke-linejoin="round" data-pc-pin="20" data-status="author-reported" marker-end="url(#arrow-rx)" />
+  <circle cx="1445" cy="492" r="4" fill="#e07800" />
   <path d="M 945 252 H 875 V 600 H 1940 V 500 H 2010" fill="none" stroke="white" stroke-width="8" />
-  <path id="modem-ground" d="M 945 252 H 875 V 600 H 1940 V 500 H 2010" fill="none" stroke="#111111" stroke-width="3" stroke-linejoin="round" data-pc-pin="3" data-status="proposed" />
+  <path id="modem-ground" d="M 945 252 H 875 V 600 H 1940 V 500 H 2010" fill="none" stroke="#111111" stroke-width="3" stroke-linejoin="round" data-pc-pin="3" data-status="author-reported" />
   <circle cx="945" cy="252" r="4" fill="#111111" />
-  <text x="1490" y="483" font-size="16" fill="#d4147c" font-weight="bold">EXT1-20 / GPIO48 RX</text>
+  <text x="1490" y="483" font-size="16" fill="#e07800" font-weight="bold">EXT1-20 / GPIO48 RX</text>
   <text x="1490" y="529" font-size="16" fill="#008b8b" font-weight="bold">EXT1-19 / GPIO47 TX</text>
   <text x="1490" y="591" font-size="16" fill="#111111" font-weight="bold">EXT1-3 / common GND</text>
   <text x="1510" y="167" font-size="16" fill="#c62828" font-weight="bold">EXT1-1 / P4 +3.3 V</text>
@@ -394,14 +394,14 @@
   <text x="1870" y="1030" font-size="18" fill="#20242b" font-weight="normal">Do not connect P4 +3.3 V to the Agon +3.3 V rail.</text>
   <text x="1870" y="1062" font-size="18" fill="#20242b" font-weight="normal">GPIO47/48 share the already-required LDO4 3.3 V bank.</text>
   <text x="1870" y="1094" font-size="18" fill="#20242b" font-weight="normal">Earlier ZDI use of these contacts was proposed only.</text>
-  <text x="1870" y="1126" font-size="18" fill="#20242b" font-weight="normal">This proposal uses that pair for the temporary modem.</text>
+  <text x="1870" y="1126" font-size="18" fill="#20242b" font-weight="normal">The reported modem wiring occupies that pair.</text>
   <rect x="1860" y="1180" width="790" height="225" fill="#eef4fa" stroke="#bbc9d8" rx="10" />
   <text x="1880" y="1217" font-size="19" fill="#20242b" font-weight="bold">Existing wiring is the complete base harness at left.</text>
   <text x="1880" y="1254" font-size="17" fill="#20242b" font-weight="normal">All eight data wires, three handshake/clock wires,</text>
   <text x="1880" y="1284" font-size="17" fill="#20242b" font-weight="normal">common ground, pull resistors, rails and full headers remain.</text>
-  <text x="1880" y="1320" font-size="17" fill="#20242b" font-weight="normal">New highlights are task-local proposed connections.</text>
-  <text x="1880" y="1350" font-size="17" fill="#20242b" font-weight="normal">No physical rewiring or firmware change has been performed.</text>
+  <text x="1880" y="1320" font-size="17" fill="#20242b" font-weight="normal">Orange RX matches the Author’s Console8 wiring.</text>
+  <text x="1880" y="1350" font-size="17" fill="#20242b" font-weight="normal">Wiring completion is Author-reported; firmware is unchanged.</text>
   <text x="1880" y="1380" font-size="17" fill="#20242b" font-weight="normal">No dot at a crossing means the wires are not joined.</text>
   <text x="1870" y="1488" font-size="15" fill="#56606e" font-weight="normal">Base: light2-p4pc-harness-draft · Rev C manufacturer reference</text>
-  <text x="1870" y="1514" font-size="15" fill="#56606e" font-weight="normal">Task: NET-008 · 2026-11-09 · Siloed review proposal</text>
+  <text x="1870" y="1514" font-size="15" fill="#56606e" font-weight="normal">Task: NET-008 · 2026-11-09 · Author-reported wiring</text>
 </svg>

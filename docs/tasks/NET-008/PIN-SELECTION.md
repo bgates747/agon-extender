@@ -1,17 +1,17 @@
-# Temporary ESP8266 branch — task-only pin proposal
+# Temporary ESP8266 branch — task-only wiring record
 
 Use P4-PC EXT1 contacts19/20 for the modem's two UART signals. They are the
 last pair at the USB-A end, immediately beyond the existing brown D6 and green
 D7 connections. The [full drawing](ESP8266-WIRING.svg) retains all existing
 Agon/P4 harness wiring and adds the modem branch; [PNG preview](ESP8266-WIRING.png).
-This is a proposal for review, not a report of installed wiring or power qualification.
+Smith reports the wiring complete on2026-11-09 and corrects the P4 RX wire colour to orange, matching Console8. This records his construction report; no independent continuity, power-margin or communication test has occurred.
 
 ## Proposed connections
 
 | P4-PC EXT1 contact | P4 function | Modem terminal | Drawing colour |
 |---|---|---|---|
 | 19 / GPIO47 | UART2 TX, P4 transmits | RXD | Teal |
-| 20 / GPIO48 | UART2 RX, P4 receives | TXD | Magenta |
+| 20 / GPIO48 | UART2 RX, P4 receives | TXD | Orange (matches Console8) |
 | 3 / GND | Existing common ground, add a branch | GND | Black |
 | 1 / +3.3V | Candidate modem supply; power margin still to establish | VCC / 3.3V | Dashed red |
 
@@ -46,7 +46,7 @@ electrical-qualification limits remain; this copy is not a new as-built survey.
 1. The maintained P4-PC profile maps GPIO47/48 to contacts19/20 and assigns
    neither to transport nor its reserved GPIO list. The base drawing reports
    both contacts spare. Their earlier proposed ZDI assignment was deferred,
-   not installed by that record; this temporary modem proposal would occupy
+   not installed by that record; the reported temporary modem wiring occupies
    both. It does not silently modify a recovery profile or create simultaneous
    modem/ZDI use.
 2. GPIO47/48 share VDDPST_5/LDO4 with the already-connected GPIO46/D7. Existing
@@ -57,8 +57,8 @@ electrical-qualification limits remain; this copy is not a new as-built survey.
    this physical assembly. The red supply connection remains conditional;
    do not treat the diagram as power-on readiness. Do not use EXT1-2/+5V for
    the selected3.3V modem or join the two computers' positive supply rails.
-4. No physical inspection, wiring change, device connection, firmware build,
-   pin drive, power operation or hardware test occurred. Hardware remains
+4. Smith reports completing the physical wiring. The agent performed no physical
+   inspection, firmware build, pin drive, power operation or hardware test. Hardware remains
    under the dedicated scheduler. Existing pin profiles and harness authorities
    are unchanged.
 
@@ -95,6 +95,6 @@ Regenerate from the repository root:
 ```
 
 Pin/supply labels in this proposal are supported by the current schematic and
-profile; electrical availability, modem power margin and final construction
-remain to be established. No generic protocol or product pin-map change is
+profile. Construction is Author-reported; independent electrical checks and
+modem power margin remain to be established. No generic protocol or product pin-map change is
 selected by creating this task-local drawing.

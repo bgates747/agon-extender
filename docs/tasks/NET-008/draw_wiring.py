@@ -2,7 +2,7 @@
 """Task-only ESP8266 proposal over the unchanged complete P4-PC harness SVG.
 
 No hardware/profile changes. Keep the base drawing's existing wire paths,
-pulls, colours and contact geometry. New connections are a review proposal;
+pulls, colours and contact geometry. The Author reports the modem wiring complete;
 the module's physical terminal order and available power margin are unresolved.
 Use librsvg/Cairo for PNG export: ImageMagick's internal SVG renderer omitted
 the existing path elements during this task, so it is unsuitable for this file.
@@ -31,13 +31,13 @@ assert not {47,48} & (set(profile['transport']['data']) |
                      set(profile['reserved_gpios']))
 base.set('width','2700'); base.set('viewBox','0 0 2700 1540')
 base.find(tag('rect')).set('width','2700')
-base.find(tag('title')).text = 'NET-008 task proposal — full existing harness plus ESP8266 UART'
-base.find(tag('desc')).text = 'Task-only derivative. All existing harness paths retained. Proposed GPIO47 TX and GPIO48 RX, candidate P4 3.3V power and shared ground. No installed-wiring claim.'
+base.find(tag('title')).text = 'NET-008 wiring record — full existing harness plus ESP8266 UART'
+base.find(tag('desc')).text = 'Task-only derivative. All existing harness paths retained. Author-reported GPIO47 TX and orange GPIO48 RX; supply current remains unqualified.'
 for e in base.iter(tag('text')):
     if e.get('x')=='40' and e.get('y')=='40':
-        e.text = 'Agon Light 2 → P4-PC Rev C + proposed ESP8266 branch'
+        e.text = 'Agon Light 2 → P4-PC Rev C + ESP8266 branch'
     elif e.get('x')=='40' and e.get('y')=='69':
-        e.text = 'NET-008 task-only proposal · Existing harness retained · New connections highlighted'
+        e.text = 'NET-008 task-only record · Author reports wiring complete · Orange RX matches Console8'
     elif e.text and 'GPIO47 / Spare' in e.text:
         e.text = e.text.replace('GPIO47 / Spare','GPIO47 / modem TX')
     elif e.text and 'GPIO48 / Spare' in e.text:
@@ -55,26 +55,26 @@ def text(x,y,s,size=18,colour='#20242b',bold=False):
 def rect(x,y,w,h,fill='#f5f6f8',stroke='#b8c1cc',**attrs):
     return el('rect',x=x,y=y,width=w,height=h,fill=fill,stroke=stroke,**attrs)
 defs=el('defs')
-for name,col in [('tx','#008b8b'),('rx','#d4147c')]:
+for name,col in [('tx','#008b8b'),('rx','#e07800')]:
     m=ET.SubElement(defs,tag('marker'),{'id':'arrow-'+name,'markerWidth':'9','markerHeight':'9','refX':'8','refY':'4','orient':'auto','markerUnits':'userSpaceOnUse'})
     ET.SubElement(m,tag('path'),{'d':'M 0 0 L 8 4 L 0 8 Z','fill':col})
-for pin,col in [(19,'#008b8b'),(20,'#d4147c'),(1,'#c62828'),(3,'#111111')]:
+for pin,col in [(19,'#008b8b'),(20,'#e07800'),(1,'#c62828'),(3,'#111111')]:
     for kind in ['overview','bank']:
         old=base.find(f'.//*[@id="pc-{kind}-pin{pin}"]')
         if old is not None:
             old.set('stroke',col);old.set('stroke-width','3')
-            if pin in (19,20):old.set('fill','#e4f6f5' if pin==19 else '#fce7f2')
+            if pin in (19,20):old.set('fill','#e4f6f5' if pin==19 else '#fff0da')
 
 # The drawing keeps the original 1800-wide harness area intact. Branches start
 # at actual contact rectangles in its complete physical header view.
 el('path',d='M 1820 24 V 1516',stroke='#d3dce5',fill='none',stroke_width=2)
-text(1870,50,'Proposed modem branch',28,bold=True)
+text(1870,50,'ESP8266 modem branch',28,bold=True)
 text(1870,84,'P4 UART2 · 115200 baud · 8N1 · TX/RX only',18)
 text(1870,113,'Existing mainboard UART1 and all harness wires stay in place.',17)
 rect(1998,194,636,374,'#f5fafc','#64788a',rx=14)
 text(2030,231,'Real ESP8266 / existing AT firmware',23,bold=True)
 for y,label,col in [(260,'VCC / 3.3 V','#c62828'),(340,'RXD  ←  P4 TX','#008b8b'),
-                    (420,'TXD  →  P4 RX','#d4147c'),(500,'GND','#111111')]:
+                    (420,'TXD  →  P4 RX','#e07800'),(500,'GND','#111111')]:
     el('circle',cx=2010,cy=y,r=5,fill=col)
     text(2040,y+6,label,21,col,True)
 text(2030,548,'Logical terminals; module pin order is not assumed.',16)
@@ -82,21 +82,21 @@ text(2030,548,'Logical terminals; module pin order is not assumed.',16)
 branches=[
  ('modem-vcc','M 945 222 H 900 V 177 H 1770 V 260 H 2010','#c62828','',True,1),
  ('modem-tx','M 945 492 H 920 V 538 H 1860 V 340 H 2010','#008b8b','tx',False,19),
- ('modem-rx','M 2010 420 H 1910 V 492 H 1445','#d4147c','rx',False,20),
+ ('modem-rx','M 2010 420 H 1910 V 492 H 1445','#e07800','rx',False,20),
  ('modem-ground','M 945 252 H 875 V 600 H 1940 V 500 H 2010','#111111','',False,3),
 ]
 for name,d,col,arrow,dashed,pin in branches:
     # White underlay makes crossings explicit: no dot means no junction.
     el('path',d=d,fill='none',stroke='white',stroke_width=8)
     e=el('path',id=name,d=d,fill='none',stroke=col,stroke_width=3,
-         stroke_linejoin='round',data_pc_pin=pin,data_status='proposed')
+         stroke_linejoin='round',data_pc_pin=pin,data_status='author-reported' if pin != 1 else 'supply-unqualified')
     if dashed:e.set('stroke-dasharray','9 5')
     if arrow:e.set('marker-end','url(#arrow-'+arrow+')')
     if pin in (1,3,19):
         xy={1:(945,222),3:(945,252),19:(945,492)}[pin]
     else:xy=(1445,492)
     el('circle',cx=xy[0],cy=xy[1],r=4,fill=col)
-text(1490,483,'EXT1-20 / GPIO48 RX',16,'#d4147c',True)
+text(1490,483,'EXT1-20 / GPIO48 RX',16,'#e07800',True)
 text(1490,529,'EXT1-19 / GPIO47 TX',16,'#008b8b',True)
 text(1490,591,'EXT1-3 / common GND',16,'#111111',True)
 text(1510,167,'EXT1-1 / P4 +3.3 V',16,'#c62828',True)
@@ -115,16 +115,16 @@ for y,s in [(902,'Signal levels: 3.3 V. No modem RTS/CTS pins available.'),
             (1030,'Do not connect P4 +3.3 V to the Agon +3.3 V rail.'),
             (1062,'GPIO47/48 share the already-required LDO4 3.3 V bank.'),
             (1094,'Earlier ZDI use of these contacts was proposed only.'),
-            (1126,'This proposal uses that pair for the temporary modem.')]:text(1870,y,s,18)
+            (1126,'The reported modem wiring occupies that pair.')]:text(1870,y,s,18)
 rect(1860,1180,790,225,'#eef4fa','#bbc9d8',rx=10)
 text(1880,1217,'Existing wiring is the complete base harness at left.',19,bold=True)
 for y,s in [(1254,'All eight data wires, three handshake/clock wires,'),
             (1284,'common ground, pull resistors, rails and full headers remain.'),
-            (1320,'New highlights are task-local proposed connections.'),
-            (1350,'No physical rewiring or firmware change has been performed.'),
+            (1320,'Orange RX matches the Author’s Console8 wiring.'),
+            (1350,'Wiring completion is Author-reported; firmware is unchanged.'),
             (1380,'No dot at a crossing means the wires are not joined.')]:text(1880,y,s,17)
 text(1870,1488,'Base: light2-p4pc-harness-draft · Rev C manufacturer reference',15,'#56606e')
-text(1870,1514,'Task: NET-008 · 2026-11-09 · Siloed review proposal',15,'#56606e')
+text(1870,1514,'Task: NET-008 · 2026-11-09 · Author-reported wiring',15,'#56606e')
 
 actual_old=[dict(e.attrib) for e in base.iter(tag('path')) if e.attrib in old_paths]
 assert actual_old==old_paths,'Existing wire/rail paths must remain identical'
