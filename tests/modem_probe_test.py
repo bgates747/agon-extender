@@ -13,6 +13,10 @@ def good():
  return r+[{'event':'end','pass':True,'uart_retired':True}]
 class Validator(unittest.TestCase):
  def test_good(self):self.assertTrue(validate(good(),'test')['pass'])
+ def test_swapped_pins_require_matching_manifest(self):
+  r=good();r[0].update(tx=48,rx=47)
+  self.assertTrue(validate(r,'test',dict(tx=48,rx=47,baud=115200))['pass'])
+  with self.assertRaises(AssertionError):validate(r,'test',dict(tx=47,rx=48,baud=115200))
  def test_failures(self):
   for kind in ['incomplete','duplicate','wrong_pin','error','no_retirement','false_ok','wrong_command','missing_identity']:
    with self.subTest(kind=kind):

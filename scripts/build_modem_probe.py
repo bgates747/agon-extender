@@ -10,7 +10,8 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);p.add_argument('--build-id',required=True)
  p.add_argument('--tools-path',required=True,type=Path);p.add_argument('--python-env',required=True,type=Path);a=p.parse_args()
  commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
- if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True):raise SystemExit('Commit inputs before identified build')
+ scope=['vdp/fixtures/esp8266_uart','scripts/build_modem_probe.py','vdp/partitions.csv','vdp/build/boards/p4-pc.json']
+ if subprocess.check_output(['git','status','--porcelain','--',*scope],cwd=ROOT,text=True):raise SystemExit('Commit selected source inputs before identified build')
  assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=IDF,text=True).strip()==PIN
  out=a.output.resolve();out.mkdir(exist_ok=False)
  project=out/'project';shutil.copytree(ROOT/'vdp/fixtures/esp8266_uart',project)
@@ -35,6 +36,6 @@ def main():
  assert all(digest(ROOT/n)==h for n,h in inputs.items()),'Source changed during build'
  m={'source_commit':commit,'build_id':a.build_id,'idf_commit':PIN,'board':'Olimex ESP32-P4-PC Rev C','profile':'NET-008 isolated UART2 appliance','source_inputs':inputs,
     'app':{'path':str(app),'bytes':app.stat().st_size,'sha256':digest(app),'offset':layout['app']['offset']},'duration_host_seconds':time.monotonic()-start,
-    'gpio':{'tx':47,'rx':48,'baud':115200,'ldo4_mv':3300},'start_required':True,'app_only_install':True,'emulated':False,'hardware_tested':False}
+    'gpio':{'tx':48,'rx':47,'baud':115200,'ldo4_mv':3300},'start_required':True,'app_only_install':True,'emulated':False,'hardware_tested':False}
  (out/'manifest.json').write_text(json.dumps(m,indent=2)+'\n');print(json.dumps(m,indent=2))
 if __name__=='__main__':main()

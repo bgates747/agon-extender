@@ -11,9 +11,10 @@ from passive_serial import open_passive_serial
 ROOT=Path(__file__).resolve().parents[1]
 LEASE=ROOT.parent/'agon-dev-env/cross-agent/olimex-bench/bench_lease.py'
 ENV_PY=ROOT.parent/'agon-dev-env/.venv/bin/python'
-def validate(records,build):
+def validate(records,build,gpio=None):
+ gpio=gpio or dict(tx=47,rx=48,baud=115200)
  starts=[r for r in records if r.get('event')=='start']
- assert len(starts)==1 and starts[0]['build']==build and (starts[0]['tx'],starts[0]['rx'],starts[0]['baud'])==(47,48,115200),'Wrong/duplicate start'
+ assert len(starts)==1 and starts[0]['build']==build and (starts[0]['tx'],starts[0]['rx'],starts[0]['baud'])==(gpio['tx'],gpio['rx'],gpio['baud']),'Wrong/duplicate start'
  assert not any(r.get('event') in ['error','uart_error','refused'] for r in records),'Device error/refusal'
  tx=[r for r in records if r.get('event')=='tx'];rx=[r for r in records if r.get('event')=='rx'];results=[r for r in records if r.get('event')=='command_result']
  assert [r['seq'] for r in tx]==[1,2,3,4,5] and [r['seq'] for r in rx]==[1,2,3,4,5] and [r['seq'] for r in results]==[1,2,3,4,5],'Incomplete/out-of-order commands'
@@ -54,7 +55,7 @@ def main():
    records.clear();owner();s.write(b'START\n');s.flush();invoked=True
    for r in receive(s,time.monotonic()+25):
     if r.get('event')=='end':break
-   result=validate(records,build)
+   result=validate(records,build,m['gpio'])
  except Exception as e:result={'pass':False,'error':str(e)}
  finally:
   rawfile.close();result.update(invoked=invoked,build=build,elapsed_host_seconds=time.monotonic()-start,serial_sha256=hashlib.sha256((a.out/'serial.bin').read_bytes()).hexdigest())

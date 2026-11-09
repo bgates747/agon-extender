@@ -17,7 +17,8 @@
 
 namespace {
 constexpr uart_port_t modem=UART_NUM_2;
-constexpr gpio_num_t tx=GPIO_NUM_47,rx=GPIO_NUM_48;
+// Smith reports likely crossed wires: preserve wiring, route TX48/RX47.
+constexpr gpio_num_t tx=GPIO_NUM_48,rx=GPIO_NUM_47;
 esp_ldo_channel_handle_t power;
 QueueHandle_t events;
 bool installed=false,used=false;
@@ -81,7 +82,7 @@ bool exchange(unsigned seq,const char *command,int milliseconds,bool identity=fa
 void run() {
   if(used){std::puts("NET008 {\"event\":\"refused\",\"reason\":\"already_invoked\"}");return;}
   used=true;bool pass=false;
-  std::printf("NET008 {\"event\":\"start\",\"build\":\"%s\",\"tx\":47,\"rx\":48,\"baud\":115200}\n",NET008_BUILD_ID);
+  std::printf("NET008 {\"event\":\"start\",\"build\":\"%s\",\"tx\":48,\"rx\":47,\"baud\":115200}\n",NET008_BUILD_ID);
   uart_config_t cfg{};cfg.baud_rate=115200;cfg.data_bits=UART_DATA_8_BITS;
   cfg.parity=UART_PARITY_DISABLE;cfg.stop_bits=UART_STOP_BITS_1;
   cfg.flow_ctrl=UART_HW_FLOWCTRL_DISABLE;cfg.source_clk=UART_SCLK_DEFAULT;
@@ -114,6 +115,12 @@ extern "C" void app_main() {
   // Keep the shared D7/modem I/O bank powered at3.3V; never borrow its SD owner.
   esp_ldo_channel_config_t ldo{};ldo.chan_id=4;ldo.voltage_mv=3300;
   ESP_ERROR_CHECK(esp_ldo_acquire_channel(&ldo,&power));
+  // Release both modem pins before either can become TX. GPIO47 must remain
+  // input in this swapped assignment; never drive both connected modem lines.
+  for(auto pin:{tx,rx}) {
+    ESP_ERROR_CHECK(gpio_reset_pin(pin));ESP_ERROR_CHECK(gpio_set_direction(pin,GPIO_MODE_INPUT));
+    ESP_ERROR_CHECK(gpio_pullup_dis(pin));ESP_ERROR_CHECK(gpio_pulldown_dis(pin));
+  }
   // Release every existing mainboard lane and handshake; do not touch USB/LED.
   for(int n:{14,15,16,17,18,19,20,32,33,36,46}) {
     auto pin=gpio_num_t(n);

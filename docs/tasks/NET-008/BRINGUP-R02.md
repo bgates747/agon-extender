@@ -56,3 +56,12 @@ Compile only: pinned Pi-native IDF/toolchain already used for the first probe,
 expected under90s with600s bound and under2GiB memory. Retain identified binary,
 manifest and original child waits; release compiler custody and notify the next
 owner after owned compiler processes stop. Compiler work does not touch hardware.
+
+## Latest Author direction supersedes the inspection pause
+
+Smith explicitly says to do the swapped-assignment test first, check the modem
+end later, and **not restore original firmware** afterward. Proceed with the
+identified TX48/RX47 diagnostic under the existing admitted hold. Its boot and
+post-test retirement keep both modem pins as inputs; only the explicit bounded
+UART exchange enables TX48. Keep the development application installed after
+success or failure; do not run the earlier install/test/restore helper unchanged.
