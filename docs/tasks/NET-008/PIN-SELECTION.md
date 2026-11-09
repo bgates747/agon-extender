@@ -108,3 +108,14 @@ retaining the teal GPIO47 and orange GPIO48 physical leads. The original TX47/
 RX48 attempt remains a zero-byte failure in the historical test record.
 Development firmware remains installed by explicit Author instruction; UART
 pins retire to inputs after the finite test. No bandwidth qualification yet.
+
+
+## Observed UART probe directions during torture preparation
+
+After Smith confirms the two probes connect only to the new UART wires, a
+12-second24MHz capture decodes known1152008N1 traffic: D0 green is P4 commands
+and D3 orange is modem replies, with no candidate framing errors. This is the
+current observed signal-direction record. The diagram's earlier teal/orange
+lead-to-header assumption was not an independent continuity survey; do not use
+it to contradict actual decoded direction or infer where the connector-end
+crossover lies. No wiring or existing base diagram was changed for this capture.

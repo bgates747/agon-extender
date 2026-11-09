@@ -157,3 +157,45 @@ an old signal to its new UART wire (which needs physical separation). Do not
 confuse that topology question with asking for the already-given test permission.
 Actual Wi-Fi association/IP is also to be observed through bounded INFO before
 assuming the TCP data path is ready.
+
+## Probe clarification before physical execution
+
+Smith confirms D0 green and D3 orange connect only to the two new UART wires.
+Other analyzer channels remain attached independently to old P4 headers; neither
+UART probe joins an old signal net. This resolves the topology question above.
+The existing actual164 lease and explicit development-firmware retention remain
+in force. Install the identified torture appliance, query actual modem network
+state, and then execute the authorized CRC ladder when TCP connectivity is ready.
+
+## Actual installation and network prerequisite
+
+The prepared238032-byte d1d23148 application is now installed on P4, with an
+independent exact241664-byte application-sector readback. Partition selection,
+bootloader, NVS, mainboard firmware and startup remain unchanged. The retained
+incoming e348 image plus known unchanged original suffix define rollback bytes;
+no rollback was performed. Boot remains stopped until an explicit USB command.
+
+Two bounded INFO exchanges pass at1152008N1 and retire UART2 afterward. The
+modem reports STATUS5 and station IP0.0.0.0: command transport works, but it is
+not associated with Wi-Fi. No BENCH/data case or baud change has been issued.
+No CRC throughput or maximum baud result is claimed. The earlier working C8
+private configuration was kept on its SD card; local private.cfg files are host
+test fixtures, not an accepted network profile. A working private SSID/password
+profile is required before the Pi5 TCP endpoint can be exercised.
+
+A finite12-second24MHz receive-only capture acquires exactly288000000 samples
+from D0 and D3, then is losslessly archived and extraction-hash verified.
+Known AT traffic establishes these actual directions, without framing errors:
+
+| Channel / probe colour | Observed traffic | Direction |
+|---|---|---|
+| D0 / green | AT, ATE0, CIPSTATUS, CIFSR | P4 TX to ESP8266 RX |
+| D3 / orange | OK and modem status/address replies | ESP8266 TX to P4 RX |
+
+This establishes observed signal direction, not an independent survey of the
+connector-end crossover. Earlier diagram lead-colour assumptions must not
+supersede this capture. Other analyzer channels were not acquired or moved.
+Both original host supervisors and all owned child groups join successfully;
+reset holder is released, UART pins are retired, and the identified development
+image remains installed. Product P4 input/HTTP/SD services are absent in this
+isolated image. Smith's actual164 hold remains; no bench release is requested.
