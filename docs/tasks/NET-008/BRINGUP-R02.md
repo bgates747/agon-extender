@@ -65,3 +65,34 @@ identified TX48/RX47 diagnostic under the existing admitted hold. Its boot and
 post-test retirement keep both modem pins as inputs; only the explicit bounded
 UART exchange enables TX48. Keep the development application installed after
 success or failure; do not run the earlier install/test/restore helper unchanged.
+
+## Actual swapped iteration result
+
+The selected TX48/RX47 mapping passes without changing the physical wires.
+
+| Item | Actual164-r02 result |
+|---|---|
+| Image | `net008-uart2-swapped-b2026-11-09-20-10-03Z`, source336f755d,199712 bytes SHA256e3485b124b7dc33b5941309a0c690da48e04de576ade042d1af020cfb2316910. |
+| Native build |42.653 host seconds; genuine parent wait0 and owned group joined; independent compiler lease801 released, no successor. |
+| P4 install | Application-only200704-byte span independently compared, existing final-sector tail retained. No mainboard firmware/startup write. |
+| AT | Positive OK,11 received bytes,23,594 P4 microseconds. |
+| AT+GMR |118 bytes,39,167 P4 microseconds; AT1.3.0.0 (2016-07-14), SDK2.0.0, compile2016-07-19. |
+| Three additional ATs | All positive OK;23,060/23,114/23,110 P4 microseconds. |
+| UART lifecycle | One explicit START, successful UART retirement to input pins; no subsequent AT/replay. |
+| End state | Development image retained exactly as instructed. Seven recorded child/holder groups joined, both serial resources free, Agon reset released; bench still held. |
+
+Ordinary P4 product services are absent while this isolated development image
+remains installed; no ordinary mainboard input/readiness claim follows. The
+installed inventory identifies this exception and its verified bytes. The
+original firmware was **not** restored after this iteration.
+
+This proves bidirectional byte exchange at1152008N1. The successful firmware
+pin reversal explains the prior no-response result operationally; it does not
+identify which physical connector end was crossed. Keep this mapping and wiring.
+The task drawing now reflects current GPIO direction with the same physical
+lead colours. UART/network bulk throughput remains unmeasured; AT round-trip
+times include command processing and polling and are not a bandwidth limit.
+
+Machine-local original records: `agents/net008/bench-test/physical164-r02/`
+and sibling supervisor/build directories. These retain raw bytes, exact
+readback/partition selection, actual parent waits, inventory and held state.

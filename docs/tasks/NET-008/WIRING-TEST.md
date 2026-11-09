@@ -146,3 +146,11 @@ and final held state are retained in the ignored machine-local record
 `agents/net008/bench-test/physical164/` and sibling supervisor directory.
 The diagnostic and historical build manifest remain unchanged. The host runner
 now requires completed hardware admission as well as ownership before START.
+
+## Current continuation
+
+Smith explicitly rejects ending bring-up/restoring the original image after
+one failed test. The [iterative bring-up record](BRINGUP-R02.md) now controls:
+TX48/RX47 passes all five AT exchanges and the development image remains
+installed by direct instruction. The actual164 original failure/restoration
+above remains historical evidence, not the current firmware selection.

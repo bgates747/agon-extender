@@ -32,16 +32,16 @@ assert not {47,48} & (set(profile['transport']['data']) |
 base.set('width','2700'); base.set('viewBox','0 0 2700 1540')
 base.find(tag('rect')).set('width','2700')
 base.find(tag('title')).text = 'NET-008 wiring record — full existing harness plus ESP8266 UART'
-base.find(tag('desc')).text = 'Task-only derivative. All existing harness paths retained. Author-reported GPIO47 TX and orange GPIO48 RX; supply current remains unqualified.'
+base.find(tag('desc')).text = 'Task-only derivative. All existing harness paths retained. Verified swapped UART assignment: teal GPIO47 RX, orange GPIO48 TX; supply current remains unqualified.'
 for e in base.iter(tag('text')):
     if e.get('x')=='40' and e.get('y')=='40':
         e.text = 'Agon Light 2 → P4-PC Rev C + ESP8266 branch'
     elif e.get('x')=='40' and e.get('y')=='69':
-        e.text = 'NET-008 task-only record · Author reports wiring complete · Orange RX matches Console8'
+        e.text = 'NET-008 task-only record · TX48/RX47 AT test passes · Existing wire colours retained'
     elif e.text and 'GPIO47 / Spare' in e.text:
-        e.text = e.text.replace('GPIO47 / Spare','GPIO47 / modem TX')
+        e.text = e.text.replace('GPIO47 / Spare','GPIO47 / modem RX')
     elif e.text and 'GPIO48 / Spare' in e.text:
-        e.text = e.text.replace('GPIO48 / Spare','GPIO48 / modem RX')
+        e.text = e.text.replace('GPIO48 / Spare','GPIO48 / modem TX')
     elif e.get('x')=='40' and e.get('y')=='1414':
         e.text = 'New modem UART uses EXT1-19 / GPIO47 and EXT1-20 / GPIO48; their earlier proposed ZDI use is deferred.'
     elif e.get('x')=='40' and e.get('y')=='1442':
@@ -55,7 +55,7 @@ def text(x,y,s,size=18,colour='#20242b',bold=False):
 def rect(x,y,w,h,fill='#f5f6f8',stroke='#b8c1cc',**attrs):
     return el('rect',x=x,y=y,width=w,height=h,fill=fill,stroke=stroke,**attrs)
 defs=el('defs')
-for name,col in [('tx','#008b8b'),('rx','#e07800')]:
+for name,col in [('rx','#008b8b'),('tx','#e07800')]:
     m=ET.SubElement(defs,tag('marker'),{'id':'arrow-'+name,'markerWidth':'9','markerHeight':'9','refX':'8','refY':'4','orient':'auto','markerUnits':'userSpaceOnUse'})
     ET.SubElement(m,tag('path'),{'d':'M 0 0 L 8 4 L 0 8 Z','fill':col})
 for pin,col in [(19,'#008b8b'),(20,'#e07800'),(1,'#c62828'),(3,'#111111')]:
@@ -73,16 +73,16 @@ text(1870,84,'P4 UART2 · 115200 baud · 8N1 · TX/RX only',18)
 text(1870,113,'Existing mainboard UART1 and all harness wires stay in place.',17)
 rect(1998,194,636,374,'#f5fafc','#64788a',rx=14)
 text(2030,231,'Real ESP8266 / existing AT firmware',23,bold=True)
-for y,label,col in [(260,'VCC / 3.3 V','#c62828'),(340,'RXD  ←  P4 TX','#008b8b'),
-                    (420,'TXD  →  P4 RX','#e07800'),(500,'GND','#111111')]:
+for y,label,col in [(260,'VCC / 3.3 V','#c62828'),(340,'TXD  →  P4 RX','#008b8b'),
+                    (420,'RXD  ←  P4 TX','#e07800'),(500,'GND','#111111')]:
     el('circle',cx=2010,cy=y,r=5,fill=col)
     text(2040,y+6,label,21,col,True)
 text(2030,548,'Logical terminals; module pin order is not assumed.',16)
 
 branches=[
  ('modem-vcc','M 945 222 H 900 V 177 H 1770 V 260 H 2010','#c62828','',True,1),
- ('modem-tx','M 945 492 H 920 V 538 H 1860 V 340 H 2010','#008b8b','tx',False,19),
- ('modem-rx','M 2010 420 H 1910 V 492 H 1445','#e07800','rx',False,20),
+ ('modem-rx','M 2010 340 H 1860 V 538 H 920 V 492 H 945','#008b8b','rx',False,19),
+ ('modem-tx','M 1445 492 H 1910 V 420 H 2010','#e07800','tx',False,20),
  ('modem-ground','M 945 252 H 875 V 600 H 1940 V 500 H 2010','#111111','',False,3),
 ]
 for name,d,col,arrow,dashed,pin in branches:
@@ -96,8 +96,8 @@ for name,d,col,arrow,dashed,pin in branches:
         xy={1:(945,222),3:(945,252),19:(945,492)}[pin]
     else:xy=(1445,492)
     el('circle',cx=xy[0],cy=xy[1],r=4,fill=col)
-text(1490,483,'EXT1-20 / GPIO48 RX',16,'#e07800',True)
-text(1490,529,'EXT1-19 / GPIO47 TX',16,'#008b8b',True)
+text(1490,483,'EXT1-20 / GPIO48 TX',16,'#e07800',True)
+text(1490,529,'EXT1-19 / GPIO47 RX',16,'#008b8b',True)
 text(1490,591,'EXT1-3 / common GND',16,'#111111',True)
 text(1510,167,'EXT1-1 / P4 +3.3 V',16,'#c62828',True)
 
@@ -120,8 +120,8 @@ rect(1860,1180,790,225,'#eef4fa','#bbc9d8',rx=10)
 text(1880,1217,'Existing wiring is the complete base harness at left.',19,bold=True)
 for y,s in [(1254,'All eight data wires, three handshake/clock wires,'),
             (1284,'common ground, pull resistors, rails and full headers remain.'),
-            (1320,'Orange RX matches the Author’s Console8 wiring.'),
-            (1350,'Wiring completion is Author-reported; firmware is unchanged.'),
+            (1320,'Orange lead stays on GPIO48; it is now TX in software.'),
+            (1350,'TX48/RX47 passes the actual five-command AT test.'),
             (1380,'No dot at a crossing means the wires are not joined.')]:text(1880,y,s,17)
 text(1870,1488,'Base: light2-p4pc-harness-draft · Rev C manufacturer reference',15,'#56606e')
 text(1870,1514,'Task: NET-008 · 2026-11-09 · Author-reported wiring',15,'#56606e')

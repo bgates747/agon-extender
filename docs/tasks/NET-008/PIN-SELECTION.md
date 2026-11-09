@@ -4,21 +4,21 @@ Use P4-PC EXT1 contacts19/20 for the modem's two UART signals. They are the
 last pair at the USB-A end, immediately beyond the existing brown D6 and green
 D7 connections. The [full drawing](ESP8266-WIRING.svg) retains all existing
 Agon/P4 harness wiring and adds the modem branch; [PNG preview](ESP8266-WIRING.png).
-Smith reports the wiring complete on2026-11-09 and corrects the P4 RX wire colour to orange, matching Console8. This records his construction report; no independent continuity, power-margin or communication test has occurred.
+Smith reports the wiring complete on2026-11-09 and corrects the P4 RX wire colour to orange, matching Console8. This records his construction report. The swapped firmware now passes byte exchange; independent continuity and power-margin checks remain unperformed.
 
-## Proposed connections
+## Current functional connections — swapped firmware passes AT
 
 | P4-PC EXT1 contact | P4 function | Modem terminal | Drawing colour |
 |---|---|---|---|
-| 19 / GPIO47 | UART2 TX, P4 transmits | RXD | Teal |
-| 20 / GPIO48 | UART2 RX, P4 receives | TXD | Orange (matches Console8) |
+| 19 / GPIO47 | UART2 RX, P4 receives | TXD | Teal |
+| 20 / GPIO48 | UART2 TX, P4 transmits | RXD | Orange (wire retained) |
 | 3 / GND | Existing common ground, add a branch | GND | Black |
 | 1 / +3.3V | Candidate modem supply; power margin still to establish | VCC / 3.3V | Dashed red |
 
 Use the modem's terminal labels, not the order drawn in the logical block.
 The existing four-wire modem has no RTS/CTS terminals. UART2 is proposed at
 1152008N1; maintained console code currently uses UART1, and normal console
-logging uses USB serial/JTAG. No UART configuration has been implemented here.
+logging uses USB serial/JTAG. The TX48/RX47 development diagnostic passes actual AT/GMR and three repeated AT exchanges. This establishes functional byte exchange; the modem connector orientation and power margin have not been independently surveyed.
 
 ## Orient against the existing wires
 
@@ -26,9 +26,9 @@ logging uses USB serial/JTAG. No UART configuration has been implemented here.
    drawing. Pins1/2 are at the LAN/HDMI end; pins19/20 are at the USB-A end.
    A wiring-side socket view is mirrored.
 2. The existing brown wire is EXT1-17/GPIO36/D6. Move one header row toward
-   USB-A to EXT1-19/GPIO47 for the proposed modem TX.
+   USB-A to EXT1-19/GPIO47 for the current modem RX.
 3. The existing green wire is EXT1-18/GPIO46/D7. Move one header row toward
-   USB-A to EXT1-20/GPIO48 for the proposed modem RX.
+   USB-A to EXT1-20/GPIO48 for the current modem TX.
 4. In the lower separated-bank views, pins19/20 are immediately above those
    brown/green wires. Actual breadboard row numbers have not been recorded;
    this proposal does not invent hole coordinates.
@@ -98,3 +98,13 @@ Pin/supply labels in this proposal are supported by the current schematic and
 profile. Construction is Author-reported; independent electrical checks and
 modem power margin remain to be established. No generic protocol or product pin-map change is
 selected by creating this task-local drawing.
+
+## Actual swapped-pins result
+
+Smith selects software reversal before checking the ESP8266 end. With wiring
+unchanged, actual164-r02 TX48/RX47 passes all five exchanges at1152008N1; modem
+reports AT1.3.0.0/SDK2.0.0. The drawing now shows that functional direction while
+retaining the teal GPIO47 and orange GPIO48 physical leads. The original TX47/
+RX48 attempt remains a zero-byte failure in the historical test record.
+Development firmware remains installed by explicit Author instruction; UART
+pins retire to inputs after the finite test. No bandwidth qualification yet.
