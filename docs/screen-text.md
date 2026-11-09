@@ -68,4 +68,5 @@ Implementation: [host client](../scripts/screen_text.py),
 [Retained qualification](tasks/BENCH-006/RESULTS.md) records one 80×60 capture
 at 2.20 seconds; that is not a general throughput guarantee. The
 [build guide](building.md) distinguishes the deployed composition from base
-source. Legacy readback remains deferred under [BENCH-006](tasks/BENCH-006.md).
+source. Legacy readback is not a maintained capability yet;
+[BENCH-017](tasks/BENCH-017.md) owns its implementation and robot integration.
