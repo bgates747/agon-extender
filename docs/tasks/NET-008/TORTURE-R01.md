@@ -107,3 +107,31 @@ next comparison after this qualification. He raises rewiring Olimex UART1 throug
 a small mux as an alternative; no chip, schematic, wiring change or MOS/P4 mux
 implementation is selected here. Retain that option for an explicit circuit
 choice rather than silently changing the current bench during measurement.
+
+## Concrete implementation contract
+
+1. The P4 and Pi5 use1024-byte deterministic varied payloads, a16-byte header
+   (magic,sequence,length,CRC32), and an explicit zero-payload end record. CRC32
+   covers the first12 header bytes and payload. A nonce/configuration hello and
+   GO precede the test. Both directions stream simultaneously without per-frame
+   acknowledgements; each receiver checks every frame and final endpoint counts
+   must match. No resynchronization repairs a failing stream into a pass.
+2. ESP8266 AT transparent TCP mode carries the binary records. The2016 reference
+   specifies20ms/2048-byte transparent packet batching; this is a possible modem
+   transport bottleneck to measure, not a guaranteed byte rate. Bulk payloads
+   avoid literal '+' bytes so the modem's command escape is not accidental.
+   Separate setup includes any expected old/new-rate acknowledgement ambiguity;
+   require positive AT at the new programmed rate before data measurement.
+3. Actual files: P4 `bandwidth.cpp`/`bw_codec.h` within the task diagnostic;
+   Pi5 `scripts/modem_bw.py`, `modem_bw_peer.py`, `modem_bw_protocol.py`.
+   Native codec cross-checks compare the exact P4 framing bytes with Python;
+   loopback checks exercise the actual duplex peer and false-pass rejection.
+   These are host controls, not claimed physical transfers.
+4. Smith reports canonical green/orange probes on corresponding wire colours,
+   with all existing modem/P4 wiring unchanged since the passing test. Canonical
+   instrument colour mapping is D0=green,D3=orange. Signal direction must be
+   established from actual known AT traffic, not assumed from the unaudited
+   crossover. He also reports old P4 header probe attachments remain; UART
+   transmission stays stopped until it is clear these do not join old signal
+   nets to the new UART nets. Software channel selection cannot disconnect
+   physical wires. Independent source/build preparation may continue.

@@ -2,6 +2,7 @@
 // Boot leaves it idle. Explicit USB Serial/JTAG CLI START runs exactly once,
 // following the existing USB-minimal appliance model. No eZ80 appliance runs;
 // no MOS/VDP route or peripheral is commandeered. All mainboard lanes are inputs.
+#include "bandwidth.h"
 #include <cstdio>
 #include <cstring>
 #include <cctype>
@@ -131,12 +132,19 @@ extern "C" void app_main() {
   ESP_ERROR_CHECK(usb_serial_jtag_driver_install(&usb));usb_serial_jtag_vfs_use_driver();
   std::setvbuf(stdout,nullptr,_IONBF,0);
   status();
-  char line[32]{};size_t n=0;bool overflow=false;
+  char line[192]{};size_t n=0;bool overflow=false;
   for(;;) {
     char c;
     if(usb_serial_jtag_read_bytes(&c,1,pdMS_TO_TICKS(20))!=1)continue;
     if(c=='\n'||c=='\r') {
-      if(n&&!overflow){line[n]=0;if(!std::strcmp(line,"START"))run();else if(!std::strcmp(line,"STATUS"))status();else std::puts("NET008 {\"event\":\"refused\",\"reason\":\"command\"}");}
+      if(n&&!overflow){
+        line[n]=0;unsigned old_rate=0,new_rate=0,ms=0,port=0,nonce=0;char ip[64]{};char extra=0;
+        if(!std::strcmp(line,"START"))run();
+        else if(!std::strcmp(line,"STATUS"))status();
+        else if(std::sscanf(line,"INFO %u %c",&old_rate,&extra)==1&&old_rate>0&&old_rate<=1152000)net008_info(old_rate);
+        else if(std::sscanf(line,"BENCH %u %u %u %63s %u %u %c",&old_rate,&new_rate,&ms,ip,&port,&nonce,&extra)==6)net008_bench(old_rate,new_rate,ms,ip,port,nonce);
+        else std::puts("NET008 {\"event\":\"refused\",\"reason\":\"command\"}");
+      }
       n=0;overflow=false;
     } else if(n+1<sizeof(line) && !overflow)line[n++]=c;else overflow=true;
   }

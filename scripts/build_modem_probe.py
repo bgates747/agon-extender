@@ -10,12 +10,12 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);p.add_argument('--build-id',required=True)
  p.add_argument('--tools-path',required=True,type=Path);p.add_argument('--python-env',required=True,type=Path);a=p.parse_args()
  commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
- scope=['vdp/fixtures/esp8266_uart','scripts/build_modem_probe.py','vdp/partitions.csv','vdp/build/boards/p4-pc.json']
+ scope=['vdp/fixtures/esp8266_uart','scripts/build_modem_probe.py','vdp/partitions.csv','vdp/build/boards/p4-pc.json','scripts/modem_bw.py','scripts/modem_bw_peer.py','scripts/modem_bw_protocol.py']
  if subprocess.check_output(['git','status','--porcelain','--',*scope],cwd=ROOT,text=True):raise SystemExit('Commit selected source inputs before identified build')
  assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=IDF,text=True).strip()==PIN
  out=a.output.resolve();out.mkdir(exist_ok=False)
  project=out/'project';shutil.copytree(ROOT/'vdp/fixtures/esp8266_uart',project)
- files=[*sorted((ROOT/'vdp/fixtures/esp8266_uart').rglob('*')),Path(__file__).resolve(),ROOT/'vdp/partitions.csv',ROOT/'vdp/build/boards/p4-pc.json']
+ files=[*sorted((ROOT/'vdp/fixtures/esp8266_uart').rglob('*')),Path(__file__).resolve(),ROOT/'vdp/partitions.csv',ROOT/'vdp/build/boards/p4-pc.json',*[ROOT/n for n in ['scripts/modem_bw.py','scripts/modem_bw_peer.py','scripts/modem_bw_protocol.py']]]
  inputs={str(x.relative_to(ROOT)):digest(x) for x in files if x.is_file()}
  sdk=out/'sdkconfig';sdk.write_text((project/'sdkconfig.defaults').read_text()+f'\nCONFIG_PARTITION_TABLE_CUSTOM=y\nCONFIG_PARTITION_TABLE_CUSTOM_FILENAME="{ROOT / "vdp/partitions.csv"}"\n')
  # Use explicit host-native overrides, as the maintained P4 builder does.
