@@ -265,3 +265,21 @@ survival of the old keyring file, not presence or validity of the specific
 MOD-WIFI entry. Recovering that exact entry remains a distinct next step; do not
 claim the old credential was lost merely because current Oryx lacks the entry.
 Bench custody, P4 development image and modem settings remain unchanged.
+
+## Credential host correction to always-on Pi5
+
+Smith confirms the new Oryx SSID/password entry checks correctly, then selects
+Pi5 as the required credential host because it controls the bench and remains
+on. The Oryx-dependent connection step is paused; no modem join or baud case was
+submitted. Pi5 metadata confirms keyring software/Python bindings and its user
+bus exist, but no keyring files or running Secret Service exist yet.
+
+Prepare a human-run interactive enrollment on Pi5 using the exact archived
+MWJ1 entry format. Initialize/unlock an encrypted Pi keyring with hidden human
+input, then enroll Wi-Fi SSID/password with the retained helper. No password is
+put into a command line, temporary file, capture, tracked source or chat. The
+Pi keyring must be unlocked again after a restart before unattended use; merely
+being always-on does not itself establish automatic encrypted-keyring unlock.
+Do not copy Oryx's complete keyring, silently store an unlock password or create
+an unencrypted collection. Actual Pi credential enrollment remains pending the
+human interaction; current hardware hold and development image persist.
