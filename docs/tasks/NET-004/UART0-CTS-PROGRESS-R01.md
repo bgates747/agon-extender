@@ -12,6 +12,8 @@ The retained RFC25 sender masks TX when CTS blocks and rearms only at VBlank. Th
 ## State
 
 1. [x] Source diagnosis and direct human resume verified; concrete plan frozen before code.
-2. [ ] Isolated source implementation and meaningful negative controls.
-3. [ ] Exact OFF reproduction, optional ON fit/link/ABI checks and finite resource release.
-4. [ ] Package/return with honest runtime/GPIO/witness/coexistence limits.
+2. [x] Isolated source implementation and meaningful negative controls.
+3. [x] Exact OFF reproduction, optional ON fit/link/ABI checks and finite resource release.
+4. [x] Package/return with honest runtime/GPIO/witness/coexistence limits.
+
+Result: [source qualification](UART0-CTS-PROGRESS-R01-RESULT.md). All bounded work complete; no physical selection.
