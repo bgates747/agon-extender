@@ -49,11 +49,46 @@ in ignored bench records; the dated development log records the corrective note.
 | Native VDP character query | Recognizes currently drawn characters | Matches pixels against current font/colour; not a retained transcript or authoritative backing store |
 | Printer mirror | Future output through mainboard USB serial | Cannot recover text already printed; instrumentation/reader ownership remains separate |
 
-The prototype received1200 replies per route without timeouts. Its selected
-upstream implementation excluded the rightmost column and bottom row, and its
-cursor metadata was cached. Recheck these limits against the exact current
-VDPlet release. A normal bottom-row prompt must not be declared absent merely
-because the reader cannot observe that row.
+The prototype received1200 replies per route without timeouts. Its cursor
+metadata was cached. Source inspection of the selected VDPlet release confirms
+the edge restriction below. A normal bottom-row prompt must not be declared
+absent merely because the reader cannot observe that row.
+
+### Selected native source findings
+
+The VDPlet owner supplied source facts for the selected dc43 release/source
+`60e5b4ebafa3e1c8bb740e45260d78cdb6125e30`; Extender independently inspected the
+retained `video/context/fonts.h`. Local file identities and the source reply
+are retained in the ignored task research record. This is source evidence,
+not a new firmware build, hardware test or supported host reader.
+
+1. Ordinary graphics-mode text has no logical cell grid exposed by the existing
+   query. `Context::getScreenChar` recognizes canvas pixels using the current
+   font/background, after plot completion. Teletext has separate 40-by-25 cell
+   storage; that does not establish ordinary graphics-mode text backing.
+2. The current bounds test rejects equality at `canvasW-fontWidth` or
+   `canvasH-fontHeight`. It therefore rejects the last complete column and row
+   of a tiled screen. The graphics-coordinate query uses the same recognizer
+   and does not avoid this defect. A reliable prompt reader needs an explicit
+   remedy; shifting, clearing or scrolling the display is not that remedy.
+3. Variable-width fonts are refused; changed fonts/background, duplicate glyphs,
+   bitmap glyphs and overlaid graphics limit recognition. Zero is not a
+   discriminated no-match result. Queries use the current drawing context and
+   canvas, with no atomic whole-screen snapshot; visible and drawing buffers
+   need explicit treatment.
+4. Public `83` queries require no preparatory mirror activation in the VDP,
+   but replies share the application's untagged return stream and result state.
+   Callbacks can alter or suppress the reply. EMOS host integration must own
+   arbitration and preserve application query/callback semantics; merely sending
+   query bytes from another processor is not an implemented host reader.
+5. VDPlet resource `READ_BYTES` reads registered resource buffers, not arbitrary
+   framebuffer pixels or logical screen text. It is not an existing shortcut
+   to mainboard text access.
+
+These findings rule out presenting a thin wrapper around current `83` as a
+complete solution. Resolve the supported host request path and native
+recognition/storage limitations together, without changing another job's pinned
+firmware or adding preparation requirements to its application.
 
 Read these references before implementation:
 
