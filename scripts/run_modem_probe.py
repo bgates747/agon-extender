@@ -27,7 +27,9 @@ def validate(records,build):
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--port',required=True);p.add_argument('--lease',required=True);p.add_argument('--manifest',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args()
  m=json.loads(a.manifest.read_text());build=m['build_id'];a.out.mkdir(exist_ok=False)
- def owner():subprocess.run([str(ENV_PY),str(LEASE),'assert-owner','--owner','linux-extender','--lease',a.lease],check=True,capture_output=True)
+ def owner():
+  current=json.loads(subprocess.run([str(ENV_PY),str(LEASE),'assert-owner','--owner','linux-extender','--lease',a.lease],check=True,capture_output=True,text=True).stdout)
+  assert current.get('hardware_ready') is True and current.get('phase')=='consumer','Custody has not passed hardware admission'
  records=[];rawfile=(a.out/'serial.bin').open('xb');start=time.monotonic();pending=bytearray();invoked=False;result={'pass':False}
  def receive(s,deadline):
   while time.monotonic()<deadline:
