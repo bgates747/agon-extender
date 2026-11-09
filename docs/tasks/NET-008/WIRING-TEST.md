@@ -49,7 +49,7 @@ and manages central custody; Extender operates only after its actual handoff.
    bridge functionality or long-soak reliability. Leave the bench held for
    Smith after normal cleanup; release only on his explicit later instruction.
 
-## Current preparation state
+## Preparation state before actual164 (historical)
 
 Wiring is Author-reported; RX48 is orange. No adapter existed at initial
 inspection. The isolated source is now `vdp/fixtures/esp8266_uart/`, built only
@@ -62,7 +62,7 @@ The identified P4-PC build now passes with the pinned ESP-IDF5.5.5 source and
 documented Pi-native compiler/Python environment. Installation, invocation and
 restoration evidence remain pending; compilation is not a runtime pass.
 
-## Preparation result and current stop boundary
+## Preparation result and original admission stop boundary (historical)
 
 1. Source commit `5e2540ad9a70c4fc303694aaff6b3e834d2a5b05`, build
    `net008-uart2-probe-b2026-11-09-19-40-46Z`,199584-byte application SHA256
@@ -110,5 +110,39 @@ still requires reconciliation; failed readiness retains exclusive custody.
 No fabricated observation, alternate registry or restamped historical receipt
 is part of this correction. The existing hold and test scope remain unchanged.
 
-The owner correction has been requested; implementation, device-free validation
-and actual grant/admission are still pending. Extender has not accessed hardware.
+The scheduler subsequently implemented the correction, reported fifteen passing
+device-free controls and supplied actual164 post-grant admission and a joined
+sole-operator handoff. The actual test and restoration result follows.
+
+## Actual164 result — 2026-11-09
+
+The scheduler implemented grant-before-check custody and reported fifteen
+passing device-free helper controls. NET-008 received actual generation164;
+post-grant admission passed and the scheduler's genuine parent wait0/joined
+handoff assigned Extender the sole test operation. The admission issue above is
+historical, superseded by Smith's correction and this actual handoff.
+
+| Operation | Actual result |
+|---|---|
+| Temporary P4 installation | Selected199584-byte diagnostic, only200704-byte app sector span written; original final-sector tail preserved and new span independently read back. |
+| Explicit invocation | One START; UART2 TX47/RX48,1152008N1. No automatic invocation on boot. |
+| First AT | Four command bytes accepted by the P4 UART driver; zero received bytes in2,000,941 microseconds measured by P4. No electrical TX waveform claim. |
+| Remaining commands | GMR and the three later AT commands unrun after the first failure. |
+| UART retirement | Diagnostic reports successful UART deletion and input-pin retirement. |
+| Restoration | Original200704-byte prefix restored and independently compared; the unchanged suffix retains the exact original1760160-byte P4 application identity. Bootloader, partitions, NVS and mainboard firmware were not written. |
+| Normal operation | Fresh P4 boot/input admission, exact whole startup/listener reads and positive listener EXIT; neutral input, offline service, idle staged worker. Card remains mounted. |
+| Process closure | Original worker parent wait1 reflects the failed AT test; all nine recorded child/reset-holder groups are absent and both serial resources are free. Restoration completed successfully before exit. |
+| Custody | Actual164 remains held until Smith explicitly requests release. No automatic release, reset retry or AT replay. |
+
+The wiring test **fails to establish modem communication**. Zero RX does not
+distinguish power/enable, physical wiring, baud or modem state. No modem identity,
+Wi-Fi result, EMOS bridge result or supply-margin qualification is claimed.
+The generic supervisor's retained `blocked` record describes child exit1; the
+separate completion and joined records establish successful restoration and
+held custody, not an unresolved restoration failure.
+
+Exact raw transcript, boot captures, installation/readback records, parent waits,
+and final held state are retained in the ignored machine-local record
+`agents/net008/bench-test/physical164/` and sibling supervisor directory.
+The diagnostic and historical build manifest remain unchanged. The host runner
+now requires completed hardware admission as well as ownership before START.
