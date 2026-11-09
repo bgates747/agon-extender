@@ -283,3 +283,20 @@ being always-on does not itself establish automatic encrypted-keyring unlock.
 Do not copy Oryx's complete keyring, silently store an unlock password or create
 an unencrypted collection. Actual Pi credential enrollment remains pending the
 human interaction; current hardware hold and development image persist.
+
+## New MechAgon booking and stopped handback reconciliation
+
+Direct original human messages in MechAgon select an open-ended numeric-test
+booking, human physical RUN, and changed-SD-only iterations with required
+firmware installed once. The primary agent verifies these original messages,
+then supplies the dedicated scheduler and consumer with fresh host-only NET008
+stopped facts. Both prior actual operator parent proofs still validate and their
+groups are absent; both serial resources are free. No modem data case is active.
+
+Current P4 remains the identified d1d23148 isolated modem image without product
+keyboard/SD/HTTP services. Normal CLI/input readiness is not claimed. A receiving
+workflow requiring those services needs a deliberate initial supported P4
+preparation under one operator; no repeated iteration flash is implied. No
+firmware change, target command or release occurs in this reconciliation. Keep
+all NET008 evidence and retained development bytes for later resumption; Pi5
+credential enrollment remains unobserved. The scheduler owns custody transfer.
