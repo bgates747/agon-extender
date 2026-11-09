@@ -87,6 +87,7 @@ for precise limits rather than assuming support from a research or example file.
 | Quiet Console8 ESP8266 Connect-or-Skip startup; manual connection/two-ping pass | [Wi-Fi startup utility](network-startup.md) |
 | Manual Console8 ESP8266 configuration and BBS check; experimental, hardware review pending | [Wi-Fi setup utility](network-setup.md) |
 | Experimental opaque application TCP messages; UART1 and repeated parallel proof, broader qualification pending | [Application network messages](network-messages.md), [foreground parallel contract](protocols/application-network-parallel.md) |
+| Exact async UART1 SDK, CTS-edge EMOS development profile and finite sustained-game qualification | [Async application-network support](application-network-async.md), [component selector](application-network-profile.yaml) |
 | Common P4 service boundaries for other projects | [Shared services](shared-p4-services.md), development interface and consumer obligations |
 | Normalized controller input in applications | [Controller API](controller-api.md), development include and matched EMOS gateway |
 | Linux emulator setup and review boundaries | [Emulator setup](emulator-setup.md) |

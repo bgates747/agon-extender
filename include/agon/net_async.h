@@ -34,7 +34,23 @@ typedef struct {
 static agon_neta_client *agon_neta_active;
 uint8_t u1_emit_uart1(const uint8_t *,uint8_t);
 
-static void agon_neta_source_done(void){agon_neta_active->source_released=1;}
+/* Optional APP scheduling hint, after publication, under the existing owner
+ * exclusion. It must only mark app RAM: no EI/MOS/wait/reentry or ownership
+ * change. Undefined keeps the exact old path; a wake never proves drain/close.
+ * Notify transitions, not every service call, to avoid a foreground spin. */
+#ifdef AGON_NETA_NOTIFY
+static inline void agon_neta_changed(agon_neta_client*c,uint8_t phase,uint8_t fault,uint8_t error){
+    if(c->tx.phase!=phase || c->tx.fault!=fault || c->tx.fault_error!=error){
+        AGON_NET_BARRIER();AGON_NETA_NOTIFY(c);
+    }
+}
+#endif
+static void agon_neta_source_done(void){
+    agon_neta_active->source_released=1;
+#ifdef AGON_NETA_NOTIFY
+    AGON_NET_BARRIER();AGON_NETA_NOTIFY(agon_neta_active);
+#endif
+}
 /* Private matched ordinary C hook, called by EMOS with interrupts excluded and
  * both register sets protected. event:0 shared RX-first sample,1 admit source,
  * 2 owner fault. sample carries LSR bits with DR replaced by active-high STOP
@@ -42,12 +58,23 @@ static void agon_neta_source_done(void){agon_neta_active->source_released=1;}
  * START returns an admission result, before any byte is emitted. */
 static uint8_t agon_neta_service(uint8_t event,uint8_t sample){
     agon_neta_client*c=agon_neta_active;
+#ifdef AGON_NETA_NOTIFY
+    uint8_t phase=c->tx.phase,fault=c->tx.fault,error=c->tx.fault_error;
+    if(event==1){
+        uint8_t result=u1_start(&c->tx,c->net.input+1,c->net.request[13]-1,agon_neta_source_done);
+        agon_neta_changed(c,phase,fault,error);return result;
+    }
+#else
     if(event==1)return u1_start(&c->tx,c->net.input+1,c->net.request[13]-1,agon_neta_source_done);
+#endif
     if(event==2)u1_report_fault(&c->tx,sample?U1_LINE_ERROR:U1_OWNER_LOST,sample);
     else {
         u1_sample s={1,(sample&0x20)!=0,(sample&1)==0,(sample&0x40)!=0,(uint8_t)(sample&0x9e)};
         (void)u1_step(&c->tx,s,u1_emit_uart1);
     }
+#ifdef AGON_NETA_NOTIFY
+    agon_neta_changed(c,phase,fault,error);
+#endif
     if(c->tx.phase==U1_FAULT)return 4;
     if(c->tx.phase==U1_IDLE)return 0;
     if(c->tx.phase==U1_TAIL)return 3;

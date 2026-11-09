@@ -1,0 +1,30 @@
+schema_version: 1
+status: qualified
+scope: Finite exact consumer combination; not global firmware or production promotion
+build: agon-emos-eirene-r05-b2026-11-09-12-24-49Z
+consumer_repository: bgates747/MechAgon
+consumer_report_commit: 7e495a4
+consumer_report_path: docs/tasks/GOAL-001/live30-case-poll-matched-r05/result162-source/RESULT162.json
+consumer_report:
+  bytes: 6595
+  sha256: 3f133a9a2f162fafe4ac70985114066fd30697f6d7fab4bd4d884068013b2b6e
+owner_review: Report identities/pass fields and retained descriptors checked; no independent full raw
+  decode
+actual_generation: 162
+active_seconds: 73.568336538
+host_hz: 31.004856229042815
+native_nominal_hz: 31.02697800952165
+poses_observed: 2284
+eligible_commands: 2281
+eligible_commands_met: 2281
+rounds: 3
+cohort: Unseeded Native/Walls at31TPS, filled radar; matched caller, module, host and owner profile
+standard_restoration_release_utc: '2026-11-09T16:10:37.909564Z'
+excluded_claims:
+- optical FPS
+- CPU/headroom
+- flat per-frame latency
+- long-soak reliability
+- whole IRQ/application stack bound
+- CTS interrupt incidence
+- default firmware promotion

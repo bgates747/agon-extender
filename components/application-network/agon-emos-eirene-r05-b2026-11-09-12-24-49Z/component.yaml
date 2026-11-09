@@ -1,0 +1,122 @@
+schema_version: 1
+build: agon-emos-eirene-r05-b2026-11-09-12-24-49Z
+status: experimental
+scope: Maintained component development profile with separately recorded finite consumer qualification
+owner: Extender
+global_default: false
+production_promotion: false
+source:
+  repository: bgates747/agon-emos
+  commit: beec8b9555d6a3f51ce2d2ba2cfe3b05d0c02097
+  base_commit: 7e1c7a3b0fd5f976dc5d45bc3d8a5de75605364f
+  integration: Retained isolated native branch, not merged into canonical main
+  archive_member: source/emos-source.tar
+  archive:
+    bytes: 4208640
+    sha256: 8998ba0bf15f7f82b16e8dc0df2545d93343065363de062bf5ac6652ffca8e2c
+  patch_member: source/owner-change.patch
+  patch:
+    bytes: 21991
+    sha256: 6aac1d7c991e0ddd700665c6bec76eb15643cc2b53802d4e5d2ca66ace33625e
+composition:
+  network_parallel: false
+  uart0_rfc25: true
+  uart0_cts_irq: true
+  uart1_app: true
+  uart0_rx_witness: false
+  uart0_rx_reserve: true
+  uart1_rx_diagnostic: false
+  control_tx_diagnostic: false
+rom_used_bytes: 130997
+rom_free_bytes: 75
+archive:
+  retention_path: dist/components/application-network/agon-emos-eirene-r05-b2026-11-09-12-24-49Z/application-network.zip
+  bytes: 1451482
+  sha256: 0e0b5febb59df411236ce812a0b2ad68cf02feccdb5b4af7cc695302deb6d4b8
+  acquisition: Owner-provided retained local archive; Git clone does not contain generated binaries
+  published_asset_url: null
+  public_distribution_review: false
+  manifest:
+    bytes: 4338
+    sha256: 286de40f62ea239341bd88c049d149f4cfe9c1a4200b9d1e8c31a06285d819b2
+  checksums:
+    bytes: 3134
+    sha256: b8ad5720bec68a3d928ec56840f0a6c3e71a499f72611fc341e2515840400a99
+firmware:
+  ROM.bin:
+    bytes: 131072
+    sha256: d3a4524a91b5a36b0b1cb02e3156a81c487e0c135223e22b8b87ed3440d033af
+  mos.bin:
+    bytes: 130997
+    sha256: 8a1f404ec667c9559cbd03394e38ba293037f443a2e641b44ce48e553ceceda3
+  mos.map:
+    bytes: 93524
+    sha256: 6c2eda3e6d2bbe39e52f3f553c038af1757ff52af8321c66d6b249664c289724
+  mos.elf:
+    bytes: 351796
+    sha256: 8ced53c1d839dc907e8e44612c30be0de4c25a3bff7d3d7850185d9d1ee24e34
+  mos.elf.map:
+    bytes: 95906
+    sha256: 705cdf72892fd3075688cbacb47d9e1b58c67dd37e0187f3973c7326e9792634
+  manifest.json:
+    bytes: 1264
+    sha256: dc21868fea69644a14564cb6f5b9e5e03c5d189c952167521f28e37da816937f
+  identity.h:
+    bytes: 214
+    sha256: 79e4a2f9306c1ae83bf28432fd8adfbfe07a612b88f8150cc14cd7c262b7936a
+sdk:
+  include/agon/net.h:
+    bytes: 8404
+    sha256: 83c5e00f3c085496449f8d160505988ef62c1512cb1866b889e090a996bd2dcf
+  include/agon/net_async.h:
+    bytes: 6258
+    sha256: e98cc8de6532ecf53c5244b16d050f3bbcf0088236211f9d927da3fa1bdeedb5
+  include/agon/net_callback.asm:
+    bytes: 1138
+    sha256: 10fdde5cc800d54bb9f6caae795f802e6422149c4513e8446521bb5dd9ec6459
+dependencies:
+  dependencies/foreground-wait/LICENSE:
+    bytes: 1064
+    sha256: a07c0446133690f4a959d45d9c511741660b1f19cfa581fdd5ceb9e0c61cf05e
+  dependencies/foreground-wait/README.md:
+    bytes: 2716
+    sha256: 3cfff975ce6d642802023ee9ec09e8ba4037358083ab641e6400e72cb8b63197
+  dependencies/foreground-wait/include/aw_wait.h:
+    bytes: 2317
+    sha256: 6085e1f809347858d8ce17bb7669985aa5cf66a089d954fb13a655fae735e563
+  dependencies/foreground-wait/lib/libaw_wait.a:
+    bytes: 1088
+    sha256: e0dcbed3f01ce3ef76888487da439d867273ffdf0c22c72905e27b7ad8b510dc
+  dependencies/foreground-wait/src/aw_wait.s:
+    bytes: 1608
+    sha256: 088dd252db727c684b16ed154ad612608ae2f622fb3a31e9a1012e7eec151fe2
+  dependencies/uart1/LICENSE:
+    bytes: 1064
+    sha256: a07c0446133690f4a959d45d9c511741660b1f19cfa581fdd5ceb9e0c61cf05e
+  dependencies/uart1/include/u1_tx.h:
+    bytes: 2740
+    sha256: b3ca44024cda3cf6e209050dc07387a78babdb82b9229d87ddde0eaad86e838f
+  dependencies/uart1/src/u1_emit.src:
+    bytes: 503
+    sha256: 088468dd2974099c046c62ec363c036822276eb20da8d8fb59c8cb80347c893e
+  dependencies/uart1/src/u1_tx.c:
+    bytes: 2142
+    sha256: 5b9c75120a9fc1ab068211698f561e38fb49e3e8e62116ed4e8daf3e79e659e0
+required_mainboard_vdp:
+  version: VDPlet v0.1.2-alpha async-r1
+  bytes: 1115568
+  sha256: dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab
+p4: Existing matched network service/transport in consumer kit; no P4 replacement selected
+qualification:
+  path: qualification.yaml
+  bytes: 1114
+  sha256: fc419032a34a7a868fcc810d29ce3616b03e342ce1ae4e9f4216174bb5a0621c
+historical_source_package:
+  archive_sha256: 7a1f4aa040d97798000c06fbc2361408ef4d0771b85c5e299b42de8cebb62c41
+  archive_bytes: 1418681
+  status: source-native-qualified-no-runtime
+  later_runtime_record: qualification.yaml
+entry_requirement: Exact installed-build provenance plus normal namespace/OPEN admission; no public CTS
+  feature query
+refusal: Explicit unsupported profile or retained fault; no silent fallback/replay/forced detach
+usage_guide: ../../../docs/application-network-async.md

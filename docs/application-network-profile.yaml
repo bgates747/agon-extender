@@ -1,0 +1,7 @@
+schema_version: 1
+scope: Explicit async application-network development dependency only
+global_firmware_default: false
+component:
+  path: ../components/application-network/agon-emos-eirene-r05-b2026-11-09-12-24-49Z/component.yaml
+  bytes: 4844
+  sha256: adfa2fd8a1630cbce1391227d02197e85eab51eec20443965b2ad6d507a4ad17

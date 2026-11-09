@@ -1,5 +1,11 @@
 # Experimental application network messages
 
+This page describes the synchronous `ext.net` client and the separate parallel
+binding. For the application-owned async UART1 `ext.neta` adapter, use the
+[async SDK and exact development profile](application-network-async.md). That
+guide owns its acquisition, notify/wait, retained-lifetime and unsupported-profile
+rules; the APIs below must not be substituted for async lifecycle requirements.
+
 The source implementation lets an admitted Agon application exchange opaque
 binary records through P4 to a numeric IPv4 TCP peer. It is a matched development
 interface. UART1 has bounded physical echo and consumer evidence; a separate
