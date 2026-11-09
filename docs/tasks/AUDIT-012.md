@@ -1,24 +1,72 @@
-# AUDIT-012 — Audit current candidates against pinned firmware defaults
+# AUDIT-012 — Current candidate compatibility with pinned firmware
 
-## Executive summary
+Audit Extender's current test and production candidates against Smith's pinned
+firmware defaults before treating an older artifact as a normal deployment.
+Keep inherent firmware-development/version-comparison cases explicit and return
+Olimex to its current standard after those cases. This is a source/artifact
+compatibility audit; hardware permissions do not expand.
 
-Smith directs an immediate compatibility audit of current test and production candidates against the selected VDPlet and MOS defaults. Freeze this task in Git and publish it before performing the audit. Record evidence and necessary exceptions without claiming that source inspection proves hardware qualification.
+## Authority and freeze boundary
 
-## Scope and direction
+Smith's 2026-11-08 notification directs all recently active agents to use:
 
-1. VDPlet v0.1.2-alpha is the default for testing and deployments on Alexe, Olimex and Console8. Use the release firmware and verify its SHA256SUMS; it includes the UART RX recovery fix.
-2. Eirene MOS 3.1.0_uart0_rc_3 is the test default for Alexe and Console8: release ZIP `mos-rc3.bin`, 100879 bytes, SHA-256 `d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50`.
-3. Olimex uses the selected VDPlet release and latest approved integrated EMOS incorporating current Eirene enhancements; the Olimex scheduling agent maintains these defaults. Explicitly identify and justify necessary firmware exceptions in scheduling requests.
-4. Existing test, deployment, physical custody and hardware permissions remain in force. This audit does not itself authorize new test scope, unsupported firmware changes, promotion or a bypass of existing stop boundaries.
+1. VDPlet v0.1.2-alpha release firmware with verified SHA256SUMS for testing and
+   deployments on Alexe, Olimex and Console8; it includes UART RX recovery.
+2. Eirene MOS 3.1.0_uart0_rc_3 for Alexe/Console8 tests: release ZIP member
+   `mos-rc3.bin`, 100,879 bytes, SHA-256
+   `d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50`.
+3. On Olimex, the scheduling agent maintains that VDPlet and latest approved
+   EMOS incorporating current Eirene enhancements as defaults. Scheduling
+   requests explicitly identify and justify required exceptions.
+4. Write this audit task, freeze it with a commit and push, then perform the
+   audit immediately. Existing test/deployment/hardware permissions still apply.
 
-## Work and evidence
+The initial commit must contain this task and its authoritative TODO entry
+before any audit findings are produced. Existing preparation and retained
+firmware evidence predating this instruction are inputs, not results fabricated
+for this audit. Keep unrelated pending controller/scheduler work intact.
 
-1. [ ] Commit and push this task and its TODO entry before audit work, preserving unrelated work.
-2. [ ] Inventory current test and production candidates across the affected owners and devices, including frozen plans and actual component requirements. Coordinate with owners through existing authorized channels; identify scope and source of each inventory.
-3. [ ] Compare each candidate's required VDP, MOS/EMOS, APIs, modes, transport and device constraints to its applicable default. Verify relevant release artifacts and checksum evidence; classify each as evidence-supported compatible, incompatible, inherently different justified exception, or unknown/unqualified. Distinguish source/host evidence from physical qualification and installed identity from selected default.
-4. [ ] Record an actor-explicit candidate table, evidence, material limitations and required owner actions. Preserve frozen test artifacts; identify necessary adaptations and explain each exception. Update affected current instructions or owner requests within ownership and authorization boundaries.
-5. [ ] Record results and outstanding dependencies in the dated development log, notify relevant owners and keep unresolved items here until answered. Do not claim all candidates audited while any owner's inventory remains unknown.
+## Scope and evidence rules
 
-## Dependencies and boundaries
+1. Extender owns auditing its current production selections/release candidates,
+   maintained firmware/tool selectors, active test/deployment candidates and
+   operator paths named by its authoritative TODO/current handoff. Do not take
+   over other projects' source. Consult component owners for concrete facts.
+2. Inventory every unfinished authoritative TODO item. Distinguish an actual
+   current artifact from a plan, parked historical experiment or work with no
+   firmware dependency; an unfinished task does not make all its archived
+   binaries current candidates. Record exact source/manifest pointers for
+   artifact-bearing groups and do not silently omit unresolved candidates.
+3. Match platform, actual firmware/API/feature requirements and release assets.
+   Separate bare RC3's result/lifetime semantics from guarded EMOS. Do not assume
+   unchanged public ABI means every optional VDPlet feature is enabled, or API
+   table presence proves exhaustive behavioral parity.
+4. Preserve accepted production bundles, tags and frozen test inputs. An audit
+   does not promote firmware, rebuild a candidate, alter an emulator, migrate
+   production, run tests or install anything. If a candidate needs adaptation,
+   record the owning task and bounded next action, not a new implicit run.
+5. A source-compatible claim is not a physical pass. Use explicit dispositions:
+   exact standard match; source-compatible with execution unqualified;
+   inherent firmware/version exception; incompatible/needs adaptation;
+   unresolved artifact/contract; or no current candidate/not applicable.
+6. Do not create a new recurring approval bureaucracy. Apply existing manifest,
+   scope, lease, freshness and cleanup rules. Missing evidence stays visible
+   and assigned to its technical owner; no automatic fallback to older firmware.
 
-VDPlet release: https://github.com/bgates747/agon-vdplet/releases/tag/v0.1.2-alpha. Eirene release: https://github.com/bgates747/eirene-mos/releases/tag/3.1.0_uart0_rc_3. Olimex selection and retained EMOS inventory are in `docs/olimex-firmware-standard.json` and `docs/olimex-emos-functions.md`; complete Extender production selection remains `production/current.yaml`. No test, flash, reset or production promotion follows merely from an audit finding. Preserve all prior evidence and unrelated uncommitted work.
+## Work and completion
+
+1. [ ] Freeze this task/TODO entry in a pushed commit before audit execution.
+2. [ ] Inventory current selectors, release candidates and all unfinished TODO
+   items, recording precise currentness and artifact/source references.
+3. [ ] Assess firmware/API/feature compatibility and justified exceptions;
+   identify exact gaps and ownership without inventing unperformed tests.
+4. [ ] Record source/artifact findings in a tabular report and machine-readable
+   inventory, including checksum identities and evidence limitations.
+5. [ ] Update affected maintained selection/operating guidance where this audit
+   exposes an active contradiction; retain production/historical identities.
+6. [ ] Notify the Olimex scheduling agent of the relevant default, exception,
+   restore and pending first-job implications. Report the result to Smith.
+
+Completion means this bounded current-candidate audit and necessary protocol
+corrections are delivered. It does not mean all candidates pass, every deferred
+compatibility issue is implemented, or another project has finished its audit.
