@@ -135,3 +135,25 @@ choice rather than silently changing the current bench during measurement.
    transmission stays stopped until it is clear these do not join old signal
    nets to the new UART nets. Software channel selection cannot disconnect
    physical wires. Independent source/build preparation may continue.
+
+## Prepared software, physical test not yet started
+
+Source8add6d80 builds the identified P4 appliance
+`net008-uart2-bw-r01-b2026-11-09-20-58-31Z`,238032 bytes SHA256
+`d1d231484a09e9bf412c5decaf6a6d0ccc22d409c7ef118f57731113fd468365`.
+The corrected native build takes41.223 host seconds, genuine parent wait0 and
+owned process group join. CRC32 standard-vector, exact native/Python frame
+comparison, actual loopback duplex peer and count/short-window false-pass
+controls pass. An initial native format-width error was corrected with an
+explicit cast, retaining strict compiler diagnostics. Compiler805 was released.
+
+No torture appliance has been installed or invoked. The retained working AT
+image is still the actual P4 selection; no benchmark baud or network setting
+has changed and no CRC/bandwidth qualification is claimed. Current whole-test
+scope remains authorized. Before target transmission, clarify whether Smith's
+old-header comment means other independent analyzer channels remain attached
+(which does not join the UART nets), or that a green/orange channel still joins
+an old signal to its new UART wire (which needs physical separation). Do not
+confuse that topology question with asking for the already-given test permission.
+Actual Wi-Fi association/IP is also to be observed through bounded INFO before
+assuming the TCP data path is ready.
