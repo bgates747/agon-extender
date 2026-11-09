@@ -228,3 +228,24 @@ exact remembered secrets-file-to-ESP8266-flash script has not been located.
 Saved modem configuration has not yet been queried by this torture appliance;
 its bounded INFO currently queries only connection status and current address.
 Do not ask for credentials on the premise that STATUS5 proved they were erased.
+
+## Current Oryx keyring availability
+
+Smith confirms the remembered mechanism was WROOM-mediated provisioning rather
+than credentials flashed into ESP8266 firmware. A local SD configuration is a
+suitable credential source for later direct-Agon operation; this records the
+direction, not a new persistent-modem write or implementation selection.
+
+A read-only metadata check of currently booted Oryx finds its keyring directory,
+a nonempty default keyring file, a running Secret Service and an unlocked
+default collection. Exact SearchItems attributes from the archived provisioning
+script find zero matching MOD-WIFI regression entries, locked or unlocked.
+No secret values are retrieved, no keyring is unlocked or written, and no
+hardware operation occurs. The Python Secret binding is absent there; direct
+standard D-Bus metadata calls complete the check without package installation.
+
+Current Oryx is a different OS installation from the older Pop!_OS environment.
+The old credential may remain on that retained installation; its partition was
+not inspected or mounted in this check. Existing default keyring presence is
+therefore confirmed, while availability of the old credential is unestablished.
+The P4 development image,115200 modem setting and Smith-held bench are unchanged.
