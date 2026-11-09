@@ -114,7 +114,7 @@ void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,cons
  }
  phase="new_baud_AT";if(!command("AT\r\n",2000))goto finish;
  uart_get_baudrate(u,&actual_baud);
- std::printf("NET008 {\"event\":\"bw_baud\",\"requested\":%u,\"actual_p4\":%u}\n",new_baud,actual_baud);
+ std::printf("NET008 {\"event\":\"bw_baud\",\"requested\":%u,\"actual_p4\":%u}\n",new_baud,unsigned(actual_baud));
  phase="tcp_setup";if(!command("AT+CIPMUX=0\r\n",2000)||!command("AT+CIPMODE=1\r\n",2000))goto finish;
  {
   char start[100];std::snprintf(start,sizeof(start),"AT+CIPSTART=\"TCP\",\"%s\",%u\r\n",ip,port);
@@ -162,5 +162,5 @@ void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,cons
  if(connected){bool closed=command("AT+CIPCLOSE\r\n",3000);clean=closed&&clean;}
  if(installed){bool at=command("AT\r\n",2000);clean=at&&clean;}
  bool retired=retire();
- std::printf("NET008 {\"event\":\"bw_end\",\"pass\":%s,\"phase\":\"%s\",\"baud\":%u,\"actual_p4_baud\":%u,\"duration_ms\":%u,\"nonce\":%u,\"tx_frames\":%u,\"rx_frames\":%u,\"tx_bytes\":%u,\"rx_bytes\":%u,\"tx_elapsed_us\":%lld,\"rx_elapsed_us\":%lld,\"uart_errors\":%u,\"crc_errors\":%u,\"frame_errors\":%u,\"cleanup\":%s,\"uart_retired\":%s}\n",pass&&clean&&retired?"true":"false",phase,new_baud,actual_baud,milliseconds,nonce,unsigned(tx_count),rx_count,unsigned(tx_count)*1024,rx_count*1024,static_cast<long long>(tx_last-tx_first),static_cast<long long>(rx_last-rx_first),unsigned(faults),crc_errors,frame_errors,clean?"true":"false",retired?"true":"false");
+ std::printf("NET008 {\"event\":\"bw_end\",\"pass\":%s,\"phase\":\"%s\",\"baud\":%u,\"actual_p4_baud\":%u,\"duration_ms\":%u,\"nonce\":%u,\"tx_frames\":%u,\"rx_frames\":%u,\"tx_bytes\":%u,\"rx_bytes\":%u,\"tx_elapsed_us\":%lld,\"rx_elapsed_us\":%lld,\"uart_errors\":%u,\"crc_errors\":%u,\"frame_errors\":%u,\"cleanup\":%s,\"uart_retired\":%s}\n",pass&&clean&&retired?"true":"false",phase,new_baud,unsigned(actual_baud),milliseconds,nonce,unsigned(tx_count),rx_count,unsigned(tx_count)*1024,rx_count*1024,static_cast<long long>(tx_last-tx_first),static_cast<long long>(rx_last-rx_first),unsigned(faults),crc_errors,frame_errors,clean?"true":"false",retired?"true":"false");
 }
