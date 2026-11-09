@@ -5,11 +5,9 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
-## Firmware compatibility audit — immediate
-
-- [ ] **[AUDIT-012 — Current candidates against pinned firmware](docs/tasks/AUDIT-012.md)** — Freeze this audit task with a commit/push, then immediately inventory current test/production candidates against VDPlet v0.1.2-alpha and platform-specific RC3/approved EMOS defaults. Record explicit inherent exceptions, gaps and standard-restoration obligations; no new physical permissions.
-
 ## Agent development turnaround — approved first tranche
+
+- [ ] **[BENCH-016 — Reuse standard Olimex firmware](docs/tasks/BENCH-016.md)** — VDPlet v0.1.2-alpha checksums and retained a25f EMOS/map verified, released/merged Eirene functions inventoried; protocols select reuse and standard restoration after firmware/compatibility exceptions. Initial authorized standard VDP installation/pairing remains; no hardware changed by policy editing.
 
 - [ ] **[BENCH-015 — Dedicated Olimex scheduling agent](docs/tasks/BENCH-015.md)** — Train and create GPT-6.1 Terra / medium; Extender forwards initial requests and supervises the first rounds. First assigned execution is 6502's frozen PERF-022 original-r04 fixtures;75 input records and standard/exception bindings reviewed, platform operator preparation and normal admission remain; central FIFO and technical ownership preserved.
 

@@ -5,6 +5,11 @@ without opening UART1. It has no BBS check. Smith's first manual C8 run succeeds
 pass, with normal return reported. Individual menu/cancellation/fault paths
 remain host-tested only; public release closure is pending.
 
+Future Console8/Alexe tests use the
+[pinned VDPlet and bare Eirene RC3 defaults](procedures/olimex-firmware.md).
+Its ordinary MOS UART/FatFS/VDU source needs no async-output exception; the
+earlier manual pass does not qualify this exact new firmware pairing.
+
 Prepare a private `wifi-start.cfg` from the secret-free example and use short
 commands in its directory:
 

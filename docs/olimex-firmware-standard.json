@@ -1,0 +1,60 @@
+{
+  "schema": "olimex-test-firmware-standard-v1",
+  "authority_date": "2026-11-08",
+  "scope": "Default Olimex testing/deployment firmware; existing test/deployment/hardware permissions remain",
+  "policy": "procedures/olimex-firmware.md",
+  "vdp": {
+    "version": "v0.1.2-alpha",
+    "release": "https://github.com/bgates747/agon-vdplet/releases/tag/v0.1.2-alpha",
+    "source_commit": "b6c7c58331bf4cbbd54dbc4a1301c124e5963622",
+    "asset": "vdp-vdplet-0.1.2-alpha.bin",
+    "bytes": 1100304,
+    "sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+    "checksums_asset": "SHA256SUMS",
+    "checksums_sha256": "6469f6d6717ede6acb68d9b7ce519db07a1d5a08a0ef7c765739dfe86658aa9d",
+    "release_manifest_sha256": "63360b4151287875ed3b675140c1fc0d9fdc4bd6160894636e7266efc3281ef2",
+    "retained_assets": "../dist/bench-standards/vdplet-v0.1.2-alpha",
+    "features": {
+      "uart_rx_repair": true,
+      "pixels": true,
+      "text_profile": "text96",
+      "borrow_rows": true,
+      "read_bytes": true,
+      "async_worker": false,
+      "counted_return": false,
+      "pcm_sink": false
+    },
+    "selection_status": "Author-selected testing standard; all nine release SHA256SUMS entries verified locally",
+    "initial_hardware_status": "Not installed by policy update; exact release had no target execution at publication"
+  },
+  "emos": {
+    "requirement": "Latest approved integrated EMOS covering merged Eirene public API slots and releasedRC3-style async output; unmerged proposals and private experimental APIs are not silently added",
+    "binding_status": "selected-retained-owner-inventory-confirmed",
+    "build_id": "agon-emos-eirene-r04-b2026-11-06-09-02-21Z",
+    "artifact": "ROM.bin",
+    "bytes": 131072,
+    "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "source_commit": "2c79c6006d6bcb0c2b3f9d8d6aae3ef4b36c730a",
+    "profile": {
+      "EMOS_UART0_RFC25": 1,
+      "network_parallel": false
+    },
+    "map_sha256": "11a296f09e1d2b7125e1a40ce0aea62042f299e93ea85afc6a6459a351866d20",
+    "function_inventory": "olimex-emos-functions.md",
+    "retained_assets": "../dist/bench-standards/emos-eirene-r04",
+    "eirene_reference_tag": "3.1.0_uart0_rc_3",
+    "eirene_reference_commit": "97311c437093e416342a6c836cf9914f2ced027d",
+    "merged_upstream_observed_commit": "3a7259c58bfa6f34f58afe24087f418cef0148e0",
+    "qualification_limit": "API-slot inventory and retained build/native/consumer evidence; no claim of complete source/behavioral parity with every upstream function or a physical run paired with VDPlet0.1.2-alpha",
+    "not_included": [
+      "unmerged reset-vector setter61h",
+      "unmerged buffered keyboard event poll62h",
+      "private counted receive26h/raw90h",
+      "excluded old RC2 trial42h/43h"
+    ],
+    "update_policy": "Extender pins newer complete retained owner integration and updates function inventory when Eirene/EMOS standard advances; no per-test GitHEAD selection/rebuild"
+  },
+  "exceptions": "Explicit firmware-development or other-version compatibility purpose; restore affected components to current standards afterward",
+  "unchanged": "P4 firmware, startup/listener and unrelated flash/storage are not selected for replacement",
+  "production_selection": "../production/current.yaml remains separate"
+}

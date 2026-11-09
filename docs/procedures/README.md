@@ -7,6 +7,11 @@ procedure does not authorize a flash, reset, wiring change or new qualification.
 
 ## Required operation dispatch
 
+Olimex firmware selection and cleanup follow
+[standard firmware reuse](olimex-firmware.md). Ordinary jobs reuse verified
+installed standards; firmware/compatibility exceptions restore current standards
+afterward. Read this policy for OP-01, OP-03, OP-04 and OP-10 on Olimex.
+
 Before acting, the agent reads the controlling document for the requested type
 of work. For a composite operation, read all applicable rows. The Author's latest
 instruction controls scope; this index does not grant hardware authorization.

@@ -1,0 +1,1769 @@
+{
+  "schema": "extender-pinned-firmware-audit-v1",
+  "audit_task": "AUDIT-012",
+  "scope": "Extender current selectors, candidates and every unfinished TODO item; not a new physical qualification",
+  "freeze_commit": "0fa52f26",
+  "freeze_predecessor": "a1686bf5",
+  "freeze_pushed_before_audit": true,
+  "audited_utc": "2026-11-09T04:23:04.183168+00:00",
+  "vdp": {
+    "version": "v0.1.2-alpha",
+    "release": "https://github.com/bgates747/agon-vdplet/releases/tag/v0.1.2-alpha",
+    "source_commit": "b6c7c58331bf4cbbd54dbc4a1301c124e5963622",
+    "asset": "vdp-vdplet-0.1.2-alpha.bin",
+    "bytes": 1100304,
+    "sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+    "checksums_asset": "SHA256SUMS",
+    "checksums_sha256": "6469f6d6717ede6acb68d9b7ce519db07a1d5a08a0ef7c765739dfe86658aa9d",
+    "release_manifest_sha256": "63360b4151287875ed3b675140c1fc0d9fdc4bd6160894636e7266efc3281ef2",
+    "retained_assets": "../dist/bench-standards/vdplet-v0.1.2-alpha",
+    "features": {
+      "uart_rx_repair": true,
+      "pixels": true,
+      "text_profile": "text96",
+      "borrow_rows": true,
+      "read_bytes": true,
+      "async_worker": false,
+      "counted_return": false,
+      "pcm_sink": false
+    },
+    "selection_status": "Author-selected testing standard; all nine release SHA256SUMS entries verified locally",
+    "initial_hardware_status": "Not installed by policy update; exact release had no target execution at publication"
+  },
+  "olimex_emos": {
+    "requirement": "Latest approved integrated EMOS covering merged Eirene public API slots and releasedRC3-style async output; unmerged proposals and private experimental APIs are not silently added",
+    "binding_status": "selected-retained-owner-inventory-confirmed",
+    "build_id": "agon-emos-eirene-r04-b2026-11-06-09-02-21Z",
+    "artifact": "ROM.bin",
+    "bytes": 131072,
+    "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "source_commit": "2c79c6006d6bcb0c2b3f9d8d6aae3ef4b36c730a",
+    "profile": {
+      "EMOS_UART0_RFC25": 1,
+      "network_parallel": false
+    },
+    "map_sha256": "11a296f09e1d2b7125e1a40ce0aea62042f299e93ea85afc6a6459a351866d20",
+    "function_inventory": "olimex-emos-functions.md",
+    "retained_assets": "../dist/bench-standards/emos-eirene-r04",
+    "eirene_reference_tag": "3.1.0_uart0_rc_3",
+    "eirene_reference_commit": "97311c437093e416342a6c836cf9914f2ced027d",
+    "merged_upstream_observed_commit": "3a7259c58bfa6f34f58afe24087f418cef0148e0",
+    "qualification_limit": "API-slot inventory and retained build/native/consumer evidence; no claim of complete source/behavioral parity with every upstream function or a physical run paired with VDPlet0.1.2-alpha",
+    "not_included": [
+      "unmerged reset-vector setter61h",
+      "unmerged buffered keyboard event poll62h",
+      "private counted receive26h/raw90h",
+      "excluded old RC2 trial42h/43h"
+    ],
+    "update_policy": "Extender pins newer complete retained owner integration and updates function inventory when Eirene/EMOS standard advances; no per-test GitHEAD selection/rebuild"
+  },
+  "alexe_console8_mos": {
+    "tag": "3.1.0_uart0_rc_3",
+    "asset": "mos-rc3.bin",
+    "bytes": 100879,
+    "sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+    "release": "https://github.com/bgates747/eirene-mos/releases/tag/3.1.0_uart0_rc_3",
+    "byte_verification": "Author exact pin; no Extender test/deployment of bare MOS in this audit"
+  },
+  "verification": {
+    "vdp_release_checksums_passed": 9,
+    "retained_emos_rom_hash_matches": true,
+    "current_controller_header_operations": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "current_controller_result_bytes": 98,
+    "current_a25f_controller_source_and_map_confirmed": true,
+    "physical_operations": 0,
+    "builds": 0,
+    "emulator_runs": 0,
+    "other_project_source_changes": 0,
+    "production_selection_changed": false
+  },
+  "groups": [
+    {
+      "id": "A01",
+      "title": "Selected standard pair",
+      "disposition": "exact standard artifacts; physical pairing unqualified",
+      "tasks": [
+        "BENCH-016",
+        "EMOS-001"
+      ],
+      "evidence": [
+        "docs/olimex-firmware-standard.json",
+        "docs/olimex-emos-functions.md"
+      ],
+      "finding": "VDPlet b004/1100304B and full EMOS a25f/131072B rehash exactly. All nine release SHA256SUMS entries pass. P4 is a separate component. Published VDP optional async worker, counted return and PCM are disabled. EMOS guarded25h is present;61h/62h and private26h are absent.",
+      "next_action": "Reuse a25f with retained installation lineage. First authorized native standard installation verifies changed bytes; record actual pairing evidence without relabeling prior runs.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A02",
+      "title": "Accepted v0.1.0 installation",
+      "disposition": "needs adaptation for ordinary default deployment",
+      "tasks": [
+        "RELEASE-001"
+      ],
+      "evidence": [
+        "production/current.yaml",
+        "production/bundles/extender-installation-r02/bundle.yaml",
+        "production/README.md"
+      ],
+      "finding": "Immutable accepted bundle selects P4r55, EMOSv0.1.19 and historical stock VDP preservation. Its MOS is not current a25f and does not establish current Eirene functionality. Historical acceptance remains valid only for its recorded scope.",
+      "next_action": "Do not deploy the old MOS/mainboard selection as the ordinary current default. Retain bundle/tag; qualify a separately identified default-bound successor, or explicitly select a historical-version compatibility case.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A03",
+      "title": "Combined native v0.2.1 candidate",
+      "disposition": "needs adaptation of companion bindings",
+      "tasks": [
+        "RELEASE-001",
+        "INPUT-001",
+        "INPUT-003"
+      ],
+      "evidence": [
+        "production/releases/v0.2.1.yaml",
+        "production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml"
+      ],
+      "finding": "Candidate retains P4r16 but companion EMOS84da/v27 and old controller operations0\u20133, with F060 native preservation. Current a25f implements controller4\u20137,98B; old viewer0\u20133/96B is refused. P4 component acceptance is not evidence for a new complete tuple.",
+      "next_action": "Preserve accepted component bytes/version authority. Bind current a25f/new viewer and VDP012 in a separately qualified successor composition before normal release selection. Do not rewrite immutable manifests or promote based on this audit.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A04",
+      "title": "Accepted UART SD utility",
+      "disposition": "source-compatible; current default VDP pairing unqualified",
+      "tasks": [
+        "BENCH-013",
+        "REMOTE-009",
+        "REMOTE-005"
+      ],
+      "evidence": [
+        "docs/mainboard-sd-tools.json",
+        "docs/mainboard-sd.md",
+        "docs/tasks/EMOS-001/RX006-RECEIVER-R01.md"
+      ],
+      "finding": "24753B listener0566 uses EMOS services and ordinary UART SD path. Retained a25f/installed P4 lineage has repeated read/EXIT handbacks. Published P4r27 component pin is acceptance provenance, not proof it is currently installed. New native VDP pairing has not run.",
+      "next_action": "Reuse actual retained installed listener/P4 after normal admission. Do not treat its old companion pin as a mandatory MOS downgrade. Preserve original accepted component selection.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A05",
+      "title": "Parallel SD upload trial",
+      "disposition": "inherent firmware/carrier exception",
+      "tasks": [
+        "BENCH-013",
+        "PORT-008",
+        "PARALLEL-001"
+      ],
+      "evidence": [
+        "docs/mainboard-sd-parallel-trial.json",
+        "docs/mainboard-sd.md"
+      ],
+      "finding": "Trial explicitly requires EMOS855aa7/P4 5db0/listenerf60f together. Default a25f has network_parallel=false; that selector cannot stand in for the trial. Legacy-only and allocation-refusal limits remain.",
+      "next_action": "Use only a purpose-bound authorized carrier/firmware trial with exact matched inputs; restore changed MOS/native components to standards afterward. No automatic fallback or general default selection.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A06",
+      "title": "Earlier Eirene r02 qualification",
+      "disposition": "historical composition; needs rebind for ordinary reuse",
+      "tasks": [
+        "EMOS-001"
+      ],
+      "evidence": [
+        "docs/tasks/EMOS-001.md",
+        "docs/tasks/EMOS-001/R01-RESULTS.md",
+        "docs/tasks/EMOS-001/QUALIFICATION-RESULT-R01.md"
+      ],
+      "finding": "Original migration starts from RC2 42h/43h and an older complete image. It is not the current 25h/a25f default. Its partial paired qualification cannot qualify later a25f/b004.",
+      "next_action": "Keep RC2 evidence. Use current inventory and25h for ordinary candidates; any explicit RC2 compatibility case declares an exception and current-standard restoration.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A07",
+      "title": "Public controller client and old viewer",
+      "disposition": "new client source-compatible; old viewer incompatible",
+      "tasks": [
+        "INPUT-005",
+        "INPUT-001",
+        "INPUT-002",
+        "INPUT-003"
+      ],
+      "evidence": [
+        "include/agon/controller.hpp",
+        "docs/controller-api.md",
+        "docs/tasks/INPUT-005/results.json",
+        "docs/protocols/controller-emos.md"
+      ],
+      "finding": "Current public header4\u20137/98B matches retained a25f source and linked controller symbol. P4 physical CI2/CIS2 stays96B; timing bytes are EMOS-to-app only. Old viewer0\u20133/96B is not interchangeable. New pair physical behavior is unqualified.",
+      "next_action": "Use matching new header/viewer for a25f; preserve old viewer only for identified old-ABI comparisons. Do not use unversioned extraction ROM as deployment firmware. New gameport driver remains research only.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A08",
+      "title": "Extracted diagnostics",
+      "disposition": "unversioned firmware not deployable; utility pairing unresolved",
+      "tasks": [
+        "DIAG-003",
+        "AUDIT-008"
+      ],
+      "evidence": [
+        "docs/tasks/DIAG-003/results.json",
+        "docs/tasks/DIAG-003/RESULTS.md"
+      ],
+      "finding": "Extraction metrics intentionally use UNVERSIONED-DO-NOT-DEPLOY images. Older edu.text-probe/fake-provider fixtures are retired. Exact external diagnostic utilities require their declared EMOS service/slot and new-pair timing validation; general table parity alone is insufficient.",
+      "next_action": "Keep compile evidence, no ordinary flash of these images. Before a selected utility trial identify current service compatibility; do not reopen extraction merely for this audit.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A09",
+      "title": "Application network transport",
+      "disposition": "standard synchronous carrier retained; later optional ABI exception",
+      "tasks": [
+        "NET-003",
+        "NET-004"
+      ],
+      "evidence": [
+        "docs/tasks/NET-004/UART1-MATCHED-R01.json",
+        "docs/tasks/NET-004/UART1-APPLICATION-DRIVER-R01.md"
+      ],
+      "finding": "Matched d9b P4/a25f baseline uses EMOS-owned synchronous UART1 NM gateway. Later application-owned async/UART1 APP or receive-reserve compositions are not implied by default a25f. Vanilla MOS UART1 ISR/vector takeover conflicts with admitted Extender ownership.",
+      "next_action": "Use exact default gateway where applicable; declare any later firmware/API experiment separately. Bind private addresses from exact maps, not older fixed values. Consumer owner keeps source corrections.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A10",
+      "title": "Optional CPU/IRQ accounting compositions",
+      "disposition": "inherent instrumentation firmware exception",
+      "tasks": [
+        "NET-004"
+      ],
+      "evidence": [
+        "docs/tasks/NET-004/CPU-ACCOUNTING-IDENTIFIED-R01.md",
+        "docs/tasks/NET-004/CPU-ACCOUNTING-FIT-R10.md"
+      ],
+      "finding": "Full f05c ROM is a separately identified accounting build with C2 API and12B free. OFF1e4e is also not a25f. Neither experimental hooks nor private maps are default API. Existing partial runtime evidence remains limited.",
+      "next_action": "Any future specifically selected instrumentation case binds exact getter/map/SDK and standard cleanup; source-only work does not authorize a run.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A11",
+      "title": "Temporary counted receiver171c/raw90h",
+      "disposition": "inherent firmware/protocol exception; incompatible with default feature set",
+      "tasks": [
+        "EMOS-001"
+      ],
+      "evidence": [
+        "docs/tasks/EMOS-001/RX006-RECEIVER-R01.md",
+        "docs/olimex-emos-functions.md"
+      ],
+      "finding": "RX006 passed on temporary171c plus producer7d09 in prior finite cases. Standard a25f lacks26h/raw90h, and VDP012 explicitly disables counted_return. Prior132/136/139 results do not transfer to b004.",
+      "next_action": "No ordinary RX006 helper launch on defaults. A future receive-version test must explicitly select both receiver and producer exceptions and standard restoration; completed RX006 work is not reopened.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A12",
+      "title": "P4 display/board/render candidates",
+      "disposition": "P4 changes separate; new mainboard pairing unqualified",
+      "tasks": [
+        "HDMI-001",
+        "HDMI-002",
+        "HDMI-003",
+        "HDMI-004",
+        "SPRITE-001",
+        "BOARD-001",
+        "RGB-001",
+        "SCAN-001",
+        "TEXT-001",
+        "LCD-001",
+        "PORT-003",
+        "FWBUG-013"
+      ],
+      "evidence": [
+        "vdp/build/p4-profiles.json",
+        "docs/building.md",
+        "docs/tasks/HDMI-003.md",
+        "docs/tasks/HDMI-004.md",
+        "docs/tasks/TEXT-001.md"
+      ],
+      "finding": "These are Extender P4 builds, not replacements for the mainboard VDPlet. Ordinary MOS/VDU output contracts are retained at source level; optical/mode/performance gates and deferred work remain. Old matching mainboard control images must be replaced by defaults unless the comparison specifically needs them.",
+      "next_action": "Keep P4 board/profile exact. Rebind any future ordinary fixture to a25f/b004; comparative old-control runs declare purpose. No rendering campaign, visual pass or deployment follows from audit.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A13",
+      "title": "Console8 Wi-Fi utilities",
+      "disposition": "source-compatible public RC3 APIs; exact-pair execution unqualified",
+      "tasks": [
+        "NET-005",
+        "NET-006",
+        "NET-007"
+      ],
+      "evidence": [
+        "docs/network-setup-tool.json",
+        "tools/wifi-setup/src/main.c",
+        "tools/wifi-setup/src/uart.src",
+        "tools/wifi-start/src/main.c",
+        "docs/network-setup.md",
+        "docs/network-startup.md"
+      ],
+      "finding": "Standalone utilities use MOS UART1 open/write/close, foreground nonblocking RX/THRE polling, public clock/key/FatFS and synchronous VDU. They do not need25h/42h/43h. Must own the physical ESP8266/UART1; not valid on an active EMOS-owned UART1. Previous manual pass does not prove exact RC3/VDP012 pairing.",
+      "next_action": "Select bare RC3d7a plus VDP012 for future Console8/Alexe tests. Preserve utility bytes and manual-start restrictions; no new C8 run is assigned.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A14",
+      "title": "Host services and recovery tools",
+      "disposition": "source-compatible conditional on actual carrier; no firmware replacement default",
+      "tasks": [
+        "REMOTE-001",
+        "REMOTE-002",
+        "REMOTE-003",
+        "REMOTE-004",
+        "REMOTE-005",
+        "REMOTE-009",
+        "REMOTE-007",
+        "PORT-005",
+        "PORT-006",
+        "PORT-007",
+        "BENCH-010",
+        "BENCH-006",
+        "NET-001"
+      ],
+      "evidence": [
+        "scripts/README.md",
+        "docs/remote-keyboard.md",
+        "docs/bench-reset.md",
+        "docs/mainboard-sd.md",
+        "docs/p4-sd.md"
+      ],
+      "finding": "Maintained HTTP/input/reset/SD tools act through the exact installed P4/EMOS services. Most need no native VDP extension. Old prepare/build/flash helpers and dated receipts are not universal current installers; stock emulator controls and fake-provider scripts cannot imply default hardware readiness.",
+      "next_action": "Use current role guides and supplied exact images; skip firmware writing for application-only work. Refresh historical recipes only when a selected operation needs them. Do not alter emulator profiles in this audit.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A15",
+      "title": "Formal qualification and rendering fixtures",
+      "disposition": "needs default-bound receipts/oracles before reuse",
+      "tasks": [
+        "QUAL-003",
+        "QUAL-004",
+        "QUAL-001",
+        "AUDIT-010",
+        "SCROLL-001",
+        "BENCH-009",
+        "RESEARCH-007",
+        "BENCH-002",
+        "BENCH-007"
+      ],
+      "evidence": [
+        "qualification/README.md",
+        "qualification/run.py",
+        "docs/tasks/SCROLL-001.md",
+        "docs/testing/resident-render-suite.md"
+      ],
+      "finding": "Canonical runner does not flash firmware. Existing success is tied to old receipts/output profiles. Stock-reference/pixel captures may be deliberately version-specific, while ordinary new runs use defaults. Old startup-writing or private-map fixtures cannot be replayed unchanged.",
+      "next_action": "Rebind actual images/receipts, or explicitly identify reference-version purpose. Do not relabel old passes. Author-only invocation and paused campaigns remain in force.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A16",
+      "title": "Communication fixture cores",
+      "disposition": "unresolved live adapters; no deployable default-bound suite",
+      "tasks": [
+        "COMMS-001",
+        "COMMS-002",
+        "PARALLEL-001",
+        "NET-008"
+      ],
+      "evidence": [
+        "docs/tasks/COMMS-001.md",
+        "docs/tasks/COMMS-002.md",
+        "docs/tasks/NET-008.md"
+      ],
+      "finding": "Portable cores/host/native-link probes do not supply all actual EMOS/P4 mixed-leg adapters. Matched diagnostic firmware is an explicit transport comparison, not ordinary default. No physical-only helper/CRC permission is inferred beyond each existing task.",
+      "next_action": "Keep owner work/gates. Before any selected live cohort bind current APIs or exact justified carrier firmware, standard cleanup and unchanged scope.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A17",
+      "title": "Research, documentation and planning remainder",
+      "disposition": "no current deployable candidate in remaining scope",
+      "tasks": [
+        "AUDIT-012",
+        "BENCH-015",
+        "INPUT-006",
+        "NET-002",
+        "AUDIT-011",
+        "AUDIT-009",
+        "PLAN-001",
+        "PPA-001",
+        "QUAL-006",
+        "DIAG-002",
+        "REMOTE-006",
+        "REMOTE-008",
+        "RESEARCH-006",
+        "TRS-80-003",
+        "AUDIT-007",
+        "REMED-001",
+        "REMED-002",
+        "SETUP-005",
+        "HW-002",
+        "RESEARCH-001",
+        "RESEARCH-002",
+        "RESEARCH-003",
+        "BENCH-004",
+        "REMED-003"
+      ],
+      "evidence": [
+        "TODO.md",
+        "docs/tasks/INPUT-006.md",
+        "docs/tasks/QUAL-006.md"
+      ],
+      "finding": "These TODO remainders are research, decisions, documentation, infrastructure or scoped closeout rather than a new firmware-bound deployment. Their archived binaries are not made current by an unfinished checkbox.",
+      "next_action": "Apply defaults when an actual later candidate is selected. Preserve holds, ownership and no-MOS/no-VDP-hacks controller constraint. No generic approval gate added.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A18",
+      "title": "Parked or unscheduled legacy experiments",
+      "disposition": "no current launch candidate; archived dependencies retained",
+      "tasks": [
+        "BENCH-008",
+        "RESEARCH-008",
+        "RESEARCH-005",
+        "AUDIO-001",
+        "P4PC-001",
+        "TRS-80-001",
+        "HW-003",
+        "SETUP-006",
+        "HW-001",
+        "PORT-004",
+        "QUAL-002",
+        "UPSTREAM-001",
+        "MODE-001",
+        "MODE-002",
+        "DIAG-001",
+        "LINK-001",
+        "PORT-016",
+        "BENCH-003",
+        "BENCH-005",
+        "DBUF-001",
+        "BENCH-001"
+      ],
+      "evidence": [
+        "TODO.md",
+        "docs/tasks/P4PC-001.md"
+      ],
+      "finding": "Stopped/deferred hardware and standalone P4 demos remain archived research/partial results. Detached P4 demo has no mainboard MOS/VDP link. Unimplemented PCM cannot be inferred from the default VDP release, whose PCM option is disabled.",
+      "next_action": "No revival from this audit. If later selected, identify actual board/firmware and needed exception before preparation.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    },
+    {
+      "id": "A19",
+      "title": "Delegated PERF-022 original fixture cohort",
+      "disposition": "Apple exact-standard source match; Row inherent F6 exception",
+      "tasks": [
+        "BENCH-015"
+      ],
+      "evidence": [
+        "../agon-6502/build/perf022/original-r04/delegation.json",
+        "docs/olimex-firmware-standard.json"
+      ],
+      "finding": "Original219b contract/75 records reviewed by scheduler; Apple uses b004 with a25f guarded25h/callback/fresh POINT; Row uses retained F6f2c. New-pair runtime, PRT ownership and physical execution unqualified. Original restoration wording is superseded by explicit current-b004 cleanup addendum, not edited in place.",
+      "next_action": "Continue original7200s operator preparation, no extra fixture. Use supported sequential MOS batch to start result listener only after normal app return; validate35 unique rows/COMPLETE per arm. Preserve first fault and standard cleanup.",
+      "owner": "Extender unless a named consumer owner is specified",
+      "execution_against_new_defaults": "not performed by this audit"
+    }
+  ],
+  "todo_coverage": [
+    {
+      "task": "AUDIT-012",
+      "task_file": "docs/tasks/AUDIT-012.md",
+      "task_file_sha256": "b28c60a6204f77c46b10700070431d759593e18fa680890c275be0cc54976a40",
+      "todo_section": "Firmware compatibility audit \u2014 immediate",
+      "current_scope": "Freeze this audit task with a commit/push, then immediately inventory current test/production candidates against VDPlet v0.1.2-alpha and platform-specific RC3/approved EMOS defaults. Record explicit inherent exceptions, gaps and standard-restoration obligations; no new physical permissions",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "BENCH-016",
+      "task_file": "docs/tasks/BENCH-016.md",
+      "task_file_sha256": "17cdc78d5aae410d7f8da4858911819a3c245d5cf0701b4ed0d169438efe6911",
+      "todo_section": "Agent development turnaround \u2014 approved first tranche",
+      "current_scope": "VDPlet v0.1.2-alpha checksums and retained a25f EMOS/map verified, released/merged Eirene functions inventoried; protocols select reuse and standard restoration after firmware/compatibility exceptions. Initial authorized standard VDP installation/pairing remains; no hardware changed by policy editing",
+      "groups": [
+        "A01"
+      ]
+    },
+    {
+      "task": "BENCH-015",
+      "task_file": "docs/tasks/BENCH-015.md",
+      "task_file_sha256": "63622cde01eab7fe3ca945cc72d94c942dfba01eccca8c38df7f595c3f2af900",
+      "todo_section": "Agent development turnaround \u2014 approved first tranche",
+      "current_scope": "Train and create GPT-6.1 Terra / medium; Extender forwards initial requests and supervises the first rounds. First assigned execution is 6502's frozen PERF-022 original-r04 fixtures;75 input records and standard/exception bindings reviewed, platform operator preparation and normal admission remain; central FIFO and technical ownership preserved",
+      "groups": [
+        "A17",
+        "A19"
+      ]
+    },
+    {
+      "task": "BENCH-013",
+      "task_file": "docs/tasks/BENCH-013.md",
+      "task_file_sha256": "bab0266507ca296abbdff43781258fbfa76be9120364b620b157fb152e7a1be3",
+      "todo_section": "Agent development turnaround \u2014 approved first tranche",
+      "current_scope": "Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63\u219214.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests",
+      "groups": [
+        "A04",
+        "A05"
+      ]
+    },
+    {
+      "task": "COMMS-002",
+      "task_file": "docs/tasks/COMMS-002.md",
+      "task_file_sha256": "4e9df01439ba465281dd37837070f319749dc6b809f474e41414c0c59bb54c41",
+      "todo_section": "Application networking \u2014 authorized framework preparation",
+      "current_scope": "Independent corpus/timer/measurement engine and collector pass sanitizer/source/actual CLI checks and stopped eZ80 link. Actual EMOS/P4/timer binding and matched bench run remain. Faster MOS\u2194VDP communication is the primary objective; separate from accuracy testing, no measured gain yet",
+      "groups": [
+        "A16"
+      ]
+    },
+    {
+      "task": "COMMS-001",
+      "task_file": "docs/tasks/COMMS-001.md",
+      "task_file_sha256": "d89e90a3721e52436db295ba7a2a28d16bf7de427c3f37b8b46b5ed86efdc77f",
+      "todo_section": "Application networking \u2014 authorized framework preparation",
+      "current_scope": "Protocol/oracle/five-attempt engine, durable host journal and real Pi peer pass sanitizer/socket/CLI checks and stopped eZ80 link. Mixed-leg EMOS/P4/VDU/MOS SD adapters and overnight qualification remain; fixed hardware filter has no reviewed suppression counter. No sniffers or target invocation",
+      "groups": [
+        "A16"
+      ]
+    },
+    {
+      "task": "PARALLEL-001",
+      "task_file": "docs/tasks/PARALLEL-001.md",
+      "task_file_sha256": "80727d4dd26067e6bee1d2959e3fea19a0c5561b04d68c4f436beeb2da9cce56",
+      "todo_section": "Application networking \u2014 authorized framework preparation",
+      "current_scope": "Active persistent goal: Extender owns pipe diagnosis/fixtures/fixes, Wolf owns the assigned consumer test. Oryx unavailable; prepare offline and share Olimex through normal fresh reservations with UART/VDPlet",
+      "groups": [
+        "A05",
+        "A16"
+      ]
+    },
+    {
+      "task": "NET-008",
+      "task_file": "docs/tasks/NET-008.md",
+      "task_file_sha256": "7c453a0a5d30b0be30b4fd1d1fd64ecaf6a5cc262611450abf74afc9a923bf40",
+      "todo_section": "Application networking \u2014 authorized framework preparation",
+      "current_scope": "Frozen secondary task: separate P4 UART to the real modem while Extender tools support iterative development for ESP8266-only Agons. No mux, permanent backend, hardware access or pin allocation assumed; higher-priority parallel/agent work first",
+      "groups": [
+        "A16"
+      ]
+    },
+    {
+      "task": "NET-007",
+      "task_file": "docs/tasks/NET-007.md",
+      "task_file_sha256": "722f05cfbed4ee8924bc293b9819ce98ddc1365dc213de4a029f2d459fe1ef64",
+      "todo_section": "Application networking \u2014 authorized framework preparation",
+      "current_scope": "Separate Connect-or-Skip utility passes manual C8 connection/DHCP/two-ping path; private automatic-connect option and host fault checks retained. Public license/version closure and broader physical cases remain. Radiotux sources stay unchanged",
+      "groups": [
+        "A13"
+      ]
+    },
+    {
+      "task": "NET-003",
+      "task_file": "docs/tasks/NET-003.md",
+      "task_file_sha256": "17021210bb71016b9eb67694ce7c5af88d834f2d55fd39f879c18e539fce5e88",
+      "todo_section": "Application networking \u2014 authorized framework preparation",
+      "current_scope": "Plan published before code; bounded core and stopped outbound TCP adapter pass host sanitizer/loopback and actual P4 object compilation. Author accepts outbound TCP to Pi; payload/EMOS envelope/app library and worker integration remain. No firmware deployment or production selection",
+      "groups": [
+        "A09"
+      ]
+    },
+    {
+      "task": "NET-004",
+      "task_file": "docs/tasks/NET-004.md",
+      "task_file_sha256": "2399d572c23744b2b02ac114af73826fdbe2888bce335d7e9dd23a97d2309870",
+      "todo_section": "Application networking \u2014 authorized framework preparation",
+      "current_scope": "Final consumer parallel attempt failed; explicit matched UART1 renderer passes while Extender continues independent parallel diagnosis. Plain and ordinary-graphics controls pass without reproducing the fault; guarded RFC25 control remains separate. Prepare during consumer bench use, then normal fresh checkout and full restoration; no implicit carrier fallback",
+      "groups": [
+        "A09",
+        "A10"
+      ]
+    },
+    {
+      "task": "EMOS-001",
+      "task_file": "docs/tasks/EMOS-001.md",
+      "task_file_sha256": "aa449f8528e1b09a2ee1431c830408253101b04d2d5a4d628faac8962d82fe3f",
+      "todo_section": "EMOS foundation \u2014 migration",
+      "current_scope": "Corrected r02 installed/full-ROM verified;2913B ROM free. [Reused tests](docs/tasks/EMOS-001/TEST-REUSE-RESULTS-R01.md) pass nine host methods and three physical UART cases. [Full paired attempt](docs/tasks/EMOS-001/QUALIFICATION-RESULT-R01.md) passes14/25, blocked by the existing P4 HDMI mode8\u219220 deadline fault; raw-SD uninvoked. Healthy Legacy services restored for consumer use; FSIM now uses normal FIFO after the Author rescinded its earlier priority. Complete HDMI repair, a new full run, manual review and acceptance/promotion later. Prepare the [temporary counted receiver](docs/tasks/EMOS-001/RX006-RECEIVER-R01.md) for UART's separately selected finite sweep",
+      "groups": [
+        "A01",
+        "A06",
+        "A11"
+      ]
+    },
+    {
+      "task": "HDMI-004",
+      "task_file": "docs/tasks/HDMI-004.md",
+      "task_file_sha256": "2af5d60909fbf1059d8d78917ced6e9a140193a6980b2e5a6f36f17ed2593a65",
+      "todo_section": "Current corrective work \u2014 HDMI aspect",
+      "current_scope": "Build and stage the approved labelled pattern with a numeric mode menu; Author visual review pending",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "HDMI-003",
+      "task_file": "docs/tasks/HDMI-003.md",
+      "task_file_sha256": "a1340dae7aad1e6016cead563bb4fa18be04a349b54293e59c6beeba08cfe762",
+      "todo_section": "Current corrective work \u2014 HDMI aspect",
+      "current_scope": "Stock 640\u00d7240 row repetition restored in a host-tested matched renderer pair. Bounded hardware checks and Author visual confirmation govern handback; keep the full campaign stopped",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "RESEARCH-007",
+      "task_file": "docs/tasks/RESEARCH-007/NURPLES-PERFORMANCE-R01.md",
+      "task_file_sha256": "ec62d09c2d73ce6037121803860d2618f75d935f7653a0c167bc967c7eaaeef3",
+      "todo_section": "Nurples rendering qualification",
+      "current_scope": "[Full five-mode results](docs/tasks/RESEARCH-007/MULTIMODE-RESULTS-2026-10-13.md): 240/240 runs validate; mode20 indexed software/hardware Nurples queued cost falls52.91%/40.46% against optimized RGB888. Regressions and unmeasured mode136 queue scope are explicit. Final notification and deferred-collection cue correction remain; no production promotion. [Owning master task](docs/tasks/RESEARCH-007/MULTIMODE-QUALIFICATION-R01.md)",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "REMOTE-008",
+      "task_file": "docs/tasks/REMOTE-008.md",
+      "task_file_sha256": "507029470a8c65df1e15d611eb2432194f2b95ef5d34b296a84af4ee12a3ecc6",
+      "todo_section": "Web console reset",
+      "current_scope": "Separate P4 reset button and exact-device bench bridge; implementation and Author review pending",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "REMOTE-004",
+      "task_file": "docs/tasks/REMOTE-004.md",
+      "task_file_sha256": "d2354ce269369868bc9c740ca0de6b4e8ed3710f4f68cc478e5f4b1a4f52db42",
+      "todo_section": "Browser paste \u2014 accepted development, release closeout pending",
+      "current_scope": "Browser paste and restored Reset Agon accepted after Author testing. Source, local tests and bounded P4 deployment evidence retained; broader validation and production promotion remain within the HDMI release boundary. Broader clipboard investigation remains deferred",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "REMOTE-009",
+      "task_file": "docs/tasks/REMOTE-009.md",
+      "task_file_sha256": "e07aaeb02b5621e924492a7fff3f0d4f7a3f04b2a7fae71ae9fe322ca1fbecfa",
+      "todo_section": "Near-term bench reliability investigation",
+      "current_scope": "Bounded staged transfer and sequential-reader passes:1.1MB upload43.24s; new download43.57s versus250.92s matched control (5.759\u00d7), exact bytes and clean CLI/released custody. Faster listener accepted/installed with verified rollback, immutable archives and current tool selection. Paired production/version closeout and broader qualification remain; per-record UART replies remain explicit",
+      "groups": [
+        "A04",
+        "A14"
+      ]
+    },
+    {
+      "task": "BENCH-010",
+      "task_file": "docs/tasks/BENCH-010.md",
+      "task_file_sha256": "341957ae0fab190e85c4e0a46a681eeef9d4bbfaddef929545011277be680618",
+      "todo_section": "Near-term bench reliability investigation",
+      "current_scope": "Host serial-open reset repaired. [FSIM recovery R03](docs/tasks/BENCH-010/FSIM-RECOVERY-R03.md) restores verified Legacy CLI/read/EXIT and returns clean custody; overlapping Author recovery prevents sole-agent causality. Broader admission/reset investigation and prior bounded R02 limits remain",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "INPUT-006",
+      "task_file": "docs/tasks/INPUT-006.md",
+      "task_file_sha256": "aa5fc9f648cb938bf7d98e7c9cdbbbfcc15f57c25090f3c96ab784c7c0cb4b4a",
+      "todo_section": "Physical keyboard support \u2014 active",
+      "current_scope": "Research only: reuse Extender wiring/F310 decoding; standalone one-way application driver through public MOS APIs, no MOS/VDP hacks. Investigate simple state/press counters, gameport filters/pin ownership, multiple controllers and removable EMOS footprint. Conversation retained; no code/build/wiring/hardware work selected",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "INPUT-005",
+      "task_file": "docs/tasks/INPUT-005.md",
+      "task_file_sha256": "ce6184e1bfed5102ede49c9b88c292834370ce0bf74974ea4ebe618b64a7495f",
+      "todo_section": "Physical keyboard support \u2014 active",
+      "current_scope": "Offline extraction complete: 991 ROM bytes and 29 RAM bytes recovered; controller EMOS 126,826 /4,246 free. One public application include and mode20 viewer build; host/linked checks pass. Matched deployment/version selection, physical review and acceptance remain; hardware unchanged",
+      "groups": [
+        "A07"
+      ]
+    },
+    {
+      "task": "DIAG-003",
+      "task_file": "docs/tasks/DIAG-003.md",
+      "task_file_sha256": "7ee326e8c12b9e549693998d0e13e2f54119e142f6237d9bb7a6e15541e3253b",
+      "todo_section": "Physical keyboard support \u2014 active",
+      "current_scope": "Offline implementation complete: 2,947 ROM bytes recovered; text utility and ordinary/controller builds pass host/linked checks. Physical review/deployment identity and acceptance remain; installed hardware unchanged",
+      "groups": [
+        "A08"
+      ]
+    },
+    {
+      "task": "SPRITE-001",
+      "task_file": "docs/tasks/SPRITE-001.md",
+      "task_file_sha256": "f13bc253dbb84fb834aec2008161ca9a97618df73d1ea8432771971843cb4267",
+      "todo_section": "Active board-build preparation",
+      "current_scope": "Author reports beautiful output from the full684 memory remedy; the thin tear disappears when paused, and mainboard hardware sprites show no tear. Rollback reproduces ordinary Nurples's upper-playfield visibility defect. HDMI-002 now selects a480-line carrier on mode0 exit; Author confirms full upper text. ExCom SD admission, tearing and broader qualification remain open",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "HDMI-002",
+      "task_file": "docs/tasks/HDMI-002.md",
+      "task_file_sha256": "3877655007d7e04343f1c48e8360193be0719322d4292e2b4e274bcb1ebea234",
+      "todo_section": "Active board-build preparation",
+      "current_scope": "Author confirms r19 transitions. Wide-clear fault still gates cursor/scaler/full qualification. R24 locates1452\u00b5s after DMAstart within1839\u00b5s refill; long channel admission/source-cache are not observed. Recovery and stablemode96 baseline are retained. R25 public32B PPA burst trial fails first96 selection at1745\u00b5s, including1673\u00b5s DMA-to-callback; failure and full recovery are retained. R26 hardware observer is planned only; HDMI work is deferred while parallel work resumes. Preserve guards, exact evidence and actual visual/production gates",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "BOARD-001",
+      "task_file": "docs/tasks/BOARD-001.md",
+      "task_file_sha256": "5e3c9d693becff7447af156475c7d1722c0d58e70b1c09df1ef77c0ce09c6a9b",
+      "todo_section": "Active board-build preparation",
+      "current_scope": "Board profiles, shared pin consumers, ARM builds and validation pass for DevKit/PC. Web keyboard/video works; Author reports Nurples at 16\u201317 fps. The tested full-speed USB experiment bypasses the previous transaction-translation rejection, but serial now confirms failure of the keyboard's initial device-descriptor transfer. Try an alternative keyboard as the next hardware control. SD checks, electrical review and canonical qualification/acceptance remain",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "NET-006",
+      "task_file": "docs/tasks/NET-006.md",
+      "task_file_sha256": "b157efb6493ebe8913964ec6c425d6d8dc343bceed07fd5d34ab4eb7c13aacad",
+      "todo_section": "Manual Console8 Wi-Fi fixture",
+      "current_scope": "Corrected manual C8 setup/BBS test accepted; exact component package retained. Public redistribution/license closure, utility version and release tag remain under N06-11",
+      "groups": [
+        "A13"
+      ]
+    },
+    {
+      "task": "NET-005",
+      "task_file": "docs/tasks/NET-005.md",
+      "task_file_sha256": "ebb55eea9ddf0e0ba519344a2012a338f2387f366cfd21749e6b445441a106c3",
+      "todo_section": "Manual Console8 Wi-Fi fixture",
+      "current_scope": "Pi BBS implemented and running; eight host TCP checks pass and the exact unchanged Radiotux terminal package is verified. Smith's manual Console8/ESP8266 AT, Wi-Fi and terminal review remains; no remote Console8 access or async/OTIRX changes",
+      "groups": [
+        "A13"
+      ]
+    },
+    {
+      "task": "NET-002",
+      "task_file": "docs/tasks/NET-002.md",
+      "task_file_sha256": "afeb7ca60d576b979d8837425a019613ed600f48daf8527e85b66a7871a7d562",
+      "todo_section": "Networking prior-art review \u2014 awaiting review",
+      "current_scope": "Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Source review N02-01\u201305 complete; recommendations await Author review. Preserve the existing SD service; proposed AT compatibility is a separate decision",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "TEXT-001",
+      "task_file": "docs/tasks/TEXT-001.md",
+      "task_file_sha256": "9a218c499069330941368139636361c675f5f40266a59a85bb6ec52cbb2bdefa",
+      "todo_section": "Transparent text \u2014 scope review",
+      "current_scope": "Prototype implemented; native pixel checks and P4 compile pass. Lenovo bespoke rainbow demo awaits Author visual acceptance; no hardware deployment",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "AUDIT-011",
+      "task_file": "docs/tasks/AUDIT-011.md",
+      "task_file_sha256": "f644f019293199898ffc392fe6015fab9af0b6e149cab40fe839bd470495949a",
+      "todo_section": "Do now \u2014 PLAN-001",
+      "current_scope": "Proposed codebase audit: distinguish stock-visible behavior from hardware-specific implementations that fit mainboard but impose avoidable P4 costs. Start with VGA pixel ordering and indexed/PPA implications. Task prepared only; execution and renderer integration paused for Author discussion",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "AUDIT-010",
+      "task_file": "docs/tasks/AUDIT-010.md",
+      "task_file_sha256": "5613cf299273f67e564a964ce34f5ccaa85cb23dfa8582f676a43245cb28723f",
+      "todo_section": "Do now \u2014 PLAN-001",
+      "current_scope": "RP01\u2013RP04 are accepted. The canonical paired installed-system suite passed both cases and all 17 required checks; manual Nurples ExCom mode switching/gameplay passed at 25\u201329 fps. RP05 is next. Nurples causality remains deferred until the complete audit/repair sequence ends, and LCD returns afterward as a separately reviewed delta",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "AUDIT-009",
+      "task_file": "docs/tasks/AUDIT-009.md",
+      "task_file_sha256": "3a499c1435f40e1ae07cb8fd5ab9a0ace5308098e556470553bf4c91e2f73e47",
+      "todo_section": "Do now \u2014 PLAN-001",
+      "current_scope": "Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "REMOTE-005",
+      "task_file": "docs/tasks/REMOTE-005.md",
+      "task_file_sha256": "af95b93221439f38b885b6e365b049e44bd09c78e1569784aff02857f7239824",
+      "todo_section": "Do now \u2014 PLAN-001",
+      "current_scope": "R05-11: checksum-free P4r13/sdserve-v0.3.0 installed and independently verified; bounded new-service upload/download works, broader qualification/acceptance pending. Legacy bootstrap is closed. Earlier fast evidence remains frozen. Broader file-manager research, transaction migration, interactive sessions and R05-10 procedure refresh remain; production selection is unchanged",
+      "groups": [
+        "A04",
+        "A14"
+      ]
+    },
+    {
+      "task": "AUDIT-008",
+      "task_file": "docs/tasks/AUDIT-008.md",
+      "task_file_sha256": "d8c67be1a6933e3b26701677082bbb41af99a93f536aa68058737eed1b3c5fbe",
+      "todo_section": "Do now \u2014 PLAN-001",
+      "current_scope": "Delivered tranche closed out; further extraction and broader qualification parked. Revisit for measured ROM pressure or a concrete utility benefit, not routine splitting for its own sake",
+      "groups": [
+        "A08"
+      ]
+    },
+    {
+      "task": "PLAN-001",
+      "task_file": "docs/tasks/PLAN-001.md",
+      "task_file_sha256": "878dfdec715e01c5743302a437b4793075c715917633f296ad9b275061a13868",
+      "todo_section": "Do now \u2014 PLAN-001",
+      "current_scope": "T01 committed; T02 reconciliation prepared for review in [the disposition table](docs/tasks/PLAN-001/QUEUE-REVIEW.md). T03 source audit and mode-startup investigation delivered; inherited palette defect recorded, with upstream/Extender patches deferred for credits. Aginvadors optimization and further browser-performance experiments are deferred",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "PORT-008",
+      "task_file": "docs/tasks/PORT-008.md",
+      "task_file_sha256": "9faa6dafd3d5fa2fd984ca762d4a81e8906d3c92f6e2e31b38a6bad79e8cd14b",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "[Forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) complete:340.35kB/s at8192B; UART wins256B. [Reverse file prototype](docs/tasks/PORT-008/REVERSE-UPLOAD-R01.md) passes ten matched Legacy proofs and exact restoration;1.1MB host upload3.111\u00d7 faster. Raw drain and file timings differ in scope. [VALID filter cost benchmark](docs/tasks/PORT-008/FILTER-COST-R01.md) authorized and awaiting FIFO admission. Adoption, forward file integration, broader async admission, P08-D02/warm-reset and production remain open",
+      "groups": [
+        "A05"
+      ]
+    },
+    {
+      "task": "REMOTE-007",
+      "task_file": "docs/tasks/REMOTE-007.md",
+      "task_file_sha256": "ee478aa331eca5a8ed56cec12677eff13c88f9334389396e3864057d86647b4f",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "HDMI-001",
+      "task_file": "docs/tasks/HDMI-001.md",
+      "task_file_sha256": "3e051448a9f0bbd4e2e7d1f82764fcbb10a12cc8fb79aa24e30a2f091ee8f473",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "r03 startup, EMOS prompt modes0/3/8/20 and Author gameplay checks pass for Nurples and 320\u00d7240 Aginvadors/Rally. Excess sprite flicker remains open; passive timing records about19.2 complete updates/s versus60 DMA frames/s without an identified controlled game scene. Full mode coverage, fidelity/performance and promotion remain pending",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "BENCH-009",
+      "task_file": "docs/tasks/BENCH-009.md",
+      "task_file_sha256": "a785b58a1642f9379f2ad3309f7287a5c0b2988a27bf641acb954d36844a8bbf",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Long r04 campaign paused. Supplemental five-mode static controls complete. Permanent resident selection and card collection pass; the separate bounded RGB888 report is complete. No full-campaign resumption selected",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "PPA-001",
+      "task_file": "docs/tasks/PPA-001.md",
+      "task_file_sha256": "cb8abf26809e736e334feeed3c658f9af8d90e220d265966dec79038174db3c7",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Deferred, not started; Author requests task recording only. Assess current clears, rectangular fills, bitmap/sprite compositing and transforms against IDF5.5.5 PPA capabilities, then rank source-linked opportunities and proposed comparisons. No implementation or bench work selected",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "RGB-001",
+      "task_file": "docs/tasks/RGB-001.md",
+      "task_file_sha256": "35806c3a7d8bcf168d0c7512a59bf44c044fb0a49cb87ef5b3c29896cb55e594",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Original r01 measurements and gameplay failure retained. SCAN-001 copy-scroll remedy r02 passes Author Nurples review; Rally steering remains an unchanged separate issue. Broader firmware qualification/promotion remains pending. Aginvadors held-fire slowdown is an application bug. Caches, PPA and the long campaign stay deferred",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "SCAN-001",
+      "task_file": "docs/tasks/SCAN-001.md",
+      "task_file_sha256": "fe11f8b52c8962df3a4f064d81611ab3a97f764f98871bd6ae66ca73a5abc0b1",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "S01\u2013S05 complete. S06-R01 copy-scroll remedy built/flashed; 13 bounded cases pass, short Nurples returns to 60 updates/s and scrolling with 32 software sprites reaches 54\u201355 versus 26 before. Normal startup/configurations restored; Author passes Nurples, with Rally input still an unchanged separate issue. Production qualification/promotion and remaining S06 controls/mechanism gates stay open. Segmented DMA and dependent integration are explicitly deferred by the Author after this pass",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "QUAL-006",
+      "task_file": "docs/tasks/QUAL-006.md",
+      "task_file_sha256": "51fd50855fa44053fb97a1dd952772a7d1ce6cd0dfecc9860f6ce8d1c3834402",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Architecture and boot-scoped production diagnostic enablement accepted for qualification, bug reproduction and feature proofs; concrete transport/protocol contract remains before implementation. Generalize EMOS's existing finite safe-point admission so ordinary qualification can stage, launch, observe and finish correlated jobs without rewriting `/autoexec.txt`, rebooting per case, scraping stale prompt pixels, or guessing listener readiness. Retain boot-script launch only where startup, first admission, reset or recovery is the behavior under test. QUAL-005 remains authoritative until an accepted migration",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "DIAG-002",
+      "task_file": "docs/tasks/DIAG-002.md",
+      "task_file_sha256": "6f6ce4c931229f45c0e7ccd10cdddd4d1630691b6211de077092395125ea8bf1",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "After AUDIT-010 and the separately reviewed sparse-checkout/workspace reduction, make EMOS report bounded Extender connection state and the installed P4 firmware/build identity at startup. Preserve usable Legacy boot when the P4 is absent and do not merge or automate the independent reset actions",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "FWBUG-013",
+      "task_file": "docs/tasks/FWBUG-013.md",
+      "task_file_sha256": "81bf8d9c08615deb3387b5e96bb823c1725345ebb30e176a0d817a89415590c5",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Renewed Author report on r19. Exact installed EMOSv27 polls only at an empty CLI line; P4 treats that control traffic as drawing and prevents cursor idle restoration. Bounded parser repair and continuous-poll regression are active, combined with restoring the existing mode8 scaler selection under HDMI-002. Physical visual review remains required",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "REMOTE-006",
+      "task_file": "docs/tasks/REMOTE-006.md",
+      "task_file_sha256": "09fd714e8fb360a225b42d8283ce67602ac4024eb0f5f89a589d21f559dfe8e2",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Add a Reset Extender button beside Reset Agon while preserving two independent actions. Select an external P4 reset executor capable of recovering more than a responsive self-restart; define Legacy/ExCom and in-flight-service outcomes before implementation. Queued behind the active AUDIT-010 review/repair gate unless explicitly reprioritized",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "RESEARCH-006",
+      "task_file": "docs/tasks/RESEARCH-006.md",
+      "task_file_sha256": "917b07e01987fa4dd358c8df7cb06a9d7cdbce5f01d7fc0ffab4a9deea410293",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Initial assessment recorded; investigate header-only serial transport versus digital VGA taps, fidelity and bandwidth. Research only; no implementation or bench work selected",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "TRS-80-003",
+      "task_file": "docs/tasks/TRS-80-003.md",
+      "task_file_sha256": "4a970ac8327c2e8906618d5b46f48a54c926e549ab0e53527a3e531c3b2c7e40",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Feasibility study first: coordinate detached MAME reuse, then native Agon execution with P4 device models, EMOS bridge and eight-bit parallel transport. Cross-project orientation recorded; common Ethernet boundary extracted for detached build evaluation; hybrid feasibility and image leases remain open",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "LCD-001",
+      "task_file": "docs/tasks/LCD-001.md",
+      "task_file_sha256": "e80b3d319c4ea89f14b6cd2c40cb7cbc27c16aaec165471ae609016ef3dd515f",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Preserve the working experimental panel evidence and implementation. After AUDIT-010 reviews and fixes the pre-LCD baseline, redeploy LCD support as a separately reviewed delta and rerun geometry, late-mode, browser/service, performance and gameplay regressions",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "PORT-003",
+      "task_file": "docs/tasks/PORT-003.md",
+      "task_file_sha256": "9c90189f9bae3ecfa61d125ae8f1ec618435152c538b81a68fbed16d29d91d2d",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Display backend works; wider command consumption and faithful coverage remain incomplete. Primary implementation owner for T03; retain accepted key-query/audio slices and all explicit command deferrals",
+      "groups": [
+        "A12"
+      ]
+    },
+    {
+      "task": "AUDIT-007",
+      "task_file": "docs/tasks/AUDIT-007.md",
+      "task_file_sha256": "a410b2c132cebd0789fcabe4942a4c8f3a01e770383bf75041f70c2a024f0a6d",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Parked by the Author: first graphics-backend review and mode-startup investigation delivered; exhaustive remainder deferred. Resume only on explicit Author direction; preserve existing finding owners and feature deferrals",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "QUAL-003",
+      "task_file": "docs/tasks/QUAL-003.md",
+      "task_file_sha256": "3b04603cef0159369b59211e436ca0b68fee6d961d68f081d68726cfe38ada96",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Many bounded results complete; correctness gaps and review gates remain; browser experiments parked. Separate retained correctness/exception work from dormant performance branches; no automatic new run",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "PORT-006",
+      "task_file": "docs/tasks/PORT-006.md",
+      "task_file_sha256": "8a8dfde7c61522e1f7f2bcc94dd74ed88ec8c8da0c885e64f88be5cd50d85cf0",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Network service works; resilience/update-service scope incomplete. Browser keyboard was reintroduced. Keep remaining network obligations; browser input belongs to REMOTE-001, not a retired-service claim",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "QUAL-001",
+      "task_file": "docs/tasks/QUAL-001.md",
+      "task_file_sha256": "1bb8f9aed3a4b27d3c4ec173d6aef57f5e85c897fe02286b51ab180b3deab25b",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Matrix scaffold exists; four-mode reconciliation and validator integrity gates remain. Retain infrastructure work; partial records do not certify complete compatibility",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "REMED-001",
+      "task_file": "docs/tasks/REMED-001.md",
+      "task_file_sha256": "7021e5d6298bdbb8a5091c7873f155c7685f0c035368f41d2153ea3d5f7a703b",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Some architecture promotions complete; broader conformance/replacement work incomplete. Reconcile only applicable remaining obligations; old global freeze wording is not evidence that accepted ExCom ceased to work",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "REMED-002",
+      "task_file": "docs/tasks/REMED-002.md",
+      "task_file_sha256": "d6bb01b80733bb6f832a1cc44ce1029515e5469da23954c6a6a66a762d665852",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Findings have mixed fixes, deferrals and outstanding validation. Retain finding IDs and owning-task gates; no blanket closure from successful gameplay",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "SETUP-005",
+      "task_file": "docs/tasks/SETUP-005.md",
+      "task_file_sha256": "790bade4affa47d867cc6711d638ef6492e5353c9b0bfbc07fd0937799c2eee0",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Immediate ExCom/input decisions accepted; broader mode-integration questions remain. Resolve decisions only when selected scope depends on them; do not reopen settled keyboard choices",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "HW-002",
+      "task_file": "docs/tasks/HW-002.md",
+      "task_file_sha256": "f63d5397739257188ffaa5ed02525bff86bca63e4e5465dbd7dd3f8addb7e1bd",
+      "todo_section": "Next-work candidates and remaining implementation",
+      "current_scope": "Simplified wiring accepted within scope; USB schematic/as-built and endpoint review incomplete. Keep documentation obligations; remove the obsolete tomorrow/date framing from the queue",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "BENCH-002",
+      "task_file": "docs/tasks/BENCH-002.md",
+      "task_file_sha256": "5cdb8ff39b36701fb55e1bf075dd83304d1900a091f9cd205a006cfb8053016e",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "30-Hz test deployment exists; later feedback and production/test split supersede initial awaiting-review wording. Review final disposition; production Nurples is single-vblank and the slower build is test-only",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "BENCH-004",
+      "task_file": "docs/tasks/BENCH-004.md",
+      "task_file_sha256": "ddd41cb72ac4949a23cac48863cbd3311dfda6d4ee64cea99ab699a044327501",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Mailbox implementation/local tests complete; task still lacks an explicit Mac handshake receipt. Locate or obtain a peer round-trip only if needed; empty mailbox checks do not establish that gate",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "RESEARCH-001",
+      "task_file": "docs/tasks/RESEARCH-001.md",
+      "task_file_sha256": "82c7163094a346f9c8a3f19f1b3a306760754742832703dd3d2215d3f8cfeb36",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Five source reviews complete; synthesis available. Accept/archive research separately from any proposed optimization; no new search or implementation",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "RESEARCH-002",
+      "task_file": "docs/tasks/RESEARCH-002.md",
+      "task_file_sha256": "36a2b808b36f60d8216549f623690d576555660169c5ec455c695bd1dc6d9d07",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Published-throughput research complete. Accept/archive findings; published link/codec rates are not measured application throughput",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "RESEARCH-003",
+      "task_file": "docs/tasks/RESEARCH-003.md",
+      "task_file_sha256": "aa58e7c236c9d5f3c909464424ea7a4a5ba0d58f2bc43b3fc2e324aca0f2038a",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Twelve standalone runs complete; 60-fps delivery unmet. Historical candidate-left-installed note is obsolete as a current bench description. Review bounded result; consult latest restoration authority rather than assume the old candidate is installed",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "BENCH-001",
+      "task_file": "docs/tasks/BENCH-001.md",
+      "task_file_sha256": "3d3173c69fb02d396c64d9c48a552386de2e21ce0946be655a20fd8c3e5b0705",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Bounded telemetry/driving work complete and frozen; human review/remaining game continuation separate. Close accepted scope after review; retain AgonArcade RALLY-22 ownership of further driving",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "REMOTE-002",
+      "task_file": "docs/tasks/REMOTE-002.md",
+      "task_file_sha256": "5ef5e767d1285cedaafb99e264d4756a2ffe40d4e8ca88ab84465645b0a5283c",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Host input implemented, tested and used; current task summary links the implementation commit and operating guide. Review remaining physical/human gates; no duplicate implementation required",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "REMED-003",
+      "task_file": "docs/tasks/REMED-003.md",
+      "task_file_sha256": "e50fbfa426c7941e1ce0a907f25d424def757a2238d4cd38face0cc24dd5c78a",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Identical filesystem probe passes hardware/raw image and fails directory backend; report prepared. Author reviews report; submitting to upstream requires explicit authorization",
+      "groups": [
+        "A17"
+      ]
+    },
+    {
+      "task": "NET-001",
+      "task_file": "docs/tasks/NET-001.md",
+      "task_file_sha256": "c9b0d1effedc1e7de9b567f391640e969c92cd3a851831977a618e3d3012340f",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "Viewer takeover implemented; six connections/five handovers passed. Retain pending human browser acceptance; later use does not automatically establish every gate",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "QUAL-004",
+      "task_file": "docs/tasks/QUAL-004.md",
+      "task_file_sha256": "7a351ce8820dfe4ce34e11f3287935eadfda6a61bc882cd09c516d9f5c294347",
+      "todo_section": "Review and closeout queue \u2014 no automatic new experiments",
+      "current_scope": "77 static scene pairs matched, including [static teletext](docs/tasks/QUAL-004/teletext/RESULTS.md). [Sprite/scroll follow-up](docs/tasks/QUAL-004/sprite-scroll/RESULTS.md): stock INITIAL visual/exit control passed; mainboard OVERLAP/EDGES/HIDDEN passed repeat capture, HIDDEN also full oracle. Extender checks passed; three checkpoints match mainboard exactly, INITIAL has visual control only. [Packed expansion BM02](docs/tasks/QUAL-004/packed-expansion/RESULTS.md) passed; BM03 parked. Capture-interference investigation QUAL-004-CI01 and four Copper controls deferred; no claim of complete dynamic-sprite parity",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "BENCH-008",
+      "task_file": "docs/tasks/BENCH-008.md",
+      "task_file_sha256": "bc007c73d8903deaec1d10c23fc39e81715c0174edaec5bd6483b34aaeadcf33",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Correct output but worse frame rate with replacement deltas; initial experiment complete. B08-06 cost investigation deferred until Author resumes; pre-experiment P4 firmware restored after the regression",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "RESEARCH-008",
+      "task_file": "docs/tasks/RESEARCH-008.md",
+      "task_file_sha256": "f615c98f284b1ed63c6cd09a8c157fd9abb15b83ec01540fe421ad112885e000",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Independent external-output investigation, primarily for P4-DevKit. Assess indexed delivery, palette expansion, HSTX and transport costs only when selected. No dependency for P4-PC indexed HDMI work; no implementation or bench action authorized",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "RESEARCH-005",
+      "task_file": "docs/tasks/RESEARCH-005.md",
+      "task_file_sha256": "e664c1a935a17c0a73d6bed6e94d86075a385b3b4784983a187baaaa2147a985",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Deferred VGA pillarboxing, P4 VGA output and aspect-preserving output research; FabGL investigation and existing P4 VGA driver lead retained. No implementation or bench work scheduled",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "BENCH-007",
+      "task_file": "docs/tasks/BENCH-007.md",
+      "task_file_sha256": "0f58fac03e37740e50801c10b4f0ceab9aa6488426d56751d1b3f94634193efb",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Package/results committed; F01 mainboard panic, F02 Rally fixture discrepancy and B07-R01 procedure refresh remain. Retain these unscheduled follow-ups here; measurement implementation is complete, not another half-built package. Refresh the retained runner/startup procedure before reuse under current fixture rules",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "AUDIO-001",
+      "task_file": "docs/tasks/AUDIO-001.md",
+      "task_file_sha256": "a38f39f22fa4a10fccff304503ff64612f48142f0453d2e1881a3fec92e30442",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "SD feasibility measured; integrated parallel/audio stages not executed. Keep behind current porting priority; AF02 needs its own bounded contract",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "P4PC-001",
+      "task_file": "docs/tasks/P4PC-001.md",
+      "task_file_sha256": "9a70de131bcf170a2992483cf34d2ec2b4a6d778f5cb960df48b3ea882f6ff77",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Standalone ESP-IDF HDMI/audio experiments. Working 720p at near-60 Hz scanout renders circles at 12 fps; native 640\u00d7480 r12 renders about 30 fps but fails physical picture review. Paired capacity averages 31.77 fps scanout on / 34.02 off; drawing remains the main limit. r13 render-only RGB332 measures 3.786 ms drawing / 200 fps versus RGB888 13.758 ms / 66.667 fps, excluding scanout. Author confirms r13 fresh static bars also fail; usable native HDMI and 60-fps animation remain open",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "TRS-80-001",
+      "task_file": "docs/tasks/TRS-80-001.md",
+      "task_file_sha256": "84c8c6995da2d687dafbea13fcc52294c1aa8e14fa99330d357c625529d518d8",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Ecosystem survey/reference acquisition complete; architecture unselected. Retain future design work; no new implementation implied",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "HW-003",
+      "task_file": "docs/tasks/HW-003.md",
+      "task_file_sha256": "f6ee7f735fa7f5c92cf1db4a8826669f3e8b066e499d05cab2992ab2c6340285",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Alternate board desk assessment complete; collaborator specimen unresolved. Await exact hardware/variant and separate adaptation scope",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "PORT-005",
+      "task_file": "docs/tasks/PORT-005.md",
+      "task_file_sha256": "4113daece024da32087c252ccc752c9e089f29eff9d605488d3aa540c1cdec22",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Native USB input works; broader keyboard parity/settings refinements deferred. Preserve working input and fix blocking regressions only; browser-specific follow-up remains separate",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "REMOTE-003",
+      "task_file": "docs/tasks/REMOTE-003.md",
+      "task_file_sha256": "c26d380f04bd13091c158ed13612649a6a7b75de54fa640e0450973c747692ac",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Pi-backed browser reset accepted. Direct P4 reset wiring remains deferred",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "REMOTE-001",
+      "task_file": "docs/tasks/REMOTE-001.md",
+      "task_file_sha256": "3fff54241dc755f9eec8b48065f9f54f5e125328bac4784dbd49a08f2595aaa8",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Browser input/UI deployed; game/fullscreen follow-ups explicitly deferred. Preserve committed input/UI work; do not expand optimization or infer physical takeover acceptance",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "SETUP-006",
+      "task_file": "docs/tasks/SETUP-006.md",
+      "task_file_sha256": "72a49ccfb5b959f7e46847a7262e43a1944eee4944d442da8b159679fc185bf1",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Old full-circuit wiring target remains on hold/incomplete. Retain predecessor evidence; reconcile applicability when hardware design resumes",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "HW-001",
+      "task_file": "docs/tasks/HW-001.md",
+      "task_file_sha256": "984e557d8da2e9da2081f4485b55ccef548274d5f8b8a04b7c61c71795346d38",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Old full r02 circuit incomplete and unqualified. Do not treat simplified harness success as full r02 qualification; re-scope before resuming",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "PORT-004",
+      "task_file": "docs/tasks/PORT-004.md",
+      "task_file_sha256": "d4602bbcf2a9b72783b00922799a8955734dd9ef12cc8623b632ce8f1262373d",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Audio command framing slice passed; actual synthesis/output deferred. Retain Wolf3D and wider audio obligations; framing success does not implement sound",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "PORT-007",
+      "task_file": "docs/tasks/PORT-007.md",
+      "task_file_sha256": "abe33516d6174ac06f6c22f4365c90997869b4bc11a5fc5f824ef0225e4fe516",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "P4-local SD HTTP file/directory management r57 passes bounded hardware checks; Author acceptance/promotion pending. Broader storage remains required v1 work. Keep distinct from the accepted mainboard SD service; EMOS read access remains required",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "QUAL-002",
+      "task_file": "docs/tasks/QUAL-002.md",
+      "task_file_sha256": "61da11b8887183f6371b6db238c80c65d55b135bff5a3046044f80201437c643",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Full-circuit electrical absence/power/reset qualification on hold. Requires applicable hardware design and separate physical contract",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "UPSTREAM-001",
+      "task_file": "docs/tasks/UPSTREAM-001.md",
+      "task_file_sha256": "4e7dd48ee55ba100a7602308c8b1977b18768e8a5f7cee05fe3bcf31006e45c7",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Lifecycle correction A/B research not started. No upstream fixes imported into strict-compatible first-pass port by default",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "MODE-001",
+      "task_file": "docs/tasks/MODE-001.md",
+      "task_file_sha256": "bde4f3ac8e7d3036ee237dbeaef3adbe0749e672bc31a38a45108677925653b1",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Broader state-preserving transitions not implemented; bounded ExCom switching already exists. Retain future transition contracts without describing current ExCom as absent",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "MODE-002",
+      "task_file": "docs/tasks/MODE-002.md",
+      "task_file_sha256": "436b340d79fac9fdacd14883ad6be017002de7fbc0a251cce6a87b211bd61b42",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Post-beta automatic retry-protection evaluation not started. Require evidence and explicit scope before adding retry machinery",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "DIAG-001",
+      "task_file": "docs/tasks/DIAG-001.md",
+      "task_file_sha256": "8a1f215f814a44beb0709a8f5f077e91b2c579ef75d1da2af020aaaebe59b0fa",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "General recoverable diagnostics/crash-record product work not started. Retain release requirement and evidence/privacy decisions; task-local capture is not the full feature",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "LINK-001",
+      "task_file": "docs/tasks/LINK-001.md",
+      "task_file_sha256": "0833813d3696fa211f799e0c71e5107145d340ffe9184d1407b7c36fd604eb27",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Direct onboard-VDP/EDP link is optional deferred research. Not a prerequisite for existing keyboard/ExCom path",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "PORT-016",
+      "task_file": "docs/tasks/PORT-016.md",
+      "task_file_sha256": "dbac974f0f501a7cb0b9a52897292b6574a16343c740dd8e9227dfda1314f91c",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "MicroPython long-term feature; v1 placement undecided. No timing or input dependency; remain deferred",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "BENCH-003",
+      "task_file": "docs/tasks/BENCH-003.md",
+      "task_file_sha256": "5c37b93f9470dd5deae2faa55123ec793275c8219db53f217e305bac5fe291f3",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Author stopped after first Legacy acquisition timeout; no FPS conclusion. Do not restart; BENCH-007 does not retroactively pass this different experiment",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "BENCH-005",
+      "task_file": "docs/tasks/BENCH-005.md",
+      "task_file_sha256": "0707b2b2c77614df697e4fb27840e344a8e2ce3ff742addc5ee87a4ed935d6c4",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "Initial latency and later packing/mode investigations retained; further output experiments now parked. Retain unresolved Legacy acknowledgement/readout limits; no new browser-performance work",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "BENCH-006",
+      "task_file": "docs/tasks/BENCH-006.md",
+      "task_file_sha256": "deb2f82e9378b39845486f2e651a7cbb5051c9feac61dcf958f8c9fd4c0f8244",
+      "todo_section": "Parked, blocked and unscheduled work",
+      "current_scope": "ExCom text readback implemented; Legacy S04 explicitly deferred. Keep only Legacy follow-up as remaining scope; preserve functioning ExCom endpoint",
+      "groups": [
+        "A14"
+      ]
+    },
+    {
+      "task": "RELEASE-001",
+      "task_file": "docs/tasks/RELEASE-001.md",
+      "task_file_sha256": "4699181c693aca1d090bc65282e87d715824cb30182f4c6cdd47491a67344893",
+      "todo_section": "Governing limits",
+      "current_scope": "Mode3 repair r19/v27 passes16 targeted transitions and complete native25/25 paired qualification; entry modes/Legacy CLI, cursor commands, raw-sector restoration, notification and cleanup verify. Actual Author visual retry/acceptance and successor bundle/version binding remain before production selection/tag. Accepted r16 bundle and failed r01/r02 evidence retained; EMOS/mainboard/startup unchanged",
+      "groups": [
+        "A02",
+        "A03"
+      ]
+    },
+    {
+      "task": "DBUF-001",
+      "task_file": "docs/tasks/DBUF-001.md",
+      "task_file_sha256": "3c618e63322238ab1fa7dc71b7a8ef16b902d86d18a0a54404bd2e5089f7a091",
+      "todo_section": "Deferred game-renderer experiments",
+      "current_scope": "Retain per-buffer incremental scrolling and hardware-sprite discussion for a future game-engine suite; full redraw excluded, implementation deferred",
+      "groups": [
+        "A18"
+      ]
+    },
+    {
+      "task": "SCROLL-001",
+      "task_file": "docs/tasks/SCROLL-001.md",
+      "task_file_sha256": "3447c1a457dcd212fbc99969271e39bcb704a91e200995844db696a3f6ab926b",
+      "todo_section": "Pattern-based rendering qualification",
+      "current_scope": "Mode lifecycle r03 compiles and Pi coordinator passes offline simulation; live adapter, double-buffered entry cleanup and physical validation remain. Bench reserved by another project; earlier startup modification needs separately authorized repair",
+      "groups": [
+        "A15"
+      ]
+    },
+    {
+      "task": "INPUT-003",
+      "task_file": "docs/tasks/INPUT-003.md",
+      "task_file_sha256": "b581726c289bf22a300d8a7fada2aee16a4302e6d21e058701e15e156d985225",
+      "todo_section": "Analog controller input",
+      "current_scope": "Native F310 USB D-pad correction installed/full-readback verified;42 controller checks cover all raw hat combinations. Author up-left failure was a latched USB decoder error; exact rejected bytes were unavailable. Author physical control/D-pad retry accepted; exact bytes retained. Production promotion awaits canonical qualification and an agreed release version. Unexplained subsequent P4 restart is retained as an open coexistence incident. Unplug/coexistence/load, offline startup and production qualification remain; EMOS/mainboard/startup preserved",
+      "groups": [
+        "A03",
+        "A07"
+      ]
+    },
+    {
+      "task": "INPUT-002",
+      "task_file": "docs/tasks/INPUT-002.md",
+      "task_file_sha256": "ebe61e5cba9d454286ffceb034a405ce134577d281ad48aff310f80477c9542d",
+      "todo_section": "Analog controller input",
+      "current_scope": "P4r14 priority correction installed/full-readback verified;120Hz ACK median261.703\u21921.794ms and100% delivery.60/240Hz,Pi120Hz and keyboard/fast-SD coexistence pass. EMOS/application/display latency, Author review and justified timestamp probes remain; all sources stopped,CLI handed back",
+      "groups": [
+        "A07"
+      ]
+    },
+    {
+      "task": "INPUT-001",
+      "task_file": "docs/tasks/INPUT-001.md",
+      "task_file_sha256": "3d7ba5edff5d4b90db9671c58d4609a35e63f14b35bae6c5da9964711e998fb4",
+      "todo_section": "Analog controller input",
+      "current_scope": "Author reports corrected viewer-r03 working; experimental P4r14/EMOSv27/sdserve-v0.3.0 installed with independent readbacks. EMOS has270 ROM bytes free. UDP backlog corrected under INPUT-002; downstream latency,broader input/reset/coexistence and production acceptance remain. Mainboard VDP/startup preserved",
+      "groups": [
+        "A03",
+        "A07"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": "../agon-6502/build/perf022/original-r04/delegation.json",
+      "bytes": 22792,
+      "sha256": "219b1b60ec32d38e8c6233e2953f3dab6f4c93ab2e5f47744259fb79fbf3bcca"
+    },
+    {
+      "path": "TODO.md",
+      "bytes": 35452,
+      "sha256": "638e5310ef2ee66fb92bd6f2e48eab74bbd070b4016035ef8e90fe75b562d6cf"
+    },
+    {
+      "path": "docs/bench-reset.md",
+      "bytes": 11417,
+      "sha256": "926dfccd558e0155ee10fa65d3fc9850ea2a91f608061578e81292fe0bc00faa"
+    },
+    {
+      "path": "docs/building.md",
+      "bytes": 44920,
+      "sha256": "efe24159c39ded8587a28d07c4bdf177b46469f0dee4b07470832ee3bd42f065"
+    },
+    {
+      "path": "docs/controller-api.md",
+      "bytes": 10822,
+      "sha256": "e0eb157226c39d7e04b0383f9f49d9952dd400f7f18ad5ef329781e5dbb7ff79"
+    },
+    {
+      "path": "docs/mainboard-sd-parallel-trial.json",
+      "bytes": 2160,
+      "sha256": "ab851471c14d22eb3d3dbfb1505ce55627e7a512b1c82d838a64555d29f03ebe"
+    },
+    {
+      "path": "docs/mainboard-sd-tools.json",
+      "bytes": 1555,
+      "sha256": "e63af145cd1273831f5b0dd8aa465cae77fbe86b12e39f9dffd3a1893378d142"
+    },
+    {
+      "path": "docs/mainboard-sd.md",
+      "bytes": 28581,
+      "sha256": "cef08095bc91e0574a5180431de6b205a26169b37398c4aa8f1645550257b1a5"
+    },
+    {
+      "path": "docs/network-setup-tool.json",
+      "bytes": 534,
+      "sha256": "5e81ed7412a262c70387e24e1dd806dcd00023be606eb4ec1cad81adeb541309"
+    },
+    {
+      "path": "docs/network-setup.md",
+      "bytes": 2278,
+      "sha256": "03ea78c6cd168164549f533fe8c78ebcc29e021a37967b3e17ac12726449a9a2"
+    },
+    {
+      "path": "docs/network-startup.md",
+      "bytes": 4336,
+      "sha256": "6378d1f5e2e7ef4a5e110434138c992c8771c0d8890d2f658cb6a736295de5cb"
+    },
+    {
+      "path": "docs/olimex-emos-functions.md",
+      "bytes": 4549,
+      "sha256": "4236fd4c46cee0f298e595b3ec5994d2894c5e3353814272c343849d81b40512"
+    },
+    {
+      "path": "docs/olimex-firmware-standard.json",
+      "bytes": 3335,
+      "sha256": "c859e14432b47079a0c06a307298846684bf4dcbd1fd9a41debb348ccfb49493"
+    },
+    {
+      "path": "docs/p4-sd.md",
+      "bytes": 11057,
+      "sha256": "94229a8bb040d8ec117caf8731d587e1d69ae29e80dc3a9f5e0a96dd0f410395"
+    },
+    {
+      "path": "docs/protocols/controller-emos.md",
+      "bytes": 11625,
+      "sha256": "a54604efca200eb0c2bc2164230594d3323c19265343e3326defd07c064b833f"
+    },
+    {
+      "path": "docs/remote-keyboard.md",
+      "bytes": 20360,
+      "sha256": "90ba2f4c97d34a954cf670e5af8daa06f2c64e2b9fd85849a629a977736de645"
+    },
+    {
+      "path": "docs/tasks/COMMS-001.md",
+      "bytes": 11059,
+      "sha256": "d89e90a3721e52436db295ba7a2a28d16bf7de427c3f37b8b46b5ed86efdc77f"
+    },
+    {
+      "path": "docs/tasks/COMMS-002.md",
+      "bytes": 10479,
+      "sha256": "4e9df01439ba465281dd37837070f319749dc6b809f474e41414c0c59bb54c41"
+    },
+    {
+      "path": "docs/tasks/DIAG-003/RESULTS.md",
+      "bytes": 5018,
+      "sha256": "ea66a72096400063547265a3c95ff9a75d22b5fbcadb12f77907857244c515f3"
+    },
+    {
+      "path": "docs/tasks/DIAG-003/results.json",
+      "bytes": 5524,
+      "sha256": "c842f67ad3500f35932ab81604eae1a3a5f6395d646c7163121711095589d25c"
+    },
+    {
+      "path": "docs/tasks/EMOS-001.md",
+      "bytes": 11753,
+      "sha256": "aa449f8528e1b09a2ee1431c830408253101b04d2d5a4d628faac8962d82fe3f"
+    },
+    {
+      "path": "docs/tasks/EMOS-001/QUALIFICATION-RESULT-R01.md",
+      "bytes": 7088,
+      "sha256": "36286e6d45a275abc9cf283e99d0eb618917ee1619c9d5134a6e4caf2d48a559"
+    },
+    {
+      "path": "docs/tasks/EMOS-001/R01-RESULTS.md",
+      "bytes": 4696,
+      "sha256": "b62feb950bcb7a9646e925da23a93ed614ae764c1a6e7e77380b73229c25573a"
+    },
+    {
+      "path": "docs/tasks/EMOS-001/RX006-RECEIVER-R01.md",
+      "bytes": 16367,
+      "sha256": "5170b39df9ce9ad72a4e629994401c74dd6ad8adacdfa0dcb99553eda7985fef"
+    },
+    {
+      "path": "docs/tasks/HDMI-003.md",
+      "bytes": 15447,
+      "sha256": "a1340dae7aad1e6016cead563bb4fa18be04a349b54293e59c6beeba08cfe762"
+    },
+    {
+      "path": "docs/tasks/HDMI-004.md",
+      "bytes": 8528,
+      "sha256": "2af5d60909fbf1059d8d78917ced6e9a140193a6980b2e5a6f36f17ed2593a65"
+    },
+    {
+      "path": "docs/tasks/INPUT-005/results.json",
+      "bytes": 6647,
+      "sha256": "3ee206df88a46aea1153f7fb425b196acdb11901d3f476ed86ce9bf41f94d5fc"
+    },
+    {
+      "path": "docs/tasks/INPUT-006.md",
+      "bytes": 15866,
+      "sha256": "aa5fc9f648cb938bf7d98e7c9cdbbbfcc15f57c25090f3c96ab784c7c0cb4b4a"
+    },
+    {
+      "path": "docs/tasks/NET-004/CPU-ACCOUNTING-FIT-R10.md",
+      "bytes": 2967,
+      "sha256": "0ae7281fc32846ce635649e9b1517e42184c35947d5bc54e211ea87760aea7e7"
+    },
+    {
+      "path": "docs/tasks/NET-004/CPU-ACCOUNTING-IDENTIFIED-R01.md",
+      "bytes": 3117,
+      "sha256": "37581fa9dc5930538c2c0475b3dff0951a68e5d13d62c046f1d24298721586cc"
+    },
+    {
+      "path": "docs/tasks/NET-004/UART1-APPLICATION-DRIVER-R01.md",
+      "bytes": 13635,
+      "sha256": "e6a3bee881f80c3e527ab001178d84d3094af37b5a00626f33b7c3c27bbb0256"
+    },
+    {
+      "path": "docs/tasks/NET-004/UART1-MATCHED-R01.json",
+      "bytes": 2977,
+      "sha256": "ec9a067141eb1f6aad0246f7d0d595facb7801da14d4b18b2c8255196150f901"
+    },
+    {
+      "path": "docs/tasks/NET-008.md",
+      "bytes": 10231,
+      "sha256": "7c453a0a5d30b0be30b4fd1d1fd64ecaf6a5cc262611450abf74afc9a923bf40"
+    },
+    {
+      "path": "docs/tasks/P4PC-001.md",
+      "bytes": 20120,
+      "sha256": "9a70de131bcf170a2992483cf34d2ec2b4a6d778f5cb960df48b3ea882f6ff77"
+    },
+    {
+      "path": "docs/tasks/QUAL-006.md",
+      "bytes": 28142,
+      "sha256": "51fd50855fa44053fb97a1dd952772a7d1ce6cd0dfecc9860f6ce8d1c3834402"
+    },
+    {
+      "path": "docs/tasks/SCROLL-001.md",
+      "bytes": 25930,
+      "sha256": "3447c1a457dcd212fbc99969271e39bcb704a91e200995844db696a3f6ab926b"
+    },
+    {
+      "path": "docs/tasks/TEXT-001.md",
+      "bytes": 12902,
+      "sha256": "9a218c499069330941368139636361c675f5f40266a59a85bb6ec52cbb2bdefa"
+    },
+    {
+      "path": "docs/testing/resident-render-suite.md",
+      "bytes": 7190,
+      "sha256": "50f7e151d8898fd30472717af610a43b696cb5f66f292a9eab5282bd1a568cf2"
+    },
+    {
+      "path": "include/agon/controller.hpp",
+      "bytes": 12782,
+      "sha256": "afaf2adfa332376b5fc52c0af0e5776f34ccd34bf137cac286f9564dbe5a1b77"
+    },
+    {
+      "path": "production/README.md",
+      "bytes": 6684,
+      "sha256": "e9ac0173728c99d7bf7a731c94b8737cffba6f21035efd0d3718663c4c4133b8"
+    },
+    {
+      "path": "production/bundles/extender-installation-r02/bundle.yaml",
+      "bytes": 4265,
+      "sha256": "1fc90f395fabfdb4dff8b4c450820cde8ee297c3fde771ce76e36b3473f230df"
+    },
+    {
+      "path": "production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml",
+      "bytes": 5153,
+      "sha256": "e5fa192bb2e621d215e001ed042c0908c524ccabcbb41619f14ec1a65fed5a1c"
+    },
+    {
+      "path": "production/current.yaml",
+      "bytes": 456,
+      "sha256": "6f75e49d701f32c5079e94da12c38271cfb004439d78e2417350c70d57bf0382"
+    },
+    {
+      "path": "production/releases/v0.2.1.yaml",
+      "bytes": 4717,
+      "sha256": "3f0ccd5c882d8f5ab7883dab532c5096fcd8bc766254c130dbcbac7b59306b9a"
+    },
+    {
+      "path": "qualification/README.md",
+      "bytes": 13687,
+      "sha256": "9838d9fdc1c9ea6b1dc397a089e8c2259ecba2d6d2ba4921ba1decf8b9a6b4f8"
+    },
+    {
+      "path": "qualification/run.py",
+      "bytes": 45327,
+      "sha256": "325c9083057efaf6d6cb140442e141e3ee2c4334ee8a1c8fbe26477fe8ef0df4"
+    },
+    {
+      "path": "scripts/README.md",
+      "bytes": 14520,
+      "sha256": "25e67cf1e9286541620c171e16c205af0d5173146ae35d50f294680496db9c45"
+    },
+    {
+      "path": "tools/wifi-setup/src/main.c",
+      "bytes": 5599,
+      "sha256": "1aa8b71d0a1dc4a68f58b29ee288834b301f6bb11928d31f552615f7421a910c"
+    },
+    {
+      "path": "tools/wifi-setup/src/uart.src",
+      "bytes": 690,
+      "sha256": "b77ebe35b1dd6d35936baadd07b1453d2b1a28fb5c07c957274a9e3523b0e72c"
+    },
+    {
+      "path": "tools/wifi-start/src/main.c",
+      "bytes": 5031,
+      "sha256": "9d9bd06da47860c91ec7fe5925a2ae2841574d3bce63273f7988655bf345e88d"
+    },
+    {
+      "path": "vdp/build/p4-profiles.json",
+      "bytes": 10176,
+      "sha256": "f612f952b017f830cec9f05025d450126684a18a4d4aaddf867cf2cb23099d97"
+    }
+  ],
+  "limits": [
+    "Source/artifact compatibility is not physical execution or exhaustive conformance.",
+    "API table presence alone is not full Eirene per-function equivalence.",
+    "This audit inventories99 unfinished TODO entries; it does not promote every archived artifact into a current candidate.",
+    "Other project owners audit their own candidates. The scheduler contribution is the first-job source review."
+  ],
+  "todo_snapshot_sha256": "638e5310ef2ee66fb92bd6f2e48eab74bbd070b4016035ef8e90fe75b562d6cf",
+  "todo_snapshot_note": "All99 unfinished entries at audit time, including AUDIT-012 itself; completed audit is removed from authoritative TODO during closeout."
+}

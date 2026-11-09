@@ -1,5 +1,12 @@
 # Current installation
 
+Smith's current [platform firmware defaults](../docs/procedures/olimex-firmware.md)
+govern new testing and deployments. The retained v0.1.0 bundle below records an
+accepted historical combination; its old EMOS/mainboard VDP selection is not the
+ordinary deployment default. The [compatibility audit](../docs/tasks/AUDIT-012/RESULTS.md)
+records companion migration needs for this bundle and the v0.2.1 candidate.
+Do not rewrite their immutable bytes or infer a new production promotion.
+
 **v0.1.0** is the Author-accepted production version, tagged `v0.1.0`.
 It selects the unchanged **extender-installation-r02** local DevKit bundle.
 [Current selection](current.yaml) points to its

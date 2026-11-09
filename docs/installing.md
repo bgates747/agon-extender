@@ -1,5 +1,14 @@
 # Installing an Extender bundle
 
+For new testing and deployment, first apply the
+[platform firmware defaults](procedures/olimex-firmware.md). The bundle sequence
+below describes the retained accepted package. Its old EMOS/stock-mainboard
+preservation instruction does not select those versions for an ordinary new job.
+Use current standard companion images, or an explicit firmware/version case;
+changing companions creates a new combination requiring its own qualification.
+Keep the original bundle and its evidence intact. Matching installed standards
+are reused without a redundant flash or full unchanged-device backup.
+
 Use `production/current.yaml` in the source repository to select the approved
 local installation and its immutable bundle record. Production **v0.1.0** selects
 `extender-installation-r02`; the tag does not rename packaged components. The accepted combination is

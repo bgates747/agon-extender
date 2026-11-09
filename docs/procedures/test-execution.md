@@ -9,6 +9,11 @@ monitor settling and the prohibition on test-driven startup changes.
 
 ## TE-01 — Prepare without invoking
 
+For Olimex, resolve the [standard firmware selection](olimex-firmware.md) and
+recorded installed identities first. Skip unnecessary firmware writes when the
+standard already matches. A declared firmware/compatibility exception binds
+current standard restore artifacts, not an obsolete incoming image by default.
+
 1. The agent reads the active task contract, bench constraints, SD layout and
    current machine-local bench record. Confirm Author authorization, bench
    availability, exact firmware/fixture identities and the actual application

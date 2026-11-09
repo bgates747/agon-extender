@@ -8,6 +8,19 @@ current behavior. Dated evidence supports claims but is not a second manual.
 Production **v0.1.0** is the accepted local combination. The [current approved local installation](../production/README.md) selects exact
 firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 
+**Olimex testing defaults** are separately governed by the
+[standard firmware policy](procedures/olimex-firmware.md): pinned VDPlet
+v0.1.2-alpha and latest integrated EMOS with current Eirene functions. Reuse
+matching installed standards; restore them after firmware/compatibility tests.
+The [selector](olimex-firmware-standard.json) records exact VDP/a25f EMOS identities
+and the [Eirene function inventory](olimex-emos-functions.md). This is not a
+production-bundle promotion.
+
+The [pinned-firmware candidate audit](tasks/AUDIT-012/RESULTS.md) covers current
+selectors and every unfinished task. Older production companions/private
+experimental APIs are not ordinary default deployments. Alexe/Console8 tests
+use the same VDPlet release with the pinned bare Eirene RC3 MOS.
+
 The Author also accepts the newer P4-PC direct-keyboard/onboard-hub F310
 combination. Its [immutable application update](../production/bundles/indexed-hdmi-r16-b2026-10-30-22-37-38Z/bundle.yaml)
 preserves tested bytes and current EMOS. The Author selects

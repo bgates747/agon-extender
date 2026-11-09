@@ -5,6 +5,11 @@ checks a small TCP BBS, with private configuration, English progress, Escape and
 redacted progress/error logs. It is for a manually operated Console8 with MOS3.0
 or later; it does not borrow UART1 from an active Extender installation.
 
+Future Console8/Alexe tests use the
+[pinned VDPlet and bare Eirene RC3 defaults](procedures/olimex-firmware.md).
+The existing manual pass predates that exact pairing. The source uses ordinary
+MOS UART/FatFS/VDU calls; it does not require an async-output firmware exception.
+
 At the MOS prompt, change to the utility directory once and use local filenames:
 
 ```text

@@ -8,6 +8,12 @@ physical checkout workflow; it does not grant new target or test authority.
 
 ## Three separate facts
 
+Olimex completion also observes the [standard firmware policy](olimex-firmware.md).
+Installed identities persist across application-only jobs; no routine reflash
+or full unchanged-device readback is required. A firmware/compatibility exception
+returns affected components to current standards before normal release. Neither
+desired firmware nor a successful process result is proof of installed bytes.
+
 | Fact | Evidence | What it does not prove |
 |---|---|---|
 | Host process completed | Parent-written child identity and actual `wait()` result; joined registered children/groups in the native execution namespace | Workload pass, restored firmware, CLI readiness |

@@ -1,6 +1,6 @@
 # Controller input for applications
 
-Use the single public include `include/agon/controller.hpp` for normalized gamepad input in an ordinary AgonDev C++ application. Its routines are linked into the application; EMOS retains transport ownership. The include supplies named controls, native stick/trigger values, validity, conservative age and retained press counts without allocation or a MOSlet. This development API requires the matching reduced EMOS controller endpoint and has software/target-build coverage; the earlier physical installation still uses the older application gateway.
+Use the single public include `include/agon/controller.hpp` for normalized gamepad input in an ordinary AgonDev C++ application. Its routines are linked into the application; EMOS retains transport ownership. The include supplies named controls, native stick/trigger values, validity, conservative age and retained press counts without allocation or a MOSlet. This development API requires the matching reduced EMOS controller endpoint and has software/target-build coverage. The currently selected a25f EMOS source/map includes that endpoint; the earlier accepted viewer uses the older application gateway and cannot be mixed with it.
 
 P4 or the host acquisition adapter owns physical controller decoding. The public include has no USB IDs, device report layouts, calibration UI or application-specific flight/game mappings. The on-hand F310's XInput-style controls define the normalized interface; the include alone does not make every controller compatible. See the [input guide](controller-input.md) for acquired-source support and the [transport contract](protocols/controller-emos.md) for exact bytes and ownership.
 
@@ -118,5 +118,12 @@ The tests replace physical boundaries. Passing them does not qualify hardware, i
 ## Compatibility
 
 The new client uses gateway operations 4–7 and receives 98 bytes: unchanged CIS2 bytes 0–95 followed by two raw timing bytes. The older client used operations 0–3 and received 96 bytes. Those application/EMOS combinations must not be mixed; the service name and availability discovery alone do not prove compatibility. The new endpoint refuses the old operations, and the old endpoint refuses the new OPEN.
+
+The [current EMOS selector](olimex-firmware-standard.json) pins the a25f source
+and map containing operations4–7. This closes the source/artifact identity
+question; it does not establish a physical controller-client pass with the
+new VDPlet standard. The old v0.2.1 companion viewer requires adaptation or an
+explicit historical-ABI comparison, as recorded in the
+[candidate audit](tasks/AUDIT-012/RESULTS.md).
 
 P4's CI2 request and CIS2 96-byte physical UART reply are unchanged. A controller-enabled P4 implementing that carrier remains the transport peer; this API does not install or enable controller acquisition. The earlier physically reviewed viewer/EMOS combination remains historical evidence under its [frozen gateway contract](tasks/INPUT-005/CONTROLLER-GATEWAY-V1.md). New source remains an offline development result pending separately authorized identification, installation and physical review. Production selection is unchanged.

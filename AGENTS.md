@@ -102,6 +102,15 @@ Extender-related defects with Extender, preserving evidence and arranging
 exclusive repair custody. The Author authorizes debugging as needed, with
 self-assigned task/action/validation records and a clean consumer handback.
 
+For all Olimex test/deployment preparation follow
+`docs/procedures/olimex-firmware.md` and `docs/olimex-firmware-standard.json`:
+pinned VDPlet v0.1.2-alpha plus latest integrated full-Eirene-function EMOS by
+default. Reuse matching verified installed firmware rather than reflashing per
+run. Explicit new-firmware/version-compatibility tests restore the current
+standards afterward; do not automatically restore an obsolete incoming image.
+Record actual installed identities/provenance separately from desired selection.
+Existing test, hardware, startup and stop-boundary permissions still apply.
+
 Before preparing or running any eZ80 bench fixture, also read
 `docs/qualification/bench-constraints.md`. Active constraints there govern
 fixture invocation and evidence even when the owning task predates them.

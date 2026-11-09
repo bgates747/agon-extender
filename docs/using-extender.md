@@ -6,6 +6,11 @@ operator, current owner and intended files before sending input, transferring,
 resetting or flashing. Read-only status is not proof that a running application
 can be interrupted.
 
+Apply the [current platform firmware defaults](procedures/olimex-firmware.md)
+before choosing firmware for new work. Reuse matching verified installed
+standards. Historical production bundles and old run receipts retain their
+scope; they do not override the pinned mainboard VDP/MOS defaults.
+
 ## Establish the starting state
 
 1. Obtain the P4 URL, host paths, current installed-build receipt and bench

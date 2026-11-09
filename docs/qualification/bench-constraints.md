@@ -5,6 +5,16 @@ test task. It is not product architecture and does not identify private bench
 topology or a particular specimen. Machine-specific observations remain in
 `HARDWARE.local.md`.
 
+## Standard Olimex firmware — Author instruction 2026-11-08
+
+All Olimex tests/deployments follow [standard firmware reuse](../procedures/olimex-firmware.md):
+VDPlet v0.1.2-alpha plus latest integrated full-Eirene-function EMOS by default,
+no unnecessary reinstall of matching verified images, and standard restoration
+after explicit firmware-development/version-compatibility exceptions. Current
+installed identities and verification provenance are recorded separately from
+the desired standard. Existing physical/test permissions and human-only
+invocation boundaries remain in force.
+
 ## BC-001 — Mainboard keyboard unavailable; admitted P4 input permitted
 
 **Status:** The mainboard USB/PS/2 keyboard path remains unavailable. The exact
