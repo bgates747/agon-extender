@@ -249,3 +249,19 @@ The old credential may remain on that retained installation; its partition was
 not inspected or mounted in this check. Existing default keyring presence is
 therefore confirmed, while availability of the old credential is unestablished.
 The P4 development image,115200 modem setting and Smith-held bench are unchanged.
+
+## Retained Pop!_OS keyring located
+
+Smith identifies the original credential source as the earlier Pop!_OS desktop,
+before Pi5 became the central development host. Read-only filesystem metadata
+confirms the inactive installation identifies itself as pop-os and retains a
+2390-byte login.keyring, last modified October9. A separate user.keystore also
+exists. No keyring contents or secret values are read, no collection is unlocked,
+and nothing is copied or imported into the currently booted OS.
+
+The partition remains unmounted. Default read-only debugfs directory inspection
+avoids mounting, journal replay and cross-installation writes. This establishes
+survival of the old keyring file, not presence or validity of the specific
+MOD-WIFI entry. Recovering that exact entry remains a distinct next step; do not
+claim the old credential was lost merely because current Oryx lacks the entry.
+Bench custody, P4 development image and modem settings remain unchanged.
