@@ -3,6 +3,7 @@
 // following the existing USB-minimal appliance model. No eZ80 appliance runs;
 // no MOS/VDP route or peripheral is commandeered. All mainboard lanes are inputs.
 #include "bandwidth.h"
+#include "join_codec.h"
 #include <cstdio>
 #include <cstring>
 #include <cctype>
@@ -108,6 +109,17 @@ void run() {
   bool retired=retire();pass=pass&&retired;
   std::printf("NET008 {\"event\":\"end\",\"pass\":%s,\"uart_retired\":%s}\n",pass?"true":"false",retired?"true":"false");
 }
+void join(unsigned baud) {
+ uint8_t private_bytes[98]{};size_t got=0,wanted=2;auto end=esp_timer_get_time()+5000000;
+ std::puts("NET008 {\"event\":\"join_input_ready\"}");
+ while(got<wanted&&esp_timer_get_time()<end){
+  int n=usb_serial_jtag_read_bytes(private_bytes+got,wanted-got,pdMS_TO_TICKS(20));if(n<0)break;got+=size_t(n);
+  if(got==2&&wanted==2){if(private_bytes[0]<1||private_bytes[0]>32||private_bytes[1]>64)break;wanted=2+private_bytes[0]+private_bytes[1];}
+ }
+ if(got==wanted&&wanted>2)net008_join(baud,private_bytes+2,private_bytes[0],private_bytes+2+private_bytes[0],private_bytes[1]);
+ else std::puts("NET008 {\"event\":\"join_end\",\"pass\":false,\"phase\":\"private_input\",\"ip_ready\":false,\"uart_retired\":true}");
+ n8join::wipe(private_bytes,sizeof(private_bytes));
+}
 void status() {
   std::printf("NET008 {\"event\":\"ready\",\"build\":\"%s\",\"source\":\"%s\",\"start_required\":true,\"used\":%s}\n",NET008_BUILD_ID,NET008_SOURCE_COMMIT,used?"true":"false");
 }
@@ -141,6 +153,7 @@ extern "C" void app_main() {
         line[n]=0;unsigned old_rate=0,new_rate=0,ms=0,port=0,nonce=0;char ip[64]{};char extra=0;
         if(!std::strcmp(line,"START"))run();
         else if(!std::strcmp(line,"STATUS"))status();
+        else if(std::sscanf(line,"JOIN %u %c",&old_rate,&extra)==1&&old_rate>0&&old_rate<=1152000)join(old_rate);
         else if(std::sscanf(line,"INFO %u %c",&old_rate,&extra)==1&&old_rate>0&&old_rate<=1152000)net008_info(old_rate);
         else if(std::sscanf(line,"BENCH %u %u %u %63s %u %u %c",&old_rate,&new_rate,&ms,ip,&port,&nonce,&extra)==6)net008_bench(old_rate,new_rate,ms,ip,port,nonce);
         else std::puts("NET008 {\"event\":\"refused\",\"reason\":\"command\"}");

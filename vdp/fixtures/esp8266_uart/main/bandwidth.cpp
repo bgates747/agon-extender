@@ -3,6 +3,7 @@
 // Ordinary P4 services are deliberately absent in this development image.
 #include "bandwidth.h"
 #include "bw_codec.h"
+#include "join_codec.h"
 #include <cstdio>
 #include <cstring>
 #include <cctype>
@@ -51,18 +52,22 @@ void hex(const char *kind,const uint8_t *data,size_t n) {
  std::puts("\"}");
 }
 bool write(const void *data,size_t n){return uart_write_bytes(u,data,n)==int(n);}
-bool command(const char *s,unsigned milliseconds,bool prompt=false,bool report=false) {
+bool command(const char *s,unsigned milliseconds,bool prompt=false,bool report=false,bool private_reply=false,char *reply=nullptr,size_t reply_cap=0) {
  uint8_t b[2048]{};size_t n=0;auto end=esp_timer_get_time()+int64_t(milliseconds)*1000;
  if(!write(s,std::strlen(s))||!ok(uart_wait_tx_done(u,pdMS_TO_TICKS(500))))return false;
- bool pass=false;
+ bool pass=false;auto progress=esp_timer_get_time();
  while(esp_timer_get_time()<end&&n+1<sizeof(b)) {
   if(!health())break;
+  if(private_reply&&milliseconds>3000&&esp_timer_get_time()-progress>=1000000){progress=esp_timer_get_time();std::puts("NET008 {\"event\":\"join_progress\",\"phase\":\"association\"}");}
   int got=uart_read_bytes(u,b+n,sizeof(b)-n-1,pdMS_TO_TICKS(10));if(got<0)break;n+=size_t(got);b[n]=0;
   if(std::strstr(reinterpret_cast<char *>(b),"\nERROR\r\n")||std::strstr(reinterpret_cast<char *>(b),"FAIL\r\n"))break;
   if(prompt?std::strchr(reinterpret_cast<char *>(b),'>')!=nullptr:std::strstr(reinterpret_cast<char *>(b),"\nOK\r\n")!=nullptr){pass=true;break;}
  }
- if(report||!pass)hex("bw_at_reply",b,n);
- return pass;
+ // JOIN may receive credential-bearing echoes even after ATE0. Suppress its
+ // entire raw reply on both success and failure, then erase the scratch bytes.
+ if(reply&&reply_cap){size_t k=n<reply_cap-1?n:reply_cap-1;std::memcpy(reply,b,k);reply[k]=0;}
+ if(!private_reply&&(report||!pass))hex("bw_at_reply",b,n);
+ n8join::wipe(b,sizeof(b));return pass;
 }
 bool exact(uint8_t *out,size_t n,int64_t deadline) {
  size_t got=0;last_exact=0;
@@ -163,4 +168,26 @@ void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,cons
  if(installed){bool at=command("AT\r\n",2000);clean=at&&clean;}
  bool retired=retire();
  std::printf("NET008 {\"event\":\"bw_end\",\"pass\":%s,\"phase\":\"%s\",\"baud\":%u,\"actual_p4_baud\":%u,\"duration_ms\":%u,\"nonce\":%u,\"tx_frames\":%u,\"rx_frames\":%u,\"tx_bytes\":%u,\"rx_bytes\":%u,\"tx_elapsed_us\":%lld,\"rx_elapsed_us\":%lld,\"uart_errors\":%u,\"crc_errors\":%u,\"frame_errors\":%u,\"cleanup\":%s,\"uart_retired\":%s}\n",pass&&clean&&retired?"true":"false",phase,new_baud,unsigned(actual_baud),milliseconds,nonce,unsigned(tx_count),rx_count,unsigned(tx_count)*1024,rx_count*1024,static_cast<long long>(tx_last-tx_first),static_cast<long long>(rx_last-rx_first),unsigned(faults),crc_errors,frame_errors,clean?"true":"false",retired?"true":"false");
+}
+
+void net008_join(unsigned baud,const uint8_t *ssid,size_t ns,const uint8_t *password,size_t np) {
+ char request[256]{},reply[2048]{};bool pass=false,ip_ready=false;const char *phase="credentials";
+ if(!n8join::build(request,sizeof(request),ssid,ns,password,np))goto done;
+ phase="uart_init";if(!init(baud))goto done;
+ phase="AT";if(!command("AT\r\n",2000,false,false,true)||!command("ATE0\r\n",2000,false,false,true))goto done;
+ phase="station_mode";if(!command("AT+CWMODE_CUR=1\r\n",2000,false,false,true))goto done;
+ phase="association";std::puts("NET008 {\"event\":\"join_progress\",\"phase\":\"association\"}");
+ if(!command(request,60000,false,false,true))goto done;
+ n8join::wipe(request,sizeof(request));phase="DHCP";
+ for(unsigned i=0;i<10;++i){
+  if(!command("AT+CIFSR\r\n",2000,false,false,true,reply,sizeof(reply)))goto done;
+  const char *ip=std::strstr(reply,"+CIFSR:STAIP,\"");
+  unsigned a=0,b=0,c=0,d=0;char tail=0;
+  if(ip&&std::sscanf(ip+14,"%u.%u.%u.%u%c",&a,&b,&c,&d,&tail)==5&&tail=='"'&&a<=255&&b<=255&&c<=255&&d<=255&&(a||b||c||d))ip_ready=true;
+  n8join::wipe(reply,sizeof(reply));if(ip_ready){pass=true;phase="complete";break;}
+  std::puts("NET008 {\"event\":\"join_progress\",\"phase\":\"DHCP\"}");vTaskDelay(pdMS_TO_TICKS(1000));
+ }
+ done:
+ n8join::wipe(request,sizeof(request));n8join::wipe(reply,sizeof(reply));
+ bool retired=retire();std::printf("NET008 {\"event\":\"join_end\",\"pass\":%s,\"phase\":\"%s\",\"ip_ready\":%s,\"uart_retired\":%s}\n",pass&&retired?"true":"false",phase,ip_ready?"true":"false",retired?"true":"false");
 }
