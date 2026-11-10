@@ -22,7 +22,7 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[PARALLEL-001 — Reliable eight-bit parallel for Wolf](docs/tasks/PARALLEL-001.md)** — Active persistent goal: Extender owns pipe diagnosis/fixtures/fixes, Wolf owns the assigned consumer test. Oryx unavailable; prepare offline and share Olimex through normal fresh reservations with UART/VDPlet.
 
 
-- [ ] **[NET-008 — ESP8266 bring-up and standalone-client groundwork](docs/tasks/NET-008.md)** — Corrected P4 internal1152000/full-load minute passes; external modem384000/full-minute CRC passes, higher-rate byte-loss location unresolved. Product restored and170 released. Exact original overrun contribution remains unisolated; C8 qualification/standalone client follow.
+- [ ] **[NET-008 — ESP8266 bring-up and standalone-client groundwork](docs/tasks/NET-008.md)** — Corrected P4 internal1152000/full-load minute passes; external modem384000/full-minute CRC passes, higher-rate byte-loss location unresolved. Product restored and170 released; short directional wire-capture investigation selected and contract frozen before implementation. Exact original overrun contribution remains unisolated; C8 qualification/standalone client follow.
 
 - [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility passes manual C8 connection/DHCP/two-ping path; private automatic-connect option and host fault checks retained. Public license/version closure and broader physical cases remain. Radiotux sources stay unchanged.
 

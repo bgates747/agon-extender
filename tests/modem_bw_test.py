@@ -38,4 +38,21 @@ class Protocol(unittest.TestCase):
      _,data=check(receive(sock),seq,DOWN);seq+=1
      if not data:break
     t.join();self.assertTrue(peer.finished.wait(3));self.assertTrue(peer.result['pass']);self.assertEqual(peer.result['rx_frames'],20);peer.close()
+ def test_directed_peers(self):
+  for direction in ['up','down']:
+   with tempfile.TemporaryDirectory() as tmp:
+    peer=Peer('127.0.0.1',Path(tmp)/'peer',19,576000,20,direction)
+    try:
+     with socket.create_connection(('127.0.0.1',peer.port),timeout=3) as sock:
+      sock.settimeout(3);sock.sendall(frame(0,struct.pack('<4I',19,576000,20,PAYLOAD)));self.assertEqual(check(receive(sock),0),(0,b'GO'))
+      if direction=='up':sock.sendall(frame(1,pattern(1,UP)));sock.sendall(frame(2))
+      else:sock.sendall(frame(1))
+      seq=1
+      while True:
+       _,data=check(receive(sock),seq,DOWN);seq+=1
+       if not data:break
+      self.assertTrue(peer.finished.wait(3));self.assertTrue(peer.result['pass'])
+      if direction=='up':self.assertEqual(peer.result['tx_frames'],0);self.assertEqual(peer.result['rx_frames'],1)
+      else:self.assertGreater(peer.result['tx_frames'],0);self.assertEqual(peer.result['rx_frames'],0)
+    finally:peer.close()
 if __name__=='__main__':unittest.main()

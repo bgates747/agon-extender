@@ -156,6 +156,9 @@ extern "C" void app_main() {
         else if(std::sscanf(line,"LOOPBACK %u %u %u %c",&old_rate,&ms,&new_rate,&extra)==3)net008_loopback(old_rate,ms,new_rate);
         else if(std::sscanf(line,"JOIN %u %c",&old_rate,&extra)==1&&old_rate>0&&old_rate<=1152000)join(old_rate);
         else if(std::sscanf(line,"INFO %u %c",&old_rate,&extra)==1&&old_rate>0&&old_rate<=1152000)net008_info(old_rate);
+        // Directional diagnostics keep GO/EOS control but only one bulk producer.
+        else if(std::sscanf(line,"UP %u %u %u %63s %u %u %c",&old_rate,&new_rate,&ms,ip,&port,&nonce,&extra)==6)net008_bench(old_rate,new_rate,ms,ip,port,nonce,1);
+        else if(std::sscanf(line,"DOWN %u %u %u %63s %u %u %c",&old_rate,&new_rate,&ms,ip,&port,&nonce,&extra)==6)net008_bench(old_rate,new_rate,ms,ip,port,nonce,2);
         else if(std::sscanf(line,"BENCH %u %u %u %63s %u %u %c",&old_rate,&new_rate,&ms,ip,&port,&nonce,&extra)==6)net008_bench(old_rate,new_rate,ms,ip,port,nonce);
         else std::puts("NET008 {\"event\":\"refused\",\"reason\":\"command\"}");
       }

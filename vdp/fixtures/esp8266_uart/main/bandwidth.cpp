@@ -30,7 +30,7 @@ unsigned faults=0,crc_errors=0,frame_errors=0,rx_seen=0;
 bool data_active=false;int64_t progress_at=0,data_start=0;
 size_t last_exact=0;const char *rx_failure="none";
 int64_t tx_first=0,tx_last=0,tx_deadline=0;
-unsigned duration=0;
+unsigned duration=0,bulk_direction=0;
 uint8_t tx_wire[n8bw::max_frame],tx_data[n8bw::payload_size];
 uint8_t rx_wire[n8bw::max_frame],expected[n8bw::payload_size];
 bool health() {
@@ -113,7 +113,7 @@ bool read_frame(int64_t deadline,size_t &n) {
 }
 void tx_task(void *) {
  unsigned seq=1;tx_first=esp_timer_get_time();tx_deadline=tx_first+int64_t(duration)*1000;
- while(!stop&&esp_timer_get_time()<tx_deadline) {
+ while(bulk_direction!=2&&!stop&&esp_timer_get_time()<tx_deadline) {
   n8bw::pattern(tx_data,sizeof(tx_data),seq,n8bw::up_salt);size_t n=n8bw::frame(tx_wire,seq,tx_data,sizeof(tx_data));
   if(!write(tx_wire,n)){stop=true;break;}tx_count=seq++;
  }
@@ -127,10 +127,10 @@ void net008_info(unsigned baud) {
  if(pass)pass=command("AT\r\n",2000)&&command("ATE0\r\n",2000)&&command("AT+CIPSTATUS\r\n",2000,false,true)&&command("AT+CIFSR\r\n",2000,false,true);
  bool retired=retire();std::printf("NET008 {\"event\":\"bw_info_end\",\"pass\":%s,\"baud\":%u,\"uart_retired\":%s}\n",pass?"true":"false",baud,retired?"true":"false");
 }
-void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,const char *ip,unsigned port,unsigned nonce) {
- service_profile=4;
+void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,const char *ip,unsigned port,unsigned nonce,unsigned direction) {
+ service_profile=4;bulk_direction=direction;
  bool pass=false,connected=false,transparent=false;const char *phase="arguments";unsigned rx_count=0;int64_t rx_first=0,rx_last=0;uint32_t actual_baud=0;
- if(milliseconds<1000||milliseconds>62000||new_baud>1152000||old_baud>1152000||!new_baud||!old_baud||!port||port>65535||std::strlen(ip)>15){std::puts("NET008 {\"event\":\"bw_refused\"}");return;}
+ if(direction>2||milliseconds<1000||milliseconds>62000||new_baud>1152000||old_baud>1152000||!new_baud||!old_baud||!port||port>65535||std::strlen(ip)>15){std::puts("NET008 {\"event\":\"bw_refused\"}");return;}
  for(const char *p=ip;*p;++p)if(!std::isdigit(unsigned(*p))&&*p!='.'){std::puts("NET008 {\"event\":\"bw_refused\"}");return;}
  phase="uart_init";if(!init(old_baud))goto finish;
  phase="old_baud_AT";if(!command("AT\r\n",2000)||!command("ATE0\r\n",2000))goto finish;
@@ -224,7 +224,7 @@ void net008_join(unsigned baud,const uint8_t *ssid,size_t ns,const uint8_t *pass
 // 0=reconstructed baseline,1=RX priority,2=no active USB,3=early IRAM IRQ,4=all.
 void net008_loopback(unsigned baud,unsigned milliseconds,unsigned profile) {
  if(!baud||baud>1152000||milliseconds<1000||milliseconds>62000||profile>4){std::puts("NET008 {\"event\":\"loop_refused\"}");return;}
- service_profile=profile;bool pass=false,eos=false;unsigned received=0;
+ service_profile=profile;bulk_direction=0;bool pass=false,eos=false;unsigned received=0;
  if(!init(baud,true)){retire();std::puts("NET008 {\"event\":\"loop_end\",\"pass\":false,\"phase\":\"init\"}");return;}
  std::printf("NET008 {\"event\":\"loop_start\",\"baud\":%u,\"duration_ms\":%u,\"profile\":%u,\"rx_priority\":%u,\"tx_priority\":5,\"external_pins_input\":true}\n",baud,milliseconds,profile,unsigned(uxTaskPriorityGet(nullptr)));
  duration=milliseconds;stop=false;tx_done=false;tx_count=0;data_start=progress_at=esp_timer_get_time();data_active=true;

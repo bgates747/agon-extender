@@ -8,9 +8,11 @@ from pathlib import Path
 from modem_bw_protocol import PAYLOAD,UP,DOWN,frame,check,receive,pattern
 
 class Peer:
- def __init__(self,bind,folder,nonce,baud,milliseconds):
+ def __init__(self,bind,folder,nonce,baud,milliseconds,direction="duplex"):
   self.folder=Path(folder);self.folder.mkdir(exist_ok=False)
   self.nonce,self.baud,self.ms=nonce,baud,milliseconds
+  if direction not in ["duplex","up","down"]:raise ValueError("Invalid direction")
+  self.direction=direction
   self.stop=threading.Event();self.finished=threading.Event();self.close_request=threading.Event();self.lock=threading.Lock()
   self.result={'pass':False,'tx_frames':0,'rx_frames':0};self.conn=None
   self.listener=socket.socket();self.listener.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1);self.listener.bind((bind,0));self.listener.listen(1);self.listener.settimeout(15)
@@ -22,7 +24,7 @@ class Peer:
  def sender(self):
   seq=1;start=time.monotonic();failure=None
   try:
-   while not self.stop.is_set() and time.monotonic()-start<self.ms/1000:
+   while self.direction!="up" and not self.stop.is_set() and time.monotonic()-start<self.ms/1000:
     self.conn.sendall(frame(seq,pattern(seq,DOWN)));self.result['tx_frames']=seq;seq+=1
    self.conn.sendall(frame(seq))
   except Exception as e:failure=repr(e);self.stop.set()
@@ -58,7 +60,7 @@ class Peer:
      sender.join(timeout=3)
      if sender.is_alive():failure='Sender thread did not join'
    self.result.update(rx_elapsed_seconds=0 if rx_start is None else rx_last-rx_start,rx_bytes=self.result['rx_frames']*PAYLOAD,error=failure)
-   self.result['pass']=failure is None and self.result.get('tx_error') is None and self.result['rx_frames']>0
+   self.result['pass']=failure is None and self.result.get('tx_error') is None and (self.result['rx_frames']>0 if self.direction!='down' else self.result['rx_frames']==0)
    (self.folder/'result.json').write_text(json.dumps(self.result,indent=2)+'\n');self.finished.set()
    # Keep TCP up until the P4 has completed its guarded escape/close. The
    # operator closes this peer afterward; no guessed app completion or reset.
