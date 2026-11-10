@@ -329,3 +329,25 @@ to the dedicated scheduler, which manages the actual164 release and next Mech
 booking. Primary target access stops before delivery; no further device access
 or assumed next grant. Firmware stays resident across the numeric sequence;
 physical RUN remains Smith-owned. ESP8266 CRC qualification remains unrun.
+
+## Actual release and Pi keyring repair delegation
+
+The central registry confirms NET008164 released and MechAgon NUMERIC-002
+request32215348ce73 received actual165 custody, initially in admission. Primary
+has no current bench token and performs no more target operations. P4 product
+preparation and diagnostic retention records above remain exact.
+
+Smith runs the Pi enrollment command himself. After hidden keyring-password
+creation/confirmation, the local wrapper's second LoginKeyring construction
+raises Secret Service is unavailable; Wi-Fi enrollment prompts were not reached.
+The wrapper did not establish a usable service despite daemon exit0. Preserve
+any encrypted collection created by the attempt; enrollment is not complete.
+
+Smith explicitly delegates whatever host repair is needed to Pi5 manager and
+clarifies readiness is for HIM to rerun the script. Sent the exact traceback,
+wrapper/source identity and environment in substantive mail plus immediate
+steering to the existing manager. Manager owns repair/qualification and alerts
+linux-extender when genuinely ready; primary then alerts Smith. No automatic
+human enrollment retry, secret retrieval, bench access or unrelated keyring
+migration is requested. The archived WROOM reference stays read-only; local
+wrapper correction is within the delegated repair if required.

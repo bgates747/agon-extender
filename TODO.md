@@ -22,7 +22,7 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[PARALLEL-001 — Reliable eight-bit parallel for Wolf](docs/tasks/PARALLEL-001.md)** — Active persistent goal: Extender owns pipe diagnosis/fixtures/fixes, Wolf owns the assigned consumer test. Oryx unavailable; prepare offline and share Olimex through normal fresh reservations with UART/VDPlet.
 
 
-- [ ] **[NET-008 — ESP8266 bring-up and standalone-client groundwork](docs/tasks/NET-008.md)** — Extender leads the prioritized experiment. TX48/RX47 AT/GMR passes; development firmware retained on the held bench. Next: real network exchange and measured bandwidth/limits, then hand findings to MechAgon for a game client without Extender.
+- [ ] **[NET-008 — ESP8266 bring-up and standalone-client groundwork](docs/tasks/NET-008.md)** — Extender leads the prioritized experiment. TX48/RX47 AT/GMR passes; modem-test artifacts retained and bench released to MechAgon. Pi5 keyring enrollment repair is delegated; next real network exchange and measured bandwidth/limits, then a standalone game-client handoff.
 
 - [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility passes manual C8 connection/DHCP/two-ping path; private automatic-connect option and host fault checks retained. Public license/version closure and broader physical cases remain. Radiotux sources stay unchanged.
 
