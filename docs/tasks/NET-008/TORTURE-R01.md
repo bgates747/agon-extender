@@ -351,3 +351,21 @@ linux-extender when genuinely ready; primary then alerts Smith. No automatic
 human enrollment retry, secret retrieval, bench access or unrelated keyring
 migration is requested. The archived WROOM reference stays read-only; local
 wrapper correction is within the delegated repair if required.
+
+## Pi manager repair verified; ready for human rerun
+
+Pi5 manager returns verified readiness. The local wrapper SHA256e8c8e59 matches
+the installed file; archived enrollment helpers and MWJ1 schema stay unchanged.
+Manager identifies competing providers: plain --unlock created another daemon
+rather than unlocking the managed provider. The repaired wrapper starts/waits
+for the managed provider and unlocks that exact daemon through its local control
+protocol; first collection creation gets one bounded managed reload.
+
+Manager's isolated qualification passes encrypted creation, locked/wrong-password
+refusal, correct unlock and exact store/load; all synthetic daemon processes
+join. Actual SSH/TTY reaches the password prompt in1.882s and is stopped before
+input. Existing real encrypted keyring files remain unchanged and the Pi default
+collection remains LOCKED. No real credentials are retrieved or enrolled, and
+no bench/modem action occurs. Alert Smith to rerun the same command himself,
+using the Pi keyring password he chose during the earlier attempt, then entering
+Wi-Fi credentials. Readiness is verified; actual enrollment remains human-owned.
