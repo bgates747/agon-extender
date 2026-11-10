@@ -97,3 +97,17 @@ static2048B AT reply scratch, still wiped after command. Retain stack guards and
 verify effective build config. Replace only diagnostic application, independently
 compare new bytes and explicit stopped boot, then run a deliberate INFO before
 first JOIN. No automatic fault replay, standard restoration or lease release.
+
+## Actual168 association and first short baud ladder
+
+Corrected diagnostic380b4ea6 passes installation/readback/stopped boot and INFO.
+Private first JOIN succeeds in5.979host seconds, nonzeroIP, UART retired; no
+credentials captured. Short bidirectional endpoint CRC/byte/frame checks pass
+115200 and230400. First384000 arm fails with145 P4 UART errors (FIFO overrun),
+zero recorded CRC/frame errors before stop, and unresolved immediate cleanup.
+Original peer/processes joined. A separate explicit384000 INFO then passes,
+establishing positive AT/status command-mode reconciliation without replay.
+Host --qualify-baud selects deliberate lower-rate short+10/30/60qualification
+without resubmitting the failed384000arm. P4 image unchanged; this is a separately
+identified host continuation, not a silent firmware/source repin. No rate is
+one-minute qualified yet. User-held lease168 remains occupied.

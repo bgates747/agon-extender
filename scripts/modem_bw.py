@@ -27,6 +27,7 @@ def evaluate(native,peer,seconds):
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for n in ['port','lease','manifest','out']:p.add_argument('--'+n,required=True,type=Path if n in ['manifest','out'] else str)
+ p.add_argument('--qualify-baud',type=int,choices=RATES,help='Deliberate lower-rate qualification after retained first failure and positive command-mode reconciliation')
  p.add_argument('--bind',help='Actual private Pi5 IPv4 reachable by modem');p.add_argument('--start-baud',type=int,default=115200);p.add_argument('--info-only',action='store_true');a=p.parse_args()
  if a.start_baud not in RATES:p.error('Known starting baud must be an Agon-exact ladder rate')
  if not a.info_only and not a.bind:p.error('TCP test requires explicit private --bind address')
@@ -89,15 +90,16 @@ def main():
      return record['pass_case']
     finally:peer.close()
    highest=-1
-   for i,baud in enumerate(RATES):
+   rates=[a.qualify_baud] if a.qualify_baud else RATES
+   for i,baud in enumerate(rates):
     if not case(baud,2):break
     highest=i
    while highest>=0:
     qualified=True
     for seconds in [10,30,60]:
-     if not case(RATES[highest],seconds):qualified=False;break
+     if not case(rates[highest],seconds):qualified=False;break
     if qualified:
-     result.update(pass_suite=True,max_qualified_baud=RATES[highest],scope='Exact P4/AT1.3 ESP8266/Pi5 simultaneous CRC-checked workload; C8 untested');break
+     result.update(pass_suite=True,max_qualified_baud=rates[highest],scope='Exact P4/AT1.3 ESP8266/Pi5 simultaneous CRC-checked workload; C8 untested');break
     highest-=1
    if not result.get('pass_suite'):result['error']='No rate met the full minute criterion'
   return 0 if result.get('pass_suite') else 1
