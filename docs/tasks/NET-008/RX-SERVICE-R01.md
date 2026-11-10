@@ -91,3 +91,13 @@ handoff. Independent internal profile comparisons precede one-minute1152000
 control at>=95% wire utilization; any corrected platform failure stops modem
 ceiling claims. Restore verified product P4 for normal release unless Smith
 subsequently selects different retention. No old168 hold/token is reused.
+
+## Actual170 disposition
+
+[Hardware result](RX-SERVICE-R01-RESULT.md): corrected internal1152000full-load
+minute passes; external384000duplexminute passes. Original exact causal setting
+not isolated; shared IRAM/TX-core changes limit reconstructed baseline profiles.
+Higher576000/1152000external faults are Pi CRC failures/P4 RX counters0 and
+remain component-unlocalized, not claimed modem maxima. Product P4 restored and
+independently verified, fresh joined physical handback passed, scheduler released
+170. No additional hardware case or product promotion is selected by this result.
