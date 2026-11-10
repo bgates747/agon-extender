@@ -11,7 +11,11 @@ ROOT=Path(__file__).resolve().parents[1]
 def save(path,value):
  with path.open('x') as f:json.dump(value,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
 def accepted(event,seconds):
- return (event.get('pass') is True and event.get('uart_retired') is True and
+ # A receiver control must actually keep the wire busy; a slow producer cannot
+ # qualify the UART ceiling merely by running for a minute. Ten bits per8N1 byte.
+ baud=event.get('baud',0);elapsed=event.get('tx_elapsed_us',0)
+ fill=event.get('tx_frames',0)*1040*10*1000000/(baud*elapsed) if baud>0 and elapsed>0 else 0
+ return (0.95<=fill<=1.03) and (event.get('pass') is True and event.get('uart_retired') is True and
          event.get('tx_frames',0)==event.get('rx_frames',-1)>0 and
          all(event.get(k,-1)==0 for k in ['uart_errors','crc_errors','frame_errors','fifo_errors','ring_errors']) and
          event.get('queue_peak',128)<128 and event.get('rx_elapsed_us',0)>=seconds*1000000)

@@ -34,3 +34,7 @@ its receive-service hazards and qualify them before blaming the modem.
 This is source evidence and a corrective candidate, not hardware qualification.
 Actual peripheral controls and corrected modem transfers require fresh scheduler
 custody; current6502 lease169 is untouched. No mainboard MOS/VDP API changed.
+
+Receiver acceptance also requires at least95% nominal8N1 wire utilization,
+using actual transmitted frames and producer-to-drained TX duration. This guards
+against qualifying a receiver with a producer too slow to load the UART.

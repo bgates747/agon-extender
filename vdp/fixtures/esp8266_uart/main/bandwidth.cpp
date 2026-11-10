@@ -39,7 +39,8 @@ bool health() {
  size_t buffered=0;if(uart_get_buffered_data_len(u,&buffered)==ESP_OK&&buffered>ring_peak)ring_peak=buffered;
  while(xQueueReceive(queue,&e,0)==pdTRUE)if(e.type!=UART_DATA){
   current_ok=false;++faults;stop=true;
-  if(e.type==UART_FIFO_OVF)++fifo_faults;if(e.type==UART_BUFFER_FULL)++ring_faults;
+  if(e.type==UART_FIFO_OVF)++fifo_faults;
+  if(e.type==UART_BUFFER_FULL)++ring_faults;
   // Never block draining on USB output. First-fault detail remains in counters.
   if(!data_active)std::printf("NET008 {\"event\":\"bw_uart_error\",\"type\":%u}\n",unsigned(e.type));
  }
@@ -245,5 +246,5 @@ void net008_loopback(unsigned baud,unsigned milliseconds,unsigned profile) {
   pass=eos&&!stop&&health()&&received==tx_count&&received>0;
  }
  data_active=false;bool retired=retire();
- std::printf("NET008 {\"event\":\"loop_end\",\"pass\":%s,\"baud\":%u,\"profile\":%u,\"tx_frames\":%u,\"rx_frames\":%u,\"rx_elapsed_us\":%lld,\"uart_errors\":%u,\"crc_errors\":%u,\"frame_errors\":%u,\"ring_peak\":%u,\"queue_peak\":%u,\"max_read_call_gap_us\":%lld,\"fifo_errors\":%u,\"ring_errors\":%u,\"uart_retired\":%s}\n",pass&&retired?"true":"false",baud,profile,unsigned(tx_count),received,static_cast<long long>(last-first),faults,crc_errors,frame_errors,unsigned(ring_peak),queue_peak,static_cast<long long>(max_read_gap),fifo_faults,ring_faults,retired?"true":"false");
+ std::printf("NET008 {\"event\":\"loop_end\",\"pass\":%s,\"baud\":%u,\"profile\":%u,\"tx_frames\":%u,\"rx_frames\":%u,\"rx_elapsed_us\":%lld,\"tx_elapsed_us\":%lld,\"uart_errors\":%u,\"crc_errors\":%u,\"frame_errors\":%u,\"ring_peak\":%u,\"queue_peak\":%u,\"max_read_call_gap_us\":%lld,\"fifo_errors\":%u,\"ring_errors\":%u,\"uart_retired\":%s}\n",pass&&retired?"true":"false",baud,profile,unsigned(tx_count),received,static_cast<long long>(last-first),static_cast<long long>(tx_last-tx_first),faults,crc_errors,frame_errors,unsigned(ring_peak),queue_peak,static_cast<long long>(max_read_gap),fifo_faults,ring_faults,retired?"true":"false");
 }
