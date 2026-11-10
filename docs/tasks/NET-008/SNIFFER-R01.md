@@ -65,3 +65,18 @@ and physical execution. Prior results and failed streams remain historical.
 The prior384000duplexminute remains the highest qualified external operating
 point. P4's internal1152000minute is a peripheral control only. A short directed
 capture neither establishes a new full-minute rate nor qualifies the eZ80.
+
+## Prepared implementation
+
+Contract47bdaf69 precedes source5df7ae7c. Separate UP/DOWN commands preserve
+GO/EOS control and suppress only the opposite bulk producer; existing BENCH
+remains duplex. Corrected RX settings, payload and CRC are unchanged. Build
+net008-sniffer-r01-b2026-11-10-19-39-46Z is243344bytes, SHA256
+1f03ce3bb1e93c96005666d7de2bd7679c14bd0ffa04cab265ade3663d1e5aa1;
+app-only rounded write span245760bytes. Strict build passes. Directional TCP
+loopback controls, synthetic packed UART waveforms and byte-gap comparison
+controls pass. Capture coverage/framing are checked separately from endpoint
+verdicts; control text at a preceding baud is not interpreted as bulk corruption.
+Existing wiring evidence maps D0 to P4 TX and D3 to ESP8266 TX, independently of
+ambiguous wire/probe colour names. Source/build receipt and exact local ports,
+probe identity, artifact paths and new reservation are in ignored agent records.
