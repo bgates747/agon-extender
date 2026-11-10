@@ -300,3 +300,32 @@ preparation under one operator; no repeated iteration flash is implied. No
 firmware change, target command or release occurs in this reconciliation. Keep
 all NET008 evidence and retained development bytes for later resumption; Pi5
 credential enrollment remains unobserved. The scheduler owns custody transfer.
+
+## Explicit release approved; one-time product P4 preparation passed
+
+Smith explicitly answers Yes—release NET-008 and prepare MechAgon to the question
+that names both ending the hold and installing the supported P4 image once.
+This is independently verified in the original human conversation; the prior
+retention boundary is thereby resolved for this handoff.
+
+Under original actual164 sole custody, restore only the241664-byte P4 prefix
+changed by modem iterations. Exact independent readback matches the prepared
+product bytes; the untouched remaining product suffix retains its original
+installation provenance. Resulting complete application identity is d9bcb1a2,
+build net-003-r02-b2026-11-06-09-03-07Z, sourcee14e0b8a. No redundant whole-image
+readback or unchanged-suffix write is performed. Partition/OTA selection is
+checked unchanged; bootloader, NVS, EMOS, mainboard VDP, startup and ESP8266 are
+not modified.
+
+Supported P4 boot, neutral admitted keyboard, actual foreground SD listener,
+whole startup/listener comparison and normal EXIT/offline worker pass. Original
+supervisor and recorded child groups join0; the reset holder releases neutral
+controls and both serial resources are free. The inventory records actual
+product firmware and restored services. No numeric, modem or guest workload is
+invoked. Modem development bytes/evidence and rollback prefix remain retained.
+
+Fresh owner release observation and genuine stopped parent proof are delivered
+to the dedicated scheduler, which manages the actual164 release and next Mech
+booking. Primary target access stops before delivery; no further device access
+or assumed next grant. Firmware stays resident across the numeric sequence;
+physical RUN remains Smith-owned. ESP8266 CRC qualification remains unrun.
