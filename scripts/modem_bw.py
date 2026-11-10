@@ -37,7 +37,10 @@ def main():
   if r.get('hardware_ready') is not True or r.get('phase')!='consumer':raise RuntimeError('Genuine custody/admission required')
  own();raw=(a.out/'console.bin').open('xb');pending=bytearray();all_records=[];suite_start=time.monotonic();current=a.start_baud;cases=[]
  def records(s,deadline):
+  report=0
   while time.monotonic()<deadline:
+   if time.monotonic()-report>=5:
+    report=time.monotonic();print('Host waiting for bounded modem result; suite elapsed %.1fs'%(report-suite_start),flush=True)
    chunk=s.read(4096)
    if not chunk:continue
    raw.write(chunk);raw.flush();pending.extend(chunk)

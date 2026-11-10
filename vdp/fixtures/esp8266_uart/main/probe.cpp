@@ -153,6 +153,7 @@ extern "C" void app_main() {
         line[n]=0;unsigned old_rate=0,new_rate=0,ms=0,port=0,nonce=0;char ip[64]{};char extra=0;
         if(!std::strcmp(line,"START"))run();
         else if(!std::strcmp(line,"STATUS"))status();
+        else if(std::sscanf(line,"LOOPBACK %u %u %u %c",&old_rate,&ms,&new_rate,&extra)==3)net008_loopback(old_rate,ms,new_rate);
         else if(std::sscanf(line,"JOIN %u %c",&old_rate,&extra)==1&&old_rate>0&&old_rate<=1152000)join(old_rate);
         else if(std::sscanf(line,"INFO %u %c",&old_rate,&extra)==1&&old_rate>0&&old_rate<=1152000)net008_info(old_rate);
         else if(std::sscanf(line,"BENCH %u %u %u %63s %u %u %c",&old_rate,&new_rate,&ms,ip,&port,&nonce,&extra)==6)net008_bench(old_rate,new_rate,ms,ip,port,nonce);

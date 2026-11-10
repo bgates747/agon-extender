@@ -10,12 +10,12 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True,type=Path);p.add_argument('--build-id',required=True)
  p.add_argument('--tools-path',required=True,type=Path);p.add_argument('--python-env',required=True,type=Path);a=p.parse_args()
  commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
- scope=['vdp/fixtures/esp8266_uart','scripts/build_modem_probe.py','vdp/partitions.csv','vdp/build/boards/p4-pc.json','scripts/modem_bw.py','scripts/modem_bw_peer.py','scripts/modem_bw_protocol.py','scripts/modem_join.py']
+ scope=['vdp/fixtures/esp8266_uart','scripts/build_modem_probe.py','vdp/partitions.csv','vdp/build/boards/p4-pc.json','scripts/modem_bw.py','scripts/modem_bw_peer.py','scripts/modem_bw_protocol.py','scripts/modem_join.py','scripts/modem_rx_control.py']
  if subprocess.check_output(['git','status','--porcelain','--',*scope],cwd=ROOT,text=True):raise SystemExit('Commit selected source inputs before identified build')
  assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=IDF,text=True).strip()==PIN
  out=a.output.resolve();out.mkdir(exist_ok=False)
  project=out/'project';shutil.copytree(ROOT/'vdp/fixtures/esp8266_uart',project)
- files=[*sorted((ROOT/'vdp/fixtures/esp8266_uart').rglob('*')),Path(__file__).resolve(),ROOT/'vdp/partitions.csv',ROOT/'vdp/build/boards/p4-pc.json',*[ROOT/n for n in ['scripts/modem_bw.py','scripts/modem_bw_peer.py','scripts/modem_bw_protocol.py','scripts/modem_join.py']]]
+ files=[*sorted((ROOT/'vdp/fixtures/esp8266_uart').rglob('*')),Path(__file__).resolve(),ROOT/'vdp/partitions.csv',ROOT/'vdp/build/boards/p4-pc.json',*[ROOT/n for n in ['scripts/modem_bw.py','scripts/modem_bw_peer.py','scripts/modem_bw_protocol.py','scripts/modem_join.py','scripts/modem_rx_control.py']]]
  inputs={str(x.relative_to(ROOT)):digest(x) for x in files if x.is_file()}
  sdk=out/'sdkconfig';sdk.write_text((project/'sdkconfig.defaults').read_text()+f'\nCONFIG_PARTITION_TABLE_CUSTOM=y\nCONFIG_PARTITION_TABLE_CUSTOM_FILENAME="{ROOT / "vdp/partitions.csv"}"\n')
  # Use explicit host-native overrides, as the maintained P4 builder does.
@@ -31,7 +31,7 @@ def main():
  with (out/'build.log').open('x') as f:r=subprocess.run(cmd,env=env,stdout=f,stderr=subprocess.STDOUT)
  if r.returncode:raise SystemExit('Build failed; see '+str(out/'build.log'))
  layout=json.loads((out/'build/flasher_args.json').read_text());assert layout['app']['offset']=='0x20000'
- config=sdk.read_text();assert 'CONFIG_ESP_MAIN_TASK_STACK_SIZE=16384' in config
+ config=sdk.read_text();assert 'CONFIG_ESP_MAIN_TASK_STACK_SIZE=16384' in config and 'CONFIG_UART_ISR_IN_IRAM=y' in config
  assert 'CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y' in config and 'CONFIG_ESP32P4_REV_MIN_FULL=100' in config
  app=out/'build'/layout['app']['file']
  assert all(digest(ROOT/n)==h for n,h in inputs.items()),'Source changed during build'

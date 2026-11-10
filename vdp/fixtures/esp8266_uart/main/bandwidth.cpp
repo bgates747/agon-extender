@@ -12,12 +12,18 @@
 #include <driver/uart.h>
 #include <driver/gpio.h>
 #include <esp_timer.h>
+#include <esp_intr_alloc.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 namespace {
 constexpr auto u=UART_NUM_2;
 QueueHandle_t queue;
-bool installed=false;
+bool installed=false,loopback_mode=false;
+unsigned service_profile=4;UBaseType_t caller_priority=1;
+size_t ring_peak=0;unsigned queue_peak=0,fifo_faults=0,ring_faults=0;int64_t read_at=0,max_read_gap=0;
+bool priority_fix(){return service_profile==1||service_profile==4;}
+bool quiet_fix(){return service_profile==2||service_profile==4;}
+bool irq_fix(){return service_profile==3||service_profile==4;}
 std::atomic<bool> stop{false},tx_done{false};
 std::atomic<unsigned> tx_count{0};
 unsigned faults=0,crc_errors=0,frame_errors=0,rx_seen=0;
@@ -29,22 +35,36 @@ uint8_t tx_wire[n8bw::max_frame],tx_data[n8bw::payload_size];
 uint8_t rx_wire[n8bw::max_frame],expected[n8bw::payload_size];
 bool health() {
  uart_event_t e;bool current_ok=true;
- while(xQueueReceive(queue,&e,0)==pdTRUE)if(e.type!=UART_DATA){current_ok=false;++faults;stop=true;std::printf("NET008 {\"event\":\"bw_uart_error\",\"type\":%u}\n",unsigned(e.type));}
+ unsigned waiting=uxQueueMessagesWaiting(queue);if(waiting>queue_peak)queue_peak=waiting;
+ size_t buffered=0;if(uart_get_buffered_data_len(u,&buffered)==ESP_OK&&buffered>ring_peak)ring_peak=buffered;
+ while(xQueueReceive(queue,&e,0)==pdTRUE)if(e.type!=UART_DATA){
+  current_ok=false;++faults;stop=true;
+  if(e.type==UART_FIFO_OVF)++fifo_faults;if(e.type==UART_BUFFER_FULL)++ring_faults;
+  // Never block draining on USB output. First-fault detail remains in counters.
+  if(!data_active)std::printf("NET008 {\"event\":\"bw_uart_error\",\"type\":%u}\n",unsigned(e.type));
+ }
  return current_ok;
 }
 bool ok(esp_err_t e){if(e==ESP_OK)return true;std::printf("NET008 {\"event\":\"bw_driver_error\",\"code\":%d}\n",int(e));stop=true;return false;}
-bool init(unsigned baud) {
+bool init(unsigned baud,bool internal=false) {
+ loopback_mode=internal;caller_priority=uxTaskPriorityGet(nullptr);
+ if(priority_fix())vTaskPrioritySet(nullptr,8);
+ ring_peak=0;queue_peak=0;fifo_faults=ring_faults=0;read_at=max_read_gap=0;
  uart_config_t c{};c.baud_rate=int(baud);c.data_bits=UART_DATA_8_BITS;c.parity=UART_PARITY_DISABLE;c.stop_bits=UART_STOP_BITS_1;c.flow_ctrl=UART_HW_FLOWCTRL_DISABLE;c.source_clk=UART_SCLK_DEFAULT;
  stop=false;tx_first=tx_last=0;faults=0;crc_errors=0;frame_errors=0;tx_done=false;tx_count=0;data_active=false;rx_seen=0;
  for(auto p:{GPIO_NUM_47,GPIO_NUM_48}){if(!ok(gpio_reset_pin(p))||!ok(gpio_set_direction(p,GPIO_MODE_INPUT)))return false;}
- if(!ok(uart_param_config(u,&c))||!ok(uart_driver_install(u,32768,4096,128,&queue,0)))return false;
- installed=true;return ok(uart_set_pin(u,48,47,UART_PIN_NO_CHANGE,UART_PIN_NO_CHANGE));
+ if(!ok(uart_param_config(u,&c))||!ok(uart_driver_install(u,32768,4096,128,&queue,irq_fix()?(ESP_INTR_FLAG_IRAM|ESP_INTR_FLAG_LEVEL2):0)))return false;
+ installed=true;
+ if(irq_fix()&&(!ok(uart_set_rx_full_threshold(u,32))||!ok(uart_set_rx_timeout(u,2))))return false;
+ // Internal peripheral loopback never connects TX/RX to the live modem pins.
+ if(internal)return ok(uart_set_loop_back(u,true));
+ return ok(uart_set_loop_back(u,false))&&ok(uart_set_pin(u,48,47,UART_PIN_NO_CHANGE,UART_PIN_NO_CHANGE));
 }
 bool retire() {
- if(installed){if(!ok(uart_driver_delete(u)))return false;installed=false;}
+ if(installed){if(!ok(uart_set_loop_back(u,false)))return false;if(!ok(uart_driver_delete(u)))return false;installed=false;}
  bool pass=true;
  for(auto p:{GPIO_NUM_47,GPIO_NUM_48})pass=ok(gpio_reset_pin(p))&&ok(gpio_set_direction(p,GPIO_MODE_INPUT))&&ok(gpio_pullup_dis(p))&&ok(gpio_pulldown_dis(p))&&pass;
- return pass;
+ vTaskPrioritySet(nullptr,caller_priority);return pass;
 }
 void hex(const char *kind,const uint8_t *data,size_t n) {
  std::printf("NET008 {\"event\":\"%s\",\"hex\":\"",kind);
@@ -75,9 +95,10 @@ bool exact(uint8_t *out,size_t n,int64_t deadline) {
  size_t got=0;last_exact=0;
  while(got<n&&esp_timer_get_time()<deadline&&!stop) {
   if(!health())return false;
+  auto entered=esp_timer_get_time();if(read_at&&entered-read_at>max_read_gap)max_read_gap=entered-read_at;read_at=entered;
   int k=uart_read_bytes(u,out+got,n-got,pdMS_TO_TICKS(20));if(k<0)return false;got+=size_t(k);last_exact=got;
   auto now=esp_timer_get_time();
-  if(data_active&&now-progress_at>=1000000){progress_at=now;std::printf("NET008 {\"event\":\"bw_progress\",\"elapsed_us\":%lld,\"tx_frames\":%u,\"rx_frames\":%u,\"uart_errors\":%u}\n",static_cast<long long>(now-data_start),unsigned(tx_count),rx_seen,faults);}
+  if(data_active&&!quiet_fix()&&now-progress_at>=1000000){progress_at=now;std::printf("NET008 {\"event\":\"bw_progress\",\"elapsed_us\":%lld,\"tx_frames\":%u,\"rx_frames\":%u,\"uart_errors\":%u}\n",static_cast<long long>(now-data_start),unsigned(tx_count),rx_seen,faults);}
  }
  return got==n;
 }
@@ -100,11 +121,13 @@ void tx_task(void *) {
 }
 }
 void net008_info(unsigned baud) {
+ service_profile=4;
  bool pass=init(baud);
  if(pass)pass=command("AT\r\n",2000)&&command("ATE0\r\n",2000)&&command("AT+CIPSTATUS\r\n",2000,false,true)&&command("AT+CIFSR\r\n",2000,false,true);
  bool retired=retire();std::printf("NET008 {\"event\":\"bw_info_end\",\"pass\":%s,\"baud\":%u,\"uart_retired\":%s}\n",pass?"true":"false",baud,retired?"true":"false");
 }
 void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,const char *ip,unsigned port,unsigned nonce) {
+ service_profile=4;
  bool pass=false,connected=false,transparent=false;const char *phase="arguments";unsigned rx_count=0;int64_t rx_first=0,rx_last=0;uint32_t actual_baud=0;
  if(milliseconds<1000||milliseconds>62000||new_baud>1152000||old_baud>1152000||!new_baud||!old_baud||!port||port>65535||std::strlen(ip)>15){std::puts("NET008 {\"event\":\"bw_refused\"}");return;}
  for(const char *p=ip;*p;++p)if(!std::isdigit(unsigned(*p))&&*p!='.'){std::puts("NET008 {\"event\":\"bw_refused\"}");return;}
@@ -138,7 +161,7 @@ void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,cons
  {
   phase="data";duration=milliseconds;stop=false;tx_done=false;tx_count=0;tx_first=0;tx_last=0;
   auto run_start=esp_timer_get_time();auto deadline=run_start+int64_t(milliseconds+20000)*1000;data_start=run_start;progress_at=run_start;data_active=true;
-  if(xTaskCreate(tx_task,"n8bw_tx",4096,nullptr,5,nullptr)!=pdPASS)goto finish;
+  if(xTaskCreatePinnedToCore(tx_task,"n8bw_tx",4096,nullptr,5,nullptr,1)!=pdPASS)goto finish;
   unsigned wanted=1;bool eos=false;
   while(!stop&&esp_timer_get_time()<deadline) {
    size_t n=0;
@@ -161,6 +184,7 @@ void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,cons
  }
  finish:
  data_active=false;
+ std::printf("NET008 {\"event\":\"rx_service\",\"profile\":%u,\"ring_peak\":%u,\"queue_peak\":%u,\"max_read_call_gap_us\":%lld,\"fifo_errors\":%u,\"ring_errors\":%u}\n",service_profile,unsigned(ring_peak),queue_peak,static_cast<long long>(max_read_gap),fifo_faults,ring_faults);
  bool clean=true;
  if(transparent) {
   // Producers are stopped and joined before guarded transparent escape.
@@ -173,6 +197,7 @@ void net008_bench(unsigned old_baud,unsigned new_baud,unsigned milliseconds,cons
 }
 
 void net008_join(unsigned baud,const uint8_t *ssid,size_t ns,const uint8_t *password,size_t np) {
+ service_profile=4;
  char request[256]{},reply[2048]{};bool pass=false,ip_ready=false;const char *phase="credentials";
  if(!n8join::build(request,sizeof(request),ssid,ns,password,np))goto done;
  phase="uart_init";if(!init(baud))goto done;
@@ -192,4 +217,33 @@ void net008_join(unsigned baud,const uint8_t *ssid,size_t ns,const uint8_t *pass
  done:
  n8join::wipe(request,sizeof(request));n8join::wipe(reply,sizeof(reply));
  bool retired=retire();std::printf("NET008 {\"event\":\"join_end\",\"pass\":%s,\"phase\":\"%s\",\"ip_ready\":%s,\"uart_retired\":%s}\n",pass&&retired?"true":"false",phase,ip_ready?"true":"false",retired?"true":"false");
+}
+
+// Existing IDF peripheral loopback, isolated from external modem pads. Profiles:
+// 0=reconstructed baseline,1=RX priority,2=no active USB,3=early IRAM IRQ,4=all.
+void net008_loopback(unsigned baud,unsigned milliseconds,unsigned profile) {
+ if(!baud||baud>1152000||milliseconds<1000||milliseconds>62000||profile>4){std::puts("NET008 {\"event\":\"loop_refused\"}");return;}
+ service_profile=profile;bool pass=false,eos=false;unsigned received=0;
+ if(!init(baud,true)){retire();std::puts("NET008 {\"event\":\"loop_end\",\"pass\":false,\"phase\":\"init\"}");return;}
+ std::printf("NET008 {\"event\":\"loop_start\",\"baud\":%u,\"duration_ms\":%u,\"profile\":%u,\"rx_priority\":%u,\"tx_priority\":5,\"external_pins_input\":true}\n",baud,milliseconds,profile,unsigned(uxTaskPriorityGet(nullptr)));
+ duration=milliseconds;stop=false;tx_done=false;tx_count=0;data_start=progress_at=esp_timer_get_time();data_active=true;
+ auto deadline=data_start+int64_t(milliseconds+15000)*1000;int64_t first=0,last=0;
+ if(xTaskCreatePinnedToCore(tx_task,"n8bw_loop_tx",4096,nullptr,5,nullptr,1)==pdPASS){
+  unsigned wanted=1;
+  while(!stop&&esp_timer_get_time()<deadline){
+   size_t n=0;if(!read_frame(deadline,n))break;
+   if(n8bw::get(rx_wire+4)!=wanted++){++frame_errors;stop=true;break;}
+   size_t length=n8bw::get(rx_wire+8);if(!length){eos=true;break;}
+   n8bw::pattern(expected,length,wanted-1,n8bw::up_salt);
+   if(std::memcmp(expected,rx_wire+16,length)){++frame_errors;stop=true;break;}
+   ++received;rx_seen=received;last=esp_timer_get_time();if(!first)first=last;
+  }
+  if(!eos)stop=true;
+  auto join_until=esp_timer_get_time()+10000000;
+  while(!tx_done&&esp_timer_get_time()<join_until)vTaskDelay(pdMS_TO_TICKS(5));
+  if(!tx_done){data_active=false;std::puts("NET008 {\"event\":\"bw_task_unjoined\"}");return;}
+  pass=eos&&!stop&&health()&&received==tx_count&&received>0;
+ }
+ data_active=false;bool retired=retire();
+ std::printf("NET008 {\"event\":\"loop_end\",\"pass\":%s,\"baud\":%u,\"profile\":%u,\"tx_frames\":%u,\"rx_frames\":%u,\"rx_elapsed_us\":%lld,\"uart_errors\":%u,\"crc_errors\":%u,\"frame_errors\":%u,\"ring_peak\":%u,\"queue_peak\":%u,\"max_read_call_gap_us\":%lld,\"fifo_errors\":%u,\"ring_errors\":%u,\"uart_retired\":%s}\n",pass&&retired?"true":"false",baud,profile,unsigned(tx_count),received,static_cast<long long>(last-first),faults,crc_errors,frame_errors,unsigned(ring_peak),queue_peak,static_cast<long long>(max_read_gap),fifo_faults,ring_faults,retired?"true":"false");
 }

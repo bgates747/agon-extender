@@ -12,3 +12,6 @@ CONFIG_COMPILER_OPTIMIZATION_SIZE=y
 # INFO hex formatting and JOIN nested command frames exceeded the original
 # main-task stack on actual168. Isolated appliance only; retain hardware guard.
 CONFIG_ESP_MAIN_TASK_STACK_SIZE=16384
+
+# Keep UART ISR and its driver storage in internal memory for continuous RX.
+CONFIG_UART_ISR_IN_IRAM=y
