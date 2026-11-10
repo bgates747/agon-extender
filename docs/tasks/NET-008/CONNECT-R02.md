@@ -61,3 +61,25 @@ scheduler reconciles existing occupancy; a quiet bench is not a checkout.
 3. The Pi5 manager's verified keyring repair preserves the MWJ1 private entry
    schema and encrypted collection. Read its exact entry through the retained
    helper; no whole-keyring migration or plaintext fallback.
+
+## Source preparation result
+
+The runtime JOIN implementation is frozen at `c4f0faaf`. Strict native escaping
+checks and four synthetic private-packet controls pass, alongside the unchanged
+bandwidth codec/real loopback peer controls. The identified P4 build completed
+in68.463 host seconds:239968 bytes, SHA256
+`fe1299f896bcd9b2276c77fbfb286f3cdb84722e7014bb62fed95719841b5e85`.
+Its immutable manifest and joined compiler receipts are in the ignored local
+`agents/net008/connect-r02/` record. This is a stopped appliance build, not an
+installation, Wi-Fi association or bandwidth result.
+
+The maintained private operator is `scripts/modem_join.py`; OS Python supplies
+the exact libsecret entry over a bounded private pipe. The host and P4 suppress
+raw credential replies and wipe mutable packet buffers. No credential supplier
+is invoked during source checks. P4 emits safe association progress once per
+second and retires UART after its finite result. Native escaping includes
+quotes, backslashes, commas, maximum lengths and control-character refusal.
+
+Physical readiness remains false: the sole scheduler reports MechAgon165 active,
+6502 next, then NET-008 request9fdfecfe6ccb. No preemption or hardware operation
+was performed. The new lease, once granted, stays held until Smith releases it.
