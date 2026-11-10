@@ -1,6 +1,7 @@
 """Decode packed sigrok binary UART samples; no device or credential access.
 
-Binary output packs selected D0,D3 into bits 0,1, one byte per sample. Decode
+Binary output preserves physical D0,D3 at bits 0,3, one byte per sample.
+The retained real capture was decoded against its known AT replies to verify this. Decode
 8N1 at the selected nominal baud. Framing errors and incomplete tails invalidate
 whole-stream conclusions; preserve them rather than silently dropping errors.
 """
@@ -31,7 +32,7 @@ def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('raw',type=Path);p.add_argument('--rate',type=int,default=24000000);p.add_argument('--baud',type=int,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();a.out.mkdir(exist_ok=False)
  with a.raw.open('rb') as f,mmap.mmap(f.fileno(),0,access=mmap.ACCESS_READ) as data:
   result={}
-  for bit,name in [(0,'p4-tx'),(1,'esp-tx')]:
+  for bit,name in [(0,'p4-tx'),(3,'esp-tx')]:
    wire,pos,errors=decode(data,bit,a.rate,a.baud);(a.out/(name+'.bin')).write_bytes(wire);result[name]={'bytes':len(wire),'first_sample':pos[0] if pos else None,'last_sample':pos[-1] if pos else None,'framing_errors':errors}
  (a.out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
 if __name__=='__main__':main()

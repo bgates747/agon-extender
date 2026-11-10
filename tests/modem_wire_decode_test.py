@@ -11,9 +11,9 @@ class Wire(unittest.TestCase):
    for k in range(round(10*period)):levels.append(bits[min(9,int(k/period))])
    levels.extend([1]*23)
   levels.extend([1]*100)
-  return bytes((x<<bit)|(1<<(1-bit)) for x in levels),rate,baud
+  return bytes((x<<bit)|(1<<(3 if bit==0 else 0)) for x in levels),rate,baud
  def test_exact_bytes_both_channels(self):
-  for bit in [0,1]:
+  for bit in [0,3]:
    raw,r,b=self.waveform(bytes(range(256)),bit);data,_,errors=decode(raw,bit,r,b);self.assertEqual(data,bytes(range(256)));self.assertEqual(errors,[])
  def test_stop_error_retained(self):
   raw,r,b=self.waveform(b'x',bad=True);_,_,errors=decode(raw,0,r,b);self.assertTrue(errors)
