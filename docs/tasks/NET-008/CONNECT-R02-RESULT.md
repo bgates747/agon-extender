@@ -47,11 +47,16 @@ No sustained Agon application, C8 UART or optical/display result is implied.
 
 ## Retained state and evidence
 
-Actual lease168 remains held until Smith explicitly requests release. The
-corrected development P4 application stays installed. Its product HTTP/input/SD
-services are unavailable while this isolated appliance is resident. Mainboard
+Smith subsequently explicitly ended the hold and ordered release to6502.
+The owner restored product P4 d9b, independently compared the overwritten
+241664-byte prefix, and verified normal boot, services, CLI/read/EXIT plus fresh
+mode0/callback0/backend0 and idle resources. Original restoration and fresh-check
+workers joined0; actual stopped handback was sent to the sole scheduler for
+central release. The corrected diagnostic artifact remains retained, not installed.
+During its installation product HTTP/input/SD services were unavailable. Mainboard
 VDP dc43, EMOS a25f, startup/listener, partitions/NVS and ESP8266 firmware remain
-unchanged. No automatic product restoration or central release was performed.
+unchanged. Restoration follows that later explicit human release instruction, not an automatic
+cleanup at test end. Central release belongs to the scheduler.
 Modem last positive baud230400, Wi-Fi associated, ordinary command cleanup passed;
 P4 UART retired. Owned worker groups stopped and both USB ports free.
 
