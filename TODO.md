@@ -23,6 +23,7 @@ classification does not grant new execution or waive human acceptance.
 
 
 - [ ] **[NET-008 — ESP8266 bring-up and standalone-client groundwork](docs/tasks/NET-008.md)** — Corrected P4 internal1152000/full-load minute passes; external modem384000/full-minute CRC passes, higher-rate byte-loss location unresolved. Product restored and170 released; short wire captures now locate a1152000upload500-byte gap downstream of correct P4 TX; reverse short transfer passes. Exact original overrun contribution remains unisolated; C8 qualification/standalone client follow.
+- [ ] **[NET-009 — Pi5-powered ESP8266 UART comparison](docs/tasks/NET-009.md)** — Task and header drawing prepared; preserve GPIO17/reset ground, verify UART ownership and Pi3V3 supply headroom before wiring/power. Compare Pi UART to Pi TCP first, then Extender TCP. No hardware change or test yet.
 
 - [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility passes manual C8 connection/DHCP/two-ping path; private automatic-connect option and host fault checks retained. Public license/version closure and broader physical cases remain. Radiotux sources stay unchanged.
 

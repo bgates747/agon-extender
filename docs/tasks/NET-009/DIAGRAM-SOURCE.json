@@ -1,0 +1,7 @@
+{
+  "source": "agon-hardware/first_steps/byte/pi5-wroom-wiring-diagram.svg",
+  "sha256": "9c2f77285c80ece57abc5ed23744573002ea124b30e2a8aa611e9d8f475b9bcb",
+  "reused": "Pi5 header geometry, orientation and full row positions; archival WROOM assignments omitted",
+  "reset_reference": "docs/bench-reset.md",
+  "status": "proposal; power and host pin ownership checks pending"
+}
