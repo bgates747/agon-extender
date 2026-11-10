@@ -49,6 +49,9 @@ def main():
    send(s,f'INFO {a.old_baud}');r=read_until(s,'bw_info_end',15);assert r['pass'] and r['uart_retired'],'Known baud/command mode not established'
    nonce=secrets.randbelow(2**32-1)+1;peer=Peer(a.bind,out/'pi',nonce,a.baud,3000,a.direction)
    argv=[a.analyzer,'--loglevel','2','--driver','fx2lafw:conn='+match[1],'--config','samplerate=24000000','--channels','D0,D3','--samples','288000000','--output-format','binary','--output-file',str(out/'logic.raw')]
+   # sigrok drops to its capture account; precreate a readable public-test file.
+   raw_path=out/'logic.raw'
+   raw_path.touch(exist_ok=False);os.chmod(raw_path,0o666)
    own();capture=subprocess.Popen(argv,stdout=log,stderr=subprocess.STDOUT,start_new_session=True);save(out/'capture-actor.json',dict(**identity(capture.pid),argv=argv))
    deadline=time.monotonic()+8
    while not (out/'logic.raw').exists() or (out/'logic.raw').stat().st_size<65536:

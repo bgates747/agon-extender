@@ -80,3 +80,16 @@ verdicts; control text at a preceding baud is not interpreted as bulk corruption
 Existing wiring evidence maps D0 to P4 TX and D3 to ESP8266 TX, independently of
 ambiguous wire/probe colour names. Source/build receipt and exact local ports,
 probe identity, artifact paths and new reservation are in ignored agent records.
+
+## Host corrections during preparation/execution
+
+The retained earlier AT capture proves sigrok binary samples preserve D0 at bit0
+and D3 at bit3, not packed adjacent bits; offline decoder correction9b3401fc
+changes no P4 binary. The first new384000upload and its acquisition both pass,
+but sigrok's dropped capture account created a mode0600 file the host runner
+could not hash. Preserve the original runner exit1; reconcile the existing
+288000000-sample acquisition using its genuine joined analyzer exit0 and repaired
+local ownership, without repeating hardware. Subsequent capture runners precreate
+the noncredential waveform file with capture-account write access. No capture
+contains JOIN credentials. These are separately identified host continuations;
+the build manifest's historical host-source hashes are not silently rewritten.
