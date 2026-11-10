@@ -31,7 +31,8 @@ def main():
  with (out/'build.log').open('x') as f:r=subprocess.run(cmd,env=env,stdout=f,stderr=subprocess.STDOUT)
  if r.returncode:raise SystemExit('Build failed; see '+str(out/'build.log'))
  layout=json.loads((out/'build/flasher_args.json').read_text());assert layout['app']['offset']=='0x20000'
- config=sdk.read_text();assert 'CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y' in config and 'CONFIG_ESP32P4_REV_MIN_FULL=100' in config
+ config=sdk.read_text();assert 'CONFIG_ESP_MAIN_TASK_STACK_SIZE=16384' in config
+ assert 'CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y' in config and 'CONFIG_ESP32P4_REV_MIN_FULL=100' in config
  app=out/'build'/layout['app']['file']
  assert all(digest(ROOT/n)==h for n,h in inputs.items()),'Source changed during build'
  m={'source_commit':commit,'build_id':a.build_id,'idf_commit':PIN,'board':'Olimex ESP32-P4-PC Rev C','profile':'NET-008 isolated UART2 appliance','source_inputs':inputs,

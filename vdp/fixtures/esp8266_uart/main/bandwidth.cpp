@@ -53,7 +53,9 @@ void hex(const char *kind,const uint8_t *data,size_t n) {
 }
 bool write(const void *data,size_t n){return uart_write_bytes(u,data,n)==int(n);}
 bool command(const char *s,unsigned milliseconds,bool prompt=false,bool report=false,bool private_reply=false,char *reply=nullptr,size_t reply_cap=0) {
- uint8_t b[2048]{};size_t n=0;auto end=esp_timer_get_time()+int64_t(milliseconds)*1000;
+ // Only the main CLI task calls AT commands, never the streaming TX task.
+ // Keep the bounded reply off its stack; wipe it on every completed command.
+ static uint8_t b[2048];std::memset(b,0,sizeof(b));size_t n=0;auto end=esp_timer_get_time()+int64_t(milliseconds)*1000;
  if(!write(s,std::strlen(s))||!ok(uart_wait_tx_done(u,pdMS_TO_TICKS(500))))return false;
  bool pass=false;auto progress=esp_timer_get_time();
  while(esp_timer_get_time()<end&&n+1<sizeof(b)) {

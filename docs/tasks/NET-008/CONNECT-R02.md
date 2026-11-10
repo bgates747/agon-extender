@@ -83,3 +83,17 @@ quotes, backslashes, commas, maximum lengths and control-character refusal.
 Physical readiness remains false: the sole scheduler reports MechAgon165 active,
 6502 next, then NET-008 request9fdfecfe6ccb. No preemption or hardware operation
 was performed. The new lease, once granted, stays held until Smith releases it.
+
+## Actual168 first installation and diagnostic correction
+
+The first239968B appliance installed and independently compared successfully.
+The explicit INFO received AT/status responses at115200, then P4 main-task stack
+protection halted during CIFSR reply hex formatting. No credentials were loaded
+or JOIN submitted. Preserve the failure/serial and original wait1; this is an
+appliance defect, not a modem/Wi-Fi association failure. Mainboard reset holder
+remains intentionally asserted while P4 is halted. The same held lease permits
+a separately identified corrected build:16KiB main stack plus main-task-only
+static2048B AT reply scratch, still wiped after command. Retain stack guards and
+verify effective build config. Replace only diagnostic application, independently
+compare new bytes and explicit stopped boot, then run a deliberate INFO before
+first JOIN. No automatic fault replay, standard restoration or lease release.
