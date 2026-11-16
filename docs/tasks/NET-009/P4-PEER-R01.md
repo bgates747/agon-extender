@@ -24,6 +24,10 @@ P4 transmits and Pi5 validates. Each arm has one bulk producer.
    CRC, deterministic payload and EOS. Require verified modem command
    mode before starting another arm. A fixture, network, or cleanup
    failure stops the series for reconciliation.
+   If a longer arm detects corruption, retain the failure and use the next
+   lower rate that already passed its short arm for a new 10/30/60 second
+   sequence. Preserve the other direction's results and the original whole
+   operation deadline.
 5. Use bounded waveform capture on the Pi/modem UART pair only if the
    probes have an independently confirmed connection to those wires.
    Retain endpoint bytes around any first fault and state the limits of
