@@ -12,13 +12,20 @@ class P4Peer:
         self.nonce = nonce
         self.result = None
         self._buffer = bytearray()
-        self._port = serial.Serial(port=None, baudrate=115200, timeout=.1,
-                                   write_timeout=2, exclusive=True)
-        self._port.dtr = self._port.rts = False
-        self._port.port = port
+        # Reopening the P4 USB Serial/JTAG console after staging reset the
+        # fixture on the Olimex bench. The bench runner lends its open console
+        # across all arms, then closes it before starting the programmer.
+        self._owns_port = isinstance(port, str)
+        self._port = port
+        if self._owns_port:
+            self._port = serial.Serial(port=None, baudrate=115200, timeout=.1,
+                                       write_timeout=2, exclusive=True)
+            self._port.dtr = self._port.rts = False
+            self._port.port = port
         self._transcript = (folder / 'p4-usb.log').open('xb')
         try:
-            self._port.open()
+            if self._owns_port:
+                self._port.open()
             self._write(b'STATUS\n')
             status = self._event('status', 6)
             ip = ipaddress.IPv4Address(status['ip'])
@@ -82,5 +89,6 @@ class P4Peer:
         return self.result
 
     def close(self):
-        self._port.close()
+        if self._owns_port:
+            self._port.close()
         self._transcript.close()

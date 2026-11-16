@@ -133,7 +133,8 @@ def execute(port, args, result):
         nonce = secrets.randbits(32)
         millis = args.seconds * 1000
         if args.p4_port:
-            peer = P4Peer(args.p4_port, args.p4_source, args.out, nonce, args.baud,
+            peer = P4Peer(getattr(args, 'p4_console', None) or args.p4_port,
+                          args.p4_source, args.out, nonce, args.baud,
                           millis, args.direction)
             address = peer.address
         else:
@@ -235,6 +236,10 @@ def main():
         (args.bind and not ipaddress.IPv4Address(args.bind).is_private)
     ):
         parser.error('Transfer needs an explicit baud and a private IPv4 bind or P4 peer')
+    return run(args)
+
+
+def run(args):
     require_header_uart(args.port)
     args.out.mkdir(exist_ok=False)
     result = dict(ok=False, phase='open', tx_frames=0, rx_frames=0,

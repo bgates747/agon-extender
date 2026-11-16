@@ -39,3 +39,9 @@ event task hit a stack protection fault in newlib `_vfprintf_r` before
 DHCP produced an address. No transfer started. Increase the fixture-only
 `sys_evt` stack from 2304 to 8192 bytes, retain the first boot capture, and
 verify the new image can reach DHCP before arming any transfer.
+
+The stack-fixed fixture reached DHCP. Opening its USB Serial/JTAG tty
+again for the first arm reset the P4. The host received a fresh boot and
+an addressless status, before it sent ARM or any TCP data. The owner now
+keeps the P4 control handle open from the identified DHCP boot through
+all finite arms, then closes it before reprogramming the P4.
