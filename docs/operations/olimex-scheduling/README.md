@@ -22,7 +22,7 @@ project instructions; it grants no new test scope or physical access by itself.
    defects, not a routine scheduling approval gate. Never edit central ownership
    JSON directly or create a second queue.
 4. The helper's historical scheduler identifier stays `linux-extender`, including
-   `--scheduler linux-extender`, pregrant observation and existing operator labels.
+   `--scheduler linux-extender` and existing operator labels.
    These identify the Extender scheduling service, now operated by you; they do
    not route work back to the primary chat. Preserve frozen helper/code/kit
    identities. The canonical `state/scheduler-contact.json` identifies your actual
@@ -41,7 +41,7 @@ project instructions; it grants no new test scope or physical access by itself.
 |---|---|
 | `../agon-dev-env/codex/AGENTS.md`, then `AGENTS.md` | Human conventions, ownership and project constraints |
 | This guide, `FORWARDING.md`, `TRAINING.md` | Your role, request format and training |
-| `../agon-dev-env/cross-agent/olimex-bench/README.md` | Sole physical FIFO and lease protocol |
+| `../agon-dev-env/cross-agent/scheduling/olimex/README.md` | Sole physical FIFO and lease protocol |
 | `docs/procedures/README.md`, `docs/procedures/bench-completion.md` | Operation dispatch; actual process/physical/release evidence |
 | `../agon-dev-env/cross-agent/agentcoms/README.md` and `authorization.md` | Immutable mail, immediate steering and original human communication authority |
 | `scripts/bench_process.py` help and maintained tests when material | Actual parent-written completion and bounded failure notification |
@@ -54,13 +54,24 @@ applicable operation procedure; preparation does not waive these requirements.
 
 ## Routine decision cycle
 
+When the Author authorizes an agent to have **exclusive access to the bench**,
+the agent retains that checkout for as long as it wants or until the Author
+directs otherwise. It does not check in and out between individual runs. That
+authority includes full bench access: the agent may flash different firmware,
+modify software and deploy it during the checkout. Other agents remain out of
+the bench until custody is actually handed back. Preserve the Author's separate
+manual-invocation instructions and report the installed state honestly. The
+usual safe handback applies when the exclusive owner ultimately releases.
+
 All Olimex jobs follow the [standard firmware policy](../../procedures/olimex-firmware.md)
 and [current selector](../../olimex-firmware-standard.json). Use VDPlet
 v0.1.2-alpha and latest fully integrated Eirene-function EMOS by default, reusing
 matching verified installed firmware. The installed inventory in the ignored
 local bench record is actual state; desired selection is not an installation.
-Only a firmware-development/version-compatibility purpose uses other versions,
-and cleanup restores current standards rather than obsolete incoming images.
+Each incoming agent brings and installs the firmware needed for its slot.
+No firmware backup is required for admission and no firmware restoration is
+required for release. An agent whose flash makes the bench inoperable restores
+standard production firmware on the devices it modified before handback.
 Resolve an incomplete EMOS binding with Extender; do not silently use a subset.
 No routine full unchanged-device backup, reflash or new per-job approval gate.
 
@@ -87,16 +98,34 @@ substitute firmware during an active guest arm or race its inventory writer.
    your management authority. Request concrete technical support when needed;
    do not await primary approval of routine scheduling or supported cleanup.
    Never create a second queue, bypass FIFO or promise a lease before grant.
-5. Wake the actual consumer and obtain its genuine current readiness before
-   the final physical observation when needed. Deliver the complete handoff
-   promptly. Freshness is measured from real observation, never restamped.
+5. Reconcile the FIFO and predecessor on the host, then grant exclusive custody
+   before any physical check. The lease begins in admission with hardware not
+   ready. The designated sole operator asserts that lease, performs fresh
+   physical checks and records admission through the central helper. A failed
+   admission retains custody for reconciliation. Deliver the actual admitted
+   handoff promptly; never restamp an observation or claim readiness from a grant.
+   For a human-started review, the owner continues authorized staging and
+   verification until the bench is at a verified prompt with the exact command,
+   firmware, fixtures, input, display and required services ready. Do not hold
+   a free bench or request the Author's presence to watch preparation. Notify
+   the Author when they can type `RUN` or the specified invocation; only the
+   Author invokes it. Surface an actual blocking decision promptly.
+   For an Olimex hands-on test, the staging operator sends the desktop
+   “Agent has a question” notification with the exact start command and what
+   to check. Hold the exclusive lease and staged bench until the Author
+   explicitly answers; do not time out, restore, release, advance the queue or
+   start the test clock while waiting. Agent messages, accepted notifications
+   and elapsed time are not an answer. The timed test begins only after the
+   Author confirms readiness, with manual invocation still reserved to them.
+   The desktop question dialog is an alert only; use ordinary chat for all
+   follow-up questions, troubleshooting and test-result collection.
 6. During an explicitly delegated execution, retain the original process handle
    and parent-written journals, follow the selected finite runner once, and
    assert its actual lease before target actions. Extender and other consumers
    stay target-stopped. Never poll another agent's tool handle or take over
    merely because its conversation is quiet.
 7. At return, distinguish workload result, actual process wait/join, physical
-   restoration and central release. Coordinate existing cleanup before offline
+   handback and central release. Coordinate necessary cleanup before offline
    analysis; notify the actual `next_request` promptly after release.
 
 ## Exception handling
@@ -107,7 +136,7 @@ substitute firmware during an active guest arm or race its inventory writer.
 | Old or missing physical observation | Ask the responsible admitted operator for a genuine narrowly scoped recheck; no copying timestamps |
 | Missing external tool receipt, actual supervisor result present | Use verified parent-written result; no redundant successful-tool transcription |
 | Process absent, actual wait status missing | Outcome unknown; seek reconciliation, never infer success |
-| Failed run but clean restoration | Preserve failure, finish normal release; a workload pass is not required to free a genuinely restored bench |
+| Failed run but operable bench | Preserve failure and finish normal release; a workload pass or firmware restoration is not required |
 | Live/unknown actors or uncertain firmware/foreground | Preserve custody and ask Extender for the concrete supported reconciliation; no expiry/preemption/reset by guess |
 | Human review custody | Human exit/owner handback required; quiet time is not release |
 | Helper call result uncertain | Read central status; do not repeat the workload or overwrite the registry |
@@ -134,8 +163,9 @@ dependencies are resolved. Any changed fixture, unreviewed firmware/helper,
 unexpected foreground or uncertain operation returns to its owner/Extender;
 do not improvise another experiment. Preserve normal startup and mounted SD.
 Its original F6 versus VDPlet comparison may identify a concrete firmware/version
-exception, but the operator must bind current-standard restoration before its
-nonstandard write. Do not edit a frozen consumer kit silently to adopt a new
+exception. The operator brings the required firmware and remains responsible for
+restoring standard production firmware if its flash leaves the bench inoperable.
+Do not edit a frozen consumer kit silently to adopt a new
 standard, or promise execution before that specific dependency is resolved.
 
 ## Handover and continuity

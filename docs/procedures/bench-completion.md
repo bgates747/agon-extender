@@ -1,23 +1,31 @@
 # Bench completion, queue progress and blocked-operation recovery
 
 The host supervisor records process results directly. Extender releases the
-bench from verified restoration and current physical handback, then immediately
+bench from verified current physical handback, then immediately
 notifies the next prepared owner. Missing tool-interface bookkeeping must not
 become an unexplained hardware hold. This procedure supplements the central
 physical checkout workflow; it does not grant new target or test authority.
 
 ## Three separate facts
 
+An Author-authorized exclusive-access checkout is not released between runs:
+the named agent keeps it as long as it wants or until the Author says otherwise,
+and may flash different firmware, modify software and deploy it during that
+checkout. Apply this completion and release procedure when that owner actually
+hands back the bench, not after each individual run. Other agents do not access
+the bench during its custody. Honor separate human-only invocation instructions.
+
 Olimex completion also observes the [standard firmware policy](olimex-firmware.md).
 Installed identities persist across application-only jobs; no routine reflash
-or full unchanged-device readback is required. A firmware/compatibility exception
-returns affected components to current standards before normal release. Neither
+or full unchanged-device readback is required. Firmware restoration is not a
+release requirement; the agent whose flash makes the bench inoperable restores
+standard production firmware to the devices it modified. Neither
 desired firmware nor a successful process result is proof of installed bytes.
 
 | Fact | Evidence | What it does not prove |
 |---|---|---|
 | Host process completed | Parent-written child identity and actual `wait()` result; joined registered children/groups in the native execution namespace | Workload pass, restored firmware, CLI readiness |
-| Hardware restored and idle | Exact selected artifact restoration, current CLI/read/EXIT, input/resource state and preserved files under the current lease | Author acceptance or permission for a successor to run |
+| Hardware operable and idle | Current CLI/read/EXIT, input/resource state, actual firmware identity and preserved files under the current lease; recovery if a flash made it inoperable | Author acceptance or permission for a successor to run |
 | Custody released | Successful central release/status reconciliation and actual `next_request` notification | A new owner grant or expanded test scope |
 
 Codex tool/session IDs correlate execution with chat. A second agent-written
@@ -68,7 +76,46 @@ recipient read the message. Notification failure is itself visible in status;
 do not claim delivery or loop forever. Use the documented alternate authorized
 communication route when available and report any undelivered alert.
 
+## Wake the owner when background work ends
+
+For a background bench operation, arrange a bounded supervisor and an
+owner-thread wake-up on **both success and failure** before launch. The
+supervisor retains its actual terminal result and log; the notification must
+direct the owner to those records and must not claim the bench was released.
+Use a unique delivery ID and retain the sender's receipt. Do not blindly retry
+an uncertain send; inspect the delivery receipt and recipient state first.
+
+For example, the VDPlet owner's existing wrapper can wrap an already-bounded
+supervisor (replace all placeholders with the current run's actual values):
+
+```sh
+python ../agon-vdplet/tools/notify_bench_completion.py \
+  --thread OWNER_THREAD_UUID --delivery-id UNIQUE_RUN_ID \
+  --log /absolute/path/to/new-supervisor.log -- \
+  /absolute/path/to/bounded-supervisor ARGUMENTS
+```
+
+The wrapper records the supervisor's exit and log, invokes the maintained
+`pi_chat.py send --resume` for the owner, and retains a notification receipt.
+Its success and failure paths have offline verification; live self-wake is not
+yet proven. An owner wake-up is separate from the scheduler and actual-next
+owner notifications required after a genuine handback. Before reporting a
+release or accessing the bench, inspect actual lease, physical idle and
+parent/join receipts. A failure may require retaining custody and reporting a
+block rather than releasing. This wrapper grants no hardware authority and
+does not replace the unattended failure notification above.
+
 ## Resolve a block without weakening release checks
+
+When an unexpected fault, unexplained lack of progress, or uncertainty may
+hold the physical bench or its queue, the responsible agent immediately uses
+the app's **agent has a question** notification and explains the observed
+state, the affected owner and queue, and the next action in chat. Do not wait
+for a long operation timeout or silently leave the queue held. Continue any
+already-authorized safe reconciliation and handback while awaiting an answer;
+the notification does not authorize a replay, override custody or replace
+required physical verification. Do not repeat an alert while the Author is
+already present.
 
 1. Extender records the phase, owner/request/lease, known physical state, exact
    failure or approval rationale, preserved journals, next action and responsible

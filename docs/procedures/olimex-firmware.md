@@ -1,11 +1,28 @@
 # Olimex standard firmware and installed-state reuse
 
 Olimex tests use the pinned standard mainboard VDP and the latest integrated
-approved EMOS containing the current Eirene functions. Reuse matching, verified installed
-firmware across jobs. A firmware-development or version-compatibility test may
-use an explicitly identified exception, then returns the affected components
-to the current standard before normal release. This is Smith's 2026-11-08
-operating instruction, not permission for additional tests or physical access.
+approved EMOS containing the current Eirene functions as defaults. Each incoming
+agent brings and installs the firmware required for its own slot. Smith's
+2026-11-11 instruction supersedes the earlier per-slot restoration requirement:
+no firmware backup is required for admission and no firmware restoration is
+required for release. If an agent's flash leaves the bench inoperable, that
+agent restores the standard production firmware on the devices it modified.
+Existing physical and test permissions still apply.
+
+Agents are encouraged to check recorded installed firmware against their
+required binaries before flashing. From the Extender checkout, name only the
+components the job needs:
+
+```sh
+.venv/bin/python scripts/bench_firmware_check.py --require vdp=/path/to/vdp.bin --require emos=/path/to/emos.bin
+```
+
+`p4=PATH` is also supported. The host-only script hashes the exact required
+files and checks the installed inventory, pending-write state and recorded
+verification receipt. A match reflects recorded evidence, not a fresh device
+reading: confirm no intervening write and obtain normal lease and physical
+admission. Skip reflashing a verified matching image. An unknown or different
+result requires reconciliation or preparation under the owner's lease.
 
 ## Selection and ownership
 
@@ -101,12 +118,12 @@ Keep the current record accurate during a job, not merely its incoming identity.
    A fresh lease observation does not require fresh unchanged-firmware readback.
 3. If they differ, arrange the necessary standard preparation under existing
    physical permissions and exclusive custody before declaring readiness.
-   Preserve affected unknown bytes, verify release checksums and independently
+   Preserve unrelated mutable user data, verify release checksums and independently
    compare the written bytes. Installation is separate from test invocation.
 4. A firmware-development/compatibility exception identifies its purpose, exact
    alternate images and API/layout dependencies in the existing job plan. Bind
-   current standard restore artifacts, write extents and cleanup time before
-   changing firmware. No additional generic exemption form or human approval
+   write extents and any required recovery resources before changing firmware.
+   No additional generic exemption form or human approval
    round is required for a test already authorized for that purpose.
 5. A frozen older fixture does not silently become an exception just because it
    expects old firmware. The owner either adapts/re-freezes it for the standard
@@ -119,31 +136,17 @@ Keep the current record accurate during a job, not merely its incoming identity.
 
 ## Cleanup, restoration and release
 
-1. Restore each component changed to a nonstandard test image to the **current
-   standard**, not automatically to an obsolete incoming test image. Standard
-   application-only jobs keep the same standard firmware in place.
-2. Resolve the exact cleanup target before any nonstandard write. If the standard
-   selection changes during occupancy, Extender and the operator reconcile the
-   new target and remaining allowed cleanup scope/time; do not silently rewrite
-   the frozen run or its evidence. An explicit stop/no-monitoring boundary and
-   actual permissions still govern all further operations.
-   For an already-running frozen comparison, the operator finishes the original
-   worker and returns terminal/joined custody before Extender reconciles a
-   separately identified amended-standard handback. No mid-arm substitution, replay or
-   clock extension is authorized. An old image may remain a valid comparison
-   result while being superseded as the default; record those facts separately.
-3. Independently verify changed bytes and record the resulting installed identity;
-   then verify normal boot, CLI/input, original route/mode and services, preserved
-   files and joined actors through maintained procedures. Unchanged components
-   are not redundantly flashed. P4, boot/table/OTA and unrelated storage remain
-   outside a mainboard application update.
-4. Emergency fallback to a retained working image, when separately within the
-   recovery authority, is recorded honestly. A nonstandard or unknown result is
-   not a successful standard handback. Retain occupied custody and report the
-   concrete recovery dependency instead of force-releasing or hiding it.
-5. Release normally only after the promised standard restoration and actual
-   physical/process handback. Notify the actual successor before offline analysis.
-   Keep the failed test's verdict distinct from successful firmware restoration.
+1. Firmware restoration is not required merely to release the bench. Record the
+   actual installed identity and provenance for the next agent, which brings and
+   installs its own required firmware under its lease.
+2. If a flash leaves the bench inoperable, the agent that performed the flash
+   restores current standard production firmware to the devices it modified,
+   independently verifies the recovery and retains custody until safe handback.
+   Report any concrete recovery blocker promptly.
+3. Independently verify newly written bytes and record installed identity;
+   verify the actual physical/process handback and preserve unrelated data.
+   Notify the actual successor after release. Preserve frozen evidence and any
+   explicit user-directed restoration or current-job stopping boundary.
 
 ## Initial transition
 

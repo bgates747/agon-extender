@@ -11,8 +11,9 @@ monitor settling and the prohibition on test-driven startup changes.
 
 For Olimex, resolve the [standard firmware selection](olimex-firmware.md) and
 recorded installed identities first. Skip unnecessary firmware writes when the
-standard already matches. A declared firmware/compatibility exception binds
-current standard restore artifacts, not an obsolete incoming image by default.
+standard already matches. Each agent brings the firmware required for its slot;
+firmware restoration is not required on release unless the agent's flash leaves
+the bench inoperable or the Author explicitly directs restoration.
 
 1. The agent reads the active task contract, bench constraints, SD layout and
    current machine-local bench record. Confirm Author authorization, bench
@@ -44,6 +45,25 @@ current standard restore artifacts, not an obsolete incoming image by default.
 6. Preparation does not authorize running a test. Rendering checks and smoke
    programs remain tests regardless of duration. If the Author reserves
    invocation, finish independent preparation and leave every test stopped.
+7. For a human review, proceed with all authorized preparation without asking
+   the Author to be available to watch it. Install and independently verify
+   the required firmware and fixtures, establish the required input, display,
+   host services and controller, and leave the verified prompt and working
+   directory or exact command ready. Call for the Author's attention only when
+   the remaining action is for the Author to type the specified `RUN` or other
+   explicit invocation. A granted lease or copied files alone are not readiness.
+   Report a genuine blocking decision promptly; do not invoke the test for the
+   Author or change a separately specified stopping boundary.
+8. For an Olimex hands-on test, once the bench is fully staged, send the
+   desktop “Agent has a question” notification with the exact start command
+   and what the Author should check. Hold the exclusive lease and staged setup
+   until the Author explicitly answers. Do not restore, release, move to the
+   next job, start a test clock or time out merely because the answer is
+   pending. Agent messages, notification acceptance and elapsed time are not
+   the Author's reply. Begin the timed test only when the Author confirms
+   readiness; the Author retains the reserved manual invocation. The desktop
+   question dialog is an alert only. Use ordinary chat for every follow-up
+   question, troubleshooting exchange and collection of test results.
 
 ## TE-02 — Invoke and honor the stopping point
 

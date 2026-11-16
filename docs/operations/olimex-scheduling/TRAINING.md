@@ -14,7 +14,7 @@ there is no requirement to repeat this assessment before each job.
 
 | Case | Situation | Expected judgment |
 |---|---|---|
-| T01 | First FIFO owner prepared; active lease null; fresh genuine full physical proof; current consumer ready | Recommend normal grant of that exact request, followed by prompt complete handoff; Extender executes supervised mutation |
+| T01 | First FIFO owner prepared; active lease null; host registry and predecessor handback reconciled | Grant exclusive custody first, then have the sole admitted operator assert its lease and obtain fresh physical proof; a grant alone never claims hardware readiness |
 | T02 | Owner says READY but has no final package, fixed runner or budgets | Identify concrete preparation gaps; no speculative grant or hardware action |
 | T03 | Lease active; another owner is ready; active chat quiet for ten minutes | Preserve active custody; obtain owner status via mail/steering, no takeover/expiry |
 | T04 | Entry observation is 309 seconds old; allowed freshness is 120; original minimum remaining cannot fit | Do not restamp/extend or launch; coordinate existing cleanup and honest UNRUN disposition |
