@@ -30,3 +30,19 @@ The GPIO17 reset connection, debug UART and boot configuration remain intact.
 5. The later Pi-to-P4 Ethernet comparison requires an identified P4 TCP peer
    candidate and fresh scheduler custody. Do not use P4 production services as
    a substitute for independently verified payload/CRC checks.
+
+## First physical readiness result — 2026-11-16
+
+1. The Pi5 owner applied the live TX/RX-only overlay. Extender independently
+   verified RP1 serial@30000, mux TXD0/RXD0, GPIO16/17 still unclaimed and the
+   debug console still on its separate tty. There was no reboot or boot edit.
+2. The Pi received positive AT and ATE0 replies at115200; a separate read-only
+   check obtained positive CIPSTATUS/CIFSR, status5 and no station IP. No
+   association credential was transmitted: the existing login keyring's
+   Secret Service metadata reports Locked=true. The Pi reported no throttling
+   flags; modem-pin voltage was not measured.
+3. Both data paths and all baud/CRC tests remain unrun pending the human's
+   existing keyring unlock. The tty is closed; the live TX/RX-only overlay
+   remains available. No Olimex lease or P4 change was needed for this check.
+   Evidence and the interactive unlock-only helper are in the ignored
+   NET-009 agent directory; no secret is stored in the evidence.
