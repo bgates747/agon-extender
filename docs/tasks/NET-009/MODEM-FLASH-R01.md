@@ -97,7 +97,9 @@ of the Olimex P4 bench.
    Extender verified all vendor segment offsets, the two executable
    checksums, the candidate hash, and the UART parameters in the image.
    The ignored local manifest retains exact source and write identities.
-3. Flash and verify the complete candidate at offset zero with the image
-   header kept. This replaces the original flash layout with the release
-   layout. Keep the full verified original for rollback. Installation,
-   first boot and the upload comparison remain pending.
+3. Extender flashed the complete candidate at offset zero through the Pi5
+   UART and independently verified the full 2 MiB digest. The write kept
+   the image header. The verified original is retained for rollback.
+   GPIO14 and GPIO15 were returned to inputs with pulls disabled for
+   Smith's normal power cycle. First boot and the upload comparison
+   remain pending.
