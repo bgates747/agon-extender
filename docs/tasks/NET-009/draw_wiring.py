@@ -42,19 +42,19 @@ text(862,260,'UEXT 1: 3.3 V',18,'#b71c1c')
 text(862,299,'UEXT 2: GND',18)
 text(862,358,'UEXT 3: modem RX',18,'#1b6b36')
 text(862,408,'UEXT 4: modem TX',18,'#a44b00')
-text(1068,260,'Look straight into the modem socket',20,font_weight='bold')
+text(1068,260,'Look into the female modem socket',20,font_weight='bold')
 text(1068,285,'Key notch at the bottom; use the molded pin-1 mark.',17)
-# Olimex UEXT face drawing with the notch down: even contacts above odd.
+# Female mating face, mirrored left to right from the previous drawing.
 # The modem is a peripheral: its pins 3/4 are RX/TX, unlike the host legend.
 line([(1280,449),(1068,449),(1068,310),(1532,310),(1532,449),(1320,449)],'#334238',3)
 for row,y in [(2,343),(1,405)]:
  for col in range(5):
-  pin=row+2*col;x=1118+90*col
+  pin=row+2*(4-col);x=1118+90*col
   color={1:'#b71c1c',2:'#111',3:'#1b6b36',4:'#a44b00'}.get(pin,'#64726b')
   rect(x-29,y-20,58,39,'white',color)
   text(x,y+6,str(pin),20,color,text_anchor='middle',font_weight='bold')
   text(x,y+34,{1:'3.3 V',2:'GND',3:'RXD',4:'TXD'}.get(pin,'—'),14,color,text_anchor='middle')
-text(1118,478,'▲ Pin 1',17,'#b71c1c',text_anchor='middle',font_weight='bold')
+text(1478,478,'▲ Pin 1',17,'#b71c1c',text_anchor='middle',font_weight='bold')
 text(1300,478,'↑ Key notch',17,text_anchor='middle')
 text(862,508,'Pins 5–10: leave open. The rear / wire-entry view is mirrored.',17)
 line([(193,218),(105,218),(105,106),(770,106),(770,250),(840,250)],'#c62828',dash='10 6')
@@ -73,4 +73,4 @@ text(1070,953,'Collector → Olimex RST/EN',18);text(825,1070,'Neither pin 9 nor
 text(160,875,'Header view reused from BYTE Pi5/WROOM artwork.',16);text(160,900,'Old WROOM bus wires are archival, not current wiring.',16);text(160,935,'USB / Ethernet end ↓',22,font_weight='bold');text(160,967,'Check physical pin 1; underside/socket views mirror.',17)
 text(42,1140,'Only the shown connections are proposed/retained. Other header pins are not declared free. No hardware was changed.',17)
 E.ElementTree(r).write(HERE/'PI5-ESP8266-WIRING.svg',encoding='unicode',xml_declaration=True)
-(HERE/'DIAGRAM-SOURCE.json').write_text(json.dumps({'source':'agon-hardware/first_steps/byte/pi5-wroom-wiring-diagram.svg','sha256':hashlib.sha256(BASE.read_bytes()).hexdigest(),'reused':'Pi5 header geometry, orientation and full row positions; archival WROOM assignments omitted','modem_connector_orientation':'https://www.olimex.com/Products/Modules/UEXT/images/UEXT-PINS.jpg','modem_signal_reference':'https://www.olimex.com/Products/IoT/ESP8266/MOD-WIFI-ESP8266/open-source-hardware','reset_reference':'docs/bench-reset.md','status':'proposal; power and host pin ownership checks pending'},indent=2)+'\n')
+(HERE/'DIAGRAM-SOURCE.json').write_text(json.dumps({'source':'agon-hardware/first_steps/byte/pi5-wroom-wiring-diagram.svg','sha256':hashlib.sha256(BASE.read_bytes()).hexdigest(),'reused':'Pi5 header geometry, orientation and full row positions; archival WROOM assignments omitted','modem_connector_orientation':'https://www.olimex.com/Products/Modules/IO/MOD-IO2/resources/MOD-IO2.pdf#page=18','modem_signal_reference':'https://www.olimex.com/Products/IoT/ESP8266/MOD-WIFI-ESP8266/open-source-hardware','reset_reference':'docs/bench-reset.md','status':'proposal; power and host pin ownership checks pending'},indent=2)+'\n')

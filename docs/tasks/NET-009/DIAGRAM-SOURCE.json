@@ -2,7 +2,7 @@
   "source": "agon-hardware/first_steps/byte/pi5-wroom-wiring-diagram.svg",
   "sha256": "9c2f77285c80ece57abc5ed23744573002ea124b30e2a8aa611e9d8f475b9bcb",
   "reused": "Pi5 header geometry, orientation and full row positions; archival WROOM assignments omitted",
-  "modem_connector_orientation": "https://www.olimex.com/Products/Modules/UEXT/images/UEXT-PINS.jpg",
+  "modem_connector_orientation": "https://www.olimex.com/Products/Modules/IO/MOD-IO2/resources/MOD-IO2.pdf#page=18",
   "modem_signal_reference": "https://www.olimex.com/Products/IoT/ESP8266/MOD-WIFI-ESP8266/open-source-hardware",
   "reset_reference": "docs/bench-reset.md",
   "status": "proposal; power and host pin ownership checks pending"
