@@ -31,3 +31,11 @@ P4 transmits and Pi5 validates. Each arm has one bulk producer.
 6. Retain the sender and receiver results and the first bad frame where
    available. Close both USB and Pi header ttys before product installation.
    Report the highest qualified rate separately for each direction.
+
+## First hardware start
+
+The first fixture image reached its USB control console, then the Ethernet
+event task hit a stack protection fault in newlib `_vfprintf_r` before
+DHCP produced an address. No transfer started. Increase the fixture-only
+`sys_evt` stack from 2304 to 8192 bytes, retain the first boot capture, and
+verify the new image can reach DHCP before arming any transfer.
