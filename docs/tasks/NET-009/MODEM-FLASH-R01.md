@@ -24,17 +24,18 @@ of the Olimex P4 bench.
 
 ## Smith's first step
 
-1. Leave the Pi5 running. At the **module end** of the harness, disconnect
-   both UART signal leads (green and orange), then disconnect the red 3.3 V
-   lead. Leave the module ground attached. Disconnecting the signal leads
-   first prevents the Pi's UART from feeding the unpowered module.
+1. Leave the Pi5 running and keep the UART leads and ground attached.
+   Extender closes the header tty and temporarily makes GPIO14 and GPIO15
+   inputs with pulls disabled. After Extender verifies that state, disconnect
+   the red 3.3 V lead at the module end. The temporary input state prevents
+   the Pi's UART from feeding the unpowered module.
 2. Hold the module's **BOOT** button while reconnecting red 3.3 V.
-   Release the button once the module powers up, then reconnect green and
-   orange to their original positions using the wiring sheet.
+   Release the button once the module powers up.
 3. Tell Extender the module is powered in bootloader mode. Leave it in
-   that state for the Pi5's first read. After programming or recovery,
-   Smith repeats the module-only power cycle with BOOT **released** to
-   start the firmware. [Olimex module instructions](https://www.olimex.com/Products/IoT/ESP8266/MOD-WIFI-ESP8266/open-source-hardware) and
+   that state for the Pi5's first read. Extender restores the captured pin
+   functions before using the UART. After programming or recovery, the same
+   coordinated power cycle with BOOT **released** starts the firmware.
+   [Olimex module instructions](https://www.olimex.com/Products/IoT/ESP8266/MOD-WIFI-ESP8266/open-source-hardware) and
    [Espressif boot-mode guide](https://docs.espressif.com/projects/esptool/en/latest/esp8266/advanced-topics/boot-mode-selection.html).
 
 ## Extender execution and acceptance
@@ -81,5 +82,22 @@ of the Olimex P4 bench.
 
 ## Status
 
-Bootloader sync, backup, candidate preparation, firmware installation and
-comparison are pending.
+1. The Pi5 synchronized with the ESP8266 ROM at 115,200 baud through the
+   existing wires. The module reported 2 MiB of flash. Extender read that
+   full extent and verified its digest against the device. The private
+   rollback image and verification log are retained.
+2. The offline candidate uses Espressif's ESP8266 AT 2.3.0.0 release
+   (`795c42d8`). Its SHA-256 is
+   `44675f6c9a4411362c0a8565c13358e0b21712cf373b809e5b382daaf54b8c7a`.
+   The 2 MiB factory image changes seven bytes. Five set the UART pins
+   and disable flow/control signals using the upstream WROOM-02-N values
+   while keeping the packaged WROOM-02 identity. Two set the boot header
+   to the original Olimex flash mode and speed, QOUT at 40 MHz. The AT
+   application and its UART1 logging configuration are the vendor bytes.
+   Extender verified all vendor segment offsets, the two executable
+   checksums, the candidate hash, and the UART parameters in the image.
+   The ignored local manifest retains exact source and write identities.
+3. Flash and verify the complete candidate at offset zero with the image
+   header kept. This replaces the original flash layout with the release
+   layout. Keep the full verified original for rollback. Installation,
+   first boot and the upload comparison remain pending.
