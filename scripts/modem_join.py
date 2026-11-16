@@ -38,10 +38,16 @@ def emit_private():
    n=os.write(sys.stdout.fileno(),view);view=view[n:]
  finally:wipe(packet)
 
-def load_private():
+def load_private(provider='login-keyring'):
+ if provider == 'login-keyring':
+  supplier = ['/usr/bin/python3', str(Path(__file__).resolve()), '--emit-private-packet']
+ elif provider == 'systemd-host':
+  supplier = ['/usr/bin/sudo', '-n', '/usr/local/libexec/net009-machine-credential', 'emit']
+ else:
+  raise ValueError('Unknown credential provider')
  packet=bytearray(128);used=0
  try:
-  with subprocess.Popen(['/usr/bin/python3',str(Path(__file__).resolve()),'--emit-private-packet'],stdout=subprocess.PIPE,stderr=subprocess.DEVNULL) as child:
+  with subprocess.Popen(supplier,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL) as child:
    try:
     # Supplier is finite; select avoids an indefinitely unavailable keyring.
     import select
@@ -53,7 +59,7 @@ def load_private():
      used+=n
      if time.monotonic()>=end:raise TimeoutError('Private keyring supplier timed out')
     if used==len(packet):raise ValueError('Oversized private credential packet')
-    if child.wait(timeout=2)!=0:raise RuntimeError('Pi keyring entry unavailable or locked; no credentials transmitted')
+    if child.wait(timeout=2)!=0:raise RuntimeError('Selected credential provider unavailable; no credentials transmitted')
    finally:
     if child.poll() is None:child.kill();child.wait()
   del packet[used:]

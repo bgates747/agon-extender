@@ -54,12 +54,12 @@ def command(port, request, *, timeout=3, prompt=False, required=True):
     return data
 
 
-def associate(port):
+def associate(port, credential_provider='login-keyring'):
     data = command(port, b'AT+CIFSR\r\n')
     ip = re.search(rb'STAIP,"(\d+\.\d+\.\d+\.\d+)"', data)
     if ip and ip.group(1) != b'0.0.0.0':
         return 'existing'
-    credentials = load_private()
+    credentials = load_private(credential_provider)
     request = bytearray(b'AT+CWJAP_CUR=')
     try:
         command(port, b'AT+CWMODE_CUR=1\r\n')
@@ -110,7 +110,7 @@ def execute(port, args, result):
     command(port, b'AT\r\n')
     command(port, b'ATE0\r\n')
     result['phase'] = 'association'
-    result['association'] = associate(port)
+    result['association'] = associate(port, args.credential_provider)
     if not args.direction:
         result.update(ok=True, phase='info_complete', command_mode=True, baud=args.old_baud)
         return
@@ -194,6 +194,7 @@ def execute(port, args, result):
 def main():
     harden()
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--credential-provider', choices=('login-keyring', 'systemd-host'), default='login-keyring')
     parser.add_argument('--port', required=True)
     parser.add_argument('--old-baud', required=True, type=int, choices=RATES)
     parser.add_argument('--baud', type=int, choices=RATES)
