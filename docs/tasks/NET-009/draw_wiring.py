@@ -32,37 +32,41 @@ r.append(pi)
 labels=['3V3','5V','GPIO2','5V','GPIO3','GND','GPIO4','GPIO14 TX','GND reset','GPIO15 RX','GPIO17 reset','GPIO18','GPIO27','GND','GPIO22','GPIO23','3V3','GPIO24','GPIO10','GND','GPIO9','GPIO25','GPIO11','GPIO8','GND','GPIO7','GPIO0','GPIO1','GPIO5','GND','GPIO6','GPIO12','GPIO13','GND','GPIO19','GPIO16','GPIO26','GPIO20','GND','GPIO21']
 for pin,label in enumerate(labels,1):
  y=218+30*((pin-1)//2);odd=pin%2
- text(180 if odd else 420,y+4,str(pin),12,text_anchor='end' if odd else 'start')
+ text(180 if odd else 420,y+(14 if pin in [1,6,8,9,10,11] else 4),str(pin),12,text_anchor='end' if odd else 'start')
  text(210 if odd else 390,y+4,label,11,text_anchor='start' if odd else 'end')
  if pin in [1,6,8,10,9,11]:
   colour={1:'#c62828',6:'#111',8:'#238b45',10:'#ef7d00',9:'#111',11:'#546e7a'}[pin];r.append(node('circle',cx=193 if odd else 407,cy=y,r=8,fill='white',stroke=colour,stroke_width=3))
 rect(840,185,735,345,fill='#e9f2e7')
 text(862,222,'Olimex MOD-WIFI-ESP8266',25,font_weight='bold')
-text(862,260,'UEXT 1: 3.3 V',18,'#b71c1c')
-text(862,299,'UEXT 2: GND',18)
-text(862,358,'UEXT 3: modem RX',18,'#1b6b36')
-text(862,408,'UEXT 4: modem TX',18,'#a44b00')
-text(1068,260,'Look into the female modem socket',20,font_weight='bold')
-text(1068,285,'Key notch at the bottom; use the molded pin-1 mark.',17)
-# Female mating face, mirrored left to right from the previous drawing.
+text(862,255,'Look into the female modem socket',20,font_weight='bold')
+text(862,279,'Key notch down. Pin 1 (3.3 V) is at the bottom right.',17)
+# Female mating face, mirrored left to right from the male face.
 # The modem is a peripheral: its pins 3/4 are RX/TX, unlike the host legend.
-line([(1280,449),(1068,449),(1068,310),(1532,310),(1532,449),(1320,449)],'#334238',3)
-for row,y in [(2,343),(1,405)]:
- for col in range(5):
-  pin=row+2*(4-col);x=1118+90*col
-  color={1:'#b71c1c',2:'#111',3:'#1b6b36',4:'#a44b00'}.get(pin,'#64726b')
-  rect(x-29,y-20,58,39,'white',color)
-  text(x,y+6,str(pin),20,color,text_anchor='middle',font_weight='bold')
-  text(x,y+34,{1:'3.3 V',2:'GND',3:'RXD',4:'TXD'}.get(pin,'—'),14,color,text_anchor='middle')
-text(1478,478,'▲ Pin 1',17,'#b71c1c',text_anchor='middle',font_weight='bold')
-text(1300,478,'↑ Key notch',17,text_anchor='middle')
+contacts={row+2*(4-col):(1118+90*col,y) for row,y in [(2,343),(1,405)] for col in range(5)}
+line([(1280,449),(1068,449),(1068,316),(1532,316),(1532,449),(1320,449)],'#334238',3)
+text(1300,440,'↓ Key notch',14,text_anchor='middle')
+for pin,(x,y) in contacts.items():
+ color={1:'#b71c1c',2:'#111',3:'#1b6b36',4:'#a44b00'}.get(pin,'#64726b')
+ rect(x-29,y-20,58,40,'white',color)
+ text(x,y-2,str(pin),18,color,text_anchor='middle',font_weight='bold')
+ text(x,y+14,{1:'3.3 V',2:'GND',3:'RXD',4:'TXD'}.get(pin,'—'),13,color,text_anchor='middle')
 text(862,508,'Pins 5–10: leave open. The rear / wire-entry view is mirrored.',17)
-line([(193,218),(105,218),(105,106),(770,106),(770,250),(840,250)],'#c62828',dash='10 6')
-line([(407,278),(610,278),(610,290),(840,290)],'#111')
-line([(407,308),(670,308),(670,350),(840,350)],'#238b45')
-line([(840,400),(720,400),(720,338),(407,338)],'#ef7d00')
+
+# Land on the edge of the numbered contact itself: 2/4 from above,
+# 1/3 from below. A light halo at each crossing means no junction.
+def modem_wire(path,pin,color,dash=None):
+ x,y=contacts[pin]
+ approach=y-20 if pin%2==0 else y+20
+ points=path+[(x,path[-1][1]),(x,approach)]
+ line(points,'#fafafa',9)
+ line(points,color,dash=dash)
+
+modem_wire([(193,218),(105,218),(105,106),(707,106),(707,482)],1,'#c62828','10 6')
+modem_wire([(407,278),(625,278),(625,294)],2,'#111')
+modem_wire([(407,308),(690,308),(690,461)],3,'#238b45')
+modem_wire([(407,338),(790,338),(790,307)],4,'#ef7d00')
 text(470,240,'Pin 1: proposed 3V3 supply',18,'#b71c1c');text(470,266,'Pin 6: new modem ground',16)
-text(470,325,'Pin 8: Pi TX → modem RX',17,'#1b6b36');text(470,370,'Pin 10: Pi RX ← modem TX',17,'#a44b00')
+text(470,326,'Pin 8: Pi TX → modem RX',17,'#1b6b36');text(470,370,'Pin 10: Pi RX ← modem TX',17,'#a44b00')
 rect(815,560,760,210,fill='#fff6df',stroke='#b8860b');text(840,594,'Power check before energizing',23,font_weight='bold');text(840,627,'Pi has 3V3 supply pins 1 and 17. Proposed modem feed: pin 1.',18);text(840,658,'Confirm ≥500 mA-capable spare 3V3 supply and module polarity.',18);text(840,689,'If unverified: draw a Pi-5V-fed regulator alternative first.',18);text(840,720,'Disconnect all four old P4 modem wires; never join supplies.',18)
 rect(800,820,800,270,fill='#edf0f2');text(825,855,'Existing Olimex reset circuit — leave intact',24,font_weight='bold')
 line([(193,368),(128,368),(128,910),(860,910)],'#546e7a',3)
