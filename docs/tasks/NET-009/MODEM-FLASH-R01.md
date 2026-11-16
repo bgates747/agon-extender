@@ -101,5 +101,10 @@ of the Olimex P4 bench.
    UART and independently verified the full 2 MiB digest. The write kept
    the image header. The verified original is retained for rollback.
    GPIO14 and GPIO15 were returned to inputs with pulls disabled for
-   Smith's normal power cycle. First boot and the upload comparison
-   remain pending.
+   Smith's normal power cycle.
+4. At the first boot check, the Pi5 had restarted and the temporary UART
+   overlay was gone. Extender reapplied `uart0-pi5` without flow control
+   parameters and verified the RP1 header UART on GPIO14 and GPIO15.
+   The ESP8266 answered `AT` at 115,200 baud. `AT+GMR` reported
+   ESP-AT 2.3.0.0, SDK `v3.4-112-gc965e03` and build `795c42d`.
+   Wi-Fi bring-up and the upload comparison remain pending.
