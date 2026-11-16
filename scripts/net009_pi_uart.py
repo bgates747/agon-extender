@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Finite NET-009 test: Pi5 RP1 UART0 <-> ESP8266 <-> Pi5 TCP peer."""
+"""Finite NET-009 test: Pi5 RP1 UART0 <-> ESP8266 <-> selected TCP peer."""
 import argparse
 import ipaddress
 import json
@@ -15,6 +15,7 @@ import serial
 from modem_bw_peer import Peer
 from modem_bw_protocol import DOWN, HEADER, PAYLOAD, UP, check, frame, pattern
 from modem_join import harden, load_private, wipe
+from net009_p4_peer import P4Peer
 
 RATES = (115200, 230400, 384000, 576000, 1152000)
 UART_NODE = 'serial@30000'
@@ -131,8 +132,14 @@ def execute(port, args, result):
         command(port, b'AT+CIPMODE=1\r\n')
         nonce = secrets.randbits(32)
         millis = args.seconds * 1000
-        peer = Peer(args.bind, args.out / 'pi', nonce, args.baud, millis, args.direction)
-        command(port, f'AT+CIPSTART="TCP","{args.bind}",{peer.port}\r\n'.encode(), timeout=10)
+        if args.p4_port:
+            peer = P4Peer(args.p4_port, args.p4_source, args.out, nonce, args.baud,
+                          millis, args.direction)
+            address = peer.address
+        else:
+            peer = Peer(args.bind, args.out / 'pi', nonce, args.baud, millis, args.direction)
+            address = args.bind
+        command(port, f'AT+CIPSTART="TCP","{address}",{peer.port}\r\n'.encode(), timeout=10)
         connected = True
         entering_transparent = True
         command(port, b'AT+CIPSEND\r\n', prompt=True)
@@ -150,6 +157,8 @@ def execute(port, args, result):
                 if check(read_frame(port, deadline, retained), 1)[1]:
                     raise ValueError('Unexpected reverse bulk data')
                 while time.monotonic() - start < args.seconds:
+                    if args.p4_port:
+                        peer.check_upload()
                     seq = result['tx_frames'] + 1
                     write_all(port, frame(seq, pattern(seq, UP)))
                     result['tx_frames'] = seq
@@ -158,10 +167,15 @@ def execute(port, args, result):
             else:
                 write_all(port, frame(1))
                 deadline = start + args.seconds + 12
-                while check(read_frame(port, deadline, retained), result['rx_frames'] + 1, DOWN)[1]:
+                while payload := check(read_frame(port, deadline, retained),
+                                       result['rx_frames'] + 1, DOWN)[1]:
+                    if args.p4_port and len(payload) != PAYLOAD:
+                        raise ValueError('Short download payload')
                     result['rx_frames'] += 1
             result['transfer_seconds'] = time.monotonic() - start
-            if not peer.finished.wait(5):
+            if args.p4_port:
+                peer.finish()
+            elif not peer.finished.wait(5):
                 raise TimeoutError('TCP peer did not complete')
             result['ok'] = (peer.result['pass'] and
                             result['tx_frames'] == peer.result['rx_frames'] and
@@ -186,8 +200,14 @@ def execute(port, args, result):
             result['cleanup_error'] = type(error).__name__
         finally:
             if peer:
-                peer.close()
-                result['peer'] = peer.result
+                try:
+                    if args.p4_port and peer.result is None:
+                        peer.finish(17)
+                except (TimeoutError, RuntimeError, ValueError) as error:
+                    result['peer_error'] = type(error).__name__
+                finally:
+                    peer.close()
+                    result['peer'] = peer.result
         result['ok'] = result['ok'] and result.get('cleanup', False)
 
 
@@ -199,14 +219,22 @@ def main():
     parser.add_argument('--old-baud', required=True, type=int, choices=RATES)
     parser.add_argument('--baud', type=int, choices=RATES)
     parser.add_argument('--direction', choices=('up', 'down'))
-    parser.add_argument('--bind')
+    destination = parser.add_mutually_exclusive_group()
+    destination.add_argument('--bind')
+    destination.add_argument('--p4-port')
+    parser.add_argument('--p4-source')
     parser.add_argument('--seconds', type=int, choices=(3, 10, 30, 60), default=3)
     parser.add_argument('--out', required=True, type=Path)
     args = parser.parse_args()
-    if args.direction and (not args.baud or not args.bind or
-                           ipaddress.ip_address(args.bind).version != 4 or
-                           not ipaddress.ip_address(args.bind).is_private):
-        parser.error('Transfer needs an explicit baud and local private IPv4 bind')
+    if bool(args.p4_port) != bool(args.p4_source) or (
+        args.p4_source and (not args.direction or not re.fullmatch(r'[a-f0-9]{40}', args.p4_source))
+    ):
+        parser.error('P4 transfer needs a stable USB device and exact source commit')
+    if args.direction and (
+        not args.baud or not (args.bind or args.p4_port) or
+        (args.bind and not ipaddress.IPv4Address(args.bind).is_private)
+    ):
+        parser.error('Transfer needs an explicit baud and a private IPv4 bind or P4 peer')
     require_header_uart(args.port)
     args.out.mkdir(exist_ok=False)
     result = dict(ok=False, phase='open', tx_frames=0, rx_frames=0,
