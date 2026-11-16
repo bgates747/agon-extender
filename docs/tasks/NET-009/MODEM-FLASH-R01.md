@@ -107,4 +107,39 @@ of the Olimex P4 bench.
    parameters and verified the RP1 header UART on GPIO14 and GPIO15.
    The ESP8266 answered `AT` at 115,200 baud. `AT+GMR` reported
    ESP-AT 2.3.0.0, SDK `v3.4-112-gc965e03` and build `795c42d`.
-   Wi-Fi bring-up and the upload comparison remain pending.
+5. The ESP8266 joined Wi-Fi using the Pi5's existing private credential
+   provider. The runner verified `AT+SYSSTORE=0` before issuing the newer
+   firmware's Wi-Fi commands.
+
+## Pi-to-Pi comparison
+
+The 2.3.0.0 candidate performed worse on upload in this run. Both firmware
+versions used the Pi5 header UART, the ESP8266, and the Pi5 TCP peer. The
+runner kept the same frame format and payload, sequence and CRC checks.
+The [original firmware measurements](PI-PEER-R01-RESULT.md) are the
+historical baseline.
+
+| Direction | Baud | Nominal window | AT 1.3.0.0 | ESP-AT 2.3.0.0 |
+| --- | ---: | ---: | --- | --- |
+| Upload | 1,152,000 | 3 s | CRC fault after 25 valid frames | Unrun after the 230,400 fault |
+| Upload | 576,000 | 60 s | Pass, 3,326 frames and 3,405,824 B | Unrun after the 230,400 fault |
+| Upload | 230,400 | 3 s | Pass, 67 frames | CRC fault on frame 23 after 22 valid frames |
+| Upload | 115,200 | 30 s | Unrun | CRC fault on frame 248 after 247 valid frames |
+| Upload | 115,200 | 10 s | Unrun | Pass, 112 frames and 114,688 B |
+| Upload | 115,200 | 3 s | Pass, 34 frames | Pass, 34 frames |
+| Download | 1,152,000 | 60 s | Unrun | Pass, 6,633 frames and 6,792,192 B |
+| Download | 1,152,000 | 3 s | Pass, 361 frames | Pass, 324 frames |
+
+The candidate completed the download ladder and the 10-, 30- and
+60-second download checks at 1,152,000 baud. The 60-second check delivered
+113 kB/s of verified payload over 60.177 s. Candidate upload failed at the
+lowest rate during backoff, leaving its 60-second upload unqualified. The
+first differences in the two corrupt uploads were at stream offsets
+23,300 and 256,900. The retained bytes do not identify where the corruption
+entered the path. The Pi reported zero throttling flags at entry and exit.
+
+Every arm returned to AT command mode. ESP-AT 2.3.0.0 remains installed
+and associated at the transient baud of 1,152,000. The Pi header tty is
+closed. The verified original stays available for rollback. The local
+NET-009 evidence contains the per-arm results, raw transfer captures,
+runner hashes and credential-free logs.

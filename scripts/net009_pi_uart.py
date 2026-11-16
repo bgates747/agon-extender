@@ -55,15 +55,19 @@ def command(port, request, *, timeout=3, prompt=False, required=True):
     return data
 
 
-def associate(port, credential_provider='login-keyring'):
+def associate(port, credential_provider='login-keyring', *, esp_at=False):
+    if esp_at:
+        command(port, b'AT+SYSSTORE=0\r\n')
+        if b'+SYSSTORE:0\r\n' not in command(port, b'AT+SYSSTORE?\r\n'):
+            raise RuntimeError('Cannot verify runtime-only Wi-Fi settings')
     data = command(port, b'AT+CIFSR\r\n')
     ip = re.search(rb'STAIP,"(\d+\.\d+\.\d+\.\d+)"', data)
     if ip and ip.group(1) != b'0.0.0.0':
         return 'existing'
     credentials = load_private(credential_provider)
-    request = bytearray(b'AT+CWJAP_CUR=')
+    request = bytearray(b'AT+CWJAP=' if esp_at else b'AT+CWJAP_CUR=')
     try:
-        command(port, b'AT+CWMODE_CUR=1\r\n')
+        command(port, b'AT+CWMODE=1\r\n' if esp_at else b'AT+CWMODE_CUR=1\r\n')
         count = credentials[0]
         for index, field in enumerate((memoryview(credentials)[2:2+count],
                                        memoryview(credentials)[2+count:])):
@@ -111,7 +115,8 @@ def execute(port, args, result):
     command(port, b'AT\r\n')
     command(port, b'ATE0\r\n')
     result['phase'] = 'association'
-    result['association'] = associate(port, args.credential_provider)
+    result['association'] = associate(port, args.credential_provider,
+                                      esp_at=getattr(args, 'esp_at', False))
     if not args.direction:
         result.update(ok=True, phase='info_complete', command_mode=True, baud=args.old_baud)
         return
@@ -218,6 +223,8 @@ def main():
     parser.add_argument('--credential-provider', choices=('login-keyring', 'systemd-host'), default='login-keyring')
     parser.add_argument('--port', required=True)
     parser.add_argument('--old-baud', required=True, type=int, choices=RATES)
+    parser.add_argument('--esp-at', action='store_true',
+                        help='Use ESP-AT Wi-Fi commands with flash storage disabled')
     parser.add_argument('--baud', type=int, choices=RATES)
     parser.add_argument('--direction', choices=('up', 'down'))
     destination = parser.add_mutually_exclusive_group()
