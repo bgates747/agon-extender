@@ -30,7 +30,9 @@ estimated duration, and job authorization in the operator's chat.
 
 Use the app's immediate send-to-thread action. When that transport is
 unavailable on Pi5, use the existing Pi chat sender with the same message and
-your actual chat UUID. Use a unique delivery ID for each message.
+your actual chat UUID. Use a unique delivery ID for each message. Run the Pi
+sender with ordinary tool review for the local app-server socket, which is
+outside the workspace sandbox.
 
 ```bash
 /Agon/mystuff/agon-dev-env/.venv/bin/python /Agon/mystuff/agon-dev-env/scripts/pi_chat.py send \
@@ -40,8 +42,8 @@ Reserve a spot for me on the bench in the FIFO.
 MESSAGE
 ```
 
-If delivery is uncertain, check its receipt before sending again. A queued
-acknowledgement is distinct from the scheduler's slot-open message.
+If delivery is uncertain, check its receipt before sending again. Wait for the
+scheduler's slot-open message even after the sender confirms delivery.
 
 ### Smith-authorized scheduling exceptions
 
@@ -87,15 +89,18 @@ the installed firmware.
 ### Stage the fixtures
 
 Stage the identified fixtures in the agreed location and verify the bytes
-and prerequisites. Keep normal startup available. The operator records
-what is staged and how the fixture will start.
+and prerequisites. Preserve `/autoexec.txt`. Reset returns to normal boot,
+and the operator starts the fixture with its explicit CLI command. The
+operator records what is staged and how the fixture will start.
 
 ## 4. Run and collect
 
 The operator starts the fixture with the planned command once the bench is
 ready. If Smith reserved that step, the operator finishes staging, sends Smith
 the exact command once, and waits. Follow the test plan's observation and stop
-conditions. Use its completion signal and collect its specified outputs.
+conditions. Use its completion signal and collect its specified outputs. If a
+fixture switches display mode, allow at least one second for the monitor to
+settle and restore the entry mode and visible CLI at the end.
 
 ## 5. Restore production firmware and check in
 

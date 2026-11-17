@@ -94,6 +94,9 @@ proven method from one current starting point.
    current commands without following historical instructions. Include the
    proposed contents and tradeoffs of a sparse operator checkout.
 
+[Owner and cold-run evidence](BENCH-020/EVIDENCE.md) ·
+[Instruction cutover](BENCH-020/CUTOVER.md)
+
 ## Unattended acceptance
 
 Smith authorizes as many cold iterations as needed. A passing iteration is one

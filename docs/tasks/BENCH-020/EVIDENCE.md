@@ -49,3 +49,41 @@ selected commands.
    uses Smith's explicit bounded unattended exception. The canonical
    directions need to keep the authority to recover, the actual bench
    ownership and the proof of safe handback visible at the action.
+
+## Second rehearsal disposition
+
+The second operator successfully recovered and checked in on November 17.
+The retained attempt stopped before any P4 write or fixture invocation.
+Recovery compared all 1,761,280 bytes of the P4 app extent with production
+and left the confirmed image in place. It restored the mainboard VDPlet
+application, compared all 1,130,496 bytes, retained the untouched EMOS ROM,
+proved the MOS CLI and verified idle transfers and free handles. The
+recovery was a separate successful return, with the original rehearsal still
+failed. The operator needed a separate recovery adapter because the phase
+runner correctly refused to advance past the failed install, but offered no
+ordinary restore entry at that boundary.
+
+[Operator log](../../../agents/bench019/rehearsal-r02/OPERATOR-LOG.md) ·
+[Terminal recovery receipt](../../../agents/bench019/rehearsal-r02/production-recovery/complete.json) ·
+[Physical handback](../../../agents/bench019/rehearsal-r02/production-recovery/handback/handback.json)
+
+## Sparse comparison
+
+The full checkout leaves historical recipes available to component owners.
+The operator checkout includes one bench guide at the same tracked path as
+the full repository, eleven required Python modules, the commissioned local
+binding, and the exact artifacts for the selected run. The regular operator
+guide, runtime, and test pins come from a frozen revision. The checkout uses
+the commissioned host Python environment and copies of the needed production
+images. The local entrance points directly to the guide and selected packet.
+Refresh the sparse checkout from a subsequent guide/runtime revision before
+using it for another packet.
+
+The matched cold test keeps the previous fixture, firmware images, SD
+program and result locations, expected results, install order and restore
+order. It uses a fresh SD transaction namespace and evidence directory. The
+two changes are the single sparse entry and the P4 stock owner sequence.
+The P4, EMOS and VDPlet artifact hashes remain identical across attempts.
+The rehearsal can establish that the curated end-to-end procedure works.
+The retained command and source comparison explains the earlier P4 pre-write
+failure independently of the rehearsal outcome.
