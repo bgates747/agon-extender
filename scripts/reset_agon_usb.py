@@ -7,6 +7,7 @@ Joined DTR/RTS release is required: separate transitions can pulse this circuit.
 There is no command injection, firmware write, retry or application replay.
 """
 import argparse
+from contextlib import contextmanager
 import fcntl
 import json
 from pathlib import Path
@@ -39,7 +40,9 @@ def identity(config):
     return port
 
 
-def pulse(config):
+@contextmanager
+def hold(config):
+    """Assert the commissioned reset until the caller exits, then release it."""
     port = identity(config)
 
     def interrupted(signum, _frame):
@@ -62,7 +65,7 @@ def pulse(config):
                             struct.pack("I", termios.TIOCM_RTS))
                 if controls() != termios.TIOCM_RTS:
                     raise RuntimeError("Agon reset assertion was not observed")
-                time.sleep(0.1)
+                yield
             finally:
                 fcntl.ioctl(handle.fd, termios.TIOCMBIC, struct.pack("I", MASK))
                 if controls() != 0:
@@ -70,6 +73,11 @@ def pulse(config):
     finally:
         for item, handler in previous.items():
             signal.signal(item, handler)
+
+
+def pulse(config):
+    with hold(config):
+        time.sleep(0.1)
 
 
 def main():

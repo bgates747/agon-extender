@@ -14,7 +14,7 @@ import time
 from urllib.request import urlopen
 
 import bench_process
-import native_bootstrap
+import olimex_p4_app
 from olimex_cli import Observer
 from olimex_flash import check_extent, flash_application
 from passive_serial import open_passive_serial
@@ -291,11 +291,15 @@ class Bench:
 
             self.listener("rom-readback", f"EXEC {self.install_dir}/{selection}.txt", read_rom)
         else:
-            port = self.c["ports"][0 if component == "mainboard" else 1]
-            result = flash_application(
-                component, self.config["programmer"], port, self.config["mainboard_mac"],
-                spec, image, pinned(spec["partition_table"]), self.out, begin,
-                required_entry=required_entry)
+            table = pinned(spec["partition_table"])
+            if component == "p4":
+                result = olimex_p4_app.replace(self, spec, image, table, before["boot"],
+                                              begin, required_entry=required_entry)
+            else:
+                result = flash_application(
+                    component, self.config["programmer"], self.c["ports"][0],
+                    self.config["mainboard_mac"], spec, image, table, self.out, begin,
+                    required_entry=required_entry)
             if result.read_bytes() != image:
                 raise RuntimeError(f"Independent {component} application readback differs")
             bench_process.record(self.out / "write-verified.json", {
@@ -306,9 +310,6 @@ class Bench:
                 bench_process.record(self.out / "agon-reset-issued.json", {"epoch": time.time()})
                 pulse(self.reset_config)
                 wait_boot(self.url, reset_before, 60)
-            else:
-                native_bootstrap.clean_bootstrap(self, self.out, from_programmer=True,
-                                                 reset_config=self.config["reset_config"])
             self.cli()
 
         receipt = {
@@ -452,7 +453,7 @@ def main():
         parser.error("Physical phases require --operator from the opened chat slot")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
     bounds = {"stage": 300, "run": kit["fixture"]["seconds"] + 210,
-              "handback": 90}
+              "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
     return bench_process.run(child_argv(args, phase), args.out / phase,
                              bounds.get(phase, 480), owner=args.operator,
                              lease=f"chat:{args.operator}", phase=phase,

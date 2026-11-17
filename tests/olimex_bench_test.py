@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from olimex_bench import Bench, preflight
 from olimex_cli import CliError, command_result, find_witness
 from olimex_flash import check_app0, check_extent, configure_flash_size, session_operations
+import olimex_p4_app
 
 
 class TestObserver(unittest.TestCase):
@@ -58,6 +59,19 @@ class TestObserver(unittest.TestCase):
 
 
 class TestOta(unittest.TestCase):
+    def test_p4_uses_stock_keep_modes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            args = ("write-flash", "--flash-mode", "keep", "--flash-freq", "keep",
+                    "--flash-size", "keep", "0x20000", folder / "write.bin")
+            with patch("olimex_p4_app.subprocess.run") as run:
+                olimex_p4_app.stock(folder, "write", "/dev/p4", "no-reset", *args)
+            self.assertEqual(run.call_args.args[0], [
+                sys.executable, "-m", "esptool", "--chip", "esp32p4", "--port", "/dev/p4",
+                "--baud", "460800", "--before", "no-reset", "--after", "no-reset",
+                *map(str, args)])
+            self.assertTrue(run.call_args.kwargs["check"])
+
     def test_unknown_flash_size_keeps_programmer_defaults(self):
         loader = MagicMock()
         detected = MagicMock(return_value=None)
