@@ -2,7 +2,7 @@
 
 **Status — Patched original fixture passed on Olimex on 2026-11-17.**
 The host regression and physical single-LF comparison pass.
-Upstream submission remains pending.
+Upstream PR [#58](https://github.com/AgonPlatform/agondev/pull/58) is published.
 
 The original fixture supplied `"Result file example\n"` to `fputs` and
 the hardware result ended in `0a 0a`. Its linker map identifies
@@ -35,10 +35,17 @@ See the [Olimex qualification record](BENCH-020.md).
   and run the owning repository’s relevant tests. Record the affected
   and fixed results and which environment produced them.
 
-- UPSTREAM-002-05 [ ] Submit the patch and regression coverage to the owning upstream
+- UPSTREAM-002-05 [x] Submit the patch and regression coverage to the owning upstream
   repository. In the PR, describe the observed extra LF, the standard
   behavior, the affected revision, and how to reproduce and verify the
   fix. Record the PR link and validation results here.
+  The [approved PR text](UPSTREAM-002/PR-DRAFT.md) was published as
+  [upstream PR #58](https://github.com/AgonPlatform/agondev/pull/58).
+  Smith requested excluding the added host harness from upstream's main branch.
+  Fork branch `codex/fputs-validation` retains the tested harness at `89b4ff1`.
+  The proposed fix branch is now `a35f384ecd69eb26e362feb5f061ee04de20d786`;
+  its net changes contain only the library fix and the existing file-I/O example
+  adjustment. Both branches have byte-identical changed library/example sources.
 
 - UPSTREAM-002-06 [x] Create or verify Smith's GitHub fork of
   AgonPlatform/agondev and use a separate project-owned checkout. Configure
@@ -331,3 +338,12 @@ Both cold attempts, their separate delivery/instruction assessments, command
 history and owner review are preserved in ignored task evidence. Both
 temporary chats were deleted after review. The upstream patch submission
 remains the task's outstanding software deliverable.
+
+### Upstream submission — 2026-11-17
+
+Smith approved publication after the crossed draft edits were reconciled.
+[AgonPlatform/agondev PR #58](https://github.com/AgonPlatform/agondev/pull/58)
+is open against master from bgates747:codex/fputs-newline. Extender verified
+the published body against the approved draft and the exact two-file scope.
+The fork-only host harness is excluded from the PR changes. Submission
+completes this task; upstream review and merge are external outcomes.
