@@ -12,7 +12,7 @@ import zlib
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from olimex_bench import Bench, preflight
 from olimex_cli import CliError, command_result, find_witness
-from olimex_flash import check_app0, check_extent
+from olimex_flash import check_app0, check_extent, session_operations
 
 
 class TestObserver(unittest.TestCase):
@@ -76,6 +76,40 @@ class TestOta(unittest.TestCase):
         check_extent("p4", spec, image)
         with self.assertRaises(ValueError):
             check_extent("p4", dict(spec, offset="0x0"), image)
+
+    def test_one_loader_supplies_both_metadata_reads_and_application_io(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)
+            table = b"T" * 3072
+            image = b"A" * 4096
+            (path / "expected-partition-table.bin").write_bytes(table)
+            (path / "write.bin").write_bytes(image)
+            loader = MagicMock()
+            loader.read_flash.side_effect = [table, self.selector(1, 2), image]
+            sent = []
+
+            def program(actual, offset, source):
+                self.assertIs(actual, loader)
+                self.assertTrue((path / "write-dispatched.json").is_file())
+                sent.append((offset, source.read_bytes()))
+
+            session_operations(loader, program, "mainboard", path)
+            self.assertEqual(sent, [(0x10000, image)])
+            self.assertEqual([call.args for call in loader.read_flash.call_args_list],
+                             [(0x8000, 3072), (0xe000, 8192), (0x10000, len(image))])
+            self.assertEqual((path / "readback.bin").read_bytes(), image)
+
+    def test_wrong_live_layout_refuses_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)
+            (path / "expected-partition-table.bin").write_bytes(b"T" * 3072)
+            loader = MagicMock()
+            loader.read_flash.return_value = b"X" * 3072
+            program = MagicMock()
+            with self.assertRaisesRegex(RuntimeError, "pinned layout"):
+                session_operations(loader, program, "p4", path)
+            program.assert_not_called()
+            self.assertFalse((path / "write-dispatched.json").exists())
 
 
 class TestBench(unittest.TestCase):

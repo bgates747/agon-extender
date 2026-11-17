@@ -151,6 +151,11 @@ exchange and sends the scheduler only the operator's chat identity and action.
    instructions from Smith. After a pass, publish the single procedure and
    use the BENCH-018 inventory to remove superseded operating instructions.
 
+The [r02 result](BENCH-019/REHEARSAL-R02-RESULT.md) records the join at the
+mainboard programming failure. The follow-up holds the serial programmer
+connection across all app operations. Rehearsal acceptance and cutover remain
+pending an authorized physical recovery and successful cold run.
+
 ## Decision register
 
 | ID | Decision | State |
