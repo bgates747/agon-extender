@@ -48,11 +48,13 @@ def check_app0(selector):
 
 
 def flash_application(component, programmer, port, mac, specification, image, table,
-                      out, begin):
+                      out, begin, *, required_entry=None):
     check_extent(component, specification, image)
     path = Path(out)
     (path / "write.bin").write_bytes(image)
     (path / "expected-partition-table.bin").write_bytes(table)
+    if required_entry is not None:
+        (path / "expected-entry.bin").write_bytes(required_entry)
     begin()
     # Keep the commissioned esptool 4.x environment. A single child owns the
     # programmer serial handle across bootloader entry, reads and write.
@@ -78,6 +80,15 @@ def session_operations(esp, write_flash, component, path):
     size = frozen.stat().st_size
     if not 0 < size <= capacity or size % 4096:
         raise ValueError("Unsafe application write extent")
+    expected = path / "expected-entry.bin"
+    if expected.is_file():
+        data = expected.read_bytes()
+        if len(data) != size:
+            raise ValueError("Entry verification must cover the write extent")
+        entry = esp.read_flash(offset, size)
+        (path / "entry-readback.bin").write_bytes(entry)
+        if entry != data:
+            raise RuntimeError("Existing firmware differs from the production entry image")
     record(path / "write-dispatched.json", {"offset": offset, "bytes": size})
     write_flash(esp, offset, frozen)
     (path / "readback.bin").write_bytes(esp.read_flash(offset, size))

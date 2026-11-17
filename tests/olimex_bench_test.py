@@ -111,6 +111,22 @@ class TestOta(unittest.TestCase):
             program.assert_not_called()
             self.assertFalse((path / "write-dispatched.json").exists())
 
+    def test_retry_requires_exact_production_entry_before_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp)
+            table = b"T" * 3072
+            (path / "expected-partition-table.bin").write_bytes(table)
+            (path / "write.bin").write_bytes(b"A" * 4096)
+            (path / "expected-entry.bin").write_bytes(b"P" * 4096)
+            loader = MagicMock()
+            loader.read_flash.side_effect = [table, self.selector(1, 2), b"X" * 4096]
+            program = MagicMock()
+            with self.assertRaisesRegex(RuntimeError, "production entry image"):
+                session_operations(loader, program, "mainboard", path)
+            self.assertEqual((path / "entry-readback.bin").read_bytes(), b"X" * 4096)
+            program.assert_not_called()
+            self.assertFalse((path / "write-dispatched.json").exists())
+
 
 class TestBench(unittest.TestCase):
     def test_plain_production_plan_and_staging(self):

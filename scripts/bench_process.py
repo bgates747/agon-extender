@@ -60,7 +60,7 @@ def members(pgid):
     return rows
 
 
-def verify_child(folder, expected_argv, *, legacy=False):
+def verify_child(folder, expected_argv, *, legacy=False, expected_returncode=0):
     """Verify existing parent-written journals without inventing a tool result.
 
     Legacy mode is an explicit reconciliation of the former child_control
@@ -82,9 +82,9 @@ def verify_child(folder, expected_argv, *, legacy=False):
         raise ValueError('Different process namespace; use the execution host view')
     if not str(start['start']).isdigit():
         raise ValueError('Missing process start identity')
-    if (terminal['returncode'] != 0 or type(terminal['returncode']) is not int
+    if (terminal['returncode'] != expected_returncode or type(terminal['returncode']) is not int
             or terminal.get('timed_out', False) or terminal.get('cancelled', False)):
-        raise ValueError('Child did not complete successfully; no success inferred')
+        raise ValueError('Child did not produce the expected wait result')
     if not (terminal['direct_child_joined'] is True
             and terminal['group_terminal'] is True
             and terminal['live_group_members'] == []):

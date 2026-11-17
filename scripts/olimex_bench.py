@@ -247,7 +247,7 @@ class Bench:
         bench_process.record(temporary, inventory)
         temporary.replace(target)
 
-    def firmware(self, component, selection):
+    def firmware(self, component, selection, *, retry=False):
         self.validate_ports()
         self.idle()
         before = self.keyboard()
@@ -256,7 +256,17 @@ class Bench:
         original = spec.get(f"{selection}_app", spec[f"{selection}_write"])
         role, hash_field = INVENTORY[component]
         inventory = bench_process.read(self.config["inventory"])
-        if inventory.get("pending_operation"):
+        pending = inventory.get("pending_operation")
+        required_entry = None
+        if retry:
+            original_attempt = self.out.parent / "install-mainboard"
+            if (not pending or pending["component"] != role or
+                    pending["selection"] != "candidate" or
+                    Path(pending["operation"]).resolve() != original_attempt.resolve() or
+                    pending["write_sha256"] != sha256(image).hexdigest()):
+                raise RuntimeError("The firmware record does not bind the original mainboard failure")
+            required_entry = pinned(spec["restore_write"])
+        elif pending:
             raise RuntimeError("A prior firmware action requires reconciliation")
         bench_process.record(self.out / "inventory-before.json", inventory)
 
@@ -284,7 +294,8 @@ class Bench:
             port = self.c["ports"][0 if component == "mainboard" else 1]
             result = flash_application(
                 component, self.config["programmer"], port, self.config["mainboard_mac"],
-                spec, image, pinned(spec["partition_table"]), self.out, begin)
+                spec, image, pinned(spec["partition_table"]), self.out, begin,
+                required_entry=required_entry)
             if result.read_bytes() != image:
                 raise RuntimeError(f"Independent {component} application readback differs")
             bench_process.record(self.out / "write-verified.json", {
@@ -383,6 +394,8 @@ class Bench:
                 self.invoke()
             elif phase == "handback":
                 self.handback()
+            elif phase == "retry-mainboard":
+                self.firmware("mainboard", "candidate", retry=True)
             else:
                 operation, component = phase.split("-", 1)
                 self.firmware(component, {"install": "candidate", "restore": "restore"}[operation])
@@ -414,14 +427,24 @@ def main():
     if not args.config or not args.out:
         parser.error("Physical phases require --config and --out")
     phase = args.phase.removeprefix("worker-")
-    if phase not in order:
+    if phase not in order and not (phase == "retry-mainboard" and "install-mainboard" in order):
         parser.error("The selected phase is absent from this job")
     if args.phase != phase:
         folder = args.out / phase
         supervisor = bench_process.read(folder / "supervisor-started.json")
         if supervisor["argv"] != child_argv(args, phase):
             raise RuntimeError("Worker is missing its supervisor binding")
-        for prior in order[:order.index(phase)]:
+        planned = "install-mainboard" if phase == "retry-mainboard" else phase
+        retry = args.out / "retry-mainboard"
+        if phase == "retry-mainboard" or (
+            retry.exists() and "install-mainboard" in order[:order.index(planned)]
+        ):
+            original = args.out / "install-mainboard"
+            bench_process.verify_child(original, child_argv(args, "install-mainboard"),
+                                       expected_returncode=1)
+        for prior in order[:order.index(planned)]:
+            if prior == "install-mainboard" and retry.exists():
+                prior = "retry-mainboard"
             bench_process.verify_child(args.out / prior, child_argv(args, prior))
         Bench(bench_process.read(args.config), kit, folder).perform(phase)
         return 0

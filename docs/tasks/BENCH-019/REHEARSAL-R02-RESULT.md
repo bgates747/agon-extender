@@ -41,3 +41,15 @@ to ordinary CLI using the commissioned route. Reconcile the pending firmware
 record from actual evidence before resuming the rehearsal. Keep this failed
 attempt and its original process receipts. Follow the draft's stop rule while
 Smith's direction is pending.
+
+## Smith-authorized mainboard retry
+
+Smith reset Agon through the ordinary P4 web reset route, confirmed a working
+MOS prompt and Extender keyboard, and authorized one mainboard reattempt in
+the cold operator's chat. The continuation uses the same manifest, config,
+operator and evidence root, with the phase `retry-mainboard`. It requires the
+original named failure and joined worker, retains that pending-write record's
+provenance, and verifies the full prior production application extent before
+allowing the candidate write. The retry has its own evidence and a distinct
+parent receipt. A successful retry permits the next listed phase,
+`install-p4`. A retry failure stops under the same rule.
