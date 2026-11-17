@@ -259,12 +259,12 @@ class Bench:
         pending = inventory.get("pending_operation")
         required_entry = None
         if retry:
-            original_attempt = self.out.parent / "install-mainboard"
+            original_attempt = self.out.parent / f"install-{component}"
             if (not pending or pending["component"] != role or
                     pending["selection"] != "candidate" or
                     Path(pending["operation"]).resolve() != original_attempt.resolve() or
                     pending["write_sha256"] != sha256(image).hexdigest()):
-                raise RuntimeError("The firmware record does not bind the original mainboard failure")
+                raise RuntimeError(f"The firmware record does not bind the original {component} failure")
             required_entry = pinned(spec["restore_write"])
         elif pending:
             raise RuntimeError("A prior firmware action requires reconciliation")
@@ -394,11 +394,10 @@ class Bench:
                 self.invoke()
             elif phase == "handback":
                 self.handback()
-            elif phase == "retry-mainboard":
-                self.firmware("mainboard", "candidate", retry=True)
             else:
                 operation, component = phase.split("-", 1)
-                self.firmware(component, {"install": "candidate", "restore": "restore"}[operation])
+                selection = "restore" if operation == "restore" else "candidate"
+                self.firmware(component, selection, retry=operation == "retry")
 
 
 def child_argv(args, phase):
@@ -427,25 +426,26 @@ def main():
     if not args.config or not args.out:
         parser.error("Physical phases require --config and --out")
     phase = args.phase.removeprefix("worker-")
-    if phase not in order and not (phase == "retry-mainboard" and "install-mainboard" in order):
+    retry_phase = phase in ("retry-mainboard", "retry-p4")
+    planned = phase.replace("retry-", "install-", 1) if retry_phase else phase
+    if planned not in order:
         parser.error("The selected phase is absent from this job")
     if args.phase != phase:
         folder = args.out / phase
         supervisor = bench_process.read(folder / "supervisor-started.json")
         if supervisor["argv"] != child_argv(args, phase):
             raise RuntimeError("Worker is missing its supervisor binding")
-        planned = "install-mainboard" if phase == "retry-mainboard" else phase
-        retry = args.out / "retry-mainboard"
-        if phase == "retry-mainboard" or (
-            retry.exists() and "install-mainboard" in order[:order.index(planned)]
-        ):
-            original = args.out / "install-mainboard"
-            bench_process.verify_child(original, child_argv(args, "install-mainboard"),
-                                       expected_returncode=1)
         for prior in order[:order.index(planned)]:
-            if prior == "install-mainboard" and retry.exists():
-                prior = "retry-mainboard"
+            if prior in ("install-mainboard", "install-p4"):
+                retry = prior.replace("install-", "retry-", 1)
+                if (args.out / retry).exists():
+                    bench_process.verify_child(args.out / prior, child_argv(args, prior),
+                                               expected_returncode=1)
+                    prior = retry
             bench_process.verify_child(args.out / prior, child_argv(args, prior))
+        if retry_phase:
+            bench_process.verify_child(args.out / planned, child_argv(args, planned),
+                                       expected_returncode=1)
         Bench(bench_process.read(args.config), kit, folder).perform(phase)
         return 0
     if not args.operator:

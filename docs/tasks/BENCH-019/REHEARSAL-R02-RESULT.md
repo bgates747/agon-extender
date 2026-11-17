@@ -53,3 +53,25 @@ provenance, and verifies the full prior production application extent before
 allowing the candidate write. The retry has its own evidence and a distinct
 parent receipt. A successful retry permits the next listed phase,
 `install-p4`. A retry failure stops under the same rule.
+
+The authorized mainboard retry passed in 88.9 s. The loader read the exact
+prior production extent, independently matched all 1,130,496 bytes of the
+candidate write, and the commissioned Agon restart returned to a working MOS
+CLI. The original failure receipt is retained.
+[Mainboard retry](../../../agents/bench019/rehearsal-r02/operator-run/retry-mainboard/independent-verification.json)
+
+The next phase connected to the P4, matched its live partition table and
+app0 selector, then stopped before entering esptool's write routine. The
+adapter had made an unknown flash-size ID fatal, although the commissioned
+esptool 4.12 `keep` path retains the programmer defaults in that case.
+The follow-up restores that behavior within the verified app0 bounds and
+records write intent separately from actual dispatch to esptool. The original
+worker joined with exit 1 after 1.0 s. Its final P4 boot state remains
+unverified. The operator sent Smith the question alert and retained custody.
+EMOS, fixture invocation, and production handback remain pending.
+[P4 programmer log](../../../agents/bench019/rehearsal-r02/operator-run/install-p4/programmer.log)
+
+After Smith directs recovery and the P4 has returned to a working CLI, an
+explicitly authorized P4 reattempt can use `retry-p4` with the same arguments
+and evidence root. It requires the original joined failure and verifies the
+entire prior production extent before it calls the candidate write.

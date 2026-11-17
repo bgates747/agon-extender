@@ -89,9 +89,19 @@ def session_operations(esp, write_flash, component, path):
         (path / "entry-readback.bin").write_bytes(entry)
         if entry != data:
             raise RuntimeError("Existing firmware differs from the production entry image")
-    record(path / "write-dispatched.json", {"offset": offset, "bytes": size})
+    record(path / "write-intent.json", {"offset": offset, "bytes": size})
     write_flash(esp, offset, frozen)
     (path / "readback.bin").write_bytes(esp.read_flash(offset, size))
+
+
+def configure_flash_size(loader, detect_flash_size, flash_size_bytes):
+    # Match esptool's --flash_size keep behavior. Live partition equality and
+    # the commissioned device/slot bound were already checked.
+    size = detect_flash_size(loader, args=None)
+    if size is not None:
+        loader.flash_set_parameters(flash_size_bytes(size))
+    else:
+        print("Flash ID did not report a size; retaining the programmer's default parameters.")
 
 
 def main():
@@ -110,12 +120,11 @@ def main():
     chip, before, _, _, _ = LAYOUTS[args.component]
 
     def program(loader, offset, image):
-        size = detect_flash_size(loader, args=None)
-        if size is None:
-            raise RuntimeError("Programmer could not determine the flash size")
-        loader.flash_set_parameters(flash_size_bytes(size))
+        configure_flash_size(loader, detect_flash_size, flash_size_bytes)
         loader.WRITE_FLASH_ATTEMPTS = 1
         with image.open("rb") as source:
+            record(args.evidence / "write-dispatched.json",
+                   {"offset": offset, "bytes": image.stat().st_size})
             write_flash(loader, argparse.Namespace(
                 addr_filename=[(offset, source)], chip=chip,
                 flash_mode="keep", flash_size="keep", flash_freq="keep",

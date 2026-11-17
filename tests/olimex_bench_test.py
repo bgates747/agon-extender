@@ -12,7 +12,7 @@ import zlib
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from olimex_bench import Bench, preflight
 from olimex_cli import CliError, command_result, find_witness
-from olimex_flash import check_app0, check_extent, session_operations
+from olimex_flash import check_app0, check_extent, configure_flash_size, session_operations
 
 
 class TestObserver(unittest.TestCase):
@@ -58,6 +58,18 @@ class TestObserver(unittest.TestCase):
 
 
 class TestOta(unittest.TestCase):
+    def test_unknown_flash_size_keeps_programmer_defaults(self):
+        loader = MagicMock()
+        detected = MagicMock(return_value=None)
+        converter = MagicMock(return_value=16 * 1024 * 1024)
+        configure_flash_size(loader, detected, converter)
+        loader.flash_set_parameters.assert_not_called()
+        converter.assert_not_called()
+        detected.return_value = "16MB"
+        configure_flash_size(loader, detected, converter)
+        converter.assert_called_once_with("16MB")
+        loader.flash_set_parameters.assert_called_once_with(16 * 1024 * 1024)
+
     def selector(self, sequence, state):
         crc = zlib.crc32(struct.pack("<I", sequence), 0xffffffff)
         record = struct.pack("<I20xII", sequence, state, crc)
@@ -90,7 +102,7 @@ class TestOta(unittest.TestCase):
 
             def program(actual, offset, source):
                 self.assertIs(actual, loader)
-                self.assertTrue((path / "write-dispatched.json").is_file())
+                self.assertTrue((path / "write-intent.json").is_file())
                 sent.append((offset, source.read_bytes()))
 
             session_operations(loader, program, "mainboard", path)
@@ -109,7 +121,7 @@ class TestOta(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "pinned layout"):
                 session_operations(loader, program, "p4", path)
             program.assert_not_called()
-            self.assertFalse((path / "write-dispatched.json").exists())
+            self.assertFalse((path / "write-intent.json").exists())
 
     def test_retry_requires_exact_production_entry_before_write(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -125,7 +137,7 @@ class TestOta(unittest.TestCase):
                 session_operations(loader, program, "mainboard", path)
             self.assertEqual((path / "entry-readback.bin").read_bytes(), b"X" * 4096)
             program.assert_not_called()
-            self.assertFalse((path / "write-dispatched.json").exists())
+            self.assertFalse((path / "write-intent.json").exists())
 
 
 class TestBench(unittest.TestCase):
