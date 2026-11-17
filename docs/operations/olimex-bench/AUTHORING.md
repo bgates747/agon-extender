@@ -7,6 +7,10 @@ The commissioning owner supplies the operator chat UUID, the full checkout
 commit, a job-local evidence directory, the commissioning chat UUID, and the
 exact phase commands alongside the job manifest. The operator follows the
 guide's host-only readiness command and fixed Pi sender before reservation.
+The initial dispatch names the durable operator log path before the operator
+begins reading or executing commands. Precreate that directory and log. If
+the app assigns the chat UUID only at creation, supply it in a follow-up while
+the operator records its initial reading in that already-named log.
 For a cold run, each logged action names its guide section or job command.
 The owner records hardware outcome and instruction completeness separately
 when reviewing the run.

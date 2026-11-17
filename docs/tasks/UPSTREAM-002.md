@@ -298,3 +298,11 @@ Use the existing shared sender and its source-verification implementation.
 The readiness check is host-only, requires no reservation or new test, and
 must finish before an operator asks for bench time. It records the shared
 sender's exact source hash because that tool belongs to agon-dev-env.
+
+The first fixed-Pi cold check passed readiness and delivered the existing
+result in one call, with no extra human confirmation. Its action review found
+a commissioning defect: the initial dispatch required logging before it named
+the log location. The operator improvised a temporary path. Authoring guidance
+now requires the owner to precreate and name the log in the initial dispatch,
+even when the creation-assigned UUID arrives in a follow-up. Repeat only the
+host-only readiness/report check to validate that correction.
