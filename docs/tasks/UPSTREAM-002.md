@@ -1,6 +1,6 @@
 # UPSTREAM-002 — Correct AgonDev fputs newline handling
 
-**Status — Patched original fixture passed on Olimex on 2026-11-17.**
+**Status — Complete on 2026-11-17.**
 The host regression and physical single-LF comparison pass.
 Upstream PR [#58](https://github.com/AgonPlatform/agondev/pull/58) is published.
 
@@ -336,8 +336,7 @@ performed no hardware operation.
 
 Both cold attempts, their separate delivery/instruction assessments, command
 history and owner review are preserved in ignored task evidence. Both
-temporary chats were deleted after review. The upstream patch submission
-remains the task's outstanding software deliverable.
+temporary chats were deleted after review. The upstream patch submission was completed as recorded below.
 
 ### Upstream submission — 2026-11-17
 
