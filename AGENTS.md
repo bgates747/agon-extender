@@ -326,6 +326,16 @@ Preserve uncertain run evidence.
 
 ## Cross-machine agent mailbox
 
+Smith authorizes commissioned Olimex operators to return their test result
+directly to the commissioning Extender chat
+`01a13443-f921-72d1-9d3e-d05652c7a750` using the immediate
+`send_message_to_thread` tool. The authorized summary includes PASS/FAIL,
+result byte counts, artifact/result hashes, CLI and cleanup status, and
+evidence paths under this project's `agents/` directory. The operator needs
+no additional human approval solely to return this summary. The project
+reviewer configuration identifies this exact destination and payload class.
+Keep full logs in durable evidence and send their references in the summary.
+
 Olimex reservation and check-in use the direct chat exchange in its bench
 procedure. For host process receipts see [Bench completion](docs/procedures/bench-completion.md).
 
@@ -346,7 +356,8 @@ hardware activity or override pending approval/input waits.
 When sending an Author-authorized chat notification to another agent, use
 **steering** delivery so the active recipient sees it promptly. Do not queue
 the notification. Use the mailbox for detailed project coordination. In chat, send the mail
-alert or the direct Olimex scheduling message specified in the bench procedure.
+alert, the commissioned operator result summary above, or the direct Olimex
+scheduling message specified in the bench procedure.
 
 ## SD file placement
 

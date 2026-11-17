@@ -1,4 +1,5 @@
 /.gitignore
+/.codex/config.toml
 /docs/operations/olimex-bench/
 /docs/procedures/bench-completion.md
 /docs/procedures/test-appliances.md

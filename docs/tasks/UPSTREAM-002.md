@@ -13,34 +13,34 @@ See the [Olimex qualification record](BENCH-020.md).
 
 ## Subtasks
 
-- [x] **UPSTREAM-002-01.** Record the affected AgonDev SDK build and trace `fputs.o` to the owning
+- UPSTREAM-002-01 [x] Record the affected AgonDev SDK build and trace `fputs.o` to the owning
   source in the [AgonDev upstream repository](https://github.com/AgonPlatform/agondev)
   or the C library repository it uses. Check the current upstream revision
   and existing issues or patches before choosing the PR target. Confirm
   that the defect comes from the library routine linked into the fixture.
 
-- [x] **UPSTREAM-002-02.** Reproduce it with a minimal Agon program that writes a string to a file
+- UPSTREAM-002-02 [x] Reproduce it with a minimal Agon program that writes a string to a file
   and compares the saved bytes. Retain the build identity, linker map and
   failing output. Confirm whether the current upstream version reproduces it.
 
-- [x] **UPSTREAM-002-03.** Patch the owning C library source on a focused branch in Smith's AgonDev fork. Make
+- UPSTREAM-002-03 [x] Patch the owning C library source on a focused branch in Smith's AgonDev fork. Make
   `fputs` write the supplied bytes through the string terminator, excluding
   the terminator itself, and preserve standard success and write-error
   reporting. Verify that `puts` still appends its newline. Keep the
   qualified Extender fixture and installed SDK as the comparison baseline.
 
-- [x] **UPSTREAM-002-04.** Build the patched library and link the reproducer against it. Verify
+- UPSTREAM-002-04 [x] Build the patched library and link the reproducer against it. Verify
   byte-for-byte output for an empty string, a string without a newline,
   and a string already ending in one newline. Check the write-error path
   and run the owning repository’s relevant tests. Record the affected
   and fixed results and which environment produced them.
 
-- [ ] **UPSTREAM-002-05.** Submit the patch and regression coverage to the owning upstream
+- UPSTREAM-002-05 [ ] Submit the patch and regression coverage to the owning upstream
   repository. In the PR, describe the observed extra LF, the standard
   behavior, the affected revision, and how to reproduce and verify the
   fix. Record the PR link and validation results here.
 
-- [x] **UPSTREAM-002-06.** Create or verify Smith's GitHub fork of
+- UPSTREAM-002-06 [x] Create or verify Smith's GitHub fork of
   AgonPlatform/agondev and use a separate project-owned checkout. Configure
   the fork as `origin` and AgonPlatform/agondev as `upstream`. Keep the
   existing upstream reference checkout read-only and record the verified
@@ -145,7 +145,7 @@ task evidence directory. The operator reported successful routine check-in.
 
 ## Operator result notification follow-up
 
-- [ ] **UPSTREAM-002-07.** Investigate the result sender's two automatic
+- UPSTREAM-002-07 [x] Investigate the result sender's two automatic
   approval rejections. The reviewer rejected private paths and evidence in a
   report to the commissioning Extender chat, including after the operator
   retrieved the commissioning instruction and verified CHAT-AUTH-001.
@@ -163,17 +163,17 @@ specific standing authorization where needed. The retained failure concerns
 the immediate send-to-thread tool and project paths, hashes and bench evidence
 sent to the commissioning Extender chat.
 
-- UPSTREAM-002-08 [ ] Correct Extender's local reviewer environment profile
+- UPSTREAM-002-08 [x] Correct Extender's local reviewer environment profile
   to identify Smith-owned project chats as trusted internal destinations for
   routine project results and evidence. Preserve the general reviewer policy
   and apply the same explicit scope to agent startup guidance.
 
-- UPSTREAM-002-09 [ ] Verify configuration support and the policy's effective
+- UPSTREAM-002-09 [x] Verify configuration support and the policy's effective
   load, then use a fresh operator context to report the already-retained
   fixture result through the same immediate sender. Retain receipt, settings,
   payload and any rejection. This verification requires no new bench work.
 
-- UPSTREAM-002-10 [ ] Compare the previous retained sender outcome, document
+- UPSTREAM-002-10 [x] Compare the previous retained sender outcome, document
   observed differences and limits, publish the maintained correction, and
   delete the temporary verification chat after saving its evidence.
 
@@ -184,3 +184,38 @@ authentication tokens and third-party destinations retain their existing rules.
 The task is complete when a fresh operator sends this class of report through
 the original tool without a per-message human intervention and the effective
 configuration and instructions are retained for future operators.
+
+### Reporting correction result
+
+The execution checkpoint is
+`925ddbea78cb5839fefa943366a875ea573abaca`. Extender's effective local
+reviewer policy omitted any trusted-destination scope for operator result
+reports. It contained a dated scheduling exception. The failed report's
+reviewer classified project paths and evidence as unauthorized private-data
+disclosure, including after the operator retrieved standing authorization.
+
+The previous cold operator worked in the curated sparse checkout, which had
+no local reviewer configuration, and reported using `pi_chat.py` because
+the immediate MCP sender was unavailable there. The current operator used
+the full checkout and the MCP sender. Those are verified differences. The
+retained evidence does not prove the reviewer's complete internal reasoning.
+
+Extender appended a scope for one destination, its commissioning chat, and
+one payload class comprising routine test status, byte counts, hashes, CLI
+and cleanup status, and evidence paths under Extender's agent directory.
+The preceding reviewer policy remains byte-identical. An initially proposed
+broader scope for all project chats was rejected by automatic review and
+never executed. The narrower append was approved. Extender's AGENTS.md now
+states the same return authorization, and the sparse path list includes the
+maintained reviewer configuration.
+
+The app server's effective project configuration matched the updated file.
+A fresh GPT-6.1 Sol Light verification operator used the same immediate
+`send_message_to_thread` tool once to send the retained fputs result with
+hashes and absolute evidence paths. The call succeeded without a new human
+message in that operator chat. Exact payload, response, policy hashes and
+comparison records are retained in the ignored notification-fix evidence.
+There was no additional hardware test. This verifies this destination and
+payload scope; the broader proposal was not applied.
+
+The temporary verification chat was deleted after its final records were saved.

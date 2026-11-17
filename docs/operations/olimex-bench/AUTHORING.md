@@ -76,8 +76,11 @@ when the authorized run exercises it on the bench.
 
 ## Refresh the operator checkout
 
-The [sparse paths](sparse-paths.txt) select these guides, the example, and
-the commissioned runner and its local dependencies. The full Extender
+The [sparse paths](sparse-paths.txt) select these guides, the example,
+the project reviewer configuration, and the commissioned runner and its local
+dependencies. The reviewer configuration authorizes operators to return
+routine result summaries and evidence references to the commissioning
+Extender chat. The full Extender
 checkout has the broader operation index and the historical references
 linked from some of the guides.
 
