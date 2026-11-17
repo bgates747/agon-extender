@@ -57,6 +57,15 @@ argument schema. The verified arguments are `threadId` and `prompt`;
 `hostId` is optional. Omit model and thinking overrides. The tool sends
 immediately; it has no separate Steer argument.
 
+The desktop thread-management server is `codex_app` (singular).
+`codex_apps` (plural) is the connector server; its ready status does not
+establish that the thread sender is available. On a remote Pi chat, desktop
+bridge and saved-configuration conditions can prevent sender injection.
+Use ordinary durable operator chats; the installed desktop gives ephemeral
+chats an empty desktop-tool allowlist. If the lookup below finds no sender,
+record that outcome and follow the Pi route rather than diagnosing the
+desktop bridge during bench checkout.
+
 After discovery returns the sender, reserve by running this JavaScript in
 `functions.exec`:
 

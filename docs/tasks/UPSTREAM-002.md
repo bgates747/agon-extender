@@ -232,8 +232,9 @@ The temporary verification chat was deleted after its final records were saved.
 Smith explicitly requested these instructions after reviewing the previous
 operator's discovery gap. The earlier wording that the MCP tool was unavailable
 was too strong. Its log establishes that the operator did not find it. Oryx
-Manager has been asked to inspect existing desktop source/logs for concrete
-tool-exposure conditions; runtime cause remains unverified.
+Manager inspected the installed desktop source and surviving logs. Its
+findings below establish exposure conditions and a registration difference;
+the exact failed gate in the earlier run remains unverified.
 
 The guide now gives executable JavaScript for one bounded catalog lookup,
 handles the two observed callable names, and shows the exact reservation call
@@ -242,3 +243,30 @@ specifies how to check in and return an authorized result. Extender executed
 the discovery snippet verbatim and verified its returned argument schema
 against the successful cold delivery. Discovery failure, delivery uncertainty
 and approval rejection have distinct documented dispositions.
+
+### Desktop source findings
+
+Oryx Manager inspected desktop build 26.1111.21308 and the three operator
+UUIDs in its retained startup logs. The earlier operator has ready events
+for the plural `codex_apps` connector server. The later two have ready
+events for the singular `codex_app` desktop thread-management server as
+well. No singular-server startup event was found for the earlier operator
+in the scanned logs. This is evidence of different server registration.
+It does not establish which condition prevented injection or prove that the
+operator missed an available tool.
+
+The installed desktop injects its remote thread-management tools only when
+the remote server is at least 0.147.0, its desktop forward is verified,
+the working-directory saved configuration can be read, and that
+configuration has no existing desktop-MCP override. Ordinary tasks receive
+the sender allowlist; ephemeral tasks receive an empty allowlist. The
+sender definition has `destructiveHint: true`, so invocation can require
+review after successful registration. The reviewer-profile setting is
+absent from the sender injection gates.
+
+The exact source and log locations are retained in the immutable Oryx
+Manager return `codex-extender-sender-exposure-source-answer-one` and the
+ignored notification-fix evidence. Future operator instructions identify
+the singular server and specify the bounded catalog check and Pi route,
+so an absent desktop tool does not require ad-hoc bridge research during
+bench work.
