@@ -135,6 +135,13 @@ slot opens. After checkout, use this command for each listed phase in order.
 Keep the same job, config and evidence directory throughout. Use your chat ID
 as the operator value.
 
+In the commissioned Pi5 sparse checkout, the phase runner uses a shared
+operation lock outside the workspace and needs access to the bench's local
+devices and services. In `exec_command`, request
+`sandbox_permissions: require_escalated` for the physical phase command so it
+goes through ordinary tool review. The offline `preflight` uses only local
+job inputs.
+
 ```bash
 .venv/bin/python scripts/olimex_bench.py --job JOB.json --sha256 JOB_SHA256 \
   --config BENCH.local.json --out RUN_EVIDENCE --operator OPERATOR_CHAT_ID PHASE
