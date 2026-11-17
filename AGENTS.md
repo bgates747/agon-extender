@@ -328,8 +328,8 @@ Preserve uncertain run evidence.
 
 Smith authorizes commissioned Olimex operators to return their test result
 directly to the commissioning Extender chat
-`01a13443-f921-72d1-9d3e-d05652c7a750` using the immediate
-`send_message_to_thread` tool. The authorized summary includes PASS/FAIL,
+`01a13443-f921-72d1-9d3e-d05652c7a750` using the maintained Pi
+`pi_chat.py` sender specified in the Olimex bench procedure. The authorized summary includes PASS/FAIL,
 result byte counts, artifact/result hashes, CLI and cleanup status, and
 evidence paths under this project's `agents/` directory. The operator needs
 no additional human approval solely to return this summary. The project

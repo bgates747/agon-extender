@@ -3,6 +3,14 @@
 Create the fixture and check the job packet before asking for bench time.
 The [Olimex bench procedure](README.md) governs physical checkout and handback.
 
+The commissioning owner supplies the operator chat UUID, the full checkout
+commit, a job-local evidence directory, the commissioning chat UUID, and the
+exact phase commands alongside the job manifest. The operator follows the
+guide's host-only readiness command and fixed Pi sender before reservation.
+For a cold run, each logged action names its guide section or job command.
+The owner records hardware outcome and instruction completeness separately
+when reviewing the run.
+
 1. Define the behavior under test, the expected result, the required
    processor and display mode, and what ends the run. State who invokes the
    test, what the operator may observe, and which firmware must be restored.

@@ -12,6 +12,7 @@
 /scripts/bench_process.py
 /scripts/keyboard.py
 /scripts/olimex_bench.py
+/scripts/olimex_operator_ready.py
 /scripts/olimex_cli.py
 /scripts/olimex_flash.py
 /scripts/olimex_p4_app.py
