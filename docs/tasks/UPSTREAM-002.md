@@ -222,7 +222,7 @@ payload scope; the broader proposal was not applied.
 
 The temporary verification chat was deleted after its final records were saved.
 
-### Exact sender discovery instructions
+### Exact sender discovery instructions — superseded by the fixed Pi route
 
 - UPSTREAM-002-11 [x] Document and check the exact immediate-tool discovery
   and call in the canonical bench guide, including deferred tools, both
@@ -266,10 +266,8 @@ absent from the sender injection gates.
 
 The exact source and log locations are retained in the immutable Oryx
 Manager return `codex-extender-sender-exposure-source-answer-one` and the
-ignored notification-fix evidence. Future operator instructions identify
-the singular server and specify the bounded catalog check and Pi route,
-so an absent desktop tool does not require ad-hoc bridge research during
-bench work.
+ignored notification-fix evidence. This explains why desktop sender discovery could vary. The fixed Pi route
+below now removes that desktop dependency from the operator procedure.
 
 ### Fixed Pi communication and cold-run acceptance amendment
 
@@ -278,18 +276,18 @@ checks. Pi operators use the existing shared `pi_chat.py` for reservation,
 check-in and result return. The operator guide supplies exact commands.
 Desktop MCP discovery is removed from this Pi workflow.
 
-- UPSTREAM-002-12 [ ] Provide one host-only readiness command before FIFO
+- UPSTREAM-002-12 [x] Provide one host-only readiness command before FIFO
   reservation. It checks the commissioned checkout revision and selected
   guide/script/reviewer files, records their hashes, and verifies the existing
   Pi sender endpoint and original standing authorization without sending a
   message or touching the bench.
 
-- UPSTREAM-002-13 [ ] Give cold operators exact Pi-sender commands and require
+- UPSTREAM-002-13 [x] Give cold operators exact Pi-sender commands and require
   each logged action to reference its controlling guide section or commissioned
   job command. Record missing instructions and improvised discovery as defects.
   Assess procedure completeness independently of hardware PASS.
 
-- UPSTREAM-002-14 [ ] Publish and refresh the sparse checkout from the same
+- UPSTREAM-002-14 [x] Publish and refresh the sparse checkout from the same
   revision, run the readiness check there, and verify a bounded existing-result
   return through the fixed Pi sender. Retain the receipt and any rejection.
 
@@ -306,3 +304,30 @@ the log location. The operator improvised a temporary path. Authoring guidance
 now requires the owner to precreate and name the log in the initial dispatch,
 even when the creation-assigned UUID arrives in a follow-up. Repeat only the
 host-only readiness/report check to validate that correction.
+
+### Fixed-route acceptance result
+
+The amended contract was frozen at
+`1886935c695fae0d7b1d8273bd27ac1ab4874ca0`. The maintained readiness
+command and fixed Pi instructions shipped at
+`d1c0575ffd584cc693b0ca5add06240faaf4ec54`; the initial-log commissioning
+correction shipped at `3390a58e611bc84268fbd75d85e99e6664374441`.
+
+Full and sparse checkouts matched all 28 selected file hashes, the shared
+sender hash and the effective reviewer-policy hash. The readiness command
+passed on both. Wrong-revision and modified-file checks refused before
+endpoint access.
+
+The second fixed-Pi cold operator passed readiness and delivered the retained
+fputs result in one accepted `pi_chat.py` call without an extra human
+approval. Its initial dispatch named the existing durable log. Extender
+reviewed all seven actual command calls and matched them to the log and
+controlling instructions. There were no searches, improvised operational
+steps, missing prerequisites, route changes, retries or review rejections.
+Hardware outcome remained the previously retained fputs PASS; this check
+performed no hardware operation.
+
+Both cold attempts, their separate delivery/instruction assessments, command
+history and owner review are preserved in ignored task evidence. Both
+temporary chats were deleted after review. The upstream patch submission
+remains the task's outstanding software deliverable.

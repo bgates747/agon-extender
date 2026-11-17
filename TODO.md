@@ -218,6 +218,7 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[QUAL-002](docs/tasks/QUAL-002.md)** — Full-circuit electrical absence/power/reset qualification on hold. Requires applicable hardware design and separate physical contract.
 
 - [ ] **[UPSTREAM-001](docs/tasks/UPSTREAM-001.md)** — Lifecycle correction A/B research not started. No upstream fixes imported into strict-compatible first-pass port by default.
+- [ ] **[UPSTREAM-002 — Correct AgonDev fputs newline handling](docs/tasks/UPSTREAM-002.md)** — Host and Olimex validation passed. Fixed Pi reporting qualified. Upstream PR pending.
 
 - [ ] **[MODE-001](docs/tasks/MODE-001.md)** — Broader state-preserving transitions not implemented; bounded ExCom switching already exists. Retain future transition contracts without describing current ExCom as absent.
 
