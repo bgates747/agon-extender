@@ -97,8 +97,10 @@ operator records what is staged and how the fixture will start.
 ## 4. Run and collect
 
 The operator starts the fixture with the planned command once the bench is
-ready. If Smith reserved that step, the operator finishes staging, sends Smith
-the exact command once, and waits. Follow the test plan's observation and stop
+ready. If Smith reserved that step, the operator finishes staging and uses
+the desktop **Agent has a question** alert with the exact start command and
+what to check. The operator holds the slot and setup while waiting for Smith
+to start. Use ordinary chat for follow-up. Follow the test plan's observation and stop
 conditions. Use its completion signal and collect its specified outputs. If a
 fixture switches display mode, allow at least one second for the monitor to
 settle and restore the entry mode and visible CLI at the end.
@@ -154,13 +156,16 @@ other workload.
 
 | Phase | What the Pi operator does |
 | --- | --- |
-| Mainboard VDPlet | Open one classic ESP32 programmer session using esptool 4.12. Verify the commissioned device and app0 layout, write only the job extent at `0x10000`, and independently read and compare that extent before closing the programmer. Use the commissioned Agon USB reset and prove a working CLI. |
+| Mainboard VDPlet | Open one classic ESP32 programmer session using esptool 4.12. Verify the commissioned device and app0 layout, write the job extent at `0x10000`, and independently compare it. Hold Agon reset, restart the installed P4 and wait for its boot-pad release. Release Agon reset and prove a working CLI. |
 | Extender VDP | Hold the Agon reset through its commissioned USB RTS circuit. Use stock esptool 5.1.0 on the P4 USB at 460,800 baud. Read the partition table and OTA selector, write app0 at `0x20000` with all three flash settings set to `keep`, and independently compare the written extent. Restart the P4 once and wait for its boot-pad release. Release Agon reset, then prove a working CLI. |
 | EMOS | At the Legacy CLI, run the prepared `FLASH mos … -f` for the staged ROM. Wait for the updater to restart and admit input. Use `SAVE` to read the full 128 KiB ROM, retrieve it from the SD listener, compare it with the requested image and exit the listener. |
 
-Keep each phase's output and parent-written terminal receipt. A firmware
-phase writes `independent-verification.json`; a completed handback writes
-`handback.json`. Record the first failure and its phase before recovery.
+Poll the original tool session until it exits. Live worker output is at
+`RUN_EVIDENCE/PHASE/output.log`. The phase directory also contains the
+parent-written `child-terminal.json` and, on success, `complete.json`.
+A firmware phase writes `independent-verification.json` and a completed
+handback writes `handback.json`. Record the first failure and its phase before
+recovery.
 
 ## Stop on an unexpected problem
 

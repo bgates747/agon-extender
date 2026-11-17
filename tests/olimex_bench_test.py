@@ -1,5 +1,6 @@
 """Offline regression cases for the discovered CLI and phase boundaries."""
 
+from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 import struct
@@ -59,6 +60,27 @@ class TestObserver(unittest.TestCase):
 
 
 class TestOta(unittest.TestCase):
+    def test_paired_restart_keeps_agon_held_until_p4_pad_release(self):
+        events = []
+
+        @contextmanager
+        def actuator(_config):
+            events.append("hold")
+            yield
+            events.append("release")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            bench = MagicMock()
+            bench.out = Path(tmp)
+            with patch("olimex_p4_app.hold", actuator), \
+                    patch("olimex_p4_app.reset_until_pads_release",
+                          side_effect=lambda _bench: events.append("P4 ready")), \
+                    patch("olimex_p4_app.wait_boot",
+                          side_effect=lambda *_: events.append("Agon ready") or {"ready": True}):
+                olimex_p4_app.reboot_pair(bench, 1414)
+            self.assertEqual(events, ["hold", "P4 ready", "release", "Agon ready"])
+            self.assertTrue((bench.out / "agon-admitted.json").is_file())
+
     def test_p4_uses_stock_keep_modes(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp)

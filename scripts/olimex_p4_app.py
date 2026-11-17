@@ -1,5 +1,7 @@
 """Application replacement for the commissioned Olimex P4-PC using stock esptool."""
 
+from contextlib import contextmanager
+from hashlib import sha256
 import subprocess
 import sys
 import time
@@ -22,10 +24,49 @@ def stock(out, label, port, before, *args):
         subprocess.run(argv, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=110)
 
 
-def replace(bench, spec, image, table, before_boot, begin, *, required_entry=None):
-    from esptool import __version__
+def reset_until_pads_release(bench):
+    """Restart the P4 while its caller holds Agon in reset."""
     from esptool.reset import HardReset
     import serial
+
+    bench.own()
+    out = bench.out
+    console = serial.Serial(port=None, baudrate=115200, timeout=0.15, exclusive=True)
+    console.dtr = console.rts = False
+    console.port = bench.c["ports"][1]
+    with console, (out / "p4-boot.bin").open("xb") as capture:
+        record(out / "p4-reset-issued.json", {"epoch": time.time()})
+        HardReset(console, uses_usb=True).reset()
+        until = time.monotonic() + 50
+        received = bytearray()
+        while PAD not in received:
+            if time.monotonic() >= until or len(received) > 4 * 1024 * 1024:
+                raise TimeoutError("P4 did not report boot pad release")
+            data = console.read(min(4096, console.in_waiting or 1))
+            capture.write(data)
+            received.extend(data)
+            check_startup(received, PAD)
+        record(out / "p4-pad-release.json", {"epoch": time.time()})
+
+
+@contextmanager
+def hold_agon(bench):
+    bench.own()
+    with hold(bench.reset_config):
+        record(bench.out / "agon-hold-asserted.json", {"epoch": time.time()})
+        yield
+    record(bench.out / "agon-hold-released.json", {"epoch": time.time()})
+
+
+def reboot_pair(bench, before_boot):
+    """Start Agon after the installed P4 has released its boot pads."""
+    with hold_agon(bench):
+        reset_until_pads_release(bench)
+    record(bench.out / "agon-admitted.json", wait_boot(bench.url, before_boot, 60))
+
+
+def replace(bench, spec, image, table, before_boot, begin, *, required_entry=None):
+    from esptool import __version__
 
     if __version__ != "5.1.0":
         raise RuntimeError("P4-PC requires the commissioned stock esptool 5.1.0")
@@ -41,8 +82,7 @@ def replace(bench, spec, image, table, before_boot, begin, *, required_entry=Non
 
     # The same hold, stock CLI flags and pad-release boundary as NET-009.
     # Keep the mainboard held while the P4 GPIO boot pads may be driven.
-    with hold(bench.reset_config):
-        record(out / "agon-hold-asserted.json", {"epoch": time.time()})
+    with hold_agon(bench):
         stock(out, "partition", port, "usb-reset", "read-flash", "0x8000", "0x1000",
               partition)
         stock(out, "selector", port, "no-reset", "read-flash", "0xf000", "0x2000", selector)
@@ -63,22 +103,9 @@ def replace(bench, spec, image, table, before_boot, begin, *, required_entry=Non
               readback)
         if readback.read_bytes() != image:
             raise RuntimeError("Independent P4 application readback differs")
-        console = serial.Serial(port=None, baudrate=115200, timeout=0.15, exclusive=True)
-        console.dtr = console.rts = False
-        console.port = port
-        with console, (out / "p4-boot.bin").open("xb") as capture:
-            record(out / "p4-reset-issued.json", {"epoch": time.time()})
-            HardReset(console, uses_usb=True).reset()
-            until = time.monotonic() + 50
-            received = bytearray()
-            while PAD not in received:
-                if time.monotonic() >= until or len(received) > 4 * 1024 * 1024:
-                    raise TimeoutError("P4 did not report boot pad release")
-                data = console.read(min(4096, console.in_waiting or 1))
-                capture.write(data)
-                received.extend(data)
-                check_startup(received, PAD)
-            record(out / "p4-pad-release.json", {"epoch": time.time()})
-    record(out / "agon-hold-released.json", {"epoch": time.time()})
-    wait_boot(bench.url, before_boot, 60)
+        record(out / "write-verified.json", {
+            "bytes": len(image), "write_sha256": sha256(image).hexdigest(),
+        })
+        reset_until_pads_release(bench)
+    record(out / "agon-admitted.json", wait_boot(bench.url, before_boot, 60))
     return readback

@@ -19,7 +19,7 @@ from olimex_cli import Observer
 from olimex_flash import check_extent, flash_application
 from passive_serial import open_passive_serial
 from reset_agon import status, wait_boot
-from reset_agon_usb import identity, pulse
+from reset_agon_usb import identity
 from sdcard import Client, RemoteError
 
 
@@ -300,16 +300,12 @@ class Bench:
                     component, self.config["programmer"], self.c["ports"][0],
                     self.config["mainboard_mac"], spec, image, table, self.out, begin,
                     required_entry=required_entry)
-            if result.read_bytes() != image:
-                raise RuntimeError(f"Independent {component} application readback differs")
-            bench_process.record(self.out / "write-verified.json", {
-                "bytes": len(image), "write_sha256": sha256(image).hexdigest(),
-            })
-            if component == "mainboard":
-                reset_before = status(self.url)["boot"]
-                bench_process.record(self.out / "agon-reset-issued.json", {"epoch": time.time()})
-                pulse(self.reset_config)
-                wait_boot(self.url, reset_before, 60)
+                if result.read_bytes() != image:
+                    raise RuntimeError("Independent mainboard application readback differs")
+                bench_process.record(self.out / "write-verified.json", {
+                    "bytes": len(image), "write_sha256": sha256(image).hexdigest(),
+                })
+                olimex_p4_app.reboot_pair(self, before["boot"])
             self.cli()
 
         receipt = {
@@ -453,6 +449,7 @@ def main():
         parser.error("Physical phases require --operator from the opened chat slot")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
     bounds = {"stage": 300, "run": kit["fixture"]["seconds"] + 210,
+              "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
               "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
     return bench_process.run(child_argv(args, phase), args.out / phase,
                              bounds.get(phase, 480), owner=args.operator,
