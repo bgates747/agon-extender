@@ -62,7 +62,7 @@ The desktop thread-management server is `codex_app` (singular).
 establish that the thread sender is available. On a remote Pi chat, desktop
 bridge and saved-configuration conditions can prevent sender injection.
 Use ordinary durable operator chats; the installed desktop gives ephemeral
-chats an empty desktop-tool allowlist. If the lookup below finds no sender,
+chats an empty desktop-tool allowlist. If discovery finds no sender,
 record that outcome and follow the Pi route rather than diagnosing the
 desktop bridge during bench checkout.
 
