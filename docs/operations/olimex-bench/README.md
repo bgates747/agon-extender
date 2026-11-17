@@ -32,7 +32,8 @@ Use the app's immediate send-to-thread action. When that transport is
 unavailable on Pi5, use the existing Pi chat sender with the same message and
 your actual chat UUID. Use a unique delivery ID for each message. Run the Pi
 sender with ordinary tool review for the local app-server socket, which is
-outside the workspace sandbox.
+outside the workspace sandbox. In `exec_command`, request
+`sandbox_permissions: require_escalated` for this socket call.
 
 ```bash
 /Agon/mystuff/agon-dev-env/.venv/bin/python /Agon/mystuff/agon-dev-env/scripts/pi_chat.py send \
