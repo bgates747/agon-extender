@@ -1,16 +1,7 @@
 # Olimex scheduling agent — initial training and assessment
 
-These are paper scenarios, not executable tests or live queue instructions.
-The new agent reads the references and writes its proposed next action, evidence
-and responsible actor for each case. Extender reviews the answers before live
-administration. Do not contact fictitious owners or mutate the registry while
-answering them.
-
-These are the initial supervised scenarios. Smith's2026-11-09 management handover
-changes the acting manager to the dedicated agent: references below to Extender
-making routine helper mutations now mean you perform them under the unchanged
-scheduling service identity. The current operating guide governs authority;
-there is no requirement to repeat this assessment before each job.
+Historical training for the retired registry workflow. Use the current
+[Olimex bench procedure](../olimex-bench/README.md) for ordinary work.
 
 | Case | Situation | Expected judgment |
 |---|---|---|

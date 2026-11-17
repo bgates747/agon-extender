@@ -20,6 +20,32 @@ selected commands.
 [First cold run](../BENCH-019/REHEARSAL-R01-RESULT.md) ·
 [Second cold run](../BENCH-019/REHEARSAL-R02-RESULT.md)
 
+### Worked owner examples
+
+1. **Extender VDP, NET-009 actual183.** The operator held Agon reset. The
+   following stock esptool forms show the recorded P4 commands, with the
+   job-specific arguments named. Each read and write ran separately.
+
+   ```bash
+   python -m esptool --chip esp32p4 --port PORT --baud 460800 --before usb-reset --after no-reset read-flash 0x8000 0x1000 TABLE
+   python -m esptool --chip esp32p4 --port PORT --baud 460800 --before no-reset --after no-reset read-flash 0xf000 0x2000 SELECTOR
+   python -m esptool --chip esp32p4 --port PORT --baud 460800 --before no-reset --after no-reset write-flash --flash-mode keep --flash-freq keep --flash-size keep 0x20000 IMAGE
+   python -m esptool --chip esp32p4 --port PORT --baud 460800 --before no-reset --after no-reset read-flash 0x20000 EXTENT READBACK
+   cmp IMAGE READBACK
+   ```
+
+   The operator verified the table and app0 selector before writing. The
+   operator then restarted the P4 while Agon remained held, observed the
+   pad-release marker and released Agon. A fresh listener, read and EXIT
+   established a working CLI. The curated runtime implements these commands.
+2. **EMOS, corrected EMOS-001 install.** Extender installed a pinned ROM with
+   one `FLASH mos ROM_PATH -f` at the Legacy CLI. After the updater restarted
+   and input was admitted, Extender saved the complete ROM with
+   `SAVE ROM_READBACK &0 &20000`. Extender opened the foreground SD listener,
+   retrieved the saved ROM, compared all bytes and exited the listener. The
+   operator runner uses the same updater, extent and fresh CLI proof with
+   staged ROM and readback paths from the job.
+
 ## Instruction and execution divergences
 
 1. The ordinary Extender dispatch required OP-10, which sent both fresh
@@ -87,3 +113,91 @@ The P4, EMOS and VDPlet artifact hashes remain identical across attempts.
 The rehearsal can establish that the curated end-to-end procedure works.
 The retained command and source comparison explains the earlier P4 pre-write
 failure independently of the rehearsal outcome.
+
+## First curated run
+
+The GPT-6.1 Sol high operator entered the Pi5 sparse checkout at
+`bb487d00`. Every physical phase completed on its first invocation.
+The operator performed all three custom writes, ran the fixture once,
+collected the four expected output lines and restored all three processors.
+The retained phase receipts prove child exit 0 and joined process groups.
+An independent SHA-256 comparison matched all six install and restore
+readbacks to the job pins. The handback records a working Legacy CLI, idle
+services and free serial handles.
+
+| Phase | Duration |
+| --- | ---: |
+| Verified SD staging | 157.241 s |
+| Mainboard VDPlet candidate and restore | 61.867 s and 61.714 s |
+| Extender VDP candidate and restore | 55.049 s and 54.920 s |
+| EMOS candidate and restore | 62.518 s and 62.316 s |
+| Invoke and collect | 14.844 s |
+| Final physical handback | 8.143 s |
+
+Wall time from stage supervisor start to completed physical handback was
+10m01s, including gaps between commands. The earlier rehearsal's 38m22s
+included a Smith hold, human recovery and fixture-observer correction, and
+measures from slot-open to scheduler closure.
+
+The first reservation command failed before reaching the scheduler. The Pi
+app-server socket is outside the workspace sandbox. The operator then used
+the ordinary review path, received the direct reservation and slot-open
+messages and completed the bench phases. The guide now names the reviewed
+invocation directly. The new cold acceptance run checks that an operator
+can complete the reservation and physical qualification without that error.
+
+## Second curated run and startup correction
+
+The second operator reserved on its first reviewed Pi message and staged the
+unchanged packet. Its mainboard write and independent full-extent comparison
+passed. The Agon-only reset advanced the boot epoch, but input remained
+unadmitted at the 60-second deadline. The parent joined the worker with exit 1.
+The operator preserved the first fault. Later installs and feature checks
+remained unrun.
+
+Under the same slot, one paired P4/Agon startup produced a working CLI
+without a firmware write. The operator then wrote and compared only the
+production mainboard extent and checked in. The scheduler confirmed release.
+P4 and EMOS were unchanged. All original and recovery receipts remain
+separate. The failure can occur after a valid flash, so an independent
+readback alone cannot qualify startup. The underlying cause of the
+intermittent input admission remains unisolated.
+
+The next frozen runtime applies the already working ordered startup after
+each mainboard app write. The Pi holds Agon, restarts the installed P4,
+waits for its serial pad-release marker, then releases Agon and checks
+fresh keyboard admission and an actual MOS CLI exchange. The operator makes
+no P4 firmware change during that phase. The fixture bytes, firmware images,
+and phase order remain fixed. The guide also names the live output and
+terminal receipt paths directly.
+
+## Qualified cold run
+
+The third GPT-6.1 Sol high operator started from the curated Pi5 checkout at
+`14e20dd2`. Its initial local entry, guide, and job packet supplied the
+operations. It inspected the selected tool source and actual journals, and
+used no historic operating guide or locally authored bench helper. The Pi
+sender reached the scheduler on its first reviewed call. The operator waited
+for the direct slot-open message and used the nine planned phases once each.
+No phase failure, retry, or human intervention occurred.
+
+The paired P4/Agon startup worked after both mainboard writes. Independent
+comparison matched all six candidate and production readbacks. The fixture
+reported EMOS accepted 0 and rejected 19, VDPlet status 0 and value 86, and P4
+results 3 → 9 and 5 → 25. The operator left a working Legacy CLI, offline
+listener, idle transfers, and free serial handles. All nine parent receipts
+showed exit 0 and joined workers. The scheduler confirmed release at
+01:16:47 EST on November 17 with an empty FIFO.
+
+| Recorded span | Duration |
+| --- | ---: |
+| Stage start to completed physical handback | 9m49s |
+| SD staging and independent readbacks | 158.833 s |
+| Mainboard install and restore | 64.378 s and 64.324 s |
+| Extender VDP install and restore | 54.992 s and 55.099 s |
+| EMOS install and restore | 62.572 s and 62.429 s |
+| Fixture invocation and collection | 14.747 s |
+| Final physical handback phase | 8.155 s |
+
+[Verified phase results and digests](../../../agents/bench020/rehearsal-r03-verification.json) ·
+[Scheduler release](../../../agents/bench020/rehearsal-r03-release.json)

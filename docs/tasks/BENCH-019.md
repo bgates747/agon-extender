@@ -1,5 +1,9 @@
 # BENCH-019 — One Olimex bench procedure
 
+Use the [current Olimex bench procedure](../operations/olimex-bench/README.md).
+[BENCH-020](BENCH-020.md) records the successful cold qualification and
+instruction cutover. The material below records the draft's development.
+
 Extender will maintain one document for the complete Olimex bench cycle,
 from checkout through firmware, fixtures, results and check-in. Smith and
 Extender will develop the policy one decision at a time. Once Smith accepts
@@ -152,9 +156,9 @@ exchange and sends the scheduler only the operator's chat identity and action.
    use the BENCH-018 inventory to remove superseded operating instructions.
 
 The [r02 result](BENCH-019/REHEARSAL-R02-RESULT.md) records the join at the
-mainboard programming failure. The follow-up holds the serial programmer
-connection across all app operations. Rehearsal acceptance and cutover remain
-pending an authorized physical recovery and successful cold run.
+mainboard programming failure. The follow-up held the serial programmer
+connection across all app operations. BENCH-020 later completed qualification
+and cutover using the curated checkout and the tested owner programming paths.
 
 ## Decision register
 
@@ -172,6 +176,4 @@ pending an authorized physical recovery and successful cold run.
 | 6a | On a long unattended goal task, the operator may restore the bench to its production state if needed, check it in without waiting for Smith, and trace the problem away from the bench. If the operator finds and fixes the problem, they may request a new slot through the normal FIFO. | Accepted |
 | 7 | For normal check-in, the operator leaves production firmware on all three processors and a working CLI, finishes transfers, stops owned processes, and closes device handles. The scheduler closes the slot and wakes the head of the FIFO if one exists. | Accepted |
 
-The working draft is for discussion. Existing instructions remain in effect
-until Smith accepts the replacement. The audit cleanup starts after that
-decision.
+The independent FIFO exercise remains deferred to real jobs.

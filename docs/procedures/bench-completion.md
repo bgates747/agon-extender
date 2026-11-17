@@ -1,32 +1,8 @@
-# Bench completion, queue progress and blocked-operation recovery
+# Bench host process evidence
 
-The host supervisor records process results directly. Extender releases the
-bench from verified current physical handback, then immediately
-notifies the next prepared owner. Missing tool-interface bookkeeping must not
-become an unexplained hardware hold. This procedure supplements the central
-physical checkout workflow; it does not grant new target or test authority.
-
-## Three separate facts
-
-An Author-authorized exclusive-access checkout is not released between runs:
-the named agent keeps it as long as it wants or until the Author says otherwise,
-and may flash different firmware, modify software and deploy it during that
-checkout. Apply this completion and release procedure when that owner actually
-hands back the bench, not after each individual run. Other agents do not access
-the bench during its custody. Honor separate human-only invocation instructions.
-
-Olimex completion also observes the [standard firmware policy](olimex-firmware.md).
-Installed identities persist across application-only jobs; no routine reflash
-or full unchanged-device readback is required. Firmware restoration is not a
-release requirement; the agent whose flash makes the bench inoperable restores
-standard production firmware to the devices it modified. Neither
-desired firmware nor a successful process result is proof of installed bytes.
-
-| Fact | Evidence | What it does not prove |
-|---|---|---|
-| Host process completed | Parent-written child identity and actual `wait()` result; joined registered children/groups in the native execution namespace | Workload pass, restored firmware, CLI readiness |
-| Hardware operable and idle | Current CLI/read/EXIT, input/resource state, actual firmware identity and preserved files under the current lease; recovery if a flash made it inoperable | Author acceptance or permission for a successor to run |
-| Custody released | Successful central release/status reconciliation and actual `next_request` notification | A new owner grant or expanded test scope |
+The host supervisor records process results directly. For Olimex custody,
+physical handback and response to failures, follow the
+[bench procedure](../operations/olimex-bench/README.md).
 
 Codex tool/session IDs correlate execution with chat. A second agent-written
 copy of a tool exit code is **not mandatory** when the original supervisor has
@@ -97,51 +73,5 @@ python ../agon-vdplet/tools/notify_bench_completion.py \
 
 The wrapper records the supervisor's exit and log, invokes the maintained
 `pi_chat.py send --resume` for the owner, and retains a notification receipt.
-Its success and failure paths have offline verification; live self-wake is not
-yet proven. An owner wake-up is separate from the scheduler and actual-next
-owner notifications required after a genuine handback. Before reporting a
-release or accessing the bench, inspect actual lease, physical idle and
-parent/join receipts. A failure may require retaining custody and reporting a
-block rather than releasing. This wrapper grants no hardware authority and
-does not replace the unattended failure notification above.
-
-## Resolve a block without weakening release checks
-
-When an unexpected fault, unexplained lack of progress, or uncertainty may
-hold the physical bench or its queue, the responsible agent immediately uses
-the app's **agent has a question** notification and explains the observed
-state, the affected owner and queue, and the next action in chat. Do not wait
-for a long operation timeout or silently leave the queue held. Continue any
-already-authorized safe reconciliation and handback while awaiting an answer;
-the notification does not authorize a replay, override custody or replace
-required physical verification. Do not repeat an alert while the Author is
-already present.
-
-1. Extender records the phase, owner/request/lease, known physical state, exact
-   failure or approval rationale, preserved journals, next action and responsible
-   actor. Send durable mail and immediately steer the owner and actual next
-   queued owner. State the block directly to the Author during attended work.
-   For a physical-access/approval blocker, use the Author's attention procedure.
-2. Classify the block: unknown/live hardware, failed restoration, stale physical
-   observation, incomplete process evidence, or administrative-only failure.
-   Quiet chats and process absence never authorize takeover. Keep existing
-   custody while the hardware is uncertain; no automatic expiry/preemption.
-3. If original supervisor journals establish the selected worker's actual
-   result, verify them directly. Preserve the old missing/rejected receipt and
-   create a separate reconciliation record; do not manufacture the receipt.
-   If freshness expired, obtain a genuinely new narrowly scoped observation
-   under existing or explicitly renewed recovery authority. Do not restamp.
-4. A denial remains binding. Inspect the exact proposed action and reviewer
-   reason; make a materially safer correction with inspectable evidence within
-   current human scope. Do not change transport, approval settings or command
-   spelling to evade it. If no permitted resolution remains, provide the
-   concrete denied action, evidence, risk and exact missing user decision.
-   Continue independent source work; do not silently treat a queue hold as done.
-5. After actual restoration/current-state/process checks pass, release normally
-   through the central helper. Resolve an uncertain release with central status,
-   never a repeated test. Record the resolution separately from the retained
-   failure and immediately notify `next_request` before lengthy offline work.
-
-This procedure supplies a bounded notification and recovery route, not a promise
-that every external approval denial can be resolved without a person. It adds
-no idle polling daemon, test autorun, forced release or blanket recovery scope.
+Its success and failure paths have offline verification. For the Olimex
+operator’s response to any result, use the linked bench procedure.

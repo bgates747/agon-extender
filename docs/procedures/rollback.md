@@ -6,11 +6,7 @@ implicit replacement of every component on the bench.
 
 ## RB-01 — Select and bound the rollback
 
-For cleanup after an Olimex firmware-development or version-compatibility test,
-Smith's [standard firmware policy](olimex-firmware.md) selects the current
-standard as the final target, even if the test entered with an older image.
-An explicitly requested recovery rollback still restores its named component;
-record a nonstandard recovery result honestly before normal standard handback.
+On Olimex, follow the [Olimex bench procedure](../operations/olimex-bench/README.md) for check-in and production restoration.
 
 1. Identify the named component, the failure being avoided, its last physically
    verified applicable build and the retained image/hash/evidence. “Latest,”

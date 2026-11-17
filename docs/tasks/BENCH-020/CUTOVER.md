@@ -1,10 +1,11 @@
 # BENCH-020 instruction cutover
 
-Use the maintained [Olimex bench guide](../../operations/olimex-bench/README.md)
-as the single checkout-through-check-in entry. Publish the redirects after
-the qualified cold run and resolve any pending legacy reservations with the
-scheduler before it switches its routine queue. The current cold run uses
-the already authorized direct-chat workflow.
+The maintained [Olimex bench guide](../../operations/olimex-bench/README.md)
+is the single checkout-through-check-in entry. The Extender, shared
+environment, and consumer redirects were updated after the qualified cold
+run. The old registry had no current owner or waiting reservations. The
+scheduler received the final guide and continues the direct-chat FIFO used in
+the rehearsal.
 
 | Existing instruction route | Correction |
 | --- | --- |
@@ -17,9 +18,9 @@ the already authorized direct-chat workflow.
 | Active project entry points identified by BENCH-018 | Replace the old scheduling branches and dated occupancy with a direct link. Keep case-specific evidence and any explicit human-start restriction. Review and change each active instruction with the owning workspace. |
 | Previous tasks, immutable run logs and old worksheets | Keep actual receipts and decisions traceable. Remove live-entry links or clearly identify the specific dated run at the point of discovery. |
 
-Before publication, verify all repo entry points reach the same current guide
-without following task evidence. Compare both production-only and
-custom-firmware paths. The production path has zero programmer commands.
-The custom path has one verification for each write and restores only the
-components touched. The scheduler receives the operator identity, slot
-request and check-in. The queue retains existing request order.
+The current entry points reach this guide directly. A production-only offline
+check listed stage, run and handback. The qualified custom path installed and
+restored only the named processors, with a complete readback per write.
+Routine scheduling used the operator's chat identity, reservation request and
+check-in. The scheduler confirmed each completed check-in. The independent
+FIFO scenarios stay deferred to real jobs.

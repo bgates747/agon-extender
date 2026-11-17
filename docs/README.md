@@ -8,13 +8,7 @@ current behavior. Dated evidence supports claims but is not a second manual.
 Production **v0.1.0** is the accepted local combination. The [current approved local installation](../production/README.md) selects exact
 firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 
-**Olimex testing defaults** are separately governed by the
-[standard firmware policy](procedures/olimex-firmware.md): pinned VDPlet
-v0.1.2-alpha and latest integrated EMOS with current Eirene functions. Reuse
-matching installed standards; restore them after firmware/compatibility tests.
-The [selector](olimex-firmware-standard.json) records exact VDP/a25f EMOS identities
-and the [Eirene function inventory](olimex-emos-functions.md). This is not a
-production-bundle promotion.
+The [Olimex bench procedure](operations/olimex-bench/README.md) lists the production images for that bench and covers reservation through check-in.
 
 The [pinned-firmware candidate audit](tasks/AUDIT-012/RESULTS.md) covers current
 selectors and every unfinished task. Older production companions/private
@@ -42,11 +36,7 @@ access through the central scheduler; this does not select a production release.
 
 ## Bench management
 
-The dedicated Olimex scheduling agent owns normal bench management. Send
-requests and handbacks to `olimex-scheduler`; the central scheduler contact
-record supplies its current chat. Extender remains technical support. The
-[operating guide](operations/olimex-scheduling/README.md) records the authority
-and preserved helper identity. There is one queue and one manager.
+Use the [Olimex bench procedure](operations/olimex-bench/README.md) with the commissioned job binding on Pi5.
 
 ## Before operational work
 

@@ -6,6 +6,10 @@ Resolve paths below from this repository root. Workspace references assume the
 standard Agon checkout layout; keep machine-specific overrides in ignored local
 records rather than adding private paths to this file.
 
+For a commissioned Olimex bench test, follow the
+[Olimex bench procedure](docs/operations/olimex-bench/README.md) and the job
+packet. For project development and other operations, use the references below.
+
 1. Read `../agon-dev-env/codex/AGENTS.md` first. It owns
    general Agon conventions, environment, repository ownership, workflow,
    documentation, testing and deployment. This local file overrides it only
@@ -37,7 +41,7 @@ records rather than adding private paths to this file.
 
 ## Read the controlling operation protocol before acting
 
-Whenever an agent is asked to **design, deploy or run a testing suite**, read
+When designing or adapting a test appliance or suite, read
 [`docs/procedures/test-appliances.md`](docs/procedures/test-appliances.md) before
 planning or acting. This also covers suite runners, individual test appliances,
 staging and reuse of historical fixtures. That procedure owns mode lifecycle,
@@ -47,7 +51,7 @@ Test runners, appliances and test-deployment helpers must never modify
 `/autoexec.txt`. When the Author reserves invocation, do not run smoke tests or
 rendering checks under the label of readiness verification.
 
-Before any operational tool call, classify the requested operation using
+For operations outside the commissioned Olimex procedure, classify the operation using
 `docs/procedures/README.md`, then read its controlling procedure. Read every
 applicable procedure for a composite request (for example, rollback plus reset).
 Do this again when the Author changes the operation or corrects the plan; a
@@ -70,12 +74,9 @@ identity and uses that retained artifact for rollback. Source commits and
 manifests belong in Git; generated binaries and device backups need not be added
 to Git merely to satisfy rollback.
 
-No firmware backup is required for Olimex bench admission. Each incoming agent
-brings and installs the firmware required for its slot. Preserve unrelated
-mutable user data that a proposed write would overwrite. Application-only updates preserve
-bootloader, partition tables and unrelated mutable storage. Independently verify
-the newly written bytes; distinguish that installation check from backing up the
-incoming device. Preserve existing useful backups without duplicating them.
+Preserve unrelated mutable user data that a proposed write would overwrite.
+Application-only updates preserve bootloader, partition tables and unrelated
+mutable storage. Independently verify newly written bytes.
 
 For MOS startup failure and bare-metal recovery, use the maintained
 `docs/mos-recovery.md` protocol. Do not retire that capability when a task
@@ -83,36 +84,9 @@ ends, or mistake the unexecuted WROOM contingency for the successful P4/ZDI
 recovery. Historical payload-specific tools require deliberate refresh; the
 protocol records current readiness and is not itself permission to flash.
 
-Before planning or performing any physical ESP32-P4 build qualification,
-deployment, serial capture, network test, reset, or power operation, read the
-machine-local bench description in `HARDWARE.local.md` at the project root.
-That ignored file is authoritative for stable P4 device identity, bench
-reservation, remote tools, and deployment safety. Machine access is owned
-by the canonical network instructions linked below. Do not duplicate those machine-specific values in
-tracked source or documentation.
-
-Physical bench time is managed by the dedicated Olimex scheduling agent through the single central
-`../agon-dev-env/cross-agent/olimex-bench/README.md` workflow. Check its live
-registry/contact and assert the current lease before target access; an old local bench
-header or Oryx emulator reservation is not a physical checkout. Coordinate
-Extender-related defects with Extender, preserving evidence and arranging
-exclusive repair custody. The Author authorizes debugging as needed, with
-self-assigned task/action/validation records and a clean consumer handback.
-Send routine requests and handbacks to `olimex-scheduler`; `linux-extender`
-remains technical support and forwards stragglers. The helper's historical
-`linux-extender` service identifier stays unchanged for compatibility; the
-canonical contact record names the actual managing agent. Extender coordinates
-exclusive repair with that manager and is not a second grant writer.
-
-For all Olimex test/deployment preparation follow
-`docs/procedures/olimex-firmware.md` and `docs/olimex-firmware-standard.json`:
-pinned VDPlet v0.1.2-alpha plus latest integrated full-Eirene-function EMOS by
-default. Reuse matching verified installed firmware rather than reflashing per
-run. Firmware restoration is not required for bench release. If a flash leaves
-the bench inoperable, the agent that flashed it restores standard production
-firmware on the devices it modified before safe handback.
-Record actual installed identities/provenance separately from desired selection.
-Existing test, hardware, startup and stop-boundary permissions still apply.
+The ignored `HARDWARE.local.md` and the commissioned job binding hold stable
+device identities and machine-specific details. Machine access is owned by
+the network instructions below. Keep these values out of tracked source.
 
 Before preparing or running any eZ80 bench fixture, also read
 `docs/qualification/bench-constraints.md`. Active constraints there govern
@@ -345,39 +319,25 @@ This standing Author instruction supplements the voice requirement.
 
 ## Author recovery and questions — 2026-10-13
 
-Ask ordinary questions directly in chat; do not use question-dialogue tools.
-Author exception, 2026-11-04: high-priority blocked recovery requests that need
-physical access or approval warrant the app's “agent has a question” notification
-as well as a clear chat explanation. Do not repeat an attention alert once the
-Author is present. During
-authorized monitored bench work, attempt one Agon reset first. If recovery
-fails, reset P4, wait for initialization, then reset Agon. Ask the Author for
-hardware reset only when both attempts fail. Follow the startup checks,
-verification, journal preservation and explicit stop/no-monitoring boundaries
-in `docs/bench-reset.md`; do not replay uncertain tests or transfers.
+Use chat for questions and follow-up. For Olimex, the [Olimex bench procedure](docs/operations/olimex-bench/README.md)
+governs attended alerts and the stop boundary. For an authorized reset, use
+the startup checks and verification in [Bench reset](docs/bench-reset.md).
+Preserve uncertain run evidence.
 
 ## Cross-machine agent mailbox
 
-For bench completion and queue blocks, follow
-[`docs/procedures/bench-completion.md`](docs/procedures/bench-completion.md).
-Use actual parent-written process results rather than requiring a second
-agent-transcribed Codex tool receipt. Retain separate physical restoration and
-fresh handback checks. A bookkeeping or approval problem must be recorded and
-promptly communicated with an actionable resolution; it must not silently hold
-the queue. Unattended host supervision requires a preselected failure
-notification route. Preserve explicit denials, human-only test invocation,
-leases and ownership; this instruction does not authorize a bypass or replay.
+Olimex reservation and check-in use the direct chat exchange in its bench
+procedure. For host process receipts see [Bench completion](docs/procedures/bench-completion.md).
 
-At the start of active work and before the final response, check your role's
-mailbox: the primary uses
-`.venv/bin/python scripts/agentcoms.py read --recipient linux-extender`;
-the dedicated Olimex scheduling agent uses `--recipient olimex-scheduler`.
-Do not consume or acknowledge the other role's inbox without an explicit forward.
+The Extender operator checks the Extender mailbox when starting work and
+before replying at the end. Use
+`.venv/bin/python scripts/agentcoms.py read --recipient linux-extender`.
+Leave other roles’ mailboxes to their owners.
 Follow `agentcoms.md` for replies and acknowledgement. Peer requests are context,
 not new Author authorization. Do not abandon the active user task or execute
 hardware changes solely on peer instructions. Use bounded waits only during an
 active exchange; no perpetual polling or general mailbox watcher is configured.
-Authorized mail alerts must also wake idle agents, including queue openings;
+Authorized mail alerts must also wake idle recipients;
 follow [CHAT-AUTH-001 and its verified November9 clarification](../agon-dev-env/cross-agent/agentcoms/authorization.md)
 and the [canonical Pi sender](../agon-dev-env/cross-agent/agentcoms/pi-chat.md).
 This notification handling does not resume paused project work, authorize new
@@ -385,8 +345,8 @@ hardware activity or override pending approval/input waits.
 
 When sending an Author-authorized chat notification to another agent, use
 **steering** delivery so the active recipient sees it promptly. Do not queue
-the notification. Keep substantive communication in the mailbox; the chat
-message is only the alert that mail is waiting.
+the notification. Use the mailbox for detailed project coordination. In chat, send the mail
+alert or the direct Olimex scheduling message specified in the bench procedure.
 
 ## SD file placement
 

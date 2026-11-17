@@ -9,10 +9,7 @@ reset must remain an escape to normal boot, without launching or resuming tests.
 
 ## Responsibilities and scope
 
-On Olimex, use the [standard firmware policy](olimex-firmware.md): pinned VDPlet
-and current full-function Eirene-based EMOS by default. Reuse a matching recorded
-installation; per-suite flashing is not required. Only a declared firmware or
-version-compatibility test uses alternatives, followed by standard restoration.
+For commissioned Olimex operations use the [Olimex bench procedure](../operations/olimex-bench/README.md).
 
 1. The Pi Python runner coordinates explicitly authorized unattended suites:
    it sequences individual tests, paces CLI commands and records outcomes.

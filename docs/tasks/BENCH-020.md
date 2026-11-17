@@ -1,6 +1,11 @@
 # BENCH-020 — Audit canonical Olimex bench instructions
 
-**Active goal, authorized by Smith on 2026-11-17.** Start with Extender’s own successful bench
+**Completed 2026-11-17.** The [third curated run](BENCH-020/EVIDENCE.md#qualified-cold-run)
+completed the three-processor fixture and verified production check-in. The
+[current bench procedure](../operations/olimex-bench/README.md) is now the
+common entry point. The independent FIFO exercise remains deferred to real jobs.
+
+The audit started with Extender’s own successful bench
 work on Extender VDP (E/VDP) and Extender MOS (EMOS). Recover the exact working
 commands and their receipts from routine owner runs. Then trace how Extender
 and the two cold operators selected their methods, and fix the instructions

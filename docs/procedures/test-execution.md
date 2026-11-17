@@ -9,20 +9,11 @@ monitor settling and the prohibition on test-driven startup changes.
 
 ## TE-01 — Prepare without invoking
 
-For Olimex, resolve the [standard firmware selection](olimex-firmware.md) and
-recorded installed identities first. Skip unnecessary firmware writes when the
-standard already matches. Each agent brings the firmware required for its slot;
-firmware restoration is not required on release unless the agent's flash leaves
-the bench inoperable or the Author explicitly directs restoration.
+For Olimex, use the [Olimex bench procedure](../operations/olimex-bench/README.md).
 
-1. The agent reads the active task contract, bench constraints, SD layout and
-   current machine-local bench record. Confirm Author authorization, bench
-   availability, exact firmware/fixture identities and the actual application
-   state. Do not assume keyboard-ready means MOS is at the prompt.
-   The Author's handoff "bench is yours" confirms a ready, idle bench for the
-   agreed work; do not ask them to repeat that confirmation. The agent can
-   establish actual command handback through a finite listener/read/EXIT
-   exchange. Stop and reconcile only if fresh evidence contradicts readiness.
+1. The operator reads the active task and obtains custody through the applicable
+   bench procedure. A successful listener/read/EXIT establishes command handback.
+   Keyboard readiness alone does not establish a MOS prompt.
 2. Preserve ordinary startup and any existing fixture configurations. Stage
    identified files in their documented directories and verify their readbacks.
    Prefer an existing fixture; do not alter a frozen executable casually.
@@ -54,16 +45,6 @@ the bench inoperable or the Author explicitly directs restoration.
    explicit invocation. A granted lease or copied files alone are not readiness.
    Report a genuine blocking decision promptly; do not invoke the test for the
    Author or change a separately specified stopping boundary.
-8. For an Olimex hands-on test, once the bench is fully staged, send the
-   desktop “Agent has a question” notification with the exact start command
-   and what the Author should check. Hold the exclusive lease and staged setup
-   until the Author explicitly answers. Do not restore, release, move to the
-   next job, start a test clock or time out merely because the answer is
-   pending. Agent messages, notification acceptance and elapsed time are not
-   the Author's reply. Begin the timed test only when the Author confirms
-   readiness; the Author retains the reserved manual invocation. The desktop
-   question dialog is an alert only. Use ordinary chat for every follow-up
-   question, troubleshooting exchange and collection of test results.
 
 ## TE-02 — Invoke and honor the stopping point
 
@@ -88,10 +69,9 @@ the bench inoperable or the Author explicitly directs restoration.
 
 1. Confirm completion through the task's admitted evidence channel before
    transferring results or injecting commands. A missing result is not proof
-   the application has stopped. Apply the Author's standing
-   [recovery order](../bench-reset.md#standing-recovery-order--author-instruction-2026-10-13)
-   during authorized monitored work before requesting operator recovery;
-   never automatically replay the uncertain operation.
+   the application has stopped. Follow the bench procedure for failure
+   handling and the [reset sequence](../bench-reset.md#authorized-input-recovery)
+   for an authorized recovery. Preserve the original outcome.
 2. Retrieve and validate durable results against their build, run/configuration,
    workload and completeness contracts. Separate application timing, rendering
    and presentation; preserve informative failures.

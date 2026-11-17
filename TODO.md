@@ -25,6 +25,10 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[NET-008 — ESP8266 bring-up and standalone-client groundwork](docs/tasks/NET-008.md)** — Corrected P4 internal1152000/full-load minute passes; external modem384000/full-minute CRC passes, higher-rate byte-loss location unresolved. Product restored and170 released; short wire captures now locate a1152000upload500-byte gap downstream of correct P4 TX; reverse short transfer passes. Exact original overrun contribution remains unisolated; C8 qualification/standalone client follow.
 - [ ] **[NET-009 — Pi5-powered ESP8266 UART comparison](docs/tasks/NET-009.md)** — Pi TCP control and P4 Ethernet comparison complete. P4 Ethernet passes separate 60 s arms at 115,200 baud upload and 1,152,000 download. Higher-rate upload loses bytes. The next task is a Pi5 UART ESP-AT update with verified rollback and matched testing.
 
+- [ ] **[BENCH-019 — One Olimex bench procedure](docs/tasks/BENCH-019.md)** — Cold qualification and cutover complete. The independent FIFO scenarios are deferred to real jobs.
+
+- [x] **[BENCH-020 — Audit canonical Olimex bench instructions](docs/tasks/BENCH-020.md)** — Curated cold run passed all three feature checks, verified production restoration and ordinary check-in. Current instruction entry points now resolve to one guide.
+
 - [ ] **[NET-007 — Quiet Console8 Wi-Fi startup](docs/tasks/NET-007.md)** — Separate Connect-or-Skip utility passes manual C8 connection/DHCP/two-ping path; private automatic-connect option and host fault checks retained. Public license/version closure and broader physical cases remain. Radiotux sources stay unchanged.
 
 - [ ] **[NET-003 — Generic application network messaging framework](docs/tasks/NET-003.md)** — Plan published before code; bounded core and stopped outbound TCP adapter pass host sanitizer/loopback and actual P4 object compilation. Author accepts outbound TCP to Pi; payload/EMOS envelope/app library and worker integration remain. No firmware deployment or production selection.

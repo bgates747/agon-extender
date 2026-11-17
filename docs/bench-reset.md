@@ -46,26 +46,24 @@ Machine-specific SSH identity and desktop helper path remain in HARDWARE.local.m
 The P4 is not connected as a reset controller and no P4/VDP firmware operation
 is part of this pulse. See DEMO-001 evidence for the accepted demonstration.
 
-## Standing recovery order — Author instruction, 2026-10-13
+## Authorized input recovery
 
-For an unresponsive bench during authorized monitored work, the agent must try
-the following recovery before asking the Author to reset hardware:
+The [Olimex bench procedure](operations/olimex-bench/README.md) governs
+response to an unexpected failure. When recovery is authorized under that
+procedure, the operator uses this sequence for unresponsive input:
 
 1. Send one ordinary Agon reset through the commissioned Pi actuator. Verify
    fresh EMOS input admission and actual CLI/listener/read handback.
 2. If that attempt fails, reset the P4 through its verified programming device
    without flashing, wait for P4 application/service initialization, then send
    one ordinary Agon reset. Verify input and actual CLI/listener/read handback.
-3. Only if both attempts fail, stop and ask the Author in ordinary chat.
-   Do not use question-dialogue tools.
+3. If both attempts fail, record what happened and use the bench procedure's
+   stop and notification steps.
 
-This is standing recovery authorization, not authorization to replay a failed
-test or transfer, alter firmware, discard transaction journals or reset during
-an explicit stop/no-monitoring instruction. Before resetting, establish safe
-setup-only startup from current readback or the latest verified unchanged
-bytes. Retain failed operations and reconcile their actual effects after
-recovery. A setup/listener timeout is a recovery trigger under this instruction,
-not proof that a workload completed.
+Before resetting, establish safe setup-only startup from current readback or
+the latest verified unchanged bytes. Retain failed operations and reconcile
+their actual effects after recovery. Honor explicit stop and no-monitoring
+instructions. Replay requires its own authorization.
 
 ## Required pre-reset check
 
@@ -85,8 +83,7 @@ not proof that a workload completed.
    processor. Use the current local recipe and evidence, not a guessed delay.
 4. After the authorized pulse, verify only what the Author permits. “Start then
    stop” or “no monitoring” forbids a subsequent status poll or automatic retry.
-   A failed readiness check is evidence to inspect; further resets require the
-   standing recovery order above or separate Author authorization.
+   Inspect failed readiness checks under the applicable recovery scope.
 
 ## Host reset command
 

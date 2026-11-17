@@ -39,9 +39,10 @@ and prompt readiness after the campaign. Product repairs remain separate work.
 
 ## Applicability and traceability
 
-This governs subsequent capture-suite execution, superseding stop-on-first-
-capture-failure and immediate diagnostic-retry rules in older task contracts.
-It does not rewrite historical outcomes or override explicit deferred test scope.
+Use this sequence when the capture-suite plan includes recovery and the
+independent control reruns. On Olimex, the
+[bench procedure](../operations/olimex-bench/README.md) governs custody,
+authorization to resume after an unexpected failure, and check-in.
 The motivating [sprite control](../tasks/QUAL-004/sprite-scroll/stock-control/RESULTS.md)
 failed with diagnostic firmware but did not reproduce on one official-stock run;
 its startup-history difference remains recorded rather than hidden.

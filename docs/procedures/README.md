@@ -7,10 +7,7 @@ procedure does not authorize a flash, reset, wiring change or new qualification.
 
 ## Required operation dispatch
 
-Olimex firmware selection and cleanup follow
-[standard firmware reuse](olimex-firmware.md). Ordinary jobs reuse verified
-installed standards; firmware/compatibility exceptions restore current standards
-afterward. Read this policy for OP-01, OP-03, OP-04 and OP-10 on Olimex.
+Start with the [Olimex bench procedure](../operations/olimex-bench/README.md) for any Olimex checkout. It includes the complete commissioned bench workflow. Use the references below for component and tool behavior.
 
 Before acting, the agent reads the controlling document for the requested type
 of work. For a composite operation, read all applicable rows. The Author's latest
@@ -28,7 +25,7 @@ Historical scripts and task recipes cannot override these protocols.
 | OP-07 | Recover MOS that cannot boot or accept installation | [MOS recovery](../mos-recovery.md); ordinary input recovery starts with OP-02 |
 | OP-08 | Promote accepted work or tag a release | [Production](../../production/README.md), [versioning](../versions/README.md) and AGENTS.md's acceptance/promotion rules |
 | OP-09 | Build firmware or prepare a candidate | [Building](../building.md), component-owner instructions and active task contract |
-| OP-10 | Request, grant, assert, release or transfer physical bench custody | [Central physical checkout](../../../agon-dev-env/cross-agent/scheduling/olimex/README.md) and [completion/block recovery](bench-completion.md); the dedicated scheduler manages Olimex, Oryx remains separate |
+| OP-10 | Request or release the physical Olimex bench | [Olimex bench procedure](../operations/olimex-bench/README.md) |
 
 ## Execution and correction rules
 
@@ -49,10 +46,9 @@ Historical scripts and task recipes cannot override these protocols.
 5. Finish exactly at the requested boundary. Starting a test is not permission
    to monitor it, collect it, recover it or rerun it. A timeout does not authorize
    reset/replay. Other work may continue only within its separate authorization
-   and without accessing or disturbing a run marked unmonitored. The Author's
-   [standing recovery order](../bench-reset.md#standing-recovery-order--author-instruction-2026-10-13)
-   supplies reset authorization during monitored work; it does not authorize
-   replay or override an explicit stop/no-monitoring boundary.
+   and without accessing or disturbing a run marked unmonitored. For Olimex,
+   the bench procedure governs when recovery can start. Use the [reset
+   sequence](../bench-reset.md#authorized-input-recovery) when authorized.
 6. Keep evidence receipts and current handoff accurate. Distinguish requested,
    staged, invoked, observed running, completed, verified and accepted. If an
    instruction prevents verification, record that limit rather than implying
