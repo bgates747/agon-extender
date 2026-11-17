@@ -270,3 +270,31 @@ ignored notification-fix evidence. Future operator instructions identify
 the singular server and specify the bounded catalog check and Pi route,
 so an absent desktop tool does not require ad-hoc bridge research during
 bench work.
+
+### Fixed Pi communication and cold-run acceptance amendment
+
+Smith approved one maintained Pi communication entry point and two acceptance
+checks. Pi operators use the existing shared `pi_chat.py` for reservation,
+check-in and result return. The operator guide supplies exact commands.
+Desktop MCP discovery is removed from this Pi workflow.
+
+- UPSTREAM-002-12 [ ] Provide one host-only readiness command before FIFO
+  reservation. It checks the commissioned checkout revision and selected
+  guide/script/reviewer files, records their hashes, and verifies the existing
+  Pi sender endpoint and original standing authorization without sending a
+  message or touching the bench.
+
+- UPSTREAM-002-13 [ ] Give cold operators exact Pi-sender commands and require
+  each logged action to reference its controlling guide section or commissioned
+  job command. Record missing instructions and improvised discovery as defects.
+  Assess procedure completeness independently of hardware PASS.
+
+- UPSTREAM-002-14 [ ] Publish and refresh the sparse checkout from the same
+  revision, run the readiness check there, and verify a bounded existing-result
+  return through the fixed Pi sender. Retain the receipt and any rejection.
+
+Keep the existing reviewer rules and specific result-return authorization.
+Use the existing shared sender and its source-verification implementation.
+The readiness check is host-only, requires no reservation or new test, and
+must finish before an operator asks for bench time. It records the shared
+sender's exact source hash because that tool belongs to agon-dev-env.
