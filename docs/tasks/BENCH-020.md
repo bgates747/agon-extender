@@ -11,6 +11,15 @@ maintained appliance and execution procedures, and a buildable production-only
 example. The [sparse path list](../operations/olimex-bench/sparse-paths.txt)
 keeps the selected guides and tools tied to their repository sources.
 
+The GPT-6.1 Sol Light operator built and ran the production-only example on
+Olimex. Its first `stage` stopped at the shared lock in the default sandbox.
+The reviewed `stage` passed, and the first run exposed an extra blank line
+in the fixture's result. The operator exited the retained SD listener under
+Smith's authorization, rebuilt the fixture using `fprintf`, and confirmed
+the corrected output was exactly one line with one LF. The operator verified
+safe handback and the scheduler closed the slot. The original failures and
+the passing run remain in the permanent checkout's local job evidence.
+
 The audit started with Extender’s own successful bench
 work on Extender VDP (E/VDP) and Extender MOS (EMOS). Recover the exact working
 commands and their receipts from routine owner runs. Then trace how Extender

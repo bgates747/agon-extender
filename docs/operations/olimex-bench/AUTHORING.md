@@ -56,7 +56,7 @@ make -C docs/operations/olimex-bench/example AGONDEV_TOOLCHAIN=/path/to/agondev
 ```
 
 Without that override, the Makefile uses `agondev-config --prefix` from
-the operator's PATH. Copy the resulting `bin/OLIMTEST.bin` into the job
+the operator's PATH. Copy the resulting `bin/OLIMT2.bin` into the job
 directory. Copy [job.example.json](example/job.example.json) to a new job
 manifest, fill in the local artifact path and the two commissioned SD
 identity hashes, and replace the example artifact size and hash with

@@ -7,9 +7,9 @@ int main(void) {
         return 1;
     }
 
-    int written = fputs("Result file example\n", report);
+    int written = fprintf(report, "%s\n", "Result file example");
     int closed = fclose(report);
-    if (written == EOF || closed != 0) {
+    if (written < 0 || closed != 0) {
         puts("OLIMTEST FAIL writing result");
         return 1;
     }

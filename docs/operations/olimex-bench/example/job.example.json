@@ -2,8 +2,8 @@
   "schema": 1,
   "namespace": "olimex-authoring",
   "fixture": {
-    "agon": {"path": "path/to/OLIMTEST.bin", "bytes": 0, "sha256": "FIXTURE_SHA256"},
-    "sd_program": "/test/olimex-authoring/OLIMTEST.bin",
+    "agon": {"path": "path/to/OLIMT2.bin", "bytes": 0, "sha256": "FIXTURE_SHA256"},
+    "sd_program": "/test/olimex-authoring/OLIMT2.bin",
     "sd_result": "/test/olimex-authoring/result.txt",
     "address": "040000",
     "seconds": 25,
