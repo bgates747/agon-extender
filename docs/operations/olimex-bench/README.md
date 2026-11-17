@@ -30,12 +30,63 @@ estimated duration, and job authorization in the operator's chat.
 | 3. Open the slot | Scheduler | When the bench is free, mark the head of the FIFO active and send that chat “Your Olimex slot is open.” This gives the operator exclusive custody. |
 | 4. Check in | Operator | “I’m done with my testing. You may release my reservation now.” On receipt from the active operator’s chat, the scheduler closes the slot and wakes the head of the FIFO if there is one. |
 
-Use the app's immediate send-to-thread action. When that transport is
-unavailable on Pi5, use the existing Pi chat sender with the same message and
-your actual chat UUID. Use a unique delivery ID for each message. Run the Pi
-sender with ordinary tool review for the local app-server socket, which is
-outside the workspace sandbox. In `exec_command`, request
-`sandbox_permissions: require_escalated` for this socket call.
+### Find and call the immediate chat sender
+
+In a `functions.exec` call, inspect the callable tool catalog with this
+JavaScript. Deferred tools can be callable through `tools` while absent from
+the initially displayed tool list.
+
+```javascript
+const sender = ALL_TOOLS.find(tool =>
+  /^(?:mcp__)?codex_app__send_message_to_thread$/.test(tool.name)
+);
+if (sender) {
+  store("olimex.chat_sender", sender.name);
+  text(sender);
+} else {
+  text(ALL_TOOLS.filter(tool =>
+    /send.*message.*thread/i.test(tool.name + " " + tool.description)
+  ));
+}
+```
+
+The current callable name is
+`mcp__codex_app__send_message_to_thread`. Some tool catalogs use
+`codex_app__send_message_to_thread`. Inspect the returned description and
+argument schema. The verified arguments are `threadId` and `prompt`;
+`hostId` is optional. Omit model and thinking overrides. The tool sends
+immediately; it has no separate Steer argument.
+
+After discovery returns the sender, reserve by running this JavaScript in
+`functions.exec`:
+
+```javascript
+const name = load("olimex.chat_sender");
+if (!name) throw new Error("Discover the chat sender before sending");
+text(await tools[name]({
+  threadId: "01a1be59-b9fe-7ca1-a5b5-bef1230421f4",
+  prompt: "Reserve a spot for me on the bench in the FIFO."
+}));
+```
+
+For check-in, use the same tool and destination with the check-in message
+from the table. For an authorized result report, use the commissioning chat's
+ID and the result summary. Save the actual tool name, destination and delivery
+response in the operator log. Rediscover the sender if the tool catalog changes.
+
+If discovery finds no sender, use the session's tool-search facility when
+one is exposed, searching for `Codex send_message_to_thread`, and inspect
+the returned schema. Only after catalog discovery and any available tool
+search fail should the operator record the sender as absent and use the
+Pi command below. A review rejection is a separate outcome; follow its stated
+resolution and retain the rejection.
+
+### Pi sender when the immediate tool is absent
+
+Use the same message and your actual chat UUID. Use a unique delivery ID for
+each message. Run the Pi sender with ordinary tool review for the local
+app-server socket, which is outside the workspace sandbox. In `exec_command`,
+request `sandbox_permissions: require_escalated` for this socket call.
 
 ```bash
 /Agon/mystuff/agon-dev-env/.venv/bin/python /Agon/mystuff/agon-dev-env/scripts/pi_chat.py send \

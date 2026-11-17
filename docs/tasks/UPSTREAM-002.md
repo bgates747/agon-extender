@@ -195,10 +195,12 @@ reviewer classified project paths and evidence as unauthorized private-data
 disclosure, including after the operator retrieved standing authorization.
 
 The previous cold operator worked in the curated sparse checkout, which had
-no local reviewer configuration, and reported using `pi_chat.py` because
-the immediate MCP sender was unavailable there. The current operator used
-the full checkout and the MCP sender. Those are verified differences. The
-retained evidence does not prove the reviewer's complete internal reasoning.
+no local reviewer configuration, and reported using `pi_chat.py` after
+its tool search did not surface the immediate MCP sender. The current
+operator used the full checkout and the MCP sender. Those are verified
+differences. The previous operator's complete tool inventory was not retained,
+so actual absence of that tool is unproven. The retained evidence does not
+prove the reviewer's complete internal reasoning.
 
 Extender appended a scope for one destination, its commissioning chat, and
 one payload class comprising routine test status, byte counts, hashes, CLI
@@ -219,3 +221,24 @@ There was no additional hardware test. This verifies this destination and
 payload scope; the broader proposal was not applied.
 
 The temporary verification chat was deleted after its final records were saved.
+
+### Exact sender discovery instructions
+
+- UPSTREAM-002-11 [x] Document and check the exact immediate-tool discovery
+  and call in the canonical bench guide, including deferred tools, both
+  observed name prefixes, the argument schema, receipt retention, and the
+  condition for using the Pi sender. Refresh the curated operator checkout.
+
+Smith explicitly requested these instructions after reviewing the previous
+operator's discovery gap. The earlier wording that the MCP tool was unavailable
+was too strong. Its log establishes that the operator did not find it. Oryx
+Manager has been asked to inspect existing desktop source/logs for concrete
+tool-exposure conditions; runtime cause remains unverified.
+
+The guide now gives executable JavaScript for one bounded catalog lookup,
+handles the two observed callable names, and shows the exact reservation call
+using the discovered callable and the actual scheduler ID. The same call
+specifies how to check in and return an authorized result. Extender executed
+the discovery snippet verbatim and verified its returned argument schema
+against the successful cold delivery. Discovery failure, delivery uncertainty
+and approval rejection have distinct documented dispositions.
