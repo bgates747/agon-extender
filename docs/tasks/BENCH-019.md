@@ -6,7 +6,7 @@ Extender will develop the policy one decision at a time. Once Smith accepts
 the procedure, Extender will remove superseded instructions using the
 [BENCH-018 audit](BENCH-018/INVENTORY.md) as the cleanup list.
 
-1. **Draft the full procedure.** Use the [working draft](BENCH-019/PROCEDURE-DRAFT-R02.md)
+1. **Draft the full procedure.** Use the [working draft](BENCH-019/PROCEDURE-DRAFT-R03.md)
    to review a complete job. Cover what one human instruction authorizes,
    queue admission, sole custody, firmware choice and verification, fixture
    loading and invocation, data collection, firmware recovery or restoration
@@ -144,7 +144,7 @@ exchange and sends the scheduler only the operator's chat identity and action.
    job has no firmware operations and that staging has no fixture invocation.
    Custom jobs independently verify and restore only their changed components.
 3. **Cold acceptance and cutover.** Give a fresh operator the revised draft,
-   pinned kit and documented commands. Repeat the custom three-processor
+   [pinned kit](BENCH-019/REHEARSAL-R02.md) and documented commands. Repeat the custom three-processor
    fixture in one normal checkout. Record tool use and actual timings, all three
    diagnostic outcomes and a verified production handback. The normal path
    must need zero historical/source searches, local helper authoring or extra

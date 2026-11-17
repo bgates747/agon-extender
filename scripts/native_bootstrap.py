@@ -49,13 +49,19 @@ def wait_p4_initialization(observe,read_display,raw,*,clock=time.monotonic,recor
         else:since=None
     raise TimeoutError('Clean current P4 initialization missing; no Agon dispatch')
 
-def clean_bootstrap(b, folder):
+def clean_bootstrap(b, folder, *, from_programmer=False, reset_config=None):
+    """Restart a normal P4 or one left in its loader by a verified app write.
+
+    In the programmer case the caller checks idle services before opening
+    the programmer. The P4 HTTP endpoints are unavailable in the loader.
+    """
     from esptool.reset import HardReset
     import serial as pyserial
     from p4_boot_guard import check_startup
     p = folder / 'clean-bootstrap'; p.mkdir(exist_ok=False)
     b.own(); b.ports_free()
-    assert not b.get('/sd/status')['online'] and b.get('/sd/fast')['phase'] == 0
+    if not from_programmer:
+        assert not b.get('/sd/status')['online'] and b.get('/sd/fast')['phase'] == 0
     raw = bytearray()
     # P4 programming USB intentionally resets; passive joined-control readers
     # refuse RTS assertion and must never be used for this operation.
@@ -75,7 +81,7 @@ def clean_bootstrap(b, folder):
         assert raw.count(PAD) == 1
         save(p/'p4-initialized.json', dict(epoch=time.time(), build=BUILD.decode(), pad_once=True, display=display, read_only_timeout_samples=misses))
         argv = [str(ROOT/'.venv/bin/python'), str(ROOT/'scripts/reset_agon_usb.py'),
-            '--config', str(ROOT/'agents/bench-reset/usb-reset.local.json'), '--verify-url', b.url,
+            '--config', str(reset_config or ROOT/'agents/bench-reset/usb-reset.local.json'), '--verify-url', b.url,
             '--verify-timeout', '60']
         b.own(); save(p/'agon-reset-issued.json', dict(epoch=time.time(), once=True, argv=argv))
         with (p/'agon-reset.log').open('x') as log:
