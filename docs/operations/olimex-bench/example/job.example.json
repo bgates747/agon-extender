@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "namespace": "olimex-authoring",
+  "fixture": {
+    "agon": {"path": "path/to/OLIMTEST.bin", "bytes": 0, "sha256": "FIXTURE_SHA256"},
+    "sd_program": "/test/olimex-authoring/OLIMTEST.bin",
+    "sd_result": "/test/olimex-authoring/result.txt",
+    "address": "040000",
+    "seconds": 25,
+    "success": "OLIMTEST PASS",
+    "failure": "OLIMTEST FAIL",
+    "expected_agon": ["Result file example"]
+  },
+  "firmware": {},
+  "preserve": {
+    "/autoexec.txt": "COMMISSIONED_STARTUP_SHA256",
+    "/emos/sdserve.bin": "COMMISSIONED_LISTENER_SHA256"
+  }
+}

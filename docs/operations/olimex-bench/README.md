@@ -1,5 +1,7 @@
 # Olimex bench checkout through check-in
 
+For a new or adapted fixture, start with [Prepare an Olimex test job](AUTHORING.md).
+
 The scheduler
 manages the FIFO and wakes each operator when their slot opens. The operator
 owns all bench preparation, test execution, recovery, and check-in. The

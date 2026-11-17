@@ -5,6 +5,12 @@ completed the three-processor fixture and verified production check-in. The
 [current bench procedure](../operations/olimex-bench/README.md) is now the
 common entry point. The independent FIFO exercise remains deferred to real jobs.
 
+The permanent Pi5 sparse checkout also supports test authoring. It includes
+the [job authoring guide](../operations/olimex-bench/AUTHORING.md), the
+maintained appliance and execution procedures, and a buildable production-only
+example. The [sparse path list](../operations/olimex-bench/sparse-paths.txt)
+keeps the selected guides and tools tied to their repository sources.
+
 The audit started with Extender’s own successful bench
 work on Extender VDP (E/VDP) and Extender MOS (EMOS). Recover the exact working
 commands and their receipts from routine owner runs. Then trace how Extender
