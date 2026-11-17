@@ -28,6 +28,21 @@ estimated duration, and job authorization in the operator's chat.
 | 3. Open the slot | Scheduler | When the bench is free, mark the head of the FIFO active and send that chat “Your Olimex slot is open.” This gives the operator exclusive custody. |
 | 4. Check in | Operator | “I’m done with my testing. You may release my reservation now.” On receipt from the active operator’s chat, the scheduler closes the slot and wakes the head of the FIFO if there is one. |
 
+Use the app's immediate send-to-thread action. When that transport is
+unavailable on Pi5, use the existing Pi chat sender with the same message and
+your actual chat UUID. Use a unique delivery ID for each message.
+
+```bash
+/Agon/mystuff/agon-dev-env/.venv/bin/python /Agon/mystuff/agon-dev-env/scripts/pi_chat.py send \
+  --source-thread OPERATOR_CHAT_ID --thread 01a1be59-b9fe-7ca1-a5b5-bef1230421f4 \
+  --resume --delivery-id UNIQUE_DELIVERY_ID --message-file - <<'MESSAGE'
+Reserve a spot for me on the bench in the FIFO.
+MESSAGE
+```
+
+If delivery is uncertain, check its receipt before sending again. A queued
+acknowledgement is distinct from the scheduler's slot-open message.
+
 ### Smith-authorized scheduling exceptions
 
 When Smith directs an exception to the normal scheduling policy, the operator
