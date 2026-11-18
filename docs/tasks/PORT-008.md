@@ -4,7 +4,8 @@ Extender will close the gap between the successful parallel SD upload trial
 and routine Olimex staging. The qualification uses the current EMOS and EVDP
 baselines with the maintained `sdserve` listener, then ties the exact passing
 combination to the bench runner and production selection. Smith authorized
-the first tranche on 2026-11-17.
+the first tranche on 2026-11-17. The offline candidate and bench packet are
+ready for physical qualification.
 
 ## Current scope
 
@@ -29,27 +30,30 @@ filter. Keep the current EMOS ROM if compatibility and hardware results
 support it. A change to EMOS requires a demonstrated integration gap. VDPlet
 stays on its normal mainboard image throughout this qualification.
 
-- PORT-008-001 [ ] Trace the maintained listener's current source and
+- PORT-008-001 [x] Trace the maintained listener's current source and
   accepted build, the EMOS gateway ABI, and both EVDP compositions. Compare
   listener option and capability advertisement, link calls, error/EXIT behavior,
   and the trial's corrected DMA descriptor, completion sampling and VALID filter
   code. Record which deltas are required, where they belong, and whether the
-  installed EMOS ROM can be reused. Pin the starting sources and rollback files.
+  installed EMOS ROM can be reused. Starting sources and rollback files are
+  pinned. The existing EMOS ROM is selected unchanged for the candidate.
 
-- PORT-008-002 [ ] Prepare one identified candidate stack from the maintained
+- PORT-008-002 [x] Prepare one identified candidate stack from the maintained
   EMOS, EVDP and `sdserve` sources. Extender verifies the linked gateway/sender
   and listener compatibility, and runs focused checks for missing capability,
   zero-byte creation, complete activation, failed admission and session cleanup.
   Keep local artifact hashes for component identity. Pin the exact candidate
-  and restore bytes before commissioning a physical run.
+  and restore bytes before commissioning a physical run. Native builds and
+  offline checks pass with the pins in the candidate record.
 
-- PORT-008-003 [ ] Bind the candidate to a generic commissioned staging
+- PORT-008-003 [x] Bind the candidate to a generic commissioned staging
   route. For nonempty uploads, the Pi5 runner requires PARLIO before mutation
   and records the carrier used. The runner creates empty markers through the
   control path, stages multiple job files, and keeps staged and direct client
   sessions from overlapping. Routine uploads use no CRC, payload digest or
   verification GET. A missing capability or transfer error stops dispatch.
   Keep checksum-free UART result collection and explicit fixture invocation.
+  The schema-2 runner and staged-client refusal checks pass offline.
 
 - PORT-008-004 [ ] Qualify the matched combination on the Olimex under
   exclusive custody and the current bench procedure. Use fresh scratch paths
@@ -73,10 +77,10 @@ stays on its normal mainboard image throughout this qualification.
   Verify a fresh operator can follow the published staging instructions and
   find the exact supported profile. Record the acceptance and release here.
 
-The first tranche covers source comparison, candidate construction
-and offline runner checks. Its handoff supplies the exact candidate and restore
-artifacts plus the bounded bench packet. The full CADENCE02 workload and
-parallel downloads remain separate from this upload qualification.
+The first tranche is complete. The [candidate record](PORT-008/PRODUCTION-SD-UPLOAD-R01.md)
+supplies exact candidate and restore identities and the bounded bench packet.
+The full CADENCE02 workload and parallel downloads remain separate from this
+upload qualification.
 
 ### Current authorized tranche — parallel uploads, 2026-11-03
 

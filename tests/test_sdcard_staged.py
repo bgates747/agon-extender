@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('sdcard_staged', ROOT/'scripts/sdcard_staged.py')
@@ -78,6 +79,41 @@ class StagedClientTests(unittest.TestCase):
             self.assertEqual(len(saves), 3)  # submit, delivered, released; not per212B
             self.assertIsNone(client.state['job'])
             self.assertTrue(client.state['last']['delivered'])
+
+    def test_required_parallel_refuses_old_p4_before_any_submission(self):
+        with tempfile.TemporaryDirectory() as temp:
+            client, fake = self.fixture(temp)
+            source = Path(temp)/'source'
+            source.write_bytes(b'abc')
+            with self.assertRaisesRegex(staged.TransferError, 'no job submitted'):
+                client.begin('put', '/test/file', source=source, activate=True, require_parallel=True)
+            self.assertEqual(fake.calls, [('GET', '')])
+            self.assertFalse(client.path.exists())
+
+    def test_required_parallel_receipt_and_uncertain_proof(self):
+        for data, proof, carrier in ((b'', {}, 'empty-control'),
+                                     (b'abc', dict(parallel_outcome=3, parallel_clock_count=3,
+                                                   parallel_valid_count=2), 'parlio'),
+                                     (b'abc', {}, None)):
+            with self.subTest(data=data, proof=proof), tempfile.TemporaryDirectory() as temp:
+                client, fake = self.fixture(temp)
+                fake.result.update(parallel_required_supported=True, **proof)
+                source = Path(temp)/'source'
+                source.write_bytes(data)
+                with patch.object(client, 'request', wraps=client.request) as request:
+                    if carrier:
+                        receipt = client.begin('put', '/test/file', source=source, activate=True,
+                                               require_parallel=True)
+                        self.assertEqual(receipt['payload_carrier'], carrier)
+                    else:
+                        with self.assertRaisesRegex(staged.TransferError, 'proof is absent'):
+                            client.begin('put', '/test/file', source=source, activate=True,
+                                         require_parallel=True)
+                        self.assertNotIn(('DELETE', ''), fake.calls)
+                        self.assertTrue(client.state['job']['require_parallel'])
+                    post, = [call for call in request.call_args_list if call.args[0:1] == ('POST',)]
+                    self.assertEqual(post.kwargs['headers']['X-Extender-Require-Parallel'], '1')
+                    self.assertNotIn(('GET', '/data'), fake.calls)
 
     def test_download_empty_and_binary(self):
         for payload in (b'', bytes(range(256))*300):

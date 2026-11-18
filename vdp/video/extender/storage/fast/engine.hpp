@@ -14,7 +14,7 @@ constexpr std::uint32_t Quota = 32U * 1024U * 1024U;
 struct Plan {
   std::string path;
   std::uint32_t id = 0, size = 0, boot = 0;
-  bool upload = false, activate = false;
+  bool upload = false, activate = false, requireParallel = false;
 };
 enum Error : unsigned { Ok, Invalid, Transport, Protocol, Remote, Local, TooLarge };
 struct Progress {
@@ -39,7 +39,8 @@ struct Link {
 };
 inline bool valid(const Plan &p) {
   if (!p.id || !p.boot || p.size > Quota || p.path.empty() || p.path[0] != '/' ||
-      p.path.size() > (p.upload ? 112U : 120U) || (p.activate && !p.upload)) return false;
+      p.path.size() > (p.upload ? 112U : 120U) ||
+      ((p.activate || p.requireParallel) && !p.upload)) return false;
   if (p.path == "/") return false;
   size_t start = 1;
   for (size_t i = 1; i <= p.path.size(); ++i) {
@@ -100,7 +101,11 @@ public:
       return unsigned(at+1+plan.path.size());
     };
     if (plan.upload) {
-      const bool parallel=plan.size && (sd_u16(reply_.data()+26)&128) && link_.parallelUploads();
+      const bool available=(sd_u16(reply_.data()+26)&128) && link_.parallelUploads();
+      // The commissioned host can require this carrier. Refuse before BEGIN
+      // creates the Agon-side transaction if either peer lacks support.
+      if(plan.requireParallel && !available){fail(Protocol);return p_;}
+      const bool parallel=plan.size && available;
       if(parallel && !link_.prepareUpload(spool,plan.size,plan.id)){fail(Local);return p_;}
       sd_put32(args.data(), plan.id); sd_put32(args.data()+4, plan.size);
       // bytes8..11 reserved zero; no digest on either processor.

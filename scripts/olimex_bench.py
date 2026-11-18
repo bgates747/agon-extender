@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path, PurePosixPath
 import re
+import struct
 import subprocess
 import sys
 import time
@@ -21,6 +22,7 @@ from passive_serial import open_passive_serial
 from reset_agon import status, wait_boot
 from reset_agon_usb import identity
 from sdcard import Client, RemoteError
+from sdcard_staged import Client as StagedClient, QUOTA
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,6 +34,7 @@ INVENTORY = {
 }
 PRESERVED = ("/autoexec.txt", "/emos/sdserve.bin")
 LISTENER = "EMOS sdserve --fast /"
+PARALLEL_LISTENER = "EMOS sdserve --fast --parallel /"
 
 
 def pinned(specification):
@@ -61,8 +64,30 @@ def phases(kit):
             + [f"restore-{name}" for name in reversed(components)] + ["handback"])
 
 
+def fixture_inputs(job):
+    payloads = {job["sd_program"]: job["agon"]}
+    names = {job["sd_program"].lower(), job["sd_result"].lower()}
+    if len(names) != 2:
+        raise ValueError("Fixture program and result name the same FAT path")
+    for item in job.get("inputs", []):
+        path = sd_path(item["sd_path"], ("/test",))
+        if path.lower() in names:
+            raise ValueError(f"Duplicate fixture or result path: {path}")
+        names.add(path.lower())
+        payloads[path] = item["source"]
+    targets = {PurePosixPath(name) for name in names}
+    if len(job["sd_result"]) > 120 or any(part.endswith(".") for path in targets for part in path.parts):
+        raise ValueError("Fixture inputs or result contain an unsupported FAT path")
+    if any(targets.intersection(p.parents) for p in targets):
+        raise ValueError("A fixture file also names a required directory")
+    for path, spec in payloads.items():
+        if len(path) > 112 or not 0 <= spec["bytes"] <= QUOTA:
+            raise ValueError(f"Fixture exceeds the staged upload bounds: {path}")
+    return payloads
+
+
 def preflight(kit):
-    if kit["schema"] != 1 or set(kit["firmware"]) - set(COMPONENTS):
+    if kit["schema"] not in (1, 2) or set(kit["firmware"]) - set(COMPONENTS):
         raise ValueError("Unsupported bench job or component")
     job = kit["fixture"]
     sd_path(job["sd_program"], ("/test",))
@@ -81,7 +106,13 @@ def preflight(kit):
         raise ValueError("Expected startup and foreground listener identity pins")
     if any(not re.fullmatch(r"[a-f0-9]{64}", digest) for digest in kit["preserve"].values()):
         raise ValueError("Startup and listener pins must be SHA-256 digests")
-    pinned(job["agon"])
+    if kit["schema"] == 2:
+        for item in fixture_inputs(job).values():
+            pinned(item)
+    else:
+        if "inputs" in job:
+            raise ValueError("Multiple fixture inputs require the parallel job schema")
+        pinned(job["agon"])
     if "p4_probe" in job:
         pinned(job["p4_probe"])
     if not re.fullmatch(r"[a-z0-9-]{1,36}", kit["namespace"]):
@@ -164,16 +195,19 @@ class Bench:
                         "--url", self.url, "--state", str(self.out / f"keys-{label}.json"),
                         "type", command, "--enter"], check=True, timeout=42)
 
-    def listener(self, label, command, operation):
+    def start_listener(self, label, command):
         self.idle()
+        self.type_line(label, command)
+        deadline = time.monotonic() + 25
+        while not self.get("/sd/status")["online"]:
+            if time.monotonic() >= deadline:
+                raise TimeoutError(f"Foreground listener did not start during {label}")
+            time.sleep(0.2)
+
+    def listener(self, label, command, operation):
+        self.start_listener(label, command)
         client = Client(self.url, self.out / f"sd-{label}.json", timeout=12)
         try:
-            self.type_line(label, command)
-            deadline = time.monotonic() + 25
-            while not client.status()["online"]:
-                if time.monotonic() >= deadline:
-                    raise TimeoutError(f"Foreground listener did not start during {label}")
-                time.sleep(0.2)
             client.connect(require_fast=True)
             for remote, expected in self.kit["preserve"].items():
                 data = client.download(remote)
@@ -191,7 +225,9 @@ class Bench:
 
     def stage(self):
         job = self.kit["fixture"]
-        payloads = {job["sd_program"]: pinned(job["agon"])}
+        sources = (fixture_inputs(job) if self.kit["schema"] == 2 else
+                   {job["sd_program"]: job["agon"]})
+        payloads = {destination: pinned(spec) for destination, spec in sources.items()}
         expected_absent = []
         if "emos" in self.kit["firmware"]:
             for selection in ("candidate", "restore"):
@@ -209,6 +245,10 @@ class Bench:
                 if error.status == 6 and error.detail in (b"\x04", b"\x05"):
                     return None
                 raise
+
+        if self.kit["schema"] == 2:
+            self.stage_parallel(payloads, [job["sd_result"], *expected_absent], existing)
+            return
 
         def transfer(client):
             directories = {str(PurePosixPath(remote).parent) for remote in payloads}
@@ -240,6 +280,53 @@ class Bench:
                 print(f"Verified {remote} {sha256(payload).hexdigest()}", flush=True)
 
         self.listener("stage", LISTENER, transfer)
+
+    def stage_parallel(self, payloads, result_paths, existing):
+        if self.get("/sd/fast").get("parallel_required_supported") is not True:
+            raise RuntimeError("P4 does not support required parallel uploads")
+        self.start_listener("stage", PARALLEL_LISTENER)
+        targets = [*payloads, *result_paths]
+        client = Client(self.url, self.out / "sd-stage-metadata.json", timeout=12)
+        try:
+            client.connect(require_fast=True)
+            hello = client.rpc(1)
+            if len(hello) != 8 or not struct.unpack_from("<H", hello, 6)[0] & 0x80:
+                raise RuntimeError("The foreground listener lacks parallel upload capability")
+            for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
+                client.make_directory(directory, parents=True)
+            for path in targets:
+                if existing(client, path) is not None:
+                    raise RuntimeError(f"Parallel staging requires a fresh target: {path}")
+        finally:
+            client.lock.close()
+
+        for number, (path, payload) in enumerate(payloads.items()):
+            prefix = self.out / f"stage-file-{number:02d}"
+            source = prefix.with_suffix(".bin")
+            with source.open("xb") as stream:
+                stream.write(payload)
+            staged = StagedClient(self.url, prefix.with_suffix(".json"))
+            try:
+                result = staged.begin("put", path, source=source, activate=True,
+                                      require_parallel=True)
+                bench_process.record(prefix.with_suffix(".receipt.json"),
+                                     {"target": path, "result": result})
+            finally:
+                staged.close()
+
+        self.exit_staged_listener("stage")
+
+    def exit_staged_listener(self, label):
+        # A staged job establishes its own listener session. Never issue EXIT
+        # from the direct client used before staging.
+        client = Client(self.url, self.out / f"sd-{label}-exit.json", timeout=12)
+        try:
+            client.connect(require_fast=True)
+            client.rpc(11)
+            self.idle()
+            self.keyboard()
+        finally:
+            client.lock.close()
 
     def update_inventory(self, inventory):
         target = Path(self.config["inventory"])

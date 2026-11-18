@@ -72,7 +72,7 @@ int main(int argc,char **argv){
   assert(argc==2);std::filesystem::path root=argv[1];unsigned cases=0;
   for(unsigned size:{0U,1U,63U,64U,65U,512U,65535U,65536U,65537U,1100000U}){
     setup(root);auto bytes=content(size);auto f=spool(bytes);Peer peer;Engine e(peer,55);
-    auto result=e.run(Plan{"/test/file",73,size,101,true,true},f);fclose(f);
+    auto result=e.run(Plan{"/test/file",73,size,101,true,true,true},f);fclose(f);
     assert(!result.error&&result.bytes==size&&bulkCalls==(size?1U:0U));
     assert(result.records==(size?5U:4U));
     for(auto op:peer.operations)assert(op!=SD_WRITE);
@@ -86,6 +86,15 @@ int main(int argc,char **argv){
     assert(!r.error&&!bulkCalls&&r.records==7); // UART chosen BEFORE admission
     for(auto op:peer.operations)assert(op!=SD_PARALLEL_WRITE);++cases;
   }
+  for(unsigned variant=0;variant<2;++variant){
+    setup(root);Peer peer;if(variant)peer.selected=false;else peer.capability=false;
+    auto f=spool(content(513));Engine e(peer,58);
+    auto r=e.run(Plan{"/test/file",73,513,101,true,true,true},f);fclose(f);
+    assert(r.error==Protocol&&!bulkCalls);
+    assert(peer.operations==std::vector<unsigned>{SD_HELLO});
+    assert(std::filesystem::is_empty(root/"test"));
+    assert(test_crc_calls()==0);++cases;
+  }
   for(unsigned failure=0;failure<5;++failure){
     setup(root);Peer peer;auto f=spool(content(65537));
     if(failure==0)peer.allocationFailure=true;
@@ -93,7 +102,7 @@ int main(int argc,char **argv){
     if(failure==2)peer.physicalFailure=true;
     if(failure==3)fs_fault(3,2); // payload short write after metadata succeeds
     if(failure==4)fs_fault(8,2); // payload device error after metadata succeeds
-    Engine e(peer,57);auto r=e.run(Plan{"/test/file",73,65537,101,true,true},f);fclose(f);
+    Engine e(peer,57);auto r=e.run(Plan{"/test/file",73,65537,101,true,true,true},f);fclose(f);
     assert(r.error&&!std::filesystem::exists(root/"test/file"));
     for(auto op:peer.operations)assert(op!=SD_ACTIVATE&&op!=SD_WRITE);
     assert(test_crc_calls()==0);++cases;

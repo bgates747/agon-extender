@@ -78,11 +78,14 @@ class Client:
         return {'X-Extender-Job': f"{job['id']:08x}",
                 'X-Extender-Boot': f"{job['boot']:08x}"}
 
-    def begin(self, operation, remote, *, source=None, destination=None, activate=False):
+    def begin(self, operation, remote, *, source=None, destination=None, activate=False,
+              require_parallel=False):
         if self.state['job']:
             raise TransferError('Existing job retained; use resume/status before another transfer')
         if operation not in ('put', 'get') or (operation == 'put' and not activate) or (operation == 'get' and activate):
             raise ValueError('Staged put requires --activate; use sdcard.py for stage-only transactions')
+        if require_parallel and operation != 'put':
+            raise ValueError('A parallel requirement applies only to uploads')
         try:
             remote.encode('ascii')
         except UnicodeEncodeError:
@@ -99,17 +102,22 @@ class Client:
         if destination and Path(destination).exists():
             raise FileExistsError(destination)
         before = self.status()
+        if require_parallel and before.get('parallel_required_supported') is not True:
+            raise TransferError('P4 does not support required parallel uploads; no job submitted')
         if before['phase'] != 0:
             raise TransferError('P4 has a retained job; inspect it before submitting another')
         self.state['job'] = {'id': secrets.randbelow(0xffffffff)+1, 'boot': before['boot'],
                              'operation': operation, 'remote': remote, 'activate': activate,
                              'size': len(payload), 'destination': str(Path(destination).absolute()) if destination else None,
-                             'started': time.time(), 'result': None, 'delivered': False}
+                             'started': time.time(), 'result': None, 'delivered': False,
+                             'require_parallel': require_parallel}
         self.save()  # durable BEFORE any possibly mutating HTTP submission
         headers = self.headers() | {'X-Extender-Operation': operation, 'X-Extender-Path': remote,
                                    'Content-Type': 'application/octet-stream'}
         if activate:
             headers['X-Extender-Activate'] = '1'
+        if require_parallel:
+            headers['X-Extender-Require-Parallel'] = '1'
         started = time.monotonic()
         with self.request('POST', data=payload, headers=headers) as response:
             if response.status != 202:
@@ -137,6 +145,12 @@ class Client:
                     raise TransferError('Invalid terminal byte count; job retained')
                 if job['operation'] == 'put' and current['size'] != job['size']:
                     raise TransferError('Upload length mismatch; job retained')
+                if job.get('require_parallel'):
+                    if job['size'] and (current.get('parallel_outcome') != 3
+                            or current.get('parallel_clock_count') != job['size']
+                            or current.get('parallel_valid_count') != 2):
+                        raise TransferError('Parallel completion proof is absent; job retained')
+                    current['payload_carrier'] = 'parlio' if job['size'] else 'empty-control'
                 job['result'] = current
                 break
             if current['phase'] not in (1, 2, 3):
@@ -237,6 +251,8 @@ def main():
     put.add_argument('remote')
     put.add_argument('--activate', action='store_true', required=True,
                      help='Complete the file replacement; stage-only transactions use sdcard.py')
+    put.add_argument('--require-parallel', action='store_true',
+                     help='Refuse if the parallel upload carrier is unavailable')
     get = commands.add_parser('get')
     get.add_argument('remote')
     get.add_argument('destination', type=Path)
@@ -246,7 +262,8 @@ def main():
     client = Client(args.url, args.state, args.timeout)
     try:
         if args.command == 'put':
-            result = client.begin('put', args.remote, source=args.source, activate=args.activate)
+            result = client.begin('put', args.remote, source=args.source, activate=args.activate,
+                                  require_parallel=args.require_parallel)
         elif args.command == 'get':
             result = client.begin('get', args.remote, destination=args.destination)
         elif args.command == 'status':

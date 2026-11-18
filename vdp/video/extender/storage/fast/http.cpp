@@ -26,6 +26,11 @@
 #include <unistd.h>
 
 namespace agon::extender::storage::fast {
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+constexpr bool supportsRequiredParallel = true;
+#else
+constexpr bool supportsRequiredParallel = false;
+#endif
 namespace {
 enum Phase : unsigned { Idle, Receiving, Queued, Running, Complete, Failed };
 struct Snapshot {
@@ -98,12 +103,12 @@ esp_err_t status(httpd_req_t *r) {
   }
 #endif
   int n=std::snprintf(body,sizeof(body),
-    "{\"protocol\":1,\"boot\":%lu,\"id\":%lu,\"phase\":%u,\"bytes\":%lu,\"size\":%lu,"
+    "{\"protocol\":1,\"parallel_required_supported\":%s,\"boot\":%lu,\"id\":%lu,\"phase\":%u,\"bytes\":%lu,\"size\":%lu,"
     "\"records\":%lu,\"error\":%u,\"remote_status\":%u,\"filesystem\":%u,"
     "\"stage_us\":%llu,\"mainboard_us\":%llu,\"parallel_prepare_us\":%llu,"
     "\"parallel_active_ms\":%lu,\"parallel_handover_ms\":%lu,\"parallel_phase\":%u,\"parallel_outcome\":%u,"
     "\"parallel_clock_count\":%ld,\"parallel_valid_count\":%ld}",
-    (unsigned long)serverBoot,(unsigned long)s.id,s.phase,(unsigned long)s.progress.bytes,
+    supportsRequiredParallel?"true":"false",(unsigned long)serverBoot,(unsigned long)s.id,s.phase,(unsigned long)s.progress.bytes,
     (unsigned long)s.progress.size,(unsigned long)s.progress.records,s.progress.error,
     s.progress.remoteStatus,s.progress.filesystem,(unsigned long long)s.stageUs,
     (unsigned long long)s.mainboardUs,(unsigned long long)s.progress.parallelPrepareUs,
@@ -212,7 +217,7 @@ void worker(void *) {
 esp_err_t admit(httpd_req_t *r) {
   // Admission is explicit host intent, never a browser-origin side effect.
   if(httpd_req_get_hdr_value_len(r,"Origin"))return reply(r,"400 Bad Request","Origin not accepted");
-  char id[9]{},boot[9]{},operation[4]{},path[121]{},activate[2]{};
+  char id[9]{},boot[9]{},operation[4]{},path[121]{},activate[2]{},requireParallel[2]{};
   std::uint32_t job=0,instance=0;
   Plan candidate;
   if(!header(r,"X-Extender-Job",id,sizeof(id))||!number(id,job)||
@@ -224,6 +229,12 @@ esp_err_t admit(httpd_req_t *r) {
   if(header(r,"X-Extender-Activate",activate,sizeof(activate))){
     if(std::strcmp(activate,"1"))return reply(r,"400 Bad Request","Invalid activation");
     candidate.activate=true;
+  }
+  if(httpd_req_get_hdr_value_len(r,"X-Extender-Require-Parallel")){
+    if(!candidate.upload || !header(r,"X-Extender-Require-Parallel",requireParallel,sizeof(requireParallel)) ||
+       std::strcmp(requireParallel,"1"))return reply(r,"400 Bad Request","Invalid parallel requirement");
+    if(!supportsRequiredParallel)return reply(r,"503 Service Unavailable","Parallel uploads unavailable");
+    candidate.requireParallel=true;
   }
   if(r->content_len>Quota)return reply(r,"400 Bad Request","File exceeds32MiB staging limit");
   candidate.size=r->content_len;candidate.boot=1; // actual foreground boot below

@@ -11,7 +11,7 @@ from unittest.mock import MagicMock, patch
 import zlib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from olimex_bench import Bench, preflight
+from olimex_bench import Bench, fixture_inputs, preflight
 from olimex_cli import CliError, command_result, find_witness
 from olimex_flash import check_app0, check_extent, configure_flash_size, session_operations
 import olimex_p4_app
@@ -177,6 +177,80 @@ class TestOta(unittest.TestCase):
 
 
 class TestBench(unittest.TestCase):
+    def test_parallel_staging_rejects_case_alias_of_input(self):
+        job = {"sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
+               "agon": {}, "inputs": [{"sd_path": "/test/DEMO/PROGRAM.BIN", "source": {}}]}
+        with self.assertRaisesRegex(ValueError, "Duplicate fixture or result path"):
+            fixture_inputs(job)
+
+    def test_parallel_stage_serializes_sessions_without_readback(self):
+        from sdcard import RemoteError
+
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            bench = Bench.__new__(Bench)
+            bench.out = folder
+            bench.url = "http://example.invalid"
+            bench.get = MagicMock(return_value={"parallel_required_supported": True})
+            bench.start_listener = MagicMock()
+            bench.idle = MagicMock()
+            bench.keyboard = MagicMock()
+            direct = MagicMock()
+            direct.rpc.return_value = struct.pack("<IHH", 1, 212, 0x80)
+            direct.stat_entry.side_effect = RemoteError("absent", status=6, detail=b"\x04")
+            exit_client = MagicMock()
+            uploads = []
+
+            def begin(operation, target, *, source, activate, require_parallel):
+                direct.lock.close.assert_called_once()
+                exit_client.connect.assert_not_called()
+                self.assertEqual(operation, "put")
+                self.assertTrue(activate and require_parallel)
+                data = source.read_bytes()
+                uploads.append((target, data))
+                return {"payload_carrier": "parlio" if data else "empty-control"}
+
+            bench.kit = {"schema": 2, "firmware": {}, "fixture": {
+                "sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
+                "inputs": [],
+            }}
+            for name, field, data in (("program.bin", "agon", b"program"),
+                                      ("GROUND.ON", "inputs", b"")):
+                local = folder / name
+                local.write_bytes(data)
+                spec = {"path": str(local), "bytes": len(data), "sha256": sha256(data).hexdigest()}
+                if field == "agon":
+                    bench.kit["fixture"][field] = spec
+                else:
+                    bench.kit["fixture"][field].append({"sd_path": f"/test/demo/{name}", "source": spec})
+
+            with patch("olimex_bench.Client", side_effect=[direct, exit_client]), \
+                    patch("olimex_bench.StagedClient", return_value=MagicMock(begin=begin)):
+                bench.stage()
+            self.assertEqual(uploads, [("/test/demo/program.bin", b"program"),
+                                       ("/test/demo/GROUND.ON", b"")])
+            direct.download.assert_not_called()
+            exit_client.download.assert_not_called()
+            exit_client.rpc.assert_called_once_with(11)
+            self.assertEqual(len(list(folder.glob("*.receipt.json"))), 2)
+
+    def test_parallel_stage_refuses_missing_listener_capability(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bench = Bench.__new__(Bench)
+            bench.out = Path(tmp)
+            bench.url = "http://example.invalid"
+            bench.get = MagicMock(return_value={"parallel_required_supported": True})
+            bench.start_listener = MagicMock()
+            direct = MagicMock()
+            direct.rpc.return_value = struct.pack("<IHH", 1, 212, 0x50)
+            with patch("olimex_bench.Client", return_value=direct), \
+                    patch("olimex_bench.StagedClient") as staged:
+                with self.assertRaisesRegex(RuntimeError, "lacks parallel upload capability"):
+                    bench.stage_parallel({"/test/demo/a": b"a"}, [], MagicMock())
+                direct.make_directory.assert_not_called()
+                staged.assert_not_called()
+            direct.lock.close.assert_called_once()
+
     def test_plain_production_plan_and_staging(self):
         with tempfile.TemporaryDirectory() as tmp:
             folder = Path(tmp)
