@@ -79,8 +79,63 @@ stays on its normal mainboard image throughout this qualification.
 
 The first tranche is complete. The [candidate record](PORT-008/PRODUCTION-SD-UPLOAD-R01.md)
 supplies exact candidate and restore identities and the bounded bench packet.
-The full CADENCE02 workload and parallel downloads remain separate from this
-upload qualification.
+The full CADENCE02 workload remains separate from this upload qualification.
+The download work below extends the file service using the same owner and task.
+
+### Parallel SD downloads and two-way qualification — 2026-11-17
+
+The [bench turnaround plan](BENCH-013.md) already scoped file payloads in
+both directions. Its third priority assigns parallel downloads to PORT-008
+and the file-service owners. Extender owns the integration across EMOS,
+EVDP, the canonical `sdserve` listener and the Pi5 job runner. This amendment
+gives the download work its own execution checklist under the existing task.
+The upload candidate already exists and retains its own qualification result.
+Two-way file support means that the same matched build can stage inputs and
+collect generated results over PARLIO on successive jobs.
+
+The current P4 staged GET issues UART `SD_READ` requests for up to 216 bytes
+at a time and writes each reply to the P4 spool. The existing forward transport
+has clocked bytes from the eZ80 into P4 PARLIO RX in hardware, including the
+[8192-byte command-stream proof](PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md).
+Its native receive leaf admits at most 4096 bytes at a time. That evidence
+supplies a sender and receiver to reuse. File bytes need a dedicated path into
+the staged download spool with explicit buffer ownership and completion.
+
+- PORT-008-006 [ ] Pin the existing forward code and the upload candidate.
+  Trace the canonical listener's sequential FatFS reader, the EMOS sender
+  and shared-pin handover, EVDP's native PARLIO receiver, and the P4 staged
+  spool. Select the smallest supported route for a file larger than one RX
+  block. Record buffer sizes, ROM/RAM cost, transfer and cleanup deadlines,
+  and who owns each buffer until completion. Assess whether the proved
+  block limit requires multiple admissions before promising whole-file handling.
+
+- PORT-008-007 [ ] Implement a bounded parallel GET through the same canonical
+  listener and staged job interface as PUT. EMOS owns the link and file-side
+  send. EVDP feeds the received payload into the named P4 snapshot. The Pi5
+  client requires parallel GET capability and the runner records the carrier
+  for actual result retrieval. Missing capability or uncertain completion is
+  a visible failure without UART fallback or automatic replay. Empty files
+  use the control path. Keep both directions free of payload CRCs, substitute
+  digests and routine verification reads. Preserve the existing result checks.
+
+- PORT-008-008 [ ] Test the combined candidate offline. Cover both directions,
+  empty files, the selected RX block boundary and its tail, missing capability,
+  EOF and short transfer, full spool/media, failed handover and cleanup. A
+  failed GET must leave no completed snapshot for HTTP delivery. Build and pin
+  the combined EMOS, EVDP, listener and host artifacts and the production
+  restores. Freeze a finite physical qualification packet from those artifacts.
+
+- PORT-008-009 [ ] Qualify PUT and GET on the same installed combination through
+  the canonical listener. Exercise an empty file, the RX boundary and one
+  representative large scratch file in both directions, then stage the worked
+  fixture and collect its generated report over PARLIO. Use scratch byte
+  comparisons as separate qualification evidence. Record carrier, completion,
+  application output, CLI recovery and clean handback. On tested acceptance,
+  publish the exact pair, listener, runner and curated instructions together.
+
+Smith authorized the first download tranche. It covers source integration,
+offline tests and a pinned qualification packet. Physical checkout follows the
+qualification packet and existing bench procedure.
 
 ### Current authorized tranche — parallel uploads, 2026-11-03
 
