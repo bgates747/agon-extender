@@ -167,6 +167,31 @@ Smith authorized the first download tranche. It covers source integration,
 offline tests and a pinned qualification packet. Physical checkout follows the
 qualification packet and existing bench procedure.
 
+### Paired fixture operation on production PARLIO
+
+Smith directs Extender to finish the commissioned runner for Arcade's
+CADENCE02 pair and notify Arcade when the packet is ready. The Pi5 runner
+stages the two arms together, installs the single selected mainboard timing
+image and invokes each arm once in order in its own working directory.
+It collects each arm's two generated reports and its own passive mainboard
+UART capture. Arcade owns the physical run, workload analysis and handback.
+
+- PORT-008-010 [ ] Extend the normal runner and curated authoring guide for
+  named ordered fixtures, verified working directories, separately bounded
+  application and deferred UART completion, and multiple dynamic results.
+  Preserve the single-fixture interface and exact phase receipts. Exercise
+  a returned prompt followed by a fragmented diagnostic end line, selector
+  discipline between transactions, and failure without advancing the pair.
+
+- PORT-008-011 [ ] Bind Arcade's six pinned files, including the empty
+  marker, to a fresh two-arm namespace. Use the v0.3.0 EMOS, P4 and listener
+  with the owner-pinned mainboard-only exception and restore. The app runs
+  at most 120 seconds per arm, with up to 30 further seconds after return
+  for the complete `PNT end retained=128` line. Retrieve both reports once
+  over PARLIO. Run the host regressions and exact manifest preflight,
+  refresh the curated checkout, and hand off commands and evidence paths.
+  Extender does source and host verification only for this packet.
+
 ### Current authorized tranche — parallel uploads, 2026-11-03
 
 The Author selects whole-file P4 PSRAM with small foreground eZ80 SD-write
