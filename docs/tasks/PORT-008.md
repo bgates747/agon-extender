@@ -6,7 +6,8 @@ baselines with the maintained `sdserve` listener, then ties the exact passing
 combination to the bench runner and production selection. Smith authorized
 the first tranche on 2026-11-17. The corrected two-way candidate passed
 physical qualification, including a 1.1 MB file in each direction. Production
-handback is verified. Production promotion awaits tested acceptance.
+handback is verified. Smith accepted the two-way result and selected
+`v0.3.0` for production promotion on the commissioned Olimex bench.
 
 ## Current scope
 
@@ -77,6 +78,13 @@ stays on its normal mainboard image throughout this qualification.
   selector, the commissioned runner and curated operator checkout together.
   Verify a fresh operator can follow the published staging instructions and
   find the exact supported profile. Record the acceptance and release here.
+  Use the corrected r03 exact bytes, keep the prior restore set, and install
+  and independently verify the P4 app0 extent, EMOS ROM and canonical SD
+  listener in one normal operator slot. Keep the production mainboard VDPlet.
+  Make checksum-free parallel PUT and GET the runner default. Verify the
+  default from the curated checkout, including a production transfer and
+  clean handback. Publish the immutable bundle selection, curated procedure
+  and annotated `v0.3.0` tag before releasing the slot.
 
 The first tranche is complete. The [candidate record](PORT-008/PRODUCTION-SD-UPLOAD-R01.md)
 supplies exact candidate and restore identities and the bounded bench packet.
