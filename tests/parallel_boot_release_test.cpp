@@ -8,9 +8,9 @@
 #include <iostream>
 #include <functional>
 extern "C" {
+#include "eZ80.h"
 #include "emos_parallel_handover.h"
 #include "emos_keyboard.h"
-#include "eZ80.h"
 volatile BYTE hostPcDr,hostPcDdr,hostPcAlt1,hostPcAlt2;
 volatile BYTE hostPdDr,hostPdDdr,hostPdAlt1,hostPdAlt2;
 volatile BYTE hostUart1Ier,hostUart1Mctl;

@@ -161,3 +161,16 @@ profile. Keep the same identified EMOS and listener. After verified
 production handback, use a fresh namespace to repeat the full two-way test
 with the corrected P4. The new packet retains the scratch sizes, exact
 comparisons, worked fixture result and bounded phases.
+
+One Agon reset restored the CLI after the failed large GET. The worked
+fixture ran once, reported `OLIMTEST PASS`, and returned the exact 20-byte
+report through one PARLIO receive block. Production EMOS, the P4 app0
+extent and the canonical listener were verified restored. The final
+handback confirmed Legacy CLI, idle transfers and free serial handles.
+The scheduler accepted check-in. The first physical campaign establishes
+small-file two-way behavior and the 1.1 MB upload. Sustained GET is pending
+qualification on the corrected P4 candidate.
+
+The repaired source passed 758 startup and recovery-adapter cases and 20
+paired SD coordinator cases. The corrective P4 source is
+`be1d94329e55cc5e4243adbcdad73e3c530f9053`.

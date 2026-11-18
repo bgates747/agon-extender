@@ -25,7 +25,9 @@ class BootTests(unittest.TestCase):
                   'esp_rom_gpio.h','soc/uart_periph.h'):
     p=d/header;p.parent.mkdir(parents=True,exist_ok=True)
     p.write_text('#include "p4_uart_sdk_fake.hpp"\n')
-   inc=[f'-I{d}',f'-I{ROOT/"tests"}',f'-I{EMOS/"tests/host"}',
+   (d/'ez80f92.h').write_text('#include "eZ80.h"\n')
+   flags.extend(('-DMOS_DEFINES_H=1', '-DMOS_AGONDEV_LOWERCASE_EZ80_H=1'))
+   inc=[f'-I{d}',f'-I{ROOT/"tests"}',f'-I{ROOT.parent/"agon-emos/tests/host"}',
         f'-I{EMOS/"src"}',f'-I{ROOT/"vdp/video"}']
    objects=[]
    for source in ['emos_parallel_boot','emos_parallel_handover','emos_parallel_startup']:

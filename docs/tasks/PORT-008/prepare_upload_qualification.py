@@ -6,6 +6,7 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import random
+import re
 import tarfile
 
 from qualify_parallel_upload import ROOT, validate
@@ -37,6 +38,7 @@ def main():
     parser.add_argument("--worked-artifact", type=Path, required=True)
     parser.add_argument("--p4-table", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--namespace", help="Fresh bench SD namespace for a new qualification")
     args = parser.parse_args()
     two_way = args.emos_build is not None
 
@@ -86,7 +88,9 @@ def main():
     fixture = json.loads(args.worked_job.read_text())
     if fixture["preserve"]["/emos/sdserve.bin"] != rollback["sha256"]:
         raise ValueError("Worked job and accepted listener baseline disagree")
-    namespace = "port008-sdparallel-r02" if two_way else "port008-sdupload-r01"
+    namespace = args.namespace or ("port008-sdparallel-r02" if two_way else "port008-sdupload-r01")
+    if not re.fullmatch(r"[a-z0-9-]{1,36}", namespace):
+        raise ValueError("Invalid qualification SD namespace")
     fixture.update(schema=3 if two_way else 2, namespace=namespace, firmware=firmware)
     job = fixture["fixture"]
     # Use the worked example rebuilt for a fresh result path. The original
