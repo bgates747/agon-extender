@@ -267,9 +267,10 @@ void runConsole(VDUStreamProcessor *processor) {
       console_board::kDataPins,console_board::kClock,console_board::kValid,
       console_board::kReady,console_board::kUartTx,console_board::kUartRx,
       console_board::kUartRts,console_board::kUartCts,xPortGetCoreID(),
-      [](std::uint32_t now,std::uint32_t job,std::uint32_t length) {
+      [](std::uint32_t now,const agon::extender::transport::P4UploadMailbox &m) {
         using namespace agon::extender::storage;
-        portENTER_CRITICAL(&sd_mutex);bool okay=sd_service.admitBulk(now,job,length);
+        portENTER_CRITICAL(&sd_mutex);
+        bool okay=sd_service.admitBulk(now,m.job,m.length,m.receiving,m.offset);
         portEXIT_CRITICAL(&sd_mutex);return okay;
       });
 #endif

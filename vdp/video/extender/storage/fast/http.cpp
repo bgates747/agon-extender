@@ -103,31 +103,47 @@ esp_err_t status(httpd_req_t *r) {
   }
 #endif
   int n=std::snprintf(body,sizeof(body),
-    "{\"protocol\":1,\"parallel_required_supported\":%s,\"boot\":%lu,\"id\":%lu,\"phase\":%u,\"bytes\":%lu,\"size\":%lu,"
+    "{\"protocol\":1,\"parallel_required_supported\":%s,\"parallel_get_required_supported\":%s,"
+    "\"boot\":%lu,\"id\":%lu,\"phase\":%u,\"bytes\":%lu,\"size\":%lu,"
     "\"records\":%lu,\"error\":%u,\"remote_status\":%u,\"filesystem\":%u,"
     "\"stage_us\":%llu,\"mainboard_us\":%llu,\"parallel_prepare_us\":%llu,"
     "\"parallel_active_ms\":%lu,\"parallel_handover_ms\":%lu,\"parallel_phase\":%u,\"parallel_outcome\":%u,"
-    "\"parallel_clock_count\":%ld,\"parallel_valid_count\":%ld}",
-    supportsRequiredParallel?"true":"false",(unsigned long)serverBoot,(unsigned long)s.id,s.phase,(unsigned long)s.progress.bytes,
+    "\"parallel_clock_count\":%ld,\"parallel_valid_count\":%ld,"
+    "\"parallel_read_bytes\":%lu,\"parallel_read_blocks\":%lu}",
+    supportsRequiredParallel?"true":"false",supportsRequiredParallel?"true":"false",
+    (unsigned long)serverBoot,(unsigned long)s.id,s.phase,(unsigned long)s.progress.bytes,
     (unsigned long)s.progress.size,(unsigned long)s.progress.records,s.progress.error,
     s.progress.remoteStatus,s.progress.filesystem,(unsigned long long)s.stageUs,
     (unsigned long long)s.mainboardUs,(unsigned long long)s.progress.parallelPrepareUs,
     (unsigned long)s.progress.parallelActiveMs,(unsigned long)s.progress.parallelHandoverMs,nativePhase,nativeOutcome,
-    (long)s.progress.parallelClockCount,(long)s.progress.parallelValidCount);
+    (long)s.progress.parallelClockCount,(long)s.progress.parallelValidCount,
+    (unsigned long)s.progress.parallelReadBytes,(unsigned long)s.progress.parallelReadBlocks);
+  if(n<0 || unsigned(n)>=sizeof(body))return reply(r,"500 Internal Server Error","Status overflow");
   httpd_resp_set_type(r,"application/json");httpd_resp_set_hdr(r,"Cache-Control","no-store");
   return httpd_resp_send(r,body,n);
 }
 class QueueLink final : public Link {
 #if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
   std::uint64_t prepareUs_{};
+  bool prepared() {
+    using M=transport::P4UploadMailbox;
+    const auto began=esp_timer_get_time();
+    while(esp_timer_get_time()-began<5000000) {
+      const auto phase=transport::uploadMailbox.status();
+      if(phase==M::prepared)return true;
+      if(phase==M::refused || phase==M::cleanupFault)return false;
+      vTaskDelay(1);
+    }
+    return false;
+  }
 #endif
 public:
   bool exchange(const std::uint8_t *p,unsigned n,std::uint8_t *out,unsigned &size) override {
     const auto start=esp_timer_get_time();
 #if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
-    const bool bulk=n==SD_HEADER+8 && p[12]==SD_PARALLEL_WRITE;
-    if(bulk && !transport::uploadMailbox.offer())return false;
-    const std::int64_t deadline=bulk?610000000LL:30000000LL;
+    const bool upload=p[12]==SD_PARALLEL_WRITE;
+    if((upload || p[12]==SD_PARALLEL_READ) && !transport::uploadMailbox.offer())return false;
+    const std::int64_t deadline=upload?610000000LL:30000000LL;
 #else
     const std::int64_t deadline=30000000LL;
 #endif
@@ -145,15 +161,21 @@ public:
   bool prepareUpload(FILE *file,std::uint32_t length,std::uint32_t id) override {
     auto &m=transport::uploadMailbox;
     const auto started=esp_timer_get_time();
-    if(!m.load(file,length,id))return false;
-    const auto began=esp_timer_get_time();
-    while(esp_timer_get_time()-began<5000000) {
-      auto phase=m.status();
-      if(phase==transport::P4UploadMailbox::prepared){prepareUs_=esp_timer_get_time()-started;return true;}
-      if(phase==transport::P4UploadMailbox::refused || phase==transport::P4UploadMailbox::cleanupFault)return false;
-      vTaskDelay(1);
-    }
-    return false;
+    if(!m.load(file,length,id) || !prepared())return false;
+    prepareUs_=esp_timer_get_time()-started;
+    return true;
+  }
+  bool parallelDownloads() const override { return true; }
+  bool prepareDownload(std::uint32_t id,std::uint32_t offset,unsigned size) override {
+    return transport::uploadMailbox.loadDownload(id,offset,size) && prepared();
+  }
+  Error storeDownload(FILE *file,unsigned size) override {
+    auto &m=transport::uploadMailbox;
+    if(m.status()!=transport::P4UploadMailbox::returned || m.length!=size ||
+        m.outcome.load()!=unsigned(transport::P4ParallelUpload::Result::complete))return Transport;
+    const bool written=std::fwrite(m.download.data(),1,size,file)==size;
+    if(!finishUpload())return Transport;
+    return written?Ok:Local;
   }
   bool uploadReturned(Progress &p) const override {
     if(transport::uploadMailbox.status()!=transport::P4UploadMailbox::returned)return false;
@@ -231,9 +253,9 @@ esp_err_t admit(httpd_req_t *r) {
     candidate.activate=true;
   }
   if(httpd_req_get_hdr_value_len(r,"X-Extender-Require-Parallel")){
-    if(!candidate.upload || !header(r,"X-Extender-Require-Parallel",requireParallel,sizeof(requireParallel)) ||
+    if(!header(r,"X-Extender-Require-Parallel",requireParallel,sizeof(requireParallel)) ||
        std::strcmp(requireParallel,"1"))return reply(r,"400 Bad Request","Invalid parallel requirement");
-    if(!supportsRequiredParallel)return reply(r,"503 Service Unavailable","Parallel uploads unavailable");
+    if(!supportsRequiredParallel)return reply(r,"503 Service Unavailable","Parallel SD transfer unavailable");
     candidate.requireParallel=true;
   }
   if(r->content_len>Quota)return reply(r,"400 Bad Request","File exceeds32MiB staging limit");

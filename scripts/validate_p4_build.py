@@ -172,7 +172,7 @@ def check_upload_tx_linkage(commands: list[dict], ninja: str, build: Path, enabl
 
 
 def check_parallel_rx_linkage(commands: list[dict], ninja: str, build: Path, enabled: bool) -> None:
-    """Require the existing exact finite-RX fix for ExExt and network parallel."""
+    """Require the exact finite-RX fix for the profiles that use it."""
     derivative = (build / "exext-parlio/parlio_rx.c").resolve()
     actions = [c for c in commands if Path(c["file"]).name == "parlio_rx.c"]
     derived = [c for c in actions if Path(c["file"]).resolve() == derivative]
@@ -335,7 +335,8 @@ def main() -> None:
     check_upload_tx_linkage(commands, ninja_path.read_text().replace("$\n  ", ""),
                             output / "build", args.parallel_upload_candidate)
     check_parallel_rx_linkage(commands, ninja_path.read_text().replace("$\n  ", ""),
-                              output / "build", args.exext_stream or args.network_parallel)
+                              output / "build",
+                              args.exext_stream or args.network_parallel or args.parallel_upload_candidate)
     by_source: dict[Path, list[dict]] = {}
     for command in commands:
         source = Path(command["file"]).resolve()

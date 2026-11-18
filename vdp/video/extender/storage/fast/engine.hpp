@@ -24,6 +24,7 @@ struct Progress {
   std::uint32_t parallelActiveMs = 0, parallelHandoverMs = 0;
   unsigned parallelOutcome = 0;
   int parallelClockCount = -1, parallelValidCount = -1;
+  std::uint32_t parallelReadBytes = 0, parallelReadBlocks = 0;
 };
 struct Link {
   virtual ~Link() = default;
@@ -36,11 +37,14 @@ struct Link {
   virtual bool parallelUploads() const { return false; }
   virtual bool prepareUpload(FILE *,std::uint32_t,std::uint32_t) { return false; }
   virtual bool uploadReturned(Progress &) const { return false; }
+  virtual bool parallelDownloads() const { return false; }
+  virtual bool prepareDownload(std::uint32_t, std::uint32_t, unsigned) { return false; }
+  virtual Error storeDownload(FILE *, unsigned) { return Transport; }
 };
 inline bool valid(const Plan &p) {
   if (!p.id || !p.boot || p.size > Quota || p.path.empty() || p.path[0] != '/' ||
       p.path.size() > (p.upload ? 112U : 120U) ||
-      ((p.activate || p.requireParallel) && !p.upload)) return false;
+      (!p.upload && (p.activate || p.size))) return false;
   if (p.path == "/") return false;
   size_t start = 1;
   for (size_t i = 1; i <= p.path.size(); ++i) {
@@ -101,7 +105,7 @@ public:
       return unsigned(at+1+plan.path.size());
     };
     if (plan.upload) {
-      const bool available=(sd_u16(reply_.data()+26)&128) && link_.parallelUploads();
+      const bool available=(sd_u16(reply_.data()+26)&SD_CAP_PARALLEL_WRITE) && link_.parallelUploads();
       // The commissioned host can require this carrier. Refuse before BEGIN
       // creates the Agon-side transaction if either peer lacks support.
       if(plan.requireParallel && !available){fail(Protocol);return p_;}
@@ -134,16 +138,31 @@ public:
         return p_;
       }
     } else {
+      const bool parallel=plan.requireParallel;
+      if (parallel && (!(sd_u16(reply_.data()+26)&SD_CAP_PARALLEL_READ) ||
+          !link_.parallelDownloads())) { fail(Protocol); return p_; }
       if (!rpc(SD_STAT, args.data(), path(0))) return p_;
       if (replySize_ != 5 || (reply_[24]&16)) { fail(Protocol); return p_; }
       p_.size = sd_u32(reply_.data()+20);
       if (p_.size > Quota) { fail(TooLarge); return p_; }
       while (p_.bytes < p_.size) {
-        auto n = std::min<std::uint32_t>(216, p_.size-p_.bytes);
-        sd_put32(args.data(), p_.bytes); sd_put16(args.data()+4, n);
-        if (!rpc(SD_READ, args.data(), path(6))) return p_;
-        if (replySize_ != n+4 || sd_u32(reply_.data()+20) != p_.size) { fail(Protocol); return p_; }
-        if (std::fwrite(reply_.data()+24, 1, n, spool) != n) { fail(Local); return p_; }
+        const auto n = std::min<std::uint32_t>(parallel?SD_PARALLEL_READ_BLOCK:216, p_.size-p_.bytes);
+        if (parallel) {
+          if (!link_.prepareDownload(plan.id, p_.bytes, n)) { fail(Transport); return p_; }
+          sd_put32(args.data(), plan.id); sd_put32(args.data()+4, p_.bytes);
+          sd_put32(args.data()+8, p_.size); sd_put16(args.data()+12, n);
+          if (!rpc(SD_PARALLEL_READ, args.data(), path(SD_PARALLEL_READ_PATH))) return p_;
+          if (!identity(plan.id, p_.bytes+n)) { fail(Protocol); return p_; }
+          const auto stored=link_.storeDownload(spool,n);
+          if (stored!=Ok) { fail(stored); return p_; }
+          p_.parallelReadBytes+=n;
+          ++p_.parallelReadBlocks;
+        } else {
+          sd_put32(args.data(), p_.bytes); sd_put16(args.data()+4, n);
+          if (!rpc(SD_READ, args.data(), path(6))) return p_;
+          if (replySize_ != n+4 || sd_u32(reply_.data()+20) != p_.size) { fail(Protocol); return p_; }
+          if (std::fwrite(reply_.data()+24, 1, n, spool) != n) { fail(Local); return p_; }
+        }
         p_.bytes += n; link_.progress(p_);
       }
       if (std::fflush(spool)) { fail(Local); return p_; }

@@ -64,17 +64,24 @@ class SdService {
   // The parser/keyboard owner polls this only at packet boundaries and after keys.
   unsigned take(std::uint8_t *out,std::uint32_t now) {
     if(!pending_ || !online(now) || (sent_ &&
-        (request_[12]==SD_PARALLEL_WRITE || now-sent_at_<400)))return 0;
+        (request_[12]==SD_PARALLEL_WRITE || request_[12]==SD_PARALLEL_READ ||
+         now-sent_at_<400)))return 0;
     std::memcpy(out,request_,request_length_);sent_=true;sent_at_=now;
     return request_length_;
   }
   // Sole console owner, only after actual EMOS release/admission. Presence
   // cannot travel on parked UART. Bind the exception to this exact sent request;
   // never manufacture a heartbeat or let ordinary requests inherit this grace.
-  bool admitBulk(std::uint32_t now,std::uint32_t job,std::uint32_t length) {
-    if(bulkHeld_ || !online(now) || !owner_ || !pending_ || !sent_ || request_length_!=SD_HEADER+8 ||
-        request_[2]!=SD_FAST_VERSION || request_[12]!=SD_PARALLEL_WRITE ||
-        sd_u32(request_+20)!=job || sd_u32(request_+24)!=length)return false;
+  bool admitBulk(std::uint32_t now,std::uint32_t job,std::uint32_t length,
+                 bool receiving=false,std::uint32_t offset=0) {
+    if(bulkHeld_ || !online(now) || !owner_ || !pending_ || !sent_ ||
+        request_length_<SD_HEADER+8 || request_[2]!=SD_FAST_VERSION ||
+        sd_u32(request_+20)!=job)return false;
+    if(receiving) {
+      if(request_[12]!=SD_PARALLEL_READ || request_length_<SD_HEADER+SD_PARALLEL_READ_PATH+2 ||
+          sd_u32(request_+24)!=offset || sd_u16(request_+32)!=length)return false;
+    } else if(request_[12]!=SD_PARALLEL_WRITE || request_length_!=SD_HEADER+8 ||
+              sd_u32(request_+24)!=length)return false;
     bulkHeld_=true;bulkAt_=now;return true;
   }
   bool receive(const std::uint8_t *data,unsigned n,std::uint32_t now) {

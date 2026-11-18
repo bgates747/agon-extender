@@ -969,7 +969,7 @@ def main() -> None:
         cache_component = verify(IDF, project)
         artifact_paths.extend(project / "components/esp_mm" / item["path"]
                               for item in cache_component["files"])
-    if args.exext_stream or args.network_parallel:
+    if args.exext_stream or args.network_parallel or args.parallel_upload_candidate:
         artifact_paths.append(build/"exext-parlio/parlio_rx.c")
     if args.parallel_upload_candidate:
         artifact_paths.extend([build/"upload-parlio/parlio_tx.c",
