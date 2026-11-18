@@ -197,6 +197,28 @@ UART capture. Arcade owns the physical run, workload analysis and handback.
   and the retained Alexe reports passed Arcade's individual and paired
   analyzer checks. Arcade owns the physical result.
 
+### Separate native diagnostics from CADENCE02 completion
+
+Smith directs Extender and Arcade to fix completion detection and rerun both
+arms. The original Olimex capture contains all 128 timing records, but the
+two UART writers interleaved within individual lines and lost the mirrored
+completion and prompt text. Arcade restored production and checked in.
+
+- PORT-008-012 [ ] Keep the same passive reader and disable MOS mirroring
+  before timed execution. Launch one fixture from a pinned MOS EXEC file
+  that starts the PARLIO listener only after RUN succeeds. Observe both
+  the listener's fresh online state within the application deadline and
+  the exact native terminator within the separate drain window. This
+  permits either completion signal to arrive first. After collection and
+  listener EXIT, obtain a fresh CLI witness and restore the entry directory.
+  Keep the direct RUN path for existing jobs. Verify against the original
+  mixed capture and new ordered, fragmented and failure cases.
+
+- PORT-008-013 [ ] Commission a fresh paired packet and checkout with the
+  same fixtures, witness firmware, production carrier and playback bounds.
+  Arcade validates the packet, runs both arms on Olimex and returns the bench
+  under the existing procedure. Extender owns the runner and host verification.
+
 ### Current authorized tranche — parallel uploads, 2026-11-03
 
 The Author selects whole-file P4 PSRAM with small foreground eZ80 SD-write
