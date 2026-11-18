@@ -1,14 +1,18 @@
 # P084 UART0 CTS-edge port for production PARLIO EMOS
 
-Production EMOS can trap the eZ80 inside its UART0 interrupt while the
-mainboard VDP withholds CTS. The owner will qualify an isolated candidate that
-yields to the game and re-arms transmission on a hardware CTS edge. It keeps the
-same transport ABI and the production PARLIO build profile.
+**Closed on 2026-11-18. Offline candidate retained as technical evidence.**
+Smith directed that MOS Eirene and production EMOS retain their
+current CTS behavior. FSIM's no-busy-wait requirement applies to its own
+eZ80 and VDPlet application code. This patch is outside FSIM's qualification,
+deployment and promotion scope.
 
-Smith selected no busy waits on either processor in FSIM turn
-`01a1efe7-1acb-72c2-b6df-216855770bb8`, message
-`01a1efe7-1b06-75a0-9d0b-6ca890969b8c`. FSIM owns the demand-pull consumer and
-requested this EMOS dependency under its frozen implementation contract.
+Production EMOS can hold the eZ80 inside its UART0 interrupt while the
+mainboard VDP withholds CTS. The offline candidate yields from that interrupt
+and re-arms transmission on a hardware CTS edge. It keeps the same
+transport ABI and the production PARLIO build profile. The work originated
+from interpreting FSIM's no-busy-wait instruction as a core firmware
+requirement. Smith clarified the intended application scope in the
+[UART owner decision record](https://github.com/bgates747/eirene-mos/blob/e32a2f1956521eb1cd67fae7f3afdb5f825b06ec/docs/tasks/RC-003/CTS-POLICY-2026-11-18.md).
 
 - P084-TX-01 [x] Trace production EMOS `abefa2f943eb3089c08d85bf39e48ebb4938f4bd`,
   ROM `9b90b5d94ec6888d85ef1fa1acf23a82b2e0eb1f179b75f549863fbd72343673`.
@@ -79,3 +83,19 @@ and callback through release, honors TEMT ordering and waits for its own
 correlated VDP receipt before reusing staging. Pin the exact ROM to select
 this behavior. The `25h` result and callback ABI are unchanged and do not
 advertise CTS-edge support. No bench run, installation or promotion occurred.
+
+## UART owner review
+
+UART reviewed the exact patch on 2026-11-18. Eirene main at
+`3a7259c58bfa6f34f58afe24087f418cef0148e0` uses synchronous UART0 output.
+The interrupt-disabled CTS wait is in [the open async UART RFC](https://github.com/AgonPlatform/eirene-mos/pull/2)
+and the EMOS port of that work. The RFC discussion favored simpler code,
+a potentially cheaper common path and lower ROM use. UART found no physical
+measurement of CTS wait frequency or duration supporting the assumption that
+waits are rare or short. The prior average-throughput measurement does not
+bound the longest interrupt pause.
+
+UART initially recommended keeping the patch available for a separate
+qualification. Smith's subsequent decision disposes of qualification,
+deployment and promotion for this task. The compiler reservation was
+released after both builds, and this task used no hardware reservation.
