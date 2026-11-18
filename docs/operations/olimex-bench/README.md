@@ -113,21 +113,29 @@ the installed firmware.
 
 ### Production restore images
 
-Use the Olimex **v0.3.0** runtime. Its
+Use the Olimex **Extender v0.3.0** runtime and the **VDPlet v0.1.3-alpha**
+mainboard companion. The Extender
 [SHA256SUMS](../../../dist/production/olimex-parlio-v0.3.0/runtime/SHA256SUMS)
-identifies the local files. The job packet supplies the exact
+identifies its local files. The
+[VDPlet release checksums](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/SHA256SUMS)
+and [Olimex write checksums](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/OLIMEX-WRITE-SHA256SUMS)
+identify the mainboard app and its padded write. The job packet supplies the exact
 `restore_write` pin for every processor the job changes.
 
 | Target | Production file | Bytes | SHA-256 | Use |
 | --- | --- | ---: | --- | --- |
 | Extender ESP32-P4, Extender VDP | [p4/app0-write.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/app0-write.bin) | 1,769,472 | `10d4b60a67888c2363e79ad29adbfd68d58a8638fd9013af413973655cb33ae4` | Extender's padded app0 write image at `0x20000`. Use it for a job with the matching `0x1B0000` write extent. |
 | Olimex eZ80, EMOS | [emos/ROM.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/emos/ROM.bin) | 131,072 | `9b90b5d94ec6888d85ef1fa1acf23a82b2e0eb1f179b75f549863fbd72343673` | Extender's complete MOS ROM for the `restore-emos` phase. |
-| Mainboard ESP32, VDPlet | [mainboard/vdp-vdplet-0.1.2-alpha.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/mainboard/vdp-vdplet-0.1.2-alpha.bin) | 1,115,568 | `dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab` | VDPlet's existing production application. The job binds its padded restore image and layout for app0 at `0x10000`. |
+| Mainboard ESP32, VDPlet | [VDPlet app0-write.bin](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/app0-write.bin) | 1,138,688 | `1b661b9357c3952fcd807dc8aed74060abf26bffeb321deab2ae2697f2e5028f` | VDPlet's padded app0 write at `0x10000`. Use it for a job with the matching `0x116000` write extent. |
 | Mainboard SD listener | [sd/emos/sdserve.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/sd/emos/sdserve.bin) | 26,127 | `98492acc7dcd29e484ef76c69026e8801375738c33c617ba61a94d8481151f08` | Extender's file for `/emos/sdserve.bin` on the SD card. |
 
 For a P4 job, bind the raw [p4/agon_extender.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/agon_extender.bin)
 as `restore_app`. Use [p4/partition-table.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/partition-table.bin)
-only to verify the layout. If an ESP32 candidate needs a different write extent,
+only to verify the layout. For a mainboard job, bind the raw
+[vdp-vdplet-0.1.3-alpha.bin](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/vdp-vdplet-0.1.3-alpha.bin)
+as `restore_app` and use the
+[mainboard partition table](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/partitions.bin)
+to verify the layout. If an ESP32 candidate needs a different write extent,
 use the job owner's pinned, equally sized candidate and restore files with
 `0xff` padding. The release archives keep the previous baseline under
 `rollback/` for owner recovery.

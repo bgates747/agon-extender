@@ -12,7 +12,7 @@ files to write, their sizes, target offsets and SHA-256 values.
 | Extender VDP on P4 | `port-008-upload-r05-b2026-11-18-03-43-16Z` |
 | EMOS on eZ80 | `agon-emos-eirene-r06-b2026-11-18-02-44-46Z` |
 | Foreground SD listener | `sdserve-v0.4.0-b2026-11-18-02-44-55Z`, installed as `/emos/sdserve.bin` |
-| Mainboard VDP | VDPlet v0.1.2-alpha, existing UART RX recovery build |
+| Mainboard VDP | [VDPlet v0.1.3-alpha companion](companions/olimex-mainboard-vdplet-v0.1.3-alpha.yaml), with a verified app0 write and prior rollback |
 | Pi5 tools | The runtime archive preserves the release tools. The bench packet pins the current curated runner revision. |
 
 The runtime and source/support archives are in
@@ -26,9 +26,10 @@ Obtain the generated files from the Extender owner if absent.
 The previous P4 app and write extent, EMOS ROM and listener are in
 the runtime's `rollback/` directory.
 
-The release updates the P4 app0, EMOS ROM and SD listener on an existing
-bench. It retains existing bootloader, partition tables, startup, and
-mainboard VDP. The [physical qualification](../docs/tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md)
+The original v0.3.0 bundle records the P4 app0, EMOS ROM, SD listener and
+v0.1.2-alpha mainboard app used in that qualification. The current selection
+binds v0.1.3-alpha separately as the mainboard companion. The
+[physical qualification](../docs/tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md)
 covers both file directions through 1,100,000 bytes and the worked example.
 The P4 application embeds a private reset endpoint. Keep the archives local,
 subject to the [notices](NOTICES.md). Other hardware and complete installations

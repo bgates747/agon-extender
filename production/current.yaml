@@ -9,3 +9,5 @@ archive_directory: ../dist/production/olimex-parlio-v0.3.0
 acceptance: ../docs/tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md
 scope: Commissioned Olimex P4-PC, checksum-free PARLIO SD staging and result collection
 prior_complete_installation: bundles/extender-installation-r02/bundle.yaml
+mainboard_companion: companions/olimex-mainboard-vdplet-v0.1.3-alpha.yaml
+mainboard_companion_sha256: 7724cac561d1a4876bca6430a1016cb412a20a86447e5883c61105c563e72e33
