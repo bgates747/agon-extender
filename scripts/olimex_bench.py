@@ -91,7 +91,10 @@ def validate_targets(payloads, results):
 
 def fixture_inputs(job):
     payloads = {job["sd_program"]: job["agon"]}
-    for item in job.get("inputs", []):
+    inputs = list(job.get("inputs", []))
+    if "listener_handoff" in job:
+        inputs.append(job["listener_handoff"])
+    for item in inputs:
         path = sd_path(item["sd_path"], ("/test",))
         if path in payloads:
             raise ValueError(f"Duplicate fixture or result path: {path}")
@@ -101,6 +104,10 @@ def fixture_inputs(job):
         if len(path) > 112 or not 0 <= spec["bytes"] <= QUOTA:
             raise ValueError(f"Fixture exceeds the staged upload bounds: {path}")
     return payloads
+
+
+def listener_batch(job):
+    return f"RUN &{job['address']}\r\n{PARALLEL_LISTENER}\r\n".encode("ascii")
 
 
 def validate_fixture(job, schema, *, named):
@@ -123,7 +130,9 @@ def validate_fixture(job, schema, *, named):
                     or not end["line"].startswith(end["prefix"])
                     or not 0 < end["seconds"] <= 120):
                 raise ValueError("Invalid deferred UART terminator or time bound")
-    elif {"results", "cwd", "uart_end"} & job.keys():
+        if "listener_handoff" in job and "uart_end" not in job:
+            raise ValueError("Listener handoff requires a native UART terminator")
+    elif {"results", "cwd", "uart_end", "listener_handoff"} & job.keys():
         raise ValueError("Directory, deferred UART and dynamic results require named fixtures")
     results = fixture_results(job)
     for path in results:
@@ -145,8 +154,11 @@ def validate_fixture(job, schema, *, named):
         if "inputs" in job:
             raise ValueError("Multiple fixture inputs require the parallel job schema")
         inputs = {job["sd_program"]: job["agon"]}
-    for item in inputs.values():
-        pinned(item)
+    batch_path = job.get("listener_handoff", {}).get("sd_path")
+    for path, item in inputs.items():
+        data = pinned(item)
+        if path == batch_path and data != listener_batch(job):
+            raise ValueError("The listener handoff batch must contain only the pinned RUN and listener commands")
     if "p4_probe" in job:
         pinned(job["p4_probe"])
     return [*inputs, *results]
@@ -491,6 +503,7 @@ class Bench:
     def invoke(self, phase="run"):
         job = fixture_runs(self.kit)[phase]
         named = "fixtures" in self.kit
+        handoff = job.get("listener_handoff")
         output_dir = self.out / "results" if named else self.out
         if named:
             output_dir.mkdir()
@@ -513,19 +526,39 @@ class Bench:
                         raise RuntimeError("The Legacy prompt cannot be used to restore its directory")
                     prompt = observer.change_directory("enter-cwd", job["cwd"], prompt)
                 observer.quiet_load(f"LOAD {job['sd_program']} &{job['address']}", prompt)
-                observer.run(f"RUN &{job['address']}", prompt, job["success"].encode(),
-                             job["failure"].encode(), job["seconds"], uart_end=job.get("uart_end"))
+                if handoff:
+                    observer.mirror_off(prompt, "mirror-off-run")
+                    self.idle()
+                    status = observer.run_to_listener(handoff["sd_path"], job["seconds"], job["uart_end"],
+                                                      lambda: self.get("/sd/status"))
+                    bench_process.record(self.out / "run-witness.json", {
+                        "listener": status, "uart_end": job["uart_end"]["line"],
+                    })
+                    self.collect_results(job, output_dir, named, listener_online=True)
+                    self.type_line("mirror-resume", "VDU 2")
+                    returned = observer.witness("post-run-witness")
+                    if returned.lower() != prompt.lower():
+                        raise RuntimeError("MOS returned to a different directory after the fixture")
+                    prompt = returned
+                else:
+                    observer.run(f"RUN &{job['address']}", prompt, job["success"].encode(),
+                                 job["failure"].encode(), job["seconds"], uart_end=job.get("uart_end"))
                 if named:
                     prompt = observer.change_directory("restore-cwd", entry, prompt)
                 observer.mirror_off(prompt)
 
+        if not handoff:
+            self.collect_results(job, output_dir, named)
+
+    def collect_results(self, job, output_dir, named, *, listener_online=False):
         result_path = self.out / "result.txt"
         def check_result():
             if result_path.read_bytes().decode("ascii").splitlines() != job["expected_agon"]:
                 raise RuntimeError("Agon fixture result differs")
 
         if self.kit.get("schema", DEFAULT_SCHEMA) == 3:
-            self.start_listener("collect", PARALLEL_LISTENER)
+            if not listener_online:
+                self.start_listener("collect", PARALLEL_LISTENER)
             for number, path in enumerate(fixture_results(job), start=1):
                 channel = f"sd-collect-{number:02d}" if named else "sd-collect"
                 destination = output_dir / PurePosixPath(path).name if named else result_path

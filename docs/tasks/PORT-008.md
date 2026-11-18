@@ -204,7 +204,7 @@ arms. The original Olimex capture contains all 128 timing records, but the
 two UART writers interleaved within individual lines and lost the mirrored
 completion and prompt text. Arcade restored production and checked in.
 
-- PORT-008-012 [ ] Keep the same passive reader and disable MOS mirroring
+- PORT-008-012 [x] Keep the same passive reader and disable MOS mirroring
   before timed execution. Launch one fixture from a pinned MOS EXEC file
   that starts the PARLIO listener only after RUN succeeds. Observe both
   the listener's fresh online state within the application deadline and
@@ -213,11 +213,14 @@ completion and prompt text. Arcade restored production and checked in.
   listener EXIT, obtain a fresh CLI witness and restore the entry directory.
   Keep the direct RUN path for existing jobs. Verify against the original
   mixed capture and new ordered, fragmented and failure cases.
+  The host replay preserves the real R01 UART bytes and refuses to accept
+  PNT alone. All 56 runner and SD client checks passed.
 
 - PORT-008-013 [ ] Commission a fresh paired packet and checkout with the
   same fixtures, witness firmware, production carrier and playback bounds.
   Arcade validates the packet, runs both arms on Olimex and returns the bench
   under the existing procedure. Extender owns the runner and host verification.
+  R02 is preflighted under `agents/arcade-cadence02-parlio/r02/`.
 
 ### Current authorized tranche — parallel uploads, 2026-11-03
 

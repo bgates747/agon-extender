@@ -109,11 +109,24 @@ analysis of the report contents.
 For an arm with native UART output that may outlast the application, include
 `"uart_end": {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30}`
 with the fixture's actual diagnostic prefix, complete terminator line and
-maximum wait after the CLI returns. The runner requires both the expected
-app completion and returned directory prompt within the application bound.
-It keeps the original passive UART reader open until it has captured the
-complete terminator line. The runner then restores the entry directory and
-collects the reports over PARLIO.
+maximum wait after application return. For timing firmware that shares USB
+UART with MOS's printer mirror, add a `listener_handoff` object with a
+fresh `sd_path` under the arm's directory and a pinned `source` for this
+two-line MOS batch, with CRLF line endings and the job's load address:
+
+```text
+RUN &040000
+EMOS sdserve --fast --parallel /
+```
+
+Stage uploads the batch with the fixture. Run checks the CLI and loads the
+program, disables the mirror, and submits one explicit `EXEC` of the batch.
+MOS starts the listener after a successful RUN. The runner requires the
+listener to come online within the application bound. It keeps its passive
+reader open and requires the complete native terminator within the additional
+UART window. Either signal can arrive first. The runner collects the reports
+through that listener, exits it, verifies a fresh MOS prompt with the mirror,
+and restores the entry directory.
 
 Preflight prints `stage`, any shared firmware installs, one `run-ID` phase
 per arm, any required restores, and `handback`. Run those phases in order.

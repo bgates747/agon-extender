@@ -100,14 +100,15 @@ class Observer:
                 self.receive(f"{label} UART terminator {marker!r}", captured, trailing, tail_seconds)
         return result
 
-    def receive(self, label, captured, predicate, seconds):
+    def receive(self, label, captured, predicate, seconds, *, poll=False):
         deadline = time.monotonic() + seconds
         while time.monotonic() < deadline:
             data = self.reader.read(1024)
-            if not data:
+            if not data and not poll:
                 continue
-            self.capture(data)
-            captured.extend(data)
+            if data:
+                self.capture(data)
+                captured.extend(data)
             if len(captured) > LIMIT:
                 raise CliError(f"Legacy serial evidence cap reached during {label}")
             result = predicate(bytes(captured))
@@ -115,10 +116,10 @@ class Observer:
                 return result
         raise CliError(f"No command-correlated Legacy CLI result for {label}")
 
-    def witness(self):
+    def witness(self, label="witness"):
         marker = secrets.token_hex(3).upper().encode("ascii")
         command = "VDU " + " ".join(str(value) for value in (*marker, 13, 10))
-        return self.exchange("witness", command, lambda data: find_witness(
+        return self.exchange(label, command, lambda data: find_witness(
             data, command, marker), 15)
 
     def quiet_load(self, command, prompt):
@@ -161,7 +162,29 @@ class Observer:
 
         return self.exchange("run", command, complete, seconds, deferred=deferred)
 
-    def mirror_off(self, prompt):
+    def run_to_listener(self, batch, seconds, uart_end, listener_status):
+        self.discard_buffered_input()
+        self.dispatch("run", f"EXEC {batch}")
+        captured = bytearray()
+        next_poll = 0.0
+
+        def online(_):
+            nonlocal next_poll
+            now = time.monotonic()
+            if now < next_poll:
+                return None
+            next_poll = now + 0.2
+            status = listener_status()
+            return status if status["online"] else None
+
+        status = self.receive("post-RUN listener admission", captured, online, seconds, poll=True)
+        marker = uart_end["line"].encode("ascii")
+        line = re.compile(rb"(?:^|[\r\n])" + re.escape(marker) + rb"(?=[\r\n])")
+        if not line.search(captured):
+            self.receive(f"native UART terminator {marker!r}", captured, line.search, uart_end["seconds"])
+        return status
+
+    def mirror_off(self, prompt, label="mirror-off"):
         command = "VDU 3"
 
         def echo_return(data):
@@ -170,4 +193,4 @@ class Observer:
 
         # The output stream ends when this command takes effect. The subsequent
         # foreground listener/read/EXIT supplies the independent CLI handback.
-        self.exchange("mirror-off", command, echo_return, 10)
+        self.exchange(label, command, echo_return, 10)

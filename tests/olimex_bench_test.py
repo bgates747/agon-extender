@@ -3,6 +3,7 @@
 from contextlib import contextmanager
 from hashlib import sha256
 from io import BytesIO
+from itertools import count
 from pathlib import Path
 import struct
 import sys
@@ -115,6 +116,44 @@ class TestObserver(unittest.TestCase):
         observer = Observer(reader, BytesIO(), MagicMock())
         with self.assertRaisesRegex(CliError, "Error accessing SD card"):
             observer.run(self.RUN, b"/ *", b"PASS", b"Error accessing SD card", 120, uart_end=end)
+
+    def test_separate_listener_and_native_witness_in_either_order(self):
+        end = {"line": "PNT end retained=128", "seconds": 30}
+        marker = b"PNT end retained=128\r\n"
+        for chunks, statuses in (
+            ([marker, b""], [False, True]),
+            ([b"PNT end retained=", b"128", b"\r\n"], [True]),
+        ):
+            with self.subTest(chunks=chunks):
+                reader = MagicMock(in_waiting=0)
+                reader.read.side_effect = chunks
+                transcript = BytesIO()
+                dispatch = MagicMock()
+                observer = Observer(reader, transcript, dispatch)
+                clock = count(step=0.21)
+                status = MagicMock(side_effect=[{"online": v} for v in statuses])
+                with patch("olimex_cli.time.monotonic", side_effect=lambda: next(clock)):
+                    self.assertTrue(observer.run_to_listener("/test/arm/run.txt", 120, end, status)["online"])
+                self.assertEqual(transcript.getvalue(), b"".join(chunks))
+                dispatch.assert_called_once_with("run", "EXEC /test/arm/run.txt")
+
+    def test_either_witness_missing_stops_without_another_command(self):
+        end = {"line": "PNT end retained=128", "seconds": 2}
+        for data, online, message in (
+            (b"PNT end retained=128\r\n", False, "post-RUN listener admission"),
+            (b"PNT end retained=1280\r\n", True, "native UART terminator"),
+        ):
+            with self.subTest(data=data, online=online):
+                reader = MagicMock(in_waiting=0)
+                reader.read.return_value = data
+                dispatch = MagicMock()
+                observer = Observer(reader, BytesIO(), dispatch)
+                clock = count(step=0.21)
+                with patch("olimex_cli.time.monotonic", side_effect=lambda: next(clock)):
+                    with self.assertRaisesRegex(CliError, message):
+                        observer.run_to_listener("/test/arm/run.txt", 2, end,
+                                                 lambda: {"online": online})
+                dispatch.assert_called_once_with("run", "EXEC /test/arm/run.txt")
 
 
 class TestOta(unittest.TestCase):
@@ -235,6 +274,54 @@ class TestOta(unittest.TestCase):
 
 
 class TestBench(unittest.TestCase):
+    def test_native_listener_handoff_packet_and_invocation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            arm = "/test/demo/full"
+
+            def pin(name, contents):
+                path = root / name
+                path.write_bytes(contents)
+                return {"path": str(path), "bytes": len(contents),
+                        "sha256": sha256(contents).hexdigest()}
+
+            batch = b"RUN &040000\r\nEMOS sdserve --fast --parallel /\r\n"
+            job = {
+                "id": "full", "cwd": arm, "agon": pin("fixture.bin", b"program"),
+                "sd_program": arm + "/fixture.bin",
+                "results": [arm + "/report.txt", arm + "/trace.csv"],
+                "address": "040000", "seconds": 120, "success": "PASS", "failure": "FAIL",
+                "uart_end": {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30},
+                "listener_handoff": {"sd_path": arm + "/run.txt", "source": pin("run.txt", batch)},
+            }
+            kit = {"fixtures": [job], "namespace": "demo", "firmware": {},
+                   "preserve": {"/autoexec.txt": "0" * 64, "/emos/sdserve.bin": "0" * 64}}
+            self.assertEqual(preflight(kit), ["stage", "run-full", "handback"])
+            job["listener_handoff"]["source"] = pin("invalid.txt", batch + b"VDU 12\r\n")
+            with self.assertRaisesRegex(ValueError, "only the pinned RUN and listener"):
+                preflight(kit)
+            job["listener_handoff"]["source"] = pin("run.txt", batch)
+            bench = Bench.__new__(Bench)
+            bench.out, bench.kit = root, kit
+            bench.c = {"ports": ["/dev/fixture"]}
+            bench.validate_ports = bench.idle = bench.keyboard = MagicMock()
+            events = []
+            bench.type_line = MagicMock(side_effect=lambda label, _cmd: events.append(label))
+            bench.collect_results = MagicMock(side_effect=lambda *_args, **_opts: events.append("collect"))
+            with patch("olimex_bench.open_passive_serial") as port, patch("olimex_bench.Observer") as observe:
+                observer = observe.return_value
+                observer.witness.side_effect = [b"/ *", arm.encode() + b" *"]
+                observer.change_directory.side_effect = [arm.encode() + b" *", b"/ *"]
+                observer.run_to_listener.side_effect = lambda *_: events.append("run") or {"online": True}
+                bench.invoke("run-full")
+                port.assert_called_once()
+            self.assertEqual(events, ["mirror-on", "run", "collect", "mirror-resume"])
+            observer.run.assert_not_called()
+            observer.mirror_off.assert_any_call(arm.encode() + b" *", "mirror-off-run")
+            observer.witness.assert_any_call("post-run-witness")
+            bench.collect_results.assert_called_once_with(job, root / "results", True,
+                                                           listener_online=True)
+
     def test_named_pair_stages_once_and_collects_each_report_with_a_fresh_session(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
