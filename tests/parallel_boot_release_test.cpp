@@ -26,6 +26,9 @@ static bool armed=false;
 static std::function<void()> foregroundPeer;
 static unsigned foregroundSteps;
 extern "C" BYTE emos_keyboard_clock(void){return BYTE(foregroundSteps);}
+extern "C" void emos_keyboard_deadline_start(t_emosDeadline *deadline){
+ *deadline={BYTE(foregroundSteps),0,2000};
+}
 extern "C" BYTE emos_keyboard_deadline_step(t_emosDeadline *){
  if(++foregroundSteps>2000)return 0;
  if(foregroundPeer)foregroundPeer();
@@ -116,6 +119,26 @@ struct Pair {
  void resetP(){pMask=0;pUp=false;assert(b.begin(p));ownership();}
 };
 int main(){unsigned cases=0;
+ // A peer file release can arrive between the file owner and boot polls.
+ // Without an armed file request the same levels must still fence UART.
+ for(bool fileOffered:{false,true})for(bool resetPrefix:{false,true}){
+  Pair q;agon::extender::transport::P4BootStartup startup(q.p,data,15,14,16,0);
+  assert(startup.begin(0));bool live=false;unsigned now=0,cancels=0;
+  auto restore=[&](){pMask=10;ownership();return true;};
+  auto cancel=[&](){assert(!pMask);++cancels;return true;};
+  for(;now<1000 && (!live || !q.live());++now){
+   q.etick();live=startup.poll(now,restore,cancel);
+  }
+  assert(live && q.live() && levels[15]);
+  hostPdDr=(hostPdDr&~0xa0)|(resetPrefix?0x20:0);
+  const auto pending=[&](){return fileOffered && !gpio_get_level(14);};
+  const bool deferred=startup.poll(++now,restore,cancel,pending);
+  assert(deferred==(fileOffered&&!resetPrefix));
+  // A file claim expires or is consumed before boot may see this again.
+  assert(!startup.poll(++now,restore,cancel));
+  if(deferred)assert(!startup.poll(++now,restore,cancel));
+  assert(cancels==1 && q.p.phase()!=H::uart);++cases;
+ }
  // Execute the REAL foreground startup owner against an already-live P4.
  // No periodic fence retries: delayed peer polling exposes stale READY-high.
  for(unsigned pd:{3u,7u,19u}) for(unsigned resetPhase=0;resetPhase<=H::uart;++resetPhase) {

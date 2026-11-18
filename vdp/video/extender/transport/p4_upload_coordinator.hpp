@@ -63,6 +63,7 @@ class P4UploadCoordinator final {
         tx_(tx),rx_(rx),rts_(rts),cts_(cts),core_(core),admit_(admission) {}
   Result poll(std::uint32_t now,bool boundary,bool empty) noexcept;
   bool ownsPhysical() const noexcept { return physical_; }
+  bool canObservePeerRelease() const noexcept;
  private:
   Result fence() noexcept;
   bool stopPayload() noexcept;

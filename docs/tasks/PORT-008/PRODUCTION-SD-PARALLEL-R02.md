@@ -131,3 +131,33 @@ observer accepts the matching banner and requires a fresh returned prompt.
 The continuation runs just the unfinished rename and verifies both listener
 identities. The failed worker and its inspection stay in the original run
 evidence. After recovery, the remaining phases use the same packet and bounds.
+
+### Physical first faults and corrective candidate
+
+The original 511-byte upload lost listener admission after HELLO and BEGIN.
+The P4 service kept the same boot ID. One commissioned Agon reset restored
+the keyboard and CLI, and the operator archived the failed transaction's
+empty partial file and 20-byte metadata. A separate 511-byte destination and
+the remaining uploads passed, including 1,100,000 bytes. The original failed
+destination stayed untouched.
+
+Parallel downloads matched the scratch input through 4,097 bytes. The
+65,537-byte download then lost admission after 18 confirmed blocks, or
+9,216 bytes. The P4 exposed no completed snapshot. The worker and passive
+reader both joined. The original failure remains recorded.
+
+Smith authorized unattended problem resolution. The next candidate corrects
+a P4 race independently reproduced in the host model. EMOS can assert its
+file release after the P4 file owner observes idle UART and just before the P4
+boot watcher checks those pins. The boot watcher then mistakes the release
+for transport loss. With a pending file offer and CLOCK low, the watcher
+gives the file owner its next poll to claim the release. The existing queue
+match, UART drain and reciprocal handover remain mandatory. CLOCK-high reset
+prefixes and unsolicited releases still follow boot recovery. The physical
+fault trace did not identify the exact pin transition.
+
+Build the P4-only source correction with the same USB, display and storage
+profile. Keep the same identified EMOS and listener. After verified
+production handback, use a fresh namespace to repeat the full two-way test
+with the corrected P4. The new packet retains the scratch sizes, exact
+comparisons, worked fixture result and bounded phases.
