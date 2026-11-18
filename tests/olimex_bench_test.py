@@ -12,7 +12,7 @@ import zlib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from olimex_bench import Bench, fixture_inputs, preflight
-from olimex_cli import CliError, command_result, find_witness
+from olimex_cli import CliError, command_result, find_witness, rename_result
 from olimex_flash import check_app0, check_extent, configure_flash_size, session_operations
 import olimex_p4_app
 
@@ -41,6 +41,19 @@ class TestObserver(unittest.TestCase):
         capture = self.LOAD.encode() + b"\r\n\rFile not found\r"
         with self.assertRaisesRegex(CliError, "File not found"):
             command_result(capture, self.LOAD, self.PROMPT)
+
+    def test_rename_needs_the_expected_banner_and_returned_prompt(self):
+        source, target = "/emos/sdserve.bin", "/test/previous.bin"
+        command = f"RENAME {source} {target}"
+        prefix = self.PROMPT + command.encode() + b"\r\n\r"
+        banner = f"Moving {source} to {target}".encode() + b"\r\r\n"
+        complete = prefix + banner + self.PROMPT
+        for end in range(len(complete)):
+            self.assertFalse(rename_result(complete[:end], command, self.PROMPT, source, target))
+        self.assertTrue(rename_result(complete, command, self.PROMPT, source, target))
+        with self.assertRaisesRegex(CliError, "File already exists"):
+            rename_result(prefix + banner + b"File already exists\r\n" + self.PROMPT,
+                          command, self.PROMPT, source, target)
 
     def result(self, captured):
         return command_result(captured, self.RUN, self.PROMPT, success=b"BENCH019 PASS",

@@ -119,3 +119,15 @@ The total phase ceiling is 4,690 seconds. Scratch case sizes are 0, 1, 511, 512,
 513, 4097, 65,537 and 1,100,000 bytes. The checksum-free UART bootstrap and
 independent firmware verification are for candidate installation only. Scratch
 comparisons qualify the path and remain outside normal or timed staging.
+
+### Listener install continuation
+
+The original physical run verified the P4 and EMOS candidate installs. Its
+listener install stopped on MOS's informational `Moving …` line before the
+second rename. The joined CLI inspection observed the production listener
+under `previous.bin`, the staged candidate under `next.bin`, and the canonical
+slot vacant. Smith authorized inspection and continuation. The amended
+observer accepts the matching banner and requires a fresh returned prompt.
+The continuation runs just the unfinished rename and verifies both listener
+identities. The failed worker and its inspection stay in the original run
+evidence. After recovery, the remaining phases use the same packet and bounds.

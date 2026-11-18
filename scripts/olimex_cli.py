@@ -54,6 +54,19 @@ def command_result(captured, command, prompt, *, success=None, failure=None):
     return True
 
 
+def rename_result(captured, command, prompt, source, destination):
+    """Witness the RENAME banner and a fresh prompt without an intervening error."""
+    lines, tail = returned_output(captured, command, prompt)
+    if tail is None:
+        return False
+    info = f"Moving {source} to {destination}".encode("ascii")
+    output = [line for line in lines if line]
+    for index, line in enumerate(output):
+        if index != 0 or line.lower() != info.lower():
+            raise CliError(line.decode("ascii", "backslashreplace"))
+    return output != [] and tail == prompt
+
+
 class Observer:
     def __init__(self, reader, transcript, dispatch):
         self.reader = reader
