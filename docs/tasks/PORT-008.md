@@ -4,8 +4,9 @@ Extender will close the gap between the successful parallel SD upload trial
 and routine Olimex staging. The qualification uses the current EMOS and EVDP
 baselines with the maintained `sdserve` listener, then ties the exact passing
 combination to the bench runner and production selection. Smith authorized
-the first tranche on 2026-11-17. The two-way candidate passed its offline
-checks. The pinned bench packet is ready for physical qualification.
+the first tranche on 2026-11-17. The corrected two-way candidate passed
+physical qualification, including a 1.1 MB file in each direction. Production
+handback is verified. Production promotion awaits tested acceptance.
 
 ## Current scope
 
@@ -132,13 +133,15 @@ the staged download spool with explicit buffer ownership and completion.
   [two-way candidate record](PORT-008/PRODUCTION-SD-PARALLEL-R02.md) for pins and
   offline results.
 
-- PORT-008-009 [ ] Qualify PUT and GET on the same installed combination through
+- PORT-008-009 [x] Qualify PUT and GET on the same installed combination through
   the canonical listener. Exercise an empty file, the RX boundary and one
   representative large scratch file in both directions, then stage the worked
   fixture and collect its generated report over PARLIO. Use scratch byte
   comparisons as separate qualification evidence. Record carrier, completion,
-  application output, CLI recovery and clean handback. On tested acceptance,
-  publish the exact pair, listener, runner and curated instructions together.
+  application output, CLI recovery and clean handback. The
+  [r03 physical result](PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md) records
+  passing transfers, the worked example and verified release. Production
+  promotion after tested acceptance remains under PORT-008-005.
 
 Smith authorized the first download tranche. It covers source integration,
 offline tests and a pinned qualification packet. Physical checkout follows the
