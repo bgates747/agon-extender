@@ -1,114 +1,40 @@
 # Mainboard SD service operating guide
 
-For commissioned Olimex jobs, follow the [bench staging policy](operations/olimex-bench/README.md#stage-the-fixtures).
-
-## Parallel uploads — working development trial
-
-The Author authorizes installation of the tested parallel-upload pair for review.
-[Exact trial identities](mainboard-sd-parallel-trial.json) pin P4, EMOS and the
-private listener; all three must match. The bench owner supplies the actual
-installation receipt and access grant. Production selection and the accepted
-[UART tool selection](mainboard-sd-tools.json) remain unchanged.
-
-At a verified Legacy MOS prompt, invoke the separately installed MOSlet:
-
-```text
-EMOS sdpu01 --fast --parallel /
-```
-
-Use the same `scripts/sdcard_staged.py` put/get commands shown below, with fresh
-job-state and destination paths. For uploads, the host stages the file on P4 SD;
-P4 loads the entire file into PSRAM, EMOS admits the parallel transfer, P4 drives
-the eight data lines, and the eZ80 clocks bounded slices into the utility's
-SD-write buffer. The utility pauses CLOCK during SD writes. UART carries control
-records; there is one payload admission, no per-byte acknowledgement or software
-checksum. Downloads retain UART and the sequential-reader improvement.
-
-Matched measured uploads, ranked by longest UART baseline first:
-
-| File bytes | UART host seconds | Parallel host seconds | Elapsed reduction from UART |
-|---|---:|---:|---:|
-| 1100000 | 44.630 | 14.346 | 67.86% |
-| 65537 | 4.566 | 2.764 | 39.47% |
-
-Host monotonic elapsed includes HTTP staging and activation; independent full
-GET/byte comparison is outside those times. All ten UART/parallel-selected cases
-through1.1MB compare exactly. These are single observations, not calibrated wire
-rates; tiny files show no useful speed difference. Full-file PSRAM capacity is
-required. A subsequent consumer repair adds fixed hardware VALID filtering
-to the matched P4 build: two2625992-byte asset uploads and a65537-byte control
-pass full readbacks after two unfiltered failures on extra VALID edges. The
-[repair record](tasks/PORT-008/UPLOAD-REPAIR-R01.md) preserves failure scope;
-the electrical pulse source remains unproven and larger files are unqualified.
-A later admission/session-loss incident recovered with one Agon reset; twenty
-captured tile controls passed without reproducing it. Its cause remains open;
-zero/-1 retained timing/counter fields are not proof that preparation never ran.
-Follow the [recovery record](tasks/PORT-008/UPLOAD-REPAIR-R02.md) and preserve
-failed jobs instead of automatically retrying. Allocation/admission failures do not
-authorize automatic fallback, retry, reset or deletion of recovery files.
-
-For a matched UART baseline, stop the idle trial listener through EXIT first,
-then start `EMOS sdpu01 --fast /`. The unchanged canonical
-`EMOS sdserve --fast /` also remains available. Neither command selects the
-parallel carrier without `--parallel`. Stop the listener before launching an
-Agon application; the service is foreground. Never overwrite the running trial
-MOSlet: exit it first and use a different stopped listener for replacement.
-Keep startup unchanged. Component rollback uses the exact incoming P4r27/EMOS
-images and installation procedure recorded by the bench owner, not Git HEAD.
+Olimex production v0.3.0 uses checksum-free PARLIO for nonempty file payloads
+in both directions. P4 drives uploads to EMOS. EMOS drives downloads into the
+P4 staged snapshot. The Pi5 client exchanges whole files with P4 over HTTP.
+UART carries control records, including operations on empty files. Use the
+[bench procedure](operations/olimex-bench/README.md) for commissioned jobs
+and the [selected component pins](mainboard-sd-tools.json) for exact builds.
 
 ## P4-staged fast files
 
-The Author accepts the sequential-reader listener for the working bench on
-2026-11-03. Use the maintained [component/tool selection](mainboard-sd-tools.json)
-for exact listener/client identities and its verified immutable archive. The
-listener is24753 bytes, build `sdserve-v0.3.0-b2026-11-03-08-07-19Z`, installed as
-`/emos/sdserve.bin`; the P4r27 worker and resident EMOS remain unchanged. This
-component acceptance does not replace the whole-installation production selection.
-Machine-local current custody and installation/rollback receipts remain in
-`HARDWARE.local.md`; an accepted artifact does not identify an occupied bench.
+At a verified Legacy prompt, start the canonical foreground listener.
 
-The new `scripts/sdcard_staged.py` candidate sends/receives a whole file through
-HTTP while a P4 worker owns the local mainboard UART request loop. P4 SD staging
-separates network delays from the eZ80 loop. No per212-byte host HTTP polling or
-host journal fsync remains. Existing per-record UART replies remain.
-
-**Bounded Legacy hardware evidence.** The P4 staging comparison covers empty,
-257B,65537B and1.1MB files in both directions, with error/CLI handback. Its
-priority4 worker measures43.24s upload and243.20s download for1.1MB, versus
-283.40/507.45s for the old client, using the previous listener.
-[Staging scope and exact builds](tasks/REMOTE-009/STAGED-RESULTS.md) separate
-host, worker and HTTP time. The accepted sequential-reader utility subsequently
-reduces a matched1.1MB download from250.92s to43.57s, with exact bytes;
-[reader comparison](tasks/REMOTE-009/DOWNLOAD-RESULTS.md) is a separate experiment.
-Installed adoption also passes a65537-byte upload/download and complete utility/
-backup/startup readbacks. No continuous bulk UART carrier, all-mode/durability
-qualification or new paired production release follows from these checks.
-
-After separately authorized matched deployment, it requires a mounted P4 card
-and the already-running `EMOS sdserve --fast /` foreground listener. It adds no
-resident EMOS bytes or listener ABI changes. Candidate commands, from this repo:
-
-```sh
-.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" put local.bin /destination.bin --activate
-.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" get /source.bin local-new-file.bin
-.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" status
-.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$JOB_STATE" resume
+```text
+EMOS sdserve --fast --parallel /
 ```
 
-Use a dedicated job state, separate from the old RPC client. One P4 job owns
-the card and queue. `resume` observes the existing job; it never resubmits an
-uncertain operation. Successful delivery releases P4 staging; failed jobs keep
-their files. Explicit `discard` abandons a terminal failed P4 spool only, leaving
-mainboard journals for existing recovery tools. A P4 restart requires inspection,
-not automatic resubmission. Downloads preserve pre-existing host files.
-Puts require `--activate`; stage-only transactions remain with `sdcard.py`,
-which retains their live session. The worker leaves the listener running;
-use its existing EXIT command before launching an Agon application.
+The commissioned runner opens and exits the listener itself. For separately
+authorized direct operation, give every staged job a fresh local state path.
 
-Results separate P4 `stage_us`, `mainboard_us` and host HTTP delivery/total time.
-Counts and close/sync checks remain; no CRC, replacement digest or whole-file
-verification download is performed. See the [candidate wire/lifecycle contract](protocols/mainboard-sd-staged.md)
-and [implementation task](tasks/REMOTE-009.md) for boundaries and validation.
+```sh
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$PUT_STATE" put local.bin /target.bin --activate --require-parallel
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$GET_STATE" get /source.bin local-new-file.bin --require-parallel
+```
+
+Wait for each client to stop before opening another client session. Use the
+checksum-free direct client from a fresh state to issue `exit` after the
+worker finishes. Exit the listener before launching an application. The
+service checks transfer completion and reports the carrier. Skip payload
+checksums, substitute digests and routine source/destination rereads.
+Keep the state and journal on failure. The `resume` command observes an
+existing staged job and does not submit another transfer.
+
+The [staged protocol](protocols/mainboard-sd-staged.md) explains the service
+boundaries. The [production qualification](tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md)
+records both directions through 1,100,000 bytes and the collected application
+result. The [release](../production/README.md) links the local production bundle.
 
 ## Existing foreground service
 
@@ -223,11 +149,9 @@ the [protocol guide](protocols/staged-webdav.md) explains ownership.
 
 ## Foreground listener — selected production
 
-The following instructions apply to `sdserve`/`sdcard.py`, not the automatic
-WebDAV endpoint. EMOS v0.1.19 and sdserve v0.2.0 provide the selected production
-baseline. Checked and fast transfers passed bounded physical checks; see the
-[deployment](tasks/AUDIT-008/HARDWARE.md) and
-[fast comparison](tasks/REMOTE-005/FAST-TRANSFER.md).
+The earlier direct UART client is retained for authorized compatibility,
+control, inspection and recovery. Use the production staged commands above
+for ordinary file payloads.
 
 ## SD locations
 
@@ -273,7 +197,9 @@ board reset is part of the wire API.
 
 ## Current MOSlet installation
 
-EMOS v0.1.19 dispatches `EMOS sdserve [--fast] /` to `/emos/sdserve.bin`.
+Production EMOS dispatches `EMOS sdserve --fast --parallel /` to
+`/emos/sdserve.bin`. The older deployment record below describes the retained
+UART workflow.
 The maintained listener moved from `/mos` to `/emos`; bare `sdserve` is no longer
 its installed invocation. Host-injected keyboard, ExCom/Legacy, listener transfer,
 return/reentry and a 4096-byte application sentinel passed physical checks.

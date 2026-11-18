@@ -1,47 +1,47 @@
 # Current installation
 
-Smith's current [platform firmware defaults](../docs/procedures/olimex-firmware.md)
-govern new testing and deployments. The retained v0.1.0 bundle below records an
-accepted historical combination; its old EMOS/mainboard VDP selection is not the
-ordinary deployment default. The [compatibility audit](../docs/tasks/AUDIT-012/RESULTS.md)
-records companion migration needs for this bundle and the v0.2.1 candidate.
-Do not rewrite their immutable bytes or infer a new production promotion.
-
-**v0.1.0** is the Author-accepted production version, tagged `v0.1.0`.
-It selects the unchanged **extender-installation-r02** local DevKit bundle.
-[Current selection](current.yaml) points to its
-[immutable manifest](bundles/extender-installation-r02/bundle.yaml) and archive
-checksums. This is the single installation selection authority; extracted
-packages do not select or install themselves.
+**v0.3.0** is the accepted production stack for two-way PARLIO on the
+commissioned Olimex P4-PC bench. The [current selection](current.yaml) pins
+the [immutable bundle](bundles/olimex-parlio-v0.3.0/bundle.yaml).
+The [operator procedure](../docs/operations/olimex-bench/README.md) gives
+the exact restore files and the default runner workflow.
 
 | Component | Selected build |
-|---|---|
-| P4 | `uart-excom-console-r55-b2026-09-25-02-18-28Z` |
-| EMOS | `agon-emos-v0.1.19-b2026-09-24-02-02-56Z` |
-| Foreground EMOSlet | `sdserve-v0.2.0-b2026-09-24-02-21-03Z`, installed in `/emos` |
-| Host clients | Exact versions and hashes in `builds/host.yaml` within the bundle |
+| --- | --- |
+| Extender VDP on P4 | `port-008-upload-r05-b2026-11-18-03-43-16Z` |
+| EMOS on eZ80 | `agon-emos-eirene-r06-b2026-11-18-02-44-46Z` |
+| Foreground SD listener | `sdserve-v0.4.0-b2026-11-18-02-44-55Z`, installed as `/emos/sdserve.bin` |
+| Mainboard VDP | VDPlet v0.1.2-alpha, existing UART RX recovery build |
+| Pi5 tools | Bench runner and SD clients pinned in the runtime archive |
 
-On the maintained checkout, the runtime and source/support archives are in
-`dist/production/extender-installation-r02/`, with external `SHA256SUMS`.
-These generated local archives are not in Git and have no public download.
-Another operator obtains both archives and recorded hashes from the build owner;
-cloning this repository alone does not fetch them. Retain both archives together.
+The runtime and source/support archives are in
+`dist/production/olimex-parlio-v0.3.0/`. The generated files are retained
+locally. Check both archives against that directory's `SHA256SUMS`; after
+extracting into fresh directories, run `sha256sum -c SHA256SUMS` in each.
+The bundle records every archive member. On the commissioned host, the
+verified runtime tree at the same location supplies the operator's direct
+restore links. Obtain the generated files from the Extender owner if absent.
+The previous P4 app and write extent, EMOS ROM and listener are in
+the runtime's `rollback/` directory.
 
-Use the [installation guide](../docs/installing.md) for verification, selective
-installation, input bootstrap and rollback. Routine operation begins at the
-[handbook](../docs/README.md). [Acceptance](../docs/tasks/RELEASE-001/R01-07.md)
-and [packaging checks](../docs/tasks/RELEASE-001/R01-08.md) define the scope.
+The release updates the P4 app0, EMOS ROM and SD listener on an existing
+bench. It retains existing bootloader, partition tables, startup, and
+mainboard VDP. The [physical qualification](../docs/tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md)
+covers both file directions through 1,100,000 bytes and the worked example.
+The P4 application embeds a private reset endpoint. Keep the archives local,
+subject to the [notices](NOTICES.md). Other hardware and complete installations
+retain their own [platform requirements](../docs/procedures/olimex-firmware.md)
+and [qualification procedure](../qualification/README.md).
 
-The firmware embeds this bench's private reset endpoint. It is local-only;
-other endpoints require a new identified build. Public redistribution remains
-subject to [source/license review](NOTICES.md). No blanket all-mode, other-board
-or performance qualification is implied. A firmware revision may be accepted
-or promoted only after the canonical [`../qualification/`](../qualification/README.md)
-suite passes against its verified installed bytes; a build, flash receipt, or
-offline-only pass is insufficient. Historical component draft labels are
-retained; the installation baseline records bounded qualification. See the
-[status interpretation](../docs/versions/README.md#status-belongs-to-a-record-and-its-declared-scope):
-a build-time draft label does not negate its later recorded acceptance.
+## Retained complete DevKit installation
+
+The earlier **v0.1.0** tag records the
+[extender-installation-r02 bundle](bundles/extender-installation-r02/bundle.yaml)
+for its qualified local DevKit. Find its archive in
+`dist/production/extender-installation-r02/` and its frozen sequence in
+the [installation guide](../docs/installing.md). The
+[compatibility audit](../docs/tasks/AUDIT-012/RESULTS.md) records companion
+migration needs. Keep those immutable images and evidence for that scope.
 
 ## Accepted native keyboard/controller update
 
@@ -65,8 +65,7 @@ update and companion identities. This consolidates the older standalone v0.2.0
 promotion; its original bytes and acceptance remain historical evidence.
 
 The combined release remains **unselected** until complete canonical paired
-qualification and final selection/tag closeout. `current.yaml` and the v0.1.0
-tag remain unchanged. [Release closeout](../docs/tasks/RELEASE-001.md) owns those
+qualification and final selection/tag closeout. The v0.1.0 tag remains historical. [Release closeout](../docs/tasks/RELEASE-001.md) owns those
 remaining gates; source integration and feature acceptance do not claim a
 canonical suite pass.
 
@@ -74,7 +73,7 @@ The earlier `extender-installation-r01` is failed preparation evidence with an
 incompatible bootloader. **Do not deploy it.** Its immutable records and archives
 remain retained; they are not an alternative current installation.
 
-## Accepted sequential-reader SD utility component
+## Retained sequential-reader SD utility component
 
 The Author approves the first bench-turnaround tranche on2026-11-03, including
 adoption of the exact tested `sdserve-v0.3.0-b2026-11-03-08-07-19Z` utility.
@@ -84,17 +83,9 @@ source archive; all archive members are independently compared with their inputs
 Generated archives and external hashes are under the relative archive directory
 recorded in that manifest. Git alone does not contain these generated bytes.
 
-The maintained [development SD tool selection](../docs/mainboard-sd-tools.json)
-is the component authority for this accepted working utility. It requires the
-matched P4r27/EMOSv27 carrier and preserves both firmware components. Installation
-and complete readback,65537-byte paired transfer, unchanged startup and clean
-CLI/idle resources pass. Prior utility bytes are retained on host and Agon SD;
-actual local rollback paths and current custody remain in the ignored bench record.
-
-This component acceptance does not replace `current.yaml` or complete the
-combined v0.2.1 paired qualification/version closeout. No new whole-installation
-version/tag is inferred from the utility build timestamp; the prior tested build
-identity is preserved. Historical pins and production archives remain immutable.
+Its earlier installation passed a 65,537-byte paired transfer with startup
+preserved. This archive remains available for that earlier combination.
+The v0.3.0 manifest supplies the current Olimex SD tooling.
 
 ## Accepted standalone Console8 Wi-Fi utility
 

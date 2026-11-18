@@ -7,7 +7,8 @@ combination to the bench runner and production selection. Smith authorized
 the first tranche on 2026-11-17. The corrected two-way candidate passed
 physical qualification, including a 1.1 MB file in each direction. Production
 handback is verified. Smith accepted the two-way result and selected
-`v0.3.0` for production promotion on the commissioned Olimex bench.
+`v0.3.0`. The matching stack is installed, and the commissioned runner
+uses both parallel file directions by default.
 
 ## Current scope
 
@@ -57,7 +58,7 @@ stays on its normal mainboard image throughout this qualification.
   Keep checksum-free UART result collection and explicit fixture invocation.
   The schema-2 runner and staged-client refusal checks pass offline.
 
-- PORT-008-004 [ ] Qualify the matched combination on the Olimex under
+- PORT-008-004 [x] Qualify the matched combination on the Olimex under
   exclusive custody and the current bench procedure. Use fresh scratch paths
   for one empty file, one 65,537-byte control, one 1,100,000-byte file, one
   2,625,992-byte asset and a proposed 20 consecutive 70,472-byte transfers to
@@ -71,8 +72,10 @@ stays on its normal mainboard image throughout this qualification.
   operator keeps the first failure and alerts Smith under the bench stop rule.
   Restore changed production components and listener before check-in, and
   verify a working CLI, idle transfers and free device handles.
+  Superseded by the accepted two-way qualification in PORT-008-009.
+  The larger asset and repeated-transfer cases were outside that frozen run.
 
-- PORT-008-005 [ ] Close the production loop after tested acceptance.
+- PORT-008-005 [x] Close the production loop after tested acceptance.
   Package the exact qualified EVDP, EMOS and canonical listener with rollback
   and the agreed release identity. Update the bench's restore pins, the SD
   selector, the commissioned runner and curated operator checkout together.
@@ -85,6 +88,15 @@ stays on its normal mainboard image throughout this qualification.
   default from the curated checkout, including a production transfer and
   clean handback. Publish the immutable bundle selection, curated procedure
   and annotated `v0.3.0` tag before releasing the slot.
+
+  The [release manifest](../../production/bundles/olimex-parlio-v0.3.0/bundle.yaml)
+  pins the exact runtime and source/support archives and prior rollback set.
+  Production P4 app0, EMOS ROM and listener passed independent verification.
+  The default runner staged 8,193 bytes and returned the worked fixture's
+  exact 20-byte result over PARLIO. All seven deployment and smoke workers
+  joined. The mainboard VDPlet and startup were preserved. The installed
+  record and phase evidence are retained under
+  `agents/port008-parlio-v030-promotion/`.
 
 The first tranche is complete. The [candidate record](PORT-008/PRODUCTION-SD-UPLOAD-R01.md)
 supplies exact candidate and restore identities and the bounded bench packet.
@@ -149,7 +161,7 @@ the staged download spool with explicit buffer ownership and completion.
   application output, CLI recovery and clean handback. The
   [r03 physical result](PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md) records
   passing transfers, the worked example and verified release. Production
-  promotion after tested acceptance remains under PORT-008-005.
+  promotion is recorded under PORT-008-005.
 
 Smith authorized the first download tranche. It covers source integration,
 offline tests and a pinned qualification packet. Physical checkout follows the

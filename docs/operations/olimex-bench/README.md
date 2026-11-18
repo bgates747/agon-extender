@@ -115,27 +115,33 @@ the installed firmware.
 
 | Processor | Owner | Binary | SHA-256 |
 | --- | --- | --- | --- |
-| Olimex eZ80, EMOS | Extender | [EMOS ROM.bin](../../../dist/bench-standards/emos-eirene-r04/ROM.bin) | `a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca` |
-| Extender ESP32-P4, Extender VDP | Extender | [Olimex P4-PC production application](../../../dist/bench-standards/extender-p4-pc-d9bcb1a2/agon_extender.bin) | `d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e` |
+| Olimex eZ80, EMOS | Extender | [EMOS ROM.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/emos/ROM.bin) | `9b90b5d94ec6888d85ef1fa1acf23a82b2e0eb1f179b75f549863fbd72343673` |
+| Extender ESP32-P4, Extender VDP | Extender | [Olimex P4-PC production application](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/agon_extender.bin) | `539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b` |
 | Mainboard ESP32, VDPlet | VDPlet | [VDPlet v0.1.2-alpha release binary](https://github.com/bgates747/agon-vdplet/releases/download/v0.1.2-alpha/vdp-vdplet-0.1.2-alpha.bin), [release checksums](https://github.com/bgates747/agon-vdplet/releases/download/v0.1.2-alpha/SHA256SUMS) | `dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab` |
+| Mainboard SD, `/emos/sdserve.bin` | Extender | [Production SD listener](../../../dist/production/olimex-parlio-v0.3.0/runtime/sd/emos/sdserve.bin) | `98492acc7dcd29e484ef76c69026e8801375738c33c617ba61a94d8481151f08` |
+
+For a P4 firmware job, the owner supplies the
+[app0 write file](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/app0-write.bin)
+at offset `0x20000`, length `0x1B0000`, SHA-256
+`10d4b60a67888c2363e79ad29adbfd68d58a8638fd9013af413973655cb33ae4`,
+and the [layout pin](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/partition-table.bin).
 
 ### Stage the fixtures
 
-Use checksum-free parallel (PARLIO) file transfers for routine Olimex test
-staging. The Pi5 operator stages the fixture and its assets in the job's SD
-directory through Extender. P4 sends the nonempty payload to EMOS over the
-parallel link. Empty files use the service's control-only path. Accept the
-service's successful completion. Skip CRCs, substitute payload digests and
-verification reads of staged contents on both ends. If a transfer or test
-fails, follow the [stop rule](#stop-on-an-unexpected-problem).
+The commissioned `olimex_bench.py` runner defaults to schema 3. It starts
+`EMOS sdserve --fast --parallel /` on the matched production stack. P4 sends
+nonempty fixture files to EMOS over PARLIO during staging. EMOS sends
+nonempty result files back to P4 over PARLIO during collection. UART carries
+control records and empty-file operations. The runner records the carrier
+and requires successful transfer completion in both directions.
 
-The parallel upload path needs a matched P4, EMOS and foreground SD listener.
-The current commissioned `olimex_bench.py stage` still uses checksum-free UART
-and reads back every staged input. It does not implement this routine policy.
-The commissioning owner resolves that gap in the job packet before checkout.
-Parallel result retrieval remains unavailable. The current file service
-retrieves requested results over checksum-free UART. Keep those result checks
-and the independent verification of processor flash writes.
+Skip CRCs, substitute payload digests and verification reads of staged
+contents on both ends. Local input hashes identify the files before the
+job, and the fixture's result checks still determine the test outcome.
+Verify firmware writes independently. If a required parallel capability is
+missing or a transfer or test fails, follow the [stop rule](#stop-on-an-unexpected-problem).
+Arrange a separate, explicit compatibility method in the job packet if
+custom firmware requires one.
 
 Preserve `/autoexec.txt` and use the job's explicit CLI start command. Record
 what was staged and which transfer path completed.
@@ -223,7 +229,7 @@ job inputs.
 
 | Phase | Operator effect |
 | --- | --- |
-| `stage` | Current implementation uses the UART staging and input readbacks described in [Stage the fixtures](#stage-the-fixtures). It creates the job directories, stages ROM images only for an EMOS job, and exits the foreground listener. |
+| `stage` | Creates job directories and stages the fixture and assets over PARLIO without routine readbacks. Stages ROM images only for an EMOS job and exits the foreground listener. |
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its applicable target. Compare the complete write extent. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `restore-emos`, `restore-p4`, `restore-mainboard` | Restore only the components the job changed. The same component verification and startup checks apply. |

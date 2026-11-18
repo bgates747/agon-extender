@@ -1,21 +1,18 @@
 # Installing an Extender bundle
 
-For new testing and deployment, first apply the
-[platform firmware defaults](procedures/olimex-firmware.md). The bundle sequence
-below describes the retained accepted package. Its old EMOS/stock-mainboard
-preservation instruction does not select those versions for an ordinary new job.
-Use current standard companion images, or an explicit firmware/version case;
-changing companions creates a new combination requiring its own qualification.
-Keep the original bundle and its evidence intact. Matching installed standards
-are reused without a redundant flash or full unchanged-device backup.
+For the commissioned Olimex P4-PC, use the [production selection](../production/current.yaml)
+and the [Olimex bench procedure](operations/olimex-bench/README.md).
+Production v0.3.0 is an application-only update to an existing bench.
+The [production release](../production/README.md) identifies the verified
+package and flash scope. The [platform firmware defaults](procedures/olimex-firmware.md)
+cover the other maintained platforms.
 
-Use `production/current.yaml` in the source repository to select the approved
-local installation and its immutable bundle record. Production **v0.1.0** selects
-`extender-installation-r02`; the tag does not rename packaged components. The accepted combination is
-P4 console r55, EMOS v0.1.19 and sdserve v0.2.0. Acceptance covers the recorded
-DevKit checks, not other boards, every video mode or a public binary release.
-Installing on another bench still requires identifying and preserving its current
-state. No installer runs on archive extraction.
+## Retained DevKit v0.1.0 installation
+
+The remainder of this guide describes the historical complete
+`extender-installation-r02` package. It uses P4 console r55, EMOS v0.1.19 and
+sdserve v0.2.0. Use its frozen instructions when working with that exact
+DevKit configuration. No installer runs on archive extraction.
 
 ## Package and prerequisites
 
@@ -218,8 +215,8 @@ reset hold for P4 flashing; verify the P4's boot-pad release marker before
 releasing Agon, then verify reciprocal console boot, input and actual CLI.
 Application-sector readback and complete expected-flash verification are separate
 from startup readiness. Save/read the complete installed EMOS ROM afterward.
-Use the [SD guide](mainboard-sd.md#parallel-uploads--working-development-trial)
-for explicit parallel invocation and error/rollback limits.
+The [production SD guide](mainboard-sd.md) supplies the routine v0.3.0
+invocation. The linked trial manifest preserves its private-listener setup.
 
 ## Optional reset bridge
 

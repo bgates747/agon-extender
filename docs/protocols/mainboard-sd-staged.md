@@ -1,16 +1,16 @@
 # P4-staged fast mainboard file transfers
 
-The development P4 worker removes HTTP request/reply turnaround and host journal
-writes from the mainboard's per-record transfer loop. It stages complete files
-on the P4 card in both directions. Existing EMOS/sdserve major2 UART records
-remain the base carrier. The optional matched parallel-upload trial below
-replaces only upload payload movement. Bounded hardware results exist; neither
-that trial nor the staged interface selects a new complete production release.
+The P4 worker stages complete files on the P4 card in both directions, so
+the Pi5 host exchanges each file over HTTP. The Olimex v0.3.0 production
+stack uses PARLIO for ordinary nonempty file payloads and checksum-free
+EMOS/sdserve major 2 UART records for control and empty-file operations.
+The [production SD selection](../mainboard-sd-tools.json) pins the matched
+P4, EMOS, listener and host tools.
 
 ## Ownership and requirements
 
 1. The host explicitly starts one job. EMOS must already have admitted the
-   foreground checksum-free `sdserve --fast` listener in Legacy mode. No test,
+   foreground `sdserve --fast --parallel` listener in Legacy mode. No test,
    startup rewrite, mode switch, keyboard injection or reset starts a job.
 2. P4 reserves its physical card through the existing nonblocking MediaLease.
    It uses private `/tmp/extender/spool/fast-BOOT-ID.data` and `.state` files;
@@ -25,16 +25,14 @@ that trial nor the staged interface selects a new complete production release.
    the claim. A stale worker cannot release or submit through a later claim.
    Failure cancels any unsent pending queue item; it does not replay a job.
 5. The installed SD utility retains target-adjacent journals/backup semantics
-   and its write/sync/close error checks. The base UART staging integration adds
-   no resident EMOS bytes; the optional parallel pair below has its own matched
-   gateway. Neither adds CRCs, substitute checksums, whole-file verification
-   reads or a supported raw UART bypass.
+   and its write/sync/close error checks. The parallel paths use the matched
+   EMOS gateway and add no payload CRCs, substitute checksums or whole-file
+   verification reads.
 
-## Optional parallel upload payload
+## Parallel upload payload
 
-The [trial manifest](../mainboard-sd-parallel-trial.json) pins the matched P4,
-EMOS and private foreground MOSlet. Explicit `--fast --parallel` selection
-advertises HELLO capability0x80. After HTTP/P4-SD staging, P4 allocates and
+The production listener advertises HELLO capability `0x80` for parallel
+uploads when started with `--fast --parallel`. After HTTP/P4-SD staging, P4 allocates and
 loads one complete PSRAM source before admitting the payload. P4 then sends
 SD operation15 with little-endian transfer-ID32 and declared-size32; the utility
 requires the existing unfinished BEGIN at offset0 with the same nonzero size.
@@ -64,10 +62,10 @@ loading/allocation), `parallel_active_ms` (armed receive including SD pauses),
 These are not calibrated wire rates. The original ten-file comparison and the
 [consumer repair record](../tasks/PORT-008/UPLOAD-REPAIR-R01.md) bound evidence.
 
-## Parallel download candidate
+## Parallel download payload
 
-The matched PORT-008 candidate lets the Pi5 staged client require PARLIO for a
-GET. P4 first checks the foreground listener's HELLO bit `0x100`. The listener
+For a required parallel GET, P4 first checks the foreground listener's
+HELLO bit `0x100`. The listener
 sets it only when started with `--fast --parallel` and its resident EMOS
 accepts the private `ext.sdlink` download capability query. A missing P4 or
 listener capability stops the job. Ordinary GET without a requirement keeps the
@@ -86,9 +84,9 @@ never enter the UART or VDU parser. The queue never retransmits operation 16.
 The P4 worker appends each proven block to its private spool, then syncs and
 closes the finished snapshot before making it available to the Pi5. Failed
 or interrupted jobs keep their state and expose no downloadable snapshot.
-There is no payload CRC, digest or extra read of the file. Empty inputs or
-results use control records only. The candidate uses one handover per block.
-Its throughput and physical reliability await bench measurement.
+Empty inputs or results use control records only. The download uses one
+handover per block. The [qualification result](../tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md)
+records the physical timings through 1,100,000 bytes.
 
 ## HTTP contract, interface version 1
 

@@ -40,9 +40,12 @@ when reviewing the run.
    the executable's build contract. Pin each input file by path, byte count
    and SHA-256 for local artifact identity. Follow the bench procedure's
    [staging policy](README.md#stage-the-fixtures) for the actual transfer.
-   Record the selected carrier, matching service and exact staging command
-   in the packet. Obtain the startup and listener hashes from the commissioned
-   bench record. For a production-only job, use an empty `firmware` object.
+   For routine jobs omit `schema` or set it to `3`. The runner requires
+   PARLIO uploads and downloads with the production `sdserve` listener.
+   Use a fresh SD namespace. For additional files, add an `inputs` array
+   under `fixture`, with an `sd_path` and a pinned `source` for each file.
+   Obtain the startup and listener hashes from the commissioned bench record.
+   For a production-only job, use an empty `firmware` object.
    For a custom job, supply only the changed components:
    - For `emos`, provide `candidate_write` and `restore_write`, each a
      complete 128 KiB ROM.
@@ -88,9 +91,8 @@ sha256sum path/to/job.json
 ```
 
 The production-only example yields `stage`, `run` and `handback`.
-The example demonstrates the existing schema and result checks. Its current
-`stage` command has the transfer limitation listed in the bench procedure.
-Fixture behavior is checked when the authorized run exercises it on the bench.
+The example uses the default PARLIO path. Stage sends the program once.
+Run retrieves the result once and checks the expected output.
 
 ## Refresh the operator checkout
 
@@ -111,6 +113,6 @@ git sparse-checkout set --no-cone --stdin < docs/operations/olimex-bench/sparse-
 ```
 
 Use the local interpreter and commissioned configuration recorded for that
-host. The restore files under `dist/bench-standards` are supplied by the
-component owners. Refresh those local files if the bench procedure's
-production hashes change.
+host. The bench procedure links directly to the component owners' retained
+restore files. The local Olimex v0.3.0 runtime is under
+`dist/production/olimex-parlio-v0.3.0/runtime/`.

@@ -54,10 +54,9 @@ unreliable reset admission; use the verified Legacy/ExCom pair for ordinary
 operation. Ordinary production instructions must not assume ExExt support. The [architecture](architecture.md) owns the
 full mode/API distinction.
 
-For the separately installed parallel-upload working trial, use the
-[trial-specific listener and matched component pins](mainboard-sd.md#parallel-uploads--working-development-trial).
-Ordinary `EMOS sdserve --fast /` uses UART; it does not enable the parallel gain.
-A consumer still requires an explicit bench grant.
+Olimex v0.3.0 serves nonempty file payloads in both directions over PARLIO.
+Use the [production SD guide](mainboard-sd.md) and obtain a slot before
+accessing the shared bench.
 
 ## Choose the job
 
@@ -65,9 +64,9 @@ A consumer still requires an explicit bench grant.
 |---|---|
 | View EDP / type interactively | Open the P4's HTTP page, Connect for video, Capture keyboard for input. [Browser/input behavior and platform limits](remote-keyboard.md#browser-keyboard-capture). Capturing does not admit a disabled EMOS input path. |
 | Send bounded agent input | [Host commands](remote-keyboard.md#host-commands), using `scripts/keyboard.py`. Its journal differs from the SD journal. Do not paste a sequence of dependent CLI commands and infer completion from sleeps. |
-| List, retrieve or replace mainboard SD files | [SD operating guide](mainboard-sd.md). At a verified controllable prompt, select Legacy and run the foreground `/emos/sdserve.bin` through `EMOS sdserve [--fast] /`. It occupies the MOSlet region, not the ordinary application's load region. |
+| List, retrieve or replace mainboard SD files | [SD operating guide](mainboard-sd.md). Start the production foreground listener in Legacy with `EMOS sdserve --fast --parallel /`. Exit it before running an application. |
 | Automatic mainboard files on newer paired candidates | [Staged transfers](mainboard-sd.md): port 8081 at an eligible idle CLI in Legacy/negotiated ExCom; no manual listener. Requires installed sdjob and a mounted P4 staging card. Bounded hardware pass, not selected production. |
-| Manage the P4’s own SD card | [P4 SD guide](p4-sd.md): candidate service on port 8080, independent of EMOS and the Agon card. Not in selected production v0.1.0; verify installed firmware first. |
+| Manage the P4’s own SD card | [P4 SD guide](p4-sd.md): candidate service on port 8080, independent of the production Agon file transfer service. |
 | Observe CLI text | [Screen-text guide](screen-text.md): P4's pixel-derived readback observes ExCom output, not MOS command-buffer RAM or the Legacy screen. It does not take video ownership or provide an atomic command-completion receipt. |
 | Reset a stuck Agon | [Reset guide](bench-reset.md). The browser button uses an optional Pi bridge, not the SD listener or a native P4 GPIO service. Reset interrupts the running program; use only with authorization and known consequences for open files. |
 | Recover failed MOS firmware | [MOS recovery](mos-recovery.md). A normal reset cannot repair a bad ROM. Recovery tooling has its own readiness and authorization requirements. |

@@ -1,21 +1,23 @@
 # Olimex standard EMOS — Eirene function inventory
 
-The standard is the retained integrated EMOS Eirene r04 build, complete ROM
-SHA-256 `a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca`.
+The standard is the integrated EMOS Eirene r06 build from Olimex v0.3.0,
+complete ROM SHA-256
+`9b90b5d94ec6888d85ef1fa1acf23a82b2e0eb1f179b75f549863fbd72343673`.
 The [selector](olimex-firmware-standard.json) pins the source/profile/map and
 retained bytes. This inventory makes “latest Eirene functions” concrete without
 treating every open proposal or private experiment as a released requirement.
 
 ## Selected baseline
 
-1. Source `2c79c6006d6bcb0c2b3f9d8d6aae3ef4b36c730a`, build
-   `agon-emos-eirene-r04-b2026-11-06-09-02-21Z`, full ROM 131,072 bytes;
-   `EMOS_UART0_RFC25=1`, `network_parallel=false`.
+1. Source `abefa2f943eb3089c08d85bf39e48ebb4938f4bd`, build
+   `agon-emos-eirene-r06-b2026-11-18-02-44-46Z`, full ROM 131,072 bytes.
+   The production source adds the SD parallel read path to the surveyed r04
+   ROM. It retains `EMOS_UART0_RFC25=1` and `network_parallel=false`.
 2. Retains Eirene/MOS/FatFS populated public API slots and the EMOS gateway,
    synchronous RST10/RST18, startup-vector initialization after BSS, and EMOS
    transport/routing/input ownership. It includes guarded async output 25h
    using the RC3-style borrowed-buffer/OTIRX mechanism.
-3. MOS owner compared populated syscall slots against merged Eirene main
+3. The MOS owner compared the r04 donor's populated syscall slots against merged Eirene main
    `3a7259c58bfa6f34f58afe24087f418cef0148e0`: none was replaced by an
    unimplemented slot. This proves table presence, not complete source or
    behavioral parity for every function. Retained build and consumer evidence

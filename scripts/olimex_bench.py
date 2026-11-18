@@ -35,6 +35,7 @@ INVENTORY = {
 PRESERVED = ("/autoexec.txt", "/emos/sdserve.bin")
 LISTENER = "EMOS sdserve --fast /"
 PARALLEL_LISTENER = "EMOS sdserve --fast --parallel /"
+DEFAULT_SCHEMA = 3
 
 
 def pinned(specification):
@@ -87,7 +88,8 @@ def fixture_inputs(job):
 
 
 def preflight(kit):
-    if kit["schema"] not in (1, 2, 3) or set(kit["firmware"]) - set(COMPONENTS):
+    schema = kit.get("schema", DEFAULT_SCHEMA)
+    if schema not in (1, 2, 3) or set(kit["firmware"]) - set(COMPONENTS):
         raise ValueError("Unsupported bench job or component")
     job = kit["fixture"]
     sd_path(job["sd_program"], ("/test",))
@@ -106,7 +108,7 @@ def preflight(kit):
         raise ValueError("Expected startup and foreground listener identity pins")
     if any(not re.fullmatch(r"[a-f0-9]{64}", digest) for digest in kit["preserve"].values()):
         raise ValueError("Startup and listener pins must be SHA-256 digests")
-    if kit["schema"] in (2, 3):
+    if schema in (2, 3):
         for item in fixture_inputs(job).values():
             pinned(item)
     else:
@@ -236,7 +238,8 @@ class Bench:
 
     def stage(self, *, include_emos=True):
         job = self.kit["fixture"]
-        sources = (fixture_inputs(job) if self.kit["schema"] in (2, 3) else
+        schema = self.kit.get("schema", DEFAULT_SCHEMA)
+        sources = (fixture_inputs(job) if schema in (2, 3) else
                    {job["sd_program"]: job["agon"]})
         payloads = {destination: pinned(spec) for destination, spec in sources.items()}
         expected_absent = []
@@ -252,7 +255,7 @@ class Bench:
                     return None
                 raise
 
-        if self.kit["schema"] in (2, 3):
+        if schema in (2, 3):
             self.stage_parallel(payloads, [job["sd_result"], *expected_absent], existing)
             return
 
@@ -289,7 +292,7 @@ class Bench:
 
     def stage_parallel(self, payloads, result_paths, existing):
         capabilities = self.get("/sd/fast")
-        both = self.kit["schema"] == 3
+        both = self.kit.get("schema", DEFAULT_SCHEMA) == 3
         if capabilities.get("parallel_required_supported") is not True:
             raise RuntimeError("P4 does not support required parallel uploads")
         if both and capabilities.get("parallel_get_required_supported") is not True:
@@ -442,7 +445,7 @@ class Bench:
             if result_path.read_bytes().decode("ascii").splitlines() != job["expected_agon"]:
                 raise RuntimeError("Agon fixture result differs")
 
-        if self.kit["schema"] == 3:
+        if self.kit.get("schema", DEFAULT_SCHEMA) == 3:
             self.start_listener("collect", PARALLEL_LISTENER)
             staged = StagedClient(self.url, self.out / "sd-collect.json")
             try:
@@ -469,7 +472,11 @@ class Bench:
                 raise RuntimeError("P4 fixture result differs")
 
     def handback(self):
-        self.cli()
+        if self.kit.get("schema", DEFAULT_SCHEMA) == 3:
+            self.start_listener("handback", PARALLEL_LISTENER)
+            self.exit_staged_listener("handback")
+        else:
+            self.cli()
         self.validate_ports()
         inventory = bench_process.read(self.config["inventory"])
         if inventory.get("pending_operation"):

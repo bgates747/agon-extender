@@ -204,12 +204,14 @@ class TestBench(unittest.TestCase):
             bench = Bench.__new__(Bench)
             bench.out = folder
             bench.url = "http://example.invalid"
-            bench.get = MagicMock(return_value={"parallel_required_supported": True})
+            bench.get = MagicMock(return_value={
+                "parallel_required_supported": True, "parallel_get_required_supported": True,
+            })
             bench.start_listener = MagicMock()
             bench.idle = MagicMock()
             bench.keyboard = MagicMock()
             direct = MagicMock()
-            direct.rpc.return_value = struct.pack("<IHH", 1, 212, 0x80)
+            direct.rpc.return_value = struct.pack("<IHH", 1, 212, 0x180)
             direct.stat_entry.side_effect = RemoteError("absent", status=6, detail=b"\x04")
             exit_client = MagicMock()
             uploads = []
@@ -223,7 +225,7 @@ class TestBench(unittest.TestCase):
                 uploads.append((target, data))
                 return {"payload_carrier": "parlio" if data else "empty-control"}
 
-            bench.kit = {"schema": 2, "firmware": {}, "fixture": {
+            bench.kit = {"firmware": {}, "fixture": {
                 "sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
                 "inputs": [],
             }}
@@ -273,7 +275,7 @@ class TestBench(unittest.TestCase):
             bench.out = Path(tmp)
             bench.url = "http://example.invalid"
             bench.c = {"ports": ["/dev/example"]}
-            bench.kit = {"schema": 3, "fixture": {
+            bench.kit = {"fixture": {
                 "sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
                 "address": "040000", "success": "PASS", "failure": "FAIL",
                 "seconds": 5, "expected_agon": ["result"],

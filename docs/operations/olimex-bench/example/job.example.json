@@ -1,5 +1,4 @@
 {
-  "schema": 1,
   "namespace": "olimex-authoring",
   "fixture": {
     "agon": {"path": "path/to/OLIMT2.bin", "bytes": 0, "sha256": "FIXTURE_SHA256"},

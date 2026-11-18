@@ -65,14 +65,20 @@ def main():
         path.write_bytes(Path(spec["path"]).read_bytes().ljust(extent, b"\xff"))
         p4[f"{name}_write"] = pin(path)
 
-    current = json.loads((ROOT / "docs/mainboard-sd-tools.json").read_text())["listener"]
-    archive = ROOT / "dist/production" / current["build_id"] / (current["build_id"] + ".tar.gz")
+    # This preparation recreates the qualification against the original
+    # UART baseline, including its matched P4 and EMOS pins above.
+    restore_listener = {
+        "bytes": 24753,
+        "sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2",
+    }
+    restore_build = "sdserve-v0.3.0-b2026-11-03-08-07-19Z"
+    archive = ROOT / "dist/production" / restore_build / (restore_build + ".tar.gz")
     old_listener = args.out / "restore-sdserve.bin"
     with tarfile.open(archive) as tar:
         member, = [m for m in tar.getmembers() if m.name.endswith("sd/emos/sdserve.bin") and m.isfile()]
         with tar.extractfile(member) as stream:
             old_listener.write_bytes(stream.read())
-    rollback = relative_pin(old_listener, current)
+    rollback = relative_pin(old_listener, restore_listener)
     production_emos = pin(ROOT / "dist/bench-standards/emos-eirene-r04/ROM.bin",
                           "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca")
     firmware = {"p4": p4}

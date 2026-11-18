@@ -5,8 +5,10 @@ records checked workflows and remaining limits; the broader [AUDIT-009](tasks/AU
 historical review is incomplete. It must not require comparing old task amendments to determine
 current behavior. Dated evidence supports claims but is not a second manual.
 
-Production **v0.1.0** is the accepted local combination. The [current approved local installation](../production/README.md) selects exact
-firmware, EMOSlet and host-tool archives with hashes and installation guidance.
+Production **v0.3.0** selects the qualified two-way SD transfer stack on
+the commissioned Olimex P4-PC bench. The [production release](../production/README.md)
+identifies the exact firmware, listener and host tools. The
+[mainboard SD guide](mainboard-sd.md) covers routine use.
 
 The [Olimex bench procedure](operations/olimex-bench/README.md) lists the production images for that bench and covers reservation through check-in.
 
@@ -21,18 +23,6 @@ preserves tested bytes and current EMOS. The Author selects
 [combined v0.2.1](../production/releases/v0.2.1.yaml), including the earlier
 accepted HDMI work already present in that source. Production selection/tagging
 await canonical paired qualification and final closeout.
-
-The Author also accepts the sequential-reader SD utility for working development
-use. [Current SD tool identities](mainboard-sd-tools.json) select its immutable
-component archive and unchanged staged clients. Its matched1.1MB download takes
-43.57s versus250.92s with the earlier utility; this scoped component acceptance
-and installation do not select a new complete production release.
-
-The Author authorizes the tested parallel-upload pair as a working development
-trial for review. The [current SD guide](mainboard-sd.md#parallel-uploads--working-development-trial)
-provides its explicit private-listener invocation, exact matched component pins,
-measured improvements and rollback boundary. The Author reviewed the installed trial and authorized Wolf consumer bench
-access through the central scheduler; this does not select a production release.
 
 ## Bench management
 

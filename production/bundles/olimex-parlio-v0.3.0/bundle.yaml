@@ -1,0 +1,155 @@
+schema_version: 1
+production_version: v0.3.0
+baseline_id: olimex-parlio-v0.3.0
+kind: olimex_p4_pc_bench_application_update
+scope: Commissioned Olimex P4-PC, checksum-free PARLIO SD staging and result collection
+archive_directory: ../../../dist/production/olimex-parlio-v0.3.0
+qualification: ../../../docs/tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md
+components:
+  p4:
+    source_commit: be1d94329e55cc5e4243adbcdad73e3c530f9053
+    build_id: port-008-upload-r05-b2026-11-18-03-43-16Z
+    offset: '0x20000'
+    partition_bytes: 7340032
+    write_bytes: 1769472
+    application: p4/agon_extender.bin
+    write_image: p4/app0-write.bin
+    partition_table: p4/partition-table.bin
+  emos:
+    source_commit: abefa2f943eb3089c08d85bf39e48ebb4938f4bd
+    build_id: agon-emos-eirene-r06-b2026-11-18-02-44-46Z
+    write_image: emos/ROM.bin
+  listener:
+    source_commit: b949b7505f121b58623a94b31bb9b53a75b7819f
+    build_id: sdserve-v0.4.0-b2026-11-18-02-44-55Z
+    sd_path: /emos/sdserve.bin
+    file: sd/emos/sdserve.bin
+  mainboard:
+    source_commit: 60e5b4ebafa3e1c8bb740e45260d78cdb6125e30
+    version: v0.1.2-alpha
+    file: mainboard/vdp-vdplet-0.1.2-alpha.bin
+    transfer_release_action: retain installed VDPlet
+rollback: Runtime rollback/ holds the prior P4 app and app0 extent, EMOS ROM and SD listener.
+distribution: Private, local generated archives. No factory install or public binary distribution.
+archives:
+  runtime:
+    file: runtime.tar.gz
+    bytes: 4745296
+    sha256: f8f10da535116a756bc56c796d9445664c540cec124c8a56f4a8a596f7c738a6
+    members:
+      NOTICES.md:
+        bytes: 2212
+        sha256: 7d270a75a09d5918464e182a49feafe8cbd9ea73596d447d9340bfe066335990
+      SHA256SUMS:
+        bytes: 2150
+        sha256: c14bded3676073ea60afa41e6ba24ba5823487b0c615863bdec408e135a98c94
+      emos/ROM.bin:
+        bytes: 131072
+        sha256: 9b90b5d94ec6888d85ef1fa1acf23a82b2e0eb1f179b75f549863fbd72343673
+      mainboard/vdp-vdplet-0.1.2-alpha.bin:
+        bytes: 1115568
+        sha256: dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab
+      p4/agon_extender.bin:
+        bytes: 1768624
+        sha256: 539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b
+      p4/app0-write.bin:
+        bytes: 1769472
+        sha256: 10d4b60a67888c2363e79ad29adbfd68d58a8638fd9013af413973655cb33ae4
+      p4/partition-table.bin:
+        bytes: 3072
+        sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+      rollback/emos/ROM.bin:
+        bytes: 131072
+        sha256: a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca
+      rollback/p4/agon_extender.bin:
+        bytes: 1760160
+        sha256: d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e
+      rollback/p4/app0-write.bin:
+        bytes: 1769472
+        sha256: 9e0814bcca05118758df25b244c489a010e795b603941feaeb62dc964a0890ca
+      rollback/sd/emos/sdserve.bin:
+        bytes: 24753
+        sha256: 0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2
+      scripts/bench_process.py:
+        bytes: 13174
+        sha256: 4fe103014449862b2cec86b05fbc0a5006b170b62aae638687409b4256e2c70a
+      scripts/keyboard.py:
+        bytes: 8822
+        sha256: 2bd907921d80315f9d83761213e8125527a07f849ff488e128188b0f114c6525
+      scripts/olimex_bench.py:
+        bytes: 27087
+        sha256: d7dcbb991b91306ec9f1c16f303883561431e3a87e7db6aeb7b3fb879cb2ed06
+      scripts/olimex_cli.py:
+        bytes: 5122
+        sha256: 45b60bd4daae62a94644ab9d13de4ae97f13e0829002ee11aa3a7d48272cee98
+      scripts/olimex_flash.py:
+        bytes: 6389
+        sha256: 4f2ca22aae6c107acf2390653d2f41ae512e716d83f4916bc35fa560ff7f2e7c
+      scripts/olimex_operator_ready.py:
+        bytes: 4274
+        sha256: 25331f55d5a10158fa04b6cf9e132fc4a1cf745d17a001f68e0c82bd16eb737b
+      scripts/olimex_p4_app.py:
+        bytes: 4609
+        sha256: 64c28f3f9156e5655de9f7fd304fa09c0e334bebbf7b2920ecdc8eabcebdacf1
+      scripts/p4_boot_guard.py:
+        bytes: 891
+        sha256: 8c8efb4c825029adb64758b35f6424b04b952af46233cf888dab5cc2fe3e90a5
+      scripts/passive_serial.py:
+        bytes: 2069
+        sha256: b665826da471b786582bb4dd24214f7c4bc925fe7018d07106e661fc5e4a3543
+      scripts/reset_agon.py:
+        bytes: 2825
+        sha256: a34a104a8f0cc06f381b243c57f70715631ab2edb63f879b6f5da0faa5685a77
+      scripts/reset_agon_usb.py:
+        bytes: 3824
+        sha256: a0426237f1915e3608671287974953b5c8e1f2dbcdf9bf6c840962d90e273b8d
+      scripts/sdcard.py:
+        bytes: 19583
+        sha256: f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa
+      scripts/sdcard_staged.py:
+        bytes: 14064
+        sha256: 6574ec58be5cda3aa8cc4c36fd215fd3ee01f95b39d2ac33affaa221b5a9bf5b
+      sd/emos/sdserve.bin:
+        bytes: 26127
+        sha256: 98492acc7dcd29e484ef76c69026e8801375738c33c617ba61a94d8481151f08
+  source-support:
+    file: source-support.tar.gz
+    bytes: 31094958
+    sha256: 5f22b5d0049d5d788e290d6015ceda4b34347ba09de9143b5349f416cfc4a243
+    members:
+      SHA256SUMS:
+        bytes: 924
+        sha256: b9bbe1a9e7b62d8858c553504f2c52e82bde4bd097d2898f8e4a99c9c73ecc21
+      emos-build.json:
+        bytes: 1151
+        sha256: 55696f4eab011a90ee09fbc26b908d31e1778836e06e9cce528546ce9c667af6
+      emos-source.tar.gz:
+        bytes: 1102951
+        sha256: 689a49628a2973076ec07b52d5943ea7da64e314ca68764f58adecf8f84700c9
+      emos.map:
+        bytes: 91892
+        sha256: 77e59750b4fb2fa58671c4ed4d5572f3d6242d0fed4fd6ef11b9187165f8be2e
+      listener-build.yaml:
+        bytes: 58650
+        sha256: b35e0473f41ef1c351f3b10544f5386a40c2e27c2a6b57294b333f71a0d33c65
+      listener-source.tar.gz:
+        bytes: 1531331
+        sha256: d25d07a9235d7523bd70d095573fd17a936e772653fa41e7cb4910e6f4f314a5
+      p4-build.json:
+        bytes: 17898
+        sha256: e471232f4bfa1551cfa1f518e1d9ad3b6b7fb71d197546c7216ba06ca9376fc9
+      p4-sdkconfig:
+        bytes: 92602
+        sha256: 09d8fae7322abe0c4382e5fd69818f3bb4e160ba13b4a530d7558274f5c85e16
+      p4-source-inputs.json:
+        bytes: 1156973
+        sha256: 9f02d138ddd59d1eecdc76e222809fd4499b1bbcd9e819b2c2f0221772a3ff49
+      p4-source.tar.gz:
+        bytes: 28211530
+        sha256: 13045b157d8bb3b14697c8380e5f663f7552665d9789f9455e61b0cfaf4f237c
+      p4-validation.json:
+        bytes: 2578
+        sha256: 9f8c858aed38960c6c6dd498342667f600d7be9f002771b9872d60ea063069e3
+      physical-qualification.md:
+        bytes: 3814
+        sha256: 703a07a6a1e034749c6adf57aa1618cf3b379b12035c0896440fac25a3e8d165

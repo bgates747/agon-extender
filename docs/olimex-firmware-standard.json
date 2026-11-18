@@ -1,6 +1,6 @@
 {
   "schema": "olimex-test-firmware-standard-v1",
-  "authority_date": "2026-11-08",
+  "authority_date": "2026-11-17",
   "scope": "Default Olimex testing/deployment firmware; existing test/deployment/hardware permissions remain",
   "policy": "procedures/olimex-firmware.md",
   "vdp": {
@@ -47,32 +47,71 @@
   },
   "emos": {
     "requirement": "Latest approved integrated EMOS covering merged Eirene public API slots and releasedRC3-style async output; unmerged proposals and private experimental APIs are not silently added",
-    "binding_status": "selected-retained-owner-inventory-confirmed",
-    "build_id": "agon-emos-eirene-r04-b2026-11-06-09-02-21Z",
+    "binding_status": "selected-qualified-olimex-parlio-v0.3.0",
+    "build_id": "agon-emos-eirene-r06-b2026-11-18-02-44-46Z",
     "artifact": "ROM.bin",
     "bytes": 131072,
-    "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
-    "source_commit": "2c79c6006d6bcb0c2b3f9d8d6aae3ef4b36c730a",
+    "sha256": "9b90b5d94ec6888d85ef1fa1acf23a82b2e0eb1f179b75f549863fbd72343673",
+    "source_commit": "abefa2f943eb3089c08d85bf39e48ebb4938f4bd",
     "profile": {
       "EMOS_UART0_RFC25": 1,
-      "network_parallel": false
+      "network_parallel": false,
+      "sd_parallel_read": true
     },
-    "map_sha256": "11a296f09e1d2b7125e1a40ce0aea62042f299e93ea85afc6a6459a351866d20",
+    "map_sha256": "77e59750b4fb2fa58671c4ed4d5572f3d6242d0fed4fd6ef11b9187165f8be2e",
     "function_inventory": "olimex-emos-functions.md",
-    "retained_assets": "../dist/bench-standards/emos-eirene-r04",
+    "retained_assets": "../dist/production/olimex-parlio-v0.3.0/runtime/emos",
     "eirene_reference_tag": "3.1.0_uart0_rc_3",
     "eirene_reference_commit": "97311c437093e416342a6c836cf9914f2ced027d",
     "merged_upstream_observed_commit": "3a7259c58bfa6f34f58afe24087f418cef0148e0",
-    "qualification_limit": "API-slot inventory and retained build/native/consumer evidence; no claim of complete source/behavioral parity with every upstream function or a physical run paired with VDPlet0.1.2-alpha",
+    "qualification_limit": "Accepted paired two-way storage and worked example on this Olimex. The inherited Eirene API survey does not claim exhaustive parity.",
     "not_included": [
       "unmerged reset-vector setter61h",
       "unmerged buffered keyboard event poll62h",
       "private counted receive26h/raw90h",
       "excluded old RC2 trial42h/43h"
     ],
-    "update_policy": "Extender pins newer complete retained owner integration and updates function inventory when Eirene/EMOS standard advances; no per-test GitHEAD selection/rebuild"
+    "update_policy": "Extender pins newer complete retained owner integration and updates function inventory when Eirene/EMOS standard advances; no per-test GitHEAD selection/rebuild",
+    "prior_build": {
+      "build_id": "agon-emos-eirene-r04-b2026-11-06-09-02-21Z",
+      "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "source_commit": "2c79c6006d6bcb0c2b3f9d8d6aae3ef4b36c730a",
+      "retained_assets": "../dist/bench-standards/emos-eirene-r04"
+    }
   },
   "exceptions": "Explicit firmware-development or other-version compatibility purpose; restore affected components to current standards afterward",
-  "unchanged": "P4 firmware, startup/listener and unrelated flash/storage are not selected for replacement",
-  "production_selection": "../production/current.yaml remains separate"
+  "unchanged": "Mainboard VDPlet, startup file, bootloader, partition tables and unrelated storage remain in place.",
+  "production_selection": "../production/current.yaml",
+  "p4": {
+    "source_commit": "be1d94329e55cc5e4243adbcdad73e3c530f9053",
+    "build_id": "port-008-upload-r05-b2026-11-18-03-43-16Z",
+    "offset": "0x20000",
+    "partition_bytes": 7340032,
+    "write_bytes": 1769472,
+    "application": "p4/agon_extender.bin",
+    "write_image": "p4/app0-write.bin",
+    "partition_table": "p4/partition-table.bin",
+    "retained_assets": "../dist/production/olimex-parlio-v0.3.0/runtime/p4",
+    "application_pin": {
+      "bytes": 1768624,
+      "sha256": "539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b"
+    },
+    "write_pin": {
+      "bytes": 1769472,
+      "sha256": "10d4b60a67888c2363e79ad29adbfd68d58a8638fd9013af413973655cb33ae4"
+    },
+    "partition_table_pin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    }
+  },
+  "listener": {
+    "source_commit": "b949b7505f121b58623a94b31bb9b53a75b7819f",
+    "build_id": "sdserve-v0.4.0-b2026-11-18-02-44-55Z",
+    "sd_path": "/emos/sdserve.bin",
+    "file": "sd/emos/sdserve.bin",
+    "bytes": 26127,
+    "sha256": "98492acc7dcd29e484ef76c69026e8801375738c33c617ba61a94d8481151f08",
+    "retained_assets": "../dist/production/olimex-parlio-v0.3.0/runtime/sd/emos"
+  }
 }

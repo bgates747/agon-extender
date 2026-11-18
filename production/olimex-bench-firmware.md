@@ -15,9 +15,8 @@ The [operator procedure](../docs/operations/olimex-bench/README.md) lists the cu
 3. Publish the current direct binary links and hashes in the bench procedure
    before the next ordinary slot opens.
 
-The working Olimex P4-PC application is retained as an immutable
-[app-only bench restore image](../dist/bench-standards/extender-p4-pc-d9bcb1a2/agon_extender.bin).
-Its [manifest](../dist/bench-standards/extender-p4-pc-d9bcb1a2/manifest.json)
-records the application offset, size, and hash. The
-[installation bundle selection](current.yaml) records the whole Extender
-release separately.
+The [current release](current.yaml) selects the qualified Olimex bundle.
+The [bundle manifest](bundles/olimex-parlio-v0.3.0/bundle.yaml) records the
+P4 app0 write scope, EMOS ROM, SD listener, production VDPlet companion
+and prior restore set. Operators get their direct binary links from the
+bench procedure above.
