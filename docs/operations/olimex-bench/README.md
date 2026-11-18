@@ -121,10 +121,24 @@ the installed firmware.
 
 ### Stage the fixtures
 
-Stage the identified fixtures in the agreed location and verify the bytes
-and prerequisites. Preserve `/autoexec.txt`. Reset returns to normal boot,
-and the operator starts the fixture with its explicit CLI command. The
-operator records what is staged and how the fixture will start.
+Use checksum-free parallel (PARLIO) file transfers for routine Olimex test
+staging. The Pi5 operator stages the fixture and its assets in the job's SD
+directory through Extender. P4 sends the nonempty payload to EMOS over the
+parallel link. Empty files use the service's control-only path. Accept the
+service's successful completion. Skip CRCs, substitute payload digests and
+verification reads of staged contents on both ends. If a transfer or test
+fails, follow the [stop rule](#stop-on-an-unexpected-problem).
+
+The parallel upload path needs a matched P4, EMOS and foreground SD listener.
+The current commissioned `olimex_bench.py stage` still uses checksum-free UART
+and reads back every staged input. It does not implement this routine policy.
+The commissioning owner resolves that gap in the job packet before checkout.
+Parallel result retrieval remains unavailable. The current file service
+retrieves requested results over checksum-free UART. Keep those result checks
+and the independent verification of processor flash writes.
+
+Preserve `/autoexec.txt` and use the job's explicit CLI start command. Record
+what was staged and which transfer path completed.
 
 ## 4. Run and collect
 
@@ -159,8 +173,8 @@ MESSAGE
 
 Return an authorized result to the commissioning chat with this same sender.
 The job packet supplies `COMMISSIONING_CHAT_ID` and the summary file. The
-summary includes the result, exact byte comparison, CLI/cleanup status and
-evidence references required by that assignment.
+summary includes the outcome, the job's result checks, CLI/cleanup status and
+evidence references.
 
 ```bash
 /Agon/mystuff/agon-dev-env/.venv/bin/python /Agon/mystuff/agon-dev-env/scripts/pi_chat.py send \
@@ -209,7 +223,7 @@ job inputs.
 
 | Phase | Operator effect |
 | --- | --- |
-| `stage` | Check commissioned ports and working CLI. Create the job directories, verify the staged bytes and exit the foreground listener. Stage the two ROM images only when the job changes EMOS. |
+| `stage` | Current implementation uses the UART staging and input readbacks described in [Stage the fixtures](#stage-the-fixtures). It creates the job directories, stages ROM images only for an EMOS job, and exits the foreground listener. |
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its applicable target. Compare the complete write extent. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `restore-emos`, `restore-p4`, `restore-mainboard` | Restore only the components the job changed. The same component verification and startup checks apply. |
@@ -237,6 +251,11 @@ handback writes `handback.json`. Record the first failure and its phase before
 recovery.
 
 ## Stop on an unexpected problem
+
+Use this rule for a failed transfer or test. Preserve the first failure and
+existing evidence. A completed transfer followed by a test failure is a reason
+to consider corruption during diagnosis. Any diagnostic readback happens as
+part of that diagnosis under the applicable recovery instructions.
 
 1. Stop work and keep the reservation active.
 2. Describe the problem and the last known bench state in the operator's own

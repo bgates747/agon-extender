@@ -2,10 +2,10 @@
 
 Routine file transfers should use the fast parallel path and skip CRCs and
 readbacks. If a test fails, the operator alerts Smith and includes possible
-transfer corruption in the investigation. Extender will check what the curated
-instructions and runner actually do, and look for evidence of silently corrupted
-files before making this the documented default. Smith approved the review on
-2026-11-17.
+transfer corruption in the investigation. The review and documentation are
+complete. The existing runner still needs a matching parallel staging profile
+and implementation. The [audit findings](BENCH-021/RESULTS.md) explain the
+runner's history and distinguish the retained failures from corrupted files.
 
 ## Scope and policy
 
@@ -29,39 +29,43 @@ files before making this the documented default. Smith approved the review on
 
 ## Review checklist
 
-- BENCH-021-001 [ ] Trace the current instructions from the curated checkout's
+- BENCH-021-001 [x] Trace the current instructions from the curated checkout's
   entry point and sparse path list through the bench procedure, authoring guide,
   worked example, execution guide and linked SD instructions. Record conflicting
   or duplicate directives, including anything that a cold operator can follow
-  into an older checked-transfer workflow.
+  into an older checked-transfer workflow. Recorded in the audit findings.
 
-- BENCH-021-002 [ ] Check retained Extender and consumer run receipts for actual
+- BENCH-021-002 [x] Check retained Extender and consumer run receipts for actual
   content corruption on the relevant commissioned hardware and carrier. Start
   with the parallel upload trial, both Wolf upload repair records and the Moon
   Patrol staging failure. Classify a completed transfer with mismatched bytes,
   an aborted or unactivated transfer, a session fault, and incorrect application
   output separately. Identify the applicable firmware and direction, and the
   limits of the evidence. Bring confirmed corruption relevant to the proposed
-  default to Smith before updating the operating guidance.
+  default to Smith before updating the operating guidance. The reviewed records
+  show no confirmed mismatch after activation on the matched PARLIO file path.
 
-- BENCH-021-003 [ ] Audit the commissioned runner and its reachable SD clients.
+- BENCH-021-003 [x] Audit the commissioned runner and its reachable SD clients.
   Record the selected listener and actual carrier, local pin checks, wire CRC or
   digest work, post-upload GETs, checks on pre-existing targets, compatibility
   fallback, and the result collection path. Include ordinary and custom firmware
   jobs. Name each policy violation and its source location. Identify the exact
   matched P4, EMOS and listener dependencies for parallel staging and any missing
-  runner support. Recommend a disposition for each violation.
+  runner support. Recommend a disposition for each violation. Source locations
+  and dispositions are recorded in the audit findings.
 
-- BENCH-021-004 [ ] Update the curated operating instructions and their upstream
+- BENCH-021-004 [x] Update the curated operating instructions and their upstream
   source after the evidence review. Give an operator one clear path to the
   commissioned commands, the no-validation transfer rule, and the failure alert
   and diagnosis procedure. State actual runner and firmware limitations plainly
   so the written policy does not claim support that the selected tools lack.
+  Updated the bench, authoring, execution and SD guides.
 
-- BENCH-021-005 [ ] Walk the revised instructions from the sparse entry point for
+- BENCH-021-005 [x] Walk the revised instructions from the sparse entry point for
   a fixture upload, a result collection and a failed transfer or test. Check
   links and consistency with the audited commands. Return the evidence summary,
-  runner findings and any implementation dependency to Smith.
+  runner findings and any implementation dependency to Smith. The document
+  walk, link checks, two offline preflights and 15 existing runner tests passed.
 
 ## Starting points and boundary
 
@@ -70,9 +74,7 @@ its [sparse path list](../operations/olimex-bench/sparse-paths.txt), and the
 [commissioned runner](../../scripts/olimex_bench.py). The [SD operating guide](../mainboard-sd.md#parallel-uploads--working-development-trial)
 describes the matched parallel trial. The two retained Wolf incidents are
 [first repair](PORT-008/UPLOAD-REPAIR-R01.md) and [second repair](PORT-008/UPLOAD-REPAIR-R02.md).
-These are starting records for the audit, not a finding about the current default.
-
 The approved tranche covers the documentation review, retained evidence and
 runner audit. Physical qualification, firmware promotion and runner
-implementation are outside this tranche. The reviewed Git baseline preserves
-the original guides and runner. Local run receipts are read-only inputs.
+implementation are outside this tranche. The [audit findings](BENCH-021/RESULTS.md)
+record the frozen baseline, local evidence scope and remaining dependencies.

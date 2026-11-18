@@ -38,7 +38,10 @@ when reviewing the run.
    commissioned local bench config, the operator instructions, and an
    evidence directory for this run. Record the program load address from
    the executable's build contract. Pin each input file by path, byte count
-   and SHA-256. Obtain the startup and listener hashes from the commissioned
+   and SHA-256 for local artifact identity. Follow the bench procedure's
+   [staging policy](README.md#stage-the-fixtures) for the actual transfer.
+   Record the selected carrier, matching service and exact staging command
+   in the packet. Obtain the startup and listener hashes from the commissioned
    bench record. For a production-only job, use an empty `firmware` object.
    For a custom job, supply only the changed components:
    - For `emos`, provide `candidate_write` and `restore_write`, each a
@@ -49,8 +52,10 @@ when reviewing the run.
      The owner supplies the commissioned layout and write extent. Each
      write file contains its application padded to that extent with `0xff`.
 5. Run the bench runner's offline `preflight` from the checkout root.
-   Confirm that it lists the expected phases. Preserve the manifest hash
-   with the job. For a job reserved for the Author to invoke, the packet
+   Confirm that it lists the expected phases. Check the staging command
+   against the transfer policy separately. Preflight checks local job inputs
+   and phase selection. Preserve the manifest hash with the job. For a job
+   reserved for the Author to invoke, the packet
    supplies the exact command and uses the bench guide's staging boundary.
 
 ## Worked example
@@ -83,8 +88,9 @@ sha256sum path/to/job.json
 ```
 
 The production-only example yields `stage`, `run` and `handback`.
-Preflight checks inputs and phase selection. Fixture behavior is checked
-when the authorized run exercises it on the bench.
+The example demonstrates the existing schema and result checks. Its current
+`stage` command has the transfer limitation listed in the bench procedure.
+Fixture behavior is checked when the authorized run exercises it on the bench.
 
 ## Refresh the operator checkout
 

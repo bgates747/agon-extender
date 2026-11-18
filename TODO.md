@@ -13,8 +13,6 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[BENCH-013 — Shorten agent deploy–run–collect cycles](docs/tasks/BENCH-013.md)** — Listener adoption complete. Whole-file PSRAM upload prototype passes ten matched Legacy file proofs:1.1MB host44.63→14.35s,67.86% less time; exact incoming restoration passes. Exact tested pair is installed/readback-verified for working-trial review; fresh65537B parallel proof passes. Author reviewed and released the bench to Wolf; subsequent priorities remain. Central scheduling governs queued requests.
 
-- [ ] **[BENCH-021 — Audit fast file transfers for Olimex tests](docs/tasks/BENCH-021.md)** — Review approved. Audit curated instructions, runner behavior and retained corruption evidence before updating the operating guidance.
-
 ## Application networking — authorized framework preparation
 
 - [ ] **[COMMS-002 — Matched UART1 versus parallel performance](docs/tasks/COMMS-002.md)** — Independent corpus/timer/measurement engine and collector pass sanitizer/source/actual CLI checks and stopped eZ80 link. Actual EMOS/P4/timer binding and matched bench run remain. Faster MOS↔VDP communication is the primary objective; separate from accuracy testing, no measured gain yet.

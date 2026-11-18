@@ -15,7 +15,9 @@ For Olimex, use the [Olimex bench procedure](../operations/olimex-bench/README.m
    bench procedure. A successful listener/read/EXIT establishes command handback.
    Keyboard readiness alone does not establish a MOS prompt.
 2. Preserve ordinary startup and any existing fixture configurations. Stage
-   identified files in their documented directories and verify their readbacks.
+   identified files in their documented directories. For Olimex, follow the
+   [bench staging policy](../operations/olimex-bench/README.md#stage-the-fixtures).
+   For other platforms, follow their deployment instructions.
    Prefer an existing fixture; do not alter a frozen executable casually.
 3. Test runners, appliances and test-deployment helpers must not modify
    `/autoexec.txt`, even temporarily. Preserve normal startup so a reset returns
@@ -38,7 +40,8 @@ For Olimex, use the [Olimex bench procedure](../operations/olimex-bench/README.m
    invocation, finish independent preparation and leave every test stopped.
 7. For a human review, proceed with all authorized preparation without asking
    the Author to be available to watch it. Install and independently verify
-   the required firmware and fixtures, establish the required input, display,
+   required firmware changes, stage fixtures under the applicable procedure,
+   establish the required input, display,
    host services and controller, and leave the verified prompt and working
    directory or exact command ready. Call for the Author's attention only when
    the remaining action is for the Author to type the specified `RUN` or other

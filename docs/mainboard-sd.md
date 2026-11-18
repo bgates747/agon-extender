@@ -1,5 +1,7 @@
 # Mainboard SD service operating guide
 
+For commissioned Olimex jobs, follow the [bench staging policy](operations/olimex-bench/README.md#stage-the-fixtures).
+
 ## Parallel uploads — working development trial
 
 The Author authorizes installation of the tested parallel-upload pair for review.
