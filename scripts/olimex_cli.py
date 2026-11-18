@@ -35,7 +35,7 @@ def find_witness(captured, command, marker):
     return None
 
 
-def command_result(captured, command, prompt, *, success=None, failure=None):
+def command_result(captured, command, prompt, *, success=None, failure=None, next_prompt=None):
     """Confirm a quiet LOAD or the requested fixture completion and prompt."""
     lines, tail = returned_output(captured, command, prompt)
     if tail is None:
@@ -46,7 +46,7 @@ def command_result(captured, command, prompt, *, success=None, failure=None):
         raise CliError(failed.decode("ascii", "backslashreplace"))
     if success is None and output:
         raise CliError(output[0].decode("ascii", "backslashreplace"))
-    if tail != prompt:
+    if tail != (next_prompt if next_prompt is not None else prompt):
         return False
     if success is not None and (not output or output[-1] != success):
         detail = b" / ".join(output).decode("ascii", "backslashreplace")
@@ -89,10 +89,18 @@ class Observer:
             if discarded > LIMIT:
                 raise CliError("Legacy serial stream did not become idle before dispatch")
 
-    def exchange(self, label, command, predicate, seconds):
+    def exchange(self, label, command, predicate, seconds, *, deferred=None):
         self.discard_buffered_input()
         self.dispatch(label, command)
         captured = bytearray()
+        result = self.receive(label, captured, predicate, seconds)
+        if deferred:
+            marker, trailing, tail_seconds = deferred
+            if not trailing(bytes(captured)):
+                self.receive(f"{label} UART terminator {marker!r}", captured, trailing, tail_seconds)
+        return result
+
+    def receive(self, label, captured, predicate, seconds):
         deadline = time.monotonic() + seconds
         while time.monotonic() < deadline:
             data = self.reader.read(1024)
@@ -117,9 +125,41 @@ class Observer:
         return self.exchange("load", command, lambda data: command_result(
             data, command, prompt), 15)
 
-    def run(self, command, prompt, success, failure, seconds):
-        return self.exchange("run", command, lambda data: command_result(
-            data, command, prompt, success=success, failure=failure), seconds)
+    def change_directory(self, label, directory, prompt):
+        command = f"CD {directory}"
+        expected = f"{directory} *".encode("ascii")
+
+        def returned(data):
+            _, tail = returned_output(data, command, prompt)
+            matched = tail is not None and tail.lower() == expected.lower()
+            if command_result(data, command, prompt, next_prompt=tail if matched else expected):
+                return tail
+            return None
+
+        return self.exchange(label, command, returned, 15)
+
+    def run(self, command, prompt, success, failure, seconds, *, uart_end=None):
+        deferred = None
+        if uart_end:
+            prefix, marker = (uart_end[key].encode("ascii") for key in ("prefix", "line"))
+            # Native logs can interrupt the mirrored prompt or a MOS line
+            # between any two characters. Remove only the configured records
+            # from the CLI view and preserve every raw byte in the transcript.
+            diagnostics = re.compile(re.escape(prefix) + rb"[^\r\n]*(?:\r\n|\r|\n|$)")
+
+            def terminator(data):
+                lines, _ = returned_output(data, command, prompt)
+                return any(line.partition(prefix)[1:] == (prefix, marker[len(prefix):])
+                           for line in lines)
+
+            deferred = marker, terminator, uart_end["seconds"]
+
+        def complete(data):
+            if uart_end:
+                data = diagnostics.sub(b"", data).rstrip(b"\r\n")
+            return command_result(data, command, prompt, success=success, failure=failure)
+
+        return self.exchange("run", command, complete, seconds, deferred=deferred)
 
     def mirror_off(self, prompt):
         command = "VDU 3"

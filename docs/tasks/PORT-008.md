@@ -176,21 +176,26 @@ image and invokes each arm once in order in its own working directory.
 It collects each arm's two generated reports and its own passive mainboard
 UART capture. Arcade owns the physical run, workload analysis and handback.
 
-- PORT-008-010 [ ] Extend the normal runner and curated authoring guide for
+- PORT-008-010 [x] Extend the normal runner and curated authoring guide for
   named ordered fixtures, verified working directories, separately bounded
   application and deferred UART completion, and multiple dynamic results.
   Preserve the single-fixture interface and exact phase receipts. Exercise
   a returned prompt followed by a fragmented diagnostic end line, selector
   discipline between transactions, and failure without advancing the pair.
+  Host tests passed, including replay of the retained 128-record UART dumps
+  with native diagnostics interleaved with mirrored MOS text.
 
-- PORT-008-011 [ ] Bind Arcade's six pinned files, including the empty
+- PORT-008-011 [x] Bind Arcade's six pinned files, including the empty
   marker, to a fresh two-arm namespace. Use the v0.3.0 EMOS, P4 and listener
   with the owner-pinned mainboard-only exception and restore. The app runs
   at most 120 seconds per arm, with up to 30 further seconds after return
   for the complete `PNT end retained=128` line. Retrieve both reports once
   over PARLIO. Run the host regressions and exact manifest preflight,
   refresh the curated checkout, and hand off commands and evidence paths.
-  Extender does source and host verification only for this packet.
+  The exact packet and operator steps are in the local
+  `agents/arcade-cadence02-parlio/` handoff. The packet passed host preflight
+  and the retained Alexe reports passed Arcade's individual and paired
+  analyzer checks. Arcade owns the physical result.
 
 ### Current authorized tranche — parallel uploads, 2026-11-03
 

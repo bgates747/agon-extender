@@ -94,6 +94,34 @@ The production-only example yields `stage`, `run` and `handback`.
 The example uses the default PARLIO path. Stage sends the program once.
 Run retrieves the result once and checks the expected output.
 
+## Prepare a paired job with dynamic results
+
+For a schema 3 job with several arms, replace the single `fixture` object
+with an ordered `fixtures` array. Give each entry a distinct `id` such as
+`full` or `ground` and an absolute `cwd` under `/test`. Keep the program,
+inputs and reports inside that arm's directory. Use the same `agon`,
+`sd_program`, `inputs`, `address`, `seconds`, `success` and `failure`
+fields as a single fixture. Supply `results` as a list of absolute SD paths
+for the generated reports in that directory in collection order. The runner
+requires a nonempty result at each path. The job packet supplies its own
+analysis of the report contents.
+
+For an arm with native UART output that may outlast the application, include
+`"uart_end": {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30}`
+with the fixture's actual diagnostic prefix, complete terminator line and
+maximum wait after the CLI returns. The runner requires both the expected
+app completion and returned directory prompt within the application bound.
+It keeps the original passive UART reader open until it has captured the
+complete terminator line. The runner then restores the entry directory and
+collects the reports over PARLIO.
+
+Preflight prints `stage`, any shared firmware installs, one `run-ID` phase
+per arm, any required restores, and `handback`. Run those phases in order.
+Each arm's results and UART transcript are in `RUN_EVIDENCE/run-ID/results/`.
+The transcript is named `vdp-usb.bin`. Generated reports retain their SD
+filenames. The phase directory also holds the separate transfer receipts
+and the parent process's completion record.
+
 ## Refresh the operator checkout
 
 The [sparse paths](sparse-paths.txt) select these guides, the example,

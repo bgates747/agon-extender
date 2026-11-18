@@ -61,41 +61,74 @@ def sd_path(path, roots):
 
 def phases(kit):
     components = [name for name in COMPONENTS if name in kit["firmware"]]
-    return (["stage"] + [f"install-{name}" for name in components] + ["run"]
+    return (["stage"] + [f"install-{name}" for name in components] + list(fixture_runs(kit))
             + [f"restore-{name}" for name in reversed(components)] + ["handback"])
+
+
+def fixture_runs(kit):
+    if "fixtures" in kit:
+        return {f"run-{job['id']}": job for job in kit["fixtures"]}
+    return {"run": kit["fixture"]}
+
+
+def fixture_results(job):
+    if "results" in job:
+        return job["results"]
+    return [job["sd_result"]]
+
+
+def validate_targets(payloads, results):
+    names = [path.lower() for path in (*payloads, *results)]
+    if len(set(names)) != len(names):
+        raise ValueError("Duplicate fixture or result path")
+    targets = {PurePosixPath(name) for name in names}
+    if any(len(path) > 120 for path in results) or any(
+            part.endswith(".") for path in targets for part in path.parts):
+        raise ValueError("Fixture inputs or results contain an unsupported FAT path")
+    if any(targets.intersection(p.parents) for p in targets):
+        raise ValueError("A fixture file also names a required directory")
 
 
 def fixture_inputs(job):
     payloads = {job["sd_program"]: job["agon"]}
-    names = {job["sd_program"].lower(), job["sd_result"].lower()}
-    if len(names) != 2:
-        raise ValueError("Fixture program and result name the same FAT path")
     for item in job.get("inputs", []):
         path = sd_path(item["sd_path"], ("/test",))
-        if path.lower() in names:
+        if path in payloads:
             raise ValueError(f"Duplicate fixture or result path: {path}")
-        names.add(path.lower())
         payloads[path] = item["source"]
-    targets = {PurePosixPath(name) for name in names}
-    if len(job["sd_result"]) > 120 or any(part.endswith(".") for path in targets for part in path.parts):
-        raise ValueError("Fixture inputs or result contain an unsupported FAT path")
-    if any(targets.intersection(p.parents) for p in targets):
-        raise ValueError("A fixture file also names a required directory")
+    validate_targets(payloads, fixture_results(job))
     for path, spec in payloads.items():
         if len(path) > 112 or not 0 <= spec["bytes"] <= QUOTA:
             raise ValueError(f"Fixture exceeds the staged upload bounds: {path}")
     return payloads
 
 
-def preflight(kit):
-    schema = kit.get("schema", DEFAULT_SCHEMA)
-    if schema not in (1, 2, 3) or set(kit["firmware"]) - set(COMPONENTS):
-        raise ValueError("Unsupported bench job or component")
-    job = kit["fixture"]
+def validate_fixture(job, schema, *, named):
     sd_path(job["sd_program"], ("/test",))
-    sd_path(job["sd_result"], ("/test",))
-    if (job["sd_program"] == job["sd_result"] or
-            not re.fullmatch(r"[0-9A-Fa-f]{6}", job["address"])):
+    if named:
+        if "sd_result" in job or "expected_agon" in job or "p4_probe" in job:
+            raise ValueError("Named fixtures use dynamic result files")
+        if not isinstance(job["results"], list) or not job["results"]:
+            raise ValueError("Named fixtures require at least one result file")
+        if any(PurePosixPath(path).name.lower() == "vdp-usb.bin" for path in job["results"]):
+            raise ValueError("A result file uses the reserved UART transcript name")
+        cwd = PurePosixPath(sd_path(job["cwd"], ("/test",)))
+        if any(PurePosixPath(path).parent != cwd
+               for path in [job["sd_program"], *job["results"]]):
+            raise ValueError("The program and reports must be in the named fixture directory")
+        if "uart_end" in job:
+            end = job["uart_end"]
+            if (not re.fullmatch(r"[ -~]{1,64}", end["prefix"])
+                    or not re.fullmatch(r"[ -~]{1,120}", end["line"])
+                    or not end["line"].startswith(end["prefix"])
+                    or not 0 < end["seconds"] <= 120):
+                raise ValueError("Invalid deferred UART terminator or time bound")
+    elif {"results", "cwd", "uart_end"} & job.keys():
+        raise ValueError("Directory, deferred UART and dynamic results require named fixtures")
+    results = fixture_results(job)
+    for path in results:
+        sd_path(path, ("/test",))
+    if job["sd_program"] in results or not re.fullmatch(r"[0-9A-Fa-f]{6}", job["address"]):
         raise ValueError("Invalid fixture address or result path")
     if not 0 < job["seconds"] <= 1800:
         raise ValueError("Invalid fixture time bound")
@@ -104,19 +137,45 @@ def preflight(kit):
             raise ValueError(f"Missing ASCII completion marker: {name}")
     if job["success"].startswith(job["failure"]):
         raise ValueError("Fixture success matches its failure prefix")
+    if schema in (2, 3):
+        inputs = fixture_inputs(job)
+        if named and any(cwd not in PurePosixPath(path).parents for path in inputs):
+            raise ValueError("Fixture inputs must be under the named fixture directory")
+    else:
+        if "inputs" in job:
+            raise ValueError("Multiple fixture inputs require the parallel job schema")
+        inputs = {job["sd_program"]: job["agon"]}
+    for item in inputs.values():
+        pinned(item)
+    if "p4_probe" in job:
+        pinned(job["p4_probe"])
+    return [*inputs, *results]
+
+
+def preflight(kit):
+    schema = kit.get("schema", DEFAULT_SCHEMA)
+    if schema not in (1, 2, 3) or set(kit["firmware"]) - set(COMPONENTS):
+        raise ValueError("Unsupported bench job or component")
+    named = "fixtures" in kit
+    if named:
+        jobs = kit["fixtures"]
+        if ("fixture" in kit or schema != 3 or not isinstance(jobs, list) or not jobs
+                or any(not re.fullmatch(r"[a-z][a-z0-9-]{0,23}", job["id"]) for job in jobs)
+                or len(fixture_runs(kit)) != len(jobs)):
+            raise ValueError("Expected uniquely named fixtures in a schema 3 job")
+    else:
+        jobs = [kit["fixture"]]
+    targets = [path for job in jobs for path in validate_fixture(job, schema, named=named)]
+    if named:
+        directories = [PurePosixPath(job["cwd"].lower()) for job in jobs]
+        if len(set(directories)) != len(jobs) or any(
+                set(directories).intersection(path.parents) for path in directories):
+            raise ValueError("Named fixtures require separate working directories")
+        validate_targets(targets, [])
     if set(kit["preserve"]) != set(PRESERVED):
         raise ValueError("Expected startup and foreground listener identity pins")
     if any(not re.fullmatch(r"[a-f0-9]{64}", digest) for digest in kit["preserve"].values()):
         raise ValueError("Startup and listener pins must be SHA-256 digests")
-    if schema in (2, 3):
-        for item in fixture_inputs(job).values():
-            pinned(item)
-    else:
-        if "inputs" in job:
-            raise ValueError("Multiple fixture inputs require the parallel job schema")
-        pinned(job["agon"])
-    if "p4_probe" in job:
-        pinned(job["p4_probe"])
     if not re.fullmatch(r"[a-z0-9-]{1,36}", kit["namespace"]):
         raise ValueError("Invalid fixture namespace")
     for component, spec in kit["firmware"].items():
@@ -237,10 +296,13 @@ class Bench:
         return payloads, results
 
     def stage(self, *, include_emos=True):
-        job = self.kit["fixture"]
         schema = self.kit.get("schema", DEFAULT_SCHEMA)
-        sources = (fixture_inputs(job) if schema in (2, 3) else
-                   {job["sd_program"]: job["agon"]})
+        jobs = fixture_runs(self.kit).values()
+        if schema in (2, 3):
+            sources = {path: spec for job in jobs for path, spec in fixture_inputs(job).items()}
+        else:
+            job = self.kit["fixture"]
+            sources = {job["sd_program"]: job["agon"]}
         payloads = {destination: pinned(spec) for destination, spec in sources.items()}
         expected_absent = []
         if include_emos and "emos" in self.kit["firmware"]:
@@ -256,7 +318,8 @@ class Bench:
                 raise
 
         if schema in (2, 3):
-            self.stage_parallel(payloads, [job["sd_result"], *expected_absent], existing)
+            results = [path for job in jobs for path in fixture_results(job)]
+            self.stage_parallel(payloads, [*results, *expected_absent], existing)
             return
 
         def transfer(client):
@@ -425,19 +488,35 @@ class Bench:
         inventory["source"] = "Olimex operator verified write and CLI"
         self.update_inventory(inventory)
 
-    def invoke(self):
+    def invoke(self, phase="run"):
+        job = fixture_runs(self.kit)[phase]
+        named = "fixtures" in self.kit
+        output_dir = self.out / "results" if named else self.out
+        if named:
+            output_dir.mkdir()
+        transcript_file = "vdp-usb.bin" if named else "mainboard-serial.bin"
         self.validate_ports()
         self.idle()
         self.keyboard()
-        job = self.kit["fixture"]
         with open_passive_serial(self.c["ports"][0], timeout=0.2) as reader:
-            with (self.out / "mainboard-serial.bin").open("xb") as transcript:
+            with (output_dir / transcript_file).open("xb") as transcript:
                 observer = Observer(reader, transcript, self.type_line)
                 self.type_line("mirror-on", "VDU 2")
                 prompt = observer.witness()
+                if named:
+                    if not prompt.startswith(b"/"):
+                        raise RuntimeError("The Legacy prompt does not show the entry directory")
+                    entry = prompt[:-2].decode("ascii")
+                    if (not re.fullmatch(r"/[A-Za-z0-9_./-]*", entry)
+                            or str(PurePosixPath(entry)) != entry
+                            or ".." in PurePosixPath(entry).parts):
+                        raise RuntimeError("The Legacy prompt cannot be used to restore its directory")
+                    prompt = observer.change_directory("enter-cwd", job["cwd"], prompt)
                 observer.quiet_load(f"LOAD {job['sd_program']} &{job['address']}", prompt)
                 observer.run(f"RUN &{job['address']}", prompt, job["success"].encode(),
-                             job["failure"].encode(), job["seconds"])
+                             job["failure"].encode(), job["seconds"], uart_end=job.get("uart_end"))
+                if named:
+                    prompt = observer.change_directory("restore-cwd", entry, prompt)
                 observer.mirror_off(prompt)
 
         result_path = self.out / "result.txt"
@@ -447,14 +526,20 @@ class Bench:
 
         if self.kit.get("schema", DEFAULT_SCHEMA) == 3:
             self.start_listener("collect", PARALLEL_LISTENER)
-            staged = StagedClient(self.url, self.out / "sd-collect.json")
-            try:
-                receipt = staged.begin("get", job["sd_result"], destination=result_path,
-                                       require_parallel=True)
-                bench_process.record(self.out / "sd-collect.receipt.json", receipt)
-            finally:
-                staged.close()
-            check_result()
+            for number, path in enumerate(fixture_results(job), start=1):
+                channel = f"sd-collect-{number:02d}" if named else "sd-collect"
+                destination = output_dir / PurePosixPath(path).name if named else result_path
+                staged = StagedClient(self.url, self.out / f"{channel}.json")
+                try:
+                    receipt = staged.begin("get", path, destination=destination,
+                                           require_parallel=True)
+                    bench_process.record(self.out / f"{channel}.receipt.json", receipt)
+                finally:
+                    staged.close()
+                if named and destination.stat().st_size == 0:
+                    raise RuntimeError(f"Fixture produced an empty report: {path}")
+            if not named:
+                check_result()
             self.exit_staged_listener("collect")
         else:
             def collect(client):
@@ -507,8 +592,8 @@ class Bench:
             if phase == "stage":
                 self.validate_ports()
                 self.stage()
-            elif phase == "run":
-                self.invoke()
+            elif phase in fixture_runs(self.kit):
+                self.invoke(phase)
             elif phase == "handback":
                 self.handback()
             else:
@@ -568,11 +653,14 @@ def main():
     if not args.operator:
         parser.error("Physical phases require --operator from the opened chat slot")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
-    bounds = {"stage": 300, "run": kit["fixture"]["seconds"] + 210,
+    bounds = {"stage": 300,
               "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
               "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
+    job = fixture_runs(kit).get(phase)
+    seconds = (job["seconds"] + job.get("uart_end", {}).get("seconds", 0) + 210
+               if job is not None else bounds.get(phase, 480))
     return bench_process.run(child_argv(args, phase), args.out / phase,
-                             bounds.get(phase, 480), owner=args.operator,
+                             seconds, owner=args.operator,
                              lease=f"chat:{args.operator}", phase=phase,
                              next_action="Keep the slot and follow the bench stop procedure.")
 

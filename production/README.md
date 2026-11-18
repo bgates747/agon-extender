@@ -12,7 +12,7 @@ the exact restore files and the default runner workflow.
 | EMOS on eZ80 | `agon-emos-eirene-r06-b2026-11-18-02-44-46Z` |
 | Foreground SD listener | `sdserve-v0.4.0-b2026-11-18-02-44-55Z`, installed as `/emos/sdserve.bin` |
 | Mainboard VDP | VDPlet v0.1.2-alpha, existing UART RX recovery build |
-| Pi5 tools | Bench runner and SD clients pinned in the runtime archive |
+| Pi5 tools | The runtime archive preserves the release tools. The bench packet pins the current curated runner revision. |
 
 The runtime and source/support archives are in
 `dist/production/olimex-parlio-v0.3.0/`. The generated files are retained

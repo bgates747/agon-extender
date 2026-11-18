@@ -232,6 +232,7 @@ job inputs.
 | `stage` | Creates job directories and stages the fixture and assets over PARLIO without routine readbacks. Stages ROM images only for an EMOS job and exits the foreground listener. |
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its applicable target. Compare the complete write extent. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
+| `run-ID` | For a named arm, witness its working directory, issue one `LOAD` and one `RUN`, and keep the same UART reader open through any configured terminator. Collect the arm's reports in its own evidence directory. Follow the order printed by preflight. |
 | `restore-emos`, `restore-p4`, `restore-mainboard` | Restore only the components the job changed. The same component verification and startup checks apply. |
 | `handback` | Verify CLI, idle transfer services, serial handles and the changed components' restores. The parent records joined worker completion before you send check-in. |
 

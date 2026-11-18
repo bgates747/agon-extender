@@ -2,6 +2,7 @@
 
 from contextlib import contextmanager
 from hashlib import sha256
+from io import BytesIO
 from pathlib import Path
 import struct
 import sys
@@ -12,7 +13,7 @@ import zlib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from olimex_bench import Bench, fixture_inputs, preflight
-from olimex_cli import CliError, command_result, find_witness, rename_result
+from olimex_cli import CliError, Observer, command_result, find_witness, rename_result
 from olimex_flash import check_app0, check_extent, configure_flash_size, session_operations
 import olimex_p4_app
 
@@ -70,6 +71,50 @@ class TestObserver(unittest.TestCase):
         self.assertFalse(self.result(b"BENCH019 PASS\r\n/ *"))
         self.assertFalse(self.result(b"RUN &040000\r\nBENCH019 PASS\r\n"))
         self.assertTrue(self.result(b"/ *RUN &040000\r\n\rBENCH019 PASS\r\n/ *"))
+
+    def test_cd_requires_the_new_prompt_after_the_command(self):
+        reader = MagicMock(in_waiting=0)
+        reader.read.side_effect = [b"/ *CD /test/full\r\n/test/fu", b"ll *"]
+        observer = Observer(reader, BytesIO(), MagicMock())
+        self.assertEqual(observer.change_directory("enter-cwd", "/test/full", b"/ *"),
+                         b"/test/full *")
+
+    def test_run_retains_one_capture_through_later_terminated_uart_line(self):
+        end = {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30}
+        prompt = b"/test/full *"
+        head = prompt + b"RUN &040000\r\nPASS\r\n" + prompt
+        diagnostics = b"PNT commit n=128\r\nPNT end retained=128"
+        for chunks in ([head, diagnostics, b"\r\n"], [head + diagnostics, b"\r\n"],
+                       [head.replace(b"PASS", b"PAPNT rows band=1\r\nSS"),
+                        diagnostics, b"\r\n"],
+                       [head[:-len(prompt)] + diagnostics + b"\r\n" + prompt]):
+            with self.subTest(chunks=chunks):
+                reader = MagicMock(in_waiting=0)
+                reader.read.side_effect = chunks
+                transcript = BytesIO()
+                dispatch = MagicMock()
+                Observer(reader, transcript, dispatch).run(
+                    self.RUN, prompt, b"PASS", b"FAIL", 120, uart_end=end)
+                self.assertEqual(transcript.getvalue(), b"".join(chunks))
+                dispatch.assert_called_once_with("run", self.RUN)
+
+    def test_stale_end_does_not_complete_the_run(self):
+        end = {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 1}
+        reader = MagicMock(in_waiting=0)
+        reader.read.side_effect = [b"PNT end retained=128\r\nRUN &040000\r\nPASS\r\n/ *", b""]
+        observer = Observer(reader, BytesIO(), MagicMock())
+        with patch("olimex_cli.time.monotonic", side_effect=[0, 0, 1, 1, 2]):
+            with self.assertRaisesRegex(CliError, "UART terminator"):
+                observer.run(self.RUN, b"/ *", b"PASS", b"FAIL", 120, uart_end=end)
+
+    def test_native_log_does_not_hide_a_mirrored_mos_error(self):
+        end = {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30}
+        reader = MagicMock(in_waiting=0)
+        reader.read.return_value = (
+            b"RUN &040000\r\nPASS\r\nError accessing PNT end retained=128\r\nSD card\r\n/ *")
+        observer = Observer(reader, BytesIO(), MagicMock())
+        with self.assertRaisesRegex(CliError, "Error accessing SD card"):
+            observer.run(self.RUN, b"/ *", b"PASS", b"Error accessing SD card", 120, uart_end=end)
 
 
 class TestOta(unittest.TestCase):
@@ -190,6 +235,81 @@ class TestOta(unittest.TestCase):
 
 
 class TestBench(unittest.TestCase):
+    def test_named_pair_stages_once_and_collects_each_report_with_a_fresh_session(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            artifact = root / "program.bin"
+            marker = root / "GROUND.ON"
+            artifact.write_bytes(b"program")
+            marker.touch()
+
+            def pin(path):
+                data = path.read_bytes()
+                return {"path": str(path), "bytes": len(data), "sha256": sha256(data).hexdigest()}
+
+            fixtures = []
+            for arm in ("full", "ground"):
+                cwd = f"/test/demo/{arm}"
+                fixtures.append({
+                    "id": arm, "cwd": cwd, "agon": pin(artifact),
+                    "sd_program": f"{cwd}/program.bin",
+                    "results": [f"{cwd}/stats.txt", f"{cwd}/trace.csv"],
+                    "address": "040000", "seconds": 120, "success": "PASS", "failure": "FAIL",
+                    "uart_end": {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30},
+                })
+            fixtures[1]["inputs"] = [
+                {"sd_path": "/test/demo/ground/GROUND.ON", "source": pin(marker)},
+            ]
+            kit = {"fixtures": fixtures, "namespace": "demo", "firmware": {},
+                   "preserve": {"/autoexec.txt": "0" * 64, "/emos/sdserve.bin": "0" * 64}}
+            self.assertEqual(preflight(kit), ["stage", "run-full", "run-ground", "handback"])
+            bench = Bench.__new__(Bench)
+            bench.out = root
+            bench.kit = kit
+            bench.stage_parallel = MagicMock()
+            bench.stage()
+            payloads, results, _ = bench.stage_parallel.call_args.args
+            self.assertEqual(payloads, {fixtures[0]["sd_program"]: b"program",
+                                        fixtures[1]["sd_program"]: b"program",
+                                        "/test/demo/ground/GROUND.ON": b""})
+            self.assertEqual(results, fixtures[0]["results"] + fixtures[1]["results"])
+
+            bench.url = "http://example.invalid"
+            bench.c = {"ports": ["/dev/example"]}
+            bench.validate_ports = bench.idle = bench.keyboard = MagicMock()
+            bench.type_line = MagicMock()
+            bench.start_listener = MagicMock()
+            bench.exit_staged_listener = MagicMock()
+            clients = [MagicMock(), MagicMock()]
+
+            def collect(operation, path, *, destination, require_parallel):
+                self.assertTrue(require_parallel)
+                self.assertEqual(operation, "get")
+                destination.write_bytes(path.encode())
+                return {"payload_carrier": "parlio"}
+
+            for client in clients:
+                client.begin.side_effect = collect
+            with patch("olimex_bench.open_passive_serial") as port, \
+                    patch("olimex_bench.Observer") as observe, \
+                    patch("olimex_bench.StagedClient", side_effect=clients):
+                observer = observe.return_value
+                observer.witness.return_value = b"/ *"
+                observer.change_directory.side_effect = [b"/test/demo/full *", b"/ *"]
+                bench.invoke("run-full")
+                port.assert_called_once()
+            observer.run.assert_called_once_with("RUN &040000", b"/test/demo/full *",
+                                                 b"PASS", b"FAIL", 120,
+                                                 uart_end=fixtures[0]["uart_end"])
+            self.assertEqual(observer.change_directory.call_args_list[1].args,
+                             ("restore-cwd", "/", b"/test/demo/full *"))
+            for client, path in zip(clients, fixtures[0]["results"]):
+                client.close.assert_called_once()
+                self.assertEqual(client.begin.call_args.args, ("get", path))
+                self.assertEqual((root / "results" / Path(path).name).read_bytes(), path.encode())
+            self.assertTrue((root / "results/vdp-usb.bin").is_file())
+            bench.exit_staged_listener.assert_called_once_with("collect")
+
     def test_parallel_staging_rejects_case_alias_of_input(self):
         job = {"sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
                "agon": {}, "inputs": [{"sd_path": "/test/DEMO/PROGRAM.BIN", "source": {}}]}
