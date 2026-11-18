@@ -31,17 +31,22 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--p4-build", type=Path, required=True)
     parser.add_argument("--listener", type=Path, required=True)
+    parser.add_argument("--emos-build", type=Path,
+                        help="Select the paired download candidate's identified EMOS build")
     parser.add_argument("--worked-job", type=Path, required=True)
     parser.add_argument("--worked-artifact", type=Path, required=True)
     parser.add_argument("--p4-table", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
+    two_way = args.emos_build is not None
 
     p4_manifest = json.loads((args.p4_build / "manifest.json").read_text())
     if not (p4_manifest["parallel_upload_candidate"] and p4_manifest["network_messages"]
             and p4_manifest["parallel_boot_candidate"] and not p4_manifest["network_parallel"]
             and not p4_manifest["source_dirty"]):
         raise ValueError("Expected a clean matched P4 build with the parallel upload sender")
+    if two_way and not (args.p4_build / "build/exext-parlio/parlio_rx.c").is_file():
+        raise ValueError("Two-way build requires the linked RX driver derivative")
     table = pin(args.p4_table, "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a")
     relative_pin(args.p4_build / "build/partition_table/partition-table.bin", table)
     candidate = pin(args.p4_build / "build/agon_extender.bin")
@@ -64,29 +69,45 @@ def main():
         with tar.extractfile(member) as stream:
             old_listener.write_bytes(stream.read())
     rollback = relative_pin(old_listener, current)
+    production_emos = pin(ROOT / "dist/bench-standards/emos-eirene-r04/ROM.bin",
+                          "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca")
+    firmware = {"p4": p4}
+    if two_way:
+        rom = json.loads((args.emos_build / "manifest.json").read_text())
+        if rom["composition"] != {
+            "sd_parallel_read": True, "network_parallel": False,
+            "uart0_rfc25": True, "control_tx_diagnostic": False,
+        }:
+            raise ValueError("Expected the matched EMOS SD-read profile")
+        firmware["emos"] = {
+            "candidate_write": relative_pin(args.emos_build / "ROM.bin", rom["outputs"]["ROM.bin"]),
+            "restore_write": production_emos,
+        }
     fixture = json.loads(args.worked_job.read_text())
     if fixture["preserve"]["/emos/sdserve.bin"] != rollback["sha256"]:
         raise ValueError("Worked job and accepted listener baseline disagree")
-    fixture.update(schema=2, namespace="port008-sdupload-r01", firmware={"p4": p4})
+    namespace = "port008-sdparallel-r02" if two_way else "port008-sdupload-r01"
+    fixture.update(schema=3 if two_way else 2, namespace=namespace, firmware=firmware)
     job = fixture["fixture"]
     # Use the worked example rebuilt for a fresh result path. The original
     # example's compiled-in destination may contain another job's evidence.
-    result = "/test/port008-sdupload-r01/fixture/result.txt"
+    result = f"/test/{namespace}/fixture/result.txt"
     if result.encode("ascii") + b"\0" not in args.worked_artifact.read_bytes():
         raise ValueError("Worked example lacks the dedicated qualification result path")
     job.update(agon=pin(args.worked_artifact),
-               sd_program="/test/port008-sdupload-r01/fixture/OLIMT2.bin",
+               sd_program=f"/test/{namespace}/fixture/OLIMT2.bin",
                sd_result=result, seconds=30)
     job["inputs"] = []
     rng = random.Random(8008)
-    for number, size in enumerate([0, 65537, 1100000, 2625992] + [70472] * 20):
+    sizes = [0, 1, 511, 512, 513, 4097, 65537, 1100000] if two_way else (
+        [0, 65537, 1100000, 2625992] + [70472] * 20)
+    for number, size in enumerate(sizes):
         local = args.out / f"upload-{number:02d}.bin"
         local.write_bytes(rng.randbytes(size))
-        job["inputs"].append({"sd_path": f"/test/port008-sdupload-r01/scratch/{local.name}",
+        job["inputs"].append({"sd_path": f"/test/{namespace}/scratch/{local.name}",
                               "source": pin(local)})
     packet = {"job": fixture, "listener": {"candidate": pin(args.listener), "restore": rollback},
-              "emos": pin(ROOT / "dist/bench-standards/emos-eirene-r04/ROM.bin",
-                          "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca")}
+              "emos": production_emos}
     validate(packet)
     manifest = args.out / "qualification.json"
     manifest.write_text(json.dumps(packet, indent=2) + "\n")

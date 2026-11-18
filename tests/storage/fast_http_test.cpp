@@ -46,6 +46,9 @@ int main(int argc,char **argv){
   std::filesystem::create_directories(root/"test");std::filesystem::create_directories(root/"spool");
   spoolDir=(root/"spool").string();fs_root(root.c_str());assert(service_init_mode("/test",101,1));
   routes(reinterpret_cast<void *>(1));presence();
+  auto required=request(11,"get","/test/file","");
+  required.headers["X-Extender-Require-Parallel"]="1";
+  admit(&required);assert(required.status=="503 Service Unavailable" && !occupied && !pendingWorker);
   auto r=request(1);admit(&r);assert(r.status=="202 Accepted"&&snapshot().phase==Queued);
   auto other=request(2);admit(&other);assert(other.status=="409 Conflict");
   auto premature=request(1);release(&premature);assert(premature.status=="409 Conflict");
@@ -56,6 +59,11 @@ int main(int argc,char **argv){
   auto served=request(3);data(&served);assert(served.response=="abc");
   auto broken=request(3);broken.failSend=true;assert(data(&broken)==ESP_FAIL);
   assert(snapshot().phase==Complete);drop(3);
+  auto lost=request(12,"get","/test/missing","");
+  admit(&lost);runWorker();assert(snapshot().phase==Failed);
+  auto unavailable=request(12);data(&unavailable);
+  assert(unavailable.status=="409 Conflict" && unavailable.response!="abc");
+  drop(12,true);
   // A lost foreground boot between admission and worker entry must not execute.
   auto reset=request(4);admit(&reset);presence(102);runWorker();
   assert(snapshot().phase==Failed&&snapshot().progress.error==Transport);

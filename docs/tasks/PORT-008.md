@@ -4,8 +4,8 @@ Extender will close the gap between the successful parallel SD upload trial
 and routine Olimex staging. The qualification uses the current EMOS and EVDP
 baselines with the maintained `sdserve` listener, then ties the exact passing
 combination to the bench runner and production selection. Smith authorized
-the first tranche on 2026-11-17. The offline candidate and bench packet are
-ready for physical qualification.
+the first tranche on 2026-11-17. The two-way candidate passed its offline
+checks. The pinned bench packet is ready for physical qualification.
 
 ## Current scope
 
@@ -89,7 +89,7 @@ both directions. Its third priority assigns parallel downloads to PORT-008
 and the file-service owners. Extender owns the integration across EMOS,
 EVDP, the canonical `sdserve` listener and the Pi5 job runner. This amendment
 gives the download work its own execution checklist under the existing task.
-The upload candidate already exists and retains its own qualification result.
+The upload candidate retains its own physical qualification packet.
 Two-way file support means that the same matched build can stage inputs and
 collect generated results over PARLIO on successive jobs.
 
@@ -101,15 +101,18 @@ Its native receive leaf admits at most 4096 bytes at a time. That evidence
 supplies a sender and receiver to reuse. File bytes need a dedicated path into
 the staged download spool with explicit buffer ownership and completion.
 
-- PORT-008-006 [ ] Pin the existing forward code and the upload candidate.
+- PORT-008-006 [x] Pin the existing forward code and the upload candidate.
   Trace the canonical listener's sequential FatFS reader, the EMOS sender
   and shared-pin handover, EVDP's native PARLIO receiver, and the P4 staged
   spool. Select the smallest supported route for a file larger than one RX
   block. Record buffer sizes, ROM/RAM cost, transfer and cleanup deadlines,
   and who owns each buffer until completion. Assess whether the proved
   block limit requires multiple admissions before promising whole-file handling.
+  Selected one 512-byte block per handover, using the listener's existing
+  upload buffer with one byte for the private gateway operation. Details and
+  build pins are in the [two-way candidate record](PORT-008/PRODUCTION-SD-PARALLEL-R02.md).
 
-- PORT-008-007 [ ] Implement a bounded parallel GET through the same canonical
+- PORT-008-007 [x] Implement a bounded parallel GET through the same canonical
   listener and staged job interface as PUT. EMOS owns the link and file-side
   send. EVDP feeds the received payload into the named P4 snapshot. The Pi5
   client requires parallel GET capability and the runner records the carrier
@@ -117,13 +120,17 @@ the staged download spool with explicit buffer ownership and completion.
   a visible failure without UART fallback or automatic replay. Empty files
   use the control path. Keep both directions free of payload CRCs, substitute
   digests and routine verification reads. Preserve the existing result checks.
+  Schema 3 requires both directions and records the staged GET result receipt.
 
-- PORT-008-008 [ ] Test the combined candidate offline. Cover both directions,
+- PORT-008-008 [x] Test the combined candidate offline. Cover both directions,
   empty files, the selected RX block boundary and its tail, missing capability,
   EOF and short transfer, full spool/media, failed handover and cleanup. A
   failed GET must leave no completed snapshot for HTTP delivery. Build and pin
   the combined EMOS, EVDP, listener and host artifacts and the production
   restores. Freeze a finite physical qualification packet from those artifacts.
+  Native builds, paired model tests and packet preflight passed. See the
+  [two-way candidate record](PORT-008/PRODUCTION-SD-PARALLEL-R02.md) for pins and
+  offline results.
 
 - PORT-008-009 [ ] Qualify PUT and GET on the same installed combination through
   the canonical listener. Exercise an empty file, the RX boundary and one

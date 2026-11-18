@@ -164,6 +164,31 @@ class StagedClientTests(unittest.TestCase):
             self.assertEqual(fake.calls.count(('POST', '')), 1)
             self.assertEqual(fake.calls.count(('GET', '/data')), 2)
 
+    def test_required_download_has_direction_specific_proof(self):
+        for data, supported, proof, carrier in (
+            (b'x', False, {}, None),
+            (b'', True, {}, 'empty-control'),
+            (b'x' * 513, True, dict(parallel_read_bytes=513, parallel_read_blocks=2), 'parlio'),
+            (b'x' * 513, True, dict(parallel_read_bytes=513, parallel_read_blocks=1), None),
+            (b'x', True, dict(parallel_outcome=3, parallel_clock_count=1, parallel_valid_count=2), None),
+        ):
+            with self.subTest(size=len(data), supported=supported, proof=proof), tempfile.TemporaryDirectory() as temp:
+                client, fake = self.fixture(temp, data)
+                fake.result.update(parallel_required_supported=True,
+                                   parallel_get_required_supported=supported, **proof)
+                output = Path(temp) / 'result'
+                if carrier:
+                    receipt = client.begin('get', '/test/file', destination=output, require_parallel=True)
+                    self.assertEqual(receipt['payload_carrier'], carrier)
+                    self.assertEqual(output.read_bytes(), data)
+                    self.assertEqual(fake.calls.count(('GET', '/data')), 1)
+                else:
+                    with self.assertRaises(staged.TransferError):
+                        client.begin('get', '/test/file', destination=output, require_parallel=True)
+                    self.assertFalse(output.exists())
+                    self.assertNotIn(('GET', '/data'), fake.calls)
+                    self.assertEqual(fake.calls.count(('POST', '')), int(supported))
+
     def test_crash_between_output_publication_and_receipt(self):
         with tempfile.TemporaryDirectory() as temp:
             client, fake = self.fixture(temp, b'abcdef')

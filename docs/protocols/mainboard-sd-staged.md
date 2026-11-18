@@ -49,7 +49,7 @@ acknowledgement. P4 requires exact declared CLOCK count and one VALID interval
 (two edges), then stops DMA and releases data pads before freeing the source.
 Whole-file PSRAM capacity is required; source preparation/admission failure
 never silently switches carriers or replays a request. Empty files retain their
-existing control-only path. Downloads remain UART.
+existing control-only path.
 
 The original upload trial filters CLOCK. The consumer-repair trial also filters
 VALID using the pinned SDK's fixed two-IO_MUX-sample hardware filter; strict
@@ -63,6 +63,32 @@ loading/allocation), `parallel_active_ms` (armed receive including SD pauses),
 `parallel_valid_count` report the actual proof samples; -1 means unavailable.
 These are not calibrated wire rates. The original ten-file comparison and the
 [consumer repair record](../tasks/PORT-008/UPLOAD-REPAIR-R01.md) bound evidence.
+
+## Parallel download candidate
+
+The matched PORT-008 candidate lets the Pi5 staged client require PARLIO for a
+GET. P4 first checks the foreground listener's HELLO bit `0x100`. The listener
+sets it only when started with `--fast --parallel` and its resident EMOS
+accepts the private `ext.sdlink` download capability query. A missing P4 or
+listener capability stops the job. Ordinary GET without a requirement keeps the
+existing UART behavior for older clients.
+
+P4 uses STAT to bind a declared size, then requests at most 512 bytes per
+PARLIO admission. Operation 16 carries little-endian job ID, start offset and
+total size (32 bits each), byte count (16 bits), and the existing length-prefixed
+absolute path. The listener reads the exact range into its existing file buffer
+before asking EMOS to park UART. The eZ80 drives data, CLOCK and VALID. P4
+receives into its native DMA buffer, checks the received length, CLOCK count
+and VALID interval, then stops DMA, releases the bus and restores UART. A
+matching control reply returns job ID and end offset, both 32 bits. File bytes
+never enter the UART or VDU parser. The queue never retransmits operation 16.
+
+The P4 worker appends each proven block to its private spool, then syncs and
+closes the finished snapshot before making it available to the Pi5. Failed
+or interrupted jobs keep their state and expose no downloadable snapshot.
+There is no payload CRC, digest or extra read of the file. Empty inputs or
+results use control records only. The candidate uses one handover per block.
+Its throughput and physical reliability await bench measurement.
 
 ## HTTP contract, interface version 1
 
@@ -85,7 +111,11 @@ P4 service `boot`, job `id`, `phase`, `bytes`, `size`, `records`, `error`,
    mainboard path, at most112 bytes for put/120 for get). For put, the body is
    exactly the file and `X-Extender-Activate: 1` is required. This job completes
    one replacement; stage-only transactions retain the existing RPC client.
-   For get, the body must be empty and activation omitted. Admission returns
+   For get, the body must be empty and activation omitted. With
+   `X-Extender-Require-Parallel: 1`, check `parallel_required_supported` for
+   PUT or `parallel_get_required_supported` for GET before submitting.
+   Required GET reports `parallel_read_bytes` and `parallel_read_blocks` for
+   matched native receives committed to the spool. Admission returns
    202 plus JSON; an existing retained job returns 409. No duplicate POST is
    automatically replayed or treated as a new transfer.
 2. `GET /sd/fast/data`: completed-download snapshot, with matching job/boot

@@ -16,6 +16,7 @@ import urllib.parse
 import urllib.request
 
 QUOTA = 32 * 1024 * 1024
+PARALLEL_READ_BLOCK = 512
 
 
 class TransferError(RuntimeError):
@@ -84,8 +85,6 @@ class Client:
             raise TransferError('Existing job retained; use resume/status before another transfer')
         if operation not in ('put', 'get') or (operation == 'put' and not activate) or (operation == 'get' and activate):
             raise ValueError('Staged put requires --activate; use sdcard.py for stage-only transactions')
-        if require_parallel and operation != 'put':
-            raise ValueError('A parallel requirement applies only to uploads')
         try:
             remote.encode('ascii')
         except UnicodeEncodeError:
@@ -102,8 +101,10 @@ class Client:
         if destination and Path(destination).exists():
             raise FileExistsError(destination)
         before = self.status()
-        if require_parallel and before.get('parallel_required_supported') is not True:
-            raise TransferError('P4 does not support required parallel uploads; no job submitted')
+        capability = ('parallel_required_supported' if operation == 'put'
+                      else 'parallel_get_required_supported')
+        if require_parallel and before.get(capability) is not True:
+            raise TransferError(f'P4 does not support required parallel {operation}; no job submitted')
         if before['phase'] != 0:
             raise TransferError('P4 has a retained job; inspect it before submitting another')
         self.state['job'] = {'id': secrets.randbelow(0xffffffff)+1, 'boot': before['boot'],
@@ -146,11 +147,18 @@ class Client:
                 if job['operation'] == 'put' and current['size'] != job['size']:
                     raise TransferError('Upload length mismatch; job retained')
                 if job.get('require_parallel'):
-                    if job['size'] and (current.get('parallel_outcome') != 3
-                            or current.get('parallel_clock_count') != job['size']
-                            or current.get('parallel_valid_count') != 2):
+                    size = current['size']
+                    if job['operation'] == 'put':
+                        exact = (current.get('parallel_outcome') == 3
+                                 and current.get('parallel_clock_count') == size
+                                 and current.get('parallel_valid_count') == 2)
+                    else:
+                        exact = (current.get('parallel_read_bytes') == size and
+                                 current.get('parallel_read_blocks') ==
+                                 (size + PARALLEL_READ_BLOCK - 1) // PARALLEL_READ_BLOCK)
+                    if size and not exact:
                         raise TransferError('Parallel completion proof is absent; job retained')
-                    current['payload_carrier'] = 'parlio' if job['size'] else 'empty-control'
+                    current['payload_carrier'] = 'parlio' if size else 'empty-control'
                 job['result'] = current
                 break
             if current['phase'] not in (1, 2, 3):
@@ -256,6 +264,8 @@ def main():
     get = commands.add_parser('get')
     get.add_argument('remote')
     get.add_argument('destination', type=Path)
+    get.add_argument('--require-parallel', action='store_true',
+                     help='Refuse if the parallel download carrier is unavailable')
     for name in ('status', 'resume', 'release', 'discard'):
         commands.add_parser(name)
     args = parser.parse_args()
@@ -265,7 +275,8 @@ def main():
             result = client.begin('put', args.remote, source=args.source, activate=args.activate,
                                   require_parallel=args.require_parallel)
         elif args.command == 'get':
-            result = client.begin('get', args.remote, destination=args.destination)
+            result = client.begin('get', args.remote, destination=args.destination,
+                                  require_parallel=args.require_parallel)
         elif args.command == 'status':
             result = client.status()
         elif args.command == 'resume':

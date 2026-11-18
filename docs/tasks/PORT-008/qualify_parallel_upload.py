@@ -5,7 +5,7 @@ import argparse
 import fcntl
 from hashlib import sha256
 import json
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import sys
 
 
@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import bench_process
-from olimex_bench import Bench, LISTENER, pinned, preflight, sd_path
+from olimex_bench import Bench, LISTENER, PARALLEL_LISTENER, pinned, preflight, sd_path
 from olimex_cli import Observer, command_result
 from passive_serial import open_passive_serial
 from sdcard import RemoteError
@@ -24,13 +24,18 @@ LIVE_LISTENER = "/emos/sdserve.bin"
 PHASES = {"install-p4": 650, "install-listener": 300, "stage": 300,
           "verify-scratch": 480, "run": 240, "restore-listener": 240,
           "restore-p4": 650, "handback": 90}
+TWO_WAY_PHASES = {"prepare-emos": 360, "install-p4": 650, "install-emos": 420,
+                  "install-listener": 300, "stage": 600, "verify-scratch": 720,
+                  "run": 240, "restore-listener": 240, "restore-emos": 420,
+                  "restore-p4": 650, "handback": 90}
 
 
 def validate(packet):
     kit = packet["job"]
     preflight(kit)
-    if kit["schema"] != 2 or set(kit["firmware"]) != {"p4"}:
-        raise ValueError("Qualification requires a PARLIO job and only the P4 firmware change")
+    if ((kit["schema"], set(kit["firmware"])) not in
+            ((2, {"p4"}), (3, {"p4", "emos"}))):
+        raise ValueError("Qualification requires the matched PARLIO firmware changes")
     if not kit["fixture"]["inputs"] or kit["fixture"]["seconds"] > 30:
         raise ValueError("Qualification requires explicit scratch inputs and a bounded fixture")
     listener = packet["listener"]
@@ -98,13 +103,14 @@ def change_listener(bench, packet, install):
 
 
 def compare_scratch(bench):
-    bench.start_listener("scratch", LISTENER)
+    both = bench.kit["schema"] == 3
+    bench.start_listener("scratch", PARALLEL_LISTENER if both else LISTENER)
     for number, artifact in enumerate(bench.kit["fixture"]["inputs"]):
         path = sd_path(artifact["sd_path"], ("/test",))
         output = bench.out / f"scratch-{number:02d}.bin"
-        client = StagedClient(bench.url, output.with_suffix(".json"), timeout=180)
+        client = StagedClient(bench.url, output.with_suffix(".json"), timeout=300 if both else 180)
         try:
-            result = client.begin("get", path, destination=output)
+            result = client.begin("get", path, destination=output, require_parallel=both)
             if output.read_bytes() != pinned(artifact["source"]):
                 raise RuntimeError(f"Qualification scratch bytes differ: {path}")
             bench_process.record(output.with_suffix(".receipt.json"),
@@ -114,10 +120,28 @@ def compare_scratch(bench):
     bench.exit_staged_listener("scratch")
 
 
+def prepare_emos(bench):
+    payloads, results = bench.emos_install_inputs()
+
+    def transfer(client):
+        for parent in sorted({str(PurePosixPath(path).parent) for path in [*payloads, *results]}):
+            client.make_directory(parent, parents=True)
+        for path in [*payloads, *results]:
+            absent(client, path)
+        # Firmware bootstrap before the candidate carrier exists. These
+        # inputs get independent ROM verification at the actual flash phases.
+        for path, content in payloads.items():
+            client.upload(path, content, activate=True, fast=True)
+
+    bench.listener("emos-preparation", LISTENER, transfer)
+
+
 def perform(bench, packet, phase):
     if phase in ("stage", "verify-scratch", "run", "restore-listener"):
         bench.kit["preserve"][LIVE_LISTENER] = packet["listener"]["candidate"]["sha256"]
-    if phase not in ("install-listener", "verify-scratch", "restore-listener"):
+    both = bench.kit["schema"] == 3
+    special = {"install-listener", "verify-scratch", "restore-listener", "prepare-emos"}
+    if phase not in special and not (both and phase == "stage"):
         bench.perform(phase)
         if phase == "run":
             if (bench.out / "result.txt").read_bytes() != b"Result file example\n":
@@ -129,6 +153,10 @@ def perform(bench, packet, phase):
         bench.validate_ports()
         if phase == "verify-scratch":
             compare_scratch(bench)
+        elif phase == "prepare-emos":
+            prepare_emos(bench)
+        elif phase == "stage":
+            bench.stage(include_emos=False)
         else:
             change_listener(bench, packet, install=phase == "install-listener")
 
@@ -147,11 +175,12 @@ def main():
         raise ValueError("Qualification packet differs from its pin")
     packet = json.loads(raw)
     validate(packet)
+    phases = TWO_WAY_PHASES if packet["job"]["schema"] == 3 else PHASES
     if args.phase == "preflight":
-        print("\n".join(PHASES))
+        print("\n".join(phases))
         return 0
     phase = args.phase.removeprefix("worker-")
-    if phase not in PHASES or not (args.config and args.out and args.operator):
+    if phase not in phases or not (args.config and args.out and args.operator):
         parser.error("Provide a physical phase, local config, evidence directory and slot operator")
 
     def argv(name):
@@ -163,11 +192,11 @@ def main():
     if args.phase != phase:
         if bench_process.read(folder / "supervisor-started.json")["argv"] != argv(phase):
             raise RuntimeError("Worker is missing its supervisor binding")
-        for previous in list(PHASES)[:list(PHASES).index(phase)]:
+        for previous in list(phases)[:list(phases).index(phase)]:
             bench_process.verify_child(args.out / previous, argv(previous))
         perform(Bench(bench_process.read(args.config), packet["job"], folder), packet, phase)
         return 0
-    return bench_process.run(argv(phase), folder, PHASES[phase], owner=args.operator,
+    return bench_process.run(argv(phase), folder, phases[phase], owner=args.operator,
                              lease=f"chat:{args.operator}", phase=phase,
                              next_action="Keep the slot and follow the bench stop procedure.")
 

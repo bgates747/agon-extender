@@ -21,11 +21,12 @@ class UploadPairTests(unittest.TestCase):
                         f"-I{EMOS / 'src'}", f"-I{EMOS / 'src_fatfs'}", f"-I{ROOT / 'vdp/video'}"]
             flags = ["-Wall", "-Wextra", "-Werror", "-Wno-endif-labels",
                      "-ffunction-sections", "-fdata-sections", "-DMOS_DEFINES_H=1", "-DMOS_AGONDEV_LOWERCASE_EZ80_H=1", "-DEMOS_BUSY=31", "-DEMOS_UNAVAILABLE=35",
+                     "-DEMOS_SD_PARALLEL_READ=1",
                      "-fsanitize=address,undefined", "-fno-sanitize-recover=all"]
             if os.environ.get("AGON_NETWORK_PARALLEL"):
                 flags += ["-DEMOS_NETWORK_PARALLEL=1"]
             objects = []
-            for name in ("emos_parallel_upload", "emos_parallel_handover"):
+            for name in ("emos_parallel_upload", "emos_parallel_handover", "emos_parallel_native"):
                 target = directory / (name + ".o")
                 subprocess.run(["cc", "-std=c17", *flags, *includes, "-include", "eZ80.h",
                                 "-c", str(EMOS / "src" / (name + ".c")), "-o", str(target)], check=True)
@@ -37,7 +38,8 @@ class UploadPairTests(unittest.TestCase):
             subprocess.run(["c++", "-std=c++17", *flags, "-DAGON_EXTENDER_UPLOAD_TEST",
                             *includes, str(source), *objects,
                             *[str(ROOT / "vdp/video/extender/transport" / (name + ".cpp"))
-                              for name in ("p4_parallel_upload", "p4_upload_coordinator", "p4_parallel_handover")],
+                              for name in ("p4_parallel_upload", "p4_upload_coordinator", "p4_parallel_handover",
+                                           "p4_native_payload", "p4_parallel_egress")],
                             "-Wl,--gc-sections", "-o", str(executable)], check=True)
             subprocess.run([str(executable)], check=True, timeout=45)
 

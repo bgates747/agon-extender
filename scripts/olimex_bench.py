@@ -87,7 +87,7 @@ def fixture_inputs(job):
 
 
 def preflight(kit):
-    if kit["schema"] not in (1, 2) or set(kit["firmware"]) - set(COMPONENTS):
+    if kit["schema"] not in (1, 2, 3) or set(kit["firmware"]) - set(COMPONENTS):
         raise ValueError("Unsupported bench job or component")
     job = kit["fixture"]
     sd_path(job["sd_program"], ("/test",))
@@ -106,7 +106,7 @@ def preflight(kit):
         raise ValueError("Expected startup and foreground listener identity pins")
     if any(not re.fullmatch(r"[a-f0-9]{64}", digest) for digest in kit["preserve"].values()):
         raise ValueError("Startup and listener pins must be SHA-256 digests")
-    if kit["schema"] == 2:
+    if kit["schema"] in (2, 3):
         for item in fixture_inputs(job).values():
             pinned(item)
     else:
@@ -223,20 +223,26 @@ class Bench:
     def cli(self):
         self.listener("cli", LISTENER, lambda client: None)
 
-    def stage(self):
+    def emos_install_inputs(self):
+        payloads, results = {}, []
+        for selection in ("candidate", "restore"):
+            payloads[f"{self.install_dir}/{selection}.bin"] = pinned(
+                self.kit["firmware"]["emos"][f"{selection}_write"])
+            rom = f"{self.results_dir}/{selection}-rom.bin"
+            results.append(rom)
+            payloads[f"{self.install_dir}/{selection}.txt"] = (
+                f"SAVE {rom} &0 &20000\r\n{LISTENER}\r\n").encode("ascii")
+        return payloads, results
+
+    def stage(self, *, include_emos=True):
         job = self.kit["fixture"]
-        sources = (fixture_inputs(job) if self.kit["schema"] == 2 else
+        sources = (fixture_inputs(job) if self.kit["schema"] in (2, 3) else
                    {job["sd_program"]: job["agon"]})
         payloads = {destination: pinned(spec) for destination, spec in sources.items()}
         expected_absent = []
-        if "emos" in self.kit["firmware"]:
-            for selection in ("candidate", "restore"):
-                payloads[f"{self.install_dir}/{selection}.bin"] = pinned(
-                    self.kit["firmware"]["emos"][f"{selection}_write"])
-                rom = f"{self.results_dir}/{selection}-rom.bin"
-                expected_absent.append(rom)
-                payloads[f"{self.install_dir}/{selection}.txt"] = (
-                    f"SAVE {rom} &0 &20000\r\n{LISTENER}\r\n").encode("ascii")
+        if include_emos and "emos" in self.kit["firmware"]:
+            firmware_inputs, expected_absent = self.emos_install_inputs()
+            payloads.update(firmware_inputs)
 
         def existing(client, remote):
             try:
@@ -246,7 +252,7 @@ class Bench:
                     return None
                 raise
 
-        if self.kit["schema"] == 2:
+        if self.kit["schema"] in (2, 3):
             self.stage_parallel(payloads, [job["sd_result"], *expected_absent], existing)
             return
 
@@ -282,16 +288,21 @@ class Bench:
         self.listener("stage", LISTENER, transfer)
 
     def stage_parallel(self, payloads, result_paths, existing):
-        if self.get("/sd/fast").get("parallel_required_supported") is not True:
+        capabilities = self.get("/sd/fast")
+        both = self.kit["schema"] == 3
+        if capabilities.get("parallel_required_supported") is not True:
             raise RuntimeError("P4 does not support required parallel uploads")
+        if both and capabilities.get("parallel_get_required_supported") is not True:
+            raise RuntimeError("P4 does not support required parallel downloads")
         self.start_listener("stage", PARALLEL_LISTENER)
         targets = [*payloads, *result_paths]
         client = Client(self.url, self.out / "sd-stage-metadata.json", timeout=12)
         try:
             client.connect(require_fast=True)
             hello = client.rpc(1)
-            if len(hello) != 8 or not struct.unpack_from("<H", hello, 6)[0] & 0x80:
-                raise RuntimeError("The foreground listener lacks parallel upload capability")
+            required = 0x180 if both else 0x80
+            if len(hello) != 8 or struct.unpack_from("<H", hello, 6)[0] & required != required:
+                raise RuntimeError("The foreground listener lacks the required parallel capabilities")
             for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
                 client.make_directory(directory, parents=True)
             for path in targets:
@@ -426,13 +437,28 @@ class Bench:
                              job["failure"].encode(), job["seconds"])
                 observer.mirror_off(prompt)
 
-        def collect(client):
-            raw = client.download(job["sd_result"])
-            (self.out / "result.txt").write_bytes(raw)
-            if raw.decode("ascii").splitlines() != job["expected_agon"]:
+        result_path = self.out / "result.txt"
+        def check_result():
+            if result_path.read_bytes().decode("ascii").splitlines() != job["expected_agon"]:
                 raise RuntimeError("Agon fixture result differs")
 
-        self.listener("collect", LISTENER, collect)
+        if self.kit["schema"] == 3:
+            self.start_listener("collect", PARALLEL_LISTENER)
+            staged = StagedClient(self.url, self.out / "sd-collect.json")
+            try:
+                receipt = staged.begin("get", job["sd_result"], destination=result_path,
+                                       require_parallel=True)
+                bench_process.record(self.out / "sd-collect.receipt.json", receipt)
+            finally:
+                staged.close()
+            check_result()
+            self.exit_staged_listener("collect")
+        else:
+            def collect(client):
+                result_path.write_bytes(client.download(job["sd_result"]))
+                check_result()
+
+            self.listener("collect", LISTENER, collect)
         if "p4_probe" in job:
             probe = self.out / "p4-probe.py"
             probe.write_bytes(pinned(job["p4_probe"]))

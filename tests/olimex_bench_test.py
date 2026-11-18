@@ -238,18 +238,54 @@ class TestBench(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             bench = Bench.__new__(Bench)
             bench.out = Path(tmp)
+            bench.kit = {"schema": 3}
             bench.url = "http://example.invalid"
-            bench.get = MagicMock(return_value={"parallel_required_supported": True})
+            bench.get = MagicMock(return_value={
+                "parallel_required_supported": True, "parallel_get_required_supported": True,
+            })
             bench.start_listener = MagicMock()
             direct = MagicMock()
-            direct.rpc.return_value = struct.pack("<IHH", 1, 212, 0x50)
+            direct.rpc.return_value = struct.pack("<IHH", 1, 212, 0x80)
             with patch("olimex_bench.Client", return_value=direct), \
                     patch("olimex_bench.StagedClient") as staged:
-                with self.assertRaisesRegex(RuntimeError, "lacks parallel upload capability"):
+                with self.assertRaisesRegex(RuntimeError, "lacks the required parallel capabilities"):
                     bench.stage_parallel({"/test/demo/a": b"a"}, [], MagicMock())
                 direct.make_directory.assert_not_called()
                 staged.assert_not_called()
             direct.lock.close.assert_called_once()
+
+    def test_parallel_run_collects_result_through_required_get(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bench = Bench.__new__(Bench)
+            bench.out = Path(tmp)
+            bench.url = "http://example.invalid"
+            bench.c = {"ports": ["/dev/example"]}
+            bench.kit = {"schema": 3, "fixture": {
+                "sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
+                "address": "040000", "success": "PASS", "failure": "FAIL",
+                "seconds": 5, "expected_agon": ["result"],
+            }}
+            bench.validate_ports = bench.idle = bench.keyboard = MagicMock()
+            bench.type_line = MagicMock()
+            bench.start_listener = MagicMock()
+            bench.exit_staged_listener = MagicMock()
+            bench.listener = MagicMock()
+            staged = MagicMock()
+
+            def download(operation, remote, *, destination, require_parallel):
+                self.assertEqual((operation, remote, require_parallel),
+                                 ("get", "/test/demo/result.txt", True))
+                destination.write_bytes(b"result\n")
+                return {"payload_carrier": "parlio"}
+
+            staged.begin.side_effect = download
+            with patch("olimex_bench.open_passive_serial"), patch("olimex_bench.Observer"), \
+                    patch("olimex_bench.StagedClient", return_value=staged):
+                bench.invoke()
+            bench.listener.assert_not_called()
+            bench.exit_staged_listener.assert_called_once_with("collect")
+            staged.close.assert_called_once()
+            self.assertIn("parlio", (bench.out / "sd-collect.receipt.json").read_text())
 
     def test_plain_production_plan_and_staging(self):
         with tempfile.TemporaryDirectory() as tmp:

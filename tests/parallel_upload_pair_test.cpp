@@ -19,8 +19,35 @@ static P4ParallelHandover peer;
 static t_emosParallelHandover local;
 static std::unique_ptr<C> owner;
 static agon::extender::storage::SdService queue;
-static bool irq=true,reserved,bootBlock;
+static bool irq=true,reserved,bootBlock,shortRead,stopFault;
 static unsigned now,parks,unparks,releases,rawCalls,drainDelay;
+static parlio_rx_event_callbacks_t onReceive;
+static void *receiveContext;
+int parlio_new_rx_unit(parlio_rx_unit_config_t const *cfg,void **unit) {
+ assert(!unitLive && parked && cfg->max_recv_size==logical && cfg->data_width==8);
+ unitLive=true;*unit=reinterpret_cast<void *>(2);return ESP_OK;
+}
+int parlio_new_rx_level_delimiter(parlio_rx_level_delimiter_config_t const *cfg,void **delimiter) {
+ assert(cfg->eof_data_len==logical);
+ *delimiter=reinterpret_cast<void *>(3);return ESP_OK;
+}
+int parlio_rx_unit_register_event_callbacks(void *,parlio_rx_event_callbacks_t const *cb,void *ctx) {
+ onReceive=*cb;receiveContext=ctx;return ESP_OK;
+}
+int parlio_rx_unit_enable(void *,bool enable) {assert(enable && !enabled);enabled=true;return ESP_OK;}
+int parlio_rx_unit_disable(void *) {
+ assert(enabled);
+ if(stopFault)return ESP_FAIL;
+ enabled=false;return ESP_OK;
+}
+int parlio_del_rx_unit(void *) {assert(unitLive && !enabled);unitLive=false;return ESP_OK;}
+int parlio_del_rx_delimiter(void *) {assert(!enabled);return ESP_OK;}
+int parlio_rx_unit_receive(void *,void *buffer,std::size_t n,parlio_receive_config_t const *) {
+ assert(enabled && buffer==allocation && n==logical);return ESP_OK;
+}
+int parlio_tx_unit_register_event_callbacks(void *,parlio_tx_event_callbacks_t const *,void *) {
+ assert(false && "Native TX is outside this file transfer model");return ESP_FAIL;
+}
 static void synchronize(){
  auto newValid=bool(hostPdDr&0x80);signal(newValid);
  clockLevel=bool(hostPdDr&0x20);
@@ -66,8 +93,11 @@ extern "C" BYTE emos_keyboard_parallel_release(){
  assert(reserved&&hostUart1Mctl==0);reserved=false;++releases;return UART_POLL_READY;
 }
 extern "C" BYTE emos_keyboard_clock(){return BYTE(now);}
+extern "C" void emos_keyboard_deadline_start(t_emosDeadline *d){
+ *d={BYTE(now),0,200};
+}
 extern "C" BYTE emos_keyboard_deadline_step(t_emosDeadline *d){
- synchronize();return ++d->elapsed<200;
+ synchronize();return ++d->elapsed<d->budget;
 }
 extern "C" void emos_parallel_io_write_control(UINT24 bits){
  hostPdDr=BYTE((hostPdDr&0x4f)|bits|(ready?0x10:0));
@@ -81,8 +111,35 @@ extern "C" BYTE emos_parallel_upload_bytes(BYTE *buffer,UINT24 n){
  for(unsigned i=0;i<n;++i)buffer[i]=dma[(clocked+i)%cycle];
  clocks(n);++rawCalls;return 0;
 }
-static bool admission(std::uint32_t time,std::uint32_t id,std::uint32_t length){
- return queue.admitBulk(time,id,length);
+extern "C" BYTE emos_parallel_native_bytes(BYTE *buffer,UINT24 n,BYTE reverse) {
+ assert(!reverse && n==logical && enabled && ready==0 && valid);
+ const unsigned actual=shortRead?n-1:n;
+ signal(false);
+ std::memcpy(allocation,buffer,actual);
+ for(auto &counter:counters)if(counter.running&&counter.gated)counter.count+=actual;
+ signal(true);
+ parlio_rx_event_data_t event{reinterpret_cast<void *>(3),allocation,actual};
+ onReceive.on_receive_done(reinterpret_cast<void *>(2),&event,receiveContext);
+ ++rawCalls;
+ return 0;
+}
+static bool admission(std::uint32_t time,const M &box){
+ return queue.admitBulk(time,box.job,box.length,box.receiving,box.offset);
+}
+static void offerRead(unsigned n,unsigned offset) {
+ constexpr unsigned descriptor=SD_PARALLEL_READ_PATH;
+ std::uint8_t presence[20],request[SD_HEADER+descriptor+3],wire[240];
+ unsigned out=0;
+ sd_header_mode(presence,SD_PRESENCE,101,0,0,0,0,1);sd_seal(presence);
+ assert(queue.receive(presence,20,now));auto token=queue.claim(now);assert(token);
+ sd_header_mode(request,SD_REQUEST,111,1,SD_PARALLEL_READ,0,descriptor+3,1);
+ sd_put32(request+20,73);sd_put32(request+24,offset);sd_put32(request+28,offset+n);
+ sd_put16(request+32,n);request[34]=2;request[35]='/';request[36]='a';sd_seal(request);
+ assert(uploadMailbox.loadDownload(73,offset,n));
+ synchronize();assert(uploadMailbox.status()==M::prepared && !unitLive && !allocation);
+ assert(uploadMailbox.offer());
+ assert(queue.postOwned(token,request,sizeof(request),wire,out,now)==202);
+ assert(queue.take(wire,now)==sizeof(request));
 }
 static void boot(){
  peer=P4ParallelHandover{};
@@ -95,6 +152,7 @@ static void boot(){
  hostPdDdr=0x10;hostPdAlt1=hostPdAlt2=0;hostPdDr=0x90;
  hostUart1Ier=5;hostUart1Mctl=0;irq=true;reserved=bootBlock=false;
  now=parks=unparks=releases=rawCalls=0;drainDelay=1;valid=1;clockLevel=0;
+ shortRead=stopFault=false;
  queue=agon::extender::storage::SdService{};
  owner=std::make_unique<C>(peer,pins,14,16,15,18,17,20,19,0,admission);
 }
@@ -175,5 +233,38 @@ int main(){unsigned cases=0;
  assert(!bootBlock&&!reserved&&unparks==1&&peer.phase()==P4ParallelHandover::uart);
  uploadMailbox.retire();synchronize();assert(uploadMailbox.status()==M::free&&!allocation);
  owner.reset();++cases;
- reset();std::cout<<"PASS "<<cases<<" paired upload coordinators; one admission/park, retained slices, exact bytes and clean UART return\n";
+ for(unsigned n:{1U,511U,512U}){
+  reset();boot();logical=n;offerRead(n,512);
+  std::vector<BYTE> data(n);
+  for(unsigned i=0;i<n;++i)data[i]=pattern(i+512);
+  assert(emos_parallel_download_send(data.data(),n)==0);
+  assert(uploadMailbox.status()==M::returned && uploadMailbox.outcome.load()==unsigned(R::complete));
+  assert(std::equal(data.begin(),data.end(),uploadMailbox.download.begin()));
+  assert(bootBlock==false && !reserved && parks==1 && unparks==1 && releases==1 && rawCalls==1);
+  assert(!allocation && !unitLive && !outputs && local.phase==EPH_UART && peer.phase()==P4ParallelHandover::uart);
+  uploadMailbox.retire();synchronize();assert(uploadMailbox.status()==M::free);
+  owner.reset();++cases;
+ }
+ // Short receive can finish DMA's callback without delivering the exact
+ // descriptor. Neither processor may report a successful reciprocal return.
+ reset();boot();logical=511;offerRead(511,0);
+ std::array<BYTE,511> data{};shortRead=true;
+ assert(emos_parallel_download_send(data.data(),511)!=0);
+ assert(uploadMailbox.status()==M::refused && !allocation && !unitLive && !outputs && !unparks);
+ uploadMailbox.retire();synchronize();assert(uploadMailbox.status()==M::free);
+ owner.reset();++cases;
+ // A failed driver stop pins the owner and DMA even after worker retirement.
+ // Run this intentionally retained fault in a separate process.
+ reset();auto child=fork();assert(child>=0);
+ if(!child){
+  boot();logical=511;offerRead(511,0);stopFault=true;
+  assert(emos_parallel_download_send(data.data(),511)!=0);
+  assert(uploadMailbox.status()==M::cleanupFault && allocation && unitLive && !unparks);
+  uploadMailbox.retire();synchronize();
+  assert(uploadMailbox.status()==M::cleanupFault && allocation);
+  _exit(0);
+ }
+ int status;assert(waitpid(child,&status,0)==child && WIFEXITED(status) && WEXITSTATUS(status)==0);
+ ++cases;
+ std::cout<<"PASS "<<cases<<" paired SD coordinators; exact bytes, matched UART return and retained cleanup faults\n";
 }

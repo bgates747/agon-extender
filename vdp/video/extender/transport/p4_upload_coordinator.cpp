@@ -1,7 +1,7 @@
 #include "p4_upload_coordinator.hpp"
 #include <driver/gpio.h>
 namespace agon::extender::transport {
-using H=P4ParallelHandover;using U=P4ParallelUpload;using M=P4UploadMailbox;
+using H=P4ParallelHandover;using U=P4ParallelUpload;using M=P4UploadMailbox;using N=P4NativePayload;
 bool P4UploadCoordinator::releasePads() noexcept {
   bool okay=true;
   for(int p:data_){
@@ -13,16 +13,22 @@ bool P4UploadCoordinator::releasePads() noexcept {
   }
   return okay;
 }
-P4UploadCoordinator::Result P4UploadCoordinator::fence() noexcept {
-  handover_.cancel();fenced_=true;
-  if(payload_ && payload_->cancel()==U::Result::cleanupFault){
+bool P4UploadCoordinator::stopPayload() noexcept {
+  if((payload_ && payload_->cancel()==U::Result::cleanupFault) ||
+      (receiver_ && (receiver_->result()==N::Result::cleanupFault ||
+       (receiver_->result()==N::Result::pending && receiver_->cancel()==N::Result::cleanupFault)))) {
     uploadMailbox.outcome.store(unsigned(U::Result::cleanupFault));
     uploadMailbox.state.store(M::cleanupFault,std::memory_order_release);
-    return Result::cleanupFault;
+    return false;
   }
+  payload_.reset();receiver_.reset();return true;
+}
+P4UploadCoordinator::Result P4UploadCoordinator::fence() noexcept {
+  handover_.cancel();fenced_=true;
+  if(!stopPayload())return Result::cleanupFault;
   // Existing boot owner may perform reciprocal recovery only after this
   // native leaf really stopped/released. Never manufacture a UART grant.
-  physical_=false;payload_.reset();parking_.reset();
+  physical_=false;parking_.reset();
   uploadMailbox.outcome.store(unsigned(U::Result::fault));
   uploadMailbox.state.store(M::refused,std::memory_order_release);
   return Result::recovery;
@@ -36,11 +42,8 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
     // The worker cannot destroy source storage while the console owns a DMA
     // unit. Even a refused request retires through this same console owner.
     if(m.cancel.load(std::memory_order_acquire) && state!=M::free && state!=M::loading){
-      if(payload_ && payload_->cancel()==U::Result::cleanupFault){
-        m.outcome.store(unsigned(U::Result::cleanupFault));
-        m.state.store(M::cleanupFault,std::memory_order_release);return Result::cleanupFault;
-      }
-      payload_.reset();parking_.reset();
+      if(!stopPayload())return Result::cleanupFault;
+      parking_.reset();
       if(!m.source.release()){m.state.store(M::cleanupFault,std::memory_order_release);return Result::cleanupFault;}
       m.state.store(M::free,std::memory_order_release);return Result::uart;
     }
@@ -51,6 +54,11 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
       // recovered UART phase admits preparation; begin() below clears that
       // history, exactly as the existing P4 handover admit() already does.
       if(h.phase()!=H::uart)return Result::uart;
+      if(m.receiving) {
+        receiver_.emplace(data_,clock_,valid_,ready_,core_);
+        m.state.store(M::prepared,std::memory_order_release);
+        return Result::uart;
+      }
       payload_.emplace(data_,clock_,valid_,ready_,core_);
       auto r=payload_->prepare(m.source);
       m.outcome.store(unsigned(r));
@@ -66,7 +74,7 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
     // A held peer release request immediately fences NEW UART producers.
     // The drain phase below still requires actual boundary/empty before park;
     // returning uart here would keep pumping keys into an already parked peer.
-    if(!admit_ || !admit_(now,m.job,std::uint32_t(m.source.size())) || !h.begin())return fence();
+    if(!admit_ || !admit_(now,m) || !h.begin())return fence();
     parking_.emplace(tx_,rx_,rts_,cts_,core_);
     physical_=true;parked_=released_=restored_=fenced_=false;
     startedAt_=now;phase_=h.phase();phaseAt_=now;m.state.store(M::active,std::memory_order_release);
@@ -75,7 +83,7 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
   if(h.failed())return fence();
   // Only the payload phase includes SD-write pauses. Handover phases retain
   // their short bounded deadline; late phase changes cannot renew an old one.
-  if(std::uint32_t(now-phaseAt_)>=(phase_==H::block?600000U:2000U))return fence();
+  if(std::uint32_t(now-phaseAt_)>=(phase_==H::block && !m.receiving?600000U:2000U))return fence();
   if(h.phase()!=phase_){phase_=h.phase();phaseAt_=now;}
   std::uint8_t done=0;
   const bool valid=gpio_get_level(gpio_num_t(valid_));
@@ -94,13 +102,25 @@ P4UploadCoordinator::Result P4UploadCoordinator::poll(std::uint32_t now,
     released_=true;done|=H::released;
   }
   if(h.phase()==H::localArm){
-    if(payload_->result()==U::Result::prepared) {
+    if(m.receiving) {
+      payloadAt_=now;
+      if(receiver_->arm(h,parked_,false,m.download.data(),m.download.size(),
+          m.length,now,2000)!=N::Result::pending)return fence();
+    } else if(payload_->result()==U::Result::prepared) {
       payloadAt_=now;
       if(payload_->arm(parked_,m.source.size(),now,600000)!=U::Result::pending)return fence();
     }
     done|=H::armed;released_=false;
   }
-  if(h.phase()==H::block){
+  if(h.phase()==H::block && m.receiving) {
+    if(m.cancel.load(std::memory_order_acquire))return fence();
+    const auto r=receiver_->poll(now);
+    if(r==N::Result::complete) {
+      m.activeMs=std::uint32_t(now-payloadAt_);
+      m.outcome.store(unsigned(U::Result::complete));
+      released_=true;done|=H::done;
+    } else if(r!=N::Result::pending)return fence();
+  } else if(h.phase()==H::block){
     auto r=m.cancel.load(std::memory_order_acquire)?payload_->cancel():payload_->poll(now);
     if(r==U::Result::cleanupFault)return fence();
     if(r!=U::Result::pending){

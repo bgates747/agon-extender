@@ -38,9 +38,11 @@ int gpio_pulldown_dis(int){return fails()?ESP_FAIL:ESP_OK;}
 int gpio_func_sel(int,int n){assert(n==PIN_FUNC_GPIO);if(!parked)mutationBeforePark=true;return fails()?ESP_FAIL:ESP_OK;}
 void esp_rom_gpio_connect_out_signal(int,int,bool a,bool b){assert(!a&&!b);outputs=true;if(!parked)mutationBeforePark=true;}
 void *heap_caps_aligned_alloc(std::size_t a,std::size_t n,int caps){
- assert(a==64&&n%64==0&&caps==(MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT)&&!allocation);
+ assert(a==64&&n&&!allocation);
+ if(caps==(MALLOC_CAP_INTERNAL|MALLOC_CAP_DMA|MALLOC_CAP_8BIT))assert(parked && n<=512);
+ else assert(n%64==0&&caps==(MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
  if(fails())return nullptr;
- allocation=std::aligned_alloc(a,n);allocated=n;return allocation;
+ allocation=std::aligned_alloc(a,(n+a-1)/a*a);allocated=n;return allocation;
 }
 void heap_caps_free(void *p){assert(p==allocation&&!unitLive&&!enabled);std::free(p);allocation=nullptr;}
 int parlio_new_tx_unit(parlio_tx_unit_config_t const *c,void **p){
