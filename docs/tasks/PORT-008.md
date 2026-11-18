@@ -1,6 +1,82 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
+Extender will close the gap between the successful parallel SD upload trial
+and routine Olimex staging. The qualification uses the current EMOS and EVDP
+baselines with the maintained `sdserve` listener, then ties the exact passing
+combination to the bench runner and production selection. Smith authorized
+the first tranche on 2026-11-17.
+
 ## Current scope
+
+### Production parallel SD upload qualification — 2026-11-17
+
+Smith requested this extension to qualify EMOS, EVDP and the SD listener as a
+single supported bench combination. Extender owns all three components and the
+commissioned Pi5 runner. The earlier trial used `/emos/sdpu01.bin`, while the
+current bench runs `/emos/sdserve.bin`. Use the maintained listener source and
+keep one supported listener at the production path. Carry the demonstrated
+parallel behavior into that source while preserving the accepted sequential
+reader and existing checksum-free UART sessions. The private trial remains
+comparison evidence. [Accepted listener](../mainboard-sd-tools.json) ·
+[Parallel trial pins](../mainboard-sd-parallel-trial.json) ·
+[Production build audit](BENCH-021/RESULTS.md#runner-findings-and-disposition)
+
+The starting pair is EMOS `a25f1612` from `2c79c600` and the EVDP build
+`d9bcb1a2` from `e14e0b8a`. EMOS already links the SD upload gateway and
+receiver. The EVDP build excluded the sender. Start from the current approved
+source and build settings, then carry over the proven sender and its VALID
+filter. Keep the current EMOS ROM if compatibility and hardware results
+support it. A change to EMOS requires a demonstrated integration gap. VDPlet
+stays on its normal mainboard image throughout this qualification.
+
+- PORT-008-001 [ ] Trace the maintained listener's current source and
+  accepted build, the EMOS gateway ABI, and both EVDP compositions. Compare
+  listener option and capability advertisement, link calls, error/EXIT behavior,
+  and the trial's corrected DMA descriptor, completion sampling and VALID filter
+  code. Record which deltas are required, where they belong, and whether the
+  installed EMOS ROM can be reused. Pin the starting sources and rollback files.
+
+- PORT-008-002 [ ] Prepare one identified candidate stack from the maintained
+  EMOS, EVDP and `sdserve` sources. Extender verifies the linked gateway/sender
+  and listener compatibility, and runs focused checks for missing capability,
+  zero-byte creation, complete activation, failed admission and session cleanup.
+  Keep local artifact hashes for component identity. Pin the exact candidate
+  and restore bytes before commissioning a physical run.
+
+- PORT-008-003 [ ] Bind the candidate to a generic commissioned staging
+  route. For nonempty uploads, the Pi5 runner requires PARLIO before mutation
+  and records the carrier used. The runner creates empty markers through the
+  control path, stages multiple job files, and keeps staged and direct client
+  sessions from overlapping. Routine uploads use no CRC, payload digest or
+  verification GET. A missing capability or transfer error stops dispatch.
+  Keep checksum-free UART result collection and explicit fixture invocation.
+
+- PORT-008-004 [ ] Qualify the matched combination on the Olimex under
+  exclusive custody and the current bench procedure. Use fresh scratch paths
+  for one empty file, one 65,537-byte control, one 1,100,000-byte file, one
+  2,625,992-byte asset and a proposed 20 consecutive 70,472-byte transfers to
+  exercise the previously failing session pattern. Freeze the exact phase
+  bounds, configuration and expected receipts before checkout. Retain carrier,
+  activation and clean EXIT evidence. Exercise the candidate under the normal
+  `/emos/sdserve.bin` path with a pinned rollback and unchanged `/autoexec.txt`.
+  Compare scratch bytes separately for this transport qualification, outside
+  timed staging. Keep that comparison out of routine runs. Run the standard
+  worked example once with the candidate active and retrieve its result. The
+  operator keeps the first failure and alerts Smith under the bench stop rule.
+  Restore changed production components and listener before check-in, and
+  verify a working CLI, idle transfers and free device handles.
+
+- PORT-008-005 [ ] Close the production loop after tested acceptance.
+  Package the exact qualified EVDP, EMOS and canonical listener with rollback
+  and the agreed release identity. Update the bench's restore pins, the SD
+  selector, the commissioned runner and curated operator checkout together.
+  Verify a fresh operator can follow the published staging instructions and
+  find the exact supported profile. Record the acceptance and release here.
+
+The first tranche covers source comparison, candidate construction
+and offline runner checks. Its handoff supplies the exact candidate and restore
+artifacts plus the bounded bench packet. The full CADENCE02 workload and
+parallel downloads remain separate from this upload qualification.
 
 ### Current authorized tranche — parallel uploads, 2026-11-03
 
