@@ -71,8 +71,8 @@ PARLIO carrier. Pi compiler generation 978 was released after both serial build
 process groups joined.
 
 The TX interrupt samples CTS once before touching the pending source or count.
-If the receiver withholds permission, EMOS masks TX, publishes the deferred
-owner, arms and acknowledges the modem interrupt, resamples CTS and returns.
+If the receiver withholds permission, EMOS publishes the deferred owner,
+masks TX, arms and acknowledges the modem interrupt, resamples CTS and returns.
 The modem interrupt or VBlank rearms the sole FIFO copier. A later stop can
 still leave a partly transmitted stream, so the application retains source
 and callback through release, honors TEMT ordering and waits for its own
