@@ -39,6 +39,8 @@ def main():
     parser.add_argument("--p4-table", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--namespace", help="Fresh bench SD namespace for a new qualification")
+    parser.add_argument("--capture-p4-usb", action="store_true",
+                        help="Record joined passive P4 diagnostics during transfers")
     args = parser.parse_args()
     two_way = args.emos_build is not None
 
@@ -112,6 +114,8 @@ def main():
                               "source": pin(local)})
     packet = {"job": fixture, "listener": {"candidate": pin(args.listener), "restore": rollback},
               "emos": production_emos}
+    if args.capture_p4_usb:
+        packet["capture_p4_usb"] = True
     validate(packet)
     manifest = args.out / "qualification.json"
     manifest.write_text(json.dumps(packet, indent=2) + "\n")

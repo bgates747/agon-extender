@@ -2,11 +2,14 @@
 """PORT-008 candidate qualification. Each physical phase needs an open slot."""
 
 import argparse
+from contextlib import contextmanager, nullcontext
 import fcntl
+from concurrent.futures import ThreadPoolExecutor
 from hashlib import sha256
 import json
 from pathlib import Path, PurePosixPath
 import sys
+from threading import Event
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -155,6 +158,31 @@ def prepare_emos(bench):
     bench.listener("emos-preparation", LISTENER, transfer)
 
 
+@contextmanager
+def capture_p4(bench):
+    before = bench.keyboard()
+    stop = Event()
+    with (open_passive_serial(bench.c["ports"][1], timeout=0.2) as reader,
+          (bench.out / "p4-passive.bin").open("xb") as transcript,
+          ThreadPoolExecutor(max_workers=1) as executor):
+        if bench.keyboard()["boot"] != before["boot"]:
+            raise RuntimeError("Opening passive P4 capture changed input admission")
+
+        def copy():
+            while not stop.is_set():
+                data = reader.read(1024)
+                if data:
+                    transcript.write(data)
+                    transcript.flush()
+
+        worker = executor.submit(copy)
+        try:
+            yield
+        finally:
+            stop.set()
+            worker.result(timeout=3)
+
+
 def perform(bench, packet, phase):
     if phase in ("stage", "verify-scratch", "run", "restore-listener"):
         bench.kit["preserve"][LIVE_LISTENER] = packet["listener"]["candidate"]["sha256"]
@@ -170,16 +198,18 @@ def perform(bench, packet, phase):
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         bench.lock = lock
         bench.validate_ports()
-        if phase == "verify-scratch":
-            compare_scratch(bench)
-        elif phase == "prepare-emos":
-            prepare_emos(bench)
-        elif phase == "stage":
-            bench.stage(include_emos=False)
-        elif phase == "resume-listener":
-            resume_listener(bench, packet)
-        else:
-            change_listener(bench, packet, install=phase == "install-listener")
+        observe = packet.get("capture_p4_usb") and phase in {"stage", "verify-scratch"}
+        with capture_p4(bench) if observe else nullcontext():
+            if phase == "verify-scratch":
+                compare_scratch(bench)
+            elif phase == "prepare-emos":
+                prepare_emos(bench)
+            elif phase == "stage":
+                bench.stage(include_emos=False)
+            elif phase == "resume-listener":
+                resume_listener(bench, packet)
+            else:
+                change_listener(bench, packet, install=phase == "install-listener")
 
 
 def main():
