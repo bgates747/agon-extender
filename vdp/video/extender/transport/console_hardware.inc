@@ -399,7 +399,11 @@ void runConsole(VDUStreamProcessor *processor) {
     }
     const bool blockDrain=blockResult==BlockResult::drain;
     // No parser, USB admission or UART writer runs while release is unresolved.
-    if(!blockDrain && !startup.poll(now,restoreUart,cancelTransport)) {
+    if(!blockDrain && !startup.poll(now,restoreUart,cancelTransport
+#if defined(AGON_EXTENDER_PARALLEL_UPLOAD)
+                                  ,[&](){return upload.canObservePeerRelease();}
+#endif
+                                  )) {
       vTaskDelay(pdMS_TO_TICKS(1));return;
     }
     if(!blockDrain)block.recovered();

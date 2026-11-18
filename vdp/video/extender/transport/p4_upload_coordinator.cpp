@@ -2,6 +2,13 @@
 #include <driver/gpio.h>
 namespace agon::extender::transport {
 using H=P4ParallelHandover;using U=P4ParallelUpload;using M=P4UploadMailbox;using N=P4NativePayload;
+bool P4UploadCoordinator::canObservePeerRelease() const noexcept {
+  // The peer can lower VALID after poll() saw idle UART but before the
+  // boot adapter samples the same pins. Let the next poll validate the
+  // queued request and claim C0/V0. A clock-high reset prefix still fences.
+  return xPortGetCoreID()==core_ && uploadMailbox.status()==M::offered &&
+      !gpio_get_level(gpio_num_t(clock_));
+}
 bool P4UploadCoordinator::releasePads() noexcept {
   bool okay=true;
   for(int p:data_){

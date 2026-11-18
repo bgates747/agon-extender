@@ -22,6 +22,11 @@ class P4BootStartup final {
   }
   template<class Restore,class Cancel>
   bool poll(std::uint32_t now,Restore restoreUart,Cancel cancelTransport) noexcept {
+    return poll(now,restoreUart,cancelTransport,[](){return false;});
+  }
+  template<class Restore,class Cancel,class PeerRelease>
+  bool poll(std::uint32_t now,Restore restoreUart,Cancel cancelTransport,
+            PeerRelease fileOfferCanClaimRelease) noexcept {
     if(xPortGetCoreID()!=core_ || cleanupFailed_)return false;
     // PORT-008 LC01: entry/payload/return belongs to the shared block owner.
     // Its CLOCK/VALID transitions are not reset indications. Yield without
@@ -39,7 +44,8 @@ class P4BootStartup final {
       blockOwned_=false;
     }
     if(live_) {
-      if(handover_.phase()==P4ParallelHandover::uart && pads_.uartLive())return true;
+      if(handover_.phase()==P4ParallelHandover::uart &&
+          (pads_.uartLive() || fileOfferCanClaimRelease()))return true;
       // Stop this owner's parser/serializer immediately. Only a completed
       // physical fence permits queue cancellation; SDK failures retry release.
       pendingLoss_=true;begin(now);return false;
