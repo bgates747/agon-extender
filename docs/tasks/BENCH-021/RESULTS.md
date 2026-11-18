@@ -73,8 +73,20 @@ independent processor flash verification in place.
 The [parallel trial selector](../../mainboard-sd-parallel-trial.json) identifies
 P4 `5db0c0a0`, EMOS `855aa732` and `/emos/sdpu01.bin` `f60f244f`. Its listener
 command is `EMOS sdpu01 --fast --parallel /`. The curated production images,
-P4 `d9bcb1a2` and EMOS `a25f1612`, differ from that trial. The
-[firmware audit](../AUDIT-012/RESULTS.md) confirms the current default EMOS
-lacks the parallel capability. Extender owns selecting and qualifying a
-compatible transfer stack before commissioning it as the routine route. The
-download carrier and multi-input runner changes remain implementation work.
+P4 `d9bcb1a2` and EMOS `a25f1612`, differ from that trial.
+
+Extender rehashed the production P4 application against the retained owner
+build `net-003-r02-b2026-11-06-09-03-07Z`. Its build manifest has
+`parallel_upload_candidate: false`, which excludes the SD PARLIO sender.
+The production EMOS ROM includes the SD upload gateway and receiver. Its
+retained link map matches manifest SHA-256 `11a296f0…` and contains
+`emos_sdlink_gateway` and `emos_parallel_upload_begin/read/end`. EMOS source
+`2c79c600` enables `EMOS_PARALLEL_UPLOAD=1`. The `network_parallel` setting
+controls application networking. The earlier audit conflated those features.
+
+The P4 build and default listener selection explain the missing production
+file route. Extender still needs to qualify the current EMOS with a
+PARLIO-enabled P4 and matching listener before commissioning that route.
+The reviewed evidence establishes no need to replace EMOS just to enable
+the feature. The download carrier and multi-input runner remain implementation
+work.
