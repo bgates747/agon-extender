@@ -2,10 +2,14 @@
 
 For the commissioned Olimex P4-PC, use the [production selection](../production/current.yaml)
 and the [Olimex bench procedure](operations/olimex-bench/README.md).
-Production v0.3.0 is an application-only update to an existing bench.
-The [production release](../production/README.md) identifies the verified
-package and flash scope. The [platform firmware defaults](procedures/olimex-firmware.md)
-cover the other maintained platforms.
+Production v0.3.0 updates the P4 app0, the full EMOS ROM and the SD listener
+on an existing bench. It preserves the mainboard VDPlet, the bootloaders,
+the partition tables and startup. The [production release](../production/README.md)
+locates the verified runtime. Use the bench procedure's **Production restore
+images** table to select the exact write file, target and SHA-256. Follow the
+commissioned install or restore phase for the affected processor.
+The [platform firmware defaults](procedures/olimex-firmware.md) cover the other
+maintained platforms.
 
 ## Retained DevKit v0.1.0 installation
 
@@ -26,7 +30,7 @@ third-party notices; publication is not yet approved.
 
 The runtime package contains `p4/`, `sd/`, `scripts/`, `reset/`, `builds/`,
 `baseline.yaml`, `bundle.yaml`, `INSTALL.md`, `NOTICES.md` and `SHA256SUMS`.
-Its P4 profile is the Olimex ESP32-P4 DevKit, not the future P4-PC. Keep the
+Its P4 profile is the Olimex ESP32-P4 DevKit. Keep the
 installed onboard VDP unchanged. The retained mainboard image matches official VDP v2.16.0; that historical
 match is not a fresh readback of another board. No mainboard VDP image or FLASH utility is shipped.
 

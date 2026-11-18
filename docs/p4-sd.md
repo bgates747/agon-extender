@@ -2,7 +2,9 @@
 
 The development firmware provides a sessionless HTTP file manager for the P4's
 own card, with a Python CLI and curl interface. Candidate **r57 passed bounded
-hardware checks on the local DevKit**, but is not in selected production v0.1.0.
+hardware checks on the local DevKit**. The
+[production selection](../production/current.yaml) identifies the commissioned
+Olimex firmware.
 Obtain the current installed-build receipt and bench ownership before connecting;
 the historical r57 result does not establish what firmware is running now. See the
 [hardware results](tasks/PORT-007/HARDWARE-RESULTS.md) for scope. See [implementation contract and evidence](tasks/PORT-007/NETWORK-CONTRACT.md).

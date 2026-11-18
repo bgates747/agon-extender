@@ -1,6 +1,10 @@
 # Firmware references
 
-For the Olimex bench, use the [current operator procedure](../operations/olimex-bench/README.md).
+The commissioned Olimex P4-PC bench uses **Extender v0.3.0**. The
+[production selection](../../production/current.yaml) pins the bundle.
+Use **Production restore images** in the
+[current operator procedure](../operations/olimex-bench/README.md)
+for exact write files, target offsets and checksums.
 The [firmware-owner procedure](../../production/olimex-bench-firmware.md)
 covers maintaining the production images.
 

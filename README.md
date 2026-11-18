@@ -11,10 +11,14 @@ a successful compile and a deployed/qualified combination are different things.
 ## Start here
 
 The [Extender handbook](docs/README.md) is the current documentation entry point.
+The commissioned Olimex P4-PC bench uses **Extender v0.3.0**. The
+[production release](production/README.md) identifies its exact firmware and
+archives. The [bench guide](docs/operations/olimex-bench/README.md) gives the
+production write files, offsets and checksums.
 
 1. **Using an existing installation:** [operator and external-agent entry point](docs/using-extender.md).
-2. **Transferring files:** [mainboard SD guide](docs/mainboard-sd.md), including the
-   foreground `EMOS sdserve` EMOSlet and paired `--fast` option.
+2. **Transferring files:** [mainboard SD guide](docs/mainboard-sd.md) for
+   checksum-free PARLIO staging and collection with the foreground listener.
 3. **Building:** [component build guide](docs/building.md). Select the native
    `p4-console` profile explicitly; the retained PlatformIO files are historical
    rollback material.
@@ -33,22 +37,21 @@ recorded builds and bench, not every Agon/P4 combination.
 | Legacy / Exclusive Compatible (ExCom) display routing | EMOS selects mainboard VDP or EDP. Retained VDP rendering and browser output work; compatibility and performance limits remain. [Architecture](docs/architecture.md), [bug register](docs/firmware-bugs.md). |
 | Physical, browser and agent keyboard input | P4 USB input, explicit browser capture and paced host automation are implemented. All require EMOS to have admitted Extender input. Physical input takes priority; browser capture overrides automation. [Keyboard guide](docs/remote-keyboard.md). |
 | Browser video and observation | P4 serves the page and final rendered pixels, with full-frame RLE2 by default. Browser output can slow gameplay; presented fps is not application-loop or native-rendering throughput. [Video contract](docs/protocols/browser-video.md). |
-| Agon mainboard SD | Foreground `EMOS sdserve [--fast] /` supports listing, reads and recoverable staged replacement. Normal mode verifies whole files; fast mode omits those verification passes. EMOSlet installation and latest scoped physical checks: [operating guide](docs/mainboard-sd.md). It does not run alongside a game. |
+| Agon mainboard SD | Olimex v0.3.0 uses `EMOS sdserve --fast --parallel /` for two-way staged files in Legacy. See the [operating guide](docs/mainboard-sd.md). |
 | Remote reset | An optional Pi-hosted bridge pulses the Agon's reset circuit; the browser button uses that bridge. This is not P4-native reset or power cycling. [Reset guide](docs/bench-reset.md). |
-| P4-local SD | Development candidate provides CLI/HTTP file and directory management; bounded r57 hardware checks recorded, outside selected production v0.1.0. [P4 SD guide](docs/p4-sd.md). Current bench firmware must be checked separately. |
-| Future / deferred | Audio: [PORT-004](docs/tasks/PORT-004.md). Parallel transport, MicroPython and physical video outputs remain separate work; see [TODO](TODO.md). |
+| P4-local SD | The development CLI/HTTP file manager passed bounded r57 DevKit checks. See the [P4 SD guide](docs/p4-sd.md). |
+| Future / deferred | Audio, parallel display and application transports, MicroPython, and physical video output work are tracked in [TODO](TODO.md). |
 
 Network services use plain HTTP/WebSocket on a trusted LAN, without
 authentication. The SD root passed to `sdserve` bounds access; `/` exposes the
 whole mainboard card. The SD wire API does not execute programs. Agent keyboard
 control can issue MOS commands only after its input path is already admitted.
 
-The current physical reference is **Agon Light 2 + Olimex ESP32-P4-DevKit Rev D1**.
-The [r03 UART harness](hardware/designs/light2-harness-r03/README.md) and its
-USB addition are not a complete qualification of every as-built circuit.
-The planned **ESP32-P4-PC** has a separate [reference library](docs/hardware/esp32-p4-pc/README.md)
-with manuals, schematics, provenance and upstream example-clone instructions.
-Do not treat the planned board as the installed DevKit.
+The commissioned Olimex bench uses **Agon Light 2 + ESP32-P4-PC**. See the
+[P4-PC reference library](docs/hardware/esp32-p4-pc/README.md) for its board
+documentation. The earlier **ESP32-P4-DevKit Rev D1** and
+[r03 UART harness](hardware/designs/light2-harness-r03/README.md) remain
+documented for their original installation.
 
 ## Source ownership and further reading
 

@@ -110,7 +110,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Production PARLIO upload candidate passes offline and awaits physical qualification. Offline parallel SD download integration and a combined PUT/GET qualification packet are authorized. [Forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) complete:340.35kB/s at8192B; UART wins256B. [VALID filter cost benchmark](docs/tasks/PORT-008/FILTER-COST-R01.md) authorized and awaiting FIFO admission. Broader async admission and P08-D02/warm-reset remain open.
+- [ ] **[PORT-008 — Eight-bit bidirectional ExExt transport](docs/tasks/PORT-008.md)** — Two-way SD transfers are qualified and released as [Olimex v0.3.0](production/README.md). The [forward rate comparison](docs/tasks/PORT-008/TRANSFER-RATE-COMPARISON-RESULTS.md) measured 340.35 kB/s at 8192 bytes. The [VALID filter cost benchmark](docs/tasks/PORT-008/FILTER-COST-R01.md), broader async admission and P08-D02/warm-reset remain open.
 
 - [ ] **[REMOTE-007 — Restore staged WebDAV file transfers](docs/tasks/REMOTE-007.md)** — Metadata requests succeed but file GET returns HTTP 500 on the current bench; checked foreground EMOS listener transfers work. Bounded reproduction, fault isolation, repair and Legacy/ExCom/file-manager validation planned; execution not started.
 

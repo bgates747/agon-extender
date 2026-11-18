@@ -390,7 +390,7 @@ The maintained `p4-console` target includes the selected codecs, browser decoder
 build flags and hash-guarded DSP derivative. It no longer requires hidden task
 snapshot overlays. The accepted r55 build additionally fixes the separate
 bootloader configuration path and checks both silicon ranges before freezing an
-image. See the [current bundle](../production/README.md) for exact binaries and
+image. See the [retained DevKit bundle](../production/bundles/extender-installation-r02/bundle.yaml) for exact binaries and
 [physical acceptance](tasks/RELEASE-001/R01-07.md) for the bounded scope.
 
 EMOS and the listener reproduce historical bytes exactly. P4 r55 is a separately
@@ -403,7 +403,7 @@ manifest. No new FPS guarantee or change to request pacing is implied.
 [reproduce_sd_components.py](../scripts/reproduce_sd_components.py) clones clean
 owning repositories into a fresh directory, uses the existing MOS builder and
 AgonDev toolchain, and requires expected historical hashes. For the selected
-recorded installation (substitute local checkout/tool paths):
+historical v0.1.0 DevKit installation (substitute local checkout/tool paths):
 
 ```sh
 .venv/bin/python scripts/reproduce_sd_components.py \
@@ -428,9 +428,10 @@ not modify an emulator, SD card or board.
 
 ## Local installation packaging
 
-The [production entry point](../production/README.md) and `production/current.yaml`
-select the accepted immutable bundle. r02 packages the exact physically tested
-r55 outputs; it does not rebuild or flash them. A clean source export must pass
+The [production entry point](../production/README.md) gives the current Olimex
+v0.3.0 archives. The commands below reconstruct the historical
+`extender-installation-r02` DevKit package from exact r55 artifacts.
+A clean source export for that recipe must pass
 both application and bootloader silicon-configuration checks. The maintained
 pre-build hook resolves the configuration path absolutely for both CMake builds.
 

@@ -72,7 +72,8 @@ the committed display route is Legacy. It delivers the unchanged payload to
 the application's registered `mos_setkbvector` callback without treating the
 completion as a key. Genuine mainboard keys still obey keyboard-source selection.
 This correction has passed linked CPU checks and a bounded physical Pingo
-completion/input test; it is not part of the selected production v0.1.0 bundle.
+completion/input test on the named build. The
+[Olimex EMOS inventory](olimex-emos-functions.md) describes current API coverage.
 See the EMOS owner's [contract and evidence](../../agon-emos/docs/tasks/INTEG-015.md).
 
 The Author-approved v0.1.27 build additionally admits exact ten-byte `VDPL`

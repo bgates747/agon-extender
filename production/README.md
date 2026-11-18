@@ -3,8 +3,9 @@
 **v0.3.0** is the accepted production stack for two-way PARLIO on the
 commissioned Olimex P4-PC bench. The [current selection](current.yaml) pins
 the [immutable bundle](bundles/olimex-parlio-v0.3.0/bundle.yaml).
-The [operator procedure](../docs/operations/olimex-bench/README.md) gives
-the exact restore files and the default runner workflow.
+Use **Production restore images** in the
+[operator procedure](../docs/operations/olimex-bench/README.md) for the exact
+files to write, their sizes, target offsets and SHA-256 values.
 
 | Component | Selected build |
 | --- | --- |
@@ -20,7 +21,8 @@ locally. Check both archives against that directory's `SHA256SUMS`; after
 extracting into fresh directories, run `sha256sum -c SHA256SUMS` in each.
 The bundle records every archive member. On the commissioned host, the
 verified runtime tree at the same location supplies the operator's direct
-restore links. Obtain the generated files from the Extender owner if absent.
+restore links and [runtime SHA256SUMS](../dist/production/olimex-parlio-v0.3.0/runtime/SHA256SUMS).
+Obtain the generated files from the Extender owner if absent.
 The previous P4 app and write extent, EMOS ROM and listener are in
 the runtime's `rollback/` directory.
 

@@ -343,8 +343,8 @@ mark tagging pending.
 
 On 2026-09-25 UTC the Author approved **v0.1.0** for the complete accepted
 production combination, selecting `extender-installation-r02`. Its annotated Git
-tag is `v0.1.0`. `production/current.yaml` records the production version, tag and
-immutable bundle reference together.
+tag is `v0.1.0`. The current selector records the applicable production version,
+tag and immutable bundle reference together.
 
 During early development, compatible production increments advance `v0.1.x`.
 Minor changes are reserved for Author-agreed milestones or developmental breaking
@@ -371,3 +371,11 @@ canonical hardware qualification or a published release tag. Preserve the
 existing immutable application-update archive and original embedded build ID;
 complete the declared qualification/selection gates before creating the
 annotated v0.2.1 tag. Do not move v0.1.0 or invent a separate v0.2.0 tag.
+
+### Olimex P4-PC production v0.3.0
+
+The Author accepted the exact two-way PARLIO stack as v0.3.0 for the
+commissioned Olimex bench. The [current production selection](../../production/current.yaml)
+binds the published tag and immutable bundle. The
+[bench guide](../operations/olimex-bench/README.md) names the verified
+P4 app0 image, complete EMOS ROM, SD listener and retained mainboard VDPlet.

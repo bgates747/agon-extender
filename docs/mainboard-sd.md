@@ -53,17 +53,15 @@ startup read and EXIT pass both after installation and during120Hz controller
 traffic. See the [bounded comparison](tasks/INPUT-002/R14-COMPARISON.md). No new
 large-transfer or full coexistence qualification is implied.
 
-Two mainboard transfer methods exist. **Selected production v0.1.0** provides
-checked/fast transfers through the foreground `sdserve` EMOSlet in Legacy mode.
-The **newer development candidate** adds automatic, P4-card-staged WebDAV jobs
-at the idle MOS prompt in Legacy and negotiated ExCom, plus application-initiated
-card transfers. Bounded hardware checks pass; this candidate has not been promoted
-to production. Verify the installed component receipt rather than assuming Git
-HEAD or the selected bundle describes the bench.
+Olimex v0.3.0 runs the foreground `sdserve` EMOSlet in Legacy mode.
+Separate development builds add automatic WebDAV jobs at an idle MOS prompt
+and application-initiated card transfers. Their bounded results belong to
+the exact builds in the qualification records below.
 
 | Method | Client / endpoint | Agon requirement | Status |
 |---|---|---|---|
-| Foreground checked/fast listener | `scripts/sdcard.py`, P4 HTTP origin | Manually start `/emos/sdserve.bin`; Legacy only | Selected production; instructions below |
+| Foreground staged listener | `scripts/sdcard_staged.py` and the bench runner | Start `EMOS sdserve --fast --parallel /` in Legacy | Olimex production v0.3.0 |
+| Direct UART client | `scripts/sdcard.py`, P4 HTTP origin | Foreground listener in Legacy | Control, inspection and authorized compatibility or recovery |
 | Automatic staged mainboard files | HTTP/WebDAV, port 8081 | Eligible idle CLI; paired resident EMOS and `/emos/sdjob.bin`; mounted P4 staging card | Development; bounded Legacy/ExCom hardware pass |
 | Application-owned card transfer | Linked `emos_file_transfer()` helper | Application explicitly initiates its own transfer | Development; bounded bidirectional Legacy/ExCom hardware pass |
 | P4-local card management | `scripts/p4sd.py` or curl, port 8080 | No Agon listener or EMOS required | Separate development service; [P4 SD guide](p4-sd.md) |
@@ -147,7 +145,7 @@ result semantics belong to the component owner's
 [application helper guide](https://github.com/bgates747/agon-emos/blob/main/lib/sdapp/README.md);
 the [protocol guide](protocols/staged-webdav.md) explains ownership.
 
-## Foreground listener — selected production
+## Direct UART client
 
 The earlier direct UART client is retained for authorized compatibility,
 control, inspection and recovery. Use the production staged commands above

@@ -1,6 +1,11 @@
 # Local project handoff
 
-## Current — actual148 passed, restored and released
+For the commissioned Olimex bench, use the
+[v0.3.0 production selection](production/current.yaml) and the
+[bench procedure](docs/operations/olimex-bench/README.md) for current binary
+pins, setup and handback. The entries below record past operations.
+
+## Historical — actual148 passed, restored and released
 
 The corrected 6502 cohort passed both pixel/map probes, DOS save, quit and a
 fresh application reload. Both disk analyses recovered the exact 58-byte guest
@@ -20,7 +25,7 @@ remain in the central registry and ignored local records.
 
 Actual147 had already completed Smith's human review, including the key repair,
 and released normally. Future FSIM hardware applications remain human-started
-only. Earlier sections below are historical and do not supersede this header.
+only.
 
 ## Historical — actual147 loaded for Smith's human review
 

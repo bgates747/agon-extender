@@ -3,9 +3,8 @@
 Checked protocol major1 and checksum-free fast major2, maintained for
 the EMOS-owned gateway, P4 service and foreground `sdserve` application/EMOSlet.
 The [operating guide](../mainboard-sd.md) owns invocation and installed identities.
-Major2 is installed in the developmental P4r13/sdserve-v0.3.0 combination, with
-bounded installation upload/download readbacks; broader qualification is pending.
-It changes checksum semantics
+Olimex v0.3.0 uses major2 UART records for the control path alongside the
+[staged PARLIO payload paths](mainboard-sd-staged.md). Major2 changes checksum semantics
 while preserving the existing packet offsets and resident gateway ABI.
 The Author's standing policy forbids operational major1 traffic without an
 explicit request; its checked implementation remains compatibility code.

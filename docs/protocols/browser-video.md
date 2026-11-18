@@ -15,10 +15,10 @@ overrides. This decision does not change pacing or expand supported formats.
 Client replacements and firmware deployments must preserve and verify this default.
 Authority: [ADR-0021](../decisions/ADR-0021-rle2-browser-default.md).
 
-The selected production r55 browser requests `?rle2=1&packed=2`. The earlier
+The retained v0.1.0 DevKit r55 browser requests `?rle2=1&packed=2`. The earlier
 reset-only build accidentally requested raw `/video`; that discrepancy was
-corrected in [RELEASE-001](../tasks/RELEASE-001/R01-07.md) and is not the current
-selected behavior. The P4 may still select raw fallback when compression is
+corrected in [RELEASE-001](../tasks/RELEASE-001/R01-07.md).
+The P4 may still select raw fallback when compression is
 ineligible or larger. Restoring codec negotiation did not add a pacing limiter.
 
 
@@ -47,7 +47,7 @@ Authority: [ADR-0020](../decisions/ADR-0020-web-output-30fps.md).
 | Normal policy at 512×384 | ADR-0020 specifies a 30 complete-frame/s ceiling, including output admission; it does not claim implementation |
 | Earlier controlled client | BENCH-005 K01 used an explicit 30 credits/s limiter; this describes that historical test |
 | Authorized later experiment | BENCH-005 W01–W02 raised the explicit client ceiling to 60/s; this did not replace the policy |
-| Selected production r55 | Browser sends the first credit on connection, then returns one after presentation in `requestAnimationFrame`; no explicit 30/60-fps time limiter |
+| Retained DevKit r55 | Browser sends the first credit on connection, then returns one after presentation in `requestAnimationFrame`; no explicit 30/60-fps time limiter |
 | P4-local SD candidate r57 | Same browser `app.js` bytes as r55; storage qualification did not change pacing |
 
 The selected client follows browser presentation opportunities and one-frame
@@ -194,7 +194,7 @@ retains its correct-image but worse-performance result.
 | `packed=2` | EVP1 or raw fallback | Palette form plus direct six-bit RGB222 |
 | `pair=1` | EVQ1 or raw fallback | Optional experimental pair-RLE; not the ordinary default |
 
-The selected production browser default combines `rle2=1&packed=2`: the server chooses an
+The r55 browser combines `rle2=1&packed=2`, which lets the server choose an
 eligible smaller representation. Requesting a codec is not proof it was sent;
 record actual magic and bytes. Earlier RLE2 candidates limited decoded frames
 to 512×384; the composed-packing candidate enlarged that bound to 1024×768.

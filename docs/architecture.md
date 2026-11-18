@@ -34,12 +34,14 @@ The remaining sections state design obligations unless an implemented subset is
 identified explicitly. Full fault recovery, generalized EDU APIs and compatibility
 coverage must not be inferred from the working console or diagnostic services.
 
-## Future EMOS foundation
+## EMOS foundation
 
-The Author selects Eirene as the future EMOS base, including asynchronous UART
-and OTIRX improvements. EMOS retains routing, transport, activation and committed
-mode ownership; unaware applications retain synchronous output semantics. This
-is a planned migration, not the currently installed or selected production base.
+The [Olimex v0.3.0 production selection](../production/current.yaml) uses the
+integrated Eirene-based EMOS, including the guarded asynchronous UART path.
+EMOS retains routing, transport, activation and committed mode ownership.
+Unaware applications retain synchronous output semantics. The
+[EMOS function inventory](olimex-emos-functions.md) identifies the exact ROM
+and API coverage.
 The [accepted direction](decisions/ADR-2026-11-04-eirene-emos-base.md) and
 [planning task](tasks/EMOS-001.md) define its integration boundary.
 
