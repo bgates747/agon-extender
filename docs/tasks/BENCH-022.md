@@ -1,6 +1,8 @@
 # BENCH-022 — Audit recent Olimex runner reliability
 
-**Approved audit scope, November 19, 2026.** Extender will determine where recent Olimex jobs
+**Audit returned for Smith’s review.** See the [findings and recommendations](BENCH-022/FINDINGS.md) and [phase ledger](BENCH-022/PHASES.md). The approved scope was frozen and pushed at `11d2a5d396c04091db2c20e9bbaa4f406f76dfdd`.
+
+**Original scope.** Extender will determine where recent Olimex jobs
 stopped and which recurring needs the shared runner should cover. Compare
 first-attempt successes and failures against actual commands and receipts.
 Return findings, ranked changes, and proposed approval wording for custom
@@ -33,7 +35,7 @@ runner code. The first tranche reviews retained evidence.
 
 ## Review process
 
-- BENCH-022-001 [ ] After Smith reviews the draft, freeze the audit scope
+- BENCH-022-001 [x] After Smith reviews the draft, freeze the audit scope
   in Git and publish it. Inventory Olimex jobs from November 12 through
   this request on November 19, 2026, in Eastern time. Start with
   Extender’s own production and custom firmware jobs, VDPL-057, FSIM
@@ -42,7 +44,7 @@ runner code. The first tranche reviews retained evidence.
   failed attempts, retries and jobs stopped before target access. Mark
   earlier comparison runs separately.
 
-- BENCH-022-002 [ ] Build a ledger from each job’s exact commands,
+- BENCH-022-002 [x] Build a ledger from each job’s exact commands,
   checkout and runner revisions, tool versions, firmware tuple, manifest
   and parent-written receipts. For each relevant phase record whether
   shared or job-specific code ran, the first-attempt outcome, the last
@@ -51,14 +53,14 @@ runner code. The first tranche reviews retained evidence.
   Link the evidence, mark missing fields, and keep machine-local bindings
   and raw captures in their existing ignored locations.
 
-- BENCH-022-003 [ ] Ask each recent operator with gaps in the records
+- BENCH-022-003 [x] Ask each recent operator with gaps in the records
   one consolidated question. Request the missing evidence, exact deviation
   from the shared procedure, reason for the deviation, first failure, and
   workaround or recurring need. Record unknowns and missing responses.
   Operators provide technical details. Use scheduler records for
   inventory while preserving the scheduler’s FIFO-only role.
 
-- BENCH-022-004 [ ] Trace each first failure to the instruction or code
+- BENCH-022-004 [x] Trace each first failure to the instruction or code
   path that selected the operation. Compare the command, programmer
   session, reset order, observer and completion criteria with an
   applicable proven predecessor. Classify each as shared runner or
@@ -70,7 +72,7 @@ runner code. The first tranche reviews retained evidence.
   comparable baseline, describe a separate read-only control with fixed
   wiring, firmware and starting state for Smith to consider.
 
-- BENCH-022-005 [ ] Rank the consolidation candidates. For each, name
+- BENCH-022-005 [x] Rank the consolidation candidates. For each, name
   the jobs that needed it, any shared helper already available, the
   smallest supported interface, failure handling, and qualification
   evidence needed. Identify cases that can use the existing runner
@@ -125,3 +127,7 @@ findings to Smith before changing runner code or bench policy. Hardware
 tests and commissioning are outside this audit.
 Close the audit once Smith has the ledger, evidence-backed findings and
 a disposition for each recommendation.
+
+## Disposition
+
+Extender completed the inventory, phase ledger, operator consultation, attribution and ranked recommendations. Smith’s disposition of the recommendations is pending. No runner or operating-policy changes or physical controls were executed.
