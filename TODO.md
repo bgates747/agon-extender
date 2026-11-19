@@ -59,7 +59,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[BENCH-022 — Audit recent Olimex runner reliability](docs/tasks/BENCH-022.md)** — Audit complete. Findings and ranked runner changes await Smith’s disposition.
+- [ ] **[BENCH-022 — Audit recent Olimex runner reliability](docs/tasks/BENCH-022.md)** — Implement approved failed-phase recovery, human-start support and runner diagnostics. USB sync investigation deferred.
 
 - [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — Bounded staged transfer and sequential-reader passes:1.1MB upload43.24s; new download43.57s versus250.92s matched control (5.759×), exact bytes and clean CLI/released custody. Faster listener accepted/installed with verified rollback, immutable archives and current tool selection. Paired production/version closeout and broader qualification remain; per-record UART replies remain explicit.
 

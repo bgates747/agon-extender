@@ -1,6 +1,6 @@
 # BENCH-022 — Audit recent Olimex runner reliability
 
-**Audit returned for Smith’s review.** See the [findings and recommendations](BENCH-022/FINDINGS.md) and [phase ledger](BENCH-022/PHASES.md). The approved scope was frozen and pushed at `11d2a5d396c04091db2c20e9bbaa4f406f76dfdd`.
+**Three shared runner corrections approved.** See the [findings and recommendations](BENCH-022/FINDINGS.md) and [phase ledger](BENCH-022/PHASES.md). The approved scope was frozen and pushed at `11d2a5d396c04091db2c20e9bbaa4f406f76dfdd`.
 
 **Original scope.** Extender will determine where recent Olimex jobs
 stopped and which recurring needs the shared runner should cover. Compare
@@ -131,3 +131,27 @@ a disposition for each recommendation.
 ## Disposition
 
 Extender completed the inventory, phase ledger, operator consultation, attribution and ranked recommendations. Smith’s disposition of the recommendations is pending. No runner or operating-policy changes or physical controls were executed.
+
+## Approved implementation tranche, November 19
+
+Smith selected recommendations 1–3. Keep the separate USB first-sync
+investigation deferred. Its cause remains unknown. Stock SD OTA/app1
+and the proposed custom-runner approval rule remain separate decisions.
+
+- BENCH-022-006 [ ] Add an explicitly invoked recovery route for a proved
+  failed, joined phase. Bind the operator, original packet, successful
+  predecessors and absent successors. Restore only proved changed components
+  through the ordinary verifier and finish with the ordinary handback.
+  Preserve the original failure and refuse uncertain writes or live actors.
+
+- BENCH-022-007 [ ] Support stage-only and preload-only human-start jobs.
+  A preload requires one observed LOAD and the returned working-directory
+  prompt. Smith runs the fixture and reports the result and return to MOS
+  in chat. Use the ordinary production restore and check-in afterward.
+
+- BENCH-022-008 [ ] Preserve the keyboard admission sample on failure.
+  Bind distinct CLI observations, validate marker inputs before dispatch,
+  and verify the needed runtime/interpreter before target work. Update the
+  curated operator and author guides. Exercise the normal entry points,
+  failed receipts and saved transcripts offline, and retain the distinction
+  between host qualification and qualification on a separately approved real job.
