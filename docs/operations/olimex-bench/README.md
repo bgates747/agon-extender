@@ -221,10 +221,10 @@ tools. The manifest lists staged payloads, expected results and the processors
 this job changes.
 
 ```bash
-.venv/bin/python scripts/olimex_bench.py --job JOB.json --sha256 JOB_SHA256 preflight
+.venv/bin/python scripts/olimex_bench.py --job JOB.json --sha256 JOB_SHA256 --config BENCH.local.json preflight
 ```
 
-The offline command prints the applicable phases in order. Prepare before the
+The offline command checks the local interpreter dependencies for the selected firmware and prints the applicable phases in order. Prepare before the
 slot opens. After checkout, use this command for each listed phase in order.
 Keep the same job, config and evidence directory throughout. Use your chat ID
 as the operator value.
@@ -247,14 +247,17 @@ job inputs.
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its applicable target. Compare the complete write extent. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `run-ID` | For a named arm, witness its working directory, issue one `LOAD` and one invocation, and keep the same UART reader open through any configured terminator. Follow the [authoring guide](AUTHORING.md) for a native-UART job with MOS-managed listener handoff. Collect reports in the arm's evidence directory. |
+| `preload` | For a human-start fixture, enter its directory, issue one LOAD, observe the returned prompt and close the reader. After the worker joins, give Smith the packet’s RUN command. |
 | `restore-emos`, `restore-p4`, `restore-mainboard` | Restore only the components the job changed. The same component verification and startup checks apply. |
 | `handback` | Verify CLI, idle transfer services, serial handles and the changed components' restores. The parent records joined worker completion before you send check-in. |
 
-A production-only job lists no install or restore phases. A staging-only or
-human-start job stops its automation before `run` and follows the invocation
-boundary in its own packet. The runner collects results from its own observed
-`RUN`. Name the exact commands and observation path in the packet for any
-other workload.
+For a `human_start` job, stop after the last install (or stage for a
+production-only job). If preflight lists `preload`, run that phase and
+wait for its successful join first. Give Smith the packet’s commands.
+For preload, Smith types only `RUN &ADDRESS` from the confirmed directory.
+Smith reports the visual verdict and return to MOS in chat. Record his
+words, then follow his disposition and the ordinary restore and handback
+phases. A human verdict requires no script or synthetic result file.
 
 ### Firmware methods used by the phase runner
 
@@ -291,3 +294,28 @@ operator can then trace the problem away from the bench. If the operator
 finds and fixes the problem, they may request a new slot through the normal
 FIFO. If the operator cannot return the bench to its production state,
 follow the stop rule above.
+
+### Restore and check in after a failed phase
+
+Once recovery is authorized under the stop rule above, confirm the fixture
+has stopped and MOS is available for the ordinary restore or handback
+commands. In the **original slot**, from the **same checkout and working
+directory**, use the original job, operator, config and evidence root. For
+example, when the failed phase was `run-full`, invoke:
+
+```bash
+.venv/bin/python scripts/olimex_bench.py --job JOB.json --sha256 JOB_SHA256 \
+  --config BENCH.local.json --out RUN_EVIDENCE --operator OPERATOR_CHAT_ID recover-after-run-full
+```
+
+Replace `run-full` with the exact failed phase name. The runner verifies the
+joined failure and its predecessors, checks that later phases never started,
+and compares the verified component records with the installed inventory.
+It restores outstanding candidates in reverse install order and performs
+normal handback. Keep the original failure. Check in only after the recovery
+directory contains both `handback.json` and the parent's `complete.json`.
+The original fixture outcome stands.
+
+If recovery reports an uncertain write, a live worker, different custody,
+or missing records, keep the slot and follow the stop rule. Older runs
+that predate `operation-binding.json` require individual reconciliation.

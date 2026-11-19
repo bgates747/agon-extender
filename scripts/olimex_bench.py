@@ -16,7 +16,7 @@ from urllib.request import urlopen
 
 import bench_process
 import olimex_p4_app
-from olimex_cli import Observer
+from olimex_cli import Observer, completion_markers
 from olimex_flash import check_extent, flash_application
 from passive_serial import open_passive_serial
 from reset_agon import status, wait_boot
@@ -61,7 +61,10 @@ def sd_path(path, roots):
 
 def phases(kit):
     components = [name for name in COMPONENTS if name in kit["firmware"]]
-    return (["stage"] + [f"install-{name}" for name in components] + list(fixture_runs(kit))
+    invocation = list(fixture_runs(kit))
+    if "human_start" in kit:
+        invocation = ["preload"] if kit["human_start"] == "preload" else []
+    return (["stage"] + [f"install-{name}" for name in components] + invocation
             + [f"restore-{name}" for name in reversed(components)] + ["handback"])
 
 
@@ -110,12 +113,12 @@ def listener_batch(job):
     return f"RUN &{job['address']}\r\n{PARALLEL_LISTENER}\r\n".encode("ascii")
 
 
-def validate_fixture(job, schema, *, named):
+def validate_fixture(job, schema, *, named, manual=False):
     sd_path(job["sd_program"], ("/test",))
     if named:
         if "sd_result" in job or "expected_agon" in job or "p4_probe" in job:
             raise ValueError("Named fixtures use dynamic result files")
-        if not isinstance(job["results"], list) or not job["results"]:
+        if not isinstance(job["results"], list) or (not manual and not job["results"]):
             raise ValueError("Named fixtures require at least one result file")
         if any(PurePosixPath(path).name.lower() == "vdp-usb.bin" for path in job["results"]):
             raise ValueError("A result file uses the reserved UART transcript name")
@@ -139,13 +142,13 @@ def validate_fixture(job, schema, *, named):
         sd_path(path, ("/test",))
     if job["sd_program"] in results or not re.fullmatch(r"[0-9A-Fa-f]{6}", job["address"]):
         raise ValueError("Invalid fixture address or result path")
-    if not 0 < job["seconds"] <= 1800:
-        raise ValueError("Invalid fixture time bound")
-    for name in ("success", "failure"):
-        if not re.fullmatch(r"[ -~]+", job[name]):
-            raise ValueError(f"Missing ASCII completion marker: {name}")
-    if job["success"].startswith(job["failure"]):
-        raise ValueError("Fixture success matches its failure prefix")
+    if manual:
+        if job["results"] or {"success", "failure", "seconds", "uart_end", "listener_handoff"} & job.keys():
+            raise ValueError("Human-start jobs use the operator's chat verdict and an empty results list")
+    else:
+        if not 0 < job["seconds"] <= 1800:
+            raise ValueError("Invalid fixture time bound")
+        completion_markers(job["success"], job["failure"])
     if schema in (2, 3):
         inputs = fixture_inputs(job)
         if named and any(cwd not in PurePosixPath(path).parents for path in inputs):
@@ -177,7 +180,10 @@ def preflight(kit):
             raise ValueError("Expected uniquely named fixtures in a schema 3 job")
     else:
         jobs = [kit["fixture"]]
-    targets = [path for job in jobs for path in validate_fixture(job, schema, named=named)]
+    manual = "human_start" in kit
+    if manual and (kit["human_start"] not in ("stage-only", "preload") or not named or len(jobs) != 1):
+        raise ValueError("Human start requires stage-only or preload and exactly one named fixture")
+    targets = [path for job in jobs for path in validate_fixture(job, schema, named=named, manual=manual)]
     if named:
         directories = [PurePosixPath(job["cwd"].lower()) for job in jobs]
         if len(set(directories)) != len(jobs) or any(
@@ -229,10 +235,12 @@ class Bench:
     def keyboard(self):
         actual = status(self.url)
         # The endpoint retains the previous session ID after cancellation.
-        closed = not actual["session"] or actual["reason"] == 1
-        if not (actual["ready"] and actual["physical_neutral"]
-                and not actual["pending"] and not actual["held"] and closed):
-            raise RuntimeError("Keyboard is not admitted and idle")
+        required = {"ready", "physical_neutral", "pending", "held", "session", "reason"}
+        if (not required.issubset(actual) or not actual["ready"] or not actual["physical_neutral"]
+                or actual["pending"] or actual["held"] or (actual["session"] and actual["reason"] != 1)):
+            path = self.out / f"keyboard-refused-{time.time_ns()}.json"
+            bench_process.record(path, actual)
+            raise RuntimeError(f"Keyboard is not admitted and idle. Status saved in {path}")
         return actual
 
     def idle(self):
@@ -293,8 +301,10 @@ class Bench:
         finally:
             client.lock.close()
 
-    def cli(self):
-        self.listener("cli", LISTENER, lambda client: None)
+    def cli(self, label="cli"):
+        if not re.fullmatch(r"[a-zA-Z0-9_-]+", label):
+            raise ValueError("Invalid CLI observation label")
+        self.listener(label, LISTENER, lambda client: None)
 
     def emos_install_inputs(self):
         payloads, results = {}, []
@@ -501,7 +511,10 @@ class Bench:
         self.update_inventory(inventory)
 
     def invoke(self, phase="run"):
-        job = fixture_runs(self.kit)[phase]
+        preload = phase == "preload"
+        if "human_start" in self.kit and not (preload and self.kit["human_start"] == "preload"):
+            raise ValueError("Smith owns fixture invocation for this job")
+        job = self.kit["fixtures"][0] if preload else fixture_runs(self.kit)[phase]
         named = "fixtures" in self.kit
         handoff = job.get("listener_handoff")
         output_dir = self.out / "results" if named else self.out
@@ -526,6 +539,13 @@ class Bench:
                         raise RuntimeError("The Legacy prompt cannot be used to restore its directory")
                     prompt = observer.change_directory("enter-cwd", job["cwd"], prompt)
                 observer.quiet_load(f"LOAD {job['sd_program']} &{job['address']}", prompt)
+                if preload:
+                    observer.mirror_off(prompt)
+                    bench_process.record(self.out / "preload.json", {
+                        "sd_program": job["sd_program"], "address": job["address"],
+                        "prompt": prompt.decode("ascii"), "entry_directory": entry,
+                    })
+                    return
                 if handoff:
                     observer.mirror_off(prompt, "mirror-off-run")
                     self.idle()
@@ -589,7 +609,9 @@ class Bench:
             if (self.out / "p4-result.txt").read_text().splitlines() != job["expected_p4"]:
                 raise RuntimeError("P4 fixture result differs")
 
-    def handback(self):
+    def handback(self, restores=None):
+        if restores is None:
+            restores = {c: self.out.parent / f"restore-{c}" for c in self.kit["firmware"]}
         if self.kit.get("schema", DEFAULT_SCHEMA) == 3:
             self.start_listener("handback", PARALLEL_LISTENER)
             self.exit_staged_listener("handback")
@@ -602,30 +624,82 @@ class Bench:
         for component, spec in self.kit["firmware"].items():
             role, hash_field = INVENTORY[component]
             expected = spec.get("restore_app", spec["restore_write"])["sha256"]
-            receipt = bench_process.read(self.out.parent / f"restore-{component}"
-                                         / "independent-verification.json")
+            if inventory["components"][hash_field] != expected:
+                raise RuntimeError(f"Inventory differs from production for {role}")
+            if component not in restores:
+                continue
+            receipt = bench_process.read(restores[component] / "independent-verification.json")
             if (receipt["sha256"] != expected or not receipt["boot_cli_ready"]
-                    or inventory["components"][hash_field] != expected):
+                    or receipt["verified_extent_sha256"] != spec["restore_write"]["sha256"]):
                 raise RuntimeError(f"Missing verified production restore for {role}")
         bench_process.record(self.out / "handback.json", {
             "working_legacy_cli": True, "keyboard": self.keyboard(),
             "listener_offline": True, "staged_transfer_idle": True, "serial_handles_free": True,
-            "production_restores": list(self.kit["firmware"]),
+            "production_restores": list(restores),
         })
         if self.kit["firmware"]:
             inventory["ready_claim"] = True
             inventory["recorded_epoch"] = time.time()
             self.update_inventory(inventory)
 
-    def perform(self, phase):
+    def recover(self, args, failed, owner, binding):
+        root = self.out.parent
+        history = recovery_history(args, self.kit, failed, owner, binding)
+        inventory = bench_process.read(self.config["inventory"])
+        if inventory.get("pending_operation"):
+            raise RuntimeError("Unreconciled firmware operation. Inspect the inventory and original write evidence")
+        changed, restores = [], {}
+        for component in reversed(COMPONENTS):
+            if component not in self.kit["firmware"]:
+                continue
+            spec = self.kit["firmware"][component]
+            role, field = INVENTORY[component]
+            operation = next((phase for phase in reversed(history)
+                              if phase in (f"install-{component}", f"retry-{component}",
+                                           f"restore-{component}")), None)
+            selection = "restore" if operation in (None, f"restore-{component}") else "candidate"
+            extent = spec[f"{selection}_write"]
+            digest = spec.get(f"{selection}_app", extent)["sha256"]
+            if inventory["components"][field] != digest:
+                raise RuntimeError(f"Inventory does not establish the expected {component} image")
+            if operation is None:
+                continue
+            receipt_path = root / operation / "independent-verification.json"
+            receipt = bench_process.read(receipt_path)
+            if (receipt["component"] != role or receipt["selection"] != selection
+                    or receipt["sha256"] != digest or receipt["boot_cli_ready"] is not True
+                    or receipt["verified_extent_sha256"] != extent["sha256"]
+                    or receipt["verified_extent_bytes"] != extent["bytes"]
+                    or Path(inventory[role]["verification_receipt"]).resolve() != receipt_path.resolve()):
+                raise RuntimeError(f"Firmware evidence does not bind {component} to the original operation")
+            if selection == "restore":
+                restores[component] = receipt_path.parent
+            elif extent["sha256"] != spec["restore_write"]["sha256"]:
+                changed.append(component)
+        bench_process.record(self.out / "plan.json", {"failed": failed, "restore": changed,
+                                                     "completed": history})
+        for component in changed:
+            folder = self.out / f"restore-{component}"
+            folder.mkdir()
+            restore = Bench(self.config, self.kit, folder)
+            restore.lock = self.lock
+            restore.firmware(component, "restore")
+            restores[component] = folder
+        self.handback(restores)
+
+    def perform(self, phase, *, recovery=None):
         path = Path(self.config["operation_lock"])
         with path.open("a") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             self.lock = lock
-            if phase == "stage":
+            if recovery is not None:
+                self.recover(*recovery)
+            elif any(self.out.parent.glob("recover-after-*")):
+                raise RuntimeError("Recovery has started in this evidence directory")
+            elif phase == "stage":
                 self.validate_ports()
                 self.stage()
-            elif phase in fixture_runs(self.kit):
+            elif phase == "preload" or phase in fixture_runs(self.kit):
                 self.invoke(phase)
             elif phase == "handback":
                 self.handback()
@@ -639,6 +713,74 @@ def child_argv(args, phase):
     return [sys.executable, str(Path(__file__).resolve()), "--job", str(args.job),
             "--sha256", args.sha256, "--config", str(args.config),
             "--out", str(args.out), f"worker-{phase}"]
+
+
+def runtime_preflight(kit, config):
+    # reboot_pair uses the runner interpreter even for a mainboard-only job.
+    if {"mainboard", "p4"}.intersection(kit["firmware"]):
+        from esptool import __version__
+        from esptool.reset import HardReset
+        if __version__ != "5.1.0" or not callable(HardReset):
+            raise RuntimeError(f"{sys.executable} needs stock esptool 5.1.0 for the paired restart")
+    if "mainboard" in kit["firmware"]:
+        interpreter = Path(config["programmer"]).with_name("python")
+        subprocess.run([str(interpreter), "-c",
+                        "from esptool import __version__, get_default_connected_device\n"
+                        "from esptool.cmds import detect_flash_size, write_flash\n"
+                        "from esptool.util import flash_size_bytes\n"
+                        "raise SystemExit(0 if __version__.startswith('4.12.') else 'Expected esptool 4.12')"],
+                       check=True, timeout=15)
+
+
+def recovery_history(args, kit, failed, owner, binding):
+    order = phases(kit)
+    planned = failed.replace("retry-", "install-", 1) if failed.startswith("retry-") else failed
+    completed = []
+    expected = {f"recover-after-{failed}"}
+
+    def verify(phase, *, fault=False):
+        folder = args.out / phase
+        argv = child_argv(args, phase)
+        supervisor = bench_process.read(folder / "supervisor-started.json")
+        if (supervisor["owner"] != owner or supervisor["lease"] != f"chat:{owner}"
+                or supervisor["phase"] != phase or supervisor["argv"] != argv
+                or bench_process.read(folder / "operation-binding.json") != binding):
+            raise RuntimeError(f"Original operator, packet or config differs for {phase}")
+        code = 0
+        if fault:
+            blocked = bench_process.read(folder / "blocked.json")
+            code = bench_process.read(folder / "child-terminal.json")["returncode"]
+            if (type(code) is not int or code == 0 or blocked["phase"] != phase or blocked["owner"] != owner
+                    or blocked["lease"] != supervisor["lease"]):
+                raise RuntimeError(f"No matching first fault for {phase}")
+        elif bench_process.read(folder / "complete.json")["state"] != "completed":
+            raise RuntimeError(f"Missing successful completion for {phase}")
+        bench_process.verify_child(folder, argv, expected_returncode=code, allow_interruption=fault)
+        expected.add(phase)
+
+    for prior in order[:order.index(planned)]:
+        if prior in ("install-mainboard", "install-p4"):
+            retry = prior.replace("install-", "retry-")
+            if (args.out / retry).exists():
+                verify(prior, fault=True)
+                prior = retry
+        verify(prior)
+        completed.append(prior)
+    if failed != planned:
+        verify(planned, fault=True)
+    verify(failed, fault=True)
+    # A failed flash that reached an intent or a readback needs reconciliation.
+    if failed.startswith(("install-", "retry-", "restore-")) and any(
+            (args.out / failed / name).exists() for name in
+            ("write-intent.json", "write-dispatched.json", "dispatch-flash.json",
+             "write-verified.json", "independent-verification.json")):
+        raise RuntimeError("The failed firmware phase has write evidence and needs reconciliation")
+    known = set(order) | {"retry-mainboard", "retry-p4"}
+    for folder in args.out.iterdir():
+        if folder.name not in expected and (folder.name in known or folder.name.startswith("recover-after-")
+                                             or (folder / "supervisor-started.json").is_file()):
+            raise RuntimeError(f"Unexpected phase evidence: {folder.name}")
+    return completed
 
 
 def main():
@@ -655,14 +797,19 @@ def main():
         raise ValueError("Job manifest differs from the named hash")
     kit = json.loads(raw)
     order = preflight(kit)
+    config = bench_process.read(args.config) if args.config else None
+    if config is not None:
+        runtime_preflight(kit, config)
     if args.phase == "preflight":
         print("\n".join(order))
         return 0
     if not args.config or not args.out:
         parser.error("Physical phases require --config and --out")
     phase = args.phase.removeprefix("worker-")
-    retry_phase = phase in ("retry-mainboard", "retry-p4")
-    planned = phase.replace("retry-", "install-", 1) if retry_phase else phase
+    failed = phase.removeprefix("recover-after-") if phase.startswith("recover-after-") else None
+    selected = failed or phase
+    retry_phase = selected in ("retry-mainboard", "retry-p4")
+    planned = selected.replace("retry-", "install-", 1) if retry_phase else selected
     if planned not in order:
         parser.error("The selected phase is absent from this job")
     if args.phase != phase:
@@ -670,6 +817,15 @@ def main():
         supervisor = bench_process.read(folder / "supervisor-started.json")
         if supervisor["argv"] != child_argv(args, phase):
             raise RuntimeError("Worker is missing its supervisor binding")
+        binding = {"cwd": str(Path.cwd()), "job_sha256": args.sha256, "config": config,
+                   "reset_config_sha256": sha256(Path(config["reset_config"]).read_bytes()).hexdigest()}
+        # Retain only the digest of the local binding in evidence.
+        binding = {"sha256": sha256(json.dumps(binding, sort_keys=True).encode()).hexdigest()}
+        bench_process.record(folder / "operation-binding.json", binding)
+        bench = Bench(config, kit, folder)
+        if failed:
+            bench.perform(phase, recovery=(args, failed, supervisor["owner"], binding))
+            return 0
         for prior in order[:order.index(planned)]:
             if prior in ("install-mainboard", "install-p4"):
                 retry = prior.replace("install-", "retry-", 1)
@@ -681,7 +837,7 @@ def main():
         if retry_phase:
             bench_process.verify_child(args.out / planned, child_argv(args, planned),
                                        expected_returncode=1)
-        Bench(bench_process.read(args.config), kit, folder).perform(phase)
+        bench.perform(phase)
         return 0
     if not args.operator:
         parser.error("Physical phases require --operator from the opened chat slot")
@@ -689,6 +845,8 @@ def main():
     bounds = {"stage": 300,
               "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
               "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
+    if failed:
+        bounds[phase] = 90 + sum(bounds.get(f"restore-{c}", 480) for c in kit["firmware"])
     job = fixture_runs(kit).get(phase)
     seconds = (job["seconds"] + job.get("uart_end", {}).get("seconds", 0) + 210
                if job is not None else bounds.get(phase, 480))

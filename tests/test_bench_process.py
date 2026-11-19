@@ -54,6 +54,8 @@ class BenchProcessTests(unittest.TestCase):
         end = bench.read(self.out/'child-terminal.json')
         self.assertTrue(end['timed_out'])
         self.assertTrue(end['group_terminal'])
+        self.assertTrue(bench.verify_child(self.out, argv, expected_returncode=end['returncode'],
+                                           allow_interruption=True)['all_joined'])
         with self.assertRaises(ValueError):
             bench.verify_child(self.out, argv)
 

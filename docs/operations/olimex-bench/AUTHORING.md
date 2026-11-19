@@ -87,7 +87,7 @@ in the C source and the manifest in sync.
 ```bash
 sha256sum path/to/job.json
 .venv/bin/python scripts/olimex_bench.py --job path/to/job.json \
-  --sha256 JOB_SHA256 preflight
+  --sha256 JOB_SHA256 --config BENCH.local.json preflight
 ```
 
 The production-only example yields `stage`, `run` and `handback`.
@@ -134,6 +134,39 @@ Each arm's results and UART transcript are in `RUN_EVIDENCE/run-ID/results/`.
 The transcript is named `vdp-usb.bin`. Generated reports retain their SD
 filenames. The phase directory also holds the separate transfer receipts
 and the parent process's completion record.
+
+## Prepare a human-start job
+
+Use schema 3, one named entry in `fixtures`, and the normal `firmware`,
+`namespace` and `preserve` fields. Set top-level `human_start` to
+`stage-only` if Smith will load and run the fixture, or `preload` if
+Smith will run an already loaded fixture. Include the usual `id`, `cwd`,
+`agon` file pin, `sd_program`, six-digit `address`, optional `inputs`,
+and `"results": []`. Omit automatic RUN markers, time bounds, listener
+handoff and UART terminators. In the packet give Smith the literal MOS
+commands, including the working directory for assets. The human observation
+and return to MOS belong in operator chat.
+
+With `preload`, the operator's worker enters the named directory and
+requires the LOAD echo and returned prompt. The receipt names the prompt,
+program and address. Stage-only prints no preload phase. Both print the
+ordinary restore and handback phases directly after preparation.
+
+## Check observer and flash dependencies
+
+Use the actual worker interpreter and supply the commissioned config to
+offline preflight. A mainboard app0 job uses the configured programmer's
+sibling Python with esptool 4.12.x, plus the runner's esptool 5.1.0 for
+paired startup. A P4 job uses the runner's 5.1.0 interpreter. A manifest-only
+preflight without the config checks the packet and lists phases. When an
+existing adapter uses these operations, call `runtime_preflight(kit, config)`
+from its own worker interpreter before it touches a device.
+
+Pass each repeated `Bench.cli(label)` observation a distinct label such as
+`before-restart` and `after-restart`. The default for a single observation is
+`cli`. The observer accepts printable ASCII text or bytes for RUN markers.
+A refused keyboard admission writes the status sample to
+`keyboard-refused-*.json` in the phase directory.
 
 ## Refresh the operator checkout
 

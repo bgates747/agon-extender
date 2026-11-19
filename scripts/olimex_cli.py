@@ -67,6 +67,21 @@ def rename_result(captured, command, prompt, source, destination):
     return output != [] and tail == prompt
 
 
+def marker_bytes(marker):
+    if isinstance(marker, str):
+        marker = marker.encode("ascii")
+    if not isinstance(marker, bytes) or not re.fullmatch(rb"[ -~]+", marker):
+        raise ValueError("Completion markers must be nonempty printable ASCII text or bytes")
+    return marker
+
+
+def completion_markers(success, failure):
+    success, failure = marker_bytes(success), marker_bytes(failure)
+    if success.startswith(failure):
+        raise ValueError("Fixture success matches its failure prefix")
+    return success, failure
+
+
 class Observer:
     def __init__(self, reader, transcript, dispatch):
         self.reader = reader
@@ -140,9 +155,12 @@ class Observer:
         return self.exchange(label, command, returned, 15)
 
     def run(self, command, prompt, success, failure, seconds, *, uart_end=None):
+        success, failure = completion_markers(success, failure)
         deferred = None
         if uart_end:
-            prefix, marker = (uart_end[key].encode("ascii") for key in ("prefix", "line"))
+            prefix, marker = (marker_bytes(uart_end[key]) for key in ("prefix", "line"))
+            if not marker.startswith(prefix) or not 0 < uart_end["seconds"] <= 120:
+                raise ValueError("Invalid UART terminator or observation bound")
             # Native logs can interrupt the mirrored prompt or a MOS line
             # between any two characters. Remove only the configured records
             # from the CLI view and preserve every raw byte in the transcript.
@@ -163,6 +181,9 @@ class Observer:
         return self.exchange("run", command, complete, seconds, deferred=deferred)
 
     def run_to_listener(self, batch, seconds, uart_end, listener_status):
+        marker = marker_bytes(uart_end["line"])
+        if not 0 < uart_end["seconds"] <= 120:
+            raise ValueError("Invalid UART observation bound")
         self.discard_buffered_input()
         self.dispatch("run", f"EXEC {batch}")
         captured = bytearray()
@@ -178,7 +199,6 @@ class Observer:
             return status if status["online"] else None
 
         status = self.receive("post-RUN listener admission", captured, online, seconds, poll=True)
-        marker = uart_end["line"].encode("ascii")
         line = re.compile(rb"(?:^|[\r\n])" + re.escape(marker) + rb"(?=[\r\n])")
         if not line.search(captured):
             self.receive(f"native UART terminator {marker!r}", captured, line.search, uart_end["seconds"])

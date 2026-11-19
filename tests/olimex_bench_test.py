@@ -540,11 +540,15 @@ class TestBench(unittest.TestCase):
         bench = Bench.__new__(Bench)
         bench.url = "http://example.invalid"
         result = dict(ready=True, physical_neutral=True, pending=0, held=0, session=25, reason=1)
-        with patch("olimex_bench.status", return_value=result):
+        with tempfile.TemporaryDirectory() as tmp, patch("olimex_bench.status", return_value=result) as read:
+            bench.out = Path(tmp)
             self.assertEqual(bench.keyboard(), result)
             result["reason"] = 0
             with self.assertRaises(RuntimeError):
                 bench.keyboard()
+            import json
+            self.assertEqual(json.loads(next(bench.out.glob("keyboard-refused-*.json")).read_text()), result)
+            self.assertEqual(read.call_count, 2)
 
 
 if __name__ == "__main__":
