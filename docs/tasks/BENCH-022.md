@@ -1,6 +1,6 @@
 # BENCH-022 — Audit recent Olimex runner reliability
 
-**Three shared runner corrections approved.** See the [findings and recommendations](BENCH-022/FINDINGS.md) and [phase ledger](BENCH-022/PHASES.md). The approved scope was frozen and pushed at `11d2a5d396c04091db2c20e9bbaa4f406f76dfdd`.
+**Three shared runner corrections implemented and checked offline. Physical qualification is pending a selected real job.** See the [findings and recommendations](BENCH-022/FINDINGS.md) and [phase ledger](BENCH-022/PHASES.md). The original audit scope was frozen and pushed at `11d2a5d396c04091db2c20e9bbaa4f406f76dfdd`.
 
 **Original scope.** Extender will determine where recent Olimex jobs
 stopped and which recurring needs the shared runner should cover. Compare
@@ -130,7 +130,7 @@ a disposition for each recommendation.
 
 ## Disposition
 
-Extender completed the inventory, phase ledger, operator consultation, attribution and ranked recommendations. Smith’s disposition of the recommendations is pending. No runner or operating-policy changes or physical controls were executed.
+Extender returned the inventory, ledger, operator responses and ranked recommendations before changing the runner. Smith approved the three corrections below. The implementation scope was frozen at `0dfdbe347fcf3952ee8516c1d2d12ae89966411a`.
 
 ## Approved implementation tranche, November 19
 
@@ -138,20 +138,39 @@ Smith selected recommendations 1–3. Keep the separate USB first-sync
 investigation deferred. Its cause remains unknown. Stock SD OTA/app1
 and the proposed custom-runner approval rule remain separate decisions.
 
-- BENCH-022-006 [ ] Add an explicitly invoked recovery route for a proved
+- BENCH-022-006 [x] Add an explicitly invoked recovery route for a proved
   failed, joined phase. Bind the operator, original packet, successful
   predecessors and absent successors. Restore only proved changed components
   through the ordinary verifier and finish with the ordinary handback.
   Preserve the original failure and refuse uncertain writes or live actors.
 
-- BENCH-022-007 [ ] Support stage-only and preload-only human-start jobs.
+- BENCH-022-007 [x] Support stage-only and preload-only human-start jobs.
   A preload requires one observed LOAD and the returned working-directory
   prompt. Smith runs the fixture and reports the result and return to MOS
   in chat. Use the ordinary production restore and check-in afterward.
 
-- BENCH-022-008 [ ] Preserve the keyboard admission sample on failure.
+- BENCH-022-008 [x] Preserve the keyboard admission sample on failure.
   Bind distinct CLI observations, validate marker inputs before dispatch,
   and verify the needed runtime/interpreter before target work. Update the
   curated operator and author guides. Exercise the normal entry points,
   failed receipts and saved transcripts offline, and retain the distinction
   between host qualification and qualification on a separately approved real job.
+
+## Implementation and qualification
+
+Runner revision `5512f2a611bd4855b297d1d4efc33cc50ba3bd57` includes
+the [operator commands](../operations/olimex-bench/README.md) and
+[manifest instructions](../operations/olimex-bench/AUTHORING.md).
+
+| Host check | Result |
+| --- | --- |
+| Shared runner and CLI, recovery/manual regressions, process supervisor | 28 + 18 + 14 tests passed. Includes a nonzero timed-out but joined child, unknown firmware state, wrong operator or packet, a live group, and an already-started successor. |
+| Arcade's two failed first arms | Replayed both original predecessor chains, firmware receipts and saved inventory. Each selected mainboard restore and handback. Neither started the ground arm. The replay substituted the new config-binding field and mocked hardware operations. The live recovery command refuses these older unbound receipts. |
+| VDPlet's retained INSTALL and preload transcripts | The observer accepted the INSTALL line and returned prompt with text markers. The actual preload contained one LOAD and a returned directory prompt. New regression cases also cover a rejected LOAD and a missing prompt. |
+| Clean sparse checkout | Matched all 29 selected files to the runner commit. The normal CLI preflight checked the commissioned Python environments and printed the expected phase orders for the existing paired job and both human-start variants. |
+
+- BENCH-022-009 [ ] Qualify the new paths on separately selected real jobs.
+  Pin the runner in the next applicable packet. Preserve first-fault and
+  handback evidence, including Smith’s chat verdict for a human-start job.
+  The existing reservation and its pinned shared checkout continue on their
+  original revision. The physical USB first-sync investigation remains deferred.
