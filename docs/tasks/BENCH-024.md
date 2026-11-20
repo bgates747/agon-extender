@@ -1,6 +1,7 @@
 # BENCH-024 — Verify mainboard VDP updates from SD before reboot
 
-**Plan approved on November 20, 2026. Offline work authorized.** Adapt Jeroen Venema's Agon Flash so an operator
+**Plan approved on November 20, 2026. Offline tranche complete.** Adapt
+Jeroen Venema's Agon Flash so an operator
 can update the Olimex mainboard VDP from SD without keypresses. The Pi5 runner
 collects the flash verification result and wakes the operator chat while the
 current VDP is still running. Qualify one update and return to production.
@@ -53,21 +54,25 @@ ordinary checksum-free PARLIO policy still governs staging and result retrieval.
 
 ## Work and qualification
 
-- BENCH-024-001 [ ] Freeze the two-part update and activation contract with
-  VDPlet. Smith assigned the eZ80 utility to Extender. Pin the
-  supported MOS-managed reply, receiver capability, boot-identity witnesses,
-  timeout and failure outcomes, and exact prototype and production artifacts
-  before selecting a physical run.
+- BENCH-024-001 [x] Freeze the two-part update and activation contract with
+  VDPlet. The approved plan checkpoint is
+  `41bcbc37eeb5b8d93300a5db595764eb3d2a358f`. Wire v1 uses the committed
+  onboard EMOS route and the ten-byte callback record. The offline packet
+  pins both receivers, the production app, bootstrap and restore data.
+  [Receiver protocol](../../../agon-vdplet/docs/tasks/VDPL-060/PROTOCOL.md)
 
-- BENCH-024-002 [ ] VDPlet implements the receiver and separate activation.
-  Verify offline that a bad digest or invalid target leaves the boot selection
-  untouched and that the terminal success result follows the target-side hash.
+- BENCH-024-002 [x] VDPlet built both receiver variants and passed the
+  dispatcher and transaction-model tests. A successful target-side readback
+  hash allows selection. Bad digests and invalid targets leave the selector
+  untouched. [VDPlet offline results](../../../agon-vdplet/docs/tasks/VDPL-060/RESULTS.md)
 
-- BENCH-024-003 [ ] Implement the Agon Flash command and Pi5 phases. Verify
-  offline that they require no keypresses, capture the flash result, reject
-  stale or missing receipts, and wake the owner on success or failure. Check
-  that the runner can complete a verified write phase with the activation
-  phase still pending.
+- BENCH-024-003 [x] Cross-linked the Agon Flash utility with noninteractive
+  stage, select and status commands. Five sender model cases passed.
+  The Pi5 runner stages the inputs, collects SD logs and result snapshots,
+  gates each selection on the verified write, and checks the candidate reboot.
+  Ten host tests passed, including prompt/transfer ordering with printer
+  mirroring off and refusals for incorrect, stale and missing receipt fields.
+  A host-only Pi service verified wake-up requests on success and failure.
 
 - BENCH-024-004 [ ] Qualify one Olimex round trip. Pin two receiver-enabled
   test builds for the outgoing and return legs and the exact production app0
@@ -82,9 +87,35 @@ ordinary checksum-free PARLIO policy still governs staging and result retrieval.
   subsequent boot witnesses to the run identifiers. Stop on the first failure.
   Smith has requested a stop before this hardware phase.
 
-- BENCH-024-005 [ ] Preserve the exact production USB recovery packet and the
-  known PlatformIO-bundled and standalone esptool procedures. If Agon Flash
+- BENCH-024-005 [x] The offline packet pins the exact production USB restore
+  and links both known USB procedures. If Agon Flash
   fails or the mainboard VDP cannot run it, retain the failure and select the
   appropriate recovery under the ordinary bench stop procedure. A fallback
   run is a separate recorded operation and leaves the original result intact.
   [Olimex bench procedure](../operations/olimex-bench/README.md)
+
+- BENCH-024-006 [ ] Pin the production boot and handback witness before
+  commissioning. Production predates the receiver's nonce, running-slot and
+  ELF identity query. The return leg can already prove the exact production
+  app0 bytes and configured selector before reboot. A fresh MOS prompt shows
+  startup. It does not independently identify the running slot. During
+  commissioning, select a production identity observation and decide whether
+  a separate read-only USB witness is required for the full handback.
+
+## Offline packet
+
+Agon Flash source is on the fork's local `codex/bench-024-agent-flash`
+branch at `f219b8b504e33d0570eee370d329a9535484a270`. The linked eZ80
+utility is 23,324 bytes with SHA-256
+`07ad0634bedcfb14a03ba38387d963b4bdc67fe114fa041e4c87eb47def6c831`.
+The ignored `agents/bench-024/offline-packet/` holds the binary, link map,
+manifest and the preflight and wake-up receipts.
+
+The [Pi phase runner](BENCH-024/ota_runner.py) keeps write and selection
+separate. The write phase exits after collecting the flash digest and proving
+the existing VDP boot and selector. The runner turns printer mirroring off
+before Agon Flash runs and retrieves the utility's SD progress log and binary
+receipt through PARLIO after MOS starts the foreground listener. Use the
+maintained [Pi service and chat wake-up](../procedures/bench-completion.md)
+to supervise the phases. The candidate packet permits offline preflight and
+refuses physical dispatch. Hardware qualification remains pending.
