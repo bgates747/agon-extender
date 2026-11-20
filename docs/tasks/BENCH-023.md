@@ -200,4 +200,9 @@ and independent readback. The job-local adapter calls the 5.1.0 API at those
 boundaries. Reconcile the previous joined pre-flash stop and start from
 normal operation with the already verified Bistromathics app0.
 
-- BENCH-023-015 [ ] Run the ten-flash series. On the first failure, stop and send the short [Oryx spoken alert](../../../agon-dev-env/codex/urgent-alerts.md). Record the full context in chat and retain the bench in its resulting state. On a clean series, restore and verify production app0, prove normal MOS handback, and check in. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T21-10-28Z/`.
+- BENCH-023-015 [x] Run until the first failure or ten attempts. Trials 1 and 2 verified the full Bistromathics write extent and returned to MOS. In trial 3, esptool 5.1.0 detected ESP32 download mode but received no valid SYNC reply. The worker joined before any flash access. The [Oryx spoken alert](../../../agon-dev-env/codex/urgent-alerts.md) playback command completed. Extender retained the bench in the post-failure state. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T21-10-28Z/`.
+
+The 5.1.0 result reproduces the same first connection failure seen on
+4.12.0. The earlier two successful 5.1.0 ROM-only sessions were insufficient
+to establish that the newer tool fixed the problem. The version change
+alone leaves the intermittent SYNC failure unresolved.
