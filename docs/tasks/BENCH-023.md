@@ -206,3 +206,16 @@ The 5.1.0 result reproduces the same first connection failure seen on
 4.12.0. The earlier two successful 5.1.0 ROM-only sessions were insufficient
 to establish that the newer tool fixed the problem. The version change
 alone leaves the intermittent SYNC failure unresolved.
+
+## Repeat with PlatformIO's bundled esptool
+
+Smith requested up to ten Bistromathics app0 writes using the uploader
+bundled with the upstream PlatformIO environment. The Pi uses the installed
+`tool-esptoolpy` package 1.40501.0, esptool 4.5.1, from Espressif32 platform
+6.6.0. The test retains the swapped USB wiring, exact Bistromathics image,
+app0 extent, one programmer session, 115,200-baud ROM entry and 460,800-baud
+stub transfer. Keeping both rates fixed isolates the uploader package from
+the upstream project's separate 600,000-baud upload setting. The job uses
+the bundled API to write only app0 and independently read it back.
+
+- BENCH-023-016 [ ] Run until the first failure or ten attempts. Send the [Oryx spoken alert](../../../agon-dev-env/codex/urgent-alerts.md) on the first failure, stop and retain the resulting bench state. On a clean series, verify production app0 restoration and normal MOS handback. Record all outcomes here. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T21-34-09Z/`.
