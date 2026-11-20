@@ -218,4 +218,18 @@ stub transfer. Keeping both rates fixed isolates the uploader package from
 the upstream project's separate 600,000-baud upload setting. The job uses
 the bundled API to write only app0 and independently read it back.
 
-- BENCH-023-016 [ ] Run until the first failure or ten attempts. Send the [Oryx spoken alert](../../../agon-dev-env/codex/urgent-alerts.md) on the first failure, stop and retain the resulting bench state. On a clean series, verify production app0 restoration and normal MOS handback. Record all outcomes here. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T21-34-09Z/`.
+- BENCH-023-016 [x] Run until the first failure or ten attempts. Stopped during trial 4 when the host runner ended without a terminal receipt. The [Oryx spoken alert](../../../agon-dev-env/codex/urgent-alerts.md) playback command completed. Trials 5–10 and production restoration were not run. Extender retained the bench with the verified Bistromathics app0. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T21-34-09Z/`.
+
+| Trials | Mainboard outcome | Runner outcome |
+| --- | --- | --- |
+| 1–3 | Bistromathics app0 write, matching full readback and responsive MOS | Each exited 0 with a joined-worker receipt |
+| 4 | Bistromathics app0 write, matching full readback and responsive MOS | Runner and worker were absent from the same host boot, with no terminal receipt or exit code. Cause unknown. |
+| 5–10 | Unrun | Series stopped |
+
+All four saved 1,138,688-byte readbacks independently hash to
+`86e4e8d383e16cac7ada4e3b451c6a09a5b39c54ffc78cfba0e7780e683410ec`.
+Trial 4's programmer log reached `Hash of data verified` and its
+`independent-verification.json` records `boot_cli_ready: true`. The ROM
+handshake succeeded on all four attempts. The runner interruption ended the
+comparison before ten trials, so the intermittent ROM SYNC question remains
+open for the bundled uploader.
