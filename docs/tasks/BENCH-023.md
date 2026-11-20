@@ -259,3 +259,13 @@ The PlatformIO evidence directory retains `original-shell-terminal.json`,
 `resume-files.sha256`, `resume-launcher-offline/`, `resume-supervisor.log`
 and its terminal and wake-up receipts, the individual phases, and
 `checkin-delivery.json`.
+
+## Verify one continuous ten-flash run under the Pi service
+
+Smith requested one fresh series of ten attempts from the checked-in
+production baseline. Use the same Bistromathics v2.16.0 app0 extent, PlatformIO
+esptool 4.5.1, 115,200-baud ROM entry, 460,800-baud stub transfer, and swapped
+USB wiring. Keep the first-failure stop and Oryx spoken alert. On ten passes,
+verify the production app0 restore and handback, then check in.
+
+- BENCH-023-020 [ ] Run the series as a single bounded Pi user service and end the operator turn after launch. The service wakes the owner on either outcome. Record each trial's app0 verification, MOS witness and joined worker result, along with the service exit and check-in or first-failure state. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T22-12-08Z/`.
