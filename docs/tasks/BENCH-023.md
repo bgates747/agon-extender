@@ -189,3 +189,15 @@ Evidence is under `agents/bench-023/BENCH-023-2026-11-20T20-47-29Z/`.
 `series.json` gives the joined session outcomes. Each `rom-NN/` holds the
 native trace and timed serial events. The series uploaded no stub and
 reached no flash operation. The stop leaves post-failure MOS unverified.
+
+## Repeat the Bistromathics flash series with esptool 5.1.0
+
+On November 20 Smith requested up to ten app0 writes using esptool 5.1.0.
+Retain the swapped USB wiring and the published Bistromathics image. Keep
+the standard single programmer session, 115,200-baud automatic-reset ROM
+entry, 460,800-baud stub transfer, app0 and table checks, full write extent
+and independent readback. The job-local adapter calls the 5.1.0 API at those
+boundaries. Reconcile the previous joined pre-flash stop and start from
+normal operation with the already verified Bistromathics app0.
+
+- BENCH-023-015 [ ] Run the ten-flash series. On the first failure, stop and send the short [Oryx spoken alert](../../../agon-dev-env/codex/urgent-alerts.md). Record the full context in chat and retain the bench in its resulting state. On a clean series, restore and verify production app0, prove normal MOS handback, and check in. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T21-10-28Z/`.
