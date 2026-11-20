@@ -163,13 +163,23 @@ what was staged and which transfer path completed.
 ## 4. Run and collect
 
 The operator starts the fixture with the planned command once the bench is
-ready. If Smith reserved that step, the operator finishes staging and uses
-the desktop **Agent has a question** alert with the exact start command and
-what to check. The operator holds the slot and setup while waiting for Smith
-to start. Use ordinary chat for follow-up. Follow the test plan's observation and stop
+ready. If Smith reserved that step, the operator finishes staging and posts
+the exact command and what to check in the originating chat. If that handoff
+needs urgent attention, use the short [Oryx spoken alert](../../../../agon-dev-env/codex/urgent-alerts.md).
+The operator holds the slot and setup while waiting for Smith to start.
+Use ordinary chat for follow-up. Follow the test plan's observation and stop
 conditions. Use its completion signal and collect its specified outputs. If a
 fixture switches display mode, allow at least one second for the monitor to
 settle and restore the entry mode and visible CLI at the end.
+
+Run multi-minute phases and automated batches under a Pi5 user service by
+default. Use the [detached launch and wake-up procedure](../../procedures/bench-completion.md).
+The packet supplies the bounded command and names the owning operator chat.
+Once the service starts, record where it will write evidence and end the turn.
+Keep the reservation active. The runner wakes the chat on success or failure.
+Skip periodic status checks and keep the ordinary stop rule for unexpected
+problems. A service can run while chat is idle without changing the job's
+authorization for retries, recovery, or release.
 
 ## 5. Restore production firmware and check in
 
@@ -224,10 +234,11 @@ this job changes.
 .venv/bin/python scripts/olimex_bench.py --job JOB.json --sha256 JOB_SHA256 --config BENCH.local.json preflight
 ```
 
-The offline command checks the local interpreter dependencies for the selected firmware and prints the applicable phases in order. Prepare before the
-slot opens. After checkout, use this command for each listed phase in order.
-Keep the same job, config and evidence directory throughout. Use your chat ID
-as the operator value.
+The offline command checks the local interpreter dependencies for the selected
+firmware and prints the applicable phases in order. Prepare before the slot
+opens. Use the phase command below directly for short work or as the command
+passed to the Pi service for longer work. Keep the same job, config and evidence
+directory throughout. Use your chat ID as the operator value.
 
 In the commissioned Pi5 sparse checkout, the phase runner uses a shared
 operation lock outside the workspace and needs access to the bench's local
@@ -267,12 +278,14 @@ phases. A human verdict requires no script or synthetic result file.
 | Extender VDP | Hold the Agon reset through its commissioned USB RTS circuit. Use stock esptool 5.1.0 on the P4 USB at 460,800 baud. Read the partition table and OTA selector, write app0 at `0x20000` with all three flash settings set to `keep`, and independently compare the written extent. Restart the P4 once and wait for its boot-pad release. Release Agon reset, then prove a working CLI. |
 | EMOS | At the Legacy CLI, run the prepared `FLASH mos … -f` for the staged ROM. Wait for the updater to restart and admit input. Use `SAVE` to read the full 128 KiB ROM, retrieve it from the SD listener, compare it with the requested image and exit the listener. |
 
-Poll the original tool session until it exits. Live worker output is at
-`RUN_EVIDENCE/PHASE/output.log`. The phase directory also contains the
-parent-written `child-terminal.json` and, on success, `complete.json`.
-A firmware phase writes `independent-verification.json` and a completed
-handback writes `handback.json`. Record the first failure and its phase before
-recovery.
+For a short foreground phase, wait for the tool result. For a detached phase
+or batch, open the runner's terminal and notification receipts when the owning
+chat wakes. Worker output is at `RUN_EVIDENCE/PHASE/output.log`. The phase
+directory also contains the parent-written `child-terminal.json` and, on
+success, `complete.json`. A firmware phase writes `independent-verification.json`
+and a completed handback writes `handback.json`. Verify the applicable receipts
+before starting another phase or checking in. On failure, record the first
+failed phase and follow the stop rule.
 
 ## Stop on an unexpected problem
 
@@ -284,7 +297,10 @@ part of that diagnosis under the applicable recovery instructions.
 1. Stop work and keep the reservation active.
 2. Describe the problem and the last known bench state in the operator's own
    chat session.
-3. Notify Smith with the desktop **Agent has a question** dialog.
+3. Send an [Oryx spoken alert](../../../../agon-dev-env/codex/urgent-alerts.md).
+   Name the operator's recognizable session and describe the immediate issue
+   in one short sentence. If the runner already sent the alert, record that
+   receipt in chat.
 4. Wait for Smith's response. Take no further action while waiting, including
    troubleshooting, retries, cleanup, restoration, or check-in.
 
