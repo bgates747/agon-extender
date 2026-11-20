@@ -292,4 +292,10 @@ handshake and 460,800-baud stub transfer. Under the retained slot, reconcile
 the last joined failure before flash access and use the ordinary paired
 restart to recover MOS with the verified Bistromathics app0 still installed.
 
-- BENCH-023-022 [ ] Run one Pi service with the tested Oryx alert classifier. Stop at the first failure and wake the owning chat. After ten passes, restore and verify production app0, verify handback and check in. Record the entry, trial results and resulting bench state. Evidence is under `agents/bench-023/BENCH-023-2026-11-20T22-29-21Z/`.
+- BENCH-023-022 [x] The restart-only entry phase admitted input and joined with exit 0. Trial 1 passed ROM SYNC, started the stub, switched to 460,800 baud and wrote 1,138,688 bytes at `0x10000`. esptool reported `Hash of data verified.` The subsequent independent readback failed when esptool received 4,052 bytes in a packet expected to contain 4,096. No complete readback or post-write MOS verification is available. The trial worker joined with exit 1. The Pi service stopped the batch, completed the Oryx playback command and woke the owning chat. Trials 2–10, restoration and check-in did not run. Extender retains the slot and the inventory marks the app0 operation pending. Evidence is under `agents/bench-023/BENCH-023-2026-11-20T22-29-21Z/`.
+
+This batch produced zero fully verified flashes and one failure in the
+460,800-baud readback. Trial 1 had already passed the 115,200-baud ROM SYNC
+where the previous PlatformIO batch stopped. The tool's short-packet report
+identifies the failed verification step. The cause of the short packet and
+the final bytes on flash remain unverified.
