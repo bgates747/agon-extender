@@ -14,6 +14,33 @@ VDPL-057 reached a working MOS prompt on boot `619087984`. Its next worker, `res
 
 A future [mainboard text snapshot](BENCH-017.md) could preserve what MOS displayed before the programmer reset. Label it with its capture time. Once the ESP32 enters its ROM downloader, VDPlet cannot serve a live snapshot. Diagnose SYNC from the original programmer session independently of screen observation.
 
+## Programmer history and earlier reproduction
+
+- On August 31 the early Extender bench used direct USB esptool to flash a
+  rebuilt Bistromathics image, including the bootloader, partition table and
+  OTA data. The retained result records verified segments and a hard reset.
+  [August record](PORT-008/emos-hardware-diagnostic/README.md)
+- On October 12 the same ESP32-PICO-D4 passed an app0-only write and verify
+  using esptool 5.1.0 at a requested 460,800 baud. The helper used automatic
+  reset for identification, reopened with no reset for the write and verify,
+  and hard-reset after verification. The helper and logs are retained under
+  `agents/bench010/stock-vdp-r01/`.
+- On November 16 the first standardized runner used esptool 4.12 in separate
+  CLI processes. Its cold rehearsal failed on the write process's reopen,
+  after the table and selector reads. Commit `7b2e9836` consolidated those
+  operations into one esptool 4.12 session. The later paired restart change
+  applies after verification. No initial selection record compares 4.12
+  against the earlier successful 5.1 control.
+  [Cold rehearsal record](BENCH-019/REHEARSAL-R02-RESULT.md)
+- On November 19 the VDPL-057 rerun first stopped at ROM SYNC. A later
+  recovery connected, switched to 460,800, read the table and selector, and
+  then got a short 3,949-byte frame while reading app0. Extender's matched
+  read with 115,200 throughout matched the full 1,164,592-byte app0 capture,
+  table and selector. The next restoration attempt on November 20 stayed
+  at 115,200 and failed before the stub at initial ROM SYNC. See the retained
+  `agents/vdpl057-programmer-diagnostic/evidence-115200/` and the VDPL-057
+  recovery receipts.
+
 ## Research plan
 
 - BENCH-023-001 [ ] Compare the failing VDPL-057 programmer log with the first-attempt OLX-06 and Nurples sync failures, successful FLY-07 sessions, and a failure after successful sync. Record the last positive observation, connection parameters, reset history where available, and earliest flash operation for each. Count esptool’s internal SYNC attempts separately from an operator retry.
@@ -122,4 +149,21 @@ entry before the first new attempt. The swap changes both the cable and Pi5
 USB path assigned to each device. The test therefore cannot isolate a cable
 from its host port.
 
-- BENCH-023-013 [ ] Run up to ten numbered attempts with swapped USB connections. On the first error, stop and send **Agent has a question**. A clean series ends with verified production app0 and normal MOS handback.
+- BENCH-023-013 [x] Run up to ten numbered attempts with swapped USB connections. Five passed. Trial 6 reproduced the same 115,200-baud ROM SYNC failure before any flash access. The worker joined, the desktop question was accepted, and Extender held the resulting bench state. Evidence is under `agents/bench-023/BENCH-023-2026-11-20T20-13-45Z/`.
+
+## Compare esptool 5.1.0 and 4.12.0 at ROM SYNC
+
+On November 20 Smith requested a ROM-only comparison at 115,200 baud with
+the swapped USB wiring left in place. Return the bench from the prior
+programmer stop using the normal paired restart. Use the same mainboard
+endpoint, fixed ROM baud, automatic reset, single connection attempt and
+both native and host serial traces. Start with 5.1.0, then alternate with
+4.12.0 for up to ten sessions total. Keep esptool's built-in SYNC exchanges
+inside each connection attempt. After successful SYNC, read the ESP32 MAC
+without uploading a stub or accessing flash. Restart normally after a
+successful session to set up the next one. Stop at the first failed session
+and send **Agent has a question**. Keep that state intact for Smith. Compare
+the two installed tool environments and report any unequal coverage if the
+first failure truncates the series.
+
+- BENCH-023-014 [ ] Run the ROM-only comparison and record the first failed session or all ten passes. Evidence directory `agents/bench-023/BENCH-023-2026-11-20T20-47-29Z/`.
