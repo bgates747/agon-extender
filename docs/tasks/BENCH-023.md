@@ -223,16 +223,16 @@ the bundled API to write only app0 and independently read it back.
 | Trials | Mainboard outcome | Runner outcome |
 | --- | --- | --- |
 | 1–3 | Bistromathics app0 write, matching full readback and responsive MOS | Each exited 0 with a joined-worker receipt |
-| 4 | Bistromathics app0 write, matching full readback and responsive MOS | Runner and worker were absent from the same host boot, with no terminal receipt or exit code. Cause unknown. |
-| 5–10 | Unrun | Series stopped |
+| 4 | Bistromathics app0 write, matching full readback and responsive MOS | Outer shell exited 143. The worker's final wait receipt is missing. |
+| 5–10 | Pending at the initial stop | See the continuation below |
 
 All four saved 1,138,688-byte readbacks independently hash to
 `86e4e8d383e16cac7ada4e3b451c6a09a5b39c54ffc78cfba0e7780e683410ec`.
 Trial 4's programmer log reached `Hash of data verified` and its
 `independent-verification.json` records `boot_cli_ready: true`. The ROM
-handshake succeeded on all four attempts. The runner interruption ended the
-comparison before ten trials, so the intermittent ROM SYNC question remains
-open for the bundled uploader.
+handshake succeeded on all four attempts. The runner interruption stopped the
+initial invocation after four trials. The continuation below records the
+remaining six.
 
 ## Diagnose the host interruption and continue trials 5–10
 
@@ -244,6 +244,18 @@ six trials pass, restore production app0, verify handback and check in.
 
 - BENCH-023-017 [x] Identify the interruption from the original Codex command record and Pi receipts. Codex recorded outer shell exit 143 at 16:38:42 EST during trial 4, consistent with SIGTERM. The worker survived until at least 16:39:06 EST, when it verified the write and MOS and committed the inventory. The supervisor did not leave a final wait receipt. Context compaction was in progress, but the record does not identify who sent the signal. Trial 4 counts as a verified hardware result with an interrupted host execution record.
 
-- BENCH-023-018 [ ] Start the same bounded phase supervisor under a transient Pi user service outside the tool session. Retain its log, exit status and owner-chat wake-up. Prove the new launcher with host-only commands, reconcile trial 4 from its saved readback, MOS and inventory records, and leave trials 1–4 untouched.
+- BENCH-023-018 [x] Run the same bounded phase supervisor under a transient Pi user service outside the tool session. Host-only preflight reconciled trial 4's saved readback, MOS and inventory. A simulated trial 6 failure stopped the launcher, invoked the mocked alert exactly once and dispatched no later phase. In the live run the service retained its terminal status, completion log and accepted owner-chat wake-up. The original trial records were preserved.
 
-- BENCH-023-019 [ ] Run trials 5–10 using the retained input packet and original phase workers. Record each attempted result and the stop or production handback. Local evidence remains in the PlatformIO run directory above, with separate continuation launcher records.
+- BENCH-023-019 [x] Trials 5–10 all passed on the original packet and phase workers. Each matched the full 1,138,688-byte app0 readback, returned to a working MOS prompt and left a successful, joined-worker receipt. The service logged no failure and did not invoke the Oryx alert. The production VDPlet v0.1.3-alpha app0 restore passed its full extent readback. Handback verified Legacy CLI, listener offline, transfers idle and serial handles free. The scheduler accepted check-in and the FIFO became empty.
+
+The combined series is **10 verified app0 writes and zero ROM SYNC failures**
+using PlatformIO's bundled esptool 4.5.1 at 115,200-baud ROM entry and
+460,800-baud stub transfer. Nine attempts have normal trial-exit receipts.
+Trial 4 has an independently verified write, MOS and inventory, with the
+interrupted launcher receipt preserved. Ten attempts bound this observation.
+The intermittent failure's underlying cause remains unresolved.
+
+The PlatformIO evidence directory retains `original-shell-terminal.json`,
+`resume-files.sha256`, `resume-launcher-offline/`, `resume-supervisor.log`
+and its terminal and wake-up receipts, the individual phases, and
+`checkin-delivery.json`.
