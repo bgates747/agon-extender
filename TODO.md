@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-017 — Mainboard VDP text observation for robot operators](docs/tasks/BENCH-017.md)** — Preferred design for review: VDPlet tracks visible text from boot on the bench. The Pi runner reads it on demand over mainboard USB serial; eZ80 applications can control tracking and request the same snapshot through EMOS. Owns BENCH-006’s deferred Legacy S04.
+- [ ] **[BENCH-017 — Mainboard VDP text observation for robot operators](docs/tasks/BENCH-017.md)** — Read existing mainboard text on demand through one host request, without prior mirroring, application instrumentation or per-read helper staging/invocation. Preserve the loaded application and replace blind listener-only waits. Supported request path/query ownership remain to be resolved; owns BENCH-006's former deferred Legacy S04.
 
 
 
@@ -23,7 +23,7 @@ classification does not grant new execution or waive human acceptance.
 
 
 - [ ] **[NET-008 — ESP8266 bring-up and standalone-client groundwork](docs/tasks/NET-008.md)** — Corrected P4 internal1152000/full-load minute passes; external modem384000/full-minute CRC passes, higher-rate byte-loss location unresolved. Product restored and170 released; short wire captures now locate a1152000upload500-byte gap downstream of correct P4 TX; reverse short transfer passes. Exact original overrun contribution remains unisolated; C8 qualification/standalone client follow.
-- [ ] **[NET-009 — Pi5-powered ESP8266 UART comparison](docs/tasks/NET-009.md)** — ESP-AT 2.3.0.0 passes 60 s downloads at 1,152,000 baud and regresses on upload. Replace the stacked jumpers with the soldered breakout and repeat the two failed upload checks on the same firmware.
+- [ ] **[NET-009 — Pi5-powered ESP8266 UART comparison](docs/tasks/NET-009.md)** — Pi TCP control and P4 Ethernet comparison complete. P4 Ethernet passes separate 60 s arms at 115,200 baud upload and 1,152,000 download. Higher-rate upload loses bytes. The next task is a Pi5 UART ESP-AT update with verified rollback and matched testing.
 
 - [ ] **[BENCH-019 — One Olimex bench procedure](docs/tasks/BENCH-019.md)** — Cold qualification and cutover complete. The independent FIFO scenarios are deferred to real jobs.
 
