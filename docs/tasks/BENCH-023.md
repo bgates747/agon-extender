@@ -97,3 +97,14 @@ Evidence is under `agents/bench-023/BENCH-023-2026-11-20T18-38-54Z/`. In
 `serial-events.json` holds the raw boot bytes and timed reads and writes.
 The matching files under `rom-01/` show a recovered SYNC timeout.
 The parent receipts and `handback/handback.json` cover the return to MOS.
+
+## Repeat the ten-flash suite after removing the probes
+
+Smith removed the sniffer leads from the boards and unplugged both the
+sniffer and the ESP8266 module from the Pi5. Smith then powered the bench
+back up and confirmed that remote input and MOS `DIR` worked. Repeat the
+same Bistromathics app0 writes with the original USB cables, programmer,
+baud and full-extent verification. Treat the wiring removal, USB peripheral
+removal and power cycle as one change to the test conditions.
+
+- BENCH-023-012 [ ] Run up to ten numbered attempts. Stop on the first error, alert Smith immediately with **Agent has a question**, and leave the bench in the resulting state. If the series succeeds, restore and verify production app0, verify MOS and idle services, and check in. A cable swap is a separate test.
