@@ -52,3 +52,25 @@ One trial is one invocation of the programmer against the published application,
 An initial host adapter error occurred before opening the programmer and is archived as `setup-fault-01`. The first app0 preparation phase stopped before OTA because the job packet used an obsolete SD listener pin. The corrected phase closed the existing listener session and used the previously staged production image. Neither preparation phase was a flash trial.
 
 The bench returned to VDPlet v0.1.3-alpha production app0 with the exact `0x116000` write extent independently verified. The handback proved working MOS, idle transfers, closed serial ports and joined workers. Local evidence follows the run-directory convention above. See `trial-results.json`, the numbered `programmer.log` files, `verified-handback.json` and `checkin-delivery.json`.
+
+## Traced ROM-only test
+
+On 2026-11-20 Smith asked Extender to take the bench after Wolf3dOrig checks in
+and capture a failed SYNC with esptool tracing enabled. Use the same mainboard
+USB bridge, classic ESP32 target, automatic reset and 115,200-baud ROM entry as
+the ordinary programmer. On successful SYNC, read the MAC from the ROM's
+register interface and close the programmer. End the series at the first
+failed connection or after ten successful sessions. Between sessions use
+the ordinary restart to start the next session from normal operation. No
+stub upload, flash access or firmware change is in scope.
+
+Capture esptool's native trace and the serial reads at the host, including the
+boot bytes esptool reads before the first packet. Record bytes accepted by the
+serial driver and the sequence of reads and input flushes. Host evidence can
+show transmission requests and replies but cannot establish delivery to the
+ESP32 pin. After the series, verify a working MOS prompt and idle bench before
+check-in. Keep all attempts and the final joined receipts.
+
+- BENCH-023-010 [ ] Capture the traced ROM sessions and report what the host sent and received on a failed SYNC. If all ten succeed, report that the failure did not reproduce.
+
+- BENCH-023-011 [ ] Verify normal MOS startup and bench handback, then report the trace location and findings to Smith.
