@@ -268,4 +268,15 @@ esptool 4.5.1, 115,200-baud ROM entry, 460,800-baud stub transfer, and swapped
 USB wiring. Keep the first-failure stop and Oryx spoken alert. On ten passes,
 verify the production app0 restore and handback, then check in.
 
-- BENCH-023-020 [ ] Run the series as a single bounded Pi user service and end the operator turn after launch. The service wakes the owner on either outcome. Record each trial's app0 verification, MOS witness and joined worker result, along with the service exit and check-in or first-failure state. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T22-12-08Z/`.
+- BENCH-023-020 [x] The single Pi service passed trials 1 and 2 with full 1,138,688-byte app0 readbacks, working MOS prompts and joined exit-zero workers. Trial 3 failed at 115,200-baud ROM SYNC. esptool 4.5.1 detected download mode and received no valid SYNC reply. The failed attempt reached neither the stub nor any flash access. Its worker joined with exit 1. Trials 4–10 and the production restore were not started. Extender retains the reservation. The last verified app0 is Bistromathics from trial 2. MOS after the failure is unverified.
+
+The Pi service recorded exit 1 and woke the idle owner chat. The Oryx spoken
+alert playback command completed. The launcher's failure text classifier could
+not find `rg` on the service `PATH`, so the alert used its generic trial 3
+failure wording. The escalation and first-failure stop both ran. This was a
+reproduction of the earlier ROM SYNC symptom with the bundled uploader, at a
+different point from the earlier host launcher interruption.
+
+Evidence is under `agents/bench-023/BENCH-023-2026-11-20T22-12-08Z/`, including
+the service log and terminal and wake-up receipts, `oryx-alert.log`, the two
+passing readbacks and `trial-03/programmer.log` and `child-terminal.json`.
