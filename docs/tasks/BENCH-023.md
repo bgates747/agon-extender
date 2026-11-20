@@ -280,3 +280,5 @@ different point from the earlier host launcher interruption.
 Evidence is under `agents/bench-023/BENCH-023-2026-11-20T22-12-08Z/`, including
 the service log and terminal and wake-up receipts, `oryx-alert.log`, the two
 passing readbacks and `trial-03/programmer.log` and `child-terminal.json`.
+
+- BENCH-023-021 [x] Fix the alert text classifier in `run-series-r02.sh` in the evidence directory above. Use `/usr/bin/grep -Fq` on a readable programmer log and retain the generic alert when the log is unavailable. Preserve the original launcher and input pins. An offline Pi user service with no `rg` on its `PATH` tested both the saved ROM SYNC failure and a missing log. Each case stopped at the simulated third trial, exited 1 and issued exactly one mock alert with the expected wording. The receipt is `alert-classifier-offline-r02.json`.
