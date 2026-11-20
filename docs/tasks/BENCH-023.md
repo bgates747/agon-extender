@@ -71,6 +71,29 @@ show transmission requests and replies but cannot establish delivery to the
 ESP32 pin. After the series, verify a working MOS prompt and idle bench before
 check-in. Keep all attempts and the final joined receipts.
 
-- BENCH-023-010 [ ] Capture the traced ROM sessions and report what the host sent and received on a failed SYNC. If all ten succeed, report that the failure did not reproduce.
+- BENCH-023-010 [x] Capture the traced ROM sessions. Session 2 reproduced the failure. Both traces and the raw host serial events are retained.
 
-- BENCH-023-011 [ ] Verify normal MOS startup and bench handback, then report the trace location and findings to Smith.
+- BENCH-023-011 [x] Verify normal MOS startup and bench handback. Joined worker, idle transfer and free serial port checks passed.
+
+### ROM trace results, 2026-11-20
+
+In both sessions the Pi received the same 129-byte ESP32 ROM banner before
+sending SYNC. It included `rst:0x1 (POWERON_RESET)`, `boot:0x0 (DOWNLOAD_BOOT(UART0/UART1/SDIO_FEI_FEO_V2))`
+and `waiting for download`.
+
+| Session | Observed exchanges |
+| --- | --- |
+| 1 | SYNC 1 received zero bytes in 100 ms. SYNC 2 received the first reply byte after about 7 ms, followed by the valid SYNC replies. The ROM MAC matched. |
+| 2 | The serial driver accepted each of five identical 46-byte SYNC frames. Each read returned zero bytes after about 100 ms. Esptool then reported download mode detected with no SYNC reply and exited 1. |
+
+The failed session establishes silence in the host's five receive windows.
+The trace records input flushes before each SYNC. It cannot establish what
+reached the ESP32 pin or what the host might have discarded between windows.
+The failure reproduced with production VDPlet at entry and a ROM-only probe.
+The mainboard restarted normally after the probe and MOS handback passed.
+
+Evidence is under `agents/bench-023/BENCH-023-2026-11-20T18-38-54Z/`. In
+`rom-02/`, `esptool-trace.log` records protocol decisions and
+`serial-events.json` holds the raw boot bytes and timed reads and writes.
+The matching files under `rom-01/` show a recovered SYNC timeout.
+The parent receipts and `handback/handback.json` cover the return to MOS.
