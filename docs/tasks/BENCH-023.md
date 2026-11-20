@@ -166,4 +166,26 @@ and send **Agent has a question**. Keep that state intact for Smith. Compare
 the two installed tool environments and report any unequal coverage if the
 first failure truncates the series.
 
-- BENCH-023-014 [ ] Run the ROM-only comparison and record the first failed session or all ten passes. Evidence directory `agents/bench-023/BENCH-023-2026-11-20T20-47-29Z/`.
+- BENCH-023-014 [x] Run the ROM-only comparison and record the first failed session or all ten passes. Session 4 failed at SYNC. The worker joined and the desktop question request was accepted. Extender retained custody and stopped with the board in the post-failure state.
+
+### Version comparison results, 2026-11-20
+
+| Session | esptool | Result | ROM SYNC exchange that received a reply |
+| --- | --- | --- | --- |
+| 1 | 5.1.0 | ROM MAC matched | 2 of 2 sent |
+| 2 | 4.12.0 | ROM MAC matched | 4 of 4 sent |
+| 3 | 5.1.0 | ROM MAC matched | 2 of 2 sent |
+| 4 | 4.12.0 | ROM SYNC failed | None of 5 sent |
+
+All four sessions began with the same 129-byte download-mode banner. In
+session 4, the host driver accepted each of the five 46-byte SYNC frames and
+the Pi received zero bytes in the five receive windows. Both 5.1.0 sessions
+also received zero bytes on their first SYNC exchange. Two sessions per
+version establish a reproduction under 4.12.0 with the existing wiring.
+The sample is too small to establish that switching to 5.1.0 fixes the
+intermittent failure. Both environments used pySerial 3.5.
+
+Evidence is under `agents/bench-023/BENCH-023-2026-11-20T20-47-29Z/`.
+`series.json` gives the joined session outcomes. Each `rom-NN/` holds the
+native trace and timed serial events. The series uploaded no stub and
+reached no flash operation. The stop leaves post-failure MOS unverified.
