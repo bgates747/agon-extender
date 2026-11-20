@@ -282,3 +282,14 @@ the service log and terminal and wake-up receipts, `oryx-alert.log`, the two
 passing readbacks and `trial-03/programmer.log` and `child-terminal.json`.
 
 - BENCH-023-021 [x] Fix the alert text classifier in `run-series-r02.sh` in the evidence directory above. Use `/usr/bin/grep -Fq` on a readable programmer log and retain the generic alert when the log is unavailable. Preserve the original launcher and input pins. An offline Pi user service with no `rg` on its `PATH` tested both the saved ROM SYNC failure and a missing log. Each case stopped at the simulated third trial, exited 1 and issued exactly one mock alert with the expected wording. The receipt is `alert-classifier-offline-r02.json`.
+
+## Repeat the batch with standalone esptool 5.1.0
+
+Smith requested up to ten new Bistromathics app0 attempts with standalone
+esptool 5.1.0. Use the exact prior 5.1.0 uploader from the Pi's Python
+environment, the same USB wiring and firmware bytes, the 115,200-baud ROM
+handshake and 460,800-baud stub transfer. Under the retained slot, reconcile
+the last joined failure before flash access and use the ordinary paired
+restart to recover MOS with the verified Bistromathics app0 still installed.
+
+- BENCH-023-022 [ ] Run one Pi service with the tested Oryx alert classifier. Stop at the first failure and wake the owning chat. After ten passes, restore and verify production app0, verify handback and check in. Record the entry, trial results and resulting bench state. Evidence is under `agents/bench-023/BENCH-023-2026-11-20T22-29-21Z/`.
