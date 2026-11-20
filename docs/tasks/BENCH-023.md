@@ -107,4 +107,19 @@ same Bistromathics app0 writes with the original USB cables, programmer,
 baud and full-extent verification. Treat the wiring removal, USB peripheral
 removal and power cycle as one change to the test conditions.
 
-- BENCH-023-012 [ ] Run up to ten numbered attempts. Stop on the first error, alert Smith immediately with **Agent has a question**, and leave the bench in the resulting state. If the series succeeds, restore and verify production app0, verify MOS and idle services, and check in. A cable swap is a separate test.
+- BENCH-023-012 [x] Run up to ten numbered attempts and stop on the first error. Four passed. Trial 5 announced download mode and stopped at ROM SYNC before any flash access. The worker joined and Extender retained custody. The desktop question request was accepted, and Smith reported that it disappeared while he was away. Local evidence is under `agents/bench-023/BENCH-023-2026-11-20T19-51-41Z/`.
+
+## Repeat with the P4 and mainboard USB cables exchanged
+
+Smith swapped the USB cables between the two boards and directed the same
+ten-flash test, stopping and alerting at the first failure. The host saw the
+two existing devices trade Pi5 USB paths. Use a job-local identity record for
+the swapped mainboard USB path, with the same device identity, firmware
+image, programmer, baud and verification. The starting app0 is Bistromathics
+from the previous series, verified in its trial 4, followed by a pre-flash
+stop in trial 5. Preserve that failure and reconcile its pending inventory
+entry before the first new attempt. The swap changes both the cable and Pi5
+USB path assigned to each device. The test therefore cannot isolate a cable
+from its host port.
+
+- BENCH-023-013 [ ] Run up to ten numbered attempts with swapped USB connections. On the first error, stop and send **Agent has a question**. A clean series ends with verified production app0 and normal MOS handback.
