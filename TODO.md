@@ -59,7 +59,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[BENCH-023 — Detect and report a mainboard ESP32 programmer sync failure](docs/tasks/BENCH-023.md)** — Ten upstream Bistromathics app0 flash attempts authorized and exclusive custody granted. Programmer failure reporting remains in research.
+- [ ] **[BENCH-023 — Detect and report a mainboard ESP32 programmer sync failure](docs/tasks/BENCH-023.md)** — Bistromathics USB test complete with eight passes, one selector refusal and one ROM SYNC failure. Production handback verified. Programmer failure reporting remains in research.
 
 - [ ] **[BENCH-022 — Audit recent Olimex runner reliability](docs/tasks/BENCH-022.md)** — Three shared runner corrections passed offline qualification. Pending real-job qualification. USB sync investigation deferred.
 

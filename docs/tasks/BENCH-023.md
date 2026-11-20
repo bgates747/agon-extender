@@ -1,6 +1,6 @@
 # BENCH-023 — Detect and report a mainboard ESP32 programmer sync failure
 
-Research how the Pi5 runner can identify a failed ESP32 ROM session, tell the operator whether it reached flash, and point to the original evidence. On 2026-11-20 Smith also commissioned ten USB app0 flash attempts with the latest official VDP release to measure ordinary programming on the same mainboard. The reporting design remains a proposal. The ten-trial experiment is authorized and queued.
+Research how the Pi5 runner can identify a failed ESP32 ROM session, tell the operator whether it reached flash, and point to the original evidence. On 2026-11-20, the ten USB flash attempts with upstream Bistromathics produced eight verified writes and two failures before writing. The standard app0 programmer reproduced the earlier ROM SYNC error. Production app0 and working MOS were verified at handback. The reporting design remains a proposal.
 
 ## Incident and sources
 
@@ -32,8 +32,23 @@ One trial is one invocation of the programmer against the published application,
 
 - BENCH-023-006 [x] Verify the release tag, asset identity, stock table match, current production restore pins and commissioned operator readiness. Local inputs and the accepted reservation receipt are retained under `agents/bench-023/BENCH-023-2026-11-20T18-16-32Z/`.
 
-- BENCH-023-007 [ ] Bind the app0 starting state. Smith directed an immediate transfer and the scheduler opened Extender’s slot following VDPlet’s joined handoff. Wolf3dOrig remains first waiting. Smith reports normal operation. Previous verified selection was app1 and production restoration remains unverified. The standard programmer's live table and app0 selector checks govern the first attempt. A refusal before write counts once if the programmer started. Preserve the test store.
+- BENCH-023-007 [x] Bind the app0 starting state. Smith directed an immediate transfer and the scheduler opened Extender’s slot following VDPlet’s joined handoff. Trial 1 confirmed the retained app1 selector. The established MOS OTA route then returned to production app0. Trial 2 confirmed the app0 selector before writing. The test store was left alone.
 
-- BENCH-023-008 [ ] Run ten numbered attempts and report successes and failures out of ten, with the first fault stage for each failed attempt and the separate boot/CLI outcomes.
+- BENCH-023-008 [x] Run ten numbered attempts and report successes and failures out of ten, with the first fault stage for each failed attempt and the separate boot/CLI outcomes. Results below.
 
-- BENCH-023-009 [ ] Verify the production restore, working MOS and stopped worker group. Check in through the scheduler.
+- BENCH-023-009 [x] Verify the production restore, working MOS and stopped worker group. The scheduler accepted the normal check-in.
+
+### Observed results, 2026-11-20
+
+| Trial | Starting selection | Result |
+| --- | --- | --- |
+| 1 | Retained VDPL-057 candidate in app1 | ROM SYNC, RAM stub, stock table and selector reads succeeded. The app0-only programmer refused the selector before writing. Counted as a failed flash. |
+| 2 | Production app0 after MOS OTA | Full app0 write and 1,138,688-byte readback matched Bistromathics. MOS responded. |
+| 3 | Bistromathics app0 | ESP32 announced ROM download mode. The standard programmer received no valid SYNC reply at 115,200 baud. Worker exited before flash access. Paired restart and MOS check completed before trial 4. |
+| 4–10 | Bistromathics app0 | All seven full writes and independent readbacks matched. MOS responded after each. |
+
+**8 succeeded and 2 failed out of 10.** On the nine attempts from app0, eight succeeded and one failed at ROM SYNC. The SYNC failure occurred using the standard programmer while stock firmware had been running. It therefore occurs outside the VDPL-057 store cleanup sequence. The record does not establish why SYNC was lost.
+
+An initial host adapter error occurred before opening the programmer and is archived as `setup-fault-01`. The first app0 preparation phase stopped before OTA because the job packet used an obsolete SD listener pin. The corrected phase closed the existing listener session and used the previously staged production image. Neither preparation phase was a flash trial.
+
+The bench returned to VDPlet v0.1.3-alpha production app0 with the exact `0x116000` write extent independently verified. The handback proved working MOS, idle transfers, closed serial ports and joined workers. Local evidence follows the run-directory convention above. See `trial-results.json`, the numbered `programmer.log` files, `verified-handback.json` and `checkin-delivery.json`.
