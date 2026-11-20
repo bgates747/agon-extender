@@ -233,3 +233,17 @@ Trial 4's programmer log reached `Hash of data verified` and its
 handshake succeeded on all four attempts. The runner interruption ended the
 comparison before ten trials, so the intermittent ROM SYNC question remains
 open for the bundled uploader.
+
+## Diagnose the host interruption and continue trials 5–10
+
+Smith authorized fixing the launcher and completing only the six remaining
+PlatformIO attempts. Use the same bundled esptool 4.5.1, firmware bytes,
+app0 extent, reset sequence, baud rates and wiring. On the first failure,
+retain custody and the bench state and send the Oryx spoken alert. If the
+six trials pass, restore production app0, verify handback and check in.
+
+- BENCH-023-017 [x] Identify the interruption from the original Codex command record and Pi receipts. Codex recorded outer shell exit 143 at 16:38:42 EST during trial 4, consistent with SIGTERM. The worker survived until at least 16:39:06 EST, when it verified the write and MOS and committed the inventory. The supervisor did not leave a final wait receipt. Context compaction was in progress, but the record does not identify who sent the signal. Trial 4 counts as a verified hardware result with an interrupted host execution record.
+
+- BENCH-023-018 [ ] Start the same bounded phase supervisor under a transient Pi user service outside the tool session. Retain its log, exit status and owner-chat wake-up. Prove the new launcher with host-only commands, reconcile trial 4 from its saved readback, MOS and inventory records, and leave trials 1–4 untouched.
+
+- BENCH-023-019 [ ] Run trials 5–10 using the retained input packet and original phase workers. Record each attempted result and the stop or production handback. Local evidence remains in the PlatformIO run directory above, with separate continuation launcher records.
