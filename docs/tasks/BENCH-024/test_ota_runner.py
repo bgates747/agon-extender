@@ -64,9 +64,13 @@ class Phases(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.bench = Mock()
+        inventory = self.root / "inventory.json"
+        inventory.write_text('{"components":{"native_vdp_sha256":"bootstrap"}}')
+        self.bench.config = {"inventory": inventory}
         self.bench.keyboard.return_value = {"boot": 8}
         self.bench.image.return_value = IMAGE
         self.bench.kit = {
+            "bootstrap_app0": {"sha256": "bootstrap"},
             "legs": {"candidate": {
                 "source_build": BUILD_A, "transaction": "0000007b",
                 "image": {"sha256": sha256(IMAGE).hexdigest()},

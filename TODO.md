@@ -59,7 +59,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[BENCH-024 — Verify mainboard VDP updates from SD before reboot](docs/tasks/BENCH-024.md)** — Offline work approved. VDPlet owns the receiver. Extender owns Agon Flash, the Pi runner and chat wake-up. Physical round trip awaits Smith.
+- [x] **[BENCH-024 — Verify mainboard VDP updates from SD before reboot](docs/tasks/BENCH-024.md)** — Physical round trip passed. USB esptool is the bench default. Retain verified Agon Flash and its matching receivers as a fallback.
 
 - [ ] **[BENCH-023 — Detect and report a mainboard ESP32 programmer sync failure](docs/tasks/BENCH-023.md)** — Bistromathics USB test complete with eight passes, one selector refusal and one ROM SYNC failure. Production handback verified. Programmer failure reporting remains in research.
 

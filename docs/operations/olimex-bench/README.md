@@ -272,6 +272,17 @@ phases. A human verdict requires no script or synthetic result file.
 
 ### Firmware methods used by the phase runner
 
+**Use USB esptool by default for mainboard VDPlet.** Run the commissioned
+`install-mainboard` or `restore-mainboard` phase when the job calls for an
+app0 write. The Pi programs the mainboard directly through its USB port.
+Running VDPlet and the SD listener require no special build for that write.
+
+Keep the verified Agon Flash SD updater as a fallback. If USB programming
+fails, preserve the failure and follow the stop rule. Agon Flash requires
+a separately commissioned recovery packet, a working MOS prompt and a
+running VDPlet receiver that supports verified OTA. The current production
+VDPlet predates that receiver.
+
 | Phase | What the Pi operator does |
 | --- | --- |
 | Mainboard VDPlet | Open one classic ESP32 programmer session using esptool 4.12. Verify the commissioned device and app0 layout, write the job extent at `0x10000`, and independently compare it. Hold Agon reset, restart the installed P4 and wait for its boot-pad release. Release Agon reset and prove a working CLI. |

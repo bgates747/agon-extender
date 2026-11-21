@@ -299,3 +299,44 @@ This batch produced zero fully verified flashes and one failure in the
 where the previous PlatformIO batch stopped. The tool's short-packet report
 identifies the failed verification step. The cause of the short packet and
 the final bytes on flash remain unverified.
+
+## Repeat standalone esptool with one reset after a failed attempt
+
+Smith requested a fresh series with standalone esptool 5.1.0 and the
+same Bistromathics v2.16.0 app0 image and extent. Keep the current, original
+USB cabling, 115,200-baud ROM entry and 460,800-baud stub transfer. P4 and
+EMOS keep their installed firmware. Reconcile the stopped BENCH-024 SD
+upload before the entry reset. Preserve its job evidence and SD files.
+
+- BENCH-023-023 [x] Under Extender's retained slot, count each fresh
+  programmer attempt once. A success requires the full app0 readback and
+  a working MOS prompt. Record the exact failed step for each failure,
+  including whether a write or independent readback completed. After a
+  failure below the limit, attempt one normal paired reset and record
+  whether MOS returns before starting the next numbered attempt. A reset
+  never changes the previous attempt's verdict.
+- BENCH-023-024 [x] Stop when either count reaches ten, or if the recovery
+  reset cannot return the bench to a state where another attempt can
+  proceed. Record the two totals, reset outcomes and final board state.
+  Keep the reservation active. Run the bounded series under the Pi
+  service and retain the original logs and joined-worker receipts.
+
+**Result: ten successes and zero failures.** Each standalone esptool 5.1.0
+attempt verified all 1,138,688 bytes of Bistromathics v2.16.0 in app0 and
+returned to a working MOS prompt. All ten workers joined. The entry reset
+and the ordinary restart after each successful flash ran. No failure
+recovery reset was needed. Bistromathics remains installed and Extender
+retains the reservation. Evidence is in
+`agents/bench-023/BENCH-023-2026-11-21T01-02-18Z/`.
+
+Before the entry reset, the P4 reported the retained BENCH-024 SD upload
+in terminal failure (phase 5, error 2, zero of 177 bytes). This was the
+preceding PARLIO job. The ten-flash series did not exercise PARLIO staging
+or the Agon Flash OTA path.
+
+Smith then requested production VDPlet back on the bench while retaining the
+reservation. The standalone esptool 5.1.0 restore wrote app0 only, using the
+same wiring and baud rates as the ten-pass series. The complete 1,138,688-byte
+readback matched the selected v0.1.3-alpha extent and MOS returned to a
+working prompt. The worker joined with exit 0. Evidence is in
+`agents/bench-023/BENCH-023-2026-11-21T01-21-08Z-restore/`. No check-in ran.
