@@ -54,17 +54,21 @@ def main():
             raise ValueError(f"Rebuild rowload.bin after modifying {name}")
         fixture_inputs[name] = supplied
     patterns = root / "agents/visual-review/display-pattern/fixture-r02-packed"
+    manifest_path = patterns / "manifest.json"
+    pattern_manifest = pin(manifest_path, "1c5c94883a2f4aa6ef5520633365774429ebcd15ced8817526bccbb018b90df1")
     named = {}
-    for name, digest in sorted(load(patterns / "manifest.json")["files"].items()):
+    for name, digest in sorted(load(manifest_path)["files"].items()):
+        artifact = pin(patterns / name, digest)
         if not name.startswith("m") or not name.endswith(".vdu"):
             continue
         mode = int(name[1:4])
         if 96 <= mode <= 99:
             continue
-        data = (patterns / name).read_bytes()
-        if data[:2] != bytes((22, mode)):
+        with (patterns / name).open("rb") as stream:
+            head = stream.read(2)
+        if head != bytes((22, mode)):
             raise ValueError(f"{name} does not start with its declared mode")
-        named[name] = pin(patterns / name, digest)
+        named[name] = artifact
     if not all(f"m{mode:03d}.vdu" in named for mode in (7, 8, 9, 10, 11, 20, 136, 137, 138, 139)):
         raise ValueError("Missing stock mode pattern")
     game = load(old_packet / "evidence/nurples-dev/job.json")["fixtures"][0]
@@ -106,7 +110,7 @@ def main():
         return pin(path)
     restore = padded("restore", release)
     binding = {"runner_checkout": str(runner), "runner_revision": revision, "config": config,
-               "fixture": fixture, "fixture_inputs": fixture_inputs,
+               "fixture": fixture, "fixture_inputs": fixture_inputs, "pattern_manifest": pattern_manifest,
                "observer": pin(package_source / "observe.py"),
                "scorer": pin(package_source / "score_refills.py"), "patterns": sum(name.endswith(".vdu") for name in named),
                "operator_chat": old_binding["operator_chat"], "write_extent": extent,

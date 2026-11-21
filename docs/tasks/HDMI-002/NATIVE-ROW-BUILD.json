@@ -1,0 +1,200 @@
+{
+  "source_commit": "2f99ab28dff2b18fea48337a46e382997e7ab5d1",
+  "build_id": "hdmi-native-row-r01-b2026-11-21-22-43-32Z",
+  "role": "offline P4 comparison candidate",
+  "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+  "images": {
+    "agon_extender.bin": {
+      "bytes": 1769744,
+      "sha256": "0d0affda6994a77dfff3039d606fcb9d0aed0da70653cc0bf725b13988e9b27c"
+    },
+    "agon_extender.elf": {
+      "bytes": 36552276,
+      "sha256": "c85f568e3c95c4ad96f168b0929fa2b094058f0569f15231f9120cf17bf8652f"
+    },
+    "source.tar.gz": {
+      "bytes": 28236973,
+      "sha256": "ea1421831c4c0d8afe9257a5a52b56d6188d4191ad4cbcd4fb83d614d4082f78"
+    },
+    "source-inputs.json": {
+      "bytes": 1159056,
+      "sha256": "6eb72cb141dfb0bfc406cfcbd5fa490e5433eadc4ec52fdc10d6d571d6a8cd99"
+    },
+    "dependencies.lock": {
+      "bytes": 14602,
+      "sha256": "a02df352a446db976bf1375db3de3eb7c6cdfd9603169c62ba84d30bccea78fc"
+    }
+  },
+  "validation": "PASS",
+  "elf_hash_embedded_in_application": true,
+  "linked_symbols": {
+    "agon_native_bind": true,
+    "agon_dpi_stop": true,
+    "native_worker": true,
+    "native_block_done": true,
+    "HdmiPpaScaler::initialize": false,
+    "HdmiPpaScaler::scale": false,
+    "HdmiOutput::publish(": false,
+    "StockP4Service::outputLoop": false,
+    "ppa_do_scale_rotate_mirror": false,
+    "strip_fill": false
+  },
+  "same_carrier_control": {
+    "build_id": "hdmi-coverage-r01-b2026-11-21-16-58-59Z",
+    "source_commit": "21349e0a875042c80762e4665d08effa99350e5c",
+    "application_sha256": "a4743d29bccee3e0fbef37761e136cb9404e5b44aa305199ae5e7523e3e7091a"
+  },
+  "matched_build_fields": [
+    "profile",
+    "board",
+    "idf_commit",
+    "dependencies_lock_sha256",
+    "board_profile_sha256",
+    "board_header_sha256",
+    "compiler",
+    "reset_url_sha256",
+    "network_messages",
+    "controller_input",
+    "parallel_boot_candidate",
+    "parallel_upload_candidate",
+    "usb_fsls_only",
+    "usb_dual_host",
+    "display_output"
+  ],
+  "display_flags_added": [
+    "-DAGON_EXTENDER_NATIVE_SCANOUT=1"
+  ],
+  "display_flags_removed": [
+    "-DAGON_EXTENDER_HDMI_FULL_FRAME_AUTO=1",
+    "-DAGON_EXTENDER_HDMI_PPA_320=1"
+  ],
+  "host_checks": {
+    "fixture": {
+      "passed": true,
+      "log_sha256": "a4e4efa299eabbb0fd12730cea86f2f2409a3395f8c4c04924aa8ad9580dd9cb"
+    },
+    "dma": {
+      "passed": true,
+      "log_sha256": "9ef0fdf9401e0a70d38aff1c1f9775293cd697d242b75f1518be362d9dc489ab"
+    },
+    "lifecycle": {
+      "passed": true,
+      "log_sha256": "475745851af5bf0dc6de3e537582ea086f4dea999983520a649e3ccafae6c55a"
+    },
+    "pool": {
+      "passed": true,
+      "log_sha256": "f067e5c44a23d42c8d21be1a121c1e454fcc0cdc2b4ce7e3f35a7fb5d8a36749"
+    },
+    "schedule": {
+      "passed": true,
+      "log_sha256": "7fa33c296294160086125138dc23195b295e5d1567551764fbdd763904aff427"
+    },
+    "pixels": {
+      "passed": true,
+      "log_sha256": "2df677b61b38f71244c7690f6e6be28e5b13d03a573a83a5d9549a7dc29aa27b"
+    },
+    "builder": {
+      "passed": true,
+      "log_sha256": "9e67cbb8f2bb355749c75357a7f0e3dc58bf36c63290f76dd6f16135e490aa95"
+    },
+    "old-dma": {
+      "passed": true,
+      "log_sha256": "914f21ce75165151ccfbe2188d7085acf342d0c696d34c704fdcd3f71db8457f"
+    },
+    "full-frame": {
+      "passed": true,
+      "log_sha256": "c76ea753d9d58f747f95ba7bbba435f50023db8d241227cc1f5c367359898075"
+    },
+    "rolling": {
+      "passed": true,
+      "log_sha256": "fddc01878db747a3ce2b5034747338a61a3d9fa833d7e4028cbeb747a6221835"
+    },
+    "old-schedule": {
+      "passed": true,
+      "log_sha256": "7fa33c296294160086125138dc23195b295e5d1567551764fbdd763904aff427"
+    },
+    "mode3": {
+      "passed": true,
+      "log_sha256": "a83b4757add55276b0224a225423e6b02f0498bdee5ed58e15533a93438fb21a"
+    },
+    "browser": {
+      "passed": true,
+      "log_sha256": "6d51cd2f7521b7a96f61cefb8c9e3216df9127bdc5e7f7dc27da01d2ba4bc11e"
+    },
+    "release-boot": {
+      "passed": true,
+      "log_sha256": "42e73de7bd0ca3b02bdf37b5ad5d82ed50798288f1f8276899b3014e06471b01"
+    },
+    "release-upload": {
+      "passed": true,
+      "log_sha256": "d79a1a63235a29b843e4c5769a0642845380d021b1a9b3dda0b90da4753c6dcd"
+    }
+  },
+  "pixel_oracle": {
+    "configurations": 15,
+    "full_carrier_frames": 30,
+    "rgb_pixels": 11344896,
+    "mismatches": 0,
+    "independent_marker_controls": [
+      "320×240 exact 2×2",
+      "512×384 1:1"
+    ]
+  },
+  "load_packet": {
+    "arms": {
+      "legacy": {
+        "job_sha256": "c77976d5e474faeacadb311b818af1dbaa2aba1adf6320a2f36b80e70fbda12f",
+        "fixture_sha256": "616fb3f5575beb09014e4fe92874ef59184db4bd718444defc43b9a34cedaf3b",
+        "inputs": 60,
+        "runner_phases": [
+          "stage",
+          "handback"
+        ]
+      },
+      "full-frame": {
+        "job_sha256": "af3b7de262204848cab2cc52aa16ff1a21f65a1ed3b91b33b14fd4d6b0d558bf",
+        "fixture_sha256": "616fb3f5575beb09014e4fe92874ef59184db4bd718444defc43b9a34cedaf3b",
+        "inputs": 60,
+        "runner_phases": [
+          "stage",
+          "install-p4",
+          "restore-p4",
+          "handback"
+        ],
+        "candidate_app_sha256": "a4743d29bccee3e0fbef37761e136cb9404e5b44aa305199ae5e7523e3e7091a",
+        "candidate_write_sha256": "e79ebbb8927245d2173a8a4306a09e97a1f181c4c80bed2db6a865aee81b73a1",
+        "restore_app_sha256": "539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b",
+        "restore_write_sha256": "071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1"
+      },
+      "native": {
+        "job_sha256": "5206463335d17fb4b792980ba31269825ae5ee1a8fa08d3a742b0a73c2f80df3",
+        "fixture_sha256": "616fb3f5575beb09014e4fe92874ef59184db4bd718444defc43b9a34cedaf3b",
+        "inputs": 60,
+        "runner_phases": [
+          "stage",
+          "install-p4",
+          "restore-p4",
+          "handback"
+        ],
+        "candidate_app_sha256": "0d0affda6994a77dfff3039d606fcb9d0aed0da70653cc0bf725b13988e9b27c",
+        "candidate_write_sha256": "a67918f8a586768f6f13e418b74aff1b7062d2ba14df99e4301a89d67113a1fa",
+        "restore_app_sha256": "539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b",
+        "restore_write_sha256": "071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1"
+      }
+    },
+    "files_per_arm": 61,
+    "packed_patterns": 54,
+    "app_write_extent": 1794048,
+    "matching_payloads": true,
+    "original_packed_manifest_sha256": "1c5c94883a2f4aa6ef5520633365774429ebcd15ced8817526bccbb018b90df1"
+  },
+  "physical_timing": "unmeasured",
+  "bench": "unreserved",
+  "paired_harness": "Retained P4/EMOS production qualification harness against candidate P4 and pinned EMOS source. Two development-harness attempts could not compile against these pinned EMOS host headers.",
+  "linked_rgb_store_verification": {
+    "elf_sha256": "c85f568e3c95c4ad96f168b0929fa2b094058f0569f15231f9120cf17bf8652f",
+    "aligned_rgb888_stores_per_four_physical_pixels_per_row": 3,
+    "paired_rows_reuse_same_registers": true,
+    "disassembly_sha256": "d9bb88813128f7be1c3bd275a248387780677a2bc32c3002eaaa64213adcd4d0"
+  }
+}
