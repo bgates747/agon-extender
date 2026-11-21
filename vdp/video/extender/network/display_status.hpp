@@ -58,7 +58,7 @@ inline esp_err_t nativeScanout(httpd_req_t *request) {
       "\"fault\":%u,\"fault_frame\":%u,\"fault_block\":%u,\"fault_elapsed_us\":%u,"
       "\"fault_queue_us\":%u,\"fault_render_us\":%u,\"fault_sync_us\":%u,"
       "\"underruns\":%u,\"invalid\":%u,\"rejected\":%u,\"free_internal_bytes\":%u,"
-      "\"largest_internal_bytes\":%u,\"free_psram_bytes\":%u,\"refill_histogram_100us\":[%s],"
+      "\"largest_internal_bytes\":%u,\"largest_internal_dma_bytes\":%u,\"free_psram_bytes\":%u,\"refill_histogram_100us\":[%s],"
       "\"min_draw_gap_us\":%u,\"sampled_rows\":{\"generation\":%u,\"samples\":%u,\"frame\":%u,"
       "\"block\":%u,\"source_rows\":%u,\"total_cycles\":%u,\"lock_wait_cycles\":%u,"
       "\"stock_cycles\":%u,\"expand_cycles\":%u}}",
@@ -72,6 +72,7 @@ inline esp_err_t nativeScanout(httpd_req_t *request) {
       unsigned(v.fault_render_us), unsigned(v.fault_sync_us), unsigned(v.underruns),
       unsigned(v.invalid), unsigned(v.rejected), unsigned(heap_caps_get_free_size(MALLOC_CAP_INTERNAL)),
       unsigned(heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL)),
+      unsigned(heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL | MALLOC_CAP_DMA | MALLOC_CAP_8BIT)),
       unsigned(heap_caps_get_free_size(MALLOC_CAP_SPIRAM)), bins, unsigned(v.min_draw_gap_us),
       unsigned(sample.generation), unsigned(sample.samples), unsigned(sample.frame),
       unsigned(sample.block), unsigned(sample.source_rows), unsigned(sample.total_cycles),
