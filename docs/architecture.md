@@ -438,13 +438,13 @@ mode. Same-carrier changes retain the existing candidate lifecycle. Logical
 mode IDs and buffering semantics remain stock-owned. Oversized images retain
 the documented crop fallback; this does not qualify additional carriers.
 Experimental timing selection does not change legacy logical mode IDs.
-The Author-authorized 320×240 experimental exception uses PPA bilinear2×
-presentation: a decorated private320×240 snapshot becomes640×480 at(104,0) in
-848×480. Logical front/back buffers remain independent from the HDMI pair.
-The P4 rejects a snapshot spanning a logical swap, finishes scaling before
-publication and waits for actual DMA release before reusing HDMI buffers.
-This exception preserves application dimensions/swap commands, and its loaded
-qualification remains owned by HDMI-002. The authorized HDMI-003 correction
+For 320×240, the P4 output adapter must replicate each completed logical pixel
+into a 2×2 square of identical RGB pixels and center the resulting 640×480
+image at (104,0) in 848×480. This applies after native row composition and
+preserves logical drawing dimensions, readback and stock swap behavior. The
+earlier candidate uses PPA bilinear filtering. The exact-replication decision
+and the earlier trial are recorded in [ADR-0024](decisions/ADR-0024-centered-unscaled-hdmi.md).
+HDMI-002 owns implementation and loaded qualification. The authorized HDMI-003 correction
 adds a separate 640×240 exception: P4 repeats each decorated logical row twice
 and centers640×480 in the proven848×480 carrier, preserving logical dimensions,
 coordinates and bank semantics. Host checks pass; native/visual qualification
