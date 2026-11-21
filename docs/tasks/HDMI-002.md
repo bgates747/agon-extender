@@ -1,5 +1,71 @@
 # HDMI-002 — 848×480 HDMI timing and centered 512×384 image
 
+## Screen coverage regression — 2026-11-21
+
+Smith resumed the investigation into modes that stopped filling the expected
+part of the monitor. The released Olimex P4 application
+`port-008-upload-r05-b2026-11-18-03-43-16Z` uses fixed 1280×720 RGB888.
+The retained build manifest and compile command for `hdmi_output.cpp`
+show neither automatic carrier selection nor the 320×240 PPA scaler.
+The retained app hash matches the production bundle. This configuration
+explains the undersized centered image even when the logical geometry is
+correct. These dimensions describe the HDMI signal before any monitor
+scaling. Optical confirmation on the current installation remains open.
+
+| Mode | Production P4 image and HDMI signal | Previously reviewed or selected presentation |
+| --- | --- | --- |
+| 0 | 640×480 in 1280×720, 120 black rows above and below | 640×480 centered in 848×480, full height |
+| 8 | 320×240 in 1280×720, 240 black rows above and below | 2× scale to 640×480 in 848×480, full height |
+| 20 | 512×384 in 1280×720, 168 black rows above and below | 512×384 centered in 684×384, full height |
+
+The [presentation decision](../decisions/ADR-0024-centered-unscaled-hdmi.md)
+retains black sidebars where needed to preserve proportions. The separate
+[640×240 aspect correction](HDMI-003.md) repeats mode 3 rows twice. The
+current host checks pass for row repetition and cropping. The existing
+builder still ties automatic timing and PPA scaling to the experimental
+rolling/direct composition. Earlier wide-mode clear deadline failures
+remain open on that composition. [Wide-clear repair record](HDMI-002/WIDE-CLEAR-REPAIR.md)
+
+- HDMI02-SIZE01 [ ] Propose a bounded P4-only comparison starting with
+  the exact released build and the existing labelled mode-preview fixture.
+  Confirm the original symptom in modes 0, 8 and 20. Use mode 3 as an aspect
+  control. Record the P4's reported active carrier, the monitor's observed
+  image edges and a square or circle for proportions. Select the smallest
+  production-based candidate that restores the previously reviewed
+  geometry, with a stock-to-stock mode transition check and the existing
+  scanout guards. Preserve the production EMOS, PARLIO and rollback pins.
+  Review and freeze the physical packet before running it.
+
+### HDMI02-SIZE01 operator assignment
+The approved offline execution contract and reviewed findings are in [Full-height stock HDMI modes](HDMI-002/SIZE01.md). The initial reading boundary below is historical.
+
+**State: reading only, then pause for Smith's review.** The assigned Extender
+agent owns the bounded screen coverage investigation. Smith reviews and can
+amend the assignment in the new agent's chat before the agent starts work.
+
+Read the repository's [AGENTS.md](../../AGENTS.md) first and follow its links
+to [canonical Agon instructions](../../../agon-dev-env/codex/AGENTS.md),
+the [task guide](../../../agon-dev-env/codex/tasks.md), the
+[Extender handbook](../README.md) and the
+[production selection](../../production/current.yaml). Read this task's
+screen coverage section and its linked presentation, aspect and wide-clear
+records, plus the [mode preview fixture](../../tests/fixtures/mode-preview/README.md),
+the [test appliance procedure](../procedures/test-appliances.md) and the
+[Olimex bench procedure](../operations/olimex-bench/README.md). Then report
+readiness and any blockers to Smith in the new chat and pause. This first
+turn is limited to reading and reporting. Smith may revise the assignment
+before authorizing source investigation, edits, builds or bench activity.
+
+After Smith clears that pause, the first tranche is an offline review. The
+agent verifies the released P4 build's timing/scaler flags and the
+previously reviewed dimensions, then proposes the smallest P4-only change
+and a matched visual comparison. The proposal names the exact starting
+and rollback images, affected modes, one stock-to-stock transition, and
+the checks for correct proportions, visible edges and scanout deadlines.
+It keeps production EMOS and PARLIO in place and identifies any dependency
+on experimental rolling scanout. Return that proposal to Smith before
+implementation or physical qualification.
+
 ## HDMI02-N02 — offline candidate ranking, authorized 2026-10-07
 
 The Author asks for a script predicting likely working resolutions. Build an
