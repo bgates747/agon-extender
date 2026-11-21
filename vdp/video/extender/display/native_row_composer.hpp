@@ -21,7 +21,7 @@ class NativeRowComposer {
 
   bool configure(int width, int height, int carrier_width, int carrier_height) {
     if (width <= 0 || width > static_cast<int>(maximum_width) || height <= 0 ||
-        carrier_width <= 0 || carrier_height <= 0) return false;
+        carrier_width <= 0 || (carrier_width & 3) || carrier_height <= 0) return false;
     doubled_ = width == 320 && height == 240;
     repeat_y_ = doubled_ ? 2 : hdmiVerticalRepeat(width, height);
     geometry_ = centeredHdmiGeometry(doubled_ ? width * 2 : width, height * repeat_y_,
@@ -125,11 +125,21 @@ class NativeRowComposer {
       const auto b = Double ? a : colour(x + 1);
       const auto c = colour(x + (Double ? 1 : 2));
       const auto d = Double ? c : colour(x + 3);
-      const std::uint32_t words[3]{a | b << 24, (b >> 8) | c << 16, (c >> 16) | d << 8};
-      std::memcpy(__builtin_assume_aligned(out, 4), words, 12);
+      const std::uint32_t first_word = a | (b << 24);
+      const std::uint32_t mid_word = (b >> 8) | (c << 16);
+      const std::uint32_t last_word = (c >> 16) | (d << 8);
+      const auto write_group = [&](std::uint8_t *to) {
+        // The scalar prefix aligned out; both admitted strides preserve that
+        // alignment on the repeated row. Keep the words in registers on P4.
+        auto *aligned = static_cast<std::uint8_t *>(__builtin_assume_aligned(to, 4));
+        __builtin_memcpy(aligned, &first_word, 4);
+        __builtin_memcpy(aligned + 4, &mid_word, 4);
+        __builtin_memcpy(aligned + 8, &last_word, 4);
+      };
+      write_group(out);
       out += 12;
       if (second) {
-        std::memcpy(second, words, 12);
+        write_group(second);
         second += 12;
       }
     }
