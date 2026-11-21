@@ -54,7 +54,7 @@ class HdmiOutput {
   // A contained rolling-scanout abort cannot deliver another buffer release.
   // This reports that condition; it never releases or reuses DMA-owned pixels.
   bool scanoutFailed() const;
-  void cleanup();
+  bool cleanup();
   void report(std::int64_t now);
 #ifdef AGON_EXTENDER_HDMI_LINK_WATCH
   // RESEARCH-007: read-only task-context observer, never a bridge relock.
@@ -86,11 +86,13 @@ class HdmiOutput {
   // Process-loop/core0 requests; persistent submission task/core1 executes.
   HdmiTiming requested_timing_{kHdmiTiming};
   std::atomic<unsigned> configure_state_{}; //0 idle,1 request,2 pass,3 fail
-#ifdef AGON_EXTENDER_DIRECT_RGB888
+#if defined(AGON_EXTENDER_DIRECT_RGB888) || defined(AGON_EXTENDER_HDMI_AUTO)
   static void directSubmitEntry(void *);
-  static bool directSwap(void *, unsigned);
   bool startDirectSubmitter();
   TaskHandle_t direct_task_{};
+#endif
+#ifdef AGON_EXTENDER_DIRECT_RGB888
+  static bool directSwap(void *, unsigned);
   // One requester is serialized by native exclusion. Neither the submitter
   // nor its DMA acknowledgment acquires that exclusion.
   enum DirectState : unsigned { Idle, Requested, Submitted, Complete, Failed };

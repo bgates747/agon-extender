@@ -280,14 +280,17 @@ def select_display_profile(document: dict, name: str, board: str,
     else:
         profile["forbidden_sources"].append(RGB888_SOURCE)
     if hdmi_timing == "auto" and not rolling_scanout:
-        raise SystemExit("automatic HDMI requires the explicit rolling/direct normal composition")
+        if not (ppa_scale_320 and parallel_upload and parallel_boot_candidate and
+                not direct_rgb888 and not render_benchmark_output and not indexed_ppa):
+            raise SystemExit("automatic HDMI requires the rolling profile or the full-frame PARLIO/scaler profile")
+        profile["definitions"].append("AGON_EXTENDER_HDMI_FULL_FRAME_AUTO=1")
     if rolling_scanout:
         if not direct_rgb888 or hdmi_timing not in {"auto", "848x480", "512x384", "684x384"} or render_benchmark_output!="normal":
             raise SystemExit("rolling scanout requires experimental 848x480/512x384/684x384 direct RGB888 normal output")
         profile["sources"].append("video/extender/display/rolling/scene.cpp")
         profile["definitions"].append("AGON_EXTENDER_ROLLING_SCANOUT=1")
     if ppa_scale_320:
-        if hdmi_timing != "auto" or not rolling_scanout:
+        if hdmi_timing != "auto":
             raise SystemExit("PPA 320 scaling requires the automatic rolling HDMI composition")
         profile["sources"].append("video/extender/display/hdmi_ppa_scaler.cpp")
         profile["definitions"].append("AGON_EXTENDER_HDMI_PPA_320=1")
@@ -403,6 +406,10 @@ def display_input_record(display_output: str, render_benchmark_output: str | Non
         record["ppa_scale_320"] = {"source": [320, 240], "destination": [640, 480],
                                    "carrier": [848, 480], "filter": "bilinear",
                                    "storage": "decorated snapshot; independent DMA-owned HDMI pair"}
+    if hdmi_timing == "auto" and not rolling_scanout:
+        record.update(render_storage="native", scanout={"kind": "full-frame-dma", "stop": "EOF and channel disabled"})
+        record.pop("logical_stride_bytes")
+        record.pop("presentation_copy_bytes")
     if indexed_ppa:
         record.update(render_storage="linear-physical-rgb222",logical_stride_bytes="logical width",
                       presentation_copy_bytes="logical width * height",
@@ -723,7 +730,10 @@ def main() -> None:
         args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream,
         args.parallel_upload_candidate, args.indexed_ppa, args.direct_rgb888,
         args.rolling_scanout, args.render_benchmark_output))
-    if not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification and not network_boot:
+    coverage_build = (args.hdmi_timing == "auto" and not args.rolling_scanout and
+                      args.ppa_scale_320 and args.parallel_upload_candidate and
+                      re.fullmatch(r"hdmi-coverage-r[0-9]{2,}-b[0-9-]+Z", args.build_id))
+    if not coverage_build and not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification and not network_boot:
         parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():

@@ -597,7 +597,7 @@ int8_t changeMode(uint8_t mode) {
 		case 30:
 			errVal = changeResolution(2, QSVGA_640x256_60Hz);
 			break;
-#ifdef AGON_EXTENDER_HDMI_AUTO
+#if defined(AGON_EXTENDER_HDMI_AUTO) && !defined(AGON_EXTENDER_HDMI_FULL_FRAME_AUTO)
 		// HDMI02-W: experimental Extender-only IDs, absent from stock v2.16.
 		// Expose the entire already-proven848 carrier. Keep the native indexed /
 		// RGB222 controllers and stock semantics; no RGB888 fast-path expansion.

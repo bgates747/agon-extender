@@ -29,6 +29,8 @@ project(agon_extender)
 
 if(AGON_ROLLING_SCANOUT)
   include("${AGON_VDP_ROOT}/video/extender/display/rolling/strip_driver.cmake")
+elseif(AGON_HDMI_TIMING STREQUAL "auto")
+  include("${AGON_VDP_ROOT}/video/extender/display/full_frame/driver.cmake")
 endif()
 
 if(AGON_EXEXT_STREAM OR AGON_NETWORK_PARALLEL OR AGON_PARALLEL_UPLOAD)

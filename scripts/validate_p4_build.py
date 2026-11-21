@@ -256,6 +256,26 @@ def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, ro
             subprocess.run([sys.executable,str(VDP/"video/extender/display/rolling/patch_dpi.py"),
                             str(IDF/"components/esp_lcd/dsi/esp_lcd_panel_dpi.c"),str(generated)],check=True)
             if generated.read_bytes()!=expected_dpi.read_bytes():fail("rolling derivative differs from generator")
+    if hdmi_timing == "auto" and not rolling_scanout:
+        expected_dpi = build / "full-frame/esp_lcd_panel_dpi.c"
+        import tempfile
+        for component, unit, generator in [
+                ("esp_lcd", "dsi/esp_lcd_panel_dpi.c", "full_frame/patch_dpi.py"),
+                ("esp_hw_support", "dma/dw_gdma.c", "rolling/patch_dw_gdma.py")]:
+            original = IDF / "components" / component / unit
+            derived = build / "full-frame" / original.name
+            with tempfile.TemporaryDirectory() as tmp:
+                regenerated = Path(tmp) / original.name
+                subprocess.run([sys.executable, str(VDP / "video/extender/display" / generator),
+                                str(original), str(regenerated)], check=True)
+                if regenerated.read_bytes() != derived.read_bytes():
+                    fail("full-frame DMA driver differs from pinned generator")
+            actions = [entry for entry in commands if Path(entry["file"]).name == original.name]
+            library = f"esp-idf/{component}/lib{component}.a"
+            edges = [line for line in ninja.splitlines() if line.startswith(f"build {library}:")]
+            if (len(actions) != 1 or Path(actions[0]["file"]).resolve() != derived or
+                    len(edges) != 1 or actions[0]["output"] not in edges[0] or library not in elf[0]):
+                fail("full-frame shutdown driver compile/archive/link mismatch")
     if len(dpi) != 1 or Path(dpi[0]["file"]).resolve() != expected_dpi:
         fail("HDMI build lacks exactly one pinned DPI scanout compile action")
     if rolling_scanout:
@@ -391,7 +411,7 @@ def main() -> None:
             pie_arch = "-march=rv32imafc_zicsr_zifencei_xesppie"
             if (pie_arch in argv) != args.scroll_fast:
                 fail("scroll PIE ISA selection differs from actual compile action")
-        for definition, benchmark_selected in (("AGON_EXTENDER_PARALLEL_UPLOAD",args.parallel_upload_candidate),("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
+        for definition, benchmark_selected in (("AGON_EXTENDER_HDMI_FULL_FRAME_AUTO",args.hdmi_timing == "auto" and not args.rolling_scanout),("AGON_EXTENDER_PARALLEL_UPLOAD",args.parallel_upload_candidate),("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
                                      ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
                                      ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
                                      ("AGON_EXTENDER_BENCH_OFF",args.render_benchmark_output in ("off","convert-off")),

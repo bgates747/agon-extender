@@ -31,12 +31,24 @@ static_assert(std::atomic<std::uint32_t>::is_always_lock_free,
 
 HdmiOutput &hdmiOutput() { static HdmiOutput output; return output; }
 
-void HdmiOutput::cleanup() {
+#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+extern "C" esp_err_t agon_dpi_stop(esp_lcd_panel_handle_t panel);
+#endif
+
+bool HdmiOutput::cleanup() {
   ready_ = false;
 #ifdef AGON_EXTENDER_INDEXED_PPA
   indexed_.reset();
 #endif
   output_size_.store(0, std::memory_order_release);
+#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+  // Keep every resource alive if the old transfer has not retired. A later
+  // stock mode fallback can retry this join without borrowing its pixels.
+  if (panel_ && agon_dpi_stop(panel_) != ESP_OK) {
+    ESP_LOGE(kTag, "Full-frame DMA stop unconfirmed; retaining HDMI panel");
+    return false;
+  }
+#endif
   if (panel_) { esp_lcd_panel_del(panel_); panel_ = nullptr; }
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   scaler_.reset();
@@ -65,10 +77,12 @@ void HdmiOutput::cleanup() {
   link_samples_ = link_hpd_changes_ = 0;
   link_observer_failed_ = false;
 #endif
+  return true;
 }
 
 bool HdmiOutput::start() {
   if (ready_) return true;
+  if (panel_ && !cleanup()) return false;
 #ifdef AGON_EXTENDER_BENCH_OFF
   // Retain the same RGB888 allocation while deliberately starting no DSI DMA.
   for(auto &buffer:buffers_)buffer=static_cast<std::uint8_t *>(heap_caps_aligned_calloc(64,1,bufferBytes(),MALLOC_CAP_SPIRAM));
@@ -195,6 +209,10 @@ bool HdmiOutput::start() {
   }
   if (error != ESP_OK) return failed(error, "RGB888 panel buffers");
   buffer_count_ = dpi.num_fbs;
+#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+  if (width() == 848 && buffer_count_ != 2)
+    return failed(ESP_ERR_NO_MEM, "320 scaling requires two panel buffers");
+#endif
 #ifdef AGON_EXTENDER_INDEXED_PPA
   // Indexed publication always writes a background distinct from scanout.
   // Do not advertise a working output after the ordinary one-buffer fallback.
@@ -230,7 +248,7 @@ bool HdmiOutput::start() {
   ++link_epoch_;
 #endif
   output_size_.store(unsigned(width()) << 16 | unsigned(height()),std::memory_order_release);
-#ifdef AGON_EXTENDER_DIRECT_RGB888
+#if defined(AGON_EXTENDER_DIRECT_RGB888) || defined(AGON_EXTENDER_HDMI_AUTO)
   if(!startDirectSubmitter()) return failed(ESP_ERR_NO_MEM,"Direct framebuffer submission task");
 #endif
   report_started_ = esp_timer_get_time();
@@ -257,7 +275,10 @@ bool HdmiOutput::needsMode(int w,int h) const {
 bool HdmiOutput::selectMode(int w,int h) {
 #ifdef AGON_EXTENDER_HDMI_AUTO
   if(!needsMode(w,h))return true;
-  if(!direct_task_ || frame_context_ || direct_state_.load()!=Idle)return false;
+  if (!direct_task_ || frame_context_) return false;
+#ifdef AGON_EXTENDER_DIRECT_RGB888
+  if (direct_state_.load() != Idle) return false;
+#endif
   requested_timing_=selectHdmiTiming(w,h);
   configure_state_.store(1,std::memory_order_release);
   xTaskNotifyGive(direct_task_);
@@ -668,12 +689,15 @@ bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bo
 }
 #endif
 
-#ifdef AGON_EXTENDER_DIRECT_RGB888
+#if defined(AGON_EXTENDER_DIRECT_RGB888) || defined(AGON_EXTENDER_HDMI_AUTO)
 bool HdmiOutput::startDirectSubmitter() {
   if(direct_task_) return true;
   return agon::extender::createVideoWorker(directSubmitEntry,"hdmi-swap",4096,this,6,&direct_task_,1)==pdPASS;
 }
 
+#endif
+
+#ifdef AGON_EXTENDER_DIRECT_RGB888
 Rgb888PanelStorage HdmiOutput::panelStorage() {
   if(!ready_ || !direct_task_)return {};
   // Mode preparation has joined the old output/drawing service. Finish any
@@ -725,12 +749,18 @@ bool HdmiOutput::directSwap(void *context,unsigned target) {
   }
 }
 
+#endif
+
+#if defined(AGON_EXTENDER_DIRECT_RGB888) || defined(AGON_EXTENDER_HDMI_AUTO)
 void HdmiOutput::directSubmitEntry(void *context) {
   auto &self=*static_cast<HdmiOutput*>(context);
   for(;;) {
     ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     if(self.configure_state_.load(std::memory_order_acquire)==1) {
-      self.cleanup();
+      if (!self.cleanup()) {
+        self.configure_state_.store(3, std::memory_order_release);
+        continue;
+      }
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
       agon_scanout_reset();
 #endif
@@ -738,6 +768,7 @@ void HdmiOutput::directSubmitEntry(void *context) {
       self.configure_state_.store(self.start()?2:3,std::memory_order_release);
       continue;
     }
+#ifdef AGON_EXTENDER_DIRECT_RGB888
     if(self.direct_state_.load(std::memory_order_acquire)!=Requested)continue;
     if(!self.waitForSubmittedBuffer(self.direct_cancelled_) || self.direct_cancelled_.load()) {
       self.direct_state_.store(Failed,std::memory_order_release);continue;
@@ -772,6 +803,7 @@ void HdmiOutput::directSubmitEntry(void *context) {
     self.direct_state_.store(Complete,std::memory_order_release);
 #endif
     portEXIT_CRITICAL(&self.callback_mux_);
+#endif
   }
 }
 #endif
