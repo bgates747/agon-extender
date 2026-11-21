@@ -36,7 +36,7 @@ class NativeRowComposer {
   // hands out complete 32-row strips. In the two repeated geometries both
   // physical occurrences share a slot and one lease on the sampled pixels.
   template<class PrepareRow, class MeasureExpand = NativeExpand>
-  bool fill(std::uint8_t *pixels, unsigned first_y, unsigned count, unsigned slot,
+  bool fill(std::uint8_t *pixels, unsigned first_y, unsigned count, unsigned slot, bool &slot_black,
             PrepareRow prepare_row, MeasureExpand measure_expand = {}) {
     if (!pixels || slot >= slots || count == 0 || first_y >= unsigned(output_height_) ||
         count > unsigned(output_height_) - first_y) return false;
@@ -52,18 +52,28 @@ class NativeRowComposer {
     const unsigned right_start = left_bytes + image_bytes;
     const Coverage prior = previous_[slot];
     if (!prior.initialized || top != prior.top || end != prior.end) {
-      for (int row = 0; row < rows; ++row) {
-        auto *line = pixels + row * stride;
-        if (!prior.initialized) {
-          if (left_bytes) std::memset(line, 0, left_bytes);
-          if (right_start < stride) std::memset(line + right_start, 0, stride - right_start);
+      // The DMA owner already cleared and synchronized newly allocated slots.
+      // On a quick same-carrier rebind the retired slot may still contain the
+      // old geometry. Clear only the spans that the incoming image won't write.
+      if (!slot_black) {
+        if (!prior.initialized && top == end) {
+          std::memset(pixels, 0, std::size_t(rows) * stride);
+        } else {
+          for (int row = 0; row < rows; ++row) {
+            auto *line = pixels + row * stride;
+            if (!prior.initialized) {
+              if (left_bytes) std::memset(line, 0, left_bytes);
+              if (right_start < stride) std::memset(line + right_start, 0, stride - right_start);
+            }
+            if ((row < top || row >= end) &&
+                (!prior.initialized || (row >= prior.top && row < prior.end)))
+              std::memset(line + left_bytes, 0, image_bytes);
+          }
         }
-        if ((row < top || row >= end) &&
-            (!prior.initialized || (row >= prior.top && row < prior.end)))
-          std::memset(line + left_bytes, 0, image_bytes);
       }
       previous_[slot] = {top, end, true};
     }
+    slot_black = top == end;
     for (int row = top; row < end; row += repeat_y_) {
       const int image_y = first + row - geometry_.destination_y;
       const int source_y = (image_y + geometry_.source_y) / repeat_y_;

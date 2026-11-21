@@ -208,10 +208,10 @@ static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
     bool changed = false;
     if (job.tag.block == 0) s->reading = s->render != NULL;
     if (s->reading) {
+        const bool was_black = s->black[slot];
         ok = s->render(s->ctx,s->pixels[slot],job.tag.block * NR_ROWS,NR_ROWS,
-                       d->h_pixels,d->v_pixels,slot,job.tag.frame);
-        changed = true;
-        s->black[slot] = false;
+                       d->h_pixels,d->v_pixels,slot,job.tag.frame,&s->black[slot]);
+        changed = !was_black || !s->black[slot];
     } else if (!s->black[slot]) {
         memset(s->pixels[slot],0,bytes);
         s->black[slot] = true;

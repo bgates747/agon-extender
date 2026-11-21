@@ -40,7 +40,7 @@ class StockP4Service {
 #endif
 #ifdef AGON_EXTENDER_NATIVE_SCANOUT
   static bool nativeRows(void *context, std::uint8_t *pixels, unsigned first_y,
-                         unsigned rows, unsigned width, unsigned height, unsigned slot, std::uint32_t frame);
+                         unsigned rows, unsigned width, unsigned height, unsigned slot, std::uint32_t frame, bool *slot_black);
   static void nativeDrawWake(void *context);
   NativeRowComposer native_rows_;
   SemaphoreHandle_t swap_drain_done_{};

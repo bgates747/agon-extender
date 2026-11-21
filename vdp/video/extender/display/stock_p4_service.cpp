@@ -203,13 +203,15 @@ extern "C" void agon_native_get_row_profile(agon_native_row_profile_t *out) {
 }
 
 bool StockP4Service::nativeRows(void *context, std::uint8_t *pixels, unsigned first_y,
-                                unsigned rows, unsigned width, unsigned height, unsigned slot, std::uint32_t frame) {
+                                unsigned rows, unsigned width, unsigned height, unsigned slot, std::uint32_t frame, bool *slot_black) {
   auto &self = *static_cast<StockP4Service *>(context);
   // Binding is a fallible prepare step. Its first callback can precede mode
   // commit. Start native sampling at row zero only after aliases are committed.
+  if (!rows || rows > height || !slot_black) return false;
   if (first_y == 0) self.rendering_frame_ = self.active_.load(std::memory_order_acquire);
   if (!self.rendering_frame_) {
-    std::memset(pixels, 0, std::size_t(rows) * width * 3);
+    if (!*slot_black) std::memset(pixels, 0, std::size_t(rows) * width * 3);
+    *slot_black = true;
     return true;
   }
   const unsigned block = first_y / rows;
@@ -218,7 +220,7 @@ bool StockP4Service::nativeRows(void *context, std::uint8_t *pixels, unsigned fi
     sample.frame = frame;
     sample.block = block;
     const auto begin = esp_cpu_get_cycle_count();
-    const bool rendered = self.native_rows_.fill(pixels, first_y, rows, slot,
+    const bool rendered = self.native_rows_.fill(pixels, first_y, rows, slot, *slot_black,
         [&](int y, bool rewind, std::uint8_t *signal) {
           self.controller_->sampleNativeRow(y, rewind, signal, sample);
         },
@@ -235,7 +237,7 @@ bool StockP4Service::nativeRows(void *context, std::uint8_t *pixels, unsigned fi
     portEXIT_CRITICAL(&row_profile_mux);
     return rendered;
   }
-  return self.native_rows_.fill(pixels, first_y, rows, slot,
+  return self.native_rows_.fill(pixels, first_y, rows, slot, *slot_black,
       [&](int y, bool first_cropped, std::uint8_t *signal) {
         if (first_cropped) self.controller_->prepareFirstCroppedRow(y, signal);
         else self.controller_->prepareRow(y, signal);

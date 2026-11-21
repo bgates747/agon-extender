@@ -9,8 +9,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+// slot_black starts true only for a fully cleared, DMA-visible slot. The
+// renderer leaves it true only when the complete slot is still known black.
+// True on both entry and exit means no pixel writes or cache sync are needed.
 typedef bool (*agon_native_render_t)(void *, uint8_t *, unsigned first_y, unsigned rows,
-                                     unsigned width, unsigned height, unsigned slot, uint32_t frame);
+                                     unsigned width, unsigned height, unsigned slot, uint32_t frame, bool *slot_black);
 typedef void (*agon_native_wake_t)(void *);
 esp_err_t agon_native_bind(esp_lcd_panel_handle_t panel, void *context,
                            agon_native_render_t render, agon_native_wake_t draw_wake);
