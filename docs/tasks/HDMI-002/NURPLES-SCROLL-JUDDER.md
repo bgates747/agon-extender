@@ -2,6 +2,10 @@
 
 **Offline result and test plan for Smith’s review.** Determine where the uneven vertical motion first appears during Nurples playfield scrolling. Smith saw it on the full-frame HDMI candidate while gameplay otherwise appeared to run at normal speed. Smith also saw a single brief full-screen blackout during ordinary play. Track the two symptoms independently unless evidence links them. Offline source review is complete. The matched physical test below awaits Smith’s review before any build or bench reservation.
 
+## Stock timing review commissioned November 21
+
+Smith reports the mainboard VDP does not show the scrolling problem. Review stock VDP and its graphics-library timing against the P4 candidate first. Verify the relationship of the installed mainboard companion to the official stock reference. Trace scroll execution, vertical blank, work budgets, framebuffer access and physical scanout, and identify intentional substitutions or lost guarantees with exact code evidence. Report ranked findings and uncertainties. This tranche covers source review and written results only. The transient HDMI blackout and the earlier physical plan are deferred.
+
 ## What was observed
 
 Smith described vertical judder that appeared to span multiple scanlines. Different parts of the playfield seemed to move unevenly. He saw no alternating blank and drawn scanlines. He raised scanout errors as a possibility. The trial provided a visual observation only. There is no game-time frame trace, video recording or matched release playthrough in this record. The earlier static pattern verdict and scanout samples belong to a separate run. [Bench observations](SIZE01-BENCH.md)
