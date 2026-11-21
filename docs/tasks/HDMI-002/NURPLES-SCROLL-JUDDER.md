@@ -115,3 +115,45 @@ handback. Each later window also gates the next. The earlier bad trace and
 synthetic operand leaks and restoration mismatches were rejected offline.
 The local binding, build and bench receipts are under
 `agents/hdmi002/native-rows/copper-r02/`. Nurples remains Smith's visual check.
+
+Smith shortened stock collection to one final 60-second mode-8 drawing
+sample. The corrected mode-20 drawing pilot had passed with 44,410 loops,
+7,268 MOS ticks, 60.011 seconds of Pi service observation and 122 status
+reads. The printer transcript passed the operand check and the Copper
+variable returned to its original absent state. The subsequent mode-20
+clear window was already underway. At exit it printed “Row test failed.”
+and MOS printed “Error accessing SD card” and the test directory prompt.
+The CSV for this window was not collected; the generic fixture exit status
+does not distinguish a media failure from another failed fixture check.
+The batch stopped there, before mode 8. The operator retained the reservation
+and the first-failure evidence. The final authorized measurement is pending
+the commissioned bench failure handoff.
+
+Smith confirmed that MOS uses “Error accessing SD card” for unclassified
+errors and that a directory listing read the mainboard card successfully.
+He authorized prompt verification, preservation of the current CSV, and
+only the final mode-8 drawing sample. The Pi witnessed the test directory
+prompt on Legacy route 0 and downloaded the 96-byte, three-row CSV over
+PARLIO before launching mode 8. The clear case had written 54,953 loops
+with its success field zero. In that case the only path that writes a zero
+in the CSV is the final active-mode check. The result does not distinguish
+a missing mode reply from a reply reporting another mode. Exclude that row.
+
+**Stock collection complete.** The one final mode-8 drawing sample passed.
+The CSV preserved all three prior rows and appended exactly one passing row.
+The mainboard consumed the palette operands in both corrected drawing
+samples and restored the observed Copper setting (absent). Each service
+observer recorded 122 successful status reads over 60.011 seconds.
+
+| Stock drawing case | Logical pixels | Pi interval from entry banner to Escape dispatch (s) | eZ80 loops | Approx. loops/s |
+|---|---:|---:|---:|---:|
+| Mode 20 | 512 × 384 | 60.380 | 44,410 | 735.5 |
+| Mode 8 | 320 × 240 | 60.379 | 46,285 | 766.6 |
+
+Mode 8 submitted 4.2% more loops/s than mode 20 in these single samples.
+These are workload iterations, with each rate calculated using the Pi interval.
+The sample does not measure displayed frames or P4 refills. The Pi witnessed
+the mode-0 MOS prompt after collection, the SD listener was idle, and the
+worker group exited cleanly. Stock collection stopped with Olimex custody
+retained. Smith owns the Nurples visual check. Last window receipts and
+the cumulative CSV are under the local evidence directory `final-stock-m8/`.
