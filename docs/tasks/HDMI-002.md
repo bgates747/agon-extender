@@ -36,7 +36,7 @@ remain open on that composition. [Wide-clear repair record](HDMI-002/WIDE-CLEAR-
   scanout guards. Preserve the production EMOS, PARLIO and rollback pins.
   Review and freeze the physical packet before running it.
 
-- [ ] [HDMI02-SIZE01e — Investigate Nurples scrolling judder and a brief blackout](HDMI-002/NURPLES-SCROLL-JUDDER.md). Smith reported uneven scrolling across multiple scanlines and one roughly one-second full-screen outage during ordinary gameplay on the candidate. Offline trace complete; matched release/candidate test plan awaiting review.
+- [ ] [HDMI02-SIZE01e — Investigate Nurples scrolling judder and a brief blackout](HDMI-002/NURPLES-SCROLL-JUDDER.md). Smith sees smooth terrain on the mainboard and row-dependent judder on the P4 candidate. The [stock versus P4 timing review](HDMI-002/STOCK-SCROLL-TIMING-REVIEW.md) identifies active-front writes, source-row mixing and independent clocks. The proposed scroll comparison awaits review. The single gameplay blackout is deferred.
 
 ### HDMI02-SIZE01 operator assignment
 The [frozen plan and offline results](HDMI-002/SIZE01.md) record the built candidate, DMA verification and source pins. The [matched visual packet](HDMI-002/SIZE01-VISUAL.md) awaits Smith’s review before reservation. Physical comparison and acceptance remain open. The initial assignment below is historical.
