@@ -36,7 +36,7 @@ remain open on that composition. [Wide-clear repair record](HDMI-002/WIDE-CLEAR-
   scanout guards. Preserve the production EMOS, PARLIO and rollback pins.
   Review and freeze the physical packet before running it.
 
-- [ ] [HDMI02-SIZE01e — Stock-compatible P4 presentation timing](HDMI-002/NURPLES-SCROLL-JUDDER.md). Nurples provides the mode-20 scrolling reproduction. Preserve each mode’s stock logical buffering for all applications. The [stock versus P4 timing review](HDMI-002/STOCK-SCROLL-TIMING-REVIEW.md) identifies active-front writes, source-row mixing and independent clocks. The proposed scroll comparison awaits review. The single gameplay blackout is deferred.
+- [ ] [HDMI02-SIZE01e — Stock-compatible P4 presentation timing](HDMI-002/NURPLES-SCROLL-JUDDER.md). Nurples supplies the mode-20 reproduction. Smith selected exact pixel doubling for all 320×240 modes. The [native row scanout and refill qualification plan](HDMI-002/NATIVE-ROW-SCANOUT-PLAN.md) covers redundant work, raster timing and performance under load. Awaiting design review. The separate blackout investigation is deferred.
 
 ### HDMI02-SIZE01 operator assignment
 The [frozen plan and offline results](HDMI-002/SIZE01.md) record the built candidate, DMA verification and source pins. The [matched visual packet](HDMI-002/SIZE01-VISUAL.md) awaits Smith’s review before reservation. Physical comparison and acceptance remain open. The initial assignment below is historical.

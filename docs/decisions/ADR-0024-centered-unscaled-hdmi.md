@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-10-04
-- Amended: 2026-10-13
+- Amended: 2026-11-21
 - Related tasks: HDMI-001, HDMI-002, HDMI-003
 
 ## Executive summary
@@ -97,6 +97,19 @@ correction passes host pixel/geometry checks and both matched native builds'
 bounded mode-0/3 hardware checks. The Author confirms that the indexed mode-3
 diagnostic box looks square. Wider qualification remains pending. This corrective design is not production
 acceptance or evidence of a performance improvement.
+
+## Exact pixel doubling for 320×240 — 2026-11-21
+
+Smith selected exact 2× pixel replication for 320×240 HDMI presentation. This
+supersedes the bilinear filter accepted for the October trial. The P4 maps each
+completed logical pixel, including stock palette, sprite and cursor effects, to
+four identical RGB pixels in a 2×2 square. The 640×480 image remains centered
+at (104,0) in the 848×480 signal with black sidebars. The rule applies to all
+320×240 applications and preserves each stock mode's logical buffering, readback
+and swap behavior. Its purpose is to preserve pixel edges and palette colours
+and avoid interpolation work. The earlier trial and its measured results retain
+their original build identity. The [task](../tasks/HDMI-002.md) owns the
+proposed scanout implementation and timing qualification.
 
 ## Implementation boundary
 
