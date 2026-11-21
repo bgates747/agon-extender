@@ -1,6 +1,7 @@
 // Functional test of the actual service, queued native swap and frame counter.
 // Only the physical HDMI sink and existing FreeRTOS host substrate are faked;
 // forced worker barriers make the scheduling/lifetime cases reproducible.
+#include <algorithm>
 #include <array>
 #include <cassert>
 #include <chrono>
@@ -55,6 +56,95 @@ struct Controller : StockBoundController<fabgl::VGA64Controller> {
   }
 };
 
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+int main() {
+  const char *modeline = "\"64x16\" 1 64 68 72 80 16 18 20 24 -HSync -VSync";
+  Controller controller;
+  controller.begin();
+  controller.setResolution(modeline, 64, 16, true);
+  assert(controller.isViewPortAllocated() && controller.isDoubleBuffered());
+  fabgl::Canvas canvas(&controller);
+  PresentationSnapshotPool metadata;
+  StockP4Service service(metadata);
+  assert(service.startClock());
+  hdmiOutput().fail_row_bind = true;
+  assert(!service.prepare(controller));
+  hdmiOutput().fail_row_bind = false;
+  assert(service.startClock() && service.prepare(controller));
+
+  std::array<uint8_t, 320 * 32 * 3> pixels{};
+  pixels.fill(0xff);
+  assert(hdmiOutput().emitRows(pixels.data(), 0, false));
+  assert(std::all_of(pixels.begin(), pixels.end(), [](uint8_t x) { return x == 0; }));
+  service.activate();
+  assert(hdmiOutput().emitRows(pixels.data(), 0, false));
+  StockFrameCounter counter;
+  counter = 0;
+  const auto prior_generation = stockVisibleGeneration();
+  canvas.setPixel(2, 2, fabgl::RGB888(255, 0, 0));
+  hdmi_test_enqueued = 0;
+  auto swapping = std::async(std::launch::async, [&] { canvas.swapBuffers(); });
+  await([&] { return hdmi_test_enqueued.load() != 0; });
+  Barrier draw;
+  controller.before_drain = &draw;
+  auto next = std::async(std::launch::async, [&] {
+    return hdmiOutput().emitRows(pixels.data(), 16, true);
+  });
+  draw.awaitEntry();
+  assert(next.wait_for(10ms) == std::future_status::timeout);
+  assert(hdmiOutput().emitFrame() && uint32_t(counter) == 1);
+  assert(stockVisibleGeneration() == prior_generation);
+  draw.release();
+  assert(next.wait_for(3s) == std::future_status::ready && next.get());
+  assert(swapping.wait_for(3s) == std::future_status::ready);
+  swapping.get();
+  assert(stockVisibleGeneration() == prior_generation + 1);
+  const size_t pixel = ((8 + 2) * 320 + (128 + 2)) * 3;
+  assert(pixels[pixel] == 0 && pixels[pixel + 1] == 0 && pixels[pixel + 2] == 255);
+  agon_native_row_profile_t stats{};
+  agon_native_get_row_profile(&stats);
+  assert(stats.samples == 2 && stats.source_rows == 16);
+  service.detach();
+  assert(!hdmiOutput().emitRows(pixels.data(), 17, true) && !hdmiOutput().emitFrame());
+  assert(host_stale_notifications == 0);
+  controller.end();
+
+  // A single native bank has no swap to finish. Keep the drawing worker
+  // deliberately blocked and prove the next refill completes on its own.
+  Controller single;
+  single.begin();
+  single.setResolution(modeline, 64, 16, false);
+  assert(single.isViewPortAllocated() && !single.isDoubleBuffered());
+  single.enableBackgroundPrimitiveExecution(false);
+  fabgl::Canvas terrain(&single);
+  const fabgl::RGB888 red(255, 0, 0);
+  terrain.setPixel(3, 3, red);
+  assert(terrain.getPixel(3, 3) == red);
+  terrain.setScrollingRegion(0, 0, 63, 15);
+  assert(service.startClock() && service.attach(single));
+  terrain.scroll(0, 1);
+  Barrier single_draw;
+  single.before_drain = &single_draw;
+  auto single_next = std::async(std::launch::async, [&] {
+    return hdmiOutput().emitRows(pixels.data(), 0, true);
+  });
+  single_draw.awaitEntry();
+  assert(single_next.wait_for(3s) == std::future_status::ready && single_next.get());
+  assert(hdmiOutput().emitFrame() && uint32_t(counter) == 2);
+  const size_t old_marker = ((8 + 3) * 320 + (128 + 3)) * 3;
+  assert(pixels[old_marker + 2] == 255 && terrain.getPixel(3, 3) == red);
+  single_draw.release();
+  await([&] { return single.drained.load(); });
+  assert(terrain.getPixel(3, 4) == red && terrain.getPixel(3, 3) != red);
+  assert(hdmiOutput().emitRows(pixels.data(), 1, false));
+  assert(pixels[old_marker + 2] == 0 && pixels[old_marker + 320 * 3 + 2] == 255);
+  assert(terrain.getPixel(3, 4) == red && terrain.getPixel(3, 3) != red);
+  service.detach();
+  assert(!hdmiOutput().emitRows(pixels.data(), 1, true) && !hdmiOutput().emitFrame());
+  assert(host_stale_notifications == 0);
+  single.end();
+}
+#else
 int main() {
   Controller controller;
   controller.begin();
@@ -166,3 +256,5 @@ int main() {
     assert(host_stale_notifications==0);
   }
 }
+
+#endif // AGON_EXTENDER_NATIVE_SCANOUT

@@ -25,11 +25,14 @@ def main():
     parser.add_argument('--ppa-scale-320', action='store_true')
     parser.add_argument('--report', type=Path)
     parser.add_argument('--full-frame', action='store_true', help='exercise the native full-frame AUTO/scaler configuration')
+    parser.add_argument('--native-rows', action='store_true', help='exercise the native row DMA mode lifecycle')
     args = parser.parse_args()
+    if args.native_rows and (args.old_control or args.ppa_scale_320 or args.full_frame):
+        parser.error('--native-rows is a separate scanout configuration')
     utc = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
     result = dict(start_utc=utc(), scope='host lifecycle, no physical timing claim',
                   source_sha256=hashlib.sha256(args.source.read_bytes()).hexdigest(),
-                  old_control=args.old_control, full_frame=args.full_frame, passed=False)
+                  old_control=args.old_control, full_frame=args.full_frame, native_rows=args.native_rows, passed=False)
     result['test_inputs'] = {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                             for path in (Path(__file__), HERE/'hdmi_lifecycle_test.cpp',
                                          HERE/'hdmi_lifecycle_host.hpp',
@@ -40,7 +43,7 @@ def main():
             temp = Path(name)
             # These are the only substituted API surfaces. HdmiOutput and its
             # geometry/ownership/storage/rolling headers compile unchanged.
-            for header in ('esp_heap_caps.h', 'esp_lcd_panel_ops.h',
+            for header in ('esp_heap_caps.h', 'esp_err.h', 'esp_lcd_types.h', 'esp_lcd_panel_ops.h',
                            'esp_lcd_mipi_dsi.h', 'esp_lcd_panel_io.h',
                            'esp_ldo_regulator.h', 'esp_lcd_lt8912b.h',
                            'esp_log.h', 'esp_timer.h', 'driver/i2c_master.h',
@@ -57,7 +60,8 @@ def main():
                 '-Wall', '-Wextra', '-Wno-unused-variable', '-Wno-unused-parameter',
                 '-fsanitize=address,undefined', '-fno-omit-frame-pointer',
                 '-DAGON_EXTENDER_HDMI', '-DAGON_EXTENDER_HDMI_AUTO',
-                *(['-DAGON_EXTENDER_HDMI_FULL_FRAME_AUTO'] if args.full_frame else
+                *(['-DAGON_EXTENDER_NATIVE_SCANOUT'] if args.native_rows else
+                  ['-DAGON_EXTENDER_HDMI_FULL_FRAME_AUTO'] if args.full_frame else
                   ['-DAGON_EXTENDER_DIRECT_RGB888', '-DAGON_EXTENDER_ROLLING_SCANOUT']),
                 *(['-DAGON_EXTENDER_HDMI_PPA_320'] if args.ppa_scale_320 or args.full_frame else []),
                 '-I'+str(temp), '-I'+str(HERE), '-I'+str(ROOT/'vdp/video'),

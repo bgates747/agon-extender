@@ -32,7 +32,7 @@ static void close(HdmiOutput &output) {
 }
 static bool callback(void *) {return false;}
 
-#ifndef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+#if !defined(AGON_EXTENDER_HDMI_FULL_FRAME_AUTO) && !defined(AGON_EXTENDER_NATIVE_SCANOUT)
 static void cancelled_swap(bool old) {
   HdmiOutput output;assert(output.start());int owner{};
   assert(output.bindFrameCallback(callback,&owner));
@@ -121,12 +121,55 @@ static void scaled_publication() {
 }
 #endif
 
-#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+#if defined(AGON_EXTENDER_HDMI_FULL_FRAME_AUTO) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
 static bool stopped = true;
 extern "C" esp_err_t agon_dpi_stop(esp_lcd_panel_handle_t) {
   assert(xPortGetCoreID() == 1);
   return stopped ? ESP_OK : ESP_ERR_INVALID_STATE;
 }
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+static void *reader;
+static bool render(void *, uint8_t *, unsigned, unsigned, unsigned, unsigned, unsigned, uint32_t, bool *black) { *black = false; return true; }
+static void wake(void *) {}
+extern "C" esp_err_t agon_native_bind(esp_lcd_panel_handle_t p, void *context,
+                                      agon_native_render_t, agon_native_wake_t) {
+  if (!p || reader) return ESP_ERR_INVALID_STATE;
+  reader=context;
+  return ESP_OK;
+}
+extern "C" void agon_native_unbind(esp_lcd_panel_handle_t p) { assert(p); reader=nullptr; }
+extern "C" bool agon_native_failed(esp_lcd_panel_handle_t) { return hdmi_host::faults != 0; }
+
+int main() {
+  HdmiOutput output; assert(output.start());
+  int owner;
+  assert(output.bindNativeRows(&owner,render,wake));
+  assert(!output.bindNativeRows(&owner,render,wake));
+  assert(output.bindFrameCallback(callback,&owner));
+  assert(!output.selectMode(512,384)); // servicing active logical controller
+  output.unbindFrameCallback(&owner);
+  output.joinNativeRows(); assert(reader==nullptr);
+  auto *panel=output.panel_;
+  assert(output.buffers_[0]==nullptr && output.buffers_[1]==nullptr && !output.buffer_count_);
+  stopped=false;
+  assert(!output.selectMode(512,384));
+  assert(output.panel_==panel && !output.ready() && !hdmi_host::live.empty());
+  stopped=true;
+  for(int i=0;i<10;++i){
+    assert(output.selectMode(512,384) && output.width()==684);
+    assert(output.selectMode(320,240) && output.width()==848);
+    assert(!output.needsMode(640,240));
+  }
+  hdmi_host::faults=1; assert(output.needsMode(320,240));
+  assert(output.selectMode(320,240));
+  hdmi_host::inject("init"); assert(!output.selectMode(512,384));
+  assert(hdmi_host::live.empty());
+  assert(output.selectMode(640,480));
+  assert(hdmi_host::draws==0);
+  close(output);
+  std::cout<<"PASS real native HDMI sink bind/unbind, ten carrier round trips, same-carrier fault recovery, stop-before-free and zero bitmap submissions\n";
+}
+#else
 int main() {
   scaled_publication();
   HdmiOutput output;
@@ -153,6 +196,7 @@ int main() {
   close(output);
   std::cout << "PASS retained DMA-owned buffers on unconfirmed stop, repeated carriers and scaled publication\n";
 }
+#endif
 #else
 int main(int argc,char **) {
 #ifdef AGON_EXTENDER_HDMI_PPA_320

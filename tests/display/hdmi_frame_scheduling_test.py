@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exercise actual HDMI service scheduling with the existing host substrate."""
 from pathlib import Path
+import argparse
 import subprocess
 import tempfile
 
@@ -12,6 +13,9 @@ ROW = ROOT / "docs/tasks/PORT-003/stock-backend-r1"
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--native-rows", action="store_true")
+    args = parser.parse_args()
     sources = [GL / "dispdrivers" / (name + "controller.cpp")
                for name in ("vgabase", "vgapaletted", "vga2", "vga4",
                             "vga8", "vga16", "vga64")]
@@ -33,7 +37,9 @@ def main():
             "g++", "-std=c++17", "-O1", "-g", "-pthread",
             "-ffunction-sections", "-fdata-sections", "-Wl,--gc-sections",
             "-DFABGL_EMULATED", "-DAGON_EXTENDER_STOCK_RUNTIME",
-            "-DAGON_EXTENDER_HDMI", "-DAGON_EXTENDER_DIRECT_RGB888", *["-I" + str(path) for path in includes],
+            "-DAGON_EXTENDER_HDMI",
+            "-DAGON_EXTENDER_NATIVE_SCANOUT" if args.native_rows else "-DAGON_EXTENDER_DIRECT_RGB888",
+            *["-I" + str(path) for path in includes],
             "-include", str(RUNTIME / "compat/host_preinclude.hpp"),
             *map(str, sources), "-o", str(binary)], check=True)
         subprocess.run([str(binary)], check=True, timeout=15)
