@@ -12,6 +12,14 @@ uses both parallel file directions by default.
 
 ## Current scope
 
+### Intermittent PARLIO upload stall — 2026-11-21
+
+- PORT-008-014 [ ] On the next PARLIO stall, preserve a timestamped snapshot
+  of the P4 staged job and the EMOS listener, keyboard and available telemetry
+  before reset or cleanup. Correlate it with the Pi journal, identify the last
+  confirmed step, and report which handover or return evidence is still
+  missing. Extender owns the investigation. [Incident and capture checklist](PORT-008/PARLIO-UPLOAD-STALL.md)
+
 ### Production parallel SD upload qualification — 2026-11-17
 
 Smith requested this extension to qualify EMOS, EVDP and the SD listener as a

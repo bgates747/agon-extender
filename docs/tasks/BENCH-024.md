@@ -196,6 +196,9 @@ diagnosis.
 
 ## Diagnose the 177-byte PARLIO upload separately
 
+The original run evidence follows. PORT-008 owns the open transport
+investigation and the [next-failure capture checklist](PORT-008/PARLIO-UPLOAD-STALL.md).
+
 The pre-reset snapshot from the subsequent USB flash series preserves the
 same P4 job and listener boot identities. The P4 reported terminal
 transport error 2 about 612 seconds into its worker. It accepted HELLO
