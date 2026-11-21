@@ -75,3 +75,43 @@ appliance and any existing CSV rows, and uses the standard bench keyboard.
 The first automated window is mode 20, resident drawing, for 60 seconds.
 Before continuing the matrix, verify its new SD row, elapsed time, observer
 record and return to MOS. Keep this run separate from P4 refill measurements.
+
+**Stock pilot disposition, November 21.** Exclude the mode-20 R row from the
+matched performance comparison. The Pi observer covered 60.011 seconds with
+122 successful service reads. The eZ80 reported 34,795 loops, 7,272 MOS ticks,
+zero SD payload bytes and success. The Pi recovered the new 32-byte CSV over
+PARLIO and witnessed the mode-0 MOS prompt after collection. The worker and
+supervisor exited cleanly. The operator retains the reservation.
+
+Review of the printer mirror showed repeating palette operand bytes during
+the supposedly graphics-only draw loop. The fixture sends Copper commands
+without enabling the Copper API. Stock VDP can return at the feature check
+before reading the operands, so the ordinary VDU parser processes them. The
+fixture's success flag checks mode and I/O, and misses this workload error.
+Treat the row as automation evidence only. The other 59 windows were held
+before launch. Retain the original fixture, CSV, raw transcript and job in
+the pilot evidence. Proposed correction for review: enable Copper for the
+fixture, preserve and restore its prior state, and check command consumption
+before timing drawing on either route. Keep Nurples as Smith's visual test.
+
+### Corrected stock collection
+
+Smith authorized the rowload repair, another pilot and automatic continuation
+on success. The eZ80 now reads the Copper variable through buffered command
+48 and an ordered general-poll reply. Two missing-value defaults distinguish
+absence from a present word, including zero. Each drawing window enables
+Copper only if absent and reads the full setting back after teardown.
+The preflight exercises absent, present-zero and present-0x6A35 entry
+settings, issues palette commands with printable RGB operands, and restores
+the observed original setting. The Pi rejects unexpected bytes between
+the preflight and drawing banners or a mismatched entry/exit word.
+
+The corrected binary is 11,816 bytes, SHA-256
+`69b2aec1f5d127482be14da83b70676decf26d9b79a61b19e5f0c20e98eaed91`.
+The Pi stages it beside the first binary and preserves the excluded CSV row.
+The mode-20 draw pilot counts as the first of sixty windows only on passing
+preflight, clean serial capture, valid SD row, service observation and MOS
+handback. Each later window also gates the next. The earlier bad trace and
+synthetic operand leaks and restoration mismatches were rejected offline.
+The local binding, build and bench receipts are under
+`agents/hdmi002/native-rows/copper-r02/`. Nurples remains Smith's visual check.

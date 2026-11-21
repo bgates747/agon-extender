@@ -18,6 +18,82 @@ static int active_mode(void) {
     return mos_sysvars()[sysvar_scrMode];
 }
 
+/* The Copper API is enabled by the *presence* of variable 0x0310, even
+ * when its word is zero. Buffer 61001 is fixture scratch. Command 48
+ * patches a general-poll operand; the following mode reply, issued inside
+ * the same buffer, fences that poll and detects a failed buffer call.
+ */
+enum { COPPER_ERROR = -2, COPPER_ABSENT = -1 };
+static int copper_byte(bool high, uint8_t missing) {
+    const uint8_t probe[] = {
+        23,0,0xa0,0x49,0xee,2,
+        23,0,0xa0,0x49,0xee,0,7,0, 23,0,0x80,(uint8_t)~missing,23,0,0x86,
+        23,0,0xa0,0x49,0xee,48,(uint8_t)(0x40 | high),3,0,0x10,3,missing,
+        23,0,0xa0,0x49,0xee,1
+    };
+    const uint8_t clear[] = {23,0,0xa0,0x49,0xee,2};
+    mos_clearvdpflags(vdp_pflag_mode);
+    SEND(probe);
+    int value = mos_waitforvdpflags(vdp_pflag_mode) ? COPPER_ERROR : mos_sysvars()[sysvar_gp];
+    SEND(clear);
+    return value;
+}
+
+static int copper_state(void) {
+    int lo = copper_byte(false, 0xa5);
+    int other = copper_byte(false, 0x5a);
+    if (lo == 0xa5 && other == 0x5a) return COPPER_ABSENT;
+    if (lo < 0 || lo != other) return COPPER_ERROR;
+    int hi = copper_byte(true, 0);
+    return hi < 0 ? COPPER_ERROR : (hi << 8) | lo;
+}
+
+static void write_copper(int state) {
+    const uint8_t clear[] = {23,0,0xf9,0x10,3};
+    const uint8_t set[] = {23,0,0xf8,0x10,3,(uint8_t)state,(uint8_t)(state >> 8)};
+    if (state == COPPER_ABSENT) { SEND(clear); }
+    else { SEND(set); }
+}
+
+static bool enable_copper(int entry) {
+    if (entry < COPPER_ABSENT) return false;
+    if (entry == COPPER_ABSENT) write_copper(0);
+    return copper_state() == (entry == COPPER_ABSENT ? 0 : entry);
+}
+
+static bool finish_copper(int entry) {
+    if (entry == COPPER_ABSENT) write_copper(COPPER_ABSENT);
+    return copper_state() == entry;
+}
+
+/* Outside the timed window. Exercise absence, present zero and a word
+ * with both bytes nonzero. The Pi checks the printer mirror between the
+ * two banners for any leaked operands, including printable RGB 'RGB'.
+ */
+static bool copper_check(void) {
+    int original = copper_state();
+    if (original == COPPER_ERROR) return false;
+    const int cases[] = {COPPER_ABSENT, 0, 0x6a35};
+    const uint8_t colour[] = {
+        23,0,0xc4,0,1,0, 23,0,0xc4,2,1,0,0,'R','G','B', 23,0,0xc4,1,1,0
+    };
+    printf("Copper check begin %d\r\n", original);
+    bool ok = true;
+    for (unsigned i = 0; ok && i < sizeof cases / sizeof *cases; ++i) {
+        write_copper(cases[i]);
+        int entry = copper_state();
+        ok = entry == cases[i] && enable_copper(entry);
+        if (ok) {
+            SEND(colour);
+            ok = finish_copper(entry);
+        }
+    }
+    write_copper(original);
+    int restored = copper_state();
+    printf("Copper check end %d\r\n", restored);
+    return ok && restored == original;
+}
+
 static bool select_mode(unsigned n) {
     int current = active_mode();
     if (current < 0) return false;
@@ -95,6 +171,16 @@ static bool load(unsigned n, int method) {
     bool read = method == 'D' || method == 'B';
     uint8_t file = read ? mos_fopen("m020.vdu", FA_READ) : 0;
     if (read && !file) return false;
+    int entry = COPPER_ERROR;
+    if (draw) {
+        entry = copper_state();
+        if (!enable_copper(entry)) {
+            if (entry == COPPER_ABSENT) finish_copper(entry);
+            if (file) mos_fclose(file);
+            return false;
+        }
+        printf("Copper entry %d\r\n", entry);
+    }
     printf("Mode %u test %c, Escape ends window\r\n", n, method);
     if (draw) install_scene();
     uint32_t count = 0, bytes = 0, start = getsysvar_time();
@@ -115,7 +201,11 @@ static bool load(unsigned n, int method) {
     } while (getsysvar_keyascii() != 27);
     uint32_t end = getsysvar_time();
     if (file) mos_fclose(file);
-    if (draw) retire_scene();
+    if (draw) {
+        retire_scene();
+        if (!finish_copper(entry)) ok = false;
+        else printf("Copper restored %d\r\n", entry);
+    }
     if (active_mode() != (int)n) ok = false;
     FILE *csv = fopen("rowload.csv", "a");
     if (!csv) return false;
@@ -150,10 +240,15 @@ int main(void) {
     bool ok = true;
     for (;;) {
         SEND(cursor);
-        puts("P pattern, C clear, R draw, D SD read, B both, T transitions, Q exit.");
+        puts("K Copper check, P pattern, C clear, R draw, D SD read, B both, T transitions, Q exit.");
         int how = getch();
         if (how >= 'a' && how <= 'z') how -= 'a' - 'A';
         if (how == 27 || how == 'Q') break;
+        if (how == 'K') {
+            ok = copper_check();
+            if (!ok) break;
+            continue;
+        }
         if (how == 'T') {
             puts("Testing ten mode round trips.");
             ok = transitions();
