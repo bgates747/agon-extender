@@ -109,7 +109,19 @@ at (104,0) in the 848×480 signal with black sidebars. The rule applies to all
 and swap behavior. Its purpose is to preserve pixel edges and palette colours
 and avoid interpolation work. The earlier trial and its measured results retain
 their original build identity. The [task](../tasks/HDMI-002.md) owns the
-proposed scanout implementation and timing qualification.
+scanout implementation and timing qualification.
+
+## DMA-paced native rows for P4 HDMI — 2026-11-21
+
+Smith approved direct, raster-paced native row composition for the P4 candidate.
+P4 display DMA releases a consumed RGB888 slot. The P4 worker samples stock
+rows under native exclusion, applies stock palette and overlay behavior, then
+writes the final RGB pixels directly to that slot. Drawing receives one
+opportunity after the last visible logical rows have been sampled. DMA frame
+completion owns the public frame count. Single- and double-buffered stock
+modes retain their application-visible drawing, swap and readback contracts.
+Physical phase, sustained timing and motion are qualification results owned
+by the [comparison packet](../tasks/HDMI-002/NATIVE-ROW-LOAD-PACKET.md).
 
 ## Implementation boundary
 

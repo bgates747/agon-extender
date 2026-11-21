@@ -444,6 +444,14 @@ image at (104,0) in 848×480. This applies after native row composition and
 preserves logical drawing dimensions, readback and stock swap behavior. The
 earlier candidate uses PPA bilinear filtering. The exact-replication decision
 and the earlier trial are recorded in [ADR-0024](decisions/ADR-0024-centered-unscaled-hdmi.md).
+
+For the native-row P4 HDMI selection, the P4 DSI DMA block interrupt releases
+a consumed RGB888 slot. A P4 worker reads the decorated stock rows and fills
+the next slot directly. The drawing worker receives one opportunity after the
+last visible logical row has been sampled. DMA frame completion advances the
+public VDP frame counter independently. Each stock mode retains its logical
+banks and queued swap behavior. Qualification of refill timing and visible
+motion belongs to [HDMI-002](tasks/HDMI-002/NATIVE-ROW-SCANOUT-PLAN.md).
 HDMI-002 owns implementation and loaded qualification. The authorized HDMI-003 correction
 adds a separate 640×240 exception: P4 repeats each decorated logical row twice
 and centers640×480 in the proven848×480 carrier, preserving logical dimensions,
