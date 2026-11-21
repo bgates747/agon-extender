@@ -1,6 +1,6 @@
 # BENCH-024 — Verify mainboard VDP updates from SD before reboot
 
-**Qualification complete on November 20, 2026. Retain as a fallback.** Smith
+**Closed on November 21, 2026. Retain as a fallback.** Smith
 selected USB esptool as the default for Olimex mainboard VDPlet installation
 and restore. The Agon Flash round trip passed two SD-to-flash writes, verified
 both before reboot and returned the bench to production app0. Keep the exact
@@ -145,8 +145,9 @@ round trip uses the existing production image and the banner witness above.
 
 ## Offline packet
 
-Agon Flash source is on the fork's local `codex/bench-024-agent-flash`
-branch at `f219b8b504e33d0570eee370d329a9535484a270`. The linked eZ80
+Agon Flash source is retained at
+[`f219b8b504e33d0570eee370d329a9535484a270`](https://github.com/bgates747/agon-flash/tree/f219b8b504e33d0570eee370d329a9535484a270)
+on the fork's `codex/bench-024-agent-flash` branch. The linked eZ80
 utility is 23,324 bytes with SHA-256
 `07ad0634bedcfb14a03ba38387d963b4bdc67fe114fa041e4c87eb47def6c831`.
 The ignored `agents/bench-024/offline-packet/` holds the binary, link map,
@@ -266,8 +267,8 @@ all 1,123,040 bytes of B in app1, then B booted with a fresh nonce and the
 pinned build identity. From app1, B wrote and verified all 1,117,040 bytes
 of production v0.1.3-alpha in app0. Both writes preserved the running boot
 and the boot selection until separate activation. All six workers joined.
-The runner is paused with B running and app1 still selected. Production
-boot and the visual witness are pending. Extender retains the reservation.
+The runner paused with B running and app1 still selected while waiting for
+Smith to watch the production boot.
 Evidence is in `agents/bench-024/bench024-roundtrip-20261121t014021z/`.
 
 The return to production passed. While B was still running from app1,
@@ -277,4 +278,7 @@ receipt, then restarted the bench once. Smith saw the fresh
 that observation to the new MOS boot, confirmed the same boot at a working
 prompt, and verified the listener offline, transfers idle and serial
 handles free. All nine workers joined. The installed inventory now records
-production with no pending operation. Extender retains the reservation.
+production with no pending operation. Smith then directed release. The
+scheduler accepted check-in and cleared the slot, with no operators waiting
+at that time. The receipt is `checkin-delivery.json` in the round-trip
+evidence directory. The earlier PARLIO stall remains unexplained.

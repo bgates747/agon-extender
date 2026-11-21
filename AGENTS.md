@@ -200,6 +200,14 @@ or hardware contracts:
    authoritative dependency changes. Neither replaces the tracked project
    specification, TODO, or dated development log.
 
+## Bench reporting
+
+Lead with the outcome of the operation the Author asked about. If a separate
+problem stopped the run, name the specific operation, file or device involved,
+explain what the problem blocked, and state what remains untested. Use plain
+descriptions such as “copying the command file to the Agon SD card over PARLIO”
+so the Author can tell what happened without decoding a runner phase label.
+
 ## Bench evidence retention
 
 Keep passing evidence and particularly informative failures. Once a failed

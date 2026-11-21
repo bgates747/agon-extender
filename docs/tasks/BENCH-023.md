@@ -1,6 +1,12 @@
 # BENCH-023 — Detect and report a mainboard ESP32 programmer sync failure
 
-Research how the Pi5 runner can identify a failed ESP32 ROM session, tell the operator whether it reached flash, and point to the original evidence. On 2026-11-20, the ten USB flash attempts with upstream Bistromathics produced eight verified writes and two failures before writing. The standard app0 programmer reproduced the earlier ROM SYNC error. Production app0 and working MOS were verified at handback. The reporting design remains a proposal.
+**Closed on November 21, 2026.** Standalone esptool 5.1.0 is the default
+mainboard VDPlet programmer. It passed ten consecutive Bistromathics app0
+writes and the production restore, with a full readback and a working MOS
+prompt each time. The shared entry point passed offline tests and preflight.
+The earlier intermittent USB failure's cause remains open. Smith closed the
+flashing investigation and its proposed reporting work after selecting the
+default. [Current bench guide](../operations/olimex-bench/README.md)
 
 ## Incident and sources
 
@@ -41,13 +47,27 @@ A future [mainboard text snapshot](BENCH-017.md) could preserve what MOS display
   `agents/vdpl057-programmer-diagnostic/evidence-115200/` and the VDPL-057
   recovery receipts.
 
-## Research plan
+## Research disposition
 
-- BENCH-023-001 [ ] Compare the failing VDPL-057 programmer log with the first-attempt OLX-06 and Nurples sync failures, successful FLY-07 sessions, and a failure after successful sync. Record the last positive observation, connection parameters, reset history where available, and earliest flash operation for each. Count esptool’s internal SYNC attempts separately from an operator retry.
-- BENCH-023-002 [ ] Trace the exception from esptool through the shared programmer, the job-specific store adapter, and the parent supervisor. Compare catching the error narrowly around connection establishment with classifying an already-finished child from its log. Determine which observations a small stable receipt can carry across both callers. Account for a changed esptool message, a truncated log, and an interrupted child.
-- BENCH-023-003 [ ] Propose the operator-visible outcome and evidence fields. Include the tool version, phase, ROM download-mode evidence, last acknowledged protocol operation, whether flash access started, and worker exit/join. Define when the runner can affirm zero flash operations and when it must report an unknown outcome. Preserve the raw exception. Evaluate the cost of capturing bounded boot/SYNC trace data in the original programmer session so evidence survives the next intermittent failure.
-- BENCH-023-004 [ ] Specify offline replay cases for a successful connection, this exact signature, no boot bytes, wrong boot mode, serial-open failure, and a fault after a write began. Require that only the matching case receives the specific sync diagnosis, all failed cases retain their failure status, and ambiguous cases retain uncertainty about flash. Detection must require no second serial open, reset, retry or hardware write.
-- BENCH-023-005 [ ] Return the recommended detection point, example operator report, coverage limits and any remaining unanswered question to Smith. If saved logs cannot distinguish causes, describe one separately selectable measurement and the evidence it could add. A retry policy or a claim of defective wiring needs its own evidence.
+- BENCH-023-001 [x] The [bench audit](BENCH-022/FINDINGS.md) and retained trials
+  distinguish ROM sync failures, post-write readback failures and a host
+  supervisor interruption. Close the remaining case-by-case comparison with
+  that evidence retained.
+
+- BENCH-023-002 [x] Close the proposed common classifier. The programmer log
+  and parent join receipt remain the evidence sources. The diagnostic
+  launcher's sync-specific spoken alert was checked offline.
+
+- BENCH-023-003 [x] Retain the ROM-only trace with the exact sent and
+  received events. Close the proposal for a new standard structured
+  programmer-error receipt.
+
+- BENCH-023-004 [x] Close the proposed full classifier replay suite with the
+  classifier itself. The alert and shared 5.1.0 route have the focused offline
+  coverage recorded below.
+
+- BENCH-023-005 [x] Reported the reproduced sync and short-read failures and
+  the ten-pass series. The cause of the earlier failures remains unknown.
 
 ## Ten upstream VDP flash trials
 
@@ -346,3 +366,8 @@ bench runner. Mainboard install and restore now use the runner's interpreter,
 one classic ESP32 session at the qualified baud rates, and the same app0
 checks, write, readback and paired restart. Existing bench configs can retain
 their former programmer field. [Current bench guide](../operations/olimex-bench/README.md)
+
+After the Agon Flash round trip, the final bench check verified production
+firmware, working MOS, an offline listener, idle transfers and free serial
+ports. The scheduler accepted check-in and cleared Extender's reservation.
+[Round-trip closeout](BENCH-024.md)
