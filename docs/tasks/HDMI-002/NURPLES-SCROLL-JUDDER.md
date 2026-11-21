@@ -52,3 +52,26 @@ Two independent observations inform the controls. In one retained **static mode-
 | Only a black camera image, a capture application’s replacement black frames, missing lock telemetry, or no recurrence. | Cause unresolved. Record what was visible, which receiver was observed and the exposure time. |
 
 **Decision after A/B.** If locked-signal row judder is reproduced, propose a separate single-variable comparison on the candidate carrier: first publish each completed conversion to an independent back buffer and allow reuse of the old front only after DMA acknowledges the handoff, keeping the source row reader unchanged. If mixed terrain persists, propose comparing that version with one that also takes a coherent source snapshot. Compare conversion time and delivered-frame cadence for each, because a slower control can mask the symptom. If the receiver loses lock, prioritize time-aligned evidence across P4 DMA, DSI/bridge output and receiver lock; a framebuffer change alone cannot resolve that question. These are follow-up decisions for Smith. No test, build, instrumentation or reservation is part of this offline result.
+
+## Olimex stock mainboard baseline preload — November 21
+
+Smith approved the matched packet and requested its Legacy arm first. The
+operator obtained exclusive custody and confirmed the production handback
+identities. EMOS reported Legacy on VDU route 0. A mainboard mode query
+returned 0. All 61 files (2,822,927 bytes), including the 54 ordinary-mode
+patterns, completed staging over PARLIO. MOS loaded the 10,574-byte
+`rowload.bin` at `&040000` and returned to `/test/native-rows-legacy *`.
+The keyboard was ready and the SD listener idle. This stage made zero firmware
+writes. Smith owns invocation with `RUN &040000`. The operator retains the
+slot for his run. The stage and preload receipts are in the local
+`agents/hdmi002/native-rows/packet/evidence/legacy/` directory.
+
+### Stock baseline collection after launch
+
+Smith launched rowload and assigned the remaining menu and timing work to the
+Pi operator. The stock mainboard run supplies numerical reference data. Smith
+will judge scrolling visually in Nurples. The operator keeps the staged
+appliance and any existing CSV rows, and uses the standard bench keyboard.
+The first automated window is mode 20, resident drawing, for 60 seconds.
+Before continuing the matrix, verify its new SD row, elapsed time, observer
+record and return to MOS. Keep this run separate from P4 refill measurements.
