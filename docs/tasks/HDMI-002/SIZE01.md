@@ -40,4 +40,4 @@ The plan was frozen at `9d2fba40c4ef8f388c8aaf9ee0d0e8e554432afc`. The Pi5 built
 
 The application contains the named Extender build ID. Its embedded ELF SHA-256 matches the disassembled ELF. ESP-IDF separately populated its generic app-version field from the outer build directory’s Git ancestry (`v0.3.0-42-g5d2a19a5-dirty`); the release also carries a generic dirty label. The operator identifies the image by its Extender ID and SHA-256.
 
-The inspection and host tests verify the ordering enforced by the built image. Hardware channel transitions, monitor relock, image edges, aspect and physical frame progression await Smith's decision on the [matched visual packet](SIZE01-VISUAL.md). The production selection is v0.3.0. The candidate and matching rollback extent are held for review. The task has no bench reservation.
+The inspection and host tests verify the ordering enforced by the built image. Smith subsequently ran the [matched visual packet](SIZE01-VISUAL.md) and reported a pass. The [physical comparison](SIZE01-BENCH.md) records the observed carriers and scanout. The production selection is v0.3.0.
