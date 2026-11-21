@@ -141,6 +141,10 @@ static bool native_frame(esp_lcd_dpi_panel_t *d)
         s->phase = NR_EOF;
     } else if (s->phase == NR_RUNNING) {
         if (nr_next_frame(&s->ring)) {
+            // The final block interrupt cannot observe slot 0's reuse: the
+            // pinned DPI driver arms the new list in this frame callback.
+            uint32_t lead = (uint32_t)(esp_timer_get_time() - s->ready_at[0]);
+            if (lead < nr_stats.min_lead_us) nr_stats.min_lead_us = lead;
             ++nr_stats.frames;
             rearm = true;
         } else {
