@@ -24,11 +24,12 @@ def main():
     parser.add_argument('--old-control', action='store_true')
     parser.add_argument('--ppa-scale-320', action='store_true')
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--full-frame', action='store_true', help='exercise the native full-frame AUTO/scaler configuration')
     args = parser.parse_args()
     utc = lambda: datetime.datetime.now(datetime.timezone.utc).isoformat()
     result = dict(start_utc=utc(), scope='host lifecycle, no physical timing claim',
                   source_sha256=hashlib.sha256(args.source.read_bytes()).hexdigest(),
-                  old_control=args.old_control, passed=False)
+                  old_control=args.old_control, full_frame=args.full_frame, passed=False)
     result['test_inputs'] = {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
                             for path in (Path(__file__), HERE/'hdmi_lifecycle_test.cpp',
                                          HERE/'hdmi_lifecycle_host.hpp',
@@ -56,8 +57,9 @@ def main():
                 '-Wall', '-Wextra', '-Wno-unused-variable', '-Wno-unused-parameter',
                 '-fsanitize=address,undefined', '-fno-omit-frame-pointer',
                 '-DAGON_EXTENDER_HDMI', '-DAGON_EXTENDER_HDMI_AUTO',
-                '-DAGON_EXTENDER_DIRECT_RGB888', '-DAGON_EXTENDER_ROLLING_SCANOUT',
-                *(['-DAGON_EXTENDER_HDMI_PPA_320'] if args.ppa_scale_320 else []),
+                *(['-DAGON_EXTENDER_HDMI_FULL_FRAME_AUTO'] if args.full_frame else
+                  ['-DAGON_EXTENDER_DIRECT_RGB888', '-DAGON_EXTENDER_ROLLING_SCANOUT']),
+                *(['-DAGON_EXTENDER_HDMI_PPA_320'] if args.ppa_scale_320 or args.full_frame else []),
                 '-I'+str(temp), '-I'+str(HERE), '-I'+str(ROOT/'vdp/video'),
                 str(args.source), str(HERE/'hdmi_lifecycle_test.cpp'),
                 '-o', str(binary)], check=True)

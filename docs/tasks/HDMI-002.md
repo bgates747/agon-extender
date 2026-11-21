@@ -22,7 +22,7 @@ The [presentation decision](../decisions/ADR-0024-centered-unscaled-hdmi.md)
 retains black sidebars where needed to preserve proportions. The separate
 [640×240 aspect correction](HDMI-003.md) repeats mode 3 rows twice. The
 current host checks pass for row repetition and cropping. The existing
-builder still ties automatic timing and PPA scaling to the experimental
+release builder ties automatic timing and PPA scaling to the experimental
 rolling/direct composition. Earlier wide-mode clear deadline failures
 remain open on that composition. [Wide-clear repair record](HDMI-002/WIDE-CLEAR-REPAIR.md)
 
@@ -37,7 +37,7 @@ remain open on that composition. [Wide-clear repair record](HDMI-002/WIDE-CLEAR-
   Review and freeze the physical packet before running it.
 
 ### HDMI02-SIZE01 operator assignment
-The approved offline execution contract and reviewed findings are in [Full-height stock HDMI modes](HDMI-002/SIZE01.md). The initial reading boundary below is historical.
+The [frozen plan and offline results](HDMI-002/SIZE01.md) record the built candidate, DMA verification and source pins. The [matched visual packet](HDMI-002/SIZE01-VISUAL.md) awaits Smith’s review before reservation. Physical comparison and acceptance remain open. The initial assignment below is historical.
 
 **State: reading only, then pause for Smith's review.** The assigned Extender
 agent owns the bounded screen coverage investigation. Smith reviews and can

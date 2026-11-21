@@ -1,0 +1,238 @@
+{
+  "scope": "Offline only. Target P4 code inspection, modeled DMA events and local job preflight. Optical and on-chip transition results pending.",
+  "plan_commit": "9d2fba40c4ef8f388c8aaf9ee0d0e8e554432afc",
+  "inputs_changed_against_released_source_snapshot": [
+    "scripts/build_p4.py",
+    "scripts/validate_p4_build.py",
+    "vdp/native/CMakeLists.txt",
+    "vdp/video/agon_screen.h",
+    "vdp/video/extender/display/full_frame/dpi_stop.inc",
+    "vdp/video/extender/display/full_frame/driver.cmake",
+    "vdp/video/extender/display/full_frame/patch_dpi.py",
+    "vdp/video/extender/display/hdmi_output.cpp",
+    "vdp/video/extender/display/hdmi_output.hpp"
+  ],
+  "common": {
+    "board": "p4-pc",
+    "profile": "p4-console",
+    "board_identity": "olimex-p4-pc-revc-r01",
+    "idf_commit": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+    "dependencies_lock_sha256": "a02df352a446db976bf1375db3de3eb7c6cdfd9603169c62ba84d30bccea78fc",
+    "parallel_boot_candidate": true,
+    "parallel_upload_candidate": true,
+    "controller_input": true,
+    "usb_fsls_only": true,
+    "usb_dual_host": true,
+    "network_messages": true,
+    "indexed_ppa": false,
+    "same_reset_endpoint": true,
+    "compiler_sha256": "a58c7ac425b8b06ba0a4cb6f774553bcccf2ed2c496e738e50ea6c490227b784",
+    "effective_sdkconfig_differences": [
+      "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME",
+      "CONFIG_PARTITION_TABLE_FILENAME"
+    ],
+    "partition_table_identical": true
+  },
+  "builds": {
+    "release": {
+      "id": "port-008-upload-r05-b2026-11-18-03-43-16Z",
+      "source_commit": "be1d94329e55cc5e4243adbcdad73e3c530f9053",
+      "source_dirty": false,
+      "app": {
+        "bytes": 1768624,
+        "sha256": "539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b"
+      },
+      "manifest_file": {
+        "bytes": 17898,
+        "sha256": "e471232f4bfa1551cfa1f518e1d9ad3b6b7fb71d197546c7216ba06ca9376fc9"
+      },
+      "effective_display_definitions": [
+        "AGON_EXTENDER_HDMI=1",
+        "AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1",
+        "AGON_EXTENDER_PARALLEL_UPLOAD=1",
+        "AGON_EXTENDER_STOCK_RUNTIME=1"
+      ],
+      "embedded_extender_id_verified": true,
+      "esp_idf_app_version": "b8fe4f2c-dirty",
+      "embedded_elf_sha256": "6ff5266386d63e4ed789b13cbc629437d7fcd2e3a0fe4f8ab3c9bde21794cd1b"
+    },
+    "candidate": {
+      "id": "hdmi-coverage-r01-b2026-11-21-16-58-59Z",
+      "source_commit": "21349e0a875042c80762e4665d08effa99350e5c",
+      "source_dirty": false,
+      "app": {
+        "bytes": 1790480,
+        "sha256": "a4743d29bccee3e0fbef37761e136cb9404e5b44aa305199ae5e7523e3e7091a"
+      },
+      "manifest_file": {
+        "bytes": 19235,
+        "sha256": "07b5e698d8aba9f4a62bd9f0083043a2ffa0d5e5bdd8547164ed586b0b60c39a"
+      },
+      "effective_display_definitions": [
+        "AGON_EXTENDER_HDMI=1",
+        "AGON_EXTENDER_HDMI_AUTO=1",
+        "AGON_EXTENDER_HDMI_FULL_FRAME_AUTO=1",
+        "AGON_EXTENDER_HDMI_PPA_320=1",
+        "AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE=1",
+        "AGON_EXTENDER_PARALLEL_UPLOAD=1",
+        "AGON_EXTENDER_STOCK_RUNTIME=1"
+      ],
+      "embedded_extender_id_verified": true,
+      "esp_idf_app_version": "v0.3.0-42-g5d2a19a5-dirty",
+      "embedded_elf_sha256": "7d3c26c6be779332bf9caa5a72f3f95df7343b7cb565ef943e343b6570f910f2"
+    }
+  },
+  "target": {
+    "elf": {
+      "bytes": 36798276,
+      "sha256": "7d3c26c6be779332bf9caa5a72f3f95df7343b7cb565ef943e343b6570f910f2"
+    },
+    "build_validation": {
+      "bytes": 3629,
+      "sha256": "d9a79b05e0e116b5b826a8df3f8dbaf5fabc1ebcd1c1c72c28cf025d9debc106"
+    },
+    "compile_actions": 1857,
+    "result": "PASS",
+    "derived_driver": {
+      "dw_gdma.c": {
+        "bytes": 29717,
+        "sha256": "c3339df081ad83ba1e977399d54c99af24dda90791378caa05823ea498ffff90"
+      },
+      "esp_lcd_panel_dpi.c": {
+        "bytes": 31439,
+        "sha256": "5754cdc118b0aa78f67a96221acc5a5d234357b466702433374b348b9b602355"
+      }
+    },
+    "disassembly_extract": {
+      "bytes": 12860,
+      "sha256": "18af5025b866f190d5f5f8018c050a59c1ffdc95655d83f522f88f95d6232133"
+    },
+    "eof_handler": "0x4ff0da56, checks DRAINING and EOF before rearm at 0x4ff0dab4",
+    "stop": "0x4014923e, channel-enable word at 0x50081018 loaded at 0x401492ac, masked with selected channel; zero-bit branch at 0x401492b4 after EOF check",
+    "cleanup": "0x4007b2b6 calls stop, 0x4007b2ba branches on error past deletion, 0x4007b2c6 deletes panel, 0x4007b2d2 resets scaler"
+  },
+  "offline_checks": {
+    "dma": {
+      "passed": true,
+      "log": {
+        "bytes": 148,
+        "sha256": "914f21ce75165151ccfbe2188d7085acf342d0c696d34c704fdcd3f71db8457f"
+      }
+    },
+    "full-frame": {
+      "passed": true,
+      "log": {
+        "bytes": 1075,
+        "sha256": "73c519fae7a69868c91f0541555598d74b33631833b9b2b7830070ac2b8743c4"
+      }
+    },
+    "rolling": {
+      "passed": true,
+      "log": {
+        "bytes": 820,
+        "sha256": "a31d880ea6fa3f128f7b7d81796a88a994ef858ed40d04336b527c0ca864b01b"
+      }
+    },
+    "mode3": {
+      "passed": true,
+      "log": {
+        "bytes": 104,
+        "sha256": "a83b4757add55276b0224a225423e6b02f0498bdee5ed58e15533a93438fb21a"
+      }
+    },
+    "profile": {
+      "passed": true,
+      "log": {
+        "bytes": 121,
+        "sha256": "c8fe5b0f96222d97e004f4a7894f9b05a63ba1b8f9f48335c9df869fc7eeefbe"
+      }
+    },
+    "boot": {
+      "passed": true,
+      "log": {
+        "bytes": 414,
+        "sha256": "b2fb88a4e34143c9029eae5d5d3954b6645a1513475b8a311ab32534f1bfb259"
+      }
+    },
+    "upload": {
+      "passed": true,
+      "log": {
+        "bytes": 286,
+        "sha256": "0742a47a5929be22f27c2d8c46e6dd437908de39533b3b35513f128789a72a60"
+      }
+    },
+    "fixture": {
+      "passed": true,
+      "log": {
+        "bytes": 126,
+        "sha256": "b50ca603544feddfbb94c83c0bcbe017cfa423bf231e3d3f7e06e9a1a92744de"
+      }
+    }
+  },
+  "packet": {
+    "runner_revision": "5d2a19a56f9a40f5555b5f6f526da4278c994b14",
+    "launcher": {
+      "bytes": 2983,
+      "sha256": "4ad00b42ed063c3560cacfc1b97d5fd596a5851500cbb1c84b633ebb2736b9ad"
+    },
+    "packed_patterns": {
+      "m000.vdu": {
+        "bytes": 86354,
+        "sha256": "5cb9d7c30c0ae3b9569b5ddf51e0eea3b032e877472721c200656f53a7ec7445"
+      },
+      "m008.vdu": {
+        "bytes": 27248,
+        "sha256": "81e161d1d1a24950c729d980ec82d92da2383951e23285a0beb6e72a68947391"
+      },
+      "m020.vdu": {
+        "bytes": 65523,
+        "sha256": "56d2e094357c4f53706a4229aab5605a3f094d56cfbc1b7c541589d4a853a182"
+      },
+      "m003.vdu": {
+        "bytes": 50495,
+        "sha256": "52cf9419145cc93556e16d1919e425fa73ecf757e9b23d3fc6ef6cb2b6c470b1"
+      }
+    },
+    "jobs": {
+      "a": {
+        "pin": {
+          "bytes": 2114,
+          "sha256": "dd0d7d9a10c38331e3edb941cb8650a13ad34a6568b53c1f3d362ba6860881e1"
+        },
+        "preflight": [
+          "stage",
+          "preload",
+          "handback"
+        ]
+      },
+      "b": {
+        "pin": {
+          "bytes": 3510,
+          "sha256": "d8e32bcd011b9b3fc52f3840e3bc188b887c4253ef9bd301204406492b925fb0"
+        },
+        "preflight": [
+          "stage",
+          "install-p4",
+          "preload",
+          "restore-p4",
+          "handback"
+        ]
+      }
+    },
+    "offset": "0x20000",
+    "partition_bytes": 7340032,
+    "write_bytes": 1794048,
+    "partition_table": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "candidate_write": {
+      "bytes": 1794048,
+      "sha256": "e79ebbb8927245d2173a8a4306a09e97a1f181c4c80bed2db6a865aee81b73a1"
+    },
+    "restore_write": {
+      "bytes": 1794048,
+      "sha256": "071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1"
+    }
+  }
+}

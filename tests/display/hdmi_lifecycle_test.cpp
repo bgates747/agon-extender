@@ -32,6 +32,7 @@ static void close(HdmiOutput &output) {
 }
 static bool callback(void *) {return false;}
 
+#ifndef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
 static void cancelled_swap(bool old) {
   HdmiOutput output;assert(output.start());int owner{};
   assert(output.bindFrameCallback(callback,&owner));
@@ -68,6 +69,8 @@ static void failed_panel_borrow(bool old) {
   }
   close(output);
 }
+
+#endif
 
 #ifdef AGON_EXTENDER_HDMI_PPA_320
 // Test actual sink ownership/generation rules; SDK filtering is exercised on
@@ -118,6 +121,39 @@ static void scaled_publication() {
 }
 #endif
 
+#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+static bool stopped = true;
+extern "C" esp_err_t agon_dpi_stop(esp_lcd_panel_handle_t) {
+  assert(xPortGetCoreID() == 1);
+  return stopped ? ESP_OK : ESP_ERR_INVALID_STATE;
+}
+int main() {
+  scaled_publication();
+  HdmiOutput output;
+  assert(output.start());
+  auto *panel = output.panel_;
+  auto *front = output.buffers_[0];
+  auto *back = output.buffers_[1];
+  const auto resources = hdmi_host::live.size();
+  output.ownership_.submitted(1);
+  stopped = false;
+  assert(!output.selectMode(512, 384));
+  assert(output.panel_ == panel && output.buffers_[0] == front && output.buffers_[1] == back);
+  assert(!output.ready() && output.ownership_.pending() && hdmi_host::live.size() == resources);
+  stopped = true;
+  for (int i = 0; i < 10; ++i) {
+    assert(output.selectMode(512, 384) && output.width() == 684);
+    assert(output.selectMode(320, 240) && output.width() == 848);
+    assert(!output.needsMode(640, 240));
+  }
+  hdmi_host::inject("init");
+  assert(!output.selectMode(512, 384));
+  assert(hdmi_host::live.empty());
+  assert(output.selectMode(640, 480));
+  close(output);
+  std::cout << "PASS retained DMA-owned buffers on unconfirmed stop, repeated carriers and scaled publication\n";
+}
+#else
 int main(int argc,char **) {
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   scaled_publication();
@@ -197,3 +233,5 @@ int main(int argc,char **) {
   }
   std::cout<<"PASS: real HDMI sink cancellation, fault recovery, startup failure and repeated carrier lifecycle\n";
 }
+
+#endif

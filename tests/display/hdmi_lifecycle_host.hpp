@@ -97,6 +97,11 @@ inline void vTaskDeleteWithCaps(HostTask *t) {
   {std::lock_guard lock(t->mutex);t->stop=true;t->cv.notify_one();}
   t->thread.join();delete t;
 }
+inline int xTaskCreatePinnedToCore(TaskFunction_t fn, const char *name, uint32_t bytes,
+    void *ctx, unsigned priority, HostTask **out, int core) {
+  return xTaskCreatePinnedToCoreWithCaps(fn, name, bytes, ctx, priority, out, core, 0);
+}
+inline void vTaskDelete(HostTask *task) { vTaskDeleteWithCaps(task); }
 inline size_t heap_caps_get_free_size(int) {return 12345;}
 inline void heap_caps_free(void *p) {std::free(p);}
 inline void *heap_caps_aligned_calloc(size_t,size_t n,size_t size,int) {return std::calloc(n,size);}
