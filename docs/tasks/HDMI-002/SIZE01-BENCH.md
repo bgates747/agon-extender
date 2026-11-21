@@ -19,3 +19,9 @@ Each arm staged the same five files, 232,603 bytes. The candidate's 1,794,048-by
 |---|---|---|
 | P4 display status | `d3fb2bb40791d4cad1b0c519f046b6b3aa40e20cd95f407dfd45c9956c5c36a1` | `3eb8b2bdb9962519095f415e3ce81599bf5ebf4ba92ff39af07746b64f26ac97` |
 | P4 serial | `bb34897767eae947e8c05eb30bf3f764d3da9afbfecd00e2e976bf66a01cd925` | `5d968cfe4b7ccd2efda1a7bbc27a5c633ffeb1f0dbaf391b2c4b7dfa471ad2b2` |
+
+## Ad hoc Nurples playthrough
+
+After the static preview passed, Smith played the current Nurples dev runtime on the same P4 candidate. He reported that the game ran at normal speed, but vertical scrolling showed judder across multiple scanlines. The playfield did not appear to judder as one whole image. He saw no blank scanlines alternating with displayed ones. Smith suggested scanout errors as a possible explanation. No diagnostic capture ran during gameplay and the cause remains open. The [proposed investigation](NURPLES-SCROLL-JUDDER.md) records the game and firmware identities and the comparison for review.
+
+At Smith’s request the operator restored the selected v0.3.0 P4 application at app0 offset `0x20000`. The independent 1,794,048-byte readback matched the complete restore extent, SHA-256 `071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1`. Handback verified a responsive Legacy MOS CLI, idle transfer services and free serial handles. The operator checked in with the Olimex scheduler.

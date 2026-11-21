@@ -36,6 +36,8 @@ remain open on that composition. [Wide-clear repair record](HDMI-002/WIDE-CLEAR-
   scanout guards. Preserve the production EMOS, PARLIO and rollback pins.
   Review and freeze the physical packet before running it.
 
+- [ ] [HDMI02-SIZE01e — Investigate Nurples scrolling judder](HDMI-002/NURPLES-SCROLL-JUDDER.md). Smith reported uneven vertical motion across multiple scanlines on the full-frame candidate during gameplay. Draft awaiting review.
+
 ### HDMI02-SIZE01 operator assignment
 The [frozen plan and offline results](HDMI-002/SIZE01.md) record the built candidate, DMA verification and source pins. The [matched visual packet](HDMI-002/SIZE01-VISUAL.md) awaits Smith’s review before reservation. Physical comparison and acceptance remain open. The initial assignment below is historical.
 
