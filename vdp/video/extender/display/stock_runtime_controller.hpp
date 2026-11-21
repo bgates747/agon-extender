@@ -13,6 +13,11 @@
 #include "extender/diagnostics/video_timing.hpp"
 #endif
 
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+#include "esp_cpu.h"
+#include "extender/display/native_scanout/native_row_profile.h"
+#endif
+
 namespace agon::extender::display {
 class StockRuntimeController {
  public:
@@ -22,6 +27,10 @@ class StockRuntimeController {
   virtual void bindNativeAliases() noexcept = 0;
   virtual std::size_t drain() = 0;
   virtual void prepareRow(int y, std::uint8_t *signal) = 0;
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  virtual void prepareFirstCroppedRow(int y, std::uint8_t *signal) = 0;
+  virtual void sampleNativeRow(int y, bool rewind, std::uint8_t *signal, agon_native_row_profile_t &timing) = 0;
+#endif
   virtual bool linearStorage() const noexcept { return false; }
   virtual void prepareLinearRow(int, std::uint8_t *, bool) {}
 #ifdef AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT
@@ -218,6 +227,28 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
 
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
   diagnostics::VideoRowTotals &outputRowTiming() noexcept override { return row_timing_; }
+#endif
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  void sampleNativeRow(int y, bool rewind, std::uint8_t *signal, agon_native_row_profile_t &timing) override {
+    const uint32_t begin = esp_cpu_get_cycle_count();
+    AGON_STOCK_NATIVE_GUARD;
+    const uint32_t acquired = esp_cpu_get_cycle_count();
+    if (rewind) this->rewindCroppedScanline();
+    prepareRowLocked(y, signal);
+    const uint32_t finished = esp_cpu_get_cycle_count();
+    timing.lock_wait_cycles += acquired - begin;
+    timing.stock_cycles += finished - acquired;
+    ++timing.source_rows;
+  }
+
+  void prepareFirstCroppedRow(int y, std::uint8_t *signal) override {
+    // Stock's palette list advances to the requested y in getSignalsForScanline.
+    // Cropped source rows have no output and the sprite decorator changes only
+    // the supplied row. Start the first visible row with the frame's list head.
+    AGON_STOCK_NATIVE_GUARD;
+    this->rewindCroppedScanline();
+    prepareRowLocked(y, signal);
+  }
 #endif
   void prepareRow(int y, std::uint8_t *signal) override {
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK

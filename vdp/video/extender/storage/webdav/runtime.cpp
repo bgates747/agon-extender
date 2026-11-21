@@ -12,7 +12,7 @@
 #include <esp_timer.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
 #include <freertos/idf_additions.h>
 #include <esp_heap_caps.h>
 #endif
@@ -25,7 +25,7 @@ constexpr unsigned Port = 8081, Quota = 32U * 1024U * 1024U,
 std::atomic_flag workerBusy = ATOMIC_FLAG_INIT;
 TaskHandle_t acceptTask = nullptr;
 BaseType_t startStorageWorker(TaskFunction_t function, const char *name, void *argument) {
-#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
   // SPRITE-001 experiment only: the permanent application worker and temporary
   // DAV worker otherwise require32KiB internal SRAM each beside244224 bytes of
   // scanout strips. These task-only FAT/UART/socket paths perform no SPI-flash
@@ -119,7 +119,7 @@ void worker(void *arg) {
   }
   workerBusy.clear();
   completion.complete();
-#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
   vTaskDeleteWithCaps(nullptr);
 #else
   vTaskDelete(nullptr);

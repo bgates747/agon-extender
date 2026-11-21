@@ -185,7 +185,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_upload: bool = False, network_messages: bool = False, network_parallel: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_upload: bool = False, network_messages: bool = False, network_parallel: bool = False, native_scanout: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -279,7 +279,12 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["definitions"].append("AGON_EXTENDER_DIRECT_RGB888=1")
     else:
         profile["forbidden_sources"].append(RGB888_SOURCE)
-    if hdmi_timing == "auto" and not rolling_scanout:
+    if native_scanout:
+        if (display_output != "hdmi" or hdmi_timing != "auto" or
+                any((rolling_scanout, direct_rgb888, ppa_scale_320, indexed_ppa, render_benchmark_output))):
+            raise SystemExit("native row scanout requires automatic native HDMI with a single pixel producer")
+        profile["definitions"].append("AGON_EXTENDER_NATIVE_SCANOUT=1")
+    elif hdmi_timing == "auto" and not rolling_scanout:
         if not (ppa_scale_320 and parallel_upload and parallel_boot_candidate and
                 not direct_rgb888 and not render_benchmark_output and not indexed_ppa):
             raise SystemExit("automatic HDMI requires the rolling profile or the full-frame PARLIO/scaler profile")
@@ -332,7 +337,7 @@ def select_display_profile(document: dict, name: str, board: str,
     return profile
 
 
-def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, indexed_ppa: bool = False) -> dict:
+def display_input_record(display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, indexed_ppa: bool = False, native_scanout: bool = False) -> dict:
     """Retain the selected adapter and exact vendored bridge source closure."""
     record = {"schema_version": 1, "display_output": display_output,
               "configuration": None, "adapter": None, "bridge": None}
@@ -406,7 +411,17 @@ def display_input_record(display_output: str, render_benchmark_output: str | Non
         record["ppa_scale_320"] = {"source": [320, 240], "destination": [640, 480],
                                    "carrier": [848, 480], "filter": "bilinear",
                                    "storage": "decorated snapshot; independent DMA-owned HDMI pair"}
-    if hdmi_timing == "auto" and not rolling_scanout:
+    if native_scanout:
+        record.pop("logical_stride_bytes", None)
+        record.update(render_storage="native", scanout={
+            "kind": "native-row-dma", "rows_per_block": 32, "slots": 3,
+            "refill_limit_us": 1600, "runtime_layouts": [[684, 384], [848, 480]],
+            "pixel_doubling": {"logical": [320, 240], "image": [640, 480], "offset": [104, 0]},
+        })
+        record["configuration"]["placement"] = "centered; 320x240 exact 2x2; 640x240 vertical repeat"
+        record["scanout_sources"] = [artifact_record(p) for p in sorted(
+            (VDP / "video/extender/display/native_scanout").iterdir()) if p.is_file()]
+    elif hdmi_timing == "auto" and not rolling_scanout:
         record.update(render_storage="native", scanout={"kind": "full-frame-dma", "stop": "EOF and channel disabled"})
         record.pop("logical_stride_bytes")
         record.pop("presentation_copy_bytes")
@@ -669,6 +684,7 @@ def main() -> None:
     parser.add_argument("--bitmap-lut", action="store_true", help="Nurples performance: internal RGB222/BGR lookup and bounded Native expansion")
     parser.add_argument("--hdmi-link-watch", action="store_true", help="RESEARCH-007 read-only bridge and frame-gap observer; no performance qualification")
     parser.add_argument("--ppa-scale-320", action="store_true")
+    parser.add_argument("--native-scanout", action="store_true", help="DMA-paced native row composition with exact 320x240 pixel doubling")
     parser.add_argument("--rolling-scanout",action="store_true",help="SPRITE-001 experimental DMA2D strip output")
     parser.add_argument("--abort-on-alloc-failure", action="store_true",
                         help="Experimental diagnosis: stop at the first failed heap allocation")
@@ -733,7 +749,9 @@ def main() -> None:
     coverage_build = (args.hdmi_timing == "auto" and not args.rolling_scanout and
                       args.ppa_scale_320 and args.parallel_upload_candidate and
                       re.fullmatch(r"hdmi-coverage-r[0-9]{2,}-b[0-9-]+Z", args.build_id))
-    if not coverage_build and not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification and not network_boot:
+    native_build = (args.native_scanout and args.parallel_upload_candidate and
+                    re.fullmatch(r"hdmi-native-row-r[0-9]{2,}-b[0-9-]+Z", args.build_id))
+    if not (coverage_build or native_build) and not args.indexed_ppa and args.parallel_boot_candidate and args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and not parallel_qualification and not network_boot:
         parser.error("parallel boot startup is private and cannot carry a release identity")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():
@@ -742,7 +760,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel, args.native_scanout)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -769,7 +787,7 @@ def main() -> None:
         raise SystemExit("wrong ESP-IDF checkout identity")
     tools, python_env = args.tools_path.resolve(), args.python_env.resolve()
     compiler = checked_tools(tools, python_env)
-    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.indexed_ppa)
+    display_record = display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.indexed_ppa, args.native_scanout)
     output.mkdir(parents=True)
     source_record = freeze_source_inputs(output) if (args.allow_dirty_experimental or args.parallel_boot_candidate or args.indexed_ppa) else None
     (output / "display.json").write_text(json.dumps(display_record, indent=2) + "\n")
@@ -810,7 +828,7 @@ def main() -> None:
     if args.indexed_ppa:
         from p4_ppa_clut import prepare
         prepare(IDF,project)
-    if args.rolling_scanout:
+    if args.rolling_scanout or args.native_scanout:
         from p4_cache_msync import prepare
         prepare(IDF,project)
     payload_artifacts = []
@@ -846,7 +864,7 @@ def main() -> None:
         config = apply_sdk_overrides(config, {"CONFIG_LWIP_MAX_SOCKETS":"16"})
     if args.network_messages:
         config = apply_sdk_overrides(config, {"CONFIG_LWIP_MAX_SOCKETS":"17"})
-    if args.rolling_scanout:
+    if args.rolling_scanout or args.native_scanout:
         # HDMI02-M02c: even the 1KiB preference exhausted internal RAM during
         # Nurples bitmap loading (84-byte pthread semaphore allocation fails).
         # Prefer PSRAM for all ordinary allocations; IDF still explicitly keeps
@@ -886,6 +904,7 @@ def main() -> None:
                f"-DAGON_COMPONENT_DIR={generated}",
                f"-DAGON_DEPENDENCIES_LOCK={lock}",
                f"-DAGON_VDP_ROOT={VDP}",
+               f"-DAGON_NATIVE_SCANOUT={'ON' if args.native_scanout else 'OFF'}",
                f"-DAGON_ROLLING_SCANOUT={'ON' if args.rolling_scanout else 'OFF'}",
                f"-DAGON_EXEXT_STREAM={'ON' if args.exext_stream else 'OFF'}",
                f"-DAGON_NETWORK_PARALLEL={'ON' if args.network_parallel else 'OFF'}",
@@ -943,6 +962,8 @@ def main() -> None:
         validation.append("--hdmi-link-watch")
     if args.ppa_scale_320:
         validation.append("--ppa-scale-320")
+    if args.native_scanout:
+        validation.append("--native-scanout")
     if args.rolling_scanout:
         validation.append("--rolling-scanout")
     if args.abort_on_alloc_failure:
@@ -972,9 +993,9 @@ def main() -> None:
         output / "display.json", generated / "agon_extender_build_identity.hpp",
         *payload_artifacts,
     ]
-    if args.rolling_scanout:
-        artifact_paths.extend([build/"dsi-strip/esp_lcd_panel_dpi.c",
-                               build/"dsi-strip/dw_gdma.c"])
+    if args.rolling_scanout or args.native_scanout:
+        driver_dir = build / ("native-scanout" if args.native_scanout else "dsi-strip")
+        artifact_paths.extend([driver_dir / "esp_lcd_panel_dpi.c", driver_dir / "dw_gdma.c"])
         from p4_cache_msync import verify
         cache_component = verify(IDF, project)
         artifact_paths.extend(project / "components/esp_mm" / item["path"]
@@ -1043,7 +1064,7 @@ def main() -> None:
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "display_inputs": display_record,
-        "cache_component": cache_component if args.rolling_scanout else None,
+        "cache_component": cache_component if (args.rolling_scanout or args.native_scanout) else None,
         "reset_url_sha256": (hashlib.sha256(args.reset_url.encode()).hexdigest()
                              if args.reset_url else None),
         "artifacts": [artifact_record(path) for path in artifact_paths],

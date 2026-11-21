@@ -9,11 +9,79 @@
 #ifdef AGON_EXTENDER_DIRECT_RGB888
 #include "extender/display/rgb888_pixel.hpp"
 #endif
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+#include "extender/display/native_scanout/native_scanout.h"
+#include "extender/display/native_scanout/native_row_profile.h"
+#include <cstring>
+#include "esp_heap_caps.h"
+#endif
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
 #include "extender/display/rolling/strip_probe.h"
 #include "esp_heap_caps.h"
 #endif
 namespace agon::extender::display_status {
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+// Independent of mode publication: a failed first mode must leave its DMA
+// evidence readable. Formatting runs on the HTTP task after a bounded snapshot.
+inline esp_err_t nativeScanout(httpd_req_t *request) {
+  agon_native_stats_t v{};
+  char query[24]{};
+  if (httpd_req_get_url_query_len(request) != 0) {
+    if (httpd_req_get_url_query_str(request, query, sizeof(query)) != ESP_OK ||
+        std::strcmp(query, "last_fault=1") != 0) {
+      return httpd_resp_send_err(request, HTTPD_400_BAD_REQUEST, "Unknown scanout query");
+    }
+    if (!agon_native_get_last_fault(&v)) {
+      httpd_resp_set_hdr(request, "Cache-Control", "no-store");
+      httpd_resp_set_type(request, "application/json");
+      return httpd_resp_sendstr(request, "{\"available\":false}");
+    }
+  } else {
+    agon_native_get_stats(&v);
+  }
+  agon_native_row_profile_t sample{};
+  // Profiles describe the live logical mode. A saved hardware fault has its own epoch.
+  if (!query[0]) agon_native_get_row_profile(&sample);
+  char bins[17 * 12]{};
+  size_t used = 0;
+  for (auto count : v.histogram) {
+    const int n = snprintf(bins + used, sizeof(bins) - used, "%s%u", used ? "," : "", unsigned(count));
+    if (n < 0 || size_t(n) >= sizeof(bins) - used) return ESP_FAIL;
+    used += size_t(n);
+  }
+  char body[1600];
+  const int n = snprintf(body, sizeof(body),
+      "{\"epoch\":%u,\"width\":%u,\"height\":%u,\"frames\":%u,\"blocks\":%u,"
+      "\"ready\":%u,\"draw_wakes\":%u,\"max_queue\":%u,\"max_refill_us\":%u,"
+      "\"min_sw_lead_us\":%u,\"max_queue_us\":%u,\"max_render_us\":%u,\"max_sync_us\":%u,"
+      "\"worst\":{\"frame\":%u,\"block\":%u,\"queue_us\":%u,\"render_us\":%u,\"sync_us\":%u},"
+      "\"fault\":%u,\"fault_frame\":%u,\"fault_block\":%u,\"fault_elapsed_us\":%u,"
+      "\"fault_queue_us\":%u,\"fault_render_us\":%u,\"fault_sync_us\":%u,"
+      "\"underruns\":%u,\"invalid\":%u,\"rejected\":%u,\"free_internal_bytes\":%u,"
+      "\"largest_internal_bytes\":%u,\"free_psram_bytes\":%u,\"refill_histogram_100us\":[%s],"
+      "\"min_draw_gap_us\":%u,\"sampled_rows\":{\"generation\":%u,\"samples\":%u,\"frame\":%u,"
+      "\"block\":%u,\"source_rows\":%u,\"total_cycles\":%u,\"lock_wait_cycles\":%u,"
+      "\"stock_cycles\":%u,\"expand_cycles\":%u}}",
+      unsigned(v.epoch), unsigned(v.width), unsigned(v.height), unsigned(v.frames),
+      unsigned(v.blocks), unsigned(v.ready), unsigned(v.ticks), unsigned(v.max_queue),
+      unsigned(v.max_refill_us), unsigned(v.min_lead_us), unsigned(v.max_queue_us),
+      unsigned(v.max_render_us), unsigned(v.max_sync_us), unsigned(v.worst_frame),
+      unsigned(v.worst_block), unsigned(v.worst_queue_us), unsigned(v.worst_render_us),
+      unsigned(v.worst_sync_us), unsigned(v.fault), unsigned(v.fault_frame),
+      unsigned(v.fault_block), unsigned(v.fault_elapsed_us), unsigned(v.fault_queue_us),
+      unsigned(v.fault_render_us), unsigned(v.fault_sync_us), unsigned(v.underruns),
+      unsigned(v.invalid), unsigned(v.rejected), unsigned(heap_caps_get_free_size(MALLOC_CAP_INTERNAL)),
+      unsigned(heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL)),
+      unsigned(heap_caps_get_free_size(MALLOC_CAP_SPIRAM)), bins, unsigned(v.min_draw_gap_us),
+      unsigned(sample.generation), unsigned(sample.samples), unsigned(sample.frame),
+      unsigned(sample.block), unsigned(sample.source_rows), unsigned(sample.total_cycles),
+      unsigned(sample.lock_wait_cycles), unsigned(sample.stock_cycles), unsigned(sample.expand_cycles));
+  if (n < 0 || size_t(n) >= sizeof(body)) return ESP_FAIL;
+  httpd_resp_set_hdr(request, "Cache-Control", "no-store");
+  httpd_resp_set_type(request, "application/json");
+  return httpd_resp_send(request, body, n);
+}
+#endif
 inline esp_err_t handle(httpd_req_t *request) {
   display::ModeStatus value{};
   httpd_resp_set_hdr(request,"Cache-Control","no-store");

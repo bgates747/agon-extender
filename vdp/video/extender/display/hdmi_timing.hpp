@@ -20,14 +20,14 @@ inline constexpr HdmiTiming kHdmi848{848,480,240.0f/7.0f,480,32,112,112,6,8,23,t
 // HDMI-003: stock 640x240 scans each logical row twice. Preserve its logical
 // coordinates but fit the resulting 640x480 presentation in a proven carrier.
 // This is deliberately not a general translation of VGA DoubleScan: accepted
-// 512x384 presentation and the separate 320x240 PPA policy remain unchanged.
+// 512x384 stays native; 320x240 has a separate 2x2 presentation rule.
 inline constexpr int hdmiVerticalRepeat(int width,int height) {
   return width==640 && height==240 ? 2 : 1;
 }
 // HDMI02-R: only proven carriers. Smaller modes remain unscaled; no new
 // 240-line signal is implied. Larger modes retain the documented crop fallback.
 inline constexpr HdmiTiming selectHdmiTiming(int width, int height) {
-#ifdef AGON_EXTENDER_HDMI_PPA_320
+#if defined(AGON_EXTENDER_HDMI_PPA_320) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
   if(width==320 && height==240)return kHdmi848;
 #endif
   return width > 0 && height > 0 && width <= 684 &&

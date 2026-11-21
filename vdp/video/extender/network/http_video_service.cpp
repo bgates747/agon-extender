@@ -1,4 +1,4 @@
-#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
 #include "esp_heap_caps.h"
 #endif
 #include "extender/diagnostics/render_benchmark.hpp"
@@ -36,7 +36,7 @@ bool HttpVideoService::startServer(web::EmbeddedAsset const *assets, std::size_t
   config.server_port=options.port; config.ctrl_port=options.control_port;
   config.max_uri_handlers=options.max_uri_handlers;
   config.max_open_sockets=options.max_open_sockets;config.stack_size=options.stack_bytes;
-#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
   // HDMI02-F: socket/FAT-only handlers; no flash/NVS/cache-off operations.
   // IDF owns matching capability-aware deletion on server stop.
   config.task_caps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;

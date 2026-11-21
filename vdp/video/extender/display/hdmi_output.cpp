@@ -31,7 +31,7 @@ static_assert(std::atomic<std::uint32_t>::is_always_lock_free,
 
 HdmiOutput &hdmiOutput() { static HdmiOutput output; return output; }
 
-#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+#if defined(AGON_EXTENDER_HDMI_FULL_FRAME_AUTO) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
 extern "C" esp_err_t agon_dpi_stop(esp_lcd_panel_handle_t panel);
 #endif
 
@@ -41,15 +41,18 @@ bool HdmiOutput::cleanup() {
   indexed_.reset();
 #endif
   output_size_.store(0, std::memory_order_release);
-#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+#if defined(AGON_EXTENDER_HDMI_FULL_FRAME_AUTO) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
   // Keep every resource alive if the old transfer has not retired. A later
   // stock mode fallback can retry this join without borrowing its pixels.
   if (panel_ && agon_dpi_stop(panel_) != ESP_OK) {
-    ESP_LOGE(kTag, "Full-frame DMA stop unconfirmed; retaining HDMI panel");
+    ESP_LOGE(kTag, "DMA stop unconfirmed; retaining HDMI panel");
     return false;
   }
 #endif
-  if (panel_) { esp_lcd_panel_del(panel_); panel_ = nullptr; }
+  if (panel_) {
+    if (esp_lcd_panel_del(panel_) != ESP_OK) return false;
+    panel_ = nullptr;
+  }
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   scaler_.reset();
 #endif
@@ -157,7 +160,12 @@ bool HdmiOutput::start() {
   dpi.dpi_clock_freq_mhz = timing_.pixel_mhz;
   dpi.in_color_format = LCD_COLOR_FMT_RGB888;
   dpi.out_color_format = LCD_COLOR_FMT_RGB888;
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  // The derived driver uses one descriptor list backed exclusively by its strip slots.
+  dpi.num_fbs = 1;
+#else
   dpi.num_fbs = 2;
+#endif
   dpi.video_timing.h_size = width();
   dpi.video_timing.v_size = height();
   dpi.video_timing.hsync_pulse_width = timing_.h_sync;
@@ -199,6 +207,9 @@ bool HdmiOutput::start() {
   panel_config.vendor_config = &vendor;
   esp_lcd_panel_lt8912b_io_t io_all{io_[0], io_[1], io_[2]};
   error = esp_lcd_new_panel_lt8912b(&io_all, &panel_config, &panel_);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  if (error != ESP_OK) return failed(error, "Native scanout slots");
+#else
   if (error == ESP_ERR_NO_MEM) {
     // IDF's failure path frees every partially allocated framebuffer and DMA
     // descriptor. Retry one panel buffer only after that clean failure.
@@ -227,6 +238,7 @@ bool HdmiOutput::start() {
   if (error != ESP_OK) return failed(error, "Panel buffer addresses");
   buffers_[0] = static_cast<std::uint8_t *>(buffer0);
   buffers_[1] = static_cast<std::uint8_t *>(buffer1);
+#endif
   error = esp_lcd_panel_reset(panel_);
   if (error != ESP_OK) return failed(error, "LT8912B reset");
   esp_lcd_dpi_panel_event_callbacks_t callbacks{};
@@ -240,9 +252,11 @@ bool HdmiOutput::start() {
          esp_timer_get_time() < first_frame_deadline) vTaskDelay(1);
   if (interrupt_core_.load(std::memory_order_acquire) != 1)
     return failed(ESP_ERR_INVALID_STATE, "DSI DMA callback absent or on an unexpected core");
+#ifndef AGON_EXTENDER_NATIVE_SCANOUT
   portENTER_CRITICAL(&callback_mux_);
   ownership_.reset();
   portEXIT_CRITICAL(&callback_mux_);
+#endif
   ready_ = true;
 #ifdef AGON_EXTENDER_HDMI_LINK_WATCH
   ++link_epoch_;
@@ -342,6 +356,7 @@ bool IRAM_ATTR HdmiOutput::frameComplete(esp_lcd_panel_handle_t,
 #endif
   bool task_woken = false;
   portENTER_CRITICAL_ISR(&output.callback_mux_);
+#ifndef AGON_EXTENDER_NATIVE_SCANOUT
   if (output.ownership_.pending()
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
       && (!output.rolling() || output.ownership_.submittedIndex()==agon_scanout_front())
@@ -358,12 +373,26 @@ bool IRAM_ATTR HdmiOutput::frameComplete(esp_lcd_panel_handle_t,
       output.direct_state_.store(Complete,std::memory_order_release);
 #endif
   }
+#endif
   if (output.frame_callback_) task_woken = output.frame_callback_(output.frame_context_);
   portEXIT_CRITICAL_ISR(&output.callback_mux_);
   return task_woken;
 }
 
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+bool HdmiOutput::bindNativeRows(void *context, agon_native_render_t render, agon_native_wake_t wake) {
+  return ready_ && agon_native_bind(panel_, context, render, wake) == ESP_OK;
+}
+
+void HdmiOutput::joinNativeRows() {
+  agon_native_unbind(panel_);
+}
+#endif
+
 bool HdmiOutput::scanoutFailed() const {
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  return panel_ && agon_native_failed(panel_);
+#endif
 #ifdef AGON_EXTENDER_ROLLING_SCANOUT
   if (rolling()) {
     strip_async_stats status{};
@@ -392,6 +421,7 @@ bool HdmiOutput::waitForSubmittedBuffer(std::atomic<bool> &stopping) {
   return true;
 }
 
+#ifndef AGON_EXTENDER_NATIVE_SCANOUT
 bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &stopping) {
 #if defined(AGON_EXTENDER_BENCH_HOLD) || (defined(AGON_EXTENDER_BENCH_OFF) && !defined(AGON_EXTENDER_BENCH_CONVERT_OFF))
   return ready_ && !stopping.load();
@@ -589,6 +619,8 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
   report(esp_timer_get_time());
   return true;
 }
+
+#endif // !AGON_EXTENDER_NATIVE_SCANOUT
 
 #ifdef AGON_EXTENDER_INDEXED_PPA
 bool HdmiOutput::publishLinear(StockRuntimeController &controller,std::atomic<bool> &stopping) {

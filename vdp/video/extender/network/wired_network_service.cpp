@@ -438,6 +438,9 @@ bool WiredNetworkService::startHttp() noexcept {
 #else
   options.max_uri_handlers = 22;
 #endif
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  ++options.max_uri_handlers;
+#endif
   if (!startServer(assets.data(), assets.size(), options)) return false;
   auto const server = server_.load(std::memory_order_acquire);
 #if defined(AGON_EXTENDER_CONTROLLER_INPUT)
@@ -458,6 +461,17 @@ bool WiredNetworkService::startHttp() noexcept {
     http_fault_=true;stopHttp();return false;
   }
 
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  httpd_uri_t rows{};
+  rows.uri = "/display/scanout";
+  rows.method = HTTP_GET;
+  rows.handler = &display_status::nativeScanout;
+  if (httpd_register_uri_handler(server, &rows) != ESP_OK) {
+    http_fault_ = true;
+    stopHttp();
+    return false;
+  }
+#endif
   httpd_uri_t codec{};codec.uri="/diagnostics/rle2";codec.method=HTTP_GET;codec.handler=&rle2bench::handler;
   if(httpd_register_uri_handler(server,&codec)!=ESP_OK){http_fault_=true;stopHttp();return false;}
 #if defined(AGON_EXTENDER_FRAME_TIMING)

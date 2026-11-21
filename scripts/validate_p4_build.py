@@ -223,7 +223,7 @@ def check_rolling_fbcpy_linkage(commands: list[dict], ninja: str, build: Path) -
         fail("rolling copy probe archive is absent from ELF link")
 
 
-def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, rolling_scanout: bool = False, build: Path | None = None, hdmi_timing: str = "1280x720") -> None:
+def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, rolling_scanout: bool = False, build: Path | None = None, hdmi_timing: str = "1280x720", native_scanout: bool = False) -> None:
     """Prove the selected bridge object reaches the ELF; reject stale copies."""
     bridge = (VDP / HDMI_COMPONENT / "esp_lcd_lt8912b.c").resolve()
     actions = [command for command in commands
@@ -257,13 +257,15 @@ def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, ro
                             str(IDF/"components/esp_lcd/dsi/esp_lcd_panel_dpi.c"),str(generated)],check=True)
             if generated.read_bytes()!=expected_dpi.read_bytes():fail("rolling derivative differs from generator")
     if hdmi_timing == "auto" and not rolling_scanout:
-        expected_dpi = build / "full-frame/esp_lcd_panel_dpi.c"
+        driver_dir = "native-scanout" if native_scanout else "full-frame"
+        generator_dir = "native_scanout" if native_scanout else "full_frame"
+        expected_dpi = build / driver_dir / "esp_lcd_panel_dpi.c"
         import tempfile
         for component, unit, generator in [
-                ("esp_lcd", "dsi/esp_lcd_panel_dpi.c", "full_frame/patch_dpi.py"),
+                ("esp_lcd", "dsi/esp_lcd_panel_dpi.c", f"{generator_dir}/patch_dpi.py"),
                 ("esp_hw_support", "dma/dw_gdma.c", "rolling/patch_dw_gdma.py")]:
             original = IDF / "components" / component / unit
-            derived = build / "full-frame" / original.name
+            derived = build / driver_dir / original.name
             with tempfile.TemporaryDirectory() as tmp:
                 regenerated = Path(tmp) / original.name
                 subprocess.run([sys.executable, str(VDP / "video/extender/display" / generator),
@@ -329,6 +331,7 @@ def main() -> None:
     parser.add_argument("--graphics-timing", action="store_true")
     parser.add_argument("--hdmi-link-watch", action="store_true")
     parser.add_argument("--ppa-scale-320", action="store_true")
+    parser.add_argument("--native-scanout", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true")
     parser.add_argument("--abort-on-alloc-failure", action="store_true")
     parser.add_argument("--direct-rgb888", action="store_true")
@@ -345,7 +348,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel, args.native_scanout)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -411,7 +414,7 @@ def main() -> None:
             pie_arch = "-march=rv32imafc_zicsr_zifencei_xesppie"
             if (pie_arch in argv) != args.scroll_fast:
                 fail("scroll PIE ISA selection differs from actual compile action")
-        for definition, benchmark_selected in (("AGON_EXTENDER_HDMI_FULL_FRAME_AUTO",args.hdmi_timing == "auto" and not args.rolling_scanout),("AGON_EXTENDER_PARALLEL_UPLOAD",args.parallel_upload_candidate),("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
+        for definition, benchmark_selected in (("AGON_EXTENDER_NATIVE_SCANOUT", args.native_scanout),("AGON_EXTENDER_HDMI_FULL_FRAME_AUTO",args.hdmi_timing == "auto" and not (args.rolling_scanout or args.native_scanout)),("AGON_EXTENDER_PARALLEL_UPLOAD",args.parallel_upload_candidate),("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
                                      ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
                                      ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
                                      ("AGON_EXTENDER_BENCH_OFF",args.render_benchmark_output in ("off","convert-off")),
@@ -470,8 +473,9 @@ def main() -> None:
                 fail("CLUT consumer still selects SDK HAL: "+command["file"])
 
     ninja = ninja_path.read_text().replace("$\n  ", "")
-    check_hdmi_linkage(commands, ninja, args.display_output,args.rolling_scanout,output/"build",args.hdmi_timing)
-    check_cache_linkage(commands, ninja, output / "build", args.rolling_scanout)
+    check_hdmi_linkage(commands, ninja, args.display_output, args.rolling_scanout, output / "build", args.hdmi_timing, args.native_scanout)
+    strip_memory = args.rolling_scanout or args.native_scanout
+    check_cache_linkage(commands, ninja, output / "build", strip_memory)
     archive_lines = [line for line in ninja.splitlines()
                      if line.startswith("build esp-idf/agon_vdp/libagon_vdp.a:")]
     if len(archive_lines) != 1:
@@ -498,7 +502,7 @@ def main() -> None:
     if args.display_output == "hdmi" or (output / "display.json").is_file():
         try:
             display_record = json.loads((output / "display.json").read_text())
-            if display_record != display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.indexed_ppa):
+            if display_record != display_input_record(args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.indexed_ppa, args.native_scanout):
                 fail("display snapshot differs from the selected adapter/component")
         except (OSError, ValueError) as error:
             fail(f"missing or invalid display build evidence: {error}")
@@ -538,7 +542,7 @@ def main() -> None:
                         fail(f"silicon bounds differ in {config}")
             config_lines = (output / "sdkconfig").read_text().splitlines()
             compiled_config = (output / "build/config/sdkconfig.h").read_text().splitlines()
-            if args.rolling_scanout:
+            if strip_memory:
                 check_rolling_cache_config(compiled_config)
             if args.network_messages:
                 if "#define CONFIG_LWIP_MAX_SOCKETS 17" not in compiled_config:
@@ -560,13 +564,13 @@ def main() -> None:
                 for name in ("wire.hpp", "receiver.hpp", "runtime.hpp"):
                     if str(VDP / "video/extender/input/controller" / name) not in deps:
                         fail("controller source absent from actual compiler dependencies: " + name)
-            if args.rolling_scanout and "#define CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL 0" not in compiled_config:
+            if strip_memory and "#define CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL 0" not in compiled_config:
                 raise SystemExit("rolling scanout requires the recorded PSRAM malloc preference")
             if ("#define CONFIG_HEAP_ABORT_WHEN_ALLOCATION_FAILS 1" in compiled_config) != args.abort_on_alloc_failure:
                 fail("compiled allocation-failure diagnostic differs from selection")
-            if args.rolling_scanout and "#define CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL 32768" not in compiled_config:
+            if strip_memory and "#define CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL 32768" not in compiled_config:
                 raise SystemExit("rolling scanout requires the recorded internal-only memory reserve")
-            if args.rolling_scanout and "#define CONFIG_FREERTOS_TASK_CREATE_ALLOW_EXT_MEM 1" not in compiled_config:
+            if strip_memory and "#define CONFIG_FREERTOS_TASK_CREATE_ALLOW_EXT_MEM 1" not in compiled_config:
                 raise SystemExit("rolling scanout requires explicit external SD-worker stack support")
             for key, value in board["sdkconfig_overrides"].items():
                 expected = f"{key}={value}" if value != "n" else f"# {key} is not set"

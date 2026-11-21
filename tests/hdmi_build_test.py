@@ -72,6 +72,24 @@ class HdmiBuildTest(unittest.TestCase):
             build_p4.select_display_profile(self.document, "p4-console", "p4-pc",
                                            "browser", hdmi_link_watch=True)
 
+    def test_native_rows_select_one_producer_and_keep_the_board_profile(self):
+        common = (self.document, "p4-console", "p4-pc", "hdmi")
+        selected = build_p4.select_display_profile(*common, hdmi_timing="auto", native_scanout=True)
+        self.assertIn("AGON_EXTENDER_NATIVE_SCANOUT=1", selected["definitions"])
+        self.assertNotIn("AGON_EXTENDER_HDMI_FULL_FRAME_AUTO=1", selected["definitions"])
+        self.assertNotIn(build_p4.RGB888_SOURCE, selected["sources"])
+        for arguments in ({"rolling_scanout": True}, {"ppa_scale_320": True},
+                          {"indexed_ppa": True}, {"direct_rgb888": True}):
+            with self.subTest(arguments=arguments), self.assertRaises(SystemExit):
+                build_p4.select_display_profile(*common, hdmi_timing="auto",
+                                                native_scanout=True, **arguments)
+        with self.assertRaises(SystemExit):
+            build_p4.select_display_profile(*common, native_scanout=True)
+        record = build_p4.display_input_record("hdmi", hdmi_timing="auto", native_scanout=True)
+        self.assertEqual(record["scanout"]["kind"], "native-row-dma")
+        self.assertEqual(record["scanout"]["pixel_doubling"]["offset"], [104, 0])
+        self.assertNotIn("ppa_scale_320", record)
+
     def test_indexed_ppa_is_explicit_and_requires_full_output_lifetime(self):
         args=(self.document,"p4-console","p4-pc","hdmi","normal",True,"auto",True)
         old=build_p4.select_display_profile(*args)

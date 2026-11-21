@@ -46,10 +46,19 @@ std::unique_ptr<fabgl::Canvas>	canvas;			// The canvas class
 // detach joins both native owners before Canvas/controller replacement.
 std::unique_ptr<agon::extender::display::StockRuntimeController> _stockController;
 fabgl::VGAPalettedController * _VGAController = nullptr;
-std::unique_ptr<agon::extender::display::PresentationSnapshotPool> _stockSnapshotPool;
 std::unique_ptr<agon::extender::display::StockP4Service> _stockFrameService;
 inline fabgl::BitmappedDisplayController * activeDisplayController() { return _VGAController; }
+#if defined(AGON_EXTENDER_NATIVE_SCANOUT)
+inline auto & displaySnapshotPool() {
+	// HDMI's web service retains keyboard and diagnostics. It has no video
+	// pixel producer, so do not reserve the three 1024x768 browser planes.
+	static agon::extender::display::PresentationSnapshotPool disabledPool;
+	return disabledPool;
+}
+#else
+std::unique_ptr<agon::extender::display::PresentationSnapshotPool> _stockSnapshotPool;
 inline auto & displaySnapshotPool() { return *_stockSnapshotPool; }
+#endif
 #else
 std::unique_ptr<agon::extender::display::P4DisplayController>	_VGAController;		// Upstream-shaped active controller owner
 std::unique_ptr<agon::extender::display::P4FrameService>	_P4FrameService;
@@ -245,6 +254,7 @@ bool updateVGAController(uint8_t colours) {
 		return false;
 	}
 #if defined(AGON_EXTENDER_STOCK_RUNTIME)
+#if !defined(AGON_EXTENDER_NATIVE_SCANOUT)
 	if (!_stockSnapshotPool) {
 		using namespace agon::extender::display;
 		Allocator outputAllocator{nullptr,
@@ -257,6 +267,7 @@ bool updateVGAController(uint8_t colours) {
 			return false;
 		}
 	}
+#endif
 #else
 	if (_VGAController) {
 		return true;
@@ -331,13 +342,14 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	candidate.colours = colours;
 	candidate.refresh_hz = timing.refresh_hz;
 	candidate.double_buffered = doubleBuffered;
-#ifdef AGON_EXTENDER_DIRECT_RGB888
+#if defined(AGON_EXTENDER_DIRECT_RGB888) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
 	// HDMI-002: join drawing/output before *any* candidate allocation or clear,
 	// outside native exclusion. Joining only when the target borrows panel pixels
 	// left mode96's indexed/PPA publisher running while native mode3 prepared on
 	// the same carrier. That overlap can exhaust the rolling refill deadline.
-	// The panel keeps scanning its last image; failed preparation restarts the
-	// former service below. No scanout deadline or DMA ownership check is relaxed.
+	// The native row producer also needs this join: a same-carrier resolution
+	// allocation under the native mutex can outlast its refill deadline.
+	// Failed preparation restarts the former service below.
 	const bool joinedPanel = _stockFrameService && _stockController;
 	if(joinedPanel) _stockFrameService->detach();
 #endif
@@ -368,13 +380,13 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 				new (std::nothrow) fabgl::Canvas(&vga));
 		},
 		[&] { return std::unique_ptr<StockP4Service>(
-			new (std::nothrow) StockP4Service(*_stockSnapshotPool)); },
+			new (std::nothrow) StockP4Service(displaySnapshotPool())); },
 		[&](StockP4Service &service, StockRuntimeController &controller) {
 			return service.startClock(periodForRefresh(timing.refresh_hz)) &&
 				service.prepare(controller);
 		})) {
 		debug_log("changeResolution: P4 candidate preparation failed\n\r");
-#ifdef AGON_EXTENDER_DIRECT_RGB888
+#if defined(AGON_EXTENDER_DIRECT_RGB888) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
 		if(joinedPanel) {
 			// Release partial candidate resources before restarting the former
 			// mode. Official vdu_mode still owns old/mode-1 fallback and clearing.

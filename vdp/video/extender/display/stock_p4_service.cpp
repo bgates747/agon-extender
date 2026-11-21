@@ -70,8 +70,9 @@ StockP4Service::StockP4Service(PresentationSnapshotPool &snapshots)
 }
 
 void StockP4Service::initializeSynchronization() {
-  barrier_done_ = xSemaphoreCreateBinary();
   draw_done_ = xSemaphoreCreateBinary();
+#ifndef AGON_EXTENDER_NATIVE_SCANOUT
+  barrier_done_ = xSemaphoreCreateBinary();
   output_done_ = xSemaphoreCreateBinary();
   if (barrier_done_) {
     esp_timer_create_args_t args{};
@@ -81,6 +82,7 @@ void StockP4Service::initializeSynchronization() {
     args.name = "stock-clock-join";
     if (esp_timer_create(&args, &barrier_) != ESP_OK) barrier_ = nullptr;
   }
+#endif
 }
 
 StockP4Service::~StockP4Service() {
@@ -93,6 +95,11 @@ StockP4Service::~StockP4Service() {
 }
 
 bool StockP4Service::startClock(std::uint32_t period_us) {
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  if (!period_us || !draw_done_ || controller_ || !hdmiOutput().ready()) return false;
+  period_us_ = period_us;
+  return true;
+#else
   if (!period_us || !barrier_ || !draw_done_ || !output_done_) return false;
   if (timer_ && period_us == period_us_) return true;
   if (controller_) return false; // change cadence only at a detached mode boundary
@@ -117,6 +124,7 @@ bool StockP4Service::startClock(std::uint32_t period_us) {
   esp_timer_delete(timer_);
   timer_ = nullptr;
   return false;
+#endif
 #endif
 }
 
@@ -165,6 +173,11 @@ bool StockP4Service::hardwareFrameEntry(void *context) {
   // conversion progress. Modelines originally specifying 70/75 Hz run at the
   // fixed ~60 Hz HDMI cadence in this experimental composition.
   StockFrameCounter::advance(1);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  // The refill worker releases drawing at its last-visible-block gate. DMA
+  // frame completion alone owns the public frame count; never wake twice.
+  return false;
+#else
   BaseType_t woken = pdFALSE;
   auto drawing = self.draw_task_.load(std::memory_order_acquire);
   if (drawing) vTaskNotifyGiveFromISR(drawing, &woken);
@@ -172,16 +185,95 @@ bool StockP4Service::hardwareFrameEntry(void *context) {
   // Waking both here races the queued native SwapBuffers: conversion can
   // begin on the old front and then discard every otherwise timely frame.
   return woken == pdTRUE;
+#endif
+}
+#endif
+
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+namespace {
+portMUX_TYPE row_profile_mux = portMUX_INITIALIZER_UNLOCKED;
+agon_native_row_profile_t row_profile{};
+}
+
+extern "C" void agon_native_get_row_profile(agon_native_row_profile_t *out) {
+  if (!out) return;
+  portENTER_CRITICAL(&row_profile_mux);
+  *out = row_profile;
+  portEXIT_CRITICAL(&row_profile_mux);
+}
+
+bool StockP4Service::nativeRows(void *context, std::uint8_t *pixels, unsigned first_y,
+                                unsigned rows, unsigned width, unsigned height, unsigned slot, std::uint32_t frame) {
+  auto &self = *static_cast<StockP4Service *>(context);
+  // Binding is a fallible prepare step. Its first callback can precede mode
+  // commit. Start native sampling at row zero only after aliases are committed.
+  if (first_y == 0) self.rendering_frame_ = self.active_.load(std::memory_order_acquire);
+  if (!self.rendering_frame_) {
+    std::memset(pixels, 0, std::size_t(rows) * width * 3);
+    return true;
+  }
+  const unsigned block = first_y / rows;
+  if (frame % 16 == 0 && (frame / 16) % (height / rows) == block) {
+    agon_native_row_profile_t sample{};
+    sample.frame = frame;
+    sample.block = block;
+    const auto begin = esp_cpu_get_cycle_count();
+    const bool rendered = self.native_rows_.fill(pixels, first_y, rows, slot,
+        [&](int y, bool rewind, std::uint8_t *signal) {
+          self.controller_->sampleNativeRow(y, rewind, signal, sample);
+        },
+        [&](auto expand) {
+          const auto start = esp_cpu_get_cycle_count();
+          expand();
+          sample.expand_cycles += esp_cpu_get_cycle_count() - start;
+        });
+    sample.total_cycles = esp_cpu_get_cycle_count() - begin;
+    portENTER_CRITICAL(&row_profile_mux);
+    sample.samples = ++row_profile.samples;
+    sample.generation = row_profile.generation;
+    if (sample.total_cycles >= row_profile.total_cycles) row_profile = sample;
+    portEXIT_CRITICAL(&row_profile_mux);
+    return rendered;
+  }
+  return self.native_rows_.fill(pixels, first_y, rows, slot,
+      [&](int y, bool first_cropped, std::uint8_t *signal) {
+        if (first_cropped) self.controller_->prepareFirstCroppedRow(y, signal);
+        else self.controller_->prepareRow(y, signal);
+      });
+}
+
+void StockP4Service::nativeDrawWake(void *context) {
+  auto &self = *static_cast<StockP4Service *>(context);
+  if (!self.active_.load(std::memory_order_acquire)) return;
+  xTaskNotifyGive(self.draw_task_.load(std::memory_order_acquire));
+  // In a double-buffered mode only logical swaps queue. Let the core-0
+  // worker finish that batch before this producer reads next frame's top
+  // rows. A late swap would otherwise change banks partway down the screen.
+  // The driver charges this task-context wait to this refill's deadline.
+  if (self.swap_drain_done_) xSemaphoreTake(self.swap_drain_done_, portMAX_DELAY);
 }
 #endif
 
 bool StockP4Service::prepare(StockRuntimeController &controller) {
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  if (!period_us_ || controller_ || !draw_done_) return false;
+  const unsigned size = hdmiOutput().outputSize();
+  if (!native_rows_.configure(controller.display().getViewPortWidth(),
+                              controller.display().getViewPortHeight(),
+                              size >> 16, size & 65535)) return false;
+  rendering_frame_ = false;
+  if (controller.display().isDoubleBuffered()) {
+    swap_drain_done_ = xSemaphoreCreateBinary();
+    if (!swap_drain_done_) return false;
+  }
+#else
   if (!timer_ || controller_ || !draw_done_ || !output_done_ ||
       snapshots_ == nullptr || !snapshots_->enabled()) return false;
+#endif
   controller_ = &controller;
   controller_->display().enableBackgroundPrimitiveExecution(true);
   stopping_.store(false, std::memory_order_release);
-  TaskHandle_t drawing{}, output{};
+  TaskHandle_t drawing{};
   // Retain the stock parser/drawing relationship: parser core 0 priority 3;
   // drawing core 0 priority 5. CPU output normally runs core 1 priority 6 so a
   // row waiter has precedence over the next primitive after mutex release.
@@ -189,20 +281,38 @@ bool StockP4Service::prepare(StockRuntimeController &controller) {
   // IDF esp_timer task runs priority 22/core 0 and never waits for that mutex.
   if (agon::extender::createVideoWorker(drawEntry, "stock-draw", 8192, this, 5, &drawing, 0) != pdPASS) {
     controller_->display().enableBackgroundPrimitiveExecution(false);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+    if (swap_drain_done_) { vSemaphoreDelete(swap_drain_done_); swap_drain_done_ = nullptr; }
+#endif
     controller_ = nullptr; stopping_.store(true); return false;
   }
   draw_task_.store(drawing, std::memory_order_release);
   controller_->bindDrawingTask(drawing);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  native_bound_ = hdmiOutput().bindNativeRows(this, nativeRows, nativeDrawWake);
+  if (!native_bound_) { detach(); return false; }
+  portENTER_CRITICAL(&row_profile_mux);
+  auto generation = row_profile.generation + 1;
+  row_profile = {};
+  row_profile.generation = generation;
+  portEXIT_CRITICAL(&row_profile_mux);
+#else
+  TaskHandle_t output{};
   if (agon::extender::createVideoWorker(outputEntry, "stock-output", 8192, this, kOutputTaskPriority, &output, kOutputTaskCore) != pdPASS) {
     detach(); return false;
   }
   output_task_.store(output, std::memory_order_release);
+#endif
   return true;
 }
 
 void StockP4Service::activate() {
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  assert(native_bound_ && controller_ && draw_task_.load(std::memory_order_acquire));
+#else
   assert(timer_ && controller_ && draw_task_.load(std::memory_order_acquire) &&
          output_task_.load(std::memory_order_acquire));
+#endif
   clock_.start(esp_timer_get_time(), period_us_);
 #if defined(AGON_EXTENDER_HDMI) && defined(AGON_EXTENDER_DIRECT_RGB888)
   hdmiOutput().allowDirectSwaps();
@@ -227,6 +337,12 @@ void StockP4Service::detach() {
   active_.store(false, std::memory_order_release);
 #if defined(AGON_EXTENDER_HDMI)
   hdmiOutput().unbindFrameCallback(this);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  if (native_bound_) {
+    hdmiOutput().joinNativeRows();
+    native_bound_ = false;
+  }
+#endif
 #endif
   stopping_.store(true, std::memory_order_release);
   auto drawing = draw_task_.load(std::memory_order_acquire);
@@ -242,9 +358,14 @@ void StockP4Service::detach() {
   controller_->bindDrawingTask(nullptr);
   output_task_.store(nullptr, std::memory_order_release);
   // Retain task handles until any clock callback which loaded them has left.
+#ifndef AGON_EXTENDER_NATIVE_SCANOUT
   timerBarrier();
+#endif
   if (drawing) agon::extender::deleteVideoWorker(drawing);
   if (output) agon::extender::deleteVideoWorker(output);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  if (swap_drain_done_) { vSemaphoreDelete(swap_drain_done_); swap_drain_done_ = nullptr; }
+#endif
   // With both native readers joined, retain stock's disable/flush path so
   // queued dynamic payloads finish against their still-live native mode.
   controller_->display().enableBackgroundPrimitiveExecution(false);
@@ -253,7 +374,9 @@ void StockP4Service::detach() {
 }
 
 void StockP4Service::drawEntry(void *p) { static_cast<StockP4Service *>(p)->drawLoop(); }
+#ifndef AGON_EXTENDER_NATIVE_SCANOUT
 void StockP4Service::outputEntry(void *p) { static_cast<StockP4Service *>(p)->outputLoop(); }
+#endif
 
 void StockP4Service::drawLoop() {
 #ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
@@ -270,7 +393,9 @@ void StockP4Service::drawLoop() {
 #else
     controller_->drain();
 #endif
-#if defined(AGON_EXTENDER_HDMI)
+#if defined(AGON_EXTENDER_NATIVE_SCANOUT)
+    if (swap_drain_done_) xSemaphoreGive(swap_drain_done_);
+#elif defined(AGON_EXTENDER_HDMI)
     // In stock double-buffered modes ordinary drawing is immediate; the
     // queued swap executes in this drain. Publish only after that commit and
     // sprite updates, without making the independent hardware clock wait.
@@ -285,6 +410,7 @@ void StockP4Service::drawLoop() {
   vTaskSuspend(nullptr);
 }
 
+#ifndef AGON_EXTENDER_NATIVE_SCANOUT
 void StockP4Service::outputLoop() {
 #ifdef AGON_EXTENDER_OWNER_TRACE
   agon_owner_trace::registerOutput();
@@ -400,4 +526,5 @@ void StockP4Service::publish() {
 #endif
 #endif
 }
+#endif // !AGON_EXTENDER_NATIVE_SCANOUT
 } // namespace agon::extender::display

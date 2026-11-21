@@ -117,6 +117,10 @@ class PresentationSnapshotLease final {
 
 class PresentationSnapshotPool final {
  public:
+  // HDMI-only scanout still exposes the network/status interfaces. A pool
+  // without a pixel producer has no allocator, no slots backed by PSRAM, and
+  // reports disabled without counting a failed allocation.
+  PresentationSnapshotPool() noexcept = default;
   explicit PresentationSnapshotPool(
       Allocator allocator,
       SnapshotPixelFormat format = SnapshotPixelFormat::RGB888,
@@ -174,11 +178,11 @@ class PresentationSnapshotPool final {
   void releaseAllocations() noexcept;
 
   Allocator allocator_{};
-  SnapshotPixelFormat format_;
-  std::uint64_t minimum_interval_us_;
-  bool on_demand_;
-  bool direct_rgb222_;
-  bool lookahead_;
+  SnapshotPixelFormat format_{SnapshotPixelFormat::RGB888};
+  std::uint64_t minimum_interval_us_{};
+  bool on_demand_{};
+  bool direct_rgb222_{};
+  bool lookahead_{};
   std::atomic<bool> requested_{false};
   std::array<Slot, kPresentationSnapshotSlotCount> slots_{};
 #if defined(AGON_EXTENDER_SNAPSHOT_MUTEX)

@@ -47,7 +47,7 @@
 #include "extender/diagnostics/render_benchmark.hpp"
 #endif
 
-#if defined(AGON_EXTENDER_ROLLING_SCANOUT) && defined(ESP_PLATFORM)
+#if (defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)) && defined(ESP_PLATFORM)
 // P4 task-only queue placement; stock capacity/ordering and all other builds
 // are unchanged. Pair creation/destruction through the owned adapter.
 #include "extender/display/primitive_queue.hpp"

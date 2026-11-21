@@ -16,6 +16,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "extender/display/hdmi_geometry.hpp"
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+#include "extender/display/native_scanout/native_scanout.h"
+#endif
 #include "extender/display/hdmi_buffer_ownership.hpp"
 #include "extender/display/rgb888_panel_storage.hpp"
 #ifdef AGON_EXTENDER_HDMI_PPA_320
@@ -38,7 +41,12 @@ class HdmiOutput {
   // Join any callback already executing before releasing its owner's context.
   // A stale service cannot unbind the replacement service's callback.
   void unbindFrameCallback(void *expected_context);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  bool bindNativeRows(void *context, agon_native_render_t render, agon_native_wake_t wake);
+  void joinNativeRows();
+#else
   bool publish(StockRuntimeController &controller, std::atomic<bool> &stopping);
+#endif
 #ifdef AGON_EXTENDER_DIRECT_RGB888
   Rgb888PanelStorage panelStorage();
   void allowDirectSwaps() { direct_cancelled_.store(false,std::memory_order_release); }

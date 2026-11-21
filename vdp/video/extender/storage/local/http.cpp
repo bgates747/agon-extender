@@ -1,4 +1,4 @@
-#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
 #include "esp_heap_caps.h"
 #endif
 // IMPORTANT BOARD FORK (FWBUG-014): P4-PC Rev C transport D7/GPIO46 shares
@@ -359,7 +359,7 @@ bool startHttp() noexcept {
   httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();
   cfg.server_port = 8080; cfg.ctrl_port = 32769;
   cfg.max_uri_handlers = 10; cfg.stack_size = 16384; cfg.max_open_sockets = 2;
-#ifdef AGON_EXTENDER_ROLLING_SCANOUT
+#if defined(AGON_EXTENDER_ROLLING_SCANOUT) || defined(AGON_EXTENDER_NATIVE_SCANOUT)
   // HDMI02-F: socket/FAT-only handlers; no flash/NVS/cache-off operations.
   // IDF owns matching capability-aware deletion on server stop.
   cfg.task_caps = MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT;

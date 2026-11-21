@@ -10,6 +10,9 @@
 #include "freertos/semphr.h"
 #include "extender/display/stock_runtime_controller.hpp"
 #include "extender/display/presentation_snapshot_pool.hpp"
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+#include "extender/display/native_row_composer.hpp"
+#endif
 
 namespace agon::extender::display {
 class StockP4Service {
@@ -34,6 +37,15 @@ class StockP4Service {
   static void timerEntry(void *);
 #if defined(AGON_EXTENDER_HDMI)
   static bool hardwareFrameEntry(void *);
+#endif
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  static bool nativeRows(void *context, std::uint8_t *pixels, unsigned first_y,
+                         unsigned rows, unsigned width, unsigned height, unsigned slot, std::uint32_t frame);
+  static void nativeDrawWake(void *context);
+  NativeRowComposer native_rows_;
+  SemaphoreHandle_t swap_drain_done_{};
+  bool native_bound_{};
+  bool rendering_frame_{}; // read/written only by the joined refill task
 #endif
   static void barrierEntry(void *);
   static void drawEntry(void *);

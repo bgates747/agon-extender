@@ -48,6 +48,11 @@ class StockScanlineController : public DepthController {
   // Ascending rows, starting at zero, preserve the stock Copper cursor.
   // Signal storage must have at least viewport width bytes and 8-byte alignment.
   void prepareStockRowQuiescent(int scanLine, std::uint8_t *signalRow);
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  // A cropped frame may begin at a positive native y. The stock selector
+  // traverses every intervening palette-list boundary on its first lookup.
+  void rewindCroppedScanline() { this->m_currentSignalItem = this->m_signalList; }
+#endif
 
   // This is the output-device boundary: stock signal/lane bytes become the
   // existing EVF1 RGB222 bytes. Source and destination must not overlap.
