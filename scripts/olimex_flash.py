@@ -4,19 +4,20 @@ import argparse
 from pathlib import Path
 import struct
 import subprocess
+import sys
 import zlib
 
 from bench_process import record
 
 
 LAYOUTS = {
-    "mainboard": ("esp32", "default_reset", 0xE000, 0x10000, 0x140000),
-    "p4": ("esp32p4", "usb_reset", 0xF000, 0x20000, 0x700000),
+    "mainboard": (0xE000, 0x10000, 0x140000),
+    "p4": (0xF000, 0x20000, 0x700000),
 }
 
 
 def check_extent(component, specification, image):
-    _, _, _, offset, capacity = LAYOUTS[component]
+    _, offset, capacity = LAYOUTS[component]
     if (int(specification["offset"], 0) != offset
             or specification["partition_bytes"] != capacity
             or len(image) != specification["write_bytes"]
@@ -47,8 +48,10 @@ def check_app0(selector):
     raise ValueError("The OTA selector does not establish a confirmed app0")
 
 
-def flash_application(component, programmer, port, mac, specification, image, table,
+def flash_application(component, port, mac, specification, image, table,
                       out, begin, *, required_entry=None):
+    if component != "mainboard":
+        raise ValueError("The standalone USB writer supports only the classic ESP32 mainboard")
     check_extent(component, specification, image)
     path = Path(out)
     (path / "write.bin").write_bytes(image)
@@ -56,10 +59,8 @@ def flash_application(component, programmer, port, mac, specification, image, ta
     if required_entry is not None:
         (path / "expected-entry.bin").write_bytes(required_entry)
     begin()
-    # Keep the commissioned esptool 4.x environment. A single child owns the
-    # programmer serial handle across bootloader entry, reads and write.
-    interpreter = Path(programmer).with_name("python")
-    argv = [str(interpreter), "-u", str(Path(__file__).resolve()), component,
+    # Keep one serial handle across ROM entry, stub setup, write and readback.
+    argv = [sys.executable, "-u", str(Path(__file__).resolve()), component,
             str(port), mac, str(path)]
     with (path / "programmer.log").open("xb") as log:
         subprocess.run(argv, stdout=log, stderr=subprocess.STDOUT, check=True, timeout=330)
@@ -67,7 +68,7 @@ def flash_application(component, programmer, port, mac, specification, image, ta
 
 
 def session_operations(esp, write_flash, component, path):
-    _, _, ota, offset, capacity = LAYOUTS[component]
+    ota, offset, capacity = LAYOUTS[component]
     table = (path / "expected-partition-table.bin").read_bytes()
     actual_table = esp.read_flash(0x8000, len(table))
     (path / "partition-table.bin").write_bytes(actual_table)
@@ -97,53 +98,58 @@ def session_operations(esp, write_flash, component, path):
 def configure_flash_size(loader, detect_flash_size, flash_size_bytes):
     # Match esptool's --flash_size keep behavior. Live partition equality and
     # the commissioned device/slot bound were already checked.
-    size = detect_flash_size(loader, args=None)
+    size = detect_flash_size(loader)
     if size is not None:
         loader.flash_set_parameters(flash_size_bytes(size))
     else:
         print("Flash ID did not report a size; retaining the programmer's default parameters.")
 
 
-def main():
-    from esptool import __version__, get_default_connected_device
+def mainboard_programmer():
+    from esptool import __version__
     from esptool.cmds import detect_flash_size, write_flash
+    from esptool.targets.esp32 import ESP32ROM
     from esptool.util import flash_size_bytes
 
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("component", choices=LAYOUTS)
-    parser.add_argument("port")
-    parser.add_argument("mac")
-    parser.add_argument("evidence", type=Path)
-    args = parser.parse_args()
-    if not __version__.startswith("4.12."):
-        raise RuntimeError("Expected the commissioned esptool 4.12 interpreter")
-    chip, before, _, _, _ = LAYOUTS[args.component]
+    if __version__ != "5.1.0":
+        raise RuntimeError(f"Expected standalone esptool 5.1.0, got {__version__}")
 
     def program(loader, offset, image):
         configure_flash_size(loader, detect_flash_size, flash_size_bytes)
         loader.WRITE_FLASH_ATTEMPTS = 1
-        with image.open("rb") as source:
-            record(args.evidence / "write-dispatched.json",
-                   {"offset": offset, "bytes": image.stat().st_size})
-            write_flash(loader, argparse.Namespace(
-                addr_filename=[(offset, source)], chip=chip,
-                flash_mode="keep", flash_size="keep", flash_freq="keep",
-                compress=True, no_compress=False, no_stub=False, erase_all=False,
-                force=False, encrypt=False, encrypt_files=None,
-                ignore_flash_encryption_efuse_setting=False))
+        record(image.parent / "write-dispatched.json",
+               {"offset": offset, "bytes": image.stat().st_size})
+        write_flash(loader, [(offset, str(image))], flash_freq="keep", flash_mode="keep",
+                    flash_size="keep", compress=True)
 
-    esp = get_default_connected_device([args.port], args.port, 1, 115200,
-                                       chip=chip, before=before)
+    return ESP32ROM, program
+
+
+def program_mainboard(port, mac, evidence):
+    rom_type, program = mainboard_programmer()
+    print("esptool 5.1.0, ROM entry 115200, flash transfer 460800", flush=True)
+    rom = rom_type(port, 115200)
     try:
-        actual = ":".join(f"{value:02x}" for value in esp.read_mac())
-        print(f"Commissioned {chip} programmer sees MAC {actual}", flush=True)
-        if args.component == "mainboard" and actual != args.mac.lower():
+        rom.connect("default-reset", 1)
+        actual = ":".join(f"{value:02x}" for value in rom.read_mac())
+        if actual != mac.lower():
             raise RuntimeError("Classic ESP32 MAC differs from the commissioned board")
-        esp = esp.run_stub()
-        esp.change_baud(460800)
-        session_operations(esp, program, args.component, args.evidence)
+        stub = rom.run_stub()
+        stub.change_baud(460800)
+        session_operations(stub, program, "mainboard", evidence)
     finally:
-        esp._port.close()
+        if rom._port.is_open:
+            rom._port.close()
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("component", choices=("mainboard",))
+    parser.add_argument("port")
+    parser.add_argument("mac")
+    parser.add_argument("evidence", type=Path)
+    args = parser.parse_args()
+    program_mainboard(args.port, args.mac, args.evidence)
 
 
 if __name__ == "__main__":

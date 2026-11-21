@@ -285,7 +285,7 @@ VDPlet predates that receiver.
 
 | Phase | What the Pi operator does |
 | --- | --- |
-| Mainboard VDPlet | Open one classic ESP32 programmer session using esptool 4.12. Verify the commissioned device and app0 layout, write the job extent at `0x10000`, and independently compare it. Hold Agon reset, restart the installed P4 and wait for its boot-pad release. Release Agon reset and prove a working CLI. |
+| Mainboard VDPlet | Use the runner's standalone esptool 5.1.0 in one classic ESP32 programmer session. Enter ROM at 115,200 baud, verify the MAC, start the stub, and change to 460,800 baud. Verify the partition table and app0 selector, write the job extent at `0x10000` with flash mode, size and frequency set to `keep`, and independently compare the full readback. Hold Agon reset, restart the installed P4 and wait for its boot-pad release. Release Agon reset and prove a working CLI. |
 | Extender VDP | Hold the Agon reset through its commissioned USB RTS circuit. Use stock esptool 5.1.0 on the P4 USB at 460,800 baud. Read the partition table and OTA selector, write app0 at `0x20000` with all three flash settings set to `keep`, and independently compare the written extent. Restart the P4 once and wait for its boot-pad release. Release Agon reset, then prove a working CLI. |
 | EMOS | At the Legacy CLI, run the prepared `FLASH mos … -f` for the staged ROM. Wait for the updater to restart and admit input. Use `SAVE` to read the full 128 KiB ROM, retrieve it from the SD listener, compare it with the requested image and exit the listener. |
 

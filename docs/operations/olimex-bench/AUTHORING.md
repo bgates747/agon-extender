@@ -155,10 +155,10 @@ ordinary restore and handback phases directly after preparation.
 ## Check observer and flash dependencies
 
 Use the actual worker interpreter and supply the commissioned config to
-offline preflight. A mainboard app0 job uses the configured programmer's
-sibling Python with esptool 4.12.x, plus the runner's esptool 5.1.0 for
-paired startup. A P4 job uses the runner's 5.1.0 interpreter. A manifest-only
-preflight without the config checks the packet and lists phases. When an
+offline preflight. Mainboard app0 and P4 jobs both use standalone esptool
+5.1.0 from the runner's interpreter for programming and paired startup.
+A manifest-only preflight without the config checks the packet and lists
+phases. When an
 existing adapter uses these operations, call `runtime_preflight(kit, config)`
 from its own worker interpreter before it touches a device.
 

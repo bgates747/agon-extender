@@ -15,7 +15,10 @@ import zlib
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from olimex_bench import Bench, fixture_inputs, preflight
 from olimex_cli import CliError, Observer, command_result, find_witness, rename_result
-from olimex_flash import check_app0, check_extent, configure_flash_size, session_operations
+from olimex_flash import (
+    check_app0, check_extent, configure_flash_size, flash_application, program_mainboard,
+    session_operations,
+)
 import olimex_p4_app
 
 
@@ -202,6 +205,49 @@ class TestOta(unittest.TestCase):
         configure_flash_size(loader, detected, converter)
         converter.assert_called_once_with("16MB")
         loader.flash_set_parameters.assert_called_once_with(16 * 1024 * 1024)
+
+    def test_mainboard_worker_uses_runner_interpreter(self):
+        with tempfile.TemporaryDirectory() as tmp, patch("olimex_flash.subprocess.run") as run:
+            folder = Path(tmp)
+            image = b"A" * 4096
+            spec = {"offset": "0x10000", "partition_bytes": 0x140000, "write_bytes": len(image)}
+            begin = MagicMock()
+            result = flash_application(
+                "mainboard", "/dev/test", "01:02:03:04:05:06",
+                spec, image, b"table", folder, begin)
+            begin.assert_called_once_with()
+            self.assertEqual(run.call_args.args[0], [
+                sys.executable, "-u", str(Path(__file__).resolve().parents[1] / "scripts/olimex_flash.py"),
+                "mainboard", "/dev/test", "01:02:03:04:05:06", str(folder),
+            ])
+            self.assertEqual(result, folder / "readback.bin")
+
+    def test_standalone_mainboard_programmer_matches_qualified_sequence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            table = b"T" * 3072
+            image = b"A" * 4096
+            (folder / "expected-partition-table.bin").write_bytes(table)
+            (folder / "write.bin").write_bytes(image)
+            with patch("esptool.targets.esp32.ESP32ROM") as rom_type, \
+                    patch("esptool.cmds.detect_flash_size", return_value=None), \
+                    patch("esptool.cmds.write_flash") as write:
+                rom = rom_type.return_value
+                rom.read_mac.return_value = (1, 2, 3, 4, 5, 6)
+                stub = rom.run_stub.return_value
+                stub.read_flash.side_effect = [table, self.selector(1, 2), image]
+                program_mainboard("/dev/test", "01:02:03:04:05:06", folder)
+            rom_type.assert_called_once_with("/dev/test", 115200)
+            rom.connect.assert_called_once_with("default-reset", 1)
+            stub.change_baud.assert_called_once_with(460800)
+            self.assertEqual(stub.WRITE_FLASH_ATTEMPTS, 1)
+            write.assert_called_once_with(stub, [(0x10000, str(folder / "write.bin"))],
+                                          flash_freq="keep", flash_mode="keep", flash_size="keep",
+                                          compress=True)
+            self.assertEqual([c.args for c in stub.read_flash.call_args_list],
+                             [(0x8000, 3072), (0xe000, 8192), (0x10000, len(image))])
+            self.assertEqual((folder / "readback.bin").read_bytes(), image)
+            rom._port.close.assert_called_once_with()
 
     def selector(self, sequence, state):
         crc = zlib.crc32(struct.pack("<I", sequence), 0xffffffff)

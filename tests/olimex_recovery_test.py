@@ -188,10 +188,12 @@ class Recovery(unittest.TestCase):
             restore.assert_not_called()
             handback.assert_called_once_with({})
 
-    def test_missing_programmer_interpreter_fails_on_host(self):
+    def test_runtime_preflight_uses_runner_environment(self):
         config = dict(self.config, programmer=str(self.root / "missing" / "esptool.py"))
-        with self.assertRaises(FileNotFoundError):
-            runner.runtime_preflight(self.kit, config)
+        runner.runtime_preflight(self.kit, config)
+        with patch("esptool.__version__", "4.12.0"):
+            with self.assertRaisesRegex(RuntimeError, "5.1.0"):
+                runner.runtime_preflight(self.kit, config)
 
     def test_changed_config_binding(self):
         self.binding = {"sha256": "changed"}

@@ -20,7 +20,7 @@ import bench_process
 from olimex_bench import (
     Bench, Observer, PARALLEL_LISTENER, RemoteError, open_passive_serial, pinned, status,
 )
-from olimex_flash import check_app0, check_extent, flash_application
+from olimex_flash import check_app0, check_extent, flash_application, mainboard_programmer
 from olimex_p4_app import reboot_pair
 
 FLASH_PHASES = ("write-candidate", "select-candidate", "boot-candidate",
@@ -276,21 +276,9 @@ def bootstrap(bench):
         inventory["ready_claim"] = False
         bench.update_inventory(inventory)
 
-    if "programmer_51" in job:
-        programmer = job["programmer_51"]
-        pinned(programmer)
-        (bench.out / "write.bin").write_bytes(image)
-        (bench.out / "expected-partition-table.bin").write_bytes(table)
-        begin()
-        with (bench.out / "programmer.log").open("xb") as log:
-            subprocess.run([sys.executable, "-u", programmer["path"], str(bench.c["ports"][0]),
-                            bench.config["mainboard_mac"], str(bench.out)], stdout=log,
-                           stderr=subprocess.STDOUT, check=True, timeout=330)
-        readback = bench.out / "readback.bin"
-    else:
-        readback = flash_application(
-            "mainboard", bench.config["programmer"], bench.c["ports"][0],
-            bench.config["mainboard_mac"], spec, image, table, bench.out, begin)
+    readback = flash_application(
+        "mainboard", bench.c["ports"][0], bench.config["mainboard_mac"],
+        spec, image, table, bench.out, begin)
     if readback.read_bytes() != image:
         raise RuntimeError("Receiver A app0 readback differs")
     bench_process.record(bench.out / "write-verified.json", job["bootstrap_app0_extent"])
@@ -451,15 +439,7 @@ def main():
         raise RuntimeError("Runner checkout differs from the job")
     subprocess.run(["git", "-C", str(CHECKOUT), "diff", "--exit-code", "HEAD", "--", "scripts"], check=True)
     if args.phase == "preflight":
-        if "programmer_51" in job:
-            pinned(job["programmer_51"])
-            subprocess.run([sys.executable, "-B", job["programmer_51"]["path"], "--offline"],
-                           check=True)
-        else:
-            programmer_python = Path(config["programmer"]).with_name("python")
-            subprocess.run([str(programmer_python), "-c",
-                            "import esptool; assert esptool.__version__.startswith('4.12.')"],
-                           check=True)
+        mainboard_programmer()
         bootstrap_entry(job, bench_process.read(config["inventory"]))
         print("Commissioned packet, programmer, and joined predecessor match.")
         return 0

@@ -340,3 +340,9 @@ same wiring and baud rates as the ten-pass series. The complete 1,138,688-byte
 readback matched the selected v0.1.3-alpha extent and MOS returned to a
 working prompt. The worker joined with exit 0. Evidence is in
 `agents/bench-023/BENCH-023-2026-11-21T01-21-08Z-restore/`. No check-in ran.
+
+Smith selected this standalone esptool 5.1.0 procedure for the standard
+bench runner. Mainboard install and restore now use the runner's interpreter,
+one classic ESP32 session at the qualified baud rates, and the same app0
+checks, write, readback and paired restart. Existing bench configs can retain
+their former programmer field. [Current bench guide](../operations/olimex-bench/README.md)

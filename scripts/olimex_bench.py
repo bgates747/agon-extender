@@ -17,7 +17,7 @@ from urllib.request import urlopen
 import bench_process
 import olimex_p4_app
 from olimex_cli import Observer, completion_markers
-from olimex_flash import check_extent, flash_application
+from olimex_flash import check_extent, flash_application, mainboard_programmer
 from passive_serial import open_passive_serial
 from reset_agon import status, wait_boot
 from reset_agon_usb import identity
@@ -483,7 +483,7 @@ class Bench:
                                               begin, required_entry=required_entry)
             else:
                 result = flash_application(
-                    component, self.config["programmer"], self.c["ports"][0],
+                    component, self.c["ports"][0],
                     self.config["mainboard_mac"], spec, image, table, self.out, begin,
                     required_entry=required_entry)
                 if result.read_bytes() != image:
@@ -723,13 +723,7 @@ def runtime_preflight(kit, config):
         if __version__ != "5.1.0" or not callable(HardReset):
             raise RuntimeError(f"{sys.executable} needs stock esptool 5.1.0 for the paired restart")
     if "mainboard" in kit["firmware"]:
-        interpreter = Path(config["programmer"]).with_name("python")
-        subprocess.run([str(interpreter), "-c",
-                        "from esptool import __version__, get_default_connected_device\n"
-                        "from esptool.cmds import detect_flash_size, write_flash\n"
-                        "from esptool.util import flash_size_bytes\n"
-                        "raise SystemExit(0 if __version__.startswith('4.12.') else 'Expected esptool 4.12')"],
-                       check=True, timeout=15)
+        mainboard_programmer()
 
 
 def recovery_history(args, kit, failed, owner, binding):
