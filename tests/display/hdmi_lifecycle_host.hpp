@@ -97,6 +97,11 @@ inline void vTaskDeleteWithCaps(HostTask *t) {
   {std::lock_guard lock(t->mutex);t->stop=true;t->cv.notify_one();}
   t->thread.join();delete t;
 }
+inline int xTaskCreatePinnedToCore(TaskFunction_t fn, const char *name, uint32_t bytes,
+    void *ctx, unsigned priority, HostTask **out, int core) {
+  return xTaskCreatePinnedToCoreWithCaps(fn, name, bytes, ctx, priority, out, core, 0);
+}
+inline void vTaskDelete(HostTask *task) { vTaskDeleteWithCaps(task); }
 inline size_t heap_caps_get_free_size(int) {return 12345;}
 inline void heap_caps_free(void *p) {std::free(p);}
 inline void *heap_caps_aligned_calloc(size_t,size_t n,size_t size,int) {return std::calloc(n,size);}
@@ -190,11 +195,14 @@ inline int esp_lcd_panel_draw_bitmap(HostPanel *p,int,int,int,int,const void *pi
 // Renderer substitution only supplies the surfaces called by the real sink;
 // the service/controller integration is covered by hdmi_frame_scheduling_test.
 namespace fabgl {
+enum class NativePixelFormat { SBGR2222, PALETTE16, PALETTE4, PALETTE2 };
 // Match the maintained controller hierarchy at the scanout bridge boundary.
 struct P4Color64Controller {};
 struct P4Rgb888Controller : P4Color64Controller {
   int w=848,h=480;bool doubled{};
   int getViewPortWidth(){return w;}int getViewPortHeight(){return h;}
+  NativePixelFormat format=NativePixelFormat::SBGR2222;
+  NativePixelFormat nativePixelFormat(){return format;}
   bool isDoubleBuffered(){return doubled;}
 };
 }
@@ -210,8 +218,9 @@ class StockRuntimeController {
   fabgl::P4Rgb888Controller &display(){return controller;}
   fabgl::P4Rgb888Controller &paletted(){return controller;}
   bool panelStorage(){return direct;}bool rgb888Storage(){return false;}
+  uint8_t signal_color{};
   unsigned preparePanelFrame(int &){return 0;}
-  void prepareRow(int y,uint8_t *p){std::memset(p,0,controller.w);if(on_row)on_row(y); }
+  void prepareRow(int y,uint8_t *p){std::memset(p,signal_color,controller.w);if(on_row)on_row(y); }
   void prepareRgb888Row(int,uint8_t *,uint8_t *){}
 };
 }

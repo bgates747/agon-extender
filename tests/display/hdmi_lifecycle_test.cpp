@@ -32,6 +32,7 @@ static void close(HdmiOutput &output) {
 }
 static bool callback(void *) {return false;}
 
+#ifndef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
 static void cancelled_swap(bool old) {
   HdmiOutput output;assert(output.start());int owner{};
   assert(output.bindFrameCallback(callback,&owner));
@@ -68,6 +69,8 @@ static void failed_panel_borrow(bool old) {
   }
   close(output);
 }
+
+#endif
 
 #ifdef AGON_EXTENDER_HDMI_PPA_320
 // Test actual sink ownership/generation rules; SDK filtering is exercised on
@@ -118,6 +121,107 @@ static void scaled_publication() {
 }
 #endif
 
+#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+static bool stopped = true;
+extern "C" esp_err_t agon_dpi_stop(esp_lcd_panel_handle_t) {
+  assert(xPortGetCoreID() == 1);
+  return stopped ? ESP_OK : ESP_ERR_INVALID_STATE;
+}
+static void mode20_publication() {
+  HdmiOutput output;
+  assert(output.start() && output.selectMode(512, 384));
+  StockRuntimeController renderer;
+  renderer.controller.w = 512;
+  renderer.controller.h = 384;
+  std::atomic<bool> stop{};
+  auto *panel = output.panel_;
+  assert(panel->count == 2 && !renderer.controller.doubled);
+
+  for (unsigned target : {1u, 0u}) {
+    const unsigned old_front = 1 - target;
+    const auto scanned_pixels = panel->pixels[old_front];
+    const bool early_irq = target == 0;
+    renderer.signal_color = early_irq ? 0x03 : 0x30;
+    on_row = [&](int row) {
+      if (row == 192) {
+        host_frame(panel);  // DMA repeats the old front during composition.
+        assert(hdmi_host::front == old_front && panel->pixels[old_front] == scanned_pixels);
+        ++visible_generation;  // A single logical surface has no swap fence.
+      }
+    };
+    hdmi_host::after_draw = [&] {
+      if (early_irq) host_frame(panel);  // driver selected, metadata still unpublished
+    };
+    auto run = std::async(std::launch::async, [&] { return output.publish(renderer, stop); });
+    await([&] {
+      std::lock_guard guard(output.callback_mux_);
+      return output.ownership_.pending();
+    });
+    assert(panel->selected == target && hdmi_host::front == (early_irq ? target : old_front));
+    assert(panel->pixels[old_front] == scanned_pixels);
+    for (int y = 0; y < 384; ++y) {
+      for (int x = 0; x < 684; ++x) {
+        const auto *pixel = panel->pixels[target].data() + (y * 684 + x) * 3;
+        const bool inside = x >= 86 && x < 598;
+        assert(pixel[0] == (inside && !early_irq ? 255 : 0));
+        assert(pixel[1] == 0 && pixel[2] == (inside && early_irq ? 255 : 0));
+      }
+    }
+    assert(run.wait_for(10ms) == std::future_status::timeout);
+    host_frame(panel);
+    assert(completed(run) && hdmi_host::front == target && !output.ownership_.pending());
+  }
+  hdmi_host::after_draw = {};
+  on_row = {};
+  for (auto format : {fabgl::NativePixelFormat::PALETTE16, fabgl::NativePixelFormat::PALETTE4,
+                      fabgl::NativePixelFormat::PALETTE2}) {
+    renderer.controller.format = format;  // Modes 21, 22 and 23 share the carrier.
+    assert(output.publish(renderer, stop) && panel->selected == hdmi_host::front);
+  }
+  renderer.controller.format = fabgl::NativePixelFormat::SBGR2222;
+  hdmi_host::inject("draw");
+  assert(!output.publish(renderer, stop) && !output.ownership_.pending());
+
+  assert(output.selectMode(640, 480));
+  renderer.controller.w = 640;
+  renderer.controller.h = 480;
+  assert(output.publish(renderer, stop) && output.panel_->selected == hdmi_host::front);
+  // Preserve the played firmware's single-panel fallback on allocation failure.
+  hdmi_host::inject("panel", 1, ESP_ERR_NO_MEM);
+  assert(output.selectMode(512, 384) && output.panel_->count == 1);
+  renderer.controller.w = 512;
+  renderer.controller.h = 384;
+  assert(output.publish(renderer, stop) && output.panel_->selected == 0);
+  close(output);
+}
+int main() {
+  mode20_publication();
+  scaled_publication();
+  HdmiOutput output;
+  assert(output.start());
+  auto *panel = output.panel_;
+  auto *front = output.buffers_[0];
+  auto *back = output.buffers_[1];
+  const auto resources = hdmi_host::live.size();
+  output.ownership_.submitted(1);
+  stopped = false;
+  assert(!output.selectMode(512, 384));
+  assert(output.panel_ == panel && output.buffers_[0] == front && output.buffers_[1] == back);
+  assert(!output.ready() && output.ownership_.pending() && hdmi_host::live.size() == resources);
+  stopped = true;
+  for (int i = 0; i < 10; ++i) {
+    assert(output.selectMode(512, 384) && output.width() == 684);
+    assert(output.selectMode(320, 240) && output.width() == 848);
+    assert(!output.needsMode(640, 240));
+  }
+  hdmi_host::inject("init");
+  assert(!output.selectMode(512, 384));
+  assert(hdmi_host::live.empty());
+  assert(output.selectMode(640, 480));
+  close(output);
+  std::cout << "PASS retained DMA-owned buffers on unconfirmed stop, repeated carriers and scaled publication\n";
+}
+#else
 int main(int argc,char **) {
 #ifdef AGON_EXTENDER_HDMI_PPA_320
   scaled_publication();
@@ -197,3 +301,5 @@ int main(int argc,char **) {
   }
   std::cout<<"PASS: real HDMI sink cancellation, fault recovery, startup failure and repeated carrier lifecycle\n";
 }
+
+#endif
