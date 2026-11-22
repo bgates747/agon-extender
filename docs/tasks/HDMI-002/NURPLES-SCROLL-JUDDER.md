@@ -934,3 +934,20 @@ The approved plan was frozen in `46391edc`. The [fixture source](https://github.
 The Pi compared all 72,000 computed row pairs with an independent pixel oracle; all 366,336,000 payload bytes matched and the padding guards remained intact. A separate host test ran the actual DMA callbacks against simulated descriptor and channel registers. It verified two primed pairs, 71,998 interrupt publications, 299 rearms, final pixels retained in the last two slots, and a stopped channel before restoring the reference. Eight injected faults covered stale writeback, coalesced events, withheld top VALID, invalid descriptor, premature frame completion, short transfer, underrun and attempted refill in task context. The linked target contains the DMA interrupt dispatcher, pair completion, pixel stores, cache publication and ownership fence. These offline results leave the physical two-row handshake and interrupt residency open.
 
 **Olimex reference card staged, November 22.** The Pi verified entry at the Legacy MOS prompt and checked the preserved startup files. It compared the installed r05 app0 extent before writing, checked the partition table and selector, and compared every byte of the new independent flash readback at `0x20000`. The 1,794,048-byte extent SHA-256 was `8aacbaa29db1c3b7671b9acb5e2b28e770c0980fac4cc53d22f1d0452c0ef6bc`. The P4 reported all eleven shared pads isolated and booted to its standalone USB command gate. The operator issued only `preview` and `status`. The bridge reported HDMI hot-plug detect high, the reference DMA count advanced from 60 to 61, and the P4 returned `state=reference ready=1`. The completed supervisor joined all children. Smith was alerted with the reference held and the Olimex reservation active. No live trial ran. Optical confirmation remains with Smith. EVDP networking and replacement keyboard service are absent while the standalone application is installed. The local `pair-irq-r01/bench/install-preview` record retains the readback, serial evidence and ready receipt.
+
+### Olimex two-row interrupt trial, November 22
+
+Smith saw the static reference card fill the screen with square pixels and no apparent scanout errors. Immediately before the trial, the standalone P4 reported 29,446 reference frames, HDMI hot-plug detect high and the reference ready. The Pi sent `live` once. The P4 stopped on frame 0, pair 0 (rows 0–1).
+
+| Check | Expected | Observed |
+| --- | ---: | ---: |
+| Completed transfer count for pair 0 | 636 × 64-bit words | Descriptor field read 639 |
+| Validated row pairs | 72,000 | 0 |
+| Completed live frames / frame rearms | 300 / 299 | 0 / 0 |
+| Primed pairs / interrupt refills | 2 / 71,998 | 2 / 0 |
+| Worst refill, callback entry to VALID | ≤64.4 µs | No refill reached publication |
+| Primed pixels, frame 0 rows 0–3 | 10,176 bytes | All matched the independent oracle after DMA stopped |
+
+The DMA descriptor had BLOCK_DONE set, frame-done clear and VALID clear. The first failing check was the completed word count. Frozen descriptor status-high, status-low and control-high were `0x40000000`, `0x0000027f`, and `0x04048240`. The field disagreement alone does not establish the physical number of words transmitted. The interrupt handler that detected the fault and stopped the channel used 8,255 cycles (22.93 µs at 360 MHz). It exited before the first interrupt refill, so the 64.4 µs refill comparison remains open. The bridge recorded zero underruns up to the stop.
+
+The P4 verified that live DMA had stopped and ended with `ESP_FAIL reference_ready=0`. It left the reference unrestored. The Pi preserved the raw 21,396-byte USB trace, SHA-256 `01f6f92a9dcdc03958e59c3bc15b21d52acf1cd425ef562d623e457bef2a66d1`, decoded counters, both slot payloads and their independent pixel check in the local `pair-irq-r01/bench/live-once` evidence directory. The supervisor joined the worker and delivered the failure alert. The Olimex reservation remains active.
