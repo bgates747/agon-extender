@@ -1,6 +1,6 @@
 # HDMI02-SIZE01e — Stock-compatible P4 presentation timing, with Nurples as the scrolling reproducer
 
-**Current work.** The [mode 20 row-pair packet](MODE20-ROW-PAIR-PACKET.md) tests the same ownership transfer with one intervening pair. Smith requested a compiled fixture for review before flashing. The [mode 0 trace and verifier replay](#olimex-mode-0-one-frame-result) establish the earlier single-row result. The Olimex remains reserved with the mode 0 reference displayed.
+**Current work.** The [compiled mode 20 row-pair fixture and packet](MODE20-ROW-PAIR-PACKET.md) are ready for Smith’s review before flashing. The P4 target build, 22 host driver cases, and packet preflight passed. The packet tests a single refill with one intervening pair. Physical mode 20 timing is pending. The [mode 0 trace and verifier replay](#olimex-mode-0-one-frame-result) establish the earlier single-row result. The Olimex remains reserved with the mode 0 reference displayed.
 
 **Earlier candidate.** Smith selected exact pixel doubling for 320×240. The [native row scanout plan](NATIVE-ROW-SCANOUT-PLAN.md) records the decision, the redundant work to eliminate and the refill tests under load. The [offline verification](NATIVE-ROW-SCANOUT-RESULTS.md) and [matched load-test packet](NATIVE-ROW-LOAD-PACKET.md) describe that candidate. Nurples supplies the mode-20 scroll reproduction. The [comparative source review](STOCK-SCROLL-TIMING-REVIEW.md) and its spare-buffer control remain available for diagnosis. The earlier blackout comparison is deferred.
 
