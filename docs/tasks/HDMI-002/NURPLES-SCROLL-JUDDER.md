@@ -1,6 +1,6 @@
 # HDMI02-SIZE01e — Stock-compatible P4 presentation timing, with Nurples as the scrolling reproducer
 
-**Current work.** The [compiled mode 20 row-pair fixture and packet](MODE20-ROW-PAIR-PACKET.md) are ready for Smith’s review before flashing. The P4 target build, 22 host driver cases, and packet preflight passed. The packet tests a single refill with one intervening pair. Physical mode 20 timing is pending. The [mode 0 trace and verifier replay](#olimex-mode-0-one-frame-result) establish the earlier single-row result. The Olimex remains reserved with the mode 0 reference displayed.
+**Current result.** The P4 interrupt refilled one retired mode 20 row-pair buffer in **38.697 µs** with one intervening pair. DMA consumed the replacement at the same address. Smith confirmed a good reference image. The [single-frame result](#olimex-mode-20-one-frame-result) records the evidence and the limits of this test. The [frozen packet](MODE20-ROW-PAIR-PACKET.md) defines the comparison.
 
 **Earlier candidate.** Smith selected exact pixel doubling for 320×240. The [native row scanout plan](NATIVE-ROW-SCANOUT-PLAN.md) records the decision, the redundant work to eliminate and the refill tests under load. The [offline verification](NATIVE-ROW-SCANOUT-RESULTS.md) and [matched load-test packet](NATIVE-ROW-LOAD-PACKET.md) describe that candidate. Nurples supplies the mode-20 scroll reproduction. The [comparative source review](STOCK-SCROLL-TIMING-REVIEW.md) and its spare-buffer control remain available for diagnosis. The earlier blackout comparison is deferred.
 
@@ -1054,6 +1054,21 @@ The frozen host verifier returned FAIL at its full control-word comparison for d
 Task-local evidence under `native-rows/mode0-row-r01/bench` includes the independent flash readback, reference receipts, one dispatch, both supervisor results and the original 11,897-byte USB trace in `live-once/trace.bin`, SHA-256 `cfd40d24e21f5d7f673d1b99372faf28000f5950db259c35ab3fa98569f54b1b`. The original verifier result remains in `live-once/summary.json`. The independent field and pixel comparisons are in `live-once/trace-review.json`.
 
 **Offline verifier replay, November 22.** Host checker commit `cd1b7fd4` accepts the observed paired AXI burst-length writeback of 16→15 and unchanged configured fields. Each descriptor must still release VALID and preserve its other control bits, including both enables. The host model with omitted burst fields must leave those fields zero. The original checker reproduced its recorded FAIL. The revised checker returned PASS on the identical physical bytes at `0x4ff3ec80`, 8,816 cycles at 360 MHz. All 47 saved cases retained their expected classifications: 4 PASS, 38 FAIL, and 5 INCOMPLETE. Five new regression tests include 96 single-bit corruptions across the three descriptors and one-sided burst changes. Both verdicts and individual replay results are saved in task-local `native-rows/mode20-pair-r01/mode0-checker-replay.json`.
+
+### Olimex mode 20 one-frame result
+
+November 22. The Pi installed the reviewed standalone fixture and independently compared all 1,794,048 app0 bytes with the pinned image. The P4 displayed the existing mode 20 reference at the packet geometry. Smith reported “good image on the screen for mode 20.” The Pi dispatched one live command.
+
+| Observation | Physical result |
+|---|---|
+| Retirement and reuse | DMA retired D0 (rows 0–1 from A at `0x4ff48780`) before the interrupt’s first store. The interrupt wrote rows 4–5 at that same address, cleaned the cache and published D2. The descriptor for B (rows 2–3 at `0x4ff49880`) was still valid immediately after publication. D2 subsequently retired from A and D3 closed the frame. |
+| Pixel evidence | The saved 4,104-byte replacement in A matches the expected artwork. Rows 2–3 and 4–5 have identical artwork, so the evidence identifying A is the descriptor address and fresh retirement. |
+| IRQ entry through publication | 13,931 cycles at 360 MHz, or 38.697 µs. The nominal two-row interval was 64.400 µs, leaving 25.703 µs (39.9%). The measurement starts at interrupt entry. |
+| Outcome and scope | One refill, one completed frame, zero reported underruns or faults. The P4 restored the reference with hot-plug detect high. Sustained row production, application drawing contention and Nurples remain unmeasured. |
+
+The task-local evidence is under `native-rows/mode20-pair-r01/bench`. It includes the install readback, the USB trace (`live-once/trace.bin`, 26,907 bytes, SHA-256 `1dfc06af3d87ce471441df793d0521bfe0dfd1a57db2d0311b07ad2ff750229f`), the checker result and the supervisor’s terminal receipt.
+
+The Pi restored the released v0.3.0 P4 app at `0x20000`. All 1,794,048 bytes of the job’s restore extent matched on independent readback (SHA-256 `071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1`). The Pi verified the startup and SD listener file hashes, observed the root MOS prompt and Legacy VDU route 0, and confirmed keyboard readiness, idle transfers, the closed listener and free serial ports. Both restore and handback supervisors joined their workers successfully. The scheduler closed this reservation and granted the next operator the slot. Receipts are under `bench/production-return`.
 
 ### Roadmap — prior art for ESP32-P4 HDMI output
 
