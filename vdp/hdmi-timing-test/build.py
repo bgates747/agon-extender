@@ -139,7 +139,7 @@ def main() -> None:
     stamp = started.strftime("%Y-%m-%d-%H-%M-%SZ")
     identity = json.loads((SOURCE / "identity.json").read_text())
     if args.pair_probe:
-        identity = {"artifact_id": "hdmi-pair-irq", "revision": "r01"}
+        identity = {"artifact_id": "hdmi-pair-irq", "revision": "r02"}
     build_id = identity["artifact_id"] + "-" + identity["revision"] + "-b" + stamp
     project_version = identity["revision"] + "-b" + stamp
     assert len(project_version.encode()) < 32  # ESP-IDF application version field

@@ -29,5 +29,5 @@ with tempfile.TemporaryDirectory() as tmp:
                     "-Werror", "-I", str(out), "-I", str(pair_dir),
                     str(here / "pair_handoff_host.c"), "-o", str(executable)], check=True)
     for scenario in ("normal", "stale", "coalesced", "withheld", "invalid",
-                     "early-eof", "short", "underrun", "task"):
+                     "early-eof", "short", "long", "underrun", "task"):
         subprocess.run([str(executable), scenario], check=True)

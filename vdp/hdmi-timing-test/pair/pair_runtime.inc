@@ -14,6 +14,8 @@
 
 enum { PAIRS_PER_FRAME = 240, LIVE_FRAMES = 300, TOTAL_PAIRS = 72000,
        WORDS_PER_PAIR = 636, SLOT_BYTES = 5120 };
+// IDF 5.5.5 copies this value to ARLEN/AWLEN. AXI encodes beats minus one.
+enum { FOUR_BEAT_AXI_LEN = 4 - 1 };
 #define PAIR_VALID (UINT32_C(1) << 31)
 #define PAIR_BLOCK_DONE (UINT32_C(1) << 30)
 #define PAIR_FRAME_DONE (UINT32_C(1) << 31)
@@ -58,6 +60,10 @@ static struct {
     pair_wrap_sample seam[4]; // frame 0 pairs 238/239; frame 1 pairs 0/1
     uint32_t old_flow, old_req, old_credit, old_block, old_frame, old_spacing;
     uint32_t flow, req, credit, block, frame, spacing, reload, dw_cfg, dw_cfg0;
+    struct {
+        uint32_t block_ts, status_lo, status_hi, ctrl_hi;
+        bool captured;
+    } reference_count;
 } pair;
 static portMUX_TYPE pair_control = portMUX_INITIALIZER_UNLOCKED;
 
@@ -281,6 +287,20 @@ static bool pair_on_frame(esp_lcd_dpi_panel_t *panel)
     return true;
 }
 
+// The reference EOF suppresses rearm. The caller has observed the channel
+// stopped, so this uncached descriptor still describes the same full frame.
+static void pair_capture_reference_count(esp_lcd_dpi_panel_t *panel)
+{
+    volatile dw_gdma_link_list_item_t *item =
+        dw_gdma_link_list_get_item(panel->link_lists[panel->cur_fb_index], 0);
+    asm volatile("fence iorw,iorw" ::: "memory");
+    pair.reference_count.block_ts = item->block_ts_lo.val;
+    pair.reference_count.status_lo = item->status_lo.val;
+    pair.reference_count.status_hi = item->status_hi.val;
+    pair.reference_count.ctrl_hi = item->ctrl_hi.val;
+    pair.reference_count.captured = true;
+}
+
 static bool pair_wait_stop(void)
 {
     int64_t deadline = esp_timer_get_time() + 100000;
@@ -300,9 +320,9 @@ static esp_err_t pair_allocate(void)
     pair.items = dw_gdma_link_list_get_item(pair.list, 0);
     dw_gdma_block_transfer_config_t transfer = {
         .src = {.burst_mode = DW_GDMA_BURST_MODE_INCREMENT, .burst_items = DW_GDMA_BURST_ITEMS_4,
-                .burst_len = 4, .width = DW_GDMA_TRANS_WIDTH_64},
+                .burst_len = FOUR_BEAT_AXI_LEN, .width = DW_GDMA_TRANS_WIDTH_64},
         .dst = {.addr = MIPI_DSI_BRG_MEM_BASE, .burst_mode = DW_GDMA_BURST_MODE_FIXED,
-                .burst_items = DW_GDMA_BURST_ITEMS_4, .burst_len = 4, .width = DW_GDMA_TRANS_WIDTH_64},
+                .burst_items = DW_GDMA_BURST_ITEMS_4, .burst_len = FOUR_BEAT_AXI_LEN, .width = DW_GDMA_TRANS_WIDTH_64},
         .size = WORDS_PER_PAIR,
     };
     for (unsigned p = 0; p < PAIRS_PER_FRAME; ++p) {
@@ -415,6 +435,7 @@ esp_err_t pair_driver_run(esp_lcd_panel_handle_t handle)
         pair.quiet_verified = pair_wait_stop();
         return ESP_ERR_TIMEOUT;
     }
+    pair_capture_reference_count(panel);
     if (!pair_configure_live(panel) || !pair_publish(0, true) || !pair_publish(1, true)) {
         pair_fail(SETUP);
         pair.quiet_verified = pair_wait_stop();
@@ -462,6 +483,11 @@ esp_err_t pair_driver_run(esp_lcd_panel_handle_t handle)
 
 void pair_driver_report(void)
 {
+    printf("PAIR_REF_COUNT {\"captured\":%s,\"block_ts\":%u,\"status_lo\":%u,"
+           "\"status_hi\":%u,\"ctrl_hi\":%u}\n",
+           pair.reference_count.captured ? "true" : "false", (unsigned)pair.reference_count.block_ts,
+           (unsigned)pair.reference_count.status_lo, (unsigned)pair.reference_count.status_hi,
+           (unsigned)pair.reference_count.ctrl_hi);
     printf("PAIR_RESULT {\"fault\":\"%s\",\"at\":%u,\"phase_at_fault\":%u,"
            "\"retired\":%u,\"frames\":%u,\"wraps\":%u,\"primed\":%u,\"irq_fills\":%u,"
            "\"in_irq\":%u,\"timing_misses\":%u,\"cpu_mhz\":%u,\"underruns\":%u,"

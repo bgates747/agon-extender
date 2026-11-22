@@ -10,7 +10,7 @@
 #include "pair_pattern.h"
 
 typedef union { uint32_t val; struct { uint32_t cmpltd_blk_tfr_size:22; }; } reg_t;
-typedef struct { reg_t ctrl_hi, status_hi, status_lo; } dw_gdma_link_list_item_t;
+typedef struct { reg_t ctrl_hi, status_hi, status_lo, block_ts_lo; } dw_gdma_link_list_item_t;
 typedef dw_gdma_link_list_item_t *dw_gdma_link_list_handle_t;
 typedef void *dw_gdma_channel_handle_t;
 typedef void dw_gdma_trans_done_event_data_t;
@@ -89,9 +89,20 @@ int main(int argc, char **argv)
     pair.slot[0] = storage[0]; pair.slot[1] = storage[1];
     pair.list = items; pair.items = items;
     // Reference EOF must suppress its normal rearm before the flow switch.
+    const uint32_t reference_size = PAIRS_PER_FRAME * WORDS_PER_PAIR;
+    // Preserve either observed encoding without correcting the hardware sample.
+    const uint32_t reference_status = reference_size - (!strcmp(scenario, "long") ? 1u : 0u);
+    const uint32_t reference_flags = PAIR_FRAME_DONE | PAIR_BLOCK_DONE;
+    reference.block_ts_lo.val = reference_size - 1;
+    reference.status_lo.val = reference_status;
+    reference.status_hi.val = reference_flags;
+    reference.ctrl_hi.val = 1u << 30; // LAST set, VALID clear
     pair.phase = DRAIN_REF;
     assert(pair_on_frame(&panel));
     assert(pair.phase == QUIET && pair_channel_stopped() && !output_enabled);
+    assert(!pair.reference_count.captured);
+    pair_capture_reference_count(&panel);
+    memset(&reference, 0, sizeof(reference));
     assert(pair_publish(0,true) && pair_publish(1,true));
     pair.phase = LIVE;
     fake_gdma.chen0.val = 1;
@@ -118,6 +129,7 @@ int main(int argc, char **argv)
             items[p].ctrl_hi.val |= PAIR_VALID;
         }
         if (!strcmp(scenario,"short") && !n) --items[p].status_lo.val;
+        if (!strcmp(scenario,"long") && !n) items[p].status_lo.val = 639;
         if (!strcmp(scenario,"coalesced") && !n) items[p+1].status_hi.val = PAIR_BLOCK_DONE;
         if (!strcmp(scenario,"task")) interrupt_context = false;
         if (end) fake_gdma.chen0.val = 0;
@@ -149,11 +161,16 @@ int main(int argc, char **argv)
         if (!strcmp(scenario,"withheld")) assert(pair.fault == TOP_MISSING && !pair.wraps);
         if (!strcmp(scenario,"coalesced")) assert(pair.fault == COALESCED);
         if (!strcmp(scenario,"short")) assert(pair.fault == BAD_SIZE);
+        if (!strcmp(scenario,"long"))
+            assert(pair.fault == BAD_SIZE && pair.fault_lo == 639 && !pair.retired && !pair.irq_publications);
         if (!strcmp(scenario,"task")) assert(pair.fault == OUTSIDE_IRQ);
         assert(pair.phase == FAILED && pair_channel_stopped());
         unsigned frozen = pair.fault;
         pair_on_underrun(); pair_on_frame(&panel);
         assert(pair.fault == frozen && pair_channel_stopped());
     }
+    assert(pair.reference_count.captured && pair.reference_count.block_ts == reference_size - 1);
+    assert(pair.reference_count.status_lo == reference_status && pair.reference_count.status_hi == reference_flags);
+    assert(pair.reference_count.ctrl_hi == (1u << 30));
     printf("PASS %s, retired %u, fault %s\n", scenario, (unsigned)pair.retired, pair_fault_name[pair.fault]);
 }
