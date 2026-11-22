@@ -1,6 +1,6 @@
 # HDMI02-SIZE01e — Stock-compatible P4 presentation timing, with Nurples as the scrolling reproducer
 
-**Current work.** The [mode 0 build and offline handoff results](#mode-0-build-and-offline-handoff-results) are ready for Smith’s review before flashing. The Olimex remains reserved with the prior standalone fixture stopped after the [r02 result](#olimex-r02-result--reference-calibration-and-first-live-pair). The [one-frame plan](#mode-0-one-frame-row-reuse-test) and [earlier DMA review](#last-use-dma-event-and-stock-row-plan-for-modes-8-and-20) record the test and its scope.
+**Current work.** The [Olimex mode 0 one-frame result](#olimex-mode-0-one-frame-result) confirms that DMA reused row 0’s buffer for row 479 after a 24.489 µs interrupt refill. The host checker flagged a control-word writeback difference. The fixture returned to the reference pattern, Smith reported a good display, and the Olimex remains reserved.
 
 **Earlier candidate.** Smith selected exact pixel doubling for 320×240. The [native row scanout plan](NATIVE-ROW-SCANOUT-PLAN.md) records the decision, the redundant work to eliminate and the refill tests under load. The [offline verification](NATIVE-ROW-SCANOUT-RESULTS.md) and [matched load-test packet](NATIVE-ROW-LOAD-PACKET.md) describe that candidate. Nurples supplies the mode-20 scroll reproduction. The [comparative source review](STOCK-SCROLL-TIMING-REVIEW.md) and its spare-buffer control remain available for diagnosis. The earlier blackout comparison is deferred.
 
@@ -1038,6 +1038,20 @@ The same C interrupt routine linked into the P4 application passed 16 host cases
 | Target image | ESP-IDF 5.5.5 linked the P4 revision 1.x app for app0 at `0x20000`. The linked callback checks retirement and source identity before the pixel copy, then calls `esp_cache_msync` and executes a RISC-V fence before the VALID store. The ELF and binary contain the pinned 307,200 artwork bytes. The ESP image trailer and partition-table match were verified. |
 
 Plan commit `d6f57c13` was published before implementation. Component commit `5a8495c6` produced `hdmi-mode0-row-r01-b2026-11-22-19-42-04Z`. The app is 582,224 bytes, SHA-256 `1ffda197bc6724df18e02999245a5d34abfb040a3d78a6a6f67133812e0c4266`. The retained 1,794,048-byte app0 write image has SHA-256 `0f1db78aed90bbbda8fc03e1bd24076ad5f314d77e6167a9c5d10386769e01fe`. The task-local `native-rows/mode0-row-r01` evidence holds the build manifest, linked callback disassembly, images, 16 frozen-source handoff reports and the transcript checks. The host cycle counter is synthetic. Physical retirement, refill time and HDMI output for this binary await a separately approved installation and live command. [Target runtime](https://github.com/bgates747/agon-extender/blob/5a8495c65fcb1ef38b6f43f95246ea6be7a0b1e2/vdp/hdmi-timing-test/mode0/mode0_runtime.inc) · [Offline handoff verifier](https://github.com/bgates747/agon-extender/blob/5a8495c65fcb1ef38b6f43f95246ea6be7a0b1e2/vdp/hdmi-timing-test/tests/verify_mode0_handoff.py)
+
+### Olimex mode 0 one-frame result
+
+November 22. The Pi wrote only app0 and independently read back all 1,794,048 bytes. They matched the build image above byte for byte. The P4 displayed the mode 0 reference for 837 frames before the Pi issued the single live command. Smith reported “good display.” The P4 restored the reference and reported HDMI hot-plug asserted after the trial. The operator retains the reservation.
+
+| One physical frame | Captured evidence |
+|---|---|
+| Row 0 retired | DMA cleared VALID and set BLOCK_DONE on its 2,544-byte source at `0x4ff3ec80`. The interrupt recorded retirement 5,386 CPU cycles after entry. Row 479’s descriptor was still invalid with fresh zero status. |
+| Interrupt refilled the slot once | The first-store marker was at +5,663 cycles. The P4 copied the bottom row’s 640 RGB pixels, cleaned the cache and published row 479 at +8,816 cycles. At 360 MHz this is **24.489 µs from interrupt entry to publication**, including 8.758 µs from the first-store marker to publication. |
+| Row 479 retired | The last descriptor used the same address and 2,544-byte extent. DMA wrote back BLOCK_DONE and FRAME_DONE. Both DMA-visible row captures matched the expected pattern hashes. The bridge reported zero underruns. |
+
+The frozen host verifier returned FAIL at its full control-word comparison for descriptor 0. All three descriptors showed the same difference. Apart from the expected ownership transition, only the AXI read and write burst-length fields changed, both from raw 16 at arm to 15 at writeback. Every other verifier condition held on the saved trace. The trace establishes the row handoff and its timing. Sustained row-by-row throughput and pixel-exact output at the HDMI connector were outside this single-frame measurement. [Frozen checker](https://github.com/bgates747/agon-extender/blob/5a8495c65fcb1ef38b6f43f95246ea6be7a0b1e2/vdp/hdmi-timing-test/mode0/verify_trace.py#L77-L98)
+
+Task-local evidence under `native-rows/mode0-row-r01/bench` includes the independent flash readback, reference receipts, one dispatch, both supervisor results and the original 11,897-byte USB trace in `live-once/trace.bin`, SHA-256 `cfd40d24e21f5d7f673d1b99372faf28000f5950db259c35ab3fa98569f54b1b`. The original verifier result remains in `live-once/summary.json`. The independent field and pixel comparisons are in `live-once/trace-review.json`.
 
 ### Roadmap — prior art for ESP32-P4 HDMI output
 
