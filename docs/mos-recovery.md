@@ -7,8 +7,9 @@ all 128 KiB of ROM. A keyboard-command receipt establishes only delivery.
 A missing reboot or failed readback calls for the bench stop procedure.
 
 **If MOS cannot boot, the Author selects an external ESP32-WROOM programmer
-connected to the eZ80 ZDI header.** The Author reports this was the working
-bare-metal route. Commission the exact WROOM, recovery image and verification
+connected to the eZ80 ZDI header.** The Author recalls WROOM succeeding
+more than once and identifies it as the only repeatably successful route.
+Commission the exact WROOM, recovery image and verification
 commands for the incident before wiring or writing. Keep the production
 Extender P4 and onboard VDPlet installed. The current P4-PC is unqualified as
 an eZ80 ZDI programmer and must not be used as the recovery fallback or as a
@@ -73,10 +74,10 @@ for the retained source drawings.
 ## Why P4 is excluded on the current bench
 
 The historical P4 ZDI record used the original **Olimex P4 DevKit**. The
-retained USB-identified programmer transcript reports a successful flash
-and contains a complete post-write dump matching its selected ROM. The
-current **P4-PC** has a different verified USB identity. The historical
-receipt does not establish that the current board can program the eZ80.
+retained USB-identified programmer transcript reports one successful flash
+and contains a complete post-write dump matching its selected ROM. The Author
+reports that the most recent attempt with that DevKit failed. The current
+**P4-PC** is a different device and has no verified eZ80 ZDI write.
 
 The November 22 INTEG-019 attempt on the current P4-PC independently verified
 and booted its temporary recovery app, then failed its first ZDI identity
