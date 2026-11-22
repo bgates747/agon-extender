@@ -1,8 +1,9 @@
 # RECOVERY-001 — Restore the known-good EMOS through P4 ZDI
 
-This record covers the original Olimex P4 DevKit. For the current P4-PC
-bench, follow [MOS recovery](../mos-recovery.md). The historical wiring and
-programmer results do not establish current bench readiness.
+This record covers an earlier success with the original Olimex P4 DevKit.
+The Author reports that the most recent attempt with that DevKit failed and
+recalls repeated WROOM successes. Follow [MOS recovery](../mos-recovery.md)
+for current bench guidance.
 
 ## Executive summary
 
