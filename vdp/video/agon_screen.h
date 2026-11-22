@@ -709,6 +709,10 @@ int8_t changeMode(uint8_t mode) {
 #endif
     ) {
 		restorePalette();
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+		// Also admit the former controller if failed preparation reattached it.
+		_stockFrameService->finishModeSetup();
+#endif
 	}
 	return errVal;
 }

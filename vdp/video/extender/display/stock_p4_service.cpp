@@ -205,10 +205,12 @@ extern "C" void agon_native_get_row_profile(agon_native_row_profile_t *out) {
 bool StockP4Service::nativeRows(void *context, std::uint8_t *pixels, unsigned first_y,
                                 unsigned rows, unsigned width, unsigned height, unsigned slot, std::uint32_t frame, bool *slot_black) {
   auto &self = *static_cast<StockP4Service *>(context);
-  // Binding is a fallible prepare step. Its first callback can precede mode
-  // commit. Start native sampling at row zero only after aliases are committed.
+  // Frame timing starts before changeMode finishes restoring the palette.
+  // Latch readiness at row zero so a mid-frame restore cannot split the image.
   if (!rows || rows > height || !slot_black) return false;
-  if (first_y == 0) self.rendering_frame_ = self.active_.load(std::memory_order_acquire);
+  if (first_y == 0)
+    self.rendering_frame_ = self.active_.load(std::memory_order_acquire) &&
+                            self.mode_setup_complete_.load(std::memory_order_acquire);
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
   // The DMA worker supplies a cursor only for epoch 1, frame 2, block 0.
   // All other refills use their ordinary row loop without per-row probes.
@@ -280,6 +282,7 @@ bool StockP4Service::prepare(StockRuntimeController &controller) {
                               controller.display().getViewPortHeight(),
                               size >> 16, size & 65535)) return false;
   rendering_frame_ = false;
+  mode_setup_complete_.store(false, std::memory_order_release);
   if (controller.display().isDoubleBuffered()) {
     swap_drain_done_ = xSemaphoreCreateBinary();
     if (!swap_drain_done_) return false;
@@ -406,6 +409,16 @@ void StockP4Service::drawLoop() {
     agon_lock_wake::entered(0);
 #endif
     if (stopping_.load(std::memory_order_acquire)) break;
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+    // Double-buffered setup has no application swap to drain. Even an empty
+    // drain visits sprites under the palette lock and would hold up black DMA
+    // slots waiting for this acknowledgement. Single-buffer teletext can draw
+    // during setup, and its refill never waits for this worker.
+    if (swap_drain_done_ && !mode_setup_complete_.load(std::memory_order_acquire)) {
+      xSemaphoreGive(swap_drain_done_);
+      continue;
+    }
+#endif
 #ifdef AGON_EXTENDER_RENDER_BENCHMARK
     {agon_bench::Scope drain(agon_bench::Drain);controller_->drain();}
 #else

@@ -84,6 +84,7 @@ static void testStartupRender() {
   assert(hdmiOutput().emitRows(traced.data(), 2, false));
   assert(trace_cursor == ((unsigned(NR_ROW_INACTIVE) << 16) | 0xffffu));
   service.activate();
+  service.finishModeSetup();
   trace_cursor = UINT32_MAX;
   assert(hdmiOutput().emitRows(reference.data(), 1, false));
   assert(trace_cursor == UINT32_MAX);
@@ -129,6 +130,7 @@ int main() {
   assert(hdmiOutput().emitRows(pixels.data(), 0, false));
   assert(std::all_of(pixels.begin(), pixels.end(), [](uint8_t x) { return x == 0; }));
   service.activate();
+  service.finishModeSetup();
   assert(hdmiOutput().emitRows(pixels.data(), 0, false));
   StockFrameCounter counter;
   counter = 0;
@@ -174,6 +176,7 @@ int main() {
   assert(terrain.getPixel(3, 3) == red);
   terrain.setScrollingRegion(0, 0, 63, 15);
   assert(service.startClock() && service.attach(single));
+  service.finishModeSetup();
   terrain.scroll(0, 1);
   Barrier single_draw;
   single.before_drain = &single_draw;

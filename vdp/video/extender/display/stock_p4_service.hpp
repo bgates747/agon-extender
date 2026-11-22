@@ -29,6 +29,10 @@ class StockP4Service {
   bool startClock(std::uint32_t period_us = 16667);
   bool prepare(StockRuntimeController &controller);
   void activate();
+#ifdef AGON_EXTENDER_NATIVE_SCANOUT
+  // changeMode calls this after the Agon palette (or teletext) is ready.
+  void finishModeSetup() { mode_setup_complete_.store(true, std::memory_order_release); }
+#endif
   bool attach(StockRuntimeController &controller);
   void detach();
   PresentationSnapshotPool &snapshotPool() noexcept { return *snapshots_; }
@@ -44,6 +48,7 @@ class StockP4Service {
   static void nativeDrawWake(void *context);
   NativeRowComposer native_rows_;
   SemaphoreHandle_t swap_drain_done_{};
+  std::atomic<bool> mode_setup_complete_{};
   bool native_bound_{};
   bool rendering_frame_{}; // read/written only by the joined refill task
 #endif
