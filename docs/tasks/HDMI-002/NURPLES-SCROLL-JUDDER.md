@@ -737,3 +737,58 @@ the 1,584 µs pre-publication and 1,600 µs post-VALID boundaries. Resume the
 worker, replace the mode, and read the sealed record again to verify identical
 bytes. Smith approved this diagnostic plan, implementation, build and offline
 verification. The operator holds the Olimex reservation for review before flashing.
+
+### First live refill trace r05 — build and offline verification
+
+The P4 diagnostic captured the first admitted live block on frames 2, 3 and 4
+in separate host boots. The saved record survived replacement of the display
+mode and panel in every case. A controlled frame-end interruption also located
+the unfinished logical row and stage. The Olimex still has r04 installed. The
+actual stall and its timing remain open until a physical r05 run.
+
+The task plan was pushed at `28bf7e51` before implementation. The firmware
+change is `b125e060` on `codex/hdmi02-size01`. The clean, built revision
+`d5b5ad8919ae844af511539078413d4135c6841d` includes the regression fixtures.
+Build `hdmi-native-row-r05-b2026-11-22-02-39-54Z` produced a 1,777,008-byte
+application, 1,232 bytes larger than r04. Its SHA-256 is
+`22794c82c988cbc51efde81eb708607be6dbe6e10c2cab85bbb901dbb8add9ff`.
+The native target validator passed. All 85 artifact hashes and 5,575 archived
+source inputs verified. Four firmware files differ from r04. All 1,856 compile
+commands matched after normalizing the output directory and embedded project
+version. An earlier compile received SIGTERM before linking. Its supervisor
+joined its children, and a fresh supervised build completed in 538 seconds.
+
+| First live block in the test boot | Live image, logical mode | Result after replacing the mode and panel |
+| --- | --- | --- |
+| Frame 2, block 0 | Colour tiles, 640×480 single buffer | Block published and rearmed. Frozen bytes matched throughout replacement. |
+| Frame 3, block 0 | Entirely black live image, 640×480 single buffer | Explicitly admitted live. Earlier setup black skipped. Frozen bytes matched throughout replacement. |
+| Frame 4, block 0 | Colour tiles, 320×240 double buffer, exact 2× | Setup completed partway through frame 3. Frame 4 was the first live frame. Frozen bytes matched throughout replacement. |
+
+The host fixture used the stock P4 service, FabGL controllers, native ring and
+the frame-complete callback from the r05 build. It checked all 407,040 BGR
+pixels on each of 30 frames, including borders. Across the six model panels
+DMA rearmed 30 times and retired 450 blocks, with zero refusals, invalid
+descriptors or underruns in these success cases. The ordinary build of the
+host fixture also passed, and the service fixture observed the lock cursor
+while another thread held the actual stock drawing mutex.
+
+1. The fault fixture ran 14 cases on each carrier. At an injected frame end
+   on frame 3 block 0 it distinguished a wait for the stock drawing mutex
+   on row 7, stock composition on row 7, expansion on row 7, cache writeback
+   and waiting to publish. A separate case preserved an earlier descriptor
+   fault with its own frame/block. The frozen bytes survived resumed workers,
+   disposal of the old slots, opposite-carrier rearm and a subsequent fault.
+2. With the modeled clock, the driver accepted a pre-VALID check at 1,584 µs
+   and publication at 1,600 µs. It refused a pre-VALID check at 1,585 µs and
+   revoked VALID at 1,601 µs. The status response distinguished successful
+   publication, budget rejection and an unpublished frame-end decision. At
+   1,400 µs the latter reported a lower bound and an unknown budget outcome.
+   Eight HTTP cases returned byte-identical startup records after replacement.
+3. The linked P4 image has a 168-byte frozen record and 108 bytes of scratch
+   timestamps. Static trace objects occupy 290 bytes before alignment. The
+   row cursor compiles to aligned word stores. The diagnostic reuses r04's
+   pixel converter and three DMA slots.
+
+The private `first-live-r05` evidence directory retains the application, ELF,
+matched build inputs, archive verification, frozen example responses and host
+test logs. All timing values from the host fixtures use a modeled clock.
