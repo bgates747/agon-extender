@@ -205,6 +205,63 @@ static bool keep_black(void *ctx,uint8_t *p,unsigned y,unsigned rows,unsigned w,
     ++blank_callbacks;
     return true;
 }
+// Once the worker loses this service window, both remaining block IRQs and
+// the end-of-list callback run before the worker can resume.
+static void finish_startup_frame(void) {
+    assert(current->native.ring.frame == 1);
+    assert(current->native.ring.retired == current->native.ring.count - 2);
+    tick_block();
+    tick_block();
+    native_frame(current);
+}
+
+static void startup_handoff(unsigned w, unsigned h, bool withhold) {
+    esp_lcd_dpi_panel_t d;
+    fresh(&d,w,h);
+    const unsigned blocks = d.native.ring.count;
+    const nr_tag top = {2,0};
+    nr_request job;
+    wait_irq = tick_block;
+
+    // HdmiOutput permits binding only after the first successful rearm.
+    while (d.native.ring.retired < blocks) {
+        tick_block();
+        while (xQueueReceive(d.native.queue,&job,0)) native_do_job(&d,job);
+    }
+    assert(native_frame(&d));
+    assert(agon_native_bind(&d.base,&d,keep_black,drawing) == ESP_OK);
+    const unsigned prior_callbacks = blank_callbacks;
+    while (d.native.ring.retired < blocks - 3) {
+        tick_block();
+        while (xQueueReceive(d.native.queue,&job,0)) native_do_job(&d,job);
+    }
+    tick_block();
+    assert(xQueueReceive(d.native.queue,&job,0) && nr_equal(job.tag,top));
+    assert(!d.native.reading && nr_can_write(&d.native.ring,top));
+    assert(!d.link_lists[0]->desc[0].is_valid);
+    wait_irq = finish_startup_frame;
+    if (!withhold) native_do_job(&d,job);
+    if (d.native.ring.retired == blocks - 2) finish_startup_frame();
+    wait_irq = NULL;
+
+    assert(nr_stats.blocks == 2 * blocks && nr_stats.max_queue == 2);
+    assert(nr_stats.ticks == 0 && nr_stats.invalid == 0 && nr_stats.underruns == 0);
+    if (withhold) {
+        assert(nr_stats.frames == 1 && nr_stats.ready == 2 * blocks - 3);
+        assert(nr_stats.fault == AGON_NATIVE_SEQUENCE && nr_stats.rejected == 1);
+        assert(nr_stats.fault_frame == 2 && nr_stats.fault_block == 0);
+        assert(!regs.chen0.val && !d.link_lists[0]->desc[0].is_valid);
+        assert(blank_callbacks == prior_callbacks);
+    } else {
+        assert(nr_stats.frames == 2 && nr_stats.ready == 2 * blocks - 2);
+        assert(nr_stats.fault == AGON_NATIVE_OK && nr_stats.rejected == 0);
+        assert(nr_ready(&d.native.ring,top) && d.link_lists[0]->desc[0].is_valid);
+        assert(regs.chen0.val && blank_callbacks == prior_callbacks + 1);
+    }
+    agon_native_unbind(&d.base);
+    dispose(&d);
+}
+
 static void prime_only(void) {
     esp_lcd_dpi_panel_t d;
     const int before = cache_calls;
@@ -280,6 +337,8 @@ static void negative(void) {
 }
 int main(void) {
     normal(684,384);normal(848,480);prime_only();negative();
+    startup_handoff(684,384,true); startup_handoff(848,480,true);
+    startup_handoff(684,384,false); startup_handoff(848,480,false);
     puts("Native DMA handoff: both carriers, 5 wraps each, draw/wait phase, cache-before-valid, no repeated clean-slot sync, stale tag, hardware invalid LLI, late worker, joined stop and timeout retention passed.");
     return 0;
 }

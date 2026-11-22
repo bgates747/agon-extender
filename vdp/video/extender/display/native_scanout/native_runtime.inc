@@ -184,7 +184,9 @@ static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
         const bool sample = nr_may_sample(&s->ring,job.tag);
         portEXIT_CRITICAL(&nr_mux);
         if (!live) return;
-        if (sample) break;
+        // At startup the previous frame had no reader to wake. Use the
+        // retired slot now, while the worker can still beat frame rearm.
+        if (sample || (job.tag.block == 0 && !woke)) break;
         // A later block IRQ releases the next frame's top rows. Never block
         // the interrupt or take the drawing/native mutex while awaiting it.
         ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
