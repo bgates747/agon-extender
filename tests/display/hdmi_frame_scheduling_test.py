@@ -71,7 +71,13 @@ def main():
             *["-I" + str(path) for path in includes],
             "-include", str(RUNTIME / "compat/host_preinclude.hpp"),
             *map(str, sources), "-o", str(binary)], check=True)
-        subprocess.run([str(binary)], check=True, timeout=15)
+        if args.palette_dma:
+            # The diagnostic captures epoch one once per boot. Start a fresh
+            # process for each release point, then replace the mode in-process.
+            for frame in (2, 3, 4) if args.startup_trace else (4,):
+                subprocess.run([str(binary), str(frame)], check=True, timeout=15)
+        else:
+            subprocess.run([str(binary)], check=True, timeout=15)
     if not args.palette_dma:
         print("PASS: actual HDMI service presents after native swap, keeps clock independent, and joins shutdown")
 

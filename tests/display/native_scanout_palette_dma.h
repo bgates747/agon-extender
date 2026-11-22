@@ -11,6 +11,7 @@ bool palette_dma_bind(void *context,
                       void (*wake)(void *));
 void palette_dma_unbind(void);
 void palette_dma_advance_to(unsigned frame, unsigned block);
+void palette_dma_check_black_hold(void);
 void palette_dma_stop(void);
 void palette_check_strip(unsigned frame, unsigned block, const uint8_t *pixels);
 void palette_frame_complete(unsigned completed);

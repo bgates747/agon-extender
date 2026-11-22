@@ -85,12 +85,14 @@ static void testStartupRender() {
   assert(trace_cursor == ((unsigned(NR_ROW_INACTIVE) << 16) | 0xffffu));
   service.activate();
   service.finishModeSetup();
+  trace_armed = false;
   trace_cursor = UINT32_MAX;
   assert(hdmiOutput().emitRows(reference.data(), 1, false));
   assert(trace_cursor == UINT32_MAX);
   std::unique_lock held(stockNativeMutex());
+  trace_armed = true;
   auto refill = std::async(std::launch::async, [&] {
-    return hdmiOutput().emitRows(traced.data(), 2, false);
+    return hdmiOutput().emitRows(traced.data(), 3, false);
   });
   await([] {
     return __atomic_load_n(&trace_cursor, __ATOMIC_RELAXED) == ((unsigned(NR_ROW_LOCK) << 16) | 112u);

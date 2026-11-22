@@ -26,7 +26,12 @@
 #define MALLOC_CAP_DMA 2
 #define MALLOC_CAP_8BIT 4
 #define portMUX_INITIALIZER_UNLOCKED 0
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+static void (*before_critical)(void);
+#define portENTER_CRITICAL(p) do { (void)(p); if (before_critical) before_critical(); } while (0)
+#else
 #define portENTER_CRITICAL(p) ((void)(p))
+#endif
 #define portEXIT_CRITICAL(p) ((void)(p))
 #define portENTER_CRITICAL_ISR(p) ((void)(p))
 #define portEXIT_CRITICAL_ISR(p) ((void)(p))
@@ -77,7 +82,7 @@ static void *last_sync;
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
 // The clock and IRQs advance synchronously in the simulated core-1 task.
 static void (*trace_cache_irq)(void);
-static unsigned trace_reader_take;
+static unsigned trace_reader_take, marker_cost_us;
 static void (*trace_reader_irq)(void);
 #endif
 static int64_t esp_timer_get_time(void) { return clock_us; }
@@ -147,6 +152,9 @@ static void dw_gdma_lli_set_block_markers(dw_gdma_block_markers_t *d, dw_gdma_bl
         dirty_slot_mark=NULL;
     }
     *d=value;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    if (value.is_valid) clock_us += marker_cost_us;
+#endif
 }
 #include "native_runtime.inc"
 static void fresh(esp_lcd_dpi_panel_t *d,unsigned w,unsigned h) {
@@ -360,29 +368,72 @@ static void negative(void) {
 }
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
 static agon_native_trace_t decision;
-static bool interrupt_render;
+static enum nr_trace_row_phase interrupt_at_row;
+static unsigned pre_publish_age, post_marker_cost;
+static int64_t target_origin;
 
 static void frame_decision(void) {
     assert(!agon_native_get_startup_trace(&decision));
-    finish_startup_frame();
-    // Take the reference copy while the interrupted worker is still suspended.
+    while (current->native.ring.retired < current->native.ring.count) tick_block();
+    native_frame(current);
+    // Read while the interrupted task is still suspended.
     assert(agon_native_get_startup_trace(&decision));
+}
+
+static void interrupt_publish(void) {
+    before_critical = NULL;
+    frame_decision();
+}
+
+static void cache_finished_before_publish(void) {
+    // The next task critical section in native_do_job guards publication.
+    before_critical = interrupt_publish;
+}
+
+static void budget_clock(void) {
+    clock_us = target_origin + pre_publish_age;
+    marker_cost_us = post_marker_cost;
 }
 
 static bool traced_render(void *ctx, uint8_t *pixels, unsigned y, unsigned rows,
                           unsigned w, unsigned h, unsigned slot, uint32_t frame, bool *black) {
     (void)ctx; (void)rows; (void)w; (void)h;
-    assert(frame == 2 && y == 0 && slot == 0);
     uint32_t *cursor = agon_native_trace_row_cursor();
-    assert(cursor);
-    agon_native_trace_row(cursor,NR_ROW_COMPOSE,7);
+    if (frame < 3) {
+        if (cursor) agon_native_trace_row(cursor,NR_ROW_INACTIVE,0xffff);
+        assert(*black);
+        return true;
+    }
+    assert(frame == 3 && y == 0 && slot == 0 && cursor);
+    agon_native_trace_row(cursor,NR_ROW_ACTIVE,0xffff);
+    for (unsigned row = 0; row <= 7; ++row) {
+        for (enum nr_trace_row_phase phase = NR_ROW_LOCK; phase <= NR_ROW_EXPAND; ++phase) {
+            agon_native_trace_row(cursor,phase,row);
+            if (row == 7 && phase == interrupt_at_row) frame_decision();
+        }
+    }
     clock_us += 10;
-    if (interrupt_render) frame_decision();
-    // The interrupted renderer still holds its original cursor pointer.
-    agon_native_trace_row(cursor,NR_ROW_EXPAND,7);
     pixels[0] = 1;
     *black = false;
     return true;
+}
+
+static void prepare_first_live_request(esp_lcd_dpi_panel_t *d) {
+    prepare_startup_handoff(d,traced_render);
+    nr_request job;
+    const unsigned blocks = d->native.ring.count;
+    // Publish the inactive 2:0 and pass its rearm with an empty saved record.
+    while (xQueueReceive(d->native.queue,&job,0)) native_do_job(d,job);
+    while (d->native.ring.retired < blocks) {
+        tick_block();
+        while (xQueueReceive(d->native.queue,&job,0)) native_do_job(d,job);
+    }
+    assert(native_frame(d) && !agon_native_get_startup_trace(&decision));
+    while (d->native.ring.retired < blocks - 3) {
+        tick_block();
+        while (xQueueReceive(d->native.queue,&job,0)) native_do_job(d,job);
+    }
+    tick_block();
 }
 
 static void check_preserved(void) {
@@ -402,17 +453,20 @@ static void retire_panel(esp_lcd_dpi_panel_t *d) {
 
 struct trace_case {
     const char *name;
-    // Verify where the worker was when EOF sealed the record.
     enum nr_trace_event reached;
     enum nr_trace_event unseen;
+    enum nr_trace_row_phase row_phase;
 };
 static const struct trace_case trace_cases[] = {
-    {"success",     NR_T_PUBLISHED,      NR_T_GATE_WAIT},
-    {"withheld",    NR_T_ENQUEUED,       NR_T_DEQUEUED},
-    {"wake-lock",   NR_T_WAKE_LOCK_WAIT, NR_T_WAKE_LOCK_HELD},
-    {"reader-lock", NR_T_READ_LOCK_WAIT, NR_T_READ_LOCK_HELD},
-    {"render",      NR_T_RENDER_BEGIN,   NR_T_RENDER_END},
-    {"cache",       NR_T_CACHE_BEGIN,    NR_T_CACHE_END},
+    {"success",      NR_T_PUBLISHED,      NR_T_GATE_BYPASS,    NR_ROW_EXPAND},
+    {"withheld",     NR_T_ENQUEUED,       NR_T_DEQUEUED,       NR_ROW_NONE},
+    {"wake-lock",    NR_T_WAKE_LOCK_WAIT, NR_T_WAKE_LOCK_HELD, NR_ROW_NONE},
+    {"reader-lock",  NR_T_READ_LOCK_WAIT, NR_T_READ_LOCK_HELD, NR_ROW_NONE},
+    {"drawing-lock", NR_T_RENDER_BEGIN,   NR_T_RENDER_END,     NR_ROW_LOCK},
+    {"compose",      NR_T_RENDER_BEGIN,   NR_T_RENDER_END,     NR_ROW_COMPOSE},
+    {"expand",       NR_T_RENDER_BEGIN,   NR_T_RENDER_END,     NR_ROW_EXPAND},
+    {"cache",        NR_T_CACHE_BEGIN,    NR_T_CACHE_END,      NR_ROW_EXPAND},
+    {"publish",      NR_T_PUBLISH_WAIT,   NR_T_PUBLISH_HELD,   NR_ROW_EXPAND},
 };
 
 static void test_startup_trace(unsigned height,const char *scenario) {
@@ -424,45 +478,78 @@ static void test_startup_trace(unsigned height,const char *scenario) {
         native_underrun(&d);
         assert(agon_native_get_startup_trace(&decision));
         assert(decision.site == NR_SITE_UNDERRUN && decision.fault == AGON_NATIVE_UNDERRUN);
+        assert(!decision.target_armed && decision.stamp[NR_T_DECISION] == UINT32_MAX);
         assert(decision.stamp[NR_T_RETIRE_12] == UINT32_MAX && !decision.rearmed);
+    } else if (strcmp(scenario,"other-fault") == 0) {
+        prepare_first_live_request(&d);
+        dw_gdma_break_event_data_t invalid = {.invalid_lli=&d.link_lists[0]->desc[4]};
+        native_invalid(d.dma_chan,&invalid,&d);
+        assert(agon_native_get_startup_trace(&decision));
+        assert(decision.site == NR_SITE_INVALID && decision.target_armed && decision.target_frame == 3);
+        assert(decision.fault_frame == 2 && decision.fault_block == 4 && !decision.slot_ready);
+        assert(decision.stamp[NR_T_ENQUEUED] == 0 && decision.stamp[NR_T_DEQUEUED] == UINT32_MAX);
+    } else if (strncmp(scenario,"budget-",7) == 0) {
+        const bool late_pre = strcmp(scenario,"budget-pre") == 0;
+        const bool late_valid = strcmp(scenario,"budget-valid") == 0;
+        assert(late_pre || late_valid || strcmp(scenario,"budget-edge") == 0);
+        prepare_first_live_request(&d);
+        nr_request target;
+        assert(xQueueReceive(d.native.queue,&target,0) && nr_equal(target.tag,(nr_tag){3,0}));
+        target_origin = target.retired_at;
+        pre_publish_age = late_pre ? 1585 : 1584;
+        post_marker_cost = late_valid ? 17 : 16;
+        trace_cache_irq = budget_clock;
+        native_do_job(&d,target);
+        marker_cost_us = 0;
+        trace_cache_irq = NULL;
+        if (late_pre || late_valid) {
+            assert(agon_native_get_startup_trace(&decision));
+            assert(decision.site == NR_SITE_PUBLISH && decision.fault == AGON_NATIVE_BUDGET);
+            assert(decision.stamp[NR_T_DECISION] == (late_pre ? 1585u : 1601u));
+            assert(decision.stamp[NR_T_PUBLISHED] == UINT32_MAX && !d.link_lists[0]->desc[0].is_valid);
+        } else {
+            frame_decision();
+            assert(decision.stamp[NR_T_PUBLISHED] == 1600 && decision.rearmed && decision.fault == AGON_NATIVE_OK);
+        }
+        assert(decision.target_armed && decision.target_frame == 3);
     } else {
         const struct trace_case *c = NULL;
         for (size_t i=0; i<sizeof trace_cases / sizeof trace_cases[0]; ++i)
             if (strcmp(scenario,trace_cases[i].name) == 0) c = &trace_cases[i];
         assert(c);
-        prepare_startup_handoff(&d,traced_render);
+        prepare_first_live_request(&d);
         const bool success = c->reached == NR_T_PUBLISHED;
         const bool withheld = c->unseen == NR_T_DEQUEUED;
         if (c->reached == NR_T_WAKE_LOCK_WAIT) trace_reader_take = 1;
         if (c->reached == NR_T_READ_LOCK_WAIT) trace_reader_take = 2;
         trace_reader_irq = frame_decision;
-        interrupt_render = c->reached == NR_T_RENDER_BEGIN;
+        if (c->reached == NR_T_RENDER_BEGIN) interrupt_at_row = c->row_phase;
         if (c->reached == NR_T_CACHE_BEGIN) trace_cache_irq = frame_decision;
+        if (c->reached == NR_T_PUBLISH_WAIT) trace_cache_irq = cache_finished_before_publish;
         nr_request target;
         if (!withheld) {
             assert(xQueueReceive(d.native.queue,&target,0));
-            assert(nr_equal(target.tag,(nr_tag){2,0}));
+            assert(nr_equal(target.tag,(nr_tag){3,0}));
             native_do_job(&d,target);
         }
         if (success || withheld) frame_decision();
         trace_cache_irq = NULL;
         trace_reader_irq = NULL;
+        assert(decision.target_armed && decision.target_frame == 3);
         assert(decision.epoch == 1 && decision.site == NR_SITE_REARM);
         assert(decision.rearmed == success);
         assert(decision.fault == (success ? AGON_NATIVE_OK : AGON_NATIVE_SEQUENCE));
         assert(decision.retired == d.native.ring.count);
-        assert(decision.slot_frame == 2 && decision.slot_block == 0 && decision.slot_ready == success);
+        assert(decision.slot_frame == 3 && decision.slot_block == 0 && decision.slot_ready == success);
         assert(decision.queue_depth == (withheld ? 3u : 2u));
         assert(decision.stamp[NR_T_RETIRE_12] == 0);
-        assert(decision.stamp[NR_T_RETIRE_13] >= 1000);
-        assert(decision.stamp[NR_T_RETIRE_14] == decision.stamp[NR_T_RETIRE_13] + 1000);
+        assert(decision.stamp[NR_T_RETIRE_13] == 1000);
+        assert(decision.stamp[NR_T_RETIRE_14] >= decision.stamp[NR_T_RETIRE_13] + 1000);
         assert(decision.stamp[NR_T_DECISION] == decision.stamp[NR_T_RETIRE_14]);
         assert(decision.stamp[c->reached] != UINT32_MAX && decision.stamp[c->unseen] == UINT32_MAX);
-        if (c->reached == NR_T_RENDER_BEGIN || c->reached == NR_T_CACHE_BEGIN || success) {
-            assert(decision.stamp[NR_T_GATE_BYPASS] != UINT32_MAX);
-            enum nr_trace_row_phase phase = interrupt_render ? NR_ROW_COMPOSE : NR_ROW_EXPAND;
-            assert(decision.row_cursor == (((uint32_t)phase << 16) | 7));
-        }
+        assert(decision.stamp[NR_T_PUBLISHED] == (success ? 1014u : UINT32_MAX));
+        const unsigned row = c->row_phase == NR_ROW_NONE ? 0xffff : 7;
+        assert(decision.row_cursor == (((uint32_t)c->row_phase << 16) | row));
         if (withheld) {
             assert(xQueueReceive(d.native.queue,&target,0));
             native_do_job(&d,target);  // Run the delayed task after its EOF.
@@ -544,20 +631,13 @@ void palette_dma_advance_to(unsigned frame, unsigned block) {
             assert(regs.chen0.val && nr_stats.rejected == 0 && nr_stats.invalid == 0 && nr_stats.underruns == 0);
         }
     }
-    if (frame == 3 && block == 5) {
-        assert(cache_calls == initial_cache_calls + NR_SLOTS);
-        assert(nr_stats.ticks == 1); // One real drawing opportunity during the palette hold.
-#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
-        if (nr_stats.epoch == 1) {
-            agon_native_trace_t sealed;
-            assert(agon_native_get_startup_trace(&sealed));
-            assert(sealed.site == NR_SITE_REARM && sealed.rearmed && sealed.slot_ready && !sealed.fault);
-            assert(sealed.slot_frame == 2 && sealed.slot_block == 0);
-            assert(sealed.row_cursor == (((unsigned)NR_ROW_INACTIVE << 16) | 0xffff));
-            puts("Frame 2 block 0: sealed at rearm, black and ready, source row unset.");
-        }
-#endif
-    }
+}
+void palette_dma_check_black_hold(void) {
+    // At the mid-frame setup release, only the three prime clears have
+    // needed cache writeback. The bound renderer first releases drawing at 3:0.
+    unsigned frame = palette_panel.native.ring.frame;
+    assert(cache_calls == initial_cache_calls + NR_SLOTS);
+    assert(nr_stats.ticks == (frame >= 3 ? frame - 2 : 0));
 }
 void palette_dma_stop(void) {
     assert(nr_stats.frames == 5 && nr_stats.blocks == 5 * palette_panel.native.ring.count);

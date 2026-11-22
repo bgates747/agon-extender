@@ -47,7 +47,9 @@ def main():
         if args.startup_trace:
             subprocess.run(compiler + ["-DAGON_EXTENDER_NATIVE_STARTUP_TRACE=1"], check=True)
             for height in (480, 384):
-                for case in ("success", "withheld", "wake-lock", "reader-lock", "render", "cache", "first-fault"):
+                for case in ("success", "withheld", "wake-lock", "reader-lock", "drawing-lock",
+                             "compose", "expand", "cache", "publish", "first-fault", "other-fault",
+                             "budget-edge", "budget-pre", "budget-valid"):
                     # Each process starts in boot epoch 1. Each case also drives epoch 2.
                     subprocess.run([str(binary), str(height), case], check=True)
 
