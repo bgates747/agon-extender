@@ -83,6 +83,8 @@ On the Olimex the operator installs each P4 application at `0x20000`, independen
 
 The Pi built and validated `hdmi-coverage-r02-b2026-11-22-22-05-16Z` from clean source. The application is 1,790,528 bytes, 48 bytes larger than A. Of 5,566 frozen build inputs, only the publisher changed. All 1,857 native compile commands match after normalizing checkout paths and the IDF project-version stamp. Both job manifests passed the commissioned operator's offline preflight. The [build and comparison packet identities](MODE20-SPARE-R02.json) pin both applications, the same-size release restore, rowload and game assets.
 
+**Arm A, played build.** Smith reported during the matched Nurples comparison, “scrolling looks same as before. uneven.” This reproduces the visual symptom on the baseline. In the separate 60-second mode 20 rowload sample, the five steady reports averaged 60.08 DMA refreshes/s, 26.63 image submissions/s and 36.18 ms conversion time. Gameplay cadence and the cause of the unevenness remain unmeasured. The candidate visual result is pending.
+
 ## Stock timing review commissioned November 21
 
 Smith reports the mainboard VDP does not show the scrolling problem. Review stock VDP and its graphics-library timing against the P4 candidate first. Verify the relationship of the installed mainboard companion to the official stock reference. Trace scroll execution, vertical blank, work budgets, framebuffer access and physical scanout, and identify intentional substitutions or lost guarantees with exact code evidence. Report ranked findings and uncertainties. This tranche covers source review and written results only. The transient HDMI blackout and the earlier physical plan are deferred.
