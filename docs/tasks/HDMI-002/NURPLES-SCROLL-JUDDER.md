@@ -157,3 +157,133 @@ the mode-0 MOS prompt after collection, the SD listener was idle, and the
 worker group exited cleanly. Stock collection stopped with Olimex custody
 retained. Smith owns the Nurples visual check. Last window receipts and
 the cumulative CSV are under the local evidence directory `final-stock-m8/`.
+
+### Matched P4 drawing runs
+
+Smith commissioned one 60-second resident drawing window each in modes 20
+and 8 on the full-frame build, then on the native-row candidate. Use the
+same corrected 11,816-byte eZ80 fixture as the stock runs. The operator
+verifies every P4 application write by independent readback across the
+1,794,048-byte extent. ExCom exposes sampled display text and status.
+The final handoff is the candidate running, with the four-file pinned
+Nurples dev runtime staged and the program loaded for Smith to start.
+The machine-local jobs and receipts are under
+`agents/hdmi002/native-rows/copper-r02/matched-p4/`.
+
+The full-frame install passed the independent byte comparison at offset
+0x20000. The SHA-256 of the complete 1,794,048-byte readback was
+`e79ebbb8927245d2173a8a4306a09e97a1f181c4c80bed2db6a865aee81b73a1`.
+The post-flash MOS CLI and keyboard were verified. Each P4 window uses a
+Legacy CLI load receipt followed by EMOS ExCom routing, a fresh on-screen
+marker and route status, the rowload drawing menu, a settled 60-second
+HDMI/status observation, and the eZ80's SD result. The Pi samples menu
+text outside the timing interval. The full-frame arm restores the production
+app and verifies it before the candidate stage. The candidate remains loaded
+at the Nurples handoff.
+
+**P4 bench outcome.** Both full-frame draw windows passed. Mode 20 recorded
+49,190 loops in 7,316 MOS ticks and mode 8 recorded 61,086 in 7,316 ticks.
+Each Pi observer acquired 122 status reads over 60.01 seconds with the
+expected logical and HDMI dimensions. The full-frame arm's production restore
+passed independent readback and CLI handback. The candidate's independent
+1,794,048-byte readback matched SHA-256
+`a67918f8a586768f6f13e418b74aff1b7062d2ba14df99e4301a89d67113a1fa`.
+
+Before the candidate entered either draw workload, its active and saved
+scanout registers both reported a sequence fault (code 1), epoch 1, frame 2,
+block 0, at 848 × 480. One rejection, zero invalid descriptors, zero reported
+underruns, and a maximum observed refill of 1,048 µs were recorded. Root cause
+and physical DMA timing remain unresolved. The operator stopped before RUN.
+The five staged files include the four-file Nurples runtime. Nurples was not
+loaded or started. The candidate remains installed, the Olimex lease is held,
+and all bench worker processes joined. The failure alert completed. Preserve
+`native/draw/m20-entry-fault.json` under the local matched-P4 evidence root.
+
+After the batch stopped, Smith observed that the entire P4 display was solid
+blue with no text. He recognized the appearance from earlier incidents. The
+candidate had already reported a scanout sequence fault at frame 2, block 0,
+before the drawing workload or Nurples ran. The first blue frame and HDMI
+receiver lock were not captured, so the observation establishes the visible
+end state only. Keep it distinct from the earlier brief black screen during
+Nurples gameplay.
+
+### Failure preservation, release restore and frame-wrap review
+
+The operator preserved 44 files and verified each archive member against the
+SHA-256 manifest. The private archive SHA-256 is
+`daabef48f774f3eed550251e1af4aea942d13425eaaa5a99812fc24e59cdd6e1`.
+The operator restored the released v0.3.0 P4 application at 0x20000. The
+independent readback matched all 1,794,048 bytes of the programmed extent,
+SHA-256 `071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1`.
+The application itself is 1,768,624 bytes, SHA-256
+`539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b`.
+Handback verified the working Legacy CLI, neutral keyboard, inactive listener,
+idle transfer service and free serial ports. The scheduling channel accepted
+the bench check-in. Local receipts are in the matched-P4 evidence root under
+`native-release/`, `native/restore-p4/` and `native/handback/`.
+
+**Why the P4 stopped.** The installed candidate application hash matches the
+retained build at source revision `2f99ab28dff2b18fea48337a46e382997e7ab5d1`.
+The compiled DPI driver's include path and source archive identify the same
+`native_runtime.inc` and `native_ring.h` reviewed here. At 848×480 each
+frame has fifteen 32-row DMA blocks. Block and frame numbers start at zero.
+
+| Event in frame 1 | P4 DMA interrupt and refill worker |
+|---|---|
+| Block 12 retires | Slot 0 becomes writable for frame 2, block 0. The interrupt invalidates the old descriptor and queues the new tag. The worker checks for a drawing wake. |
+| Block 13 retires | Only now does the worker's unconditional next-frame sampling gate open. That wait consumes one nominal 1,030.4 µs active-block interval, even in startup with no previous reader. |
+| Block 14 retires and the list ends | All 30 blocks across frames 0 and 1 have retired. Three slots were primed and 27 later publications completed in FIFO order, ending at frame 1, block 14. Frame 2, block 0 is still unpublished. The frame callback rejects the next list and disables DMA. |
+
+The exact-tag check worked. The interrupt handler built into this candidate
+dispatches the block callback before the full-transfer callback when both bits
+are pending and yields only afterward. The core-1 refill worker therefore
+cannot rely on running between those callbacks. The reported 1,048 µs was the
+previous frame's successful top-block publication (1,042 µs before work,
+3 µs render, 3 µs finish). The frame callback supplies literal zeros to the
+fault timer. The receipt identifies which publication missed rearm, but has no
+timestamps for that job's dequeue, gate release, reader mutex or first render.
+It establishes neither the exact source of the final delay nor receiver sync.
+
+**Why the startup wait was unnecessary.** HDMI startup waits for the first
+successful frame rearm before allowing the stock row service to bind.
+Frame 1's top slot had to be ready before that first rearm, so it could not
+have enabled a reader. Only a block-0 job can enable reading, and binding
+initializes reading to false. No preceding reader could have issued a drawing
+wake on entry to the frame 2 top job. Its wait offered drawing no protected
+time. A reader *could* have bound in time to render frame 2. The zero sampled
+profile count does not establish that frame 2 was blank.
+
+**Smallest proposed change, awaiting review.** In the P4 worker's
+`native_do_job`, skip the penultimate-retirement wait for block 0 when the
+worker issued no drawing wake for that handoff. The worker can then begin
+at block 12 retirement. Use the decision already made under the reader mutex.
+Keep binding and first-frame adoption at block 0 under that mutex. When the
+worker releases drawing, retain the existing sampling gate. Every path still
+requires slot ownership, cache visibility, the 1,600 µs guard, exact-tag
+publication and a ready descriptor at rearm. This change needs no new buffer,
+copy, interrupt or allocation.
+
+**Offline check and limit.** A two-frame FIFO schedule allowed the worker to
+take the top job at third-last retirement and withheld worker service from
+penultimate retirement through EOF. On the 15-block carrier the existing rule
+reproduced 30 retirements, 27 publications, peak queue depth 2 and rejected
+rearm. Exempting the no-wake handoff gave 28 publications and a ready top
+descriptor. The 12-block carrier gave 21 and 22 publications respectively
+after 24 retirements. These are scheduling-model results. The existing C host
+test drains the worker before invoking the frame callback and misses this
+interleaving. For an approved fix, exercise the actual callbacks on both
+carriers with deferred worker service, bind during startup, a real drawing
+wake, and a deliberately withheld publication. Check that an unpublished
+descriptor still stops DMA. A bounded first-fault record of dequeue, gate,
+render start and rearm would distinguish later worker dispatch from an
+in-flight render if the failure recurs. Candidate drawing, physical refill
+lead and Nurples remain unmeasured.
+
+**Approved implementation freeze.** Smith authorized this P4-only correction
+and an offline candidate build. Change only the top-block wait when the
+worker issued no drawing wake. Exercise the production callbacks for both
+12- and 15-block carriers, including first binding, a real drawing window,
+deferred worker service at frame end and a withheld top block. Verify the
+regression against the failed source, run the existing pixel and service
+checks, build with the failed candidate's flags, and retain the experimental
+application and its hash for review. Bench time requires a separate request.
