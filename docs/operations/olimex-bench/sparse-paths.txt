@@ -7,6 +7,8 @@
 /docs/qualification/bench-constraints.md
 /docs/qualification/capture-failure-protocol.md
 /docs/bench-reset.md
+/docs/mos-recovery.md
+/docs/mos-recovery/
 /docs/serial-monitor.md
 /docs/sd-layout.md
 /scripts/bench_process.py

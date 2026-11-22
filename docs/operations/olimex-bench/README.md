@@ -289,6 +289,13 @@ VDPlet predates that receiver.
 | Extender VDP | Hold the Agon reset through its commissioned USB RTS circuit. Use stock esptool 5.1.0 on the P4 USB at 460,800 baud. Read the partition table and OTA selector, write app0 at `0x20000` with all three flash settings set to `keep`, and independently compare the written extent. Restart the P4 once and wait for its boot-pad release. Release Agon reset, then prove a working CLI. |
 | EMOS | At the Legacy CLI, run the prepared `FLASH mos … -f` for the staged ROM. Wait for the updater to restart and admit input. Use `SAVE` to read the full 128 KiB ROM, retrieve it from the SD listener, compare it with the requested image and exit the listener. |
 
+If `FLASH mos` leaves MOS unable to boot, stop and keep the slot. The
+[bare-metal EMOS recovery procedure](../../mos-recovery.md) uses an external
+ESP32-WROOM programmer under the Author's recovery disposition. The current
+Extender P4-PC is unqualified to program the eZ80 through ZDI. Leave its
+production firmware installed and keep the standard `FLASH mos` process
+free of P4 ZDI preflight or temporary programmer firmware.
+
 For a short foreground phase, wait for the tool result. For a detached phase
 or batch, open the runner's terminal and notification receipts when the owning
 chat wakes. Worker output is at `RUN_EVIDENCE/PHASE/output.log`. The phase
