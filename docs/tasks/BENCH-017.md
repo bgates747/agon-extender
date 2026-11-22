@@ -10,7 +10,7 @@ its manual LOAD/RUN workflow is not the required product interface.
 ## Assignment and state
 
 Smith requested this task on 2026-11-09 after failed-run cleanup.
-**Task recorded; implementation and qualification not started.** This request
+**Preferred design recorded 2026-11-19 for Smith’s review. Implementation and qualification are pending.** This request
 does not start a build, firmware change, deployment or physical test.
 
 Smith subsequently clarified the required user experience: robots request the
@@ -85,16 +85,15 @@ not a new firmware build, hardware test or supported host reader.
    framebuffer pixels or logical screen text. It is not an existing shortcut
    to mainboard text access.
 
-These findings rule out presenting a thin wrapper around current `83` as a
-complete solution. Resolve the supported host request path and native
-recognition/storage limitations together, without changing another job's pinned
-firmware or adding preparation requirements to its application.
+The character recognizer above is a historical comparison. For checking the
+colour at a single graphics position, stock VDP separately documents the
+`&84` screen-pixel query to MOS. Bulk pixel retrieval is outside this task.
 
 Read these references before implementation:
 
 1. [Current text service](../screen-text.md),
    [Legacy observation and safe serial capture](../serial-monitor.md),
-   [prototype results](BENCH-005/RESULTS.md#text-readback),
+   [prototype results](BENCH-005/RESULTS.md),
    [prototype source](BENCH-005/textread/src/main.c), and
    [original Legacy requirements](BENCH-006.md).
 2. Official `agon-docs/docs/vdp/System-Commands.md`, query `&83`, and MOS
@@ -117,89 +116,56 @@ These are research references, not deployment selections. Bind actual approved
 firmware/provenance from the current selector and inventory before testing;
 inspect selected VDPlet source through its owner. Keep reference checkouts read-only.
 
-## Requirements and ownership
+## Preferred design for review
 
-1. **Observe the correct display.** The host identifies mainboard VDP/Legacy
-   explicitly. Determine whether the selected native VDP has a usable text
-   buffer/read API; otherwise call the result character-query readback. P4
-   ExCom text must never substitute for mainboard output.
-2. **Preserve state.** A CLI capture preserves application bytes and MOS
-   load/entry metadata, route, mode, font, viewport, cursor and existing text.
-   Do not clear, scroll or switch modes to simplify recognition. Account for
-   the capture command's echo. Detect overlap before using disposable MOSlet
-   space; do not assume every application leaves it free.
-3. **Respect foreground ownership.** EMOS owns routing, transports and admission.
-   A host read request must not depend on typing a helper command into the CLI,
-   knowing that the CLI has returned, or cooperation from the application being
-   observed. Assess CLI and running-application contexts explicitly. EMOS and
-   the mainboard VDP owners must arbitrate queries/replies without corrupting
-   application output or stealing an application's pending query response.
-   Report a concrete busy/unavailable condition when safe sampling cannot occur;
-   do not type capture commands into an unknown foreground. No reset, replay,
-   raw UART/GPIO bypass or private memory scraping is a fallback.
-4. **Bound and qualify captures.** Return rows, dimensions, region, start/end
-   times, cursor provenance, unknown-cell/timeout counts and component/build
-   identity. Disclose non-atomic sampling and font/colour/graphics/edge limits.
-   Bound each query and the whole capture; support a useful bounded region
-   rather than always paying for a full-screen sweep.
-5. **Make it usable by robots.** Provide a maintained host command and importable
-   interface over the existing admitted transport. One host request retrieves
-   text already displayed, with no per-read activation, mirroring, application
-   changes, helper deployment or manually started foreground service. A reader
-   that requires preparation before the output appeared fails this requirement.
-   Correlate output with the
-   actual issued command; old prompts and command echo are not completion.
-   Preserve raw text and classification. A returned error/prompt must stop an
-   inappropriate listener-only wait without launching a successor or claiming
-   the application passed.
-6. **Deliver evidence safely.** If a helper saves to SD, use new declared paths
-   and the maintained foreground service; capture before printing its own report.
-   Distinguish capture/storage errors from application errors. No startup changes.
-7. **Keep the implementation small.** Prefer an existing supported native text
-   read capability where sufficient; determine the smallest standard integration
-   that makes it available to the host on demand. A manually loaded disposable
-   CLI MOSlet alone does not satisfy the clarified requirement. Measure host
-   latency, RAM/ROM/helper size, VDP traffic and interference. No E/VDP↔EMOS
-   CRC or substitute checksum. Component owners implement any necessary supported
-   firmware change; filing this task does not authorize one.
+**VDPlet owns the visible-text buffer on the mainboard ESP32.** Update it when
+the renderer places a glyph, using its character code, actual position and font
+metrics. An overwrite replaces the old character at that location. A viewport
+scroll moves the affected text, a clear removes it, and a buffer swap exposes
+the text belonging to the newly displayed page. A font change preserves the
+positions of earlier glyphs. A mode or resolution change follows what the
+renderer actually clears or preserves. Mark areas whose text is obscured by
+graphics or whose layout cannot be represented as unknown. Distinguish an
+unknown area from a known blank. Initial scope is ordinary MOS and application
+text on the mainboard display.
 
-## Work plan
+| Caller | Preferred interface | Ownership |
+| --- | --- | --- |
+| Pi runner | Enable, disable or request one coherent snapshot through the mainboard USB serial programmer connection while VDPlet is running. | VDPlet serves the request. Extender owns the host command, importable client and serial-port coordination. Opening the connection must preserve reset lines and the running application. |
+| eZ80 application | Send VDU requests through EMOS to enable, disable or retrieve the same snapshot in bounded chunks. | EMOS owns ordinary VDU routing. VDPlet and EMOS owners must evaluate the existing keyboard-map reply mechanism for chunk delivery and demonstrate preservation of real keyboard state, pending replies and callbacks before selecting it. |
 
-1. [ ] B17-01: Inspect exact selected contracts and reusable source; record a
-   compact précis and resolve the decision register before coding.
-2. [ ] B17-02: Specify minimal CLI capture, host result, busy/unavailable behavior,
-   running-app behavior, no-preparation host access, command correlation, time
-   bounds and evidence paths. Freeze qualification inputs.
-3. [ ] B17-03: Implement in maintained owning source trees. Replace the old
-   prototype's application-clobbering LOAD/RUN deployment with a supported route.
-4. [ ] B17-04: Verify parsing, bounded timeouts, partial/unknown coverage and
-   stale-result rejection with meaningful host controls.
-5. [ ] B17-05: Under a fresh authorized lease, qualify successful command output,
-   returned application error/aborted EXEC, bottom-row prompt, scrolling/wrapping,
-   unknown glyphs, busy application and missing VDP reply. Verify loaded bytes,
-   MOS load metadata and display-state preservation; restore responsive CLI.
-   Include output printed before the host first requests a capture, mirroring
-   never enabled, and an unmodified application with no staged helper/service.
-6. [ ] B17-06: Demonstrate prompt/error reporting without waiting for the full
-   application deadline. Record capture duration and instrumentation limits;
-   polling is not guest progress and text capture is not an optical pass.
-7. [ ] B17-07: After acceptance, promote the command/API and instructions outside
-   this task silo, update scheduler references and apply production/version rules
-   if an accepted firmware or bundle changes.
+**Bench default.** Enable tracking at VDP startup so the first Pi request can
+read an error printed before any client connected. Give the bench/host and the
+application independent enable flags. Tracking continues while either requests
+it. If both turn it off, resume with unknown coverage wherever contents cannot
+be established again. Measure costs before selecting a general release default.
+
+**Snapshot semantics.** One request identifies one displayed page at one point
+in time. Bind all chunks to that snapshot. Include its identity, geometry,
+coverage and capture time so the runner can record what was visible and when.
+An old prompt alone cannot prove that a new command returned. A read must
+preserve the loaded application, MOS load metadata, display and input state.
 
 ## Decision register
 
-| ID | Recommendation / alternatives | State and effect |
+| ID | Direction | Status |
 | --- | --- | --- |
-| B17-D01 — Host experience | One host request reads current mainboard text without prior mirroring, helper staging/invocation or application instrumentation. A disposable CLI-helper-only interface is insufficient. | Author requirement clarified; initial helper recommendation superseded. Exact processor/service implementation remains open pending source facts. |
-| B17-D02 — Execution and query ownership | Determine the supported request path and safe arbitration in CLI and active-app contexts. EMOS retains transport ownership; the mainboard VDP owns its display. Do not substitute future-output mirroring or require the application to service the reader. | Open; record concrete implementation, resource costs and unavailable cases before coding. |
+| B17-D01 — Host experience | One on-demand read of existing text, including while an unmodified application runs. | Author requirement. |
+| B17-D02 — Ownership and access | VDPlet maintains one renderer-backed model. The Pi and eZ80 have independent controls and can read it. Bench tracking starts at boot. | Preferred model for review. USB framing alongside diagnostic output, VDU command allocation, reply carrier and resource budget remain open. |
+
+## Work plan
+
+- B17-01 [ ] VDPlet owner identifies render, viewport and page operations in the selected mainboard source. Specify supported text modes, invalidation rules and storage cost at the largest supported geometry.
+- B17-02 [ ] Extender and VDPlet owners specify USB commands, port ownership, response framing, snapshot lifetime, busy/unavailable responses and time bounds. Specify the eZ80 VDU requests and compare reply carriers with the EMOS owner. Review the interface before assigning opcodes.
+- B17-03 [ ] After design approval, implement the buffer and both interfaces in their owning projects. Measure RAM, firmware size, render-time overhead with tracking enabled and disabled, and snapshot latency during output.
+- B17-04 [ ] Verify overwrite (`ABC` becomes `AXC` after replacing the middle character), wrap, scroll, clear, bottom-right cell, mixed font sizes, resolution changes, graphics over text, and display-page swaps. Read one snapshot in chunks while new text is drawn. Exercise both enable flags and a tracking gap.
+- B17-05 [ ] On an authorized bench run, use an unmodified application that prints an error and returns to MOS before the Pi reader connects. Require the first request to capture the error and bottom-row prompt without mirroring, helper, keyboard input, reset or replay. Check application memory and input state, host reads during execution, and an eZ80 read with real keyboard activity.
+- B17-06 [ ] Demonstrate runner correlation of a returned error with the issued command. Preserve raw text, unknown coverage and failures in the evidence. Report an unavailable VDP as unavailable.
+- B17-07 [ ] After qualification and acceptance, publish the supported runner command, application API, measured limits and agreed defaults in the maintained guides.
 
 ## Completion
 
-A robot can request existing mainboard text on demand through a documented
-bounded host route, without additional per-read preparation, or explicitly
-report a concrete unsupported/busy condition. Capture preserves
-the loaded application and declared display state. The scheduler distinguishes
-returned command failure from missing completion without automatic reset/replay.
-Documentation names supported contexts and limits. A written task or historical
-prototype alone does not meet these implementation criteria.
+An operator can request the text already visible on the mainboard in one host
+call. An application can independently control tracking and retrieve a coherent
+snapshot. Both readers preserve the foreground application's state, and the
+operator can distinguish an observed blank from unobserved or obscured text.

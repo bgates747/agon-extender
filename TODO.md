@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Agent development turnaround — approved first tranche
 
-- [ ] **[BENCH-017 — Mainboard VDP text observation for robot operators](docs/tasks/BENCH-017.md)** — Read existing mainboard text on demand through one host request, without prior mirroring, application instrumentation or per-read helper staging/invocation. Preserve the loaded application and replace blind listener-only waits. Supported request path/query ownership remain to be resolved; owns BENCH-006's former deferred Legacy S04.
+- [ ] **[BENCH-017 — Mainboard VDP text observation for robot operators](docs/tasks/BENCH-017.md)** — Preferred design for review: VDPlet tracks visible text from boot on the bench. The Pi runner reads it on demand over mainboard USB serial; eZ80 applications can control tracking and request the same snapshot through EMOS. Owns BENCH-006’s deferred Legacy S04.
 
 
 
