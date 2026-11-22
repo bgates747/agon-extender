@@ -46,27 +46,69 @@ inline esp_err_t startupTrace(httpd_req_t *request) {
     "rearm", "retire", "successor", "enqueue", "invalid", "underrun", "ownership", "publish"
   };
   static constexpr const char *phases[] = {"none", "active", "inactive", "row_lock", "compose", "expand"};
+  static constexpr const char *admissions[] = {"unknown", "unbound_black", "inactive", "live"};
   static_assert(sizeof(sites) / sizeof(*sites) == NR_SITE_PUBLISH + 1);
   static_assert(sizeof(phases) / sizeof(*phases) == NR_ROW_EXPAND + 1);
+  static_assert(sizeof(admissions) / sizeof(*admissions) == NR_ADMIT_LIVE + 1);
   const unsigned phase = trace.row_cursor >> 16;
   if (phase >= sizeof(phases)/sizeof(*phases) || trace.site >= sizeof(sites)/sizeof(*sites))
     return ESP_FAIL;
-  char header[512];
+  const bool armed = trace.target_armed != 0;
+  const bool fault = trace.fault != AGON_NATIVE_OK;
+  const bool eof = trace.site == NR_SITE_REARM;
+  const bool published = trace.stamp[NR_T_PUBLISHED] != UINT32_MAX;
+  const bool lower_bound = eof && fault && !published && trace.stamp[NR_T_DECISION] != UINT32_MAX;
+  const char *budget = "unknown";
+  if (published) budget = trace.stamp[NR_T_PUBLISHED] <= trace.limit_us ? "met" : "exceeded";
+  else if (lower_bound && trace.stamp[NR_T_DECISION] > trace.limit_us) budget = "exceeded";
+  else if (armed && trace.site == NR_SITE_PUBLISH && trace.fault == AGON_NATIVE_BUDGET &&
+           trace.fault_frame == trace.target_frame && trace.fault_block == 0) {
+    // The worker can reject at the pre-VALID reserve or revoke a late VALID.
+    // Neither path supplies a successful publication time.
+    budget = "rejected";
+  }
+
+  // Worker milestones are ordered along its single request. DMA retirement
+  // interrupts and the seal decision have their own concurrent timestamps.
+  const char *last = armed ? events[NR_T_RETIRE_12] : "none";
+  for (unsigned i = NR_T_ENQUEUED; i <= NR_T_PUBLISHED; ++i) {
+    if (trace.stamp[i] != UINT32_MAX) last = events[i];
+  }
+  if (trace.stamp[NR_T_RENDER_BEGIN] != UINT32_MAX &&
+      trace.stamp[NR_T_RENDER_END] == UINT32_MAX && phase != NR_ROW_NONE)
+    last = phases[phase];
+
+  char header[400];
   int n = snprintf(header, sizeof(header),
-      "{\"available\":true,\"epoch\":%u,\"frame\":2,\"block\":0,\"retired\":%u,"
+      "{\"available\":true,\"epoch\":%u,\"retired\":%u,"
       "\"queue_depth\":%u,\"slot_frame\":%u,\"slot_block\":%u,\"slot_ready\":%u,"
-      "\"rearmed\":%u,\"fault\":%u,\"fault_frame\":%u,\"fault_block\":%u,\"site\":\"%s\","
-      "\"row_phase\":\"%s\",\"row\":%u,\"elapsed_us\":{",
+      "\"fault\":%u,\"site\":\"%s\",\"admission\":\"%s\",\"row_phase\":\"%s\","
+      "\"last_stage\":\"%s\",\"limit_us\":%u,\"budget\":\"%s\"",
       unsigned(trace.epoch), unsigned(trace.retired), unsigned(trace.queue_depth),
       unsigned(trace.slot_frame), unsigned(trace.slot_block), unsigned(trace.slot_ready),
-      unsigned(trace.rearmed), unsigned(trace.fault), unsigned(trace.fault_frame),
-      unsigned(trace.fault_block), sites[trace.site], phases[phase], unsigned(trace.row_cursor & 0xffff));
+      unsigned(trace.fault), sites[trace.site], admissions[nr_admission(trace.row_cursor, trace.stamp)],
+      phases[phase], last, unsigned(trace.limit_us), budget);
   if (n < 0 || size_t(n) >= sizeof(header) ||
       httpd_resp_send_chunk(request, header, n) != ESP_OK) return ESP_FAIL;
+  const struct { const char *key; uint32_t value; bool known; } fields[] = {
+    {"frame", trace.target_frame, armed}, {"block", 0, armed},
+    {"fault_frame", trace.fault_frame, fault}, {"fault_block", trace.fault_block, fault},
+    {"rearmed", trace.rearmed, eof}, {"row", trace.row_cursor & 0xffffu, phase >= NR_ROW_LOCK},
+    {"refill_us", trace.stamp[NR_T_PUBLISHED], published},
+    {"refill_lower_bound_us", trace.stamp[NR_T_DECISION], lower_bound}
+  };
+  char field[64];
+  for (const auto &f : fields) {
+    n = f.known ? snprintf(field, sizeof(field), ",\"%s\":%u", f.key, unsigned(f.value))
+                : snprintf(field, sizeof(field), ",\"%s\":null", f.key);
+    if (n < 0 || size_t(n) >= sizeof(field) ||
+        httpd_resp_send_chunk(request, field, n) != ESP_OK) return ESP_FAIL;
+  }
+  constexpr char elapsed[] = ",\"elapsed_us\":{";
+  if (httpd_resp_send_chunk(request, elapsed, sizeof(elapsed) - 1) != ESP_OK) return ESP_FAIL;
   bool first = true;
   for (unsigned i = 0; i < NR_T_COUNT; ++i) {
     if (trace.stamp[i] == UINT32_MAX) continue;
-    char field[64];
     n = snprintf(field, sizeof(field), "%s\"%s\":%u", first ? "" : ",", events[i], unsigned(trace.stamp[i]));
     if (n < 0 || size_t(n) >= sizeof(field) ||
         httpd_resp_send_chunk(request, field, n) != ESP_OK) return ESP_FAIL;

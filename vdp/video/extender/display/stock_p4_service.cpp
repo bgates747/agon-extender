@@ -212,9 +212,8 @@ bool StockP4Service::nativeRows(void *context, std::uint8_t *pixels, unsigned fi
     self.rendering_frame_ = self.active_.load(std::memory_order_acquire) &&
                             self.mode_setup_complete_.load(std::memory_order_acquire);
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
-  // The DMA worker supplies a cursor only for epoch 1, frame 2, block 0.
-  // All other refills use their ordinary row loop without per-row probes.
-  auto *cursor = frame == 2 && first_y == 0 ? agon_native_trace_row_cursor() : nullptr;
+  // The DMA worker supplies a cursor only for its armed startup top block.
+  auto *cursor = first_y == 0 ? agon_native_trace_row_cursor() : nullptr;
   if (cursor)
     agon_native_trace_row(cursor, self.rendering_frame_ ? NR_ROW_ACTIVE : NR_ROW_INACTIVE, 0xffffu);
 #endif

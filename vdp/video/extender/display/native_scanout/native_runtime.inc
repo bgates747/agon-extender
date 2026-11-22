@@ -13,13 +13,18 @@ _Static_assert(__atomic_always_lock_free(sizeof(uint32_t), 0), "trace markers mu
 // or row store after EOF interrupts it. Only this scratch space is writable by
 // that worker. The HTTP getter reads the separate immutable copy under nr_mux.
 static uint32_t nr_trace_stamps[NR_T_COUNT], nr_trace_cursor;
-static uint32_t nr_trace_origin;
-static bool nr_origin_seen, nr_trace_rendering;
+static uint32_t nr_trace_origin, nr_trace_target_frame;
+static bool nr_trace_armed, nr_trace_rendering;
 static agon_native_trace_t nr_trace_saved;
+
+static bool nr_tracing_top(const native_state *s, nr_tag tag)
+{
+    return s->trace_boot_epoch && tag.block == 0 && nr_trace_armed && tag.frame == nr_trace_target_frame;
+}
 
 static void nr_trace_at(enum nr_trace_event event, int64_t at)
 {
-    if (nr_origin_seen) {
+    if (nr_trace_armed) {
         __atomic_signal_fence(__ATOMIC_SEQ_CST);
         __atomic_store_n(&nr_trace_stamps[event], (uint32_t)at - nr_trace_origin, __ATOMIC_RELAXED);
         __atomic_signal_fence(__ATOMIC_SEQ_CST);
@@ -28,12 +33,17 @@ static void nr_trace_at(enum nr_trace_event event, int64_t at)
 
 static void nr_trace_retirement(native_state *s, nr_tag tag, int64_t now)
 {
-    if (!s->trace_boot_epoch || tag.frame != 1 || tag.block >= s->ring.count) return;
+    if (!s->trace_boot_epoch || tag.block >= s->ring.count) return;
     unsigned remaining = s->ring.count - tag.block;
     if (remaining > 3) return;
     if (remaining == 3) {
+        // Arm before nr_retire checks the old slot and before it queues the
+        // request. A failure on either side still has an exact origin.
+        memset(nr_trace_stamps, 0xff, sizeof(nr_trace_stamps));
+        nr_trace_cursor = 0xffff;
+        nr_trace_target_frame = tag.frame + 1u;
         nr_trace_origin = (uint32_t)now;
-        nr_origin_seen = true;
+        nr_trace_armed = true;
     }
     nr_trace_at(NR_T_RETIRE_12 + 3 - remaining, now);
 }
@@ -46,8 +56,11 @@ static void nr_trace_seal(native_state *s, enum nr_trace_site site,
     if (!s->trace_boot_epoch || nr_trace_saved.epoch) return;
     nr_trace_at(NR_T_DECISION, now);
     for (unsigned i = 0; i < NR_T_COUNT; ++i)
-        nr_trace_saved.stamp[i] = __atomic_load_n(&nr_trace_stamps[i], __ATOMIC_RELAXED);
-    nr_trace_saved.row_cursor = __atomic_load_n(&nr_trace_cursor, __ATOMIC_RELAXED);
+        nr_trace_saved.stamp[i] = nr_trace_armed ? __atomic_load_n(&nr_trace_stamps[i], __ATOMIC_RELAXED) : UINT32_MAX;
+    nr_trace_saved.row_cursor = nr_trace_armed ? __atomic_load_n(&nr_trace_cursor, __ATOMIC_RELAXED) : 0xffff;
+    nr_trace_saved.target_armed = nr_trace_armed;
+    nr_trace_saved.target_frame = nr_trace_armed ? nr_trace_target_frame : 0;
+    nr_trace_saved.limit_us = NR_LIMIT_US;
     nr_trace_saved.retired = retired;
     nr_trace_saved.queue_depth = uxQueueMessagesWaitingFromISR(s->queue);
     nr_slot top = s->ring.slots[0];
@@ -60,6 +73,8 @@ static void nr_trace_seal(native_state *s, enum nr_trace_site site,
     nr_trace_saved.fault_frame = tag.frame;
     nr_trace_saved.fault_block = tag.block;
     nr_trace_saved.epoch = 1;
+    nr_trace_armed = false;
+    s->trace_boot_epoch = false;
 }
 
 bool agon_native_get_startup_trace(agon_native_trace_t *out)
@@ -212,7 +227,7 @@ static bool IRAM_ATTR native_block_done(dw_gdma_channel_handle_t ch,
                     NR_FAIL(NR_SITE_ENQUEUE, d,AGON_NATIVE_QUEUE,job.tag,0,0,0);
                 } else {
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
-                    if (s->trace_boot_epoch && job.tag.frame == 2 && job.tag.block == 0)
+                    if (nr_tracing_top(s, job.tag))
                         nr_trace_at(NR_T_ENQUEUED, esp_timer_get_time());
 #endif
                     nr_max(&nr_stats.max_queue,uxQueueMessagesWaitingFromISR(s->queue));
@@ -235,7 +250,8 @@ static bool native_frame(esp_lcd_dpi_panel_t *d)
         s->phase = NR_EOF;
     } else if (s->phase == NR_RUNNING) {
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
-        const bool trace_frame = s->trace_boot_epoch && s->ring.frame == 1;
+        const nr_tag top = {s->ring.frame + 1u, 0};
+        const bool trace_frame = nr_tracing_top(s, top);
         const unsigned retired = s->ring.retired;
         const int64_t decision = trace_frame ? esp_timer_get_time() : 0;
 #endif
@@ -243,8 +259,17 @@ static bool native_frame(esp_lcd_dpi_panel_t *d)
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
         // nr_next_frame changes only frame and retired. Preserve the latter
         // before the call, and seal the result of the actual rearm predicate.
-        if (trace_frame) nr_trace_seal(s, NR_SITE_REARM, ready ? AGON_NATIVE_OK : AGON_NATIVE_SEQUENCE,
-                                     (nr_tag){2,0}, retired, decision);
+        if (trace_frame) {
+            const enum nr_trace_admission admission = nr_admission(nr_trace_cursor, nr_trace_stamps);
+            if (ready && (admission == NR_ADMIT_INACTIVE || admission == NR_ADMIT_UNBOUND_BLACK)) {
+                // This top block reached DMA as startup black. Between here
+                // and the next arm any fault must report no candidate.
+                nr_trace_armed = false;
+            } else {
+                nr_trace_seal(s, NR_SITE_REARM, ready ? AGON_NATIVE_OK : AGON_NATIVE_SEQUENCE,
+                              top, retired, decision);
+            }
+        }
 #endif
         if (ready) {
             // The final block interrupt cannot observe slot 0's reuse: the
@@ -266,7 +291,7 @@ static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
 {
     native_state *s = &d->native;
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
-    const bool trace_top = s->trace_boot_epoch && job.tag.frame == 2 && job.tag.block == 0;
+    const bool trace_top = nr_tracing_top(s, job.tag);
 #endif
     NR_TRACE_MARK(NR_T_DEQUEUED);
     // FIFO order means last frame's final native row has been read before its
@@ -506,10 +531,6 @@ static esp_err_t native_allocate(esp_lcd_dpi_panel_t *d)
     const uint32_t epoch = nr_stats.epoch + 1;
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
     s->trace_boot_epoch = epoch == 1;
-    if (s->trace_boot_epoch) {
-        memset(nr_trace_stamps, 0xff, sizeof(nr_trace_stamps));
-        nr_trace_cursor = 0xffff; // No source row has been touched.
-    }
 #endif
     nr_stats = (agon_native_stats_t){.epoch=epoch, .width=d->h_pixels,.height=d->v_pixels,.min_lead_us=UINT32_MAX,.min_draw_gap_us=UINT32_MAX};
     portEXIT_CRITICAL(&nr_mux);
