@@ -326,3 +326,95 @@ The local build, comparison receipt and red/green logs are retained under
 `agents/hdmi002/native-rows/startup-r02/`. This offline result leaves
 target startup, physical refill timing under load and Nurples visual
 acceptance open. The Olimex bench remains released with v0.3.0 installed.
+
+### Corrected candidate on Olimex and proposed first-fault trace
+
+The corrected candidate reproduced the startup failure at epoch 1, frame 2,
+block 0, on the 848×480 carrier. The P4 worker had taken the request from
+the queue. The missing observation is how far that request progressed before
+the DMA interrupt rejected frame rearm. Smith is using the bench interactively
+after the stopped batch. This review used only retained files.
+
+**Evidence.** The operator archived the complete r02 bench evidence directory
+outside the run directory and rehashed all 136 members against the originals.
+The archive SHA-256 is
+`8b32a5b11ef60342556dcf37059b83e84c4913113ecf9c0b4a8fd444d53b513c`.
+The local archive and member manifest are under
+`agents/hdmi002/native-rows/startup-r02/failure-preservation/`.
+All 1,794,048 saved readback bytes matched the candidate application and
+its prescribed padding. The boot log identifies the same r02 build.
+Both active and saved scanout reports agree on the following counters.
+
+| At first fault | r01 | r02 |
+|---|---:|---:|
+| Successful frame rearms / blocks retired / publications after priming | 1 / 30 / 27 | 1 / 30 / 27 |
+| Queue high-water / rejections / invalid-descriptor IRQs / reported underruns | 2 / 1 / 0 / 0 | 2 / 1 / 0 / 0 |
+| Slowest completed refill | 1,048 µs, frame 1 block 0 | 60 µs, frame 0 block 3 |
+
+Each retirement enqueues one request. The interrupt reads queue occupancy
+after every successful send. With 30 sends and at most two entries left, the
+single FIFO worker had removed at least 28 requests by the end of frame 1.
+The first three descriptors were primed, so request 28 is frame 2, block 0.
+The final 27 publications cover only through frame 1, block 14. The worker
+could have been interrupted immediately after removing request 28. The two
+maxima refer to different completed jobs and cannot establish a speedup or
+measure the missing publication. The EOF rejection supplies literal zeroes
+for the failed-job timing. Frame 2 is outside the every-sixteenth-frame row
+profile. The row profile cannot tell whether its renderer started.
+
+The runner observed the fault after loading rowload and before issuing RUN.
+Neither drawing window began and the runner did not preload Nurples. The
+supervisor joined its child with exit 1. The spoken-alert helper returned
+success. The last commissioned state was r02 installed and the slot held.
+
+**Proposed diagnostic, for review.** Use one compile-time diagnostic on the r02
+P4 source, armed once per boot for epoch 1 and tag (2,0). Allocate one fixed
+internal-RAM record. The ISR and worker use the same microsecond clock. Record
+elapsed time from the target retirement, with an explicit unseen value.
+Each milestone occupies one aligned, lock-free 32-bit word. Use a separate
+packed phase/source-row word for progress inside the renderer. No serial I/O,
+heap allocation, pixel copy, per-row timestamps or general scheduling log.
+
+| Owner and point | Capture for this handoff only |
+|---|---|
+| DMA block interrupt | Save the entry times for frame 1 blocks 12, 13 and 14, and mark success of the (2,0) queue send. Reuse the existing retirement timestamp. This measures the worker's actual software service window. |
+| Refill worker | Mark return from the queue receive, before/after the first reader-mutex take, drawing callback entry/return if invoked, the gate outcome (wait, open or no-wake bypass), and before/after the second reader-mutex take. Record ownership and reader-bound decisions where the driver already makes them. |
+| Refill worker and stock row reader | Mark render entry/return, or the no-reader clear/already-black path. If the callback runs, distinguish inactive black output from active rows. For just this block, overwrite the progress word with source row and operation at the native row lock, after acquisition during stock row preparation, and during RGB expansion. Instrument the ordinary frame-2 path, including the first cropped row where applicable. |
+| Refill worker | Mark before/after cache clean or its skip, and entry to the publication critical section. Record completion only after the existing fence, descriptor VALID write and budget check succeed. Cache work and publication retain their original ordering. |
+| DMA frame interrupt | Immediately before the existing rearm check, capture time, retired count, queue occupancy, slot 0 generation and ready bit. Save the check outcome and the fault site. Seal the record at this decision, or at an earlier first fault. A successful wrap also produces a receipt. |
+
+Keep the ISR and worker fields single-writer. Publish each marker atomically,
+with compiler ordering at the measured boundary. Snapshot into retained
+diagnostic storage under the existing first-fault/rearm critical section on
+core 1, before later worker progress or panel teardown can change it. Expose
+the sealed record in the existing scanout diagnostic response. Read it after
+the event. The observer need not poll during startup.
+
+**How to use the result.** Subtract adjacent milestone times to find where
+the available interval went. At EOF an entered operation with no return
+brackets the unfinished work. The renderer cursor distinguishes row-lock
+acquisition, stock composition and expansion. A completed cache clean with
+no publication directs attention to the final critical section. A published
+top descriptor with rejected rearm directs attention to ring state and the
+rearm predicate. A preemption between two markers leaves that interval open.
+A phase names the interrupted software path; it does not identify another
+task holding a mutex or establish physical HDMI timing.
+
+Before a diagnostic build goes to hardware, exercise this receipt with the
+existing host callback model: successful frame-2 wrap, intentionally withheld
+worker, and EOF during a reader wait, render or cache operation. Verify the
+record survives worker resumption and a later panel epoch. Check the linked
+target for lock-free marker stores and bound their cost, including the row
+cursor. If the diagnostic passes startup, retain the successful trace and
+report the failure as unreproduced on that build. Implementation and hardware
+execution await Smith's review.
+
+**Approval and operator observation.** Smith approved the one-shot trace for
+implementation, offline verification and an identified experimental build.
+Freeze and push this plan before editing source. Prove that EOF seals the
+record and that a later mode change preserves it. Smith saw the solid blue
+Extender display return after several P4-PC resets. Remote keyboard commands
+still worked. He could not run an Extender Nurples session and confirmed
+Nurples works on the mainboard. He left the bench at a responsive Legacy MOS
+prompt in the Nurples directory. These observations do not establish the fault
+registers for each reset. This step is offline.
