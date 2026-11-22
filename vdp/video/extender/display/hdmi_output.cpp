@@ -461,7 +461,16 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
   if (!geometry.valid() || width > static_cast<int>(kPresentationSnapshotMaximumWidth)) return false;
   // Always use independent HDMI front/back for PPA, including single-buffered
   // logical modes. The logical swap counter remains owned by stock VDP.
-  const bool doubled = (scaled || display.isDoubleBuffered()) && buffer_count_ == 2;
+  const bool guard_logical_swap = scaled || display.isDoubleBuffered();
+  bool use_spare = guard_logical_swap;
+#ifdef AGON_EXTENDER_HDMI_FULL_FRAME_AUTO
+  // Mode 20 draws into one logical surface. Compose into the idle physical
+  // framebuffer so the DMA front remains intact through the whole row pass.
+  if (width == 512 && height == 384 && this->width() == 684 &&
+      this->height() == 384 && display.nativePixelFormat() == fabgl::NativePixelFormat::SBGR2222)
+    use_spare = true;
+#endif
+  const bool doubled = use_spare && buffer_count_ == 2;
   if(scaled && !doubled)return false; // never PPA-write a scanned front
   portENTER_CRITICAL(&callback_mux_);
   const unsigned target = ownership_.writable(doubled);
@@ -510,7 +519,7 @@ bool HdmiOutput::publish(StockRuntimeController &controller, std::atomic<bool> &
     expandRepeatedSignalRowToHdmi(signal,image,image_stride,image_geometry,y,row_repeat);
   }
   auto conversion_finished = esp_timer_get_time();
-  if (doubled && visible_generation != stockVisibleGeneration()) {
+  if (doubled && guard_logical_swap && visible_generation != stockVisibleGeneration()) {
     // A logical swap during a row pass can mix two source images. Keep the
     // complete HDMI front and retry at the next ordinary frame opportunity.
     // No logical drawing, swap, counter or vblank waits are delayed here.
