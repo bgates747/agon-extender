@@ -1,5 +1,7 @@
 # HDMI02-SIZE01e — Stock-compatible P4 presentation timing, with Nurples as the scrolling reproducer
 
+**Current review.** The Olimex reservation is held with r05 installed. Smith requested the [two-row interrupt test](#two-row-interrupt-test-for-review) and wants a recognizable pattern at the earliest opportunity. The wake-only build proposal is withdrawn. Smith approved the written test on November 22. Freeze the plan, implement the isolated fixture and verify it offline. Keep the Olimex reservation.
+
 **Current review concerns stock-compatible presentation and performance.** Smith selected exact pixel doubling for 320×240. The [native row scanout plan](NATIVE-ROW-SCANOUT-PLAN.md) records the decision, the redundant work to eliminate and the refill tests under load. Smith approved that design for the P4 candidate. The [offline verification](NATIVE-ROW-SCANOUT-RESULTS.md) and [matched load-test packet](NATIVE-ROW-LOAD-PACKET.md) await his review before reservation. Nurples supplies the mode-20 scroll reproduction. The [comparative source review](STOCK-SCROLL-TIMING-REVIEW.md) and its spare-buffer control remain available for diagnosis. The earlier blackout comparison is deferred.
 
 **Application scope.** Smith confirms that Nurples should keep a single logical framebuffer. The compatibility question belongs to EVDP and applies to every application using its display paths. Nurples supplies the mode-20 reproduction. Each stock mode retains its own logical buffering and swap behavior. The mode-20 observation establishes no result for other modes. Smith has asked how directly the P4 can preserve stock's timing between native row preparation, physical scanout and queued drawing. The proposed spare-HDMI-buffer comparison isolates one possible cause. Smith selected DMA-paced native rows for the candidate.
@@ -792,3 +794,134 @@ while another thread held the actual stock drawing mutex.
 The private `first-live-r05` evidence directory retains the application, ELF,
 matched build inputs, archive verification, frozen example responses and host
 test logs. All timing values from the host fixtures use a modeled clock.
+
+### Olimex r05 — single physical startup
+
+The first live refill was frame 3 block 0. At frame end the P4 worker had
+processed logical rows 0–27 and reached the stock drawing mutex on row 28
+of the 32-row block. The trace froze before the after-acquisition marker.
+DMA refused rearm with the slot still unpublished. The cursor locates the
+worker at frame end. It provides neither a row-specific wait duration nor
+the identity of a lock holder.
+
+| First live block event | µs since slot retirement |
+| --- | ---: |
+| Worker dequeued the request | 12 |
+| Drawing wake returned | 25 |
+| Sampling gate opened | 1,040 |
+| Worker entered the live renderer | 1,048 |
+| Refill deadline | 1,600 |
+| Frame ended, rearm refused | 2,068 |
+
+Only 552 µs of the refill budget remained when rendering began. At refusal,
+1,020 µs had elapsed since render entry and the slot was at least 468 µs
+over budget. Cache writeback and descriptor publication had no entry markers.
+Both counter snapshots recorded two successful earlier rearms, 45 retired
+blocks, 42 publications, one rearm refusal, zero invalid descriptors and
+zero hardware underrun interrupts.
+
+The independent app0 readback matched all 1,794,048 written bytes at
+`0x20000`, SHA-256 `1b82f7b3cc335b34fdfe06795f00c4dfde4279574ab5ea6b045dd72132baccfd`.
+The boot log identified r05 and the installer verified the Legacy CLI.
+The private `first-live-r05/bench` capture contains the sealed response,
+both counter snapshots, UART boot log, readback and supervisor receipts.
+The sealed response SHA-256 is `e475777217d5666ce7708aaeb3001d58f76c6eff501c17b845caf20eb5ab3009`.
+The operator stopped after this boot with r05 installed and the slot held.
+
+### Why r05 waited at the frame boundary — offline fix for review
+
+The P4 port deliberately gave the drawing task one 32-line DMA interval
+before sampling next-frame row zero. On the retained boot that policy spent
+1,011 µs waiting after slot 0 was already writable. The first live refill
+ran out of time during row processing. Contention at row 28 remains possible,
+but the trace establishes no duration for that particular acquisition.
+
+| Event, measured from retirement of frame 2 block 12 | r05 |
+| --- | ---: |
+| The ring retags slot 0 for frame 3 block 0 | 0 µs |
+| The core-1 worker returns from notifying core-0 drawing and then enters the sampling wait | 25 µs, then 29 µs |
+| Block 13 retires, satisfying the port's gate; the worker observes it | 1,030 µs, then 1,040 µs |
+| Rendering starts, leaving 536 µs until the pre-VALID check and 552 µs until the deadline | 1,048 µs |
+| At the rearm decision, 28 rows are complete and row 28 has reached its pre-lock marker | 2,068 µs |
+
+The three-slot ring advances the requested tag by three at each retirement.
+Block 12's interrupt gave the worker a valid claim on the new slot. The
+separate `nr_may_sample` test requires 14 of 15 old blocks to have retired
+before admitting a next-frame request. Both P4 carriers use 1,104 pixel
+clocks per line at 240/7 MHz, or 1,030.4 µs per 32 active lines. The 10 µs
+from block 13's interrupt to the observed gate opening accounts for the
+small remainder. The full-transfer callback checks the top slot before it
+reenables DMA. Vertical blank on the HDMI signal supplies no additional
+time before this software decision. [Ring](https://github.com/bgates747/agon-extender/blob/d5b5ad8919ae844af511539078413d4135c6841d/vdp/video/extender/display/native_scanout/native_ring.h#L35) · [Worker](https://github.com/bgates747/agon-extender/blob/d5b5ad8919ae844af511539078413d4135c6841d/vdp/video/extender/display/native_scanout/native_runtime.inc#L297)
+
+Stock VDP v2.16.0 uses four signal-row buffers for 16-colour VGA and fills
+two per interrupt. In mode 0 the interrupt for visible row 476 prepares rows
+478–479 and then notifies drawing. The interrupt for row 478 prepares the
+next frame's rows 0–1. The two interrupts are nominally 63.6 µs apart
+(two lines of 800 clocks at 25.175 MHz). This is a raster interval. Actual
+CPU time available to drawing depends on when the task runs. Stock permits
+single-buffer drawing to overlap scanout. The P4 adopted the order but
+stretched the interval by using 32-line strip retirements. [Stock descriptor placement](https://github.com/AgonPlatform/vdp-gl/blob/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/dispdrivers/vgapalettedcontroller.cpp#L177) · [Row preparation and drawing notification](https://github.com/AgonPlatform/vdp-gl/blob/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/dispdrivers/vga16controller.cpp#L754)
+
+**Row 28.** The 1,020 µs from render entry to refusal includes stock row
+preparation and BGR expansion for all of rows 0–27, their lock acquisitions,
+and any preemption. There is no per-row clock or owner in the frozen record.
+The linked mode-0 inner loops alone execute 1,720 instructions per 640-pixel
+row for packed 16-colour decoding and 7,360 for BGR expansion. These counts
+describe work, not wall time. The startup palette restore had completed before
+live admission. The core-0 drawing worker could still take the mutex in a
+queued primitive or its final sprite pass. A single EOF cursor cannot assign
+the missed time to a holder. The trace also never reached cache writeback.
+[Row cursor](https://github.com/bgates747/agon-extender/blob/d5b5ad8919ae844af511539078413d4135c6841d/vdp/video/extender/display/stock_runtime_controller.hpp#L239) · [Drawing callback and swap acknowledgement](https://github.com/bgates747/agon-extender/blob/d5b5ad8919ae844af511539078413d4135c6841d/vdp/video/extender/display/stock_p4_service.cpp#L264)
+
+**Proposed P4-only change.** Move the existing once-per-frame drawing wake
+from entry to the incoming top-block job to the successful publication of
+the outgoing final strip. On this carrier, block 11's retirement requests
+that final strip (14). When block 12 retires, the same FIFO worker can start
+the next top strip as soon as it owns slot 0. Remove the extra wait for block
+13 on that top job. The old strip must already be DMA-visible before any
+swap wait. Invoke the existing callback outside the ring critical section,
+under the reader/binding lifetime protection and only for its valid binding.
+Preserve startup black and palette admission, the single-buffer notification,
+the double-buffer drain acknowledgement before row zero, the per-row stock
+mutex, and the public frame tick at actual DMA rearm. Keep cache-before-VALID
+and both budget checks. Carry the wake timestamp/tag across these two jobs
+for the existing drawing-gap diagnostic. An early wake can precede the
+refill origin, so report wake-to-sampling separately from retire-to-VALID.
+This needs no extra pixel buffer, copy or timer.
+The head start for single-buffer drawing is the interval between tail
+publication and the first top-row read. It can be short if the worker is
+already behind. The proposal reproduces stock ordering at strip granularity.
+For modes with vertical borders, verify the last actual source row as well
+as the final carrier strip.
+
+**Verification if approved.** On both 12- and 15-block carriers, exercise
+ordinary and backlogged tail publication, unbound/black and live transitions,
+mode teardown, single-buffer scrolling, and a queued double-buffer swap.
+Verify one wake after final publication, top pixels from the correct bank,
+matching first/last rows and an immutable first-live trace. Then measure
+retirement-to-VALID against 1,600 µs and wake-to-first-read separately.
+Sustained active blocks arrive every 1,030.4 µs. A passing top block alone
+cannot establish sustainable throughput. Check subsequent blocks, queue
+growth and refused rearms. If row processing still misses, use a bounded
+first-live measurement of lock wait, composition and expansion before
+choosing a mutex or pixel-loop change. This proposal awaits review with
+the Olimex reservation held and r05 installed.
+
+### Two-row interrupt test for review
+
+**Question.** Can the Olimex P4, with its DSI bridge controlling the transfer, retire exactly two physical rows at a time and refill their storage in the DMA interrupt through frame wrap? Use one 848×480 RGB888 carrier, the same 1104×517 totals and PLL240/7 clock as r05, and a fixed pattern. This isolates the hardware handoff before introducing any stock framebuffer, palette, Copper, sprites, drawing locks or RTOS refill task. Stock's interrupt-driven row preparation remains the implementation baseline.
+
+1. **Show the reference first.** Use one standalone P4 diagnostic image. It boots idle. On an explicit operator command over the P4 USB console, immediately show the existing 848×480 HDMI timing card through its known-working full-frame path. The viewer should see labelled colour bars, a white border, corner labels and a centered 512×384 field, with a small amber reference marker. Hold it while the monitor locks, for at least one full second after settling and until the operator starts the live phase. Tell Smith as soon as the reference is available. The Pi operator owns both commands. Smith can watch without typing, taking measurements or confirming each step. The reference can stay up if Smith wants time to see it. This is an isolated P4 transport test. Its USB console stays available independently of the Agon keyboard and EVDP network services. [Existing timing card and fixture](../../../vdp/hdmi-timing-test/README.md) · [Existing mode-preview patterns for subsequent stock integration](SIZE01-VISUAL.md)
+
+2. **Switch only the source of pixels.** Positively stop the reference DMA channel before reprogramming the transfer. Keep the carrier, LT8912B settings and monitor input. In the live phase fill the screen with the card's eight colours in their familiar order. Give every physical row an identifying mark in a narrow side strip encoding its absolute row and frame number. Add a wide green corner marker that changes position once per second, so Smith can recognize live output at a glance. Draw the bars and marks by writing both complete BGR rows into the retired slot in the interrupt. Only pairs 0 and 1 of the first frame are primed before DMA starts. They carry the colour bars with the reference marker colour. From the first wrap, even the top four rows must come from the interrupt. The reference framebuffer never supplies live pixels. Use a finite five-second viewing interval (300 complete live frames at the nominal 60.07 Hz). Time the first two frames separately from the rest. No mode matrix, game, SD payload or load generator.
+
+3. **Program one observable handoff.** Select the DSI bridge as flow controller and the DW-GDMA channel's destination-peripheral flow mode, with hardware handshaking from memory to the DSI FIFO. Configure frame and block word counters and their reloads while stopped. Enable multiblock explicitly. Record the effective flow, counters, reload, credit and burst settings. At 64 bits per word the bridge must terminate each pair at **636 words** (5,088 bytes) and the frame at **152,640 words**. Use a compatible request size that divides 636. The old four-bit DMA-controlled count cannot encode 240. The bridge's block-end handshake is precisely what this experiment must demonstrate. The VDMA programmed block-size field alone cannot verify how many words the peripheral accepted. [P4 revision 1.3 VDMA manual, §§5.5.4–5.5.5](https://documentation.espressif.com/esp32-p4-chip-revision-v1.3_technical_reference_manual_en.pdf) · [Bridge flow registers](https://github.com/espressif/esp-idf/blob/v5.5.5/components/soc/esp32p4/register/hw_ver1/soc/mipi_dsi_bridge_reg.h) · [Earlier hardware review](../SCAN-001/S03-FEASIBILITY.md)
+
+4. **Use stock's four physical rows of rolling storage.** Allocate two private, 64-byte-aligned 5,120-byte slots and 240 aligned internal descriptors, one per pair. Each descriptor transmits exactly 5,088 bytes. Only the first two descriptors start valid. At interrupt entry, check the expected descriptor through its uncached alias for *fresh* hardware completion, its actual transferred amount and the expected slot generation. Reject missing, out-of-order or merged events. An interrupt counter alone cannot identify the retired descriptor. Once pair p retires, the interrupt fills the same slot for p+2 modulo 240, advancing the frame tag on wrap. Finish stores, clean the private aligned range as needed, clear stale completion status for the incoming descriptor, fence, then publish VALID last. Keep future descriptors invalid until ready. The last pair alone carries LAST. Check the final block and full-transfer events, then rearm only with the correct next-frame top pairs ready. Record actual retirement of the ISR-produced pair 0. Frame-boundary ownership and writeback ordering require offline checks, including a coalesced event, a stale DONE and a withheld VALID. Check offline that every generated pixel matches an independent pattern oracle and that the linked ISR contains no queue, sleeping lock, allocation, logging or framebuffer-copy path.
+
+5. **Score the evidence automatically.** Keep counters, worst callback-entry-to-VALID and full-handler times, minimum observed lead to reuse, and a small first-wrap record in internal RAM. Preserve entry, publication, actual hardware completion and channel-rearm evidence with pair/frame identities, especially 238, 239, 0 and 1. The Pi collects one compact serial result outside the ISR. A pass on this carrier requires 240 fresh 636-word completions per frame, full-transfer done only at 239, 300 complete frames (72,000 pairs), 299 successful wraps, correct final-slot pixels, no underrun, invalid descriptor or unexplained event, and refill service within the nominal **64.4 µs** active-pair interval. Record measured IRQ spacing separately. FIFO lookahead makes this a service-time comparison rather than a measurement of HDMI raster phase. Suppress refills for pairs outside the finite run so the final two slots retain the last frame's pairs 238 and 239 for independent readback after stop. A clean receipt establishes direct IRQ refill and DMA consumption for this fixed workload. Record monitor observation or native capture separately. A picture alone cannot certify all pair retirements, and serial telemetry alone cannot certify what Smith saw.
+
+   Check interrupt context on the first live fill and count publications at that same ISR-only site. The expected split is two task-primed pairs and 71,998 ISR-produced pairs. Have the Pi compare the final two slot payloads over USB against the independent oracle after DMA has stopped. Report a timing miss separately if hardware still retired every pair correctly. A missing or ambiguous writeback makes the retirement result inconclusive. A first failure localizes the tested configuration and does not settle every possible bridge configuration.
+
+6. **End predictably.** On the first fault freeze the last good pair, failing register/descriptor state and timing. A bounded no-progress timeout also ends collection if the peripheral never signals pair completion. Stop rearm, verify the channel is disabled before freeing or rebinding anything, and report over USB even if HDMI is black. On success, once the live channel is stopped, return to the known-working reference card and identify it as reference again. On failure retain the evidence and report the last visible phase before recovery. Reset boots idle. A later commissioned installation would use app-only write/readback and retain the exact restore image. The implementation gate was approved November 22. Preserve the reservation and separately record the installation and invocation boundary before any physical phase.
