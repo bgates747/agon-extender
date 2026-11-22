@@ -51,6 +51,11 @@ typedef struct {
     dw_gdma_channel_handle_t dma_chan;
     dw_gdma_link_list_handle_t link_lists[1];
     unsigned h_pixels, v_pixels;
+#ifdef AGON_TEST_PALETTE_DMA
+    bool (*on_frame_buf_complete)(esp_lcd_panel_t *, void *, void *);
+    bool (*on_vsync)(esp_lcd_panel_t *, void *, void *);
+    void *user_ctx;
+#endif
 } esp_lcd_dpi_panel_t;
 struct queue_model { unsigned get,count; nr_request requests[3]; };
 static struct { struct { uint32_t val; } chen0; } regs;
@@ -484,6 +489,84 @@ static void test_startup_trace(unsigned height,const char *scenario) {
 }
 #endif
 
+#ifdef AGON_TEST_PALETTE_DMA
+#include "native_scanout_palette_dma.h"
+static esp_lcd_dpi_panel_t palette_panel;
+
+// Use the exact generated target's EOF callback. At end of the list the modeled
+// channel stops. Only its call through the gate may reselect LLI 0 and enable it.
+static unsigned list_selections;
+static int initial_cache_calls;
+static void dw_gdma_channel_use_link_list(dw_gdma_channel_handle_t chan, dw_gdma_link_list_handle_t list) {
+    assert(!chan->enabled && list == palette_panel.link_lists[0] && list->desc[0].is_valid);
+    ++list_selections;
+}
+#define MIPI_DSI_BRG_LL_EVENT_VSYNC 0 // P4 target minimum revision 100
+#include "palette_dma_rearm.inc"
+
+static bool palette_eof(esp_lcd_panel_t *panel, void *event, void *ctx) {
+    assert(panel == &palette_panel.base && !event && !ctx && regs.chen0.val);
+    assert(list_selections == nr_stats.frames);
+    palette_frame_complete(nr_stats.frames);
+    return false;
+}
+static void consume_palette_block(void) {
+    native_state *state = &palette_panel.native;
+    nr_tag consumed = {state->ring.frame, state->ring.retired};
+    assert(nr_ready(&state->ring, consumed));
+    assert(palette_panel.link_lists[0]->desc[consumed.block].is_valid);
+    palette_check_strip(consumed.frame, consumed.block, state->pixels[consumed.block % NR_SLOTS]);
+    tick_block();
+}
+void palette_dma_start(void) {
+    initial_cache_calls = cache_calls;
+    fresh(&palette_panel,848,480);
+    list_selections = 0;
+    palette_panel.on_frame_buf_complete = palette_eof;
+    wait_irq = consume_palette_block;
+}
+bool palette_dma_bind(void *ctx, agon_native_render_t render, agon_native_wake_t wake) {
+    return agon_native_bind(&palette_panel.base,ctx,render,wake) == ESP_OK;
+}
+void palette_dma_unbind(void) {
+    agon_native_unbind(&palette_panel.base);
+}
+void palette_dma_advance_to(unsigned frame, unsigned block) {
+    native_state *state = &palette_panel.native;
+    while (state->ring.frame != frame || state->ring.retired != block) {
+        assert(state->ring.frame < frame || (state->ring.frame == frame && state->ring.retired < block));
+        consume_palette_block();
+        nr_request job;
+        while (xQueueReceive(state->queue,&job,0)) native_do_job(&palette_panel,job);
+        if (state->ring.retired == state->ring.count) {
+            dw_gdma_channel_enable_ctrl(palette_panel.dma_chan,false);
+            mipi_dsi_dma_trans_done_cb(palette_panel.dma_chan,NULL,&palette_panel);
+            assert(regs.chen0.val && nr_stats.rejected == 0 && nr_stats.invalid == 0 && nr_stats.underruns == 0);
+        }
+    }
+    if (frame == 3 && block == 5) {
+        assert(cache_calls == initial_cache_calls + NR_SLOTS);
+        assert(nr_stats.ticks == 1); // One real drawing opportunity during the palette hold.
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+        if (nr_stats.epoch == 1) {
+            agon_native_trace_t sealed;
+            assert(agon_native_get_startup_trace(&sealed));
+            assert(sealed.site == NR_SITE_REARM && sealed.rearmed && sealed.slot_ready && !sealed.fault);
+            assert(sealed.slot_frame == 2 && sealed.slot_block == 0);
+            assert(sealed.row_cursor == (((unsigned)NR_ROW_INACTIVE << 16) | 0xffff));
+            puts("Frame 2 block 0: sealed at rearm, black and ready, source row unset.");
+        }
+#endif
+    }
+}
+void palette_dma_stop(void) {
+    assert(nr_stats.frames == 5 && nr_stats.blocks == 5 * palette_panel.native.ring.count);
+    assert(nr_stats.ready == nr_stats.blocks && nr_stats.fault == AGON_NATIVE_OK && nr_stats.ticks == 3);
+    printf("DMA: %u rearms, %u retired blocks, %u publications, %u refusals, %u invalid, %u underruns.\n",
+           nr_stats.frames,nr_stats.blocks,nr_stats.ready,nr_stats.rejected,nr_stats.invalid,nr_stats.underruns);
+    dispose(&palette_panel);
+}
+#else
 int main(int argc,char **argv) {
 #ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
     if (argc == 3) {
@@ -501,3 +584,4 @@ int main(int argc,char **argv) {
     puts("Native DMA handoff: both carriers, 5 wraps each, draw/wait phase, cache-before-valid, no repeated clean-slot sync, stale tag, hardware invalid LLI, late worker, joined stop and timeout retention passed.");
     return 0;
 }
+#endif

@@ -4,6 +4,9 @@
 #include <atomic>
 #include <functional>
 #include <mutex>
+#ifdef AGON_TEST_PALETTE_DMA
+#include "native_scanout_palette_dma.h"
+#endif
 
 constexpr int ESP_ERR_INVALID_STATE = 0x103;
 
@@ -20,11 +23,23 @@ class HdmiOutput {
   bool bindNativeRows(void *context, NativeRender render, void (*wake)(void *)) {
     std::lock_guard lock(row_mutex_);
     if (row_context_ || fail_row_bind) return false;
+#ifdef AGON_TEST_PALETTE_DMA
+    if (!palette_dma_bind(context, render, wake)) return false;
+#endif
     row_context_ = context; render_=render; wake_=wake; return true;
   }
-  unsigned outputSize() const { return (320u << 16) | 32; }
+  unsigned outputSize() const {
+#ifdef AGON_TEST_PALETTE_DMA
+    return (848u << 16) | 480;
+#else
+    return (320u << 16) | 32;
+#endif
+  }
   void joinNativeRows() {
     std::lock_guard lock(row_mutex_);
+#ifdef AGON_TEST_PALETTE_DMA
+    palette_dma_unbind();
+#endif
     row_context_=nullptr;
   }
   bool emitRows(uint8_t *pixels, uint32_t frame, bool release_drawing) {
