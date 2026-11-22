@@ -975,3 +975,20 @@ The P4 fixture read 639 from the documented DMA completion field. Its descriptor
 Smith authorized one live invocation on the reserved Olimex bench. Starting from fixture source `e4b97005`, encode the source and destination four-beat AXI limits as raw 3. Keep the bridge request and handshake at four words, with exactly 636 completed words required per pair. During the existing transition from the full-frame reference, the P4 will retain the stopped reference descriptor’s programmed size, completed count and ownership/completion flags. Report that snapshot outside the interrupt. The calibration consumes no additional transfer.
 
 The Pi will verify the descriptor configuration and frozen reference capture offline, build the standalone app, flash only the P4 app0 extent and compare a fresh full-extent readback. It will establish reference readiness, issue `live` once, and preserve the unedited serial response. Report the reference count, verified live retirement count, IRQ publications and worst callback-entry-to-VALID time against 64.4 µs. A run that stops before a refill publishes supplies no refill time. Retain the first failure and the bench reservation.
+
+### Olimex r02 result — reference calibration and first live pair
+
+The corrected AXI limits reached the hardware. The first live pair again returned raw count 639. The reference established that on this P4 the DMA-controlled frame writes back one less than its known length. The earlier interpretation of 639 as a literal 639-word completion is therefore unverified for the bridge-controlled pair.
+
+The plan freeze was pushed at `900b1222` before the component edit. Fixture source `618111ba` built as `hdmi-pair-irq-r02-b2026-11-22-17-51-00Z`. The host matched all 72,000 pixel pairs, ran the normal and nine fault cases, and checked both raw burst limits against the linked target. The Pi independently read every byte of the installed 1,794,048-byte app0 extent. Its SHA-256 matched the write image, `ece57afd5fdf05626899d847fd20f35d5c292f5a9e0a7513cc5a70d69b75d08d`. Raw app SHA-256 was `706395e1d6d5060bd5b9c2f89e397525c8fca7a289f9ab2eda8829270856fea1`.
+
+| Physical measurement | Result |
+| --- | --- |
+| Known full-frame reference, DMA controls flow | 152,640 words. Programmed block-size field 152,639 and raw completed field 152,639. Block and frame DONE set, LAST set, VALID clear. |
+| First live pair, bridge controls flow | 636 intended words. Block DONE set and VALID clear. Raw completion 639 in both r01 and r02. The first completed descriptor control-high changed from `0x04048240` to `0x040381c0`, confirming r02 used raw 3 in both AXI burst fields. |
+| Validated retirements and refills | 0 of 72,000 pairs passed. Two pairs were primed, with zero interrupt publications, complete live frames or rearms. Both primed buffers matched the oracle after stop (10,176 bytes). |
+| Worst completed refill vs 64.4 µs | Unmeasured. The interrupt handler spent 8,247 cycles (22.91 µs at 360 MHz) processing the failed completion and stopping DMA. |
+
+If the bridge-controlled block uses the reference encoding, 636 words should write back 635, and raw 639 represents 640 words, one four-word request over the target. The trace contains no independent destination write count. Correcting the burst fields did not remove the discrepancy. The fixture’s raw-equals-636 check remains the abort point. Any subsequent change to acceptance needs evidence for the destination-controlled mode.
+
+The operator issued one `live` command after the new reference was ready. The P4 verified that DMA stopped, disabled output and left the reference unrestored. The Pi retained the 21,510-byte USB trace, SHA-256 `5074031c5a5569d36e8e421f97e15e2c087a428b7ea17edf2c02d54c02caa00e`, the independent flash receipt, decoded counters, slot payloads and comparison in local `pair-irq-r02/bench` evidence. The supervisor joined the trial worker and delivered the failure alert. Olimex custody remains active.
