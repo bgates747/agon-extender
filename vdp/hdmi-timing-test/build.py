@@ -94,7 +94,8 @@ def verify_pair_build(project: Path, build: Path, tools_dir: Path, manifest: dic
     if "-DAGON_HDMI_PAIR_PROBE=1" not in main_command.split():
         raise RuntimeError("Standalone entry point compiled without the pair probe")
     compiler = Path(json.loads((build / "project_description.json").read_text())["c_compiler"]).resolve()
-    if not compiler.is_relative_to(tools_dir.resolve()) or compiler.name != "riscv32-esp-elf-gcc":
+    candidates = [p.resolve() for p in tools_dir.glob("tools/riscv32-esp-elf/*/riscv32-esp-elf/bin/riscv32-esp-elf-gcc")]
+    if candidates != [compiler]:
         raise RuntimeError(f"Unexpected pair-probe compiler: {compiler}")
     return {"derivatives": derivatives, "compiler": str(compiler), "compiler_sha256": digest(compiler)}
 

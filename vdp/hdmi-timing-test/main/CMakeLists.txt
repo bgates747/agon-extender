@@ -1,7 +1,7 @@
 # IDF extracts component dependencies in a separate script invocation. The
 # frozen build selection is also visible there before normal project flags.
 if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/../pair-probe.enabled")
-    set(pair_console_component esp_driver_usb_serial_jtag esp_driver_gpio)
+    set(pair_console_component esp_driver_usb_serial_jtag esp_driver_gpio vfs)
 endif()
 idf_component_register(SRCS "main.c" "../pattern.c"
     INCLUDE_DIRS ".."
