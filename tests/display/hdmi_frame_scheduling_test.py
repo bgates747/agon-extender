@@ -15,7 +15,10 @@ ROW = ROOT / "docs/tasks/PORT-003/stock-backend-r1"
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--native-rows", action="store_true")
+    parser.add_argument("--startup-trace", action="store_true", help="also check the diagnostic renderer against ordinary native output")
     args = parser.parse_args()
+    if args.startup_trace and not args.native_rows:
+        parser.error("--startup-trace needs --native-rows")
     sources = [GL / "dispdrivers" / (name + "controller.cpp")
                for name in ("vgabase", "vgapaletted", "vga2", "vga4",
                             "vga8", "vga16", "vga64")]
@@ -39,6 +42,7 @@ def main():
             "-DFABGL_EMULATED", "-DAGON_EXTENDER_STOCK_RUNTIME",
             "-DAGON_EXTENDER_HDMI",
             "-DAGON_EXTENDER_NATIVE_SCANOUT" if args.native_rows else "-DAGON_EXTENDER_DIRECT_RGB888",
+            *(["-DAGON_EXTENDER_NATIVE_STARTUP_TRACE"] if args.startup_trace else []),
             *["-I" + str(path) for path in includes],
             "-include", str(RUNTIME / "compat/host_preinclude.hpp"),
             *map(str, sources), "-o", str(binary)], check=True)

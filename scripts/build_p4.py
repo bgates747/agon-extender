@@ -185,7 +185,7 @@ def freeze_source_inputs(output: Path) -> dict:
 
 
 def select_display_profile(document: dict, name: str, board: str,
-                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_upload: bool = False, network_messages: bool = False, network_parallel: bool = False, native_scanout: bool = False) -> dict:
+                           display_output: str, render_benchmark_output: str | None = None, direct_rgb888: bool = False, hdmi_timing: str = "1280x720", rolling_scanout: bool = False, ppa_scale_320: bool = False, parallel_boot_candidate: bool = False, parallel_probe_candidate: bool = False, parallel_data_check: bool = False, exext_stream: bool = False, indexed_ppa: bool = False, hdmi_link_watch: bool = False, bitmap_fast: bool = False, scroll_fast: bool = False, indexed_frame_snapshot: bool = False, bitmap_lut: bool = False, graphics_timing: bool = False, controller_input: bool = False, parallel_upload: bool = False, network_messages: bool = False, network_parallel: bool = False, native_scanout: bool = False, native_startup_trace: bool = False) -> dict:
     """Select an output adapter without creating a second rendering owner."""
     if display_output not in {"browser", "hdmi"}:
         raise SystemExit("unsupported display output")
@@ -279,6 +279,10 @@ def select_display_profile(document: dict, name: str, board: str,
         profile["definitions"].append("AGON_EXTENDER_DIRECT_RGB888=1")
     else:
         profile["forbidden_sources"].append(RGB888_SOURCE)
+    if native_startup_trace:
+        if not native_scanout:
+            raise SystemExit("the startup trace requires native row scanout")
+        profile["definitions"].append("AGON_EXTENDER_NATIVE_STARTUP_TRACE=1")
     if native_scanout:
         if (display_output != "hdmi" or hdmi_timing != "auto" or
                 any((rolling_scanout, direct_rgb888, ppa_scale_320, indexed_ppa, render_benchmark_output))):
@@ -684,6 +688,7 @@ def main() -> None:
     parser.add_argument("--bitmap-lut", action="store_true", help="Nurples performance: internal RGB222/BGR lookup and bounded Native expansion")
     parser.add_argument("--hdmi-link-watch", action="store_true", help="RESEARCH-007 read-only bridge and frame-gap observer; no performance qualification")
     parser.add_argument("--ppa-scale-320", action="store_true")
+    parser.add_argument("--native-startup-trace", action="store_true", help="Capture the first frame-2 native DMA rearm for offline diagnosis")
     parser.add_argument("--native-scanout", action="store_true", help="DMA-paced native row composition with exact 320x240 pixel doubling")
     parser.add_argument("--rolling-scanout",action="store_true",help="SPRITE-001 experimental DMA2D strip output")
     parser.add_argument("--abort-on-alloc-failure", action="store_true",
@@ -760,7 +765,7 @@ def main() -> None:
     checked_display_ownership(document)
     try:
         profile = select_display_profile(document, args.profile, args.board,
-                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel, args.native_scanout)
+                                         args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel, args.native_scanout, args.native_startup_trace)
     except KeyError:
         parser.error("unknown profile")
     board, board_path = load_board(args.board, args.profile)
@@ -904,6 +909,7 @@ def main() -> None:
                f"-DAGON_COMPONENT_DIR={generated}",
                f"-DAGON_DEPENDENCIES_LOCK={lock}",
                f"-DAGON_VDP_ROOT={VDP}",
+               f"-DAGON_NATIVE_STARTUP_TRACE={'ON' if args.native_startup_trace else 'OFF'}",
                f"-DAGON_NATIVE_SCANOUT={'ON' if args.native_scanout else 'OFF'}",
                f"-DAGON_ROLLING_SCANOUT={'ON' if args.rolling_scanout else 'OFF'}",
                f"-DAGON_EXEXT_STREAM={'ON' if args.exext_stream else 'OFF'}",
@@ -962,6 +968,8 @@ def main() -> None:
         validation.append("--hdmi-link-watch")
     if args.ppa_scale_320:
         validation.append("--ppa-scale-320")
+    if args.native_startup_trace:
+        validation.append("--native-startup-trace")
     if args.native_scanout:
         validation.append("--native-scanout")
     if args.rolling_scanout:
@@ -1064,6 +1072,7 @@ def main() -> None:
         "abort_on_alloc_failure": args.abort_on_alloc_failure,
         "display_output": args.display_output,
         "display_inputs": display_record,
+        "native_startup_trace": args.native_startup_trace,
         "cache_component": cache_component if (args.rolling_scanout or args.native_scanout) else None,
         "reset_url_sha256": (hashlib.sha256(args.reset_url.encode()).hexdigest()
                              if args.reset_url else None),

@@ -15,6 +15,9 @@ enum nr_phase { NR_IDLE, NR_RUNNING, NR_DRAINING, NR_EOF, NR_FAULT };
 typedef struct { nr_tag tag; int64_t retired_at; } nr_request;
 typedef struct {
     nr_ring ring;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    bool trace_boot_epoch;
+#endif
     enum nr_phase phase;
     uint8_t *pixels[NR_SLOTS];
     int64_t ready_at[NR_SLOTS];

@@ -2,6 +2,7 @@
 #pragma once
 #include "extender/display/mode_status.hpp"
 #include <cstdio>
+#include <cstring>
 #include <esp_http_server.h>
 #ifdef AGON_EXTENDER_HDMI
 #include "extender/display/hdmi_output.hpp"
@@ -11,6 +12,9 @@
 #endif
 #ifdef AGON_EXTENDER_NATIVE_SCANOUT
 #include "extender/display/native_scanout/native_scanout.h"
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+#include "extender/display/native_scanout/native_trace.h"
+#endif
 #include "extender/display/native_scanout/native_row_profile.h"
 #include <cstring>
 #include "esp_heap_caps.h"
@@ -21,14 +25,69 @@
 #endif
 namespace agon::extender::display_status {
 #ifdef AGON_EXTENDER_NATIVE_SCANOUT
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+// The worker/ISR only seal raw words. Translate them to JSON on request.
+inline esp_err_t startupTrace(httpd_req_t *request) {
+  httpd_resp_set_hdr(request, "Cache-Control", "no-store");
+  httpd_resp_set_type(request, "application/json");
+  agon_native_trace_t trace;
+  if (!agon_native_get_startup_trace(&trace))
+    return httpd_resp_sendstr(request, "{\"available\":false}");
+
+  static constexpr const char *events[] = {
+    "third_last_retired", "penultimate_retired", "final_retired", "enqueued", "dequeued",
+    "wake_lock_wait", "wake_lock_held", "wake_begin", "wake_end",
+    "gate_wait", "gate_open", "gate_bypass", "read_lock_wait", "read_lock_held", "owned", "bound",
+    "render_begin", "render_end", "clear", "already_black", "cache_begin", "cache_end", "cache_skip",
+    "publish_wait", "publish_held", "published", "decision"
+  };
+  static_assert(sizeof(events) / sizeof(*events) == NR_T_COUNT);
+  static constexpr const char *sites[] = {
+    "rearm", "retire", "successor", "enqueue", "invalid", "underrun", "ownership", "publish"
+  };
+  static constexpr const char *phases[] = {"none", "active", "inactive", "row_lock", "compose", "expand"};
+  static_assert(sizeof(sites) / sizeof(*sites) == NR_SITE_PUBLISH + 1);
+  static_assert(sizeof(phases) / sizeof(*phases) == NR_ROW_EXPAND + 1);
+  const unsigned phase = trace.row_cursor >> 16;
+  if (phase >= sizeof(phases)/sizeof(*phases) || trace.site >= sizeof(sites)/sizeof(*sites))
+    return ESP_FAIL;
+  char header[512];
+  int n = snprintf(header, sizeof(header),
+      "{\"available\":true,\"epoch\":%u,\"frame\":2,\"block\":0,\"retired\":%u,"
+      "\"queue_depth\":%u,\"slot_frame\":%u,\"slot_block\":%u,\"slot_ready\":%u,"
+      "\"rearmed\":%u,\"fault\":%u,\"fault_frame\":%u,\"fault_block\":%u,\"site\":\"%s\","
+      "\"row_phase\":\"%s\",\"row\":%u,\"elapsed_us\":{",
+      unsigned(trace.epoch), unsigned(trace.retired), unsigned(trace.queue_depth),
+      unsigned(trace.slot_frame), unsigned(trace.slot_block), unsigned(trace.slot_ready),
+      unsigned(trace.rearmed), unsigned(trace.fault), unsigned(trace.fault_frame),
+      unsigned(trace.fault_block), sites[trace.site], phases[phase], unsigned(trace.row_cursor & 0xffff));
+  if (n < 0 || size_t(n) >= sizeof(header) ||
+      httpd_resp_send_chunk(request, header, n) != ESP_OK) return ESP_FAIL;
+  bool first = true;
+  for (unsigned i = 0; i < NR_T_COUNT; ++i) {
+    if (trace.stamp[i] == UINT32_MAX) continue;
+    char field[64];
+    n = snprintf(field, sizeof(field), "%s\"%s\":%u", first ? "" : ",", events[i], unsigned(trace.stamp[i]));
+    if (n < 0 || size_t(n) >= sizeof(field) ||
+        httpd_resp_send_chunk(request, field, n) != ESP_OK) return ESP_FAIL;
+    first = false;
+  }
+  if (httpd_resp_send_chunk(request, "}}", 2) != ESP_OK) return ESP_FAIL;
+  return httpd_resp_send_chunk(request, nullptr, 0);
+}
+#endif
 // Independent of mode publication: a failed first mode must leave its DMA
 // evidence readable. Formatting runs on the HTTP task after a bounded snapshot.
 inline esp_err_t nativeScanout(httpd_req_t *request) {
   agon_native_stats_t v{};
   char query[24]{};
   if (httpd_req_get_url_query_len(request) != 0) {
-    if (httpd_req_get_url_query_str(request, query, sizeof(query)) != ESP_OK ||
-        std::strcmp(query, "last_fault=1") != 0) {
+    if (httpd_req_get_url_query_str(request, query, sizeof(query)) != ESP_OK)
+      return httpd_resp_send_err(request, HTTPD_400_BAD_REQUEST, "Unknown scanout query");
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    if (std::strcmp(query, "startup_trace=1") == 0) return startupTrace(request);
+#endif
+    if (std::strcmp(query, "last_fault=1") != 0) {
       return httpd_resp_send_err(request, HTTPD_400_BAD_REQUEST, "Unknown scanout query");
     }
     if (!agon_native_get_last_fault(&v)) {

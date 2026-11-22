@@ -223,7 +223,7 @@ def check_rolling_fbcpy_linkage(commands: list[dict], ninja: str, build: Path) -
         fail("rolling copy probe archive is absent from ELF link")
 
 
-def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, rolling_scanout: bool = False, build: Path | None = None, hdmi_timing: str = "1280x720", native_scanout: bool = False) -> None:
+def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, rolling_scanout: bool = False, build: Path | None = None, hdmi_timing: str = "1280x720", native_scanout: bool = False, native_startup_trace: bool = False) -> None:
     """Prove the selected bridge object reaches the ELF; reject stale copies."""
     bridge = (VDP / HDMI_COMPONENT / "esp_lcd_lt8912b.c").resolve()
     actions = [command for command in commands
@@ -280,6 +280,9 @@ def check_hdmi_linkage(commands: list[dict], ninja: str, display_output: str, ro
                 fail("full-frame shutdown driver compile/archive/link mismatch")
     if len(dpi) != 1 or Path(dpi[0]["file"]).resolve() != expected_dpi:
         fail("HDMI build lacks exactly one pinned DPI scanout compile action")
+    dpi_argv = dpi[0].get("arguments") or shlex.split(dpi[0]["command"])
+    if not selected_definition(dpi_argv, "AGON_EXTENDER_NATIVE_STARTUP_TRACE", native_startup_trace):
+        fail("native startup trace selection differs in DPI driver")
     if rolling_scanout:
         check_rolling_fbcpy_linkage(commands, ninja, build)
         argv = dpi[0].get("arguments") or shlex.split(dpi[0]["command"])
@@ -331,6 +334,7 @@ def main() -> None:
     parser.add_argument("--graphics-timing", action="store_true")
     parser.add_argument("--hdmi-link-watch", action="store_true")
     parser.add_argument("--ppa-scale-320", action="store_true")
+    parser.add_argument("--native-startup-trace", action="store_true")
     parser.add_argument("--native-scanout", action="store_true")
     parser.add_argument("--rolling-scanout",action="store_true")
     parser.add_argument("--abort-on-alloc-failure", action="store_true")
@@ -348,7 +352,7 @@ def main() -> None:
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = select_display_profile(document, args.profile, args.board,
-                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel, args.native_scanout)
+                                     args.display_output, args.render_benchmark_output, args.direct_rgb888, args.hdmi_timing, args.rolling_scanout, args.ppa_scale_320, args.parallel_boot_candidate, args.parallel_probe_candidate, args.parallel_data_check, args.exext_stream, args.indexed_ppa, args.hdmi_link_watch, args.bitmap_fast, args.scroll_fast, args.indexed_frame_snapshot, args.bitmap_lut, args.graphics_timing, args.controller_input, args.parallel_upload_candidate, args.network_messages, args.network_parallel, args.native_scanout, args.native_startup_trace)
     compile_path = output / "build/compile_commands.json"
     ninja_path = output / "build/build.ninja"
     if not compile_path.is_file() or not ninja_path.is_file():
@@ -414,6 +418,8 @@ def main() -> None:
             pie_arch = "-march=rv32imafc_zicsr_zifencei_xesppie"
             if (pie_arch in argv) != args.scroll_fast:
                 fail("scroll PIE ISA selection differs from actual compile action")
+        if not selected_definition(argv, "AGON_EXTENDER_NATIVE_STARTUP_TRACE", args.native_startup_trace):
+            fail("native startup trace selection differs in application")
         for definition, benchmark_selected in (("AGON_EXTENDER_NATIVE_SCANOUT", args.native_scanout),("AGON_EXTENDER_HDMI_FULL_FRAME_AUTO",args.hdmi_timing == "auto" and not (args.rolling_scanout or args.native_scanout)),("AGON_EXTENDER_PARALLEL_UPLOAD",args.parallel_upload_candidate),("AGON_EXTENDER_BITMAP_LUT",args.bitmap_lut),("AGON_EXTENDER_INDEXED_FRAME_SNAPSHOT",args.indexed_frame_snapshot),("AGON_EXTENDER_SCROLL_FAST",args.scroll_fast),("AGON_EXTENDER_BITMAP_FAST",args.bitmap_fast),("AGON_EXTENDER_HDMI_LINK_WATCH",args.hdmi_link_watch),("AGON_EXTENDER_INDEXED_PPA",args.indexed_ppa),("AGON_EXTENDER_EXEXT_STREAM",args.exext_stream),("AGON_EXTENDER_PARALLEL_DATA_CHECK",args.parallel_data_check),("AGON_EXTENDER_PARALLEL_PROBE",args.parallel_probe_candidate),("AGON_EXTENDER_PARALLEL_BOOT_CANDIDATE",args.parallel_boot_candidate),("AGON_EXTENDER_HDMI_PPA_320",args.ppa_scale_320),("AGON_EXTENDER_ROLLING_SCANOUT",args.rolling_scanout),("AGON_EXTENDER_DIRECT_RGB888",args.direct_rgb888),
                                      ("AGON_EXTENDER_RENDER_BENCHMARK",bool(args.render_benchmark_output)),
                                      ("AGON_EXTENDER_BENCH_HOLD",args.render_benchmark_output=="hold"),
@@ -473,7 +479,7 @@ def main() -> None:
                 fail("CLUT consumer still selects SDK HAL: "+command["file"])
 
     ninja = ninja_path.read_text().replace("$\n  ", "")
-    check_hdmi_linkage(commands, ninja, args.display_output, args.rolling_scanout, output / "build", args.hdmi_timing, args.native_scanout)
+    check_hdmi_linkage(commands, ninja, args.display_output, args.rolling_scanout, output / "build", args.hdmi_timing, args.native_scanout, args.native_startup_trace)
     strip_memory = args.rolling_scanout or args.native_scanout
     check_cache_linkage(commands, ninja, output / "build", strip_memory)
     archive_lines = [line for line in ninja.splitlines()

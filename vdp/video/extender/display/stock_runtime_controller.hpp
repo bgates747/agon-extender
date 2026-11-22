@@ -16,6 +16,9 @@
 #ifdef AGON_EXTENDER_NATIVE_SCANOUT
 #include "esp_cpu.h"
 #include "extender/display/native_scanout/native_row_profile.h"
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+#include "extender/display/native_scanout/native_trace.h"
+#endif
 #endif
 
 namespace agon::extender::display {
@@ -30,6 +33,9 @@ class StockRuntimeController {
 #ifdef AGON_EXTENDER_NATIVE_SCANOUT
   virtual void prepareFirstCroppedRow(int y, std::uint8_t *signal) = 0;
   virtual void sampleNativeRow(int y, bool rewind, std::uint8_t *signal, agon_native_row_profile_t &timing) = 0;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+  virtual void traceNativeRow(int y, bool rewind, std::uint8_t *signal, std::uint32_t *cursor) = 0;
+#endif
 #endif
   virtual bool linearStorage() const noexcept { return false; }
   virtual void prepareLinearRow(int, std::uint8_t *, bool) {}
@@ -229,6 +235,15 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
   diagnostics::VideoRowTotals &outputRowTiming() noexcept override { return row_timing_; }
 #endif
 #ifdef AGON_EXTENDER_NATIVE_SCANOUT
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+  void traceNativeRow(int y, bool rewind, std::uint8_t *signal, std::uint32_t *cursor) override {
+    agon_native_trace_row(cursor, NR_ROW_LOCK, y);
+    AGON_STOCK_NATIVE_GUARD;
+    agon_native_trace_row(cursor, NR_ROW_COMPOSE, y);
+    if (rewind) this->rewindCroppedScanline();
+    prepareRowLocked(y, signal);
+  }
+#endif
   void sampleNativeRow(int y, bool rewind, std::uint8_t *signal, agon_native_row_profile_t &timing) override {
     const uint32_t begin = esp_cpu_get_cycle_count();
     AGON_STOCK_NATIVE_GUARD;

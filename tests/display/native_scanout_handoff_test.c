@@ -69,10 +69,19 @@ static uint32_t last_render_frame;
 static unsigned expected_y;
 static uint32_t *dirty_slot_mark;
 static void *last_sync;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+// The clock and IRQs advance synchronously in the simulated core-1 task.
+static void (*trace_cache_irq)(void);
+static unsigned trace_reader_take;
+static void (*trace_reader_irq)(void);
+#endif
 static int64_t esp_timer_get_time(void) { return clock_us; }
 static int esp_cache_msync(void *p, size_t n, int flags) {
     assert(p && n && flags == ESP_CACHE_MSYNC_FLAG_DIR_C2M);
     ++cache_calls; clock_us += 4; last_sync = p;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    if (trace_cache_irq) trace_cache_irq();
+#endif
     return sync_error ? ESP_FAIL : ESP_OK;
 }
 static void *heap_caps_aligned_calloc(size_t a, size_t n, size_t sz, int caps) {
@@ -84,6 +93,10 @@ static SemaphoreHandle_t xSemaphoreCreateMutex(void) {
     SemaphoreHandle_t m = xSemaphoreCreateBinary(); m->token=true; return m;
 }
 static int xSemaphoreTake(SemaphoreHandle_t m, unsigned wait) {
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    if (trace_reader_take && m == current->native.reader_mutex && --trace_reader_take == 0)
+        trace_reader_irq();
+#endif
     (void)wait; if (!m->token) return false; m->token=false; return true;
 }
 static void xSemaphoreGive(SemaphoreHandle_t m) { m->token=true; }
@@ -215,27 +228,32 @@ static void finish_startup_frame(void) {
     native_frame(current);
 }
 
+static void prepare_startup_handoff(esp_lcd_dpi_panel_t *d, agon_native_render_t renderer) {
+    const unsigned blocks = d->native.ring.count;
+    nr_request job;
+    wait_irq = tick_block;
+    // HdmiOutput permits binding only after the first successful rearm.
+    while (d->native.ring.retired < blocks) {
+        tick_block();
+        while (xQueueReceive(d->native.queue,&job,0)) native_do_job(d,job);
+    }
+    assert(native_frame(d));
+    assert(agon_native_bind(&d->base,d,renderer,drawing) == ESP_OK);
+    while (d->native.ring.retired < blocks - 3) {
+        tick_block();
+        while (xQueueReceive(d->native.queue,&job,0)) native_do_job(d,job);
+    }
+    tick_block(); // Third-last block retired. The target request is queued.
+}
+
 static void startup_handoff(unsigned w, unsigned h, bool withhold) {
     esp_lcd_dpi_panel_t d;
     fresh(&d,w,h);
     const unsigned blocks = d.native.ring.count;
     const nr_tag top = {2,0};
     nr_request job;
-    wait_irq = tick_block;
-
-    // HdmiOutput permits binding only after the first successful rearm.
-    while (d.native.ring.retired < blocks) {
-        tick_block();
-        while (xQueueReceive(d.native.queue,&job,0)) native_do_job(&d,job);
-    }
-    assert(native_frame(&d));
-    assert(agon_native_bind(&d.base,&d,keep_black,drawing) == ESP_OK);
     const unsigned prior_callbacks = blank_callbacks;
-    while (d.native.ring.retired < blocks - 3) {
-        tick_block();
-        while (xQueueReceive(d.native.queue,&job,0)) native_do_job(&d,job);
-    }
-    tick_block();
+    prepare_startup_handoff(&d,keep_black);
     assert(xQueueReceive(d.native.queue,&job,0) && nr_equal(job.tag,top));
     assert(!d.native.reading && nr_can_write(&d.native.ring,top));
     assert(!d.link_lists[0]->desc[0].is_valid);
@@ -335,7 +353,148 @@ static void negative(void) {
     assert(!d.native.worker && frees==(int)before);
     native_free(&d);assert(frees==(int)before+3);free(d.dma_chan);free(d.link_lists[0]);
 }
-int main(void) {
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+static agon_native_trace_t decision;
+static bool interrupt_render;
+
+static void frame_decision(void) {
+    assert(!agon_native_get_startup_trace(&decision));
+    finish_startup_frame();
+    // Take the reference copy while the interrupted worker is still suspended.
+    assert(agon_native_get_startup_trace(&decision));
+}
+
+static bool traced_render(void *ctx, uint8_t *pixels, unsigned y, unsigned rows,
+                          unsigned w, unsigned h, unsigned slot, uint32_t frame, bool *black) {
+    (void)ctx; (void)rows; (void)w; (void)h;
+    assert(frame == 2 && y == 0 && slot == 0);
+    uint32_t *cursor = agon_native_trace_row_cursor();
+    assert(cursor);
+    agon_native_trace_row(cursor,NR_ROW_COMPOSE,7);
+    clock_us += 10;
+    if (interrupt_render) frame_decision();
+    // The interrupted renderer still holds its original cursor pointer.
+    agon_native_trace_row(cursor,NR_ROW_EXPAND,7);
+    pixels[0] = 1;
+    *black = false;
+    return true;
+}
+
+static void check_preserved(void) {
+    agon_native_trace_t now;
+    assert(agon_native_get_startup_trace(&now));
+    assert(memcmp(&now,&decision,sizeof now) == 0);
+}
+
+static void retire_panel(esp_lcd_dpi_panel_t *d) {
+    agon_native_unbind(&d->base);
+    if (d->native.phase == NR_RUNNING) delay_event = stop_frame;
+    assert(agon_dpi_stop(&d->base) == ESP_OK && !d->native.worker && !regs.chen0.val);
+    native_free(d);
+    free(d->dma_chan);
+    free(d->link_lists[0]);
+}
+
+struct trace_case {
+    const char *name;
+    // Verify where the worker was when EOF sealed the record.
+    enum nr_trace_event reached;
+    enum nr_trace_event unseen;
+};
+static const struct trace_case trace_cases[] = {
+    {"success",     NR_T_PUBLISHED,      NR_T_GATE_WAIT},
+    {"withheld",    NR_T_ENQUEUED,       NR_T_DEQUEUED},
+    {"wake-lock",   NR_T_WAKE_LOCK_WAIT, NR_T_WAKE_LOCK_HELD},
+    {"reader-lock", NR_T_READ_LOCK_WAIT, NR_T_READ_LOCK_HELD},
+    {"render",      NR_T_RENDER_BEGIN,   NR_T_RENDER_END},
+    {"cache",       NR_T_CACHE_BEGIN,    NR_T_CACHE_END},
+};
+
+static void test_startup_trace(unsigned height,const char *scenario) {
+    const unsigned width = height == 480 ? 848 : 684;
+    esp_lcd_dpi_panel_t d;
+    fresh(&d,width,height);
+    assert(!agon_native_get_startup_trace(&decision));
+    if (strcmp(scenario,"first-fault") == 0) {
+        native_underrun(&d);
+        assert(agon_native_get_startup_trace(&decision));
+        assert(decision.site == NR_SITE_UNDERRUN && decision.fault == AGON_NATIVE_UNDERRUN);
+        assert(decision.stamp[NR_T_RETIRE_12] == UINT32_MAX && !decision.rearmed);
+    } else {
+        const struct trace_case *c = NULL;
+        for (size_t i=0; i<sizeof trace_cases / sizeof trace_cases[0]; ++i)
+            if (strcmp(scenario,trace_cases[i].name) == 0) c = &trace_cases[i];
+        assert(c);
+        prepare_startup_handoff(&d,traced_render);
+        const bool success = c->reached == NR_T_PUBLISHED;
+        const bool withheld = c->unseen == NR_T_DEQUEUED;
+        if (c->reached == NR_T_WAKE_LOCK_WAIT) trace_reader_take = 1;
+        if (c->reached == NR_T_READ_LOCK_WAIT) trace_reader_take = 2;
+        trace_reader_irq = frame_decision;
+        interrupt_render = c->reached == NR_T_RENDER_BEGIN;
+        if (c->reached == NR_T_CACHE_BEGIN) trace_cache_irq = frame_decision;
+        nr_request target;
+        if (!withheld) {
+            assert(xQueueReceive(d.native.queue,&target,0));
+            assert(nr_equal(target.tag,(nr_tag){2,0}));
+            native_do_job(&d,target);
+        }
+        if (success || withheld) frame_decision();
+        trace_cache_irq = NULL;
+        trace_reader_irq = NULL;
+        assert(decision.epoch == 1 && decision.site == NR_SITE_REARM);
+        assert(decision.rearmed == success);
+        assert(decision.fault == (success ? AGON_NATIVE_OK : AGON_NATIVE_SEQUENCE));
+        assert(decision.retired == d.native.ring.count);
+        assert(decision.slot_frame == 2 && decision.slot_block == 0 && decision.slot_ready == success);
+        assert(decision.queue_depth == (withheld ? 3u : 2u));
+        assert(decision.stamp[NR_T_RETIRE_12] == 0);
+        assert(decision.stamp[NR_T_RETIRE_13] >= 1000);
+        assert(decision.stamp[NR_T_RETIRE_14] == decision.stamp[NR_T_RETIRE_13] + 1000);
+        assert(decision.stamp[NR_T_DECISION] == decision.stamp[NR_T_RETIRE_14]);
+        assert(decision.stamp[c->reached] != UINT32_MAX && decision.stamp[c->unseen] == UINT32_MAX);
+        if (c->reached == NR_T_RENDER_BEGIN || c->reached == NR_T_CACHE_BEGIN || success) {
+            assert(decision.stamp[NR_T_GATE_BYPASS] != UINT32_MAX);
+            enum nr_trace_row_phase phase = interrupt_render ? NR_ROW_COMPOSE : NR_ROW_EXPAND;
+            assert(decision.row_cursor == (((uint32_t)phase << 16) | 7));
+        }
+        if (withheld) {
+            assert(xQueueReceive(d.native.queue,&target,0));
+            native_do_job(&d,target);  // Run the delayed task after its EOF.
+        }
+    }
+    check_preserved();
+    retire_panel(&d);
+    fresh(&d,height == 480 ? 684 : 848,height == 480 ? 384 : 480);
+    assert(nr_stats.epoch == 2);
+    check_preserved();
+    // Drive epoch 2 through its own 2:0 decision and first fault. Neither is
+    // allowed to replace the boot receipt kept after the old DMA slots free.
+    prepare_startup_handoff(&d,keep_black);
+    nr_request target;
+    assert(xQueueReceive(d.native.queue,&target,0) && nr_equal(target.tag,(nr_tag){2,0}));
+    native_do_job(&d,target);
+    finish_startup_frame();
+    assert(d.native.ring.frame == 2);
+    native_underrun(&d);
+    check_preserved();
+    retire_panel(&d);
+    printf("PASS startup trace %ux%u %s: identical after worker resumption and opposite-carrier rearm/fault.\n",
+           width,height,scenario);
+}
+#endif
+
+int main(int argc,char **argv) {
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    if (argc == 3) {
+        unsigned height = (unsigned)atoi(argv[1]);
+        assert(height == 384 || height == 480);
+        test_startup_trace(height,argv[2]);
+        return 0;
+    }
+#endif
+    (void)argv;
+    assert(argc == 1);
     normal(684,384);normal(848,480);prime_only();negative();
     startup_handoff(684,384,true); startup_handoff(848,480,true);
     startup_handoff(684,384,false); startup_handoff(848,480,false);

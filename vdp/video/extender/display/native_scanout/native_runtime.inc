@@ -5,6 +5,85 @@
 static portMUX_TYPE nr_mux = portMUX_INITIALIZER_UNLOCKED;
 static agon_native_stats_t nr_stats, nr_fault_receipt;
 
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+#include "native_trace.h"
+_Static_assert(__atomic_always_lock_free(sizeof(uint32_t), 0), "trace markers must be lock-free");
+
+// One boot capture. The core-1 worker can resume a partially completed marker
+// or row store after EOF interrupts it. Only this scratch space is writable by
+// that worker. The HTTP getter reads the separate immutable copy under nr_mux.
+static uint32_t nr_trace_stamps[NR_T_COUNT], nr_trace_cursor;
+static uint32_t nr_trace_origin;
+static bool nr_origin_seen, nr_trace_rendering;
+static agon_native_trace_t nr_trace_saved;
+
+static void nr_trace_at(enum nr_trace_event event, int64_t at)
+{
+    if (nr_origin_seen) {
+        __atomic_signal_fence(__ATOMIC_SEQ_CST);
+        __atomic_store_n(&nr_trace_stamps[event], (uint32_t)at - nr_trace_origin, __ATOMIC_RELAXED);
+        __atomic_signal_fence(__ATOMIC_SEQ_CST);
+    }
+}
+
+static void nr_trace_retirement(native_state *s, nr_tag tag, int64_t now)
+{
+    if (!s->trace_boot_epoch || tag.frame != 1 || tag.block >= s->ring.count) return;
+    unsigned remaining = s->ring.count - tag.block;
+    if (remaining > 3) return;
+    if (remaining == 3) {
+        nr_trace_origin = (uint32_t)now;
+        nr_origin_seen = true;
+    }
+    nr_trace_at(NR_T_RETIRE_12 + 3 - remaining, now);
+}
+
+// Called inside the existing nr_mux critical section. Both producer and
+// DMA IRQ are pinned to core 1. No row lock can be taken from the IRQ.
+static void nr_trace_seal(native_state *s, enum nr_trace_site site,
+                          enum agon_native_fault fault, nr_tag tag, unsigned retired, int64_t now)
+{
+    if (!s->trace_boot_epoch || nr_trace_saved.epoch) return;
+    nr_trace_at(NR_T_DECISION, now);
+    for (unsigned i = 0; i < NR_T_COUNT; ++i)
+        nr_trace_saved.stamp[i] = __atomic_load_n(&nr_trace_stamps[i], __ATOMIC_RELAXED);
+    nr_trace_saved.row_cursor = __atomic_load_n(&nr_trace_cursor, __ATOMIC_RELAXED);
+    nr_trace_saved.retired = retired;
+    nr_trace_saved.queue_depth = uxQueueMessagesWaitingFromISR(s->queue);
+    nr_slot top = s->ring.slots[0];
+    nr_trace_saved.slot_frame = top.tag.frame;
+    nr_trace_saved.slot_block = top.tag.block;
+    nr_trace_saved.slot_ready = top.ready;
+    nr_trace_saved.site = site;
+    nr_trace_saved.rearmed = fault == AGON_NATIVE_OK;
+    nr_trace_saved.fault = fault;
+    nr_trace_saved.fault_frame = tag.frame;
+    nr_trace_saved.fault_block = tag.block;
+    nr_trace_saved.epoch = 1;
+}
+
+bool agon_native_get_startup_trace(agon_native_trace_t *out)
+{
+    if (!out) return false;
+    portENTER_CRITICAL(&nr_mux);
+    bool available = nr_trace_saved.epoch != 0;
+    if (available) *out = nr_trace_saved;
+    portEXIT_CRITICAL(&nr_mux);
+    return available;
+}
+
+uint32_t *agon_native_trace_row_cursor(void)
+{
+    return nr_trace_rendering ? &nr_trace_cursor : NULL;
+}
+
+#define NR_TRACE_MARK(event) do { if (trace_top) nr_trace_at(event, esp_timer_get_time()); } while (0)
+#define NR_FAIL(site, ...) nr_fail(site, __VA_ARGS__)
+#else
+#define NR_TRACE_MARK(event) ((void)0)
+#define NR_FAIL(site, ...) nr_fail(__VA_ARGS__)
+#endif
+
 bool agon_native_get_last_fault(agon_native_stats_t *out)
 {
     if (!out) return false;
@@ -34,10 +113,18 @@ static void nr_mark(esp_lcd_dpi_panel_t *d, unsigned block, bool valid)
 }
 
 // Called with nr_mux held. First reason survives later IRQs and shutdown.
-static void nr_fail(esp_lcd_dpi_panel_t *d, enum agon_native_fault fault, nr_tag tag,
+static void nr_fail(
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+                    enum nr_trace_site site,
+#endif
+                    esp_lcd_dpi_panel_t *d, enum agon_native_fault fault, nr_tag tag,
                     uint32_t queue_us, uint32_t render_us, uint32_t sync_us)
 {
     if (!nr_stats.fault) {
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+        if (d->native.trace_boot_epoch)
+            nr_trace_seal(&d->native, site, fault, tag, d->native.ring.retired, esp_timer_get_time());
+#endif
         nr_stats.fault = fault;
         nr_stats.fault_frame = tag.frame;
         nr_stats.fault_block = tag.block;
@@ -73,7 +160,7 @@ static bool IRAM_ATTR native_invalid(dw_gdma_channel_handle_t ch, const dw_gdma_
             }
         }
         ++nr_stats.invalid;
-        nr_fail(d, AGON_NATIVE_INVALID, bad, 0, 0, 0);
+        NR_FAIL(NR_SITE_INVALID, d, AGON_NATIVE_INVALID, bad, 0, 0, 0);
     }
     portEXIT_CRITICAL_ISR(&nr_mux);
     return false;
@@ -84,7 +171,7 @@ static void native_underrun(esp_lcd_dpi_panel_t *d)
     portENTER_CRITICAL_ISR(&nr_mux);
     if (nr_live(&d->native)) {
         ++nr_stats.underruns;
-        nr_fail(d, AGON_NATIVE_UNDERRUN, (nr_tag){d->native.ring.frame,d->native.ring.retired},0,0,0);
+        NR_FAIL(NR_SITE_UNDERRUN, d, AGON_NATIVE_UNDERRUN, (nr_tag){d->native.ring.frame,d->native.ring.retired},0,0,0);
     }
     portEXIT_CRITICAL_ISR(&nr_mux);
 }
@@ -100,9 +187,12 @@ static bool IRAM_ATTR native_block_done(dw_gdma_channel_handle_t ch,
     portENTER_CRITICAL_ISR(&nr_mux);
     if (nr_live(s)) {
         nr_tag old = {s->ring.frame,s->ring.retired};
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+        nr_trace_retirement(s, old, job.retired_at);
+#endif
         if (!nr_retire(&s->ring, &old, &job.tag)) {
             ++nr_stats.rejected;
-            nr_fail(d, AGON_NATIVE_SEQUENCE, old, 0, 0, 0);
+            NR_FAIL(NR_SITE_RETIRE, d, AGON_NATIVE_SEQUENCE, old, 0, 0, 0);
         } else {
             ++nr_stats.blocks;
             nr_mark(d,old.block,false);
@@ -110,7 +200,7 @@ static bool IRAM_ATTR native_block_done(dw_gdma_channel_handle_t ch,
                 nr_tag next = nr_advance(old,1,s->ring.count);
                 if (!nr_ready(&s->ring,next)) {
                     ++nr_stats.rejected;
-                    nr_fail(d,AGON_NATIVE_SEQUENCE,next,0,0,0);
+                    NR_FAIL(NR_SITE_SUCCESSOR, d,AGON_NATIVE_SEQUENCE,next,0,0,0);
                 } else {
                     uint32_t lead = (uint32_t)(job.retired_at - s->ready_at[next.block % NR_SLOTS]);
                     if (lead < nr_stats.min_lead_us) nr_stats.min_lead_us = lead;
@@ -119,8 +209,12 @@ static bool IRAM_ATTR native_block_done(dw_gdma_channel_handle_t ch,
             if (nr_live(s)) {
                 if (xQueueSendFromISR(s->queue,&job,&higher) != pdTRUE) {
                     ++nr_stats.rejected;
-                    nr_fail(d,AGON_NATIVE_QUEUE,job.tag,0,0,0);
+                    NR_FAIL(NR_SITE_ENQUEUE, d,AGON_NATIVE_QUEUE,job.tag,0,0,0);
                 } else {
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+                    if (s->trace_boot_epoch && job.tag.frame == 2 && job.tag.block == 0)
+                        nr_trace_at(NR_T_ENQUEUED, esp_timer_get_time());
+#endif
                     nr_max(&nr_stats.max_queue,uxQueueMessagesWaitingFromISR(s->queue));
                     vTaskNotifyGiveFromISR(s->worker,&higher);
                 }
@@ -140,7 +234,19 @@ static bool native_frame(esp_lcd_dpi_panel_t *d)
         // The IDF channel has completed the last block. Do not set CHEN again.
         s->phase = NR_EOF;
     } else if (s->phase == NR_RUNNING) {
-        if (nr_next_frame(&s->ring)) {
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+        const bool trace_frame = s->trace_boot_epoch && s->ring.frame == 1;
+        const unsigned retired = s->ring.retired;
+        const int64_t decision = trace_frame ? esp_timer_get_time() : 0;
+#endif
+        bool ready = nr_next_frame(&s->ring);
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+        // nr_next_frame changes only frame and retired. Preserve the latter
+        // before the call, and seal the result of the actual rearm predicate.
+        if (trace_frame) nr_trace_seal(s, NR_SITE_REARM, ready ? AGON_NATIVE_OK : AGON_NATIVE_SEQUENCE,
+                                     (nr_tag){2,0}, retired, decision);
+#endif
+        if (ready) {
             // The final block interrupt cannot observe slot 0's reuse: the
             // pinned DPI driver arms the new list in this frame callback.
             uint32_t lead = (uint32_t)(esp_timer_get_time() - s->ready_at[0]);
@@ -149,7 +255,7 @@ static bool native_frame(esp_lcd_dpi_panel_t *d)
             rearm = true;
         } else {
             ++nr_stats.rejected;
-            nr_fail(d,AGON_NATIVE_SEQUENCE,(nr_tag){s->ring.frame + 1,0},0,0,0);
+            NR_FAIL(NR_SITE_REARM, d,AGON_NATIVE_SEQUENCE,(nr_tag){s->ring.frame + 1,0},0,0,0);
         }
     }
     portEXIT_CRITICAL_ISR(&nr_mux);
@@ -159,19 +265,29 @@ static bool native_frame(esp_lcd_dpi_panel_t *d)
 static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
 {
     native_state *s = &d->native;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    const bool trace_top = s->trace_boot_epoch && job.tag.frame == 2 && job.tag.block == 0;
+#endif
+    NR_TRACE_MARK(NR_T_DEQUEUED);
     // FIFO order means last frame's final native row has been read before its
     // block-0 successor reaches this worker. Release drawing at the third-last
     // block retirement, separate from the penultimate-retirement sampling gate.
     // Delayed service shortens that gap; retain the measured minimum.
     int64_t woke = 0;
     if (job.tag.block == 0) {
+        NR_TRACE_MARK(NR_T_WAKE_LOCK_WAIT);
         xSemaphoreTake(s->reader_mutex,portMAX_DELAY);
+        NR_TRACE_MARK(NR_T_WAKE_LOCK_HELD);
         portENTER_CRITICAL(&nr_mux);
         bool allowed = nr_live(s) && nr_can_write(&s->ring,job.tag) && !s->exit_worker;
         portEXIT_CRITICAL(&nr_mux);
         if (allowed && s->reading && s->draw_wake) {
+            NR_TRACE_MARK(NR_T_WAKE_BEGIN);
             s->draw_wake(s->ctx);
             woke = esp_timer_get_time();
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+            if (trace_top) nr_trace_at(NR_T_WAKE_END, woke);
+#endif
             portENTER_CRITICAL(&nr_mux);
             ++nr_stats.ticks;
             portEXIT_CRITICAL(&nr_mux);
@@ -186,19 +302,25 @@ static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
         if (!live) return;
         // At startup the previous frame had no reader to wake. Use the
         // retired slot now, while the worker can still beat frame rearm.
-        if (sample || (job.tag.block == 0 && !woke)) break;
+        if (sample || (job.tag.block == 0 && !woke)) {
+            NR_TRACE_MARK(sample ? NR_T_GATE_OPEN : NR_T_GATE_BYPASS);
+            break;
+        }
+        NR_TRACE_MARK(NR_T_GATE_WAIT);
         // A later block IRQ releases the next frame's top rows. Never block
         // the interrupt or take the drawing/native mutex while awaiting it.
         ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
     }
     const unsigned slot = job.tag.block % NR_SLOTS;
     const unsigned bytes = NR_ROWS * d->h_pixels * 3;
+    NR_TRACE_MARK(NR_T_READ_LOCK_WAIT);
     xSemaphoreTake(s->reader_mutex, portMAX_DELAY);
+    NR_TRACE_MARK(NR_T_READ_LOCK_HELD);
     portENTER_CRITICAL(&nr_mux);
     bool owned = nr_live(s) && !s->exit_worker && nr_can_write(&s->ring,job.tag);
     if (!owned && nr_live(s) && !s->exit_worker) {
         ++nr_stats.rejected;
-        nr_fail(d,AGON_NATIVE_SEQUENCE,job.tag,0,0,0);
+        NR_FAIL(NR_SITE_OWNERSHIP, d,AGON_NATIVE_SEQUENCE,job.tag,0,0,0);
     }
     const int64_t start = esp_timer_get_time();
     if (owned && woke) {
@@ -210,24 +332,45 @@ static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
         xSemaphoreGive(s->reader_mutex);
         return;
     }
+    NR_TRACE_MARK(NR_T_OWNED);
     bool ok = true;
     bool changed = false;
     if (job.tag.block == 0) s->reading = s->render != NULL;
     if (s->reading) {
+        NR_TRACE_MARK(NR_T_BOUND);
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+        nr_trace_rendering = trace_top;
+#endif
+        NR_TRACE_MARK(NR_T_RENDER_BEGIN);
         const bool was_black = s->black[slot];
         ok = s->render(s->ctx,s->pixels[slot],job.tag.block * NR_ROWS,NR_ROWS,
                        d->h_pixels,d->v_pixels,slot,job.tag.frame,&s->black[slot]);
+        NR_TRACE_MARK(NR_T_RENDER_END);
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+        nr_trace_rendering = false;
+#endif
         changed = !was_black || !s->black[slot];
     } else if (!s->black[slot]) {
+        NR_TRACE_MARK(NR_T_CLEAR);
         memset(s->pixels[slot],0,bytes);
         s->black[slot] = true;
         changed = true;
+    } else {
+        NR_TRACE_MARK(NR_T_ALREADY_BLACK);
     }
     xSemaphoreGive(s->reader_mutex);
     int64_t stored = esp_timer_get_time();
     esp_err_t sync = ESP_OK;
-    if (ok && changed) sync = esp_cache_msync(s->pixels[slot],bytes,ESP_CACHE_MSYNC_FLAG_DIR_C2M);
+    if (ok && changed) {
+        NR_TRACE_MARK(NR_T_CACHE_BEGIN);
+        sync = esp_cache_msync(s->pixels[slot],bytes,ESP_CACHE_MSYNC_FLAG_DIR_C2M);
+        NR_TRACE_MARK(NR_T_CACHE_END);
+    } else {
+        NR_TRACE_MARK(NR_T_CACHE_SKIP);
+    }
+    NR_TRACE_MARK(NR_T_PUBLISH_WAIT);
     portENTER_CRITICAL(&nr_mux);
+    NR_TRACE_MARK(NR_T_PUBLISH_HELD);
     int64_t finished = esp_timer_get_time();
     uint32_t q = (uint32_t)(start - job.retired_at);
     uint32_t render = (uint32_t)(stored - start), vis = (uint32_t)(finished - stored);
@@ -256,6 +399,9 @@ static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
                 } else {
                     s->ready_at[slot] = finished;
                     ++nr_stats.ready;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+                    if (trace_top) nr_trace_at(NR_T_PUBLISHED, finished);
+#endif
                 }
             }
         }
@@ -271,7 +417,7 @@ static void native_do_job(esp_lcd_dpi_panel_t *d, nr_request job)
         ++nr_stats.histogram[bin];
         if (fault != AGON_NATIVE_OK) {
             ++nr_stats.rejected;
-            nr_fail(d,fault,job.tag,q,render,vis);
+            NR_FAIL(NR_SITE_PUBLISH, d,fault,job.tag,q,render,vis);
         }
     }
     portEXIT_CRITICAL(&nr_mux);
@@ -358,6 +504,13 @@ static esp_err_t native_allocate(esp_lcd_dpi_panel_t *d)
     }
     portENTER_CRITICAL(&nr_mux);
     const uint32_t epoch = nr_stats.epoch + 1;
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+    s->trace_boot_epoch = epoch == 1;
+    if (s->trace_boot_epoch) {
+        memset(nr_trace_stamps, 0xff, sizeof(nr_trace_stamps));
+        nr_trace_cursor = 0xffff; // No source row has been touched.
+    }
+#endif
     nr_stats = (agon_native_stats_t){.epoch=epoch, .width=d->h_pixels,.height=d->v_pixels,.min_lead_us=UINT32_MAX,.min_draw_gap_us=UINT32_MAX};
     portEXIT_CRITICAL(&nr_mux);
     return ESP_OK;

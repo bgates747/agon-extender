@@ -209,11 +209,27 @@ bool StockP4Service::nativeRows(void *context, std::uint8_t *pixels, unsigned fi
   // commit. Start native sampling at row zero only after aliases are committed.
   if (!rows || rows > height || !slot_black) return false;
   if (first_y == 0) self.rendering_frame_ = self.active_.load(std::memory_order_acquire);
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+  // The DMA worker supplies a cursor only for epoch 1, frame 2, block 0.
+  // All other refills use their ordinary row loop without per-row probes.
+  auto *cursor = frame == 2 && first_y == 0 ? agon_native_trace_row_cursor() : nullptr;
+  if (cursor)
+    agon_native_trace_row(cursor, self.rendering_frame_ ? NR_ROW_ACTIVE : NR_ROW_INACTIVE, 0xffffu);
+#endif
   if (!self.rendering_frame_) {
     if (!*slot_black) std::memset(pixels, 0, std::size_t(rows) * width * 3);
     *slot_black = true;
     return true;
   }
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+  if (cursor) {
+    return self.native_rows_.fill(pixels, first_y, rows, slot, *slot_black,
+        [&](int y, bool rewind, std::uint8_t *signal) {
+          self.controller_->traceNativeRow(y, rewind, signal, cursor);
+          agon_native_trace_row(cursor, NR_ROW_EXPAND, y);
+        });
+  }
+#endif
   const unsigned block = first_y / rows;
   if (frame % 16 == 0 && (frame / 16) % (height / rows) == block) {
     agon_native_row_profile_t sample{};

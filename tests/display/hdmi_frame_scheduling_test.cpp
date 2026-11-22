@@ -57,6 +57,58 @@ struct Controller : StockBoundController<fabgl::VGA64Controller> {
 };
 
 #ifdef AGON_EXTENDER_NATIVE_SCANOUT
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+static std::uint32_t trace_cursor;
+static bool trace_armed;
+extern "C" std::uint32_t *agon_native_trace_row_cursor(void) {
+  return trace_armed ? &trace_cursor : nullptr;
+}
+
+static void testStartupRender() {
+  Controller controller;
+  controller.begin();
+  controller.setResolution("\"320x240\" 1 320 324 328 336 240 242 244 248 -HSync -VSync",
+                           320, 240, false);
+  assert(controller.getViewPortWidth() == 320 && controller.getViewPortHeight() == 240);
+  controller.enableBackgroundPrimitiveExecution(false);
+  fabgl::Canvas canvas(&controller);
+  PresentationSnapshotPool metadata;
+  StockP4Service service(metadata);
+  // The host's 320x32 panel crops the middle of the 640x480 doubled image.
+  // Logical (81,113) must produce a red square at physical (2,2).
+  canvas.setPixel(81, 113, fabgl::RGB888(255, 0, 0));
+  assert(canvas.getPixel(81, 113) == fabgl::RGB888(255, 0, 0));
+  assert(service.startClock() && service.prepare(controller));
+  std::array<std::uint8_t, 320*32*3> reference{}, traced{};
+  trace_armed = true;
+  assert(hdmiOutput().emitRows(traced.data(), 2, false));
+  assert(trace_cursor == ((unsigned(NR_ROW_INACTIVE) << 16) | 0xffffu));
+  service.activate();
+  trace_cursor = UINT32_MAX;
+  assert(hdmiOutput().emitRows(reference.data(), 1, false));
+  assert(trace_cursor == UINT32_MAX);
+  std::unique_lock held(stockNativeMutex());
+  auto refill = std::async(std::launch::async, [&] {
+    return hdmiOutput().emitRows(traced.data(), 2, false);
+  });
+  await([] {
+    return __atomic_load_n(&trace_cursor, __ATOMIC_RELAXED) == ((unsigned(NR_ROW_LOCK) << 16) | 112u);
+  });
+  held.unlock();
+  assert(refill.get());
+  assert(trace_cursor == ((unsigned(NR_ROW_EXPAND) << 16) | 127u));
+  assert(traced == reference);
+  for (int y : {2,3}) for (int x : {2,3}) {
+    const auto p = (y*320+x)*3;
+    assert(traced[p] == 0 && traced[p+1] == 0 && traced[p+2] == 255);
+  }
+  trace_armed = false;
+  trace_cursor = UINT32_MAX;
+  assert(hdmiOutput().emitRows(traced.data(), 2, false) && trace_cursor == UINT32_MAX);
+  service.detach();
+  controller.end();
+}
+#endif
 int main() {
   const char *modeline = "\"64x16\" 1 64 68 72 80 16 18 20 24 -HSync -VSync";
   Controller controller;
@@ -143,6 +195,9 @@ int main() {
   assert(!hdmiOutput().emitRows(pixels.data(), 1, true) && !hdmiOutput().emitFrame());
   assert(host_stale_notifications == 0);
   single.end();
+#ifdef AGON_EXTENDER_NATIVE_STARTUP_TRACE
+  testStartupRender();
+#endif
 }
 #else
 int main() {

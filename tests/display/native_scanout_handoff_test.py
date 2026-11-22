@@ -12,6 +12,8 @@ native = root / "vdp/video/extender/display/native_scanout"
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--idf", type=Path, required=True, help="pinned ESP-IDF 5.5.5 root")
+    parser.add_argument("--startup-trace", action="store_true",
+                        help="also run per-boot diagnostic freeze and mode change cases")
     args = parser.parse_args()
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
@@ -37,10 +39,17 @@ def main():
         irq = gdma[gdma.index("uint32_t intr_status = dw_gdma_ll_channel_get_intr_status"):]
         assert irq.index("chan->cbs.on_invalid_block(") < irq.index("chan->cbs.on_block_trans_done(") < irq.index("chan->cbs.on_full_trans_done(")
         binary = tmp / "native_handoff"
-        subprocess.run(["cc","-std=c11","-Wall","-Wextra","-Werror","-Wno-unused-function",
+        compiler = ["cc","-std=c11","-Wall","-Wextra","-Werror","-Wno-unused-function",
                         "-I",str(tmp),"-I",str(native),str(Path(__file__).with_suffix(".c")),
-                        "-o",str(binary)], check=True)
+                        "-o",str(binary)]
+        subprocess.run(compiler, check=True)
         subprocess.run([str(binary)], check=True)
+        if args.startup_trace:
+            subprocess.run(compiler + ["-DAGON_EXTENDER_NATIVE_STARTUP_TRACE=1"], check=True)
+            for height in (480, 384):
+                for case in ("success", "withheld", "wake-lock", "reader-lock", "render", "cache", "first-fault"):
+                    # Each process starts in boot epoch 1. Each case also drives epoch 2.
+                    subprocess.run([str(binary), str(height), case], check=True)
 
 if __name__ == "__main__":
     main()
