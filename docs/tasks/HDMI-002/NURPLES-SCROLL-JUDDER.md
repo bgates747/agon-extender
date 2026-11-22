@@ -634,3 +634,106 @@ test-only commit follows the clean firmware build. Private target, host,
 negative-control and compiler-release receipts are in `native-rows/palette-r04`.
 The physical 1,600 µs refill limit and on-monitor startup still require a
 bench run. Smith reviews these results before reservation.
+
+**Olimex r04 first boot.** The candidate boot log identified the r04 build.
+The independent flash readback matched all 1,794,048 written bytes at
+`0x20000`, SHA-256
+`42199f2399a5c0e02b1447d2f2de9ae89c124e959d413706dcd79eba651578c5`.
+The operator verified a working Legacy CLI after installation.
+
+| Hardware observation | Result |
+| --- | --- |
+| Frame 2 block 0 | Row sampling was inactive. The P4 published the black slot at +89 µs and accepted rearm at +2,067 µs, both relative to the retirement interrupt. The slot was ready 1,978 µs before the rearm decision. |
+| Frame 3 block 0 | The P4 refused the next handoff. Both live and saved counters showed 2 successful frame rearms, 45 block retirements, 42 publications, 1 rejection, 0 invalid descriptors and 0 underrun interrupts. |
+| First live refill against 1,600 µs | Unmeasured. Frame 3 was the first eligible live frame after the traced black frame. The one-shot captured no frame-3 row marker, and the sequence fault captured no completion timestamp. The 89 µs maximum covers completed refills only. |
+
+The operator retained the sealed trace, both counter snapshots, the boot log,
+flash readback and supervisor receipts in the private `palette-r04/bench`
+directory. The failure alert completed. The run stopped with r04 installed
+and bench custody retained for Smith.
+
+### First live refill at startup — approved trace r05
+
+The offline comparison reproduced the install receipt from the retained bytes.
+At app address `0x20000`, the independent flash readback equals the retained
+r04 application (1,775,776 bytes) followed by 18,272 bytes of `0xff`. Its
+1,794,048-byte extent has the SHA-256 recorded above. The operator retains the
+Olimex reservation with r04 installed.
+
+#### Where frame 3 block 0 reached
+
+| Event on the mode 0 boot | What the evidence establishes |
+| --- | --- |
+| Frame 2 block 12 retired | The three-slot ring assigned slot 0 to frame 3 block 0 and queued the refill. The preceding top block had taken the startup bypass and rearmed black. |
+| Drawing wake returned, then frame 2 block 13 retired or had already retired | The worker could pass the gate once DMA entered the final block. The only counted drawing wake and the only recorded wake-to-ownership gap belong to frame 3 block 0. |
+| Worker confirmed ownership of slot 0 | The worker had acquired the driver's reader mutex for the wake, released it, passed the gate, and acquired it again to refill. The measured **1,024 µs** runs from the wake callback's return to the ownership check. The retire-to-wake interval was additional. At most **576 µs** remained until the 1,600 µs limit, or **560 µs** until the pre-publication check that reserves 16 µs for arming the descriptor. |
+| Frame 2 block 14 retired and the frame ended | DMA had consumed the three primed blocks and all 42 published refills. The next top block lacked a ready publication, so the P4 refused rearm into frame 3. The end-of-frame fault supplies no completion duration. |
+
+Frame 3 is the first live *candidate*. r04 sealed its row cursor on frame 2,
+so live admission and the last row reached on frame 3 are unknown. In mode 0 a
+live top block reads 32 stock rows of 640 pixels and expands 20,480 pixels to
+three bytes each. The driver then requests cache writeback over the 81,408-byte
+physical slot (32 × 848 × 3). A wait for the stock drawing mutex, the accumulated
+cost of processing those rows, and a later delay before descriptor publication
+are all consistent with the capture. The 89 µs maximum describes completed
+refills. The routine row profiler did not sample frame 3.
+
+Reviewed in the flashed [r04 ring](https://github.com/bgates747/agon-extender/blob/4c5a16a7e70b05221f8de78a48a09c05a5af4378/vdp/video/extender/display/native_scanout/native_ring.h#L35)
+and [DMA worker and frame interrupt](https://github.com/bgates747/agon-extender/blob/4c5a16a7e70b05221f8de78a48a09c05a5af4378/vdp/video/extender/display/native_scanout/native_runtime.inc#L265).
+
+#### Smallest diagnostic change
+
+Use the existing P4 startup trace flag, one scratch record and one frozen
+record. The proposed change selects the first live top block dynamically.
+The r04 host fixture already demonstrated that palette setup can put the first
+live pixels on frame 4.
+
+1. At the third-last retirement of each startup frame in epoch 1, the DMA
+   interrupt arms scratch for the upcoming frame's block 0. It records the
+   actual target tag, clears the row and timestamps to their unseen values,
+   and uses the retirement timestamp as zero. Enqueue, worker and interrupt
+   probes all use that tag. This captures a failure even before the worker
+   calls the renderer.
+2. The P4 service records its existing row-zero readiness decision. For a
+   live refill the existing cursor identifies the logical row and the last
+   boundary crossed. `row_lock(y)` precedes acquisition of the stock drawing
+   mutex, `compose(y)` follows acquisition, and `expand(y)` follows release
+   and precedes conversion of the stock row to BGR bytes. The driver already
+   timestamps render entry/return, cache begin/end or skip, entry into the
+   publication critical section, and successful publication after descriptor
+   VALID. Use those markers and the existing worker/gate timestamps. The
+   row loop needs only its existing cursor stores.
+3. The frame interrupt uses the actual rearm result under the existing ring
+   lock. Recycle scratch only after a successful rearm with explicit inactive
+   admission or a confirmed unbound black path. Freeze on the first live
+   rearm decision or any earlier fault. Save the target tag, actual fault
+   tag/site, retired count, slot tag/readiness, cursor and event times together.
+   An early fault can have unknown admission or no armed target. A live row
+   of black pixels still counts as live. The status endpoint reports the
+   saved target. Worker resumption and subsequent mode changes must preserve
+   the frozen record.
+4. On successful publication, report retirement-to-VALID in µs against
+   1,600 and report rearm separately. On an unpublished EOF, report the last
+   stage and row plus elapsed time to the decision as a **lower bound** on
+   time to publication. At or below 1,600 µs an EOF refusal still proves a
+   missed handoff. A single cursor locates the unfinished stage but cannot
+   establish its total cost, a mutex owner or a deadlock. Formatting takes
+   place when the host retrieves the record.
+
+The existing [row-zero readiness latch](https://github.com/bgates747/agon-extender/blob/4c5a16a7e70b05221f8de78a48a09c05a5af4378/vdp/video/extender/display/stock_p4_service.cpp#L205),
+[stock row cursor](https://github.com/bgates747/agon-extender/blob/4c5a16a7e70b05221f8de78a48a09c05a5af4378/vdp/video/extender/display/stock_runtime_controller.hpp#L239)
+and [status formatter](https://github.com/bgates747/agon-extender/blob/4c5a16a7e70b05221f8de78a48a09c05a5af4378/vdp/video/extender/network/display_status.hpp#L55)
+define the observation points. This change requires no extra DMA slot, pixel
+copy, per-row clock read or serial logging in the refill path.
+
+**Approved offline checks.** Use the existing ring, renderer
+and frame-callback fixture to move live admission among frames 2, 3 and 4,
+including a mid-frame palette release and an all-black live image. Exercise
+pre-admission failure and interrupt the first live block at the drawing lock,
+stock composition, expansion, cache writeback and publication. Check the
+reported tag, row, missing milestones and time bound for each case. On success
+check the expected pixels, publication timestamp and actual rearm. Exercise
+the 1,584 µs pre-publication and 1,600 µs post-VALID boundaries. Resume the
+worker, replace the mode, and read the sealed record again to verify identical
+bytes. Smith approved this diagnostic plan, implementation, build and offline
+verification. The operator holds the Olimex reservation for review before flashing.
