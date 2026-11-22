@@ -473,3 +473,101 @@ enqueue and the frame decision. The snapshot copies 27 timestamp words at
 the decision. These are static operation counts. On-board timing and the
 stage reached during the real blue-screen failure remain open. This work did
 not access or flash the Olimex bench.
+
+**Single Olimex startup capture.** Smith authorized one r03 install and boot.
+The operator confirmed the Legacy prompt in the Nurples directory and verified
+the startup and listener files. The entire 1,794,048-byte app0 extent matched
+independent readback (SHA-256
+`1ac06cdd528010be6fad7b8738cf7a8d1bf6ca838192a547ab7c51a579ebb7a4`).
+The first boot reported the r03 build identity. The operator collected the
+sealed trace, saved fault and live counters before issuing any mode change or
+additional reset. The private receipts are in `trace-r03/bench/`.
+
+Relative to retirement of frame 1 block 12, the interrupt enqueued frame 2
+block 0 at +4 µs. The worker dequeued it at +13 µs, acquired its wake-decision
+reader mutex at +25 µs, bypassed the sampling gate at +34 µs, acquired the
+render reader mutex at +39 µs and entered the bound renderer at +47 µs. At
+the rearm decision (+2,066 µs), the cursor still read **row_lock, source row
+0**. The next marker, written just after acquisition of the stock native
+drawing lock, was absent. All 15 blocks had retired. Slot 0 had the requested
+generation but was unready. DMA rejected rearm. Both fault reports agreed on
+30 total retirements, 27 publications, one rejection and zero invalid or
+underrun interrupts. The 2,019 µs from renderer entry to EOF includes work
+before the lock marker; the trace establishes neither exact lock wait duration
+nor the holder or whether the worker was preempted. The operator stopped after
+collection with r03 installed and custody retained for Smith's review.
+
+After the r03 capture, Smith observed solid blue Extender video while the
+mainboard MOS prompt continued to accept external keyboard input. The P4
+also served the sealed trace over HTTP during collection. These observations
+establish that the scanout failure can coexist with functioning P4 services.
+
+### Released P4 handback and startup drawing-lock review
+
+The operator restored the v0.3.0 P4 application in the original Olimex slot.
+The 1,768,624 application bytes matched the released SHA-256
+`539dc7176f079bc6c298c48352b7e94c54db654fb6fdbb9c42897370fb19834b`.
+The independent readback of all 1,794,048 written bytes at `0x20000` matched
+the padded release byte for byte, SHA-256
+`071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1`.
+Handback verified the Legacy MOS prompt, keyboard ready with no keys held,
+listener offline, transfers idle and serial handles free. The supervisor
+joined its workers. The scheduler closed the reservation and reported the
+FIFO empty. The r03 failure capture and restore receipts remain in the
+private `trace-r03/bench` evidence directory.
+
+**Startup ownership in the captured build.** At source `b9b430c57e2b`,
+the P4 Arduino setup task starts the HDMI carrier and calls `changeMode(0)`
+before starting the VDU command processor (`vdp/video/video.ino`). Mode 0
+selects a 640×480 single-buffered, 16-colour controller. Source row 0 takes
+the P4 global recursive drawing mutex before reading its pixels and signal
+map (`stock_runtime_controller.hpp`, `traceNativeRow`).
+
+| Possible owner | Relation to the frame 2, block 0 failure |
+| --- | --- |
+| P4 setup task preparing the viewport and FabGL default palette | Holds the mutex during `setResolution`. That call returns before the native row callback is bound. |
+| P4 setup task restoring the Agon mode palette | `commitPreparedMode` activates the row service. Afterwards `changeMode` calls `restorePalette`. Each of 16 physical palette writes takes the row mutex briefly. Then `VGAPalettedController::updateRGB2PaletteLUT` holds it across 64 input colours and up to 16 HSV distance comparisons per input. This is the strongest candidate for a long hold. |
+| P4 stock drawing worker or VDU parser | The live counter recorded zero draw wakes. Setup starts the parser after the mode change. The bench held the eZ80 in reset through P4 startup. The failure predates application drawing. |
+
+The trace places the refill task at the first row's lock-acquisition marker
+when DMA rejected block 0. It records neither the owner nor the scheduling
+history at that marker. The 2,019 µs from renderer entry to the decision is
+an elapsed interval, not a measured mutex hold. The ordering defect is
+visible in source. The particular palette operation occupying that interval
+is inferred. Stock mainboard VGA takes its per-line colours from the signal
+map. The reverse RGB-to-palette table serves drawing. The P4 port couples the
+two through the same mutex.
+
+**Duplicate work.** FabGL already builds that reverse table in
+`setResolution`. Comparing `COLOR2RGB888` with Agon's `defaultPalette10`
+through the controller's actual RGB222 conversion gives 16 equal entries
+in the same order. Mode 0 computes the same 64-entry table twice. Other
+depths, including four colours, have different defaults. Any future
+elimination of the duplicate must preserve Agon's 64 logical palette entries
+and use the actual selected colours.
+
+**Approved native row handoff.** On the P4 native row
+path, let the new service supply live rows only after `changeMode` completes
+the selected mode's palette setup. Have the existing row-zero check latch
+readiness for the whole frame. During setup the callback supplies its existing
+black DMA slots. The physical frame callback and stock drawing service keep
+their normal cadence. A failed mode change must restore the former mode's
+readiness when its palette is settled, including the official fallback path.
+This changes the order of one handoff and needs no extra image buffer or
+pixel copy.
+
+For verification, hold palette initialization across two simulated wraps.
+Require valid black publications throughout the hold, then the complete
+expected pixel and palette output from row zero of the first live frame.
+Exercise a mode with different defaults, teletext, and failed preparation
+with an existing controller. Check the public frame count and the first live
+block's publication as well as frame 2. On a subsequent authorized bench
+run, require zero refused rearms and measure the first live refill against
+the existing 1,600 µs limit. Sustained drawing and scrolling remain separate
+load tests.
+
+Smith authorized the P4 implementation, candidate build and offline checks.
+Freeze this contract on the task branch before changing the r03 component
+source. Build from that source with the same native row and startup trace
+selections. Retain the candidate identity, image hashes, frame and pixel
+results in this task. Return them to Smith before any Olimex reservation.
