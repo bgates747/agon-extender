@@ -24,3 +24,4 @@
 /scripts/reset_agon_usb.py
 /scripts/sdcard.py
 /scripts/sdcard_staged.py
+/AGENTS.md
