@@ -327,8 +327,12 @@ This standing Author instruction supplements the voice requirement.
 
 ## Author recovery and questions — 2026-10-13
 
-Use chat for questions and follow-up. For Olimex, the [Olimex bench procedure](docs/operations/olimex-bench/README.md)
-governs attended alerts and the stop boundary. For an authorized reset, use
+Use the [Oryx spoken alert](../agon-dev-env/codex/urgent-alerts.md) when Smith
+needs urgent attention. Name the recognizable agent session and give one
+short, specific description. Put the full context and any decision in the
+originating chat. Use ordinary chat for questions, approvals, and follow-up.
+For Olimex, the [Olimex bench procedure](docs/operations/olimex-bench/README.md)
+governs the stop boundary. For an authorized reset, use
 the startup checks and verification in [Bench reset](docs/bench-reset.md).
 Preserve uncertain run evidence.
 
