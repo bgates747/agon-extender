@@ -571,3 +571,66 @@ Freeze this contract on the task branch before changing the r03 component
 source. Build from that source with the same native row and startup trace
 selections. Retain the candidate identity, image hashes, frame and pixel
 results in this task. Return them to Smith before any Olimex reservation.
+
+### Native row admission after palette setup — candidate r04
+
+The plan reached the remote at `3e07e326974b109ee24279a31f8a10be1f181099`
+before implementation. Candidate source `4c5a16a7e70b05221f8de78a48a09c05a5af4378`
+adds a readiness flag to the native P4 display service. Setup clears the
+flag before binding the row callback. The stock mode caller sets it after
+palette or teletext setup, including after a failed allocation reattaches
+the former controller. Row zero samples it once for the whole frame.
+During double-buffered setup the drawing worker acknowledges its normal
+wake immediately. Even an empty sprite pass would otherwise acquire the
+palette mutex and delay DMA through the swap acknowledgement. Single-buffer
+setup retains drawing opportunities, including those needed by teletext.
+
+The clean P4 build is `hdmi-native-row-r04-b2026-11-22-02-00-35Z`.
+The target validator passed, all 85 retained artifact hashes verified, and
+the 1,856 compilation actions carry the same Extender definitions as r03.
+Only three P4 files changed among the 5,575 archived source inputs.
+The 1,775,776-byte application is 112 bytes larger than r03. Its SHA-256 is
+`0dea7a3f6d3954ea3a55eb0c6af63683730eaeadee4152d7a6794bf2b188e77c`.
+The RISC-V image calls the bitmap palette restore before its release-store
+to the new flag. Target debug information places the flag in existing
+padding. The display service occupies 1,184 bytes in both builds.
+
+**Offline DMA and pixel results.** The host fixture exercised the native C
+ring, stock P4 service, FabGL controllers, and the build's generated ESP-IDF
+frame-complete callback. The host modeled the interrupt, DMA registers and
+clock. It held the real drawing mutex on another thread through rearm into
+frames 2 and 3, then finished installing the palette after frame 3 block 4.
+Every consumed descriptor and slot was checked before retirement.
+
+| Measurement on the 848×480 carrier | 640×480, 16 colours, single buffer | 320×240, 4 colours, double buffer |
+| --- | ---: | ---: |
+| Bound frames 2 and 3, black pixels matched | 814,080 / 814,080 | 814,080 / 814,080 |
+| First live frame 4, pixel triplets matched, including borders | 407,040 / 407,040 at 1× | 407,040 / 407,040 at exact 2× |
+| DMA rearms across bootstrap, setup and live output | 5 / 5 | 5 / 5 |
+| Retired blocks / publications | 75 / 75 | 75 / 75 |
+| Refused rearms / invalid descriptors / underruns | 0 / 0 / 0 | 0 / 0 / 0 |
+
+Frame 2 block 0 sealed ready and black with no source row sampled. Frame 3
+stayed black after setup completed partway down the image. The fixture
+compared frame 4 against an independently calculated tile pattern using Agon
+palette IDs and BGR byte order. The public frame counter reached four after
+five physical rearms because the callback was bound after the first wrap.
+
+Ten mode-lifecycle cases exercised the original mode and palette callers
+with controlled allocation and teletext results. They covered successful
+bitmap and teletext entry, failed preparation with the former controller,
+failed teletext entry and previous/default-mode fallback. A separate real
+drawing-worker check held the mutex during two double-buffered black-frame
+wakes. Both completed, and the first queued live swap waited for its own
+acknowledgement before the expected pixel appeared. Single-buffered drawing
+continued while the output was black.
+
+Under the identical held-mutex condition, the r03 service tried to sample
+source row 0 at frame 2 block 0. The test caught it before publication. With
+r04 the pixel, rearm and frame-count checks passed both with and without
+the startup trace. The regression fixture is published at
+`9fde0d8787f53c8cb412524b96a18aed23bf4d55` on the component branch. The
+test-only commit follows the clean firmware build. Private target, host,
+negative-control and compiler-release receipts are in `native-rows/palette-r04`.
+The physical 1,600 µs refill limit and on-monitor startup still require a
+bench run. Smith reviews these results before reservation.
