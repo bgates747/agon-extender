@@ -192,7 +192,12 @@ def main() -> None:
                IDF_PYTHON_ENV_PATH=str(python_env), ESP_IDF_VERSION="5.5",
                ESP_ROM_ELF_DIR=str(tools_dir / "tools/esp-rom-elfs/20241011"))
     bins = [str(path) for path in sorted((tools_dir / "tools").glob("**/bin")) if path.is_dir()]
-    env["PATH"] = os.pathsep.join([str(python_env / "bin"), *bins, env["PATH"]])
+    # Tool installations on the Pi can symlink the versioned compiler tree.
+    # Recursive globs do not traverse that symlink on our supported Python.
+    compilers = list(tools_dir.glob("tools/riscv32-esp-elf/*/riscv32-esp-elf/bin/riscv32-esp-elf-gcc"))
+    if len(compilers) != 1:
+        raise RuntimeError(f"Expected one RISC-V compiler under {tools_dir}")
+    env["PATH"] = os.pathsep.join([str(python_env / "bin"), str(compilers[0].parent), *bins, env["PATH"]])
     prefix = [str(python), str(IDF / "tools/idf.py"), "-C", str(project), "-B", str(build)]
     actions = [["build"]]
     if args.pair_probe:
