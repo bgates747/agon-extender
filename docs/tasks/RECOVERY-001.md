@@ -1,5 +1,9 @@
 # RECOVERY-001 — Restore the known-good EMOS through P4 ZDI
 
+This record covers the original Olimex P4 DevKit. For the current P4-PC
+bench, follow [MOS recovery](../mos-recovery.md). The historical wiring and
+programmer results do not establish current bench readiness.
+
 ## Executive summary
 
 **Recovery accepted:** the Author confirms Rally works on the restored Agon.

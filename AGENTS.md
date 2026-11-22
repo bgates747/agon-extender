@@ -78,11 +78,12 @@ Preserve unrelated mutable user data that a proposed write would overwrite.
 Application-only updates preserve bootloader, partition tables and unrelated
 mutable storage. Independently verify newly written bytes.
 
-For MOS startup failure and bare-metal recovery, use the maintained
-`docs/mos-recovery.md` protocol. Do not retire that capability when a task
-ends, or mistake the unexecuted WROOM contingency for the successful P4/ZDI
-recovery. Historical payload-specific tools require deliberate refresh; the
-protocol records current readiness and is not itself permission to flash.
+Use standard `FLASH mos` for an EMOS install or restore from a working MOS
+prompt. If MOS cannot boot, follow `docs/mos-recovery.md` for the Author-selected
+external WROOM recovery route. The current Extender P4-PC is unqualified for
+eZ80 ZDI recovery. Older DevKit evidence does not transfer to it. The
+procedure records the preparation and verification required for an
+authorized recovery.
 
 The ignored `HARDWARE.local.md` and the commissioned job binding hold stable
 device identities and machine-specific details. Machine access is owned by
