@@ -1,0 +1,59 @@
+{
+  "arm_a": "hdmi-coverage-r01-b2026-11-21-16-58-59Z",
+  "arm_b": "hdmi-coverage-r02-b2026-11-22-22-05-16Z",
+  "source_a": "21349e0a875042c80762e4665d08effa99350e5c",
+  "source_b": "aa502fbe9e0da891fa2c6dfcd9356b365a65801a",
+  "idf": "b774170ff46c393eeb5e495ea37936038d3f4f4f",
+  "compiler_sha256": "a58c7ac425b8b06ba0a4cb6f774553bcccf2ed2c496e738e50ea6c490227b784",
+  "compiled_commands": 1857,
+  "identical_compile_arguments_excluding_paths_and_PROJECT_VER": true,
+  "identical_sdkconfig_after_path_normalization": true,
+  "source_input_count": 5566,
+  "changed_source": [
+    "vdp/video/extender/display/hdmi_output.cpp"
+  ],
+  "identical_generated_dma_drivers": true,
+  "baseline_app_sha256": "a4743d29bccee3e0fbef37761e136cb9404e5b44aa305199ae5e7523e3e7091a",
+  "candidate_app_sha256": "53b085097800e5e1275c480ee14cff2fe3770eccfe4e4c049b1528e02ffa54b9",
+  "candidate_app_bytes": 1790528,
+  "arm_b_source_test_commit": "6b4ae17b",
+  "host_checks": [
+    "alternating targets 1 then 0",
+    "prior front byte-identical halfway through conversion and before acknowledgement",
+    "early interrupt after selection conservatively waits another callback",
+    "both complete 684x384 pixel images and borders",
+    "mutable single logical source generation does not drop mode 20",
+    "mode 8 logical swap drop and scaler handoff",
+    "modes 21\u201323 and unscaled 640\u00d7480 single-buffer control retain same-front selection",
+    "draw failure leaves ownership intact",
+    "one-buffer allocation fallback, excluded from hardware comparison",
+    "failed DMA stop retains allocations"
+  ],
+  "played_negative_control": "old source overwrote pixels of the front active in the simulated DMA reader during composition",
+  "write_offset": "0x20000",
+  "write_bytes": 1794048,
+  "arms": {
+    "played": {
+      "namespace": "spare20a",
+      "job_sha256": "4bf10608edfe134bf2c5db9989b58bf60c0fe1d3a742ef4740c6ec79a70f9e62",
+      "app_sha256": "a4743d29bccee3e0fbef37761e136cb9404e5b44aa305199ae5e7523e3e7091a",
+      "write_sha256": "e79ebbb8927245d2173a8a4306a09e97a1f181c4c80bed2db6a865aee81b73a1"
+    },
+    "spare": {
+      "namespace": "spare20b",
+      "job_sha256": "5fe8c4b640e8da7560c08b1ba24a9d2e4814426fe936ad4f10d985c2b3ed8ec1",
+      "app_sha256": "53b085097800e5e1275c480ee14cff2fe3770eccfe4e4c049b1528e02ffa54b9",
+      "write_sha256": "f60a430a1b36ff7fe8d54d58bdbb6079b1cd597c1ac9d150de5c0e3382dc256a"
+    }
+  },
+  "restore_write_sha256": "071ac03fe4b6159df8e1b15f825d523e92fe55653e681571bb44496c2d0368c1",
+  "rowload_sha256": "69b2aec1f5d127482be14da83b70676decf26d9b79a61b19e5f0c20e98eaed91",
+  "game_inputs": {
+    "nurples.bin": "b596aec8592dfc295bd379d6812cfeca96e725b59bd6676c77afaf96460c8ff9",
+    "game.agnb": "652c2b01de5dbb24100aa53d32fa2aa16f454763cad1432423bf51ae52a058ba",
+    "ui.agnb": "d0024003369c8674a3e7989efa6d45c264ab2a455e6da628b16b2afd9594d41a",
+    "fonts/Lat38-VGA8_8x8.font": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69"
+  },
+  "bench_packet_sha256": "1ba65c905894bb774a2d97c6319dbaabcef4280dceb941df71caf309fbd91127",
+  "scope": "Offline full-service mode 20 destination ownership comparison. Physical results recorded separately."
+}
