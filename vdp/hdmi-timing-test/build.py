@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import time
 from esptool.bin_image import LoadFirmwareImage
 from timings import TIMINGS, selected, header as timing_header
@@ -74,29 +75,29 @@ def check_closure(project: Path, build: Path) -> dict:
             "compiled_sources": units}
 
 
-def verify_pair_build(project: Path, build: Path, tools_dir: Path, manifest: dict) -> dict:
+def verify_probe_build(project: Path, build: Path, tools_dir: Path, manifest: dict, probe: str) -> dict:
     config = json.loads((build / "config/sdkconfig.json").read_text())
     for key, expected in {"ESP32P4_REV_MIN_FULL": 100, "ESP32P4_REV_MAX_FULL": 199,
                           "ESP_CONSOLE_USB_SERIAL_JTAG": True, "ESP_DEFAULT_CPU_FREQ_MHZ": 360,
                           "PARTITION_TABLE_CUSTOM": True, "PARTITION_TABLE_OFFSET": 0x8000}.items():
         if config.get(key) != expected:
-            raise RuntimeError(f"Unexpected {key} in pair-probe configuration: {config.get(key)}")
+            raise RuntimeError(f"Unexpected {key} in {probe} probe configuration: {config.get(key)}")
     units = [Path(name) for name in manifest["source_closure"]["compiled_sources"]]
     derivatives = []
     for name in ("esp_lcd_panel_dpi.c", "dw_gdma.c"):
-        expected_unit = build / "pair" / name
+        expected_unit = build / probe / name
         if [unit for unit in units if unit.name == name] != [expected_unit]:
             raise RuntimeError(f"Expected exactly one derived compilation of {name}")
         derivatives.append(record(expected_unit, build))
     actions = json.loads((build / "compile_commands.json").read_text())
     main_command, = (entry["command"] for entry in actions
                      if Path(entry["file"]).resolve() == project / "main/main.c")
-    if "-DAGON_HDMI_PAIR_PROBE=1" not in main_command.split():
-        raise RuntimeError("Standalone entry point compiled without the pair probe")
+    if f"-DAGON_HDMI_{probe.upper()}_PROBE=1" not in main_command.split():
+        raise RuntimeError(f"Standalone entry point compiled without the {probe} probe")
     compiler = Path(json.loads((build / "project_description.json").read_text())["c_compiler"]).resolve()
     candidates = [p.resolve() for p in tools_dir.glob("tools/riscv32-esp-elf/*/riscv32-esp-elf/bin/riscv32-esp-elf-gcc")]
     if candidates != [compiler]:
-        raise RuntimeError(f"Unexpected pair-probe compiler: {compiler}")
+        raise RuntimeError(f"Unexpected {probe} probe compiler: {compiler}")
     return {"derivatives": derivatives, "compiler": str(compiler), "compiler_sha256": digest(compiler)}
 
 
@@ -107,8 +108,11 @@ def main() -> None:
     parser.add_argument("--timing", choices=TIMINGS, default="848x480")
     parser.add_argument("--ppa-scale-320", action="store_true",
                         help="Bilinear 2x320x240 pattern, centered in the 848x480 carrier")
-    parser.add_argument("--pair-probe", action="store_true",
+    probes = parser.add_mutually_exclusive_group()
+    probes.add_argument("--pair-probe", action="store_true",
                         help="USB-commanded standalone 848x480 two-row interrupt experiment")
+    probes.add_argument("--mode0-pattern", type=Path, metavar="M000.VDU",
+                        help="Build the one-frame mode 0 row probe from the pinned packed preview")
     parser.add_argument("--tools-path", type=Path, default=TOOLS,
                         help="Host-native ESP-IDF tool directory")
     parser.add_argument("--python-env", type=Path, default=PYTHON_ENV,
@@ -116,8 +120,9 @@ def main() -> None:
     args = parser.parse_args()
     if args.ppa_scale_320 and args.timing != "848x480":
         parser.error("--ppa-scale-320 requires the proven 848x480 carrier")
-    if args.pair_probe and (args.ppa_scale_320 or args.timing != "848x480"):
-        parser.error("--pair-probe requires native 848x480 output")
+    probe = "mode0" if args.mode0_pattern else "pair" if args.pair_probe else None
+    if probe and (args.ppa_scale_320 or args.timing != "848x480"):
+        parser.error("The USB probes require native 848x480 output")
     timing = selected(args.timing)
     output = args.output.resolve()
     if output.exists():
@@ -140,6 +145,8 @@ def main() -> None:
     identity = json.loads((SOURCE / "identity.json").read_text())
     if args.pair_probe:
         identity = {"artifact_id": "hdmi-pair-irq", "revision": "r02"}
+    elif args.mode0_pattern:
+        identity = {"artifact_id": "hdmi-mode0-row", "revision": "r01"}
     build_id = identity["artifact_id"] + "-" + identity["revision"] + "-b" + stamp
     project_version = identity["revision"] + "-b" + stamp
     assert len(project_version.encode()) < 32  # ESP-IDF application version field
@@ -158,15 +165,20 @@ def main() -> None:
             shutil.copyfile(source, target)
             if digest(target) != inputs[str(source.relative_to(ROOT))]:
                 raise RuntimeError(f"Source changed while freezing the project: {source}")
-    if args.pair_probe:
+    if probe:
         # IDF resolves component requirements in a separate CMake script
         # that does not inherit the project's cache variables.
-        (project / "pair-probe.enabled").touch()
+        (project / f"{probe}-probe.enabled").touch()
         partitions = ROOT / "vdp/partitions.csv"
         inputs[str(partitions.relative_to(ROOT))] = digest(partitions)
         shutil.copyfile(partitions, project / "partitions.csv")
         if digest(project / "partitions.csv") != inputs["vdp/partitions.csv"]:
             raise RuntimeError("Partition map changed during source freeze")
+    if args.mode0_pattern:
+        artwork = json.loads(subprocess.check_output([
+            sys.executable, str(project / "mode0/prepare_pattern.py"), "--packed",
+            str(args.mode0_pattern.resolve()), "--output", str(project / "mode0/mode0_rgba2222.bin"),
+        ], text=True))
     (project / "main/build_identity.h").write_text(
         "#pragma once\n#define HDMI_TEST_BUILD_ID " + json.dumps(build_id) + "\n")
     (project / "version.txt").write_text(project_version + "\n")
@@ -201,10 +213,15 @@ def main() -> None:
     env["PATH"] = os.pathsep.join([str(python_env / "bin"), str(compilers[0].parent), *bins, env["PATH"]])
     prefix = [str(python), str(IDF / "tools/idf.py"), "-C", str(project), "-B", str(build)]
     actions = [["build"]]
-    if args.pair_probe:
-        prefix.extend(["-D", "AGON_HDMI_PAIR_PROBE=ON"])
-        manifest["presentation"] = {"method": "reference-card-then-direct-pair-irq", "pair_rows": 2,
-                                    "slots": 2, "frame_limit": 300, "invocation": "usb-console"}
+    if probe:
+        prefix.extend(["-D", f"AGON_HDMI_{probe.upper()}_PROBE=ON"])
+        if args.mode0_pattern:
+            manifest["presentation"] = {"method": "mode0-same-row-irq", "source": [640, 480],
+                                        "offset": [104, 0], "slots": 1, "frame_limit": 1,
+                                        "invocation": "usb-console", "artwork": artwork}
+        else:
+            manifest["presentation"] = {"method": "reference-card-then-direct-pair-irq", "pair_rows": 2,
+                                        "slots": 2, "frame_limit": 300, "invocation": "usb-console"}
     else:
         actions.append(["merge-bin", "--output", "hdmi-timing.factory.bin"])
     elapsed_start = time.monotonic()
@@ -226,7 +243,7 @@ def main() -> None:
         flash_path = build / "flasher_args.json"
         flash = json.loads(flash_path.read_text())
         factory_path = build / "hdmi-timing.factory.bin"
-        factory = None if args.pair_probe else factory_path.read_bytes()
+        factory = None if probe else factory_path.read_bytes()
         segments = []
         previous_end = 0
         for address, name in sorted(flash["flash_files"].items(), key=lambda item: int(item[0], 0)):
@@ -249,16 +266,16 @@ def main() -> None:
             }
             if header.chip_id != 18 or not header.min_rev_full <= 103 <= header.max_rev_full:
                 raise RuntimeError(f"Image is not compatible with the selected P4 silicon1.3: {name}")
-            if args.pair_probe and (not header.append_digest or header.stored_digest != header.calc_digest):
+            if probe and (not header.append_digest or header.stored_digest != header.calc_digest):
                 raise RuntimeError(f"ESP image SHA-256 trailer mismatch: {name}")
-        if args.pair_probe:
-            manifest["pair_toolchain"] = verify_pair_build(project, build, tools_dir, manifest)
+        if probe:
+            manifest[f"{probe}_toolchain"] = verify_probe_build(project, build, tools_dir, manifest, probe)
             app = flash["app"]
             if (int(app["offset"], 0), app["file"]) != (0x20000, "hdmi_timing.bin"):
-                raise RuntimeError(f"Unexpected pair app target: {app}")
+                raise RuntimeError(f"Unexpected probe app target: {app}")
             app_path = build / app["file"]
             if not 0 < app_path.stat().st_size <= 0x700000:
-                raise RuntimeError("Pair-probe image does not fit the selected OTA partition")
+                raise RuntimeError("Probe image does not fit the selected OTA partition")
             manifest["app_only"] = {"offset": 0x20000, **record(app_path, output)}
         else:
             manifest["factory"] = {"offset": 0, **record(factory_path, output)}

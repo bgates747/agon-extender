@@ -4,7 +4,9 @@ from pathlib import Path
 import sys
 
 
-def derive(original):
+def derive(original, probe="pair"):
+    if probe not in {"pair", "mode0"}:
+        raise ValueError(f"Unknown DMA probe {probe!r}")
     data = original.read_bytes()
     source = data.decode()
 
@@ -12,7 +14,7 @@ def derive(original):
         nonlocal source
         if source.count(old) != 1:
             raise ValueError(f"Expected one {old[:64]!r} in {original.name}")
-        source = source.replace(old, new)
+        source = source.replace(old, new.replace("pair_", f"{probe}_"))
 
     if original.name == "esp_lcd_panel_dpi.c":
         expected = "a0b13536fec34d3cc4a6324ab64bc9bb62fee4db39dec24133681bc3c17b8373"
@@ -38,6 +40,6 @@ void dw_gdma_channel_default_isr(void *args)
 
 
 if __name__ == "__main__":
-    src, target = map(Path, sys.argv[1:])
+    src, target = map(Path, sys.argv[1:3])
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(derive(src))
+    target.write_text(derive(src, sys.argv[3] if len(sys.argv) == 4 else "pair"))

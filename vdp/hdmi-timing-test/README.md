@@ -4,6 +4,13 @@ Experimental P4-PC fixture for [HDMI-002](../../docs/tasks/HDMI-002.md).
 It replaces the complete P4 application temporarily. No Agon routing, keyboard,
 Ethernet, SD, LVGL or game services are started. Product renderer code is unchanged.
 
+For the mode 0 row-reuse fixture, pass `--mode0-pattern PATH/fixture-r02-packed/m000.vdu` to
+`build.py` with a fresh output directory. The builder verifies the existing artwork and
+embeds its decoded pixels. On an authorized installation the P4 boots to its idle USB
+prompt. `preview` displays the 640×480 pattern centered in the 848×480 carrier. After
+the reference reports ready, `live` performs the single-frame trial once. `dump` reads
+the retained evidence. The first and last rows use the same internal DMA buffer.
+
 The current r02 trial generates custom 848×480 near 60 Hz with supported PLL240/7,
 two 480 Mbps DSI lanes and matched 1104×517 totals. The exact 33.75 MHz DMT/APLL
 proposal was not deployed; the task explains the silicon-revision concern.

@@ -25,20 +25,32 @@
 #include "build_identity.h"
 #include "pattern.h"
 #include "timing_config.h"
-#ifdef AGON_HDMI_PAIR_PROBE
+#if defined(AGON_HDMI_PAIR_PROBE) || defined(AGON_HDMI_MODE0_PROBE)
+#define HDMI_USB_PROBE 1
 #include <stdio.h>
 #include "driver/gpio.h"
 #include "driver/usb_serial_jtag.h"
 #include "driver/usb_serial_jtag_vfs.h"
+#ifdef AGON_HDMI_MODE0_PROBE
+#include "mode0/mode0_driver.h"
+#include "mode0/mode0_pattern.h"
+#define PROBE_NAME "MODE0"
+#define probe_run mode0_driver_run
+#define probe_report mode0_driver_report
+#else
 #include "pair/pair_driver.h"
+#define PROBE_NAME "PAIR"
+#define probe_run pair_driver_run
+#define probe_report pair_driver_report
+#endif
 _Static_assert(TEST_WIDTH == 848 && TEST_HEIGHT == 480 && !TEST_PPA_SCALE_320,
-               "The pair fixture requires the established native 848x480 carrier");
+               "The USB fixture requires the established native 848x480 carrier");
 #endif
 
 static const char *TAG = "hdmi-timing";
 static atomic_uint frames;
 
-#ifdef AGON_HDMI_PAIR_PROBE
+#ifdef HDMI_USB_PROBE
 static void isolate_agon_pads(void)
 {
     // P4-PC Rev C: GPIO46/D7 shares the SD I/O supply. Retain LDO4 even in
@@ -75,7 +87,7 @@ static void read_command(char command[16])
         if (usb_serial_jtag_read_bytes(&byte, 1, portMAX_DELAY) != 1) continue;
         if (byte == '\r' || byte == '\n') {
             if (discard) {
-                puts("PAIR_REJECT invalid command");
+                puts(PROBE_NAME "_REJECT invalid command");
                 used = 0;
                 discard = false;
             } else if (used) {
@@ -97,16 +109,16 @@ static void wait_for_preview(void)
     usb_serial_jtag_vfs_use_driver();
     setvbuf(stdout, NULL, _IONBF, 0);
     isolate_agon_pads();
-    puts("PAIR_PADS_ISOLATED");
-    printf("PAIR_IDLE %s\n", HDMI_TEST_BUILD_ID);
+    puts(PROBE_NAME "_PADS_ISOLATED");
+    printf(PROBE_NAME "_IDLE %s\n", HDMI_TEST_BUILD_ID);
     for (;;) {
         char command[16];
         read_command(command);
         if (!strcmp(command, "preview")) return;
         if (!strcmp(command, "status"))
-            puts("PAIR_STATUS state=idle frames=0 hpd=0 ready=0 build=" HDMI_TEST_BUILD_ID);
+            puts(PROBE_NAME "_STATUS state=idle frames=0 hpd=0 ready=0 build=" HDMI_TEST_BUILD_ID);
         else
-            puts("PAIR_REJECT idle; send preview");
+            puts(PROBE_NAME "_REJECT idle; send preview");
     }
 }
 
@@ -118,7 +130,7 @@ static bool observe_reference(esp_lcd_panel_handle_t panel)
     bool hpd = esp_lcd_panel_lt8912b_is_ready(panel);
     unsigned after = atomic_load_explicit(&frames, memory_order_relaxed);
     bool ready = connected && hpd && after != before;
-    printf("PAIR_REFERENCE %s frames=%u hpd=%u\n", ready ? "ready" : "unconfirmed", after, hpd);
+    printf(PROBE_NAME "_REFERENCE %s frames=%u hpd=%u\n", ready ? "ready" : "unconfirmed", after, hpd);
     return ready;
 }
 
@@ -131,7 +143,7 @@ static void reference_console(esp_lcd_panel_handle_t panel)
         read_command(command);
         if (!strcmp(command, "status")) {
             bool hpd = esp_lcd_panel_lt8912b_is_ready(panel);
-            printf("PAIR_STATUS state=%s frames=%u hpd=%u ready=%u build=%s\n",
+            printf(PROBE_NAME "_STATUS state=%s frames=%u hpd=%u ready=%u build=%s\n",
                    attempted ? "trial-ended" : "reference", atomic_load(&frames),
                    hpd, ready && hpd, HDMI_TEST_BUILD_ID);
         } else if (!strcmp(command, "preview") && !attempted) {
@@ -139,19 +151,19 @@ static void reference_console(esp_lcd_panel_handle_t panel)
         } else if (!strcmp(command, "live") && !attempted && ready) {
             if (!esp_lcd_panel_lt8912b_is_ready(panel)) {
                 ready = false;
-                puts("PAIR_REJECT HPD lost; send preview to check again");
+                puts(PROBE_NAME "_REJECT HPD lost; send preview to check again");
                 continue;
             }
             attempted = true;
-            puts("PAIR_LIVE begin");
-            esp_err_t result = pair_driver_run(panel);
-            pair_driver_report();
+            puts(PROBE_NAME "_LIVE begin");
+            esp_err_t result = probe_run(panel);
+            probe_report();
             ready = result == ESP_OK && observe_reference(panel);
-            printf("PAIR_END err=%s reference_ready=%u\n", esp_err_to_name(result), ready);
+            printf(PROBE_NAME "_END err=%s reference_ready=%u\n", esp_err_to_name(result), ready);
         } else if (!strcmp(command, "dump") && attempted) {
-            pair_driver_report();
+            probe_report();
         } else {
-            puts("PAIR_REJECT command not valid in this state");
+            puts(PROBE_NAME "_REJECT command not valid in this state");
         }
     }
 }
@@ -256,7 +268,7 @@ static bool IRAM_ATTR frame_done(esp_lcd_panel_handle_t panel,
 static void display_task(void *unused)
 {
     (void)unused;
-#ifdef AGON_HDMI_PAIR_PROBE
+#ifdef HDMI_USB_PROBE
     wait_for_preview();
 #endif
     ESP_LOGI(TAG, "%s experimental; static visual validation", HDMI_TEST_BUILD_ID);
@@ -329,6 +341,8 @@ static void display_task(void *unused)
     ESP_ERROR_CHECK(esp_lcd_dpi_panel_get_frame_buffer(panel, 1, &pixels));
 #if TEST_PPA_SCALE_320
     scaled_pattern(pixels);
+#elif defined(AGON_HDMI_MODE0_PROBE)
+    mode0_render_reference(pixels);
 #else
     ESP_ERROR_CHECK(hdmi_timing_pattern_bgr888(pixels, TEST_WIDTH * TEST_HEIGHT * 3,
                                               TEST_WIDTH * 3, TEST_WIDTH, TEST_HEIGHT)
@@ -357,7 +371,7 @@ static void display_task(void *unused)
              (unsigned)HP_SYS_CLKRST.peri_clk_ctrl03.reg_mipi_dsi_dpiclk_div_num + 1);
     ESP_LOGI(TAG, "Pattern held; %ux%u total; calculated %.6fHz; +H/+V; VIC0",
              TEST_HTOTAL, TEST_VTOTAL, 240000000.0 / TEST_DIVIDER / TEST_HTOTAL / TEST_VTOTAL);
-#ifdef AGON_HDMI_PAIR_PROBE
+#ifdef HDMI_USB_PROBE
     reference_console(panel);
 #else
     ESP_LOGI(TAG, "Visual validation - screenshot requested; all four white edges should show");
