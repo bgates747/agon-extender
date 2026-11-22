@@ -469,7 +469,7 @@ void pair_driver_report(void)
            "\"writeback\":[%u,%u,%u],\"fault_hw\":[%u,%u,%u],"
            "\"flow\":%u,\"request\":%u,\"credit\":%u,\"block_cfg\":%u,\"frame_cfg\":%u,"
            "\"frame_interval\":%u,\"block_interval\":%u,\"dw_cfg\":[%u,%u]}\n",
-           pair_fault_name[pair.fault], pair.fault_ordinal, (unsigned)pair.fault_phase,
+           pair_fault_name[pair.fault], (unsigned)pair.fault_ordinal, (unsigned)pair.fault_phase,
            (unsigned)pair.retired, (unsigned)pair.frames, (unsigned)pair.wraps, (unsigned)pair.primed,
            (unsigned)pair.irq_publications, (unsigned)pair.in_isr, (unsigned)pair.timings_over,
            (unsigned)CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ, (unsigned)pair.underruns,
