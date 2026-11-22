@@ -287,3 +287,42 @@ deferred worker service at frame end and a withheld top block. Verify the
 regression against the failed source, run the existing pixel and service
 checks, build with the failed candidate's flags, and retain the experimental
 application and its hash for review. Bench time requires a separate request.
+
+### Startup handoff correction and offline results
+
+The plan and the preserved failure were pushed in `8f682831` before implementation.
+The candidate source commit is `bae12499bda62b6d3b2c822ba0da1f5c11581515`
+on `codex/hdmi02-size01`. In `native_do_job` the P4 worker now skips the
+sampling wait for block 0 when it issued no drawing wake. The one runtime
+condition uses the worker's existing wake timestamp and introduces no allocation
+or pixel copy.
+
+The regression binds the reader after the first successful frame rearm. It
+then delivers the last two block interrupts and the end-of-list interrupt
+without further worker service. The old driver failed the new successful-rearm
+assertion. With the correction, the compiled production callbacks gave the
+following results in the host hardware model.
+
+| Frame 2, block 0 | 848×480, 15 blocks/frame | 684×384, 12 blocks/frame |
+|---|---|---|
+| Worker services the available slot | 30 retirements, 28 publications, rearmed | 24 retirements, 22 publications, rearmed |
+| Worker withholds the slot | 30 retirements, 27 publications, DMA stopped | 24 retirements, 21 publications, DMA stopped |
+
+Both withheld cases reported one sequence rejection at 2:0, an invalid top
+descriptor and a cleared channel enable bit. The genuine drawing-wake cases
+retained their modeled one-block drawing window through five wraps per carrier.
+The pixel oracle passed two-frame comparisons in 15 configurations, including
+exact 2×2 replication across the strip seam. HDMI service, carrier lifecycle
+and frame scheduling checks also passed.
+
+The clean experimental build `hdmi-native-row-r02-b2026-11-22-00-18-45Z`
+passed target validation. The independent comparison against the failed r01
+build found one changed firmware source input in 5,574, matched all 108
+checked DPI compiler options, and confirmed the no-wake branch in the linked
+RISC-V worker. All 85 manifest artifact hashes verified. The 1,769,824-byte
+P4 application has SHA-256
+`ac6f0f47c558a4224a3354fe2a383df6c2a3f97f3f115c09daf1cce5ad485da1`.
+The local build, comparison receipt and red/green logs are retained under
+`agents/hdmi002/native-rows/startup-r02/`. This offline result leaves
+target startup, physical refill timing under load and Nurples visual
+acceptance open. The Olimex bench remains released with v0.3.0 installed.
