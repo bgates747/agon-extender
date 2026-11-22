@@ -418,3 +418,58 @@ still worked. He could not run an Extender Nurples session and confirmed
 Nurples works on the mainboard. He left the bench at a responsive Legacy MOS
 prompt in the Nurples directory. These observations do not establish the fault
 registers for each reset. This step is offline.
+
+### One-shot P4 startup diagnostic
+
+The plan freeze reached the remote at `704db2bc` before the firmware change.
+Source `b9b430c57e2bfc0a4d7e0a7403aaa8e65c6dbf6d` on
+`codex/hdmi02-size01` adds the opt-in `--native-startup-trace` build flag
+to the r02 native row selection. The flag instruments the core-1 DMA driver
+and stock row renderer. The existing HTTP scanout handler accepts
+`/display/scanout?startup_trace=1` in this build.
+
+The response is `{"available":false}` until the target rearm decision or
+an earlier first fault. Once available, `elapsed_us` names the observed
+milestones, measured from the third-last retirement in frame 1. An omitted
+milestone was unseen. `site`, `retired`, `queue_depth`, `slot_frame`,
+`slot_block`, `slot_ready` and `rearmed` report the driver's decision.
+`fault_frame` and `fault_block` identify an earlier failure if present.
+The row cursor retains its last render phase, with row 65535 before any
+source row. A saved record lasts for the current boot, including carrier
+replacement. A P4 reset begins a new capture.
+
+The host handoff suite ran seven scenarios for each carrier: successful
+publication, withheld work, interruption at each of the two reader-mutex
+acquisitions, interruption in render or cache clean, and an underrun before
+the target handoff. It compared the record when sealed with its bytes after
+worker resumption, panel teardown, opposite-carrier allocation, the second
+panel's own frame-2 wrap and a later fault. All 14 passed. The ordinary
+handoff control passed as well. The C++ renderer check observed the lock
+cursor at cropped source row 112 and expansion at row 127. The resulting
+strip matched ordinary stock output byte for byte, including the expected
+2×2 marker.
+
+The clean experimental P4 build is
+`hdmi-native-row-r03-b2026-11-22-00-59-15Z`. Target validation passed, all
+85 artifact hashes verified, and the application embeds the linked ELF hash.
+The 1,775,664-byte application SHA-256 is
+`b8c0cda3255a4cf840e52d12b97fb448a6255e40cc2dd70a54fa8fe84b5209f6`.
+The DMA driver, renderer and HTTP service each gained only the trace selection
+among their Extender compiler flags compared with r02. Source, binary, ELF,
+manifests and test evidence are retained in the local `trace-r03` build silo.
+
+The HTTP host test linked the real C getter and C++ request handler with a
+modeled HTTP transport. It verified an unavailable response before the
+decision, then byte-identical JSON across mode replacement for both success
+and a fault during rendering. The existing live-status and last-fault queries
+continued to report their respective epochs.
+
+Disassembly shows aligned RISC-V word stores for the row markers. The trace
+uses 274 bytes of static internal data, including the 156-byte sealed record,
+excluding alignment and the per-panel selection flag. For the traced block,
+the renderer adds at most 97 cursor writes at 1:1 or 49 at exact 2×. The
+no-wake, dirty, bound path adds at most 14 worker clock reads plus one each at
+enqueue and the frame decision. The snapshot copies 27 timestamp words at
+the decision. These are static operation counts. On-board timing and the
+stage reached during the real blue-screen failure remain open. This work did
+not access or flash the Olimex bench.
