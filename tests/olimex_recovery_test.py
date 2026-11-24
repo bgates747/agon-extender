@@ -31,14 +31,15 @@ class HumanStart(unittest.TestCase):
 
     def test_manual_orders_and_incompatible_automation(self):
         self.assertEqual(runner.preflight(self.kit), ["stage", "handback"])
+        self.assertEqual(runner.phases(self.kit, enter_cwd=True), ["stage", "enter-cwd", "handback"])
         self.kit["human_start"] = "preload"
         self.assertEqual(runner.preflight(self.kit), ["stage", "preload", "handback"])
+        self.assertEqual(runner.phases(self.kit, enter_cwd=True), ["stage", "preload", "handback"])
         self.job["success"] = "PASS"
         with self.assertRaisesRegex(ValueError, "chat verdict"):
             runner.preflight(self.kit)
 
-    def preload(self, load_reply):
-        self.kit["human_start"] = "preload"
+    def manual_handoff(self, phase, *replies):
         bench = runner.Bench.__new__(runner.Bench)
         bench.kit, bench.out, bench.c = self.kit, self.root, {"ports": ["unused"]}
         bench.idle = bench.validate_ports = bench.keyboard = MagicMock()
@@ -49,11 +50,28 @@ class HumanStart(unittest.TestCase):
             reader = serial.return_value.__enter__.return_value
             reader.in_waiting = 0
             reader.read.side_effect = [b"VDU 65 66 67 68 69 70 13 10\r\nABCDEF\r\n/ *",
-                                       b"/ *CD /test/game\r\n/test/game *",
-                                       b"/test/game *LOAD /test/game/game.bin &040000\r\n" + load_reply,
-                                       b"/test/game *VDU 3\r\n"]
-            bench.invoke("preload")
+                                       *replies]
+            bench.invoke(phase)
         return [call.args[1] for call in bench.type_line.call_args_list]
+
+    def preload(self, load_reply):
+        self.kit["human_start"] = "preload"
+        return self.manual_handoff("preload", b"/ *CD /test/game\r\n/test/game *",
+                                   b"/test/game *LOAD /test/game/game.bin &040000\r\n" + load_reply,
+                                   b"/test/game *VDU 3\r\n")
+
+    def test_enter_cwd_leaves_the_exact_prompt_without_loading_or_running(self):
+        commands = self.manual_handoff("enter-cwd", b"/ *CD /test/game\r\n/test/game *",
+                                       b"/test/game *VDU 3\r\n")
+        self.assertEqual(commands, ["VDU 2", "VDU 65 66 67 68 69 70 13 10", "CD /test/game", "VDU 3"])
+        self.assertEqual(bench_process.read(self.root / "enter-cwd.json"), {
+            "cwd": "/test/game", "prompt": "/test/game *", "entry_directory": "/",
+        })
+
+    def test_rejected_directory_has_no_success_receipt(self):
+        with self.assertRaisesRegex(CliError, "Directory not found"):
+            self.manual_handoff("enter-cwd", b"/ *CD /test/game\r\nDirectory not found\r\n/ *")
+        self.assertFalse((self.root / "enter-cwd.json").exists())
 
     def test_preload_dispatches_one_load_then_leaves_the_prompt(self):
         commands = self.preload(b"/test/game *")

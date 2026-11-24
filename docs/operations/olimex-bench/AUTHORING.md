@@ -149,8 +149,12 @@ and return to MOS belong in operator chat.
 
 With `preload`, the operator's worker enters the named directory and
 requires the LOAD echo and returned prompt. The receipt names the prompt,
-program and address. Stage-only prints no preload phase. Both print the
-ordinary restore and handback phases directly after preparation.
+program and address. For `stage-only`, the packet can call the optional
+`enter-cwd` phase after preparation. Reuse the same manifest, config and
+evidence directory. The phase enters the manifest's `cwd`, witnesses the
+returned prompt, and joins. Smith then types the packet's LOAD and RUN
+commands. The default `stage-only` preflight still lists the ordinary
+preparation, restore, and handback phases.
 
 ## Check observer and flash dependencies
 
