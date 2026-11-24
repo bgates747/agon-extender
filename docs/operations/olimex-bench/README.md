@@ -258,13 +258,17 @@ job inputs.
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its applicable target. Compare the complete write extent. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `run-ID` | For a named arm, witness its working directory, issue one `LOAD` and one invocation, and keep the same UART reader open through any configured terminator. Follow the [authoring guide](AUTHORING.md) for a native-UART job with MOS-managed listener handoff. Collect reports in the arm's evidence directory. |
+| `enter-cwd` | If the packet requests it for a `stage-only` human-start job, enter the fixture directory from the manifest and verify MOS returns the exact prompt there. The worker closes its reader and joins before Smith loads and runs the fixture. |
 | `preload` | For a human-start fixture, enter its directory, issue one LOAD, observe the returned prompt and close the reader. After the worker joins, give Smith the packet’s RUN command. |
 | `restore-emos`, `restore-p4`, `restore-mainboard` | Restore only the components the job changed. The same component verification and startup checks apply. |
 | `handback` | Verify CLI, idle transfer services, serial handles and the changed components' restores. The parent records joined worker completion before you send check-in. |
 
 For a `human_start` job, stop after the last install (or stage for a
-production-only job). If preflight lists `preload`, run that phase and
-wait for its successful join first. Give Smith the packet’s commands.
+production-only job). If the `stage-only` packet requests `enter-cwd`, run it
+as a separate phase with the existing job, config and evidence directory.
+Its `enter-cwd.json` records the prompt. If preflight lists `preload`, run that
+phase. Require the applicable phase’s joined completion before giving Smith
+the packet’s commands.
 For preload, Smith types only `RUN &ADDRESS` from the confirmed directory.
 Smith reports the visual verdict and return to MOS in chat. Record his
 words, then follow his disposition and the ordinary restore and handback

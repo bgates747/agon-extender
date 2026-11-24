@@ -59,11 +59,13 @@ def sd_path(path, roots):
     return path
 
 
-def phases(kit):
+def phases(kit, *, enter_cwd=False):
     components = [name for name in COMPONENTS if name in kit["firmware"]]
     invocation = list(fixture_runs(kit))
     if "human_start" in kit:
         invocation = ["preload"] if kit["human_start"] == "preload" else []
+        if enter_cwd and kit["human_start"] == "stage-only":
+            invocation = ["enter-cwd"]
     return (["stage"] + [f"install-{name}" for name in components] + invocation
             + [f"restore-{name}" for name in reversed(components)] + ["handback"])
 
@@ -512,9 +514,11 @@ class Bench:
 
     def invoke(self, phase="run"):
         preload = phase == "preload"
-        if "human_start" in self.kit and not (preload and self.kit["human_start"] == "preload"):
+        enter_cwd = phase == "enter-cwd"
+        human_phase = {"preload": "preload", "enter-cwd": "stage-only"}.get(phase)
+        if human_phase != self.kit.get("human_start"):
             raise ValueError("Smith owns fixture invocation for this job")
-        job = self.kit["fixtures"][0] if preload else fixture_runs(self.kit)[phase]
+        job = self.kit["fixtures"][0] if human_phase else fixture_runs(self.kit)[phase]
         named = "fixtures" in self.kit
         handoff = job.get("listener_handoff")
         output_dir = self.out / "results" if named else self.out
@@ -538,6 +542,13 @@ class Bench:
                             or ".." in PurePosixPath(entry).parts):
                         raise RuntimeError("The Legacy prompt cannot be used to restore its directory")
                     prompt = observer.change_directory("enter-cwd", job["cwd"], prompt)
+                if enter_cwd:
+                    observer.mirror_off(prompt)
+                    bench_process.record(self.out / "enter-cwd.json", {
+                        "cwd": job["cwd"], "prompt": prompt.decode("ascii"),
+                        "entry_directory": entry,
+                    })
+                    return
                 observer.quiet_load(f"LOAD {job['sd_program']} &{job['address']}", prompt)
                 if preload:
                     observer.mirror_off(prompt)
@@ -699,7 +710,7 @@ class Bench:
             elif phase == "stage":
                 self.validate_ports()
                 self.stage()
-            elif phase == "preload" or phase in fixture_runs(self.kit):
+            elif phase in ("preload", "enter-cwd") or phase in fixture_runs(self.kit):
                 self.invoke(phase)
             elif phase == "handback":
                 self.handback()
@@ -727,7 +738,7 @@ def runtime_preflight(kit, config):
 
 
 def recovery_history(args, kit, failed, owner, binding):
-    order = phases(kit)
+    order = phases(kit, enter_cwd=(args.out / "enter-cwd").is_dir())
     planned = failed.replace("retry-", "install-", 1) if failed.startswith("retry-") else failed
     completed = []
     expected = {f"recover-after-{failed}"}
@@ -802,6 +813,7 @@ def main():
     phase = args.phase.removeprefix("worker-")
     failed = phase.removeprefix("recover-after-") if phase.startswith("recover-after-") else None
     selected = failed or phase
+    order = phases(kit, enter_cwd=selected == "enter-cwd" or (args.out / "enter-cwd").is_dir())
     retry_phase = selected in ("retry-mainboard", "retry-p4")
     planned = selected.replace("retry-", "install-", 1) if retry_phase else selected
     if planned not in order:
@@ -827,6 +839,14 @@ def main():
                     bench_process.verify_child(args.out / prior, child_argv(args, prior),
                                                expected_returncode=1)
                     prior = retry
+            if planned == "enter-cwd" or prior == "enter-cwd":
+                previous = args.out / prior
+                previous_supervisor = bench_process.read(previous / "supervisor-started.json")
+                if (previous_supervisor["owner"] != supervisor["owner"]
+                        or previous_supervisor["lease"] != supervisor["lease"]
+                        or previous_supervisor["phase"] != prior
+                        or bench_process.read(previous / "operation-binding.json") != binding):
+                    raise RuntimeError(f"Original operator, packet or config differs for {prior}")
             bench_process.verify_child(args.out / prior, child_argv(args, prior))
         if retry_phase:
             bench_process.verify_child(args.out / planned, child_argv(args, planned),
@@ -836,7 +856,7 @@ def main():
     if not args.operator:
         parser.error("Physical phases require --operator from the opened chat slot")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
-    bounds = {"stage": 300,
+    bounds = {"stage": 300, "enter-cwd": 90,
               "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
               "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
     if failed:
