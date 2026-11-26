@@ -277,11 +277,24 @@ phases. A human verdict requires no script or synthetic result file.
 app0 write. The Pi programs the mainboard directly through its USB port.
 Running VDPlet and the SD listener require no special build for that write.
 
-Keep the verified Agon Flash SD updater as a fallback. If USB programming
-fails, preserve the failure and follow the stop rule. Agon Flash requires
-a separately commissioned recovery packet, a working MOS prompt and a
-running VDPlet receiver that supports verified OTA. The current production
-VDPlet predates that receiver.
+**Use ordinary Agon Flash from SD for authorized mainboard VDP recovery
+after a USB programming failure**, when MOS responds and the running VDP
+supports the stock updater. Preserve the USB failure and follow the stop
+rule before switching methods. Use the installed Agon Flash v1.9 and stage
+the pinned, unpadded application image on the Agon SD card. At MOS, run
+`flash vdp /path/to/image.bin` with lowercase `vdp`. Confirm the updater
+identity and prompt before answering `y`. The running VDP checks the
+transfer, writes the inactive application slot, selects it and reboots
+automatically. Capture the updater's result. Verify the actual selected slot
+and its application bytes, then prove a working MOS prompt and record the
+active slot in inventory. The selected slot can be app1. If the job requires
+app0 specifically, account for the slot change before proceeding.
+
+The separately qualified Agon Flash variant in [BENCH-024](../../tasks/BENCH-024.md)
+adds flash SHA-256 verification before reboot and a separate activation
+command. Use that procedure only with its matching utility and a running
+receiver-enabled VDPlet build. Ordinary `flash vdp` uses the stock updater
+already in the running VDP.
 
 | Phase | What the Pi operator does |
 | --- | --- |
