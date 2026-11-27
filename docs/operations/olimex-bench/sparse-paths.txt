@@ -1,6 +1,7 @@
 /.gitignore
 /.codex/config.toml
 /docs/operations/olimex-bench/
+/examples/olimex-report/
 /docs/procedures/bench-completion.md
 /docs/procedures/test-appliances.md
 /docs/procedures/test-execution.md
@@ -16,6 +17,7 @@
 /scripts/olimex_bench.py
 /scripts/olimex_operator_ready.py
 /scripts/olimex_cli.py
+/scripts/olimex_reports.py
 /scripts/olimex_flash.py
 /scripts/olimex_p4_app.py
 /scripts/p4_boot_guard.py

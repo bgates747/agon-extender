@@ -180,6 +180,25 @@ class Observer:
 
         return self.exchange("run", command, complete, seconds, deferred=deferred)
 
+    def run_report(self, command, prompt, success, failure, seconds):
+        """Prove RUN returned before exposing any report for collection."""
+        success, failure = completion_markers(success, failure)
+
+        def complete(data):
+            lines, tail = returned_output(data, command, prompt)
+            if tail is None or tail.lower() != prompt.lower():
+                return None
+            output = [line for line in lines if line]
+            if any(line.startswith(failure) for line in output):
+                outcome = "failed"
+            elif output and output[-1] == success:
+                outcome = "passed"
+            else:
+                raise CliError("RUN returned without a recognized fixture verdict")
+            return {"outcome": outcome,
+                    "output": [line.decode("ascii", "backslashreplace") for line in output]}
+        return self.exchange("run", command, complete, seconds)
+
     def run_to_listener(self, batch, seconds, uart_end, listener_status):
         marker = marker_bytes(uart_end["line"])
         if not 0 < uart_end["seconds"] <= 120:

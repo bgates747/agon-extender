@@ -1,0 +1,20 @@
+    .assume adl=1
+    .include "agon/mos.inc"
+    .section .text
+    .global _olx_ffs_write
+
+; ADL C ABI. Return FRESULT in A and store the 24-bit write count through
+; the fourth argument. The stock AgonDev ffs_fwrite wrapper discards A.
+_olx_ffs_write:
+    push ix
+    ld ix, 0
+    add ix, sp
+    ld hl, (ix+6)
+    ld de, (ix+9)
+    ld bc, (ix+12)
+    ld a, ffs_fwrite
+    rst.lil 08h
+    ld hl, (ix+15)
+    ld (hl), bc
+    pop ix
+    ret

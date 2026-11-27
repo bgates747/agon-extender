@@ -96,6 +96,10 @@ Run retrieves the result once and checks the expected output.
 
 ## Prepare a paired job with dynamic results
 
+For offline preparation of a pilot that uses reusable SD output paths, see the
+[attempt-bound report contract](REPORT-LIFECYCLE.md). Existing packets continue
+to use the ordinary result flow below.
+
 For a schema 3 job with several arms, replace the single `fixture` object
 with an ordered `fixtures` array. Give each entry a distinct `id` such as
 `full` or `ground` and an absolute `cwd` under `/test`. Keep the program,

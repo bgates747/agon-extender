@@ -204,6 +204,16 @@ class Client:
                     walk(child[0],depth+1)
             self.rpc(13,b'\x00'+path_payload(current));report('remove',current)
         walk(path,0)
+
+    def remove_file(self, path):
+        """Unlink one guarded path only if it is a file."""
+        self.directory_capability()
+        self.operation_path(path)
+        self.rpc(13, b'\x01' + path_payload(path))
+        if self.stat_entry(path)[1] & 16:
+            raise RemoteError('Exact report removal refuses a directory')
+        self.rpc(13, b'\x00' + path_payload(path))
+
     def copy(self,source,destination,*,recursive=False,replace=False,fast=False,report=lambda *args:None):
         self.directory_capability();self.operation_path(source);self.operation_path(destination)
         a,b=source.lower(),destination.lower()

@@ -59,7 +59,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
-- [ ] **[BENCH-025 — Own fixture reports from invocation through SD cleanup](docs/tasks/BENCH-025.md)** — Plan approved with exact-file cleanup after durable archival and conclusive ownership, including semantically rejected reports. Nurples pilot and historical cleanup have separate gates.
+- [ ] **[BENCH-025 — Own fixture reports from invocation through SD cleanup](docs/tasks/BENCH-025.md)** — Offline candidate and fault checks complete. Nurples pilot and historical SD inventory and cleanup remain separate.
 
 - [ ] **[BENCH-022 — Audit recent Olimex runner reliability](docs/tasks/BENCH-022.md)** — Three shared runner corrections passed offline qualification. Pending real-job qualification. USB sync investigation deferred.
 

@@ -6,7 +6,8 @@ collection without replaying the fixture, and remove an owned SD copy only
 after the Pi has safely recorded it. Smith approved the plan on November 27,
 2026, with the revised D03 cleanup rule below.
 Extender owns the shared design and runner. Nurples owns its pilot fixture
-and the meaning of its timing measurements.
+and the meaning of its timing measurements. The offline candidate is ready
+for review. Pilot execution and SD work remain pending.
 
 ## Starting evidence
 
@@ -104,9 +105,9 @@ illustrative pilot attempt, the runner could show:
 
 | Arm and attempt | Agon SD | Pi evidence | Status |
 | --- | --- | --- | --- |
-| Direct 003 | `/test/nurples/earth-pose/direct/POSE.BIN` | `<job-evidence>/attempts/003/direct/POSE.BIN` and lifecycle receipt | Saved, collected, validated, cleaned |
-| Sync 004 | `/test/nurples/earth-pose/sync/POSE.BIN` | `<job-evidence>/attempts/004/sync/POSE.BIN` and archived rejection reason | Saved and collected, timing rejected, exact owned SD copy cleaned |
-| Sync 005 | `/test/nurples/earth-pose/sync/POSE.BIN` | `<job-evidence>/attempts/005/sync/collision.json` | Launch blocked. Unidentified SD copy retained pending disposition |
+| Direct 003 | `/test/nurples/earth-pose/direct/POSE.BIN` | `<attempt-003>/run-direct/report-00/POSE.BIN` and lifecycle receipts | Saved, collected, validated, cleaned |
+| Sync 004 | `/test/nurples/earth-pose/sync/POSE.BIN` | `<attempt-004>/run-sync/report-00/POSE.BIN` and archived rejection reason | Saved and collected, timing rejected, exact owned SD copy cleaned |
+| Sync 005 | `/test/nurples/earth-pose/sync/POSE.BIN` | `<attempt-005>/run-sync/report-collision.json` | Launch blocked. Unidentified SD copy retained pending disposition |
 
 ### Compatibility and existing SD backlog
 
@@ -131,13 +132,13 @@ exact reviewed file list. Neither route includes recursive deletion.
 
 ## Proposed deliverables and acceptance
 
-- BENCH-025-001 [ ] Pin the manifest and fixture contract under the accepted
+- BENCH-025-001 [x] Pin the offline manifest and fixture contract under the accepted
   decisions below. Compare the public MOS API and SDK in the selected
   firmware revisions. Record the command transport,
   supported path and size limits, exact deletion primitive, archive durability
   and lease/lock behavior.
 
-- BENCH-025-002 [ ] Add opt-in lifecycle support at the runner's ordinary
+- BENCH-025-002 [x] Add opt-in lifecycle support at the runner's ordinary
   entry points. Cover the supported result sets and failure paths offline.
   Tests must prove that a stale same-size report and case-folded collision
   block dispatch, a reused filename cannot override a token mismatch, a
@@ -146,14 +147,15 @@ exact reviewed file list. Neither route includes recursive deletion.
   rejected report only after durable archival of bytes and reason. Prove
   retention of an unidentified or uncertain report regardless of its size.
 
-- BENCH-025-003 [ ] Qualify the reusable fixture writer on selected EMOS/MOS
-  builds. Verify create collision, short write, failed close, exact recorded
+- BENCH-025-003 [x] Check the reusable fixture writer against selected EMOS/MOS
+  sources, the linked eZ80 example and host fault injection. Verify create
+  collision, short write, failed close, exact recorded
   counts and error codes, and no report-file work inside the timed loop.
   Replay the historical POSE mismatch and an invalid timing trace as
   distinct negative cases. Prove legacy fixtures and ordinary human-start
   flows keep their expected behavior.
 
-- BENCH-025-004 [ ] Exercise recoverable loss of the link before and during
+- BENCH-025-004 [x] Exercise recoverable loss of the link before and during
   retrieval, Pi interruption before archive publication, and interruption
   before and after the delete reaches SD. Include partial multi-output
   collection, reset and a changed path after interrupted cleanup.
@@ -161,8 +163,10 @@ exact reviewed file list. Neither route includes recursive deletion.
   workload to collect a file, and deletion stays blocked until each file
   has a durable archive, verdict and still-confirmed ownership.
 
-- BENCH-025-005 [ ] Run a separately approved Nurples pilot on a bounded
-  fixture and reused workspace. Compare fresh attempts with retained
+- BENCH-025-005 [ ] Pin the Nurples-owned fixture and run a separately approved
+  pilot on a bounded fixture and reused workspace. Verify live argument
+  delivery, report save and close, and exact-file cleanup through the
+  deployed SD service. Compare fresh attempts with retained
   records, verify serial/report identity and totals, and record SD occupancy,
   transfer count and elapsed time for staging, target workload, collection
   and cleanup. Prove normal CLI and handback. Review the pilot before
@@ -189,3 +193,24 @@ with a change to D03.
 The current `POSE.BIN` remains subject to Smith's explicit leave-in-place
 direction. The sync test remains on hold. The approved plan does not select
 a live pilot, authorize historical cleanup or transfer bench custody.
+
+## Offline results
+
+The [packet contract](../operations/olimex-bench/REPORT-LIFECYCLE.md) and
+[AgonDev example](../../examples/olimex-report/README.md) document the normal
+stage and run entry points, repeat-stage reuse, collection-only recovery and
+per-report evidence. The initial implementation covers automated schema-3
+packets with mirrored MOS output and verified production firmware. The
+native UART listener-handoff path and human-start jobs retain their current
+interfaces. Rollout to the shared checkout follows pilot review.
+
+| Check | Evidence |
+| --- | --- |
+| Firmware and ABI | Reviewed `Run`, executable parameters and public FatFS calls against the official MOS docs, upstream MOS v3.0.2 `8336409351ee5314e02801a7b72a4f1bb5282519` and EMOS Eirene r06 `abefa2f943eb3089c08d85bf39e48ebb4938f4bd`. Both source handlers expose A as FRESULT and BC as the count for 83h. The AgonDev wrapper discards A, so the example uses a small ADL wrapper. The linked wrapper and caller disassembly agree on the stack arguments and return register. |
+| Local built example | AgonDev Clang 15.0.7 built an 8,443-byte MOS ADL executable at `040000h`, SHA-256 `09ea71ffdd38e9a64a07b0c6d61e1edc5f50a4f7e91eb1db3a7fa705dd22ca64`. The linker map reports 54 bytes of BSS for the complete example. The local packet SHA-256 `ca1e003d1d01d5768b3fd0bce1af3ccbf76b0189e824e7c2536d1094a09a3076` passed the normal offline preflight. |
+| Fault injection | The host C harness checked five writer outcomes. The Python report tests exercised stale same-size files, FAT case collisions, target and owner binding, joined failure handling, same-packet stage reuse, short or failed saves, lost retrieval, interrupted durable archival, both sides of lost unlink acknowledgement, a replaced same-size file, reset and partial multi-output recovery. The existing runner, supervisor and transfer regressions also passed. |
+| Retained Earth evidence | Local replay independently reproduced the 27,297-byte file's 525 skipped / 5,069 VBlanks versus 561 / 5,105 on the retry's serial log. The existing Nurples decoder separately rejected the archived trace with “VBlank interval not exactly representable.” The actual SD was outside this tranche. |
+
+Build logs, executable, map, disassembly, test logs and the pinned offline
+example packet are retained under the project's ignored
+`agents/bench-025/offline/` directory.

@@ -16,6 +16,7 @@ from urllib.request import urlopen
 
 import bench_process
 import olimex_p4_app
+import olimex_reports as reports
 from olimex_cli import Observer, completion_markers
 from olimex_flash import check_extent, flash_application, mainboard_programmer
 from passive_serial import open_passive_serial
@@ -198,6 +199,8 @@ def preflight(kit):
         raise ValueError("Startup and listener pins must be SHA-256 digests")
     if not re.fullmatch(r"[a-z0-9-]{1,36}", kit["namespace"]):
         raise ValueError("Invalid fixture namespace")
+    if "report_lifecycle" in kit:
+        reports.validate(kit, pinned)
     for component, spec in kit["firmware"].items():
         for selection in ("candidate", "restore"):
             image = pinned(spec[f"{selection}_write"])
@@ -215,6 +218,9 @@ def preflight(kit):
 
 
 class Bench:
+    reports = None
+    reuse_stage = None
+
     def __init__(self, config, kit, out):
         self.config = config
         self.kit = kit
@@ -394,14 +400,20 @@ class Bench:
             if len(hello) != 8 or struct.unpack_from("<H", hello, 6)[0] & required != required:
                 raise RuntimeError("The foreground listener lacks the required parallel capabilities")
             for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
-                client.make_directory(directory, parents=True)
+                if self.reuse_stage is None:
+                    client.make_directory(directory, parents=True)
             for path in targets:
-                if existing(client, path) is not None:
+                remote = existing(client, path)
+                if self.reuse_stage is not None and path in payloads:
+                    if remote is None or remote[1] & 16 or remote[0] != len(payloads[path]):
+                        raise RuntimeError(f"Previously staged file is missing or differs in size: {path}")
+                elif remote is not None:
                     raise RuntimeError(f"Parallel staging requires a fresh target: {path}")
         finally:
             client.lock.close()
 
-        for number, (path, payload) in enumerate(payloads.items()):
+        uploads = payloads.items() if self.reuse_stage is None else ()
+        for number, (path, payload) in enumerate(uploads):
             prefix = self.out / f"stage-file-{number:02d}"
             source = prefix.with_suffix(".bin")
             with source.open("xb") as stream:
@@ -528,6 +540,10 @@ class Bench:
         self.validate_ports()
         self.idle()
         self.keyboard()
+        attempt = None
+        if self.reports:
+            stage = bench_process.read(self.out.parent / "stage/report-stage.json")
+            attempt = self.reports.prepare(phase, job, stage)
         with open_passive_serial(self.c["ports"][0], timeout=0.2) as reader:
             with (output_dir / transcript_file).open("xb") as transcript:
                 observer = Observer(reader, transcript, self.type_line)
@@ -571,6 +587,18 @@ class Bench:
                     if returned.lower() != prompt.lower():
                         raise RuntimeError("MOS returned to a different directory after the fixture")
                     prompt = returned
+                elif attempt:
+                    if self.reports.fence() != attempt["fence"]:
+                        raise RuntimeError("Custody or boot changed before RUN")
+                    argument = " " + attempt["token"] if attempt["mode"] == "token-v1" else ""
+                    command = f"RUN &{job['address']}{argument}"
+                    witness = observer.run_report(command, prompt, job["success"], job["failure"], job["seconds"])
+                    transcript.flush()
+                    os.fsync(transcript.fileno())
+                    path = output_dir / transcript_file
+                    witness.update(transcript_bytes=path.stat().st_size, transcript_sha256=reports.digest(path),
+                                   token=attempt["token"], command=command, prompt=prompt.decode("ascii"))
+                    reports.publish(self.out / "report-run.json", witness)
                 else:
                     observer.run(f"RUN &{job['address']}", prompt, job["success"].encode(),
                                  job["failure"].encode(), job["seconds"], uart_end=job.get("uart_end"))
@@ -578,8 +606,15 @@ class Bench:
                     prompt = observer.change_directory("restore-cwd", entry, prompt)
                 observer.mirror_off(prompt)
 
-        if not handoff:
+        if attempt:
+            self.finish_reports(self.out, job, attempt, witness)
+        elif not handoff:
             self.collect_results(job, output_dir, named)
+
+    def finish_reports(self, origin, job, attempt, witness):
+        valid = self.reports.collect(origin, job, attempt, witness)
+        if witness["outcome"] != "passed" or not valid:
+            raise RuntimeError("Fixture or report failed; see the attempt and per-report receipts")
 
     def collect_results(self, job, output_dir, named, *, listener_online=False):
         result_path = self.out / "result.txt"
@@ -698,18 +733,35 @@ class Bench:
             restores[component] = folder
         self.handback(restores)
 
-    def perform(self, phase, *, recovery=None):
+    def perform(self, phase, *, recovery=None, resume_reports=None):
         path = Path(self.config["operation_lock"])
         with path.open("a") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             self.lock = lock
-            if recovery is not None:
+            if self.reports:
+                self.reports.custody()
+            if resume_reports is not None:
+                origin, job, attempt, witness = resume_reports
+                self.validate_ports()
+                self.finish_reports(origin, job, attempt, witness)
+            elif recovery is not None:
                 self.recover(*recovery)
             elif any(self.out.parent.glob("recover-after-*")):
                 raise RuntimeError("Recovery has started in this evidence directory")
             elif phase == "stage":
                 self.validate_ports()
+                if self.reports:
+                    fence = self.reports.fence()
+                    if self.reuse_stage and fence != self.reuse_stage["fence"]:
+                        raise RuntimeError("Stage reuse requires uninterrupted custody, firmware and boots")
                 self.stage()
+                if self.reports:
+                    if self.reports.fence() != fence:
+                        raise RuntimeError("Custody or boot changed during staging")
+                    reports.publish(self.out / "report-stage.json", {
+                        "binding": self.reports.binding, "fence": fence,
+                        "reused_from": self.reuse_stage["source"] if self.reuse_stage else None,
+                    })
             elif phase in ("preload", "enter-cwd") or phase in fixture_runs(self.kit):
                 self.invoke(phase)
             elif phase == "handback":
@@ -721,9 +773,12 @@ class Bench:
 
 
 def child_argv(args, phase):
-    return [sys.executable, str(Path(__file__).resolve()), "--job", str(args.job),
+    argv = [sys.executable, str(Path(__file__).resolve()), "--job", str(args.job),
             "--sha256", args.sha256, "--config", str(args.config),
-            "--out", str(args.out), f"worker-{phase}"]
+            "--out", str(args.out)]
+    if getattr(args, "reuse_stage", None):
+        argv += ["--reuse-stage", str(args.reuse_stage)]
+    return [*argv, f"worker-{phase}"]
 
 
 def runtime_preflight(kit, config):
@@ -735,6 +790,100 @@ def runtime_preflight(kit, config):
             raise RuntimeError(f"{sys.executable} needs stock esptool 5.1.0 for the paired restart")
     if "mainboard" in kit["firmware"]:
         mainboard_programmer()
+    if "report_lifecycle" in kit and not Path(config["report_lease_state"]).is_absolute():
+        raise ValueError("Report lifecycle requires the absolute scheduler state path")
+
+
+def verify_bound_phase(args, phase, owner, binding, *, code=None):
+    folder = args.out / phase
+    argv = child_argv(args, phase)
+    supervisor = bench_process.read(folder / "supervisor-started.json")
+    if (supervisor["owner"] != owner or supervisor["lease"] != f"chat:{owner}"
+            or supervisor["phase"] != phase or supervisor["argv"] != argv
+            or bench_process.read(folder / "operation-binding.json") != binding):
+        raise RuntimeError(f"Original operator, packet or config differs for {phase}")
+    result = bench_process.read(folder / "child-terminal.json")["returncode"]
+    if code is not None and result != code:
+        raise RuntimeError(f"Unexpected exit for {phase}: {result}")
+    if result:
+        failure = bench_process.read(folder / "blocked.json")
+        if (failure["owner"], failure["lease"], failure["phase"]) != (owner, f"chat:{owner}", phase):
+            raise RuntimeError(f"Unbound failure receipt for {phase}")
+    elif bench_process.read(folder / "complete.json")["state"] != "completed":
+        raise RuntimeError(f"Missing successful completion for {phase}")
+    bench_process.verify_child(folder, argv, expected_returncode=result, allow_interruption=bool(result))
+    return result
+
+
+def report_resume_names(args, run):
+    name = re.compile(rf"resume-{re.escape(run)}-[0-9]{{2}}")
+    names = sorted(path.name for path in args.out.iterdir() if name.fullmatch(path.name))
+    if names != [f"resume-{run}-{index:02d}" for index in range(1, len(names) + 1)]:
+        raise RuntimeError(f"Unexpected or out-of-order report resume for {run}")
+    return names
+
+
+def verify_report_run(args, run, owner, binding, *, successful):
+    code = verify_bound_phase(args, run, owner, binding)
+    resumes = report_resume_names(args, run)
+    for name in resumes:
+        if code == 0:
+            raise RuntimeError(f"Unexpected report resume after completion: {name}")
+        code = verify_bound_phase(args, name, owner, binding)
+    if successful and code:
+        raise RuntimeError(f"No completed report collection for {run}")
+    return resumes
+
+
+def report_resume(args, phase, run, order, kit, owner, binding):
+    if any((args.out / later).exists() for later in order[order.index(run) + 1:]):
+        raise RuntimeError("A successor phase already started")
+    if any(args.out.glob("recover-after-*")):
+        raise RuntimeError("Bench recovery has already started")
+    if verify_bound_phase(args, run, owner, binding) == 0:
+        raise RuntimeError("The original report phase already completed")
+    resumes = report_resume_names(args, run)
+    if not resumes or resumes[-1] != phase:
+        raise RuntimeError("Use the next numbered report resume")
+    for prior in resumes[:-1]:
+        if verify_bound_phase(args, prior, owner, binding) == 0:
+            raise RuntimeError("The report collection already completed")
+    origin = args.out / run
+    attempt = bench_process.read(origin / "report-attempt.json")
+    witness = bench_process.read(origin / "report-run.json")
+    job = fixture_runs(kit)[run]
+    mode = kit["report_lifecycle"]["mode"]
+    argument = f" {attempt['token']}" if mode == "token-v1" else ""
+    command = f"RUN &{job['address']}{argument}"
+    if (attempt["phase"] != run or attempt["mode"] != mode or attempt["binding"] != binding
+            or attempt["program"] != job["sd_program"] or attempt["fixture"] != job["agon"]["sha256"]
+            or not re.fullmatch(reports.TOKEN, attempt["token"]) or witness["token"] != attempt["token"]
+            or witness["command"] != command or witness["outcome"] not in ("passed", "failed")
+            or bench_process.read(origin / "dispatch-run.json")["command"] != command):
+        raise RuntimeError("The original RUN and report attempt do not agree")
+    return origin, job, attempt, witness
+
+
+def stage_reuse(args, kit, owner, binding):
+    source = args.reuse_stage
+    if (source.resolve() == args.out.resolve() or not source.is_absolute()
+            or not (source / "stage/report-stage.json").is_file()):
+        raise ValueError("Reuse requires the absolute evidence root of an earlier stage")
+    original = argparse.Namespace(**vars(args))
+    original.out, original.reuse_stage = source, None
+    verify_bound_phase(original, "stage", owner, binding, code=0)
+    stage = bench_process.read(source / "stage/report-stage.json")
+    if stage["binding"] != binding or stage["reused_from"] is not None:
+        raise RuntimeError("Reuse must refer to the original matching upload receipts")
+    payloads = {path: item for job in fixture_runs(kit).values() for path, item in fixture_inputs(job).items()}
+    for number, (path, item) in enumerate(payloads.items()):
+        prefix = source / f"stage/stage-file-{number:02d}"
+        receipt = bench_process.read(prefix.with_suffix(".receipt.json"))
+        if (receipt["target"] != path or receipt["result"]["size"] != item["bytes"]
+                or receipt["result"]["bytes"] != item["bytes"] or receipt["result"]["error"] != 0
+                or reports.digest(prefix.with_suffix(".bin")) != item["sha256"]):
+            raise RuntimeError(f"No matching completed upload and host input for {path}")
+    return {"source": str(source), "fence": stage["fence"]}
 
 
 def recovery_history(args, kit, failed, owner, binding):
@@ -764,6 +913,11 @@ def recovery_history(args, kit, failed, owner, binding):
         expected.add(phase)
 
     for prior in order[:order.index(planned)]:
+        if "report_lifecycle" in kit and prior in fixture_runs(kit):
+            expected.update(verify_report_run(args, prior, owner, binding, successful=True))
+            expected.add(prior)
+            completed.append(prior)
+            continue
         if prior in ("install-mainboard", "install-p4"):
             retry = prior.replace("install-", "retry-")
             if (args.out / retry).exists():
@@ -774,6 +928,8 @@ def recovery_history(args, kit, failed, owner, binding):
     if failed != planned:
         verify(planned, fault=True)
     verify(failed, fault=True)
+    if "report_lifecycle" in kit and failed in fixture_runs(kit):
+        expected.update(verify_report_run(args, failed, owner, binding, successful=False))
     # A failed flash that reached an intent or a readback needs reconciliation.
     if failed.startswith(("install-", "retry-", "restore-")) and any(
             (args.out / failed / name).exists() for name in
@@ -795,6 +951,7 @@ def main():
     parser.add_argument("--config", type=Path)
     parser.add_argument("--out", type=Path)
     parser.add_argument("--operator", help="The chat holding the open slot")
+    parser.add_argument("--reuse-stage", type=Path, help="Original upload evidence root for a lifecycle job")
     parser.add_argument("phase")
     args = parser.parse_args()
     raw = args.job.read_bytes()
@@ -812,10 +969,14 @@ def main():
         parser.error("Physical phases require --config and --out")
     phase = args.phase.removeprefix("worker-")
     failed = phase.removeprefix("recover-after-") if phase.startswith("recover-after-") else None
+    managed = "report_lifecycle" in kit
+    resume = re.fullmatch(r"resume-(run-[a-z][a-z0-9-]{0,23})-([0-9]{2})", phase) if managed else None
+    if args.reuse_stage and not managed:
+        parser.error("Stage reuse requires opt-in report lifecycle")
     selected = failed or phase
     order = phases(kit, enter_cwd=selected == "enter-cwd" or (args.out / "enter-cwd").is_dir())
     retry_phase = selected in ("retry-mainboard", "retry-p4")
-    planned = selected.replace("retry-", "install-", 1) if retry_phase else selected
+    planned = resume[1] if resume else selected.replace("retry-", "install-", 1) if retry_phase else selected
     if planned not in order:
         parser.error("The selected phase is absent from this job")
     if args.phase != phase:
@@ -829,10 +990,28 @@ def main():
         binding = {"sha256": sha256(json.dumps(binding, sort_keys=True).encode()).hexdigest()}
         bench_process.record(folder / "operation-binding.json", binding)
         bench = Bench(config, kit, folder)
+        owner = supervisor["owner"]
+        if managed:
+            if supervisor["lease"] != f"chat:{owner}" or supervisor["phase"] != phase:
+                raise RuntimeError("Report phase lacks its original operator binding")
+            bench.reports = reports.Lifecycle(bench, owner, binding, agon_boot=lambda: status(bench.url)["boot"])
+            bench.reports.custody()
+            if resume:
+                record = report_resume(args, phase, planned, order, kit, owner, binding)
+                bench.perform(phase, resume_reports=record)
+                return 0
+            if args.reuse_stage and phase == "stage":
+                bench.reuse_stage = stage_reuse(args, kit, owner, binding)
         if failed:
-            bench.perform(phase, recovery=(args, failed, supervisor["owner"], binding))
+            bench.perform(phase, recovery=(args, failed, owner, binding))
             return 0
         for prior in order[:order.index(planned)]:
+            if managed and prior in fixture_runs(kit):
+                verify_report_run(args, prior, owner, binding, successful=True)
+                continue
+            if managed and prior == "stage":
+                verify_bound_phase(args, prior, owner, binding, code=0)
+                continue
             if prior in ("install-mainboard", "install-p4"):
                 retry = prior.replace("install-", "retry-", 1)
                 if (args.out / retry).exists():
@@ -855,6 +1034,8 @@ def main():
         return 0
     if not args.operator:
         parser.error("Physical phases require --operator from the opened chat slot")
+    if resume and phase != f"resume-{planned}-{len(report_resume_names(args, planned)) + 1:02d}":
+        parser.error("Use the next numbered report resume")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
     bounds = {"stage": 300, "enter-cwd": 90,
               "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
@@ -864,6 +1045,9 @@ def main():
     job = fixture_runs(kit).get(phase)
     seconds = (job["seconds"] + job.get("uart_end", {}).get("seconds", 0) + 210
                if job is not None else bounds.get(phase, 480))
+    if managed and (job is not None or resume):
+        count = len(fixture_runs(kit)[planned]["results"])
+        seconds = (job["seconds"] if job is not None else 0) + 150 + count * 690
     return bench_process.run(child_argv(args, phase), args.out / phase,
                              seconds, owner=args.operator,
                              lease=f"chat:{args.operator}", phase=phase,
