@@ -1,11 +1,11 @@
 # Olimex bench checkout through check-in
 
-## Temporary mainboard file transfer rule
+## Mainboard file transfer default and current restriction
 
-Until Smith lifts this restriction, use UART for all file transfers to and
-from the Olimex mainboard, including staging and result collection. This
-supersedes PARLIO transfer steps in this guide and in job packets. If the
-required transfer cannot use UART, follow the bench stop procedure.
+The standard runner uses P4-staged UART for fixture uploads and report
+downloads. Until Smith lifts the UART-only restriction, use UART for all
+mainboard file transfers. If a required transfer cannot use UART, follow
+the bench stop procedure.
 
 ## Temporary mainboard VDP flashing rule
 
@@ -157,26 +157,25 @@ use the job owner's pinned, equally sized candidate and restore files with
 
 ### Stage the fixtures
 
-Under the temporary UART rule, use named schema-3 fixtures and top-level
-`"transfer": "uart"`. The Pi starts `EMOS sdserve --fast /` for both staging
-and result collection. P4 stages each file and owns UART exchanges in
-both directions. The Pi exchanges whole files with P4 over HTTP and
-records the carrier. A required file transfer that cannot use this route triggers the
-[stop rule](#stop-on-an-unexpected-problem).
+Use schema 3 (the default manifest schema) for single and named fixtures.
+Omit `transfer` or set it to `"uart"`. The Pi starts
+`EMOS sdserve --fast /` for staging and collection. The Pi exchanges whole
+files with P4 over HTTP. P4 transfers their payloads to and from EMOS over
+UART, and EMOS accesses the mainboard SD card. The runner records the
+carrier on each completed file transfer and exits the listener after each
+successful phase. Use a fresh SD path for each payload and result.
 
-When Smith admits PARLIO again, schema 3 defaults to the parallel route.
-The runner starts
-`EMOS sdserve --fast --parallel /` on the matched production stack. P4 sends
-nonempty fixture files to EMOS over PARLIO during staging. EMOS sends
-nonempty result files back to P4 over PARLIO during collection. UART carries
-control records and empty-file operations. The runner records the carrier
-and requires successful transfer completion in both directions.
+An explicitly admitted parallel job sets `"transfer": "parlio"` in its
+schema-3 manifest and uses the matched firmware with
+`EMOS sdserve --fast --parallel /`. Omit this option while the UART-only
+restriction is in force. Older schema-1 and schema-2 manifests retain their
+historical transfer methods. Use schema 3 for routine bench operation.
 
 Skip CRCs, substitute payload digests and verification reads of staged
 contents on both ends. Local input hashes identify the files before the
 job, and the fixture's result checks still determine the test outcome.
-Verify firmware writes independently. If a required parallel capability is
-missing or a transfer or test fails, follow the [stop rule](#stop-on-an-unexpected-problem).
+Verify firmware writes independently. If a required capability is missing
+or a transfer or test fails, follow the [stop rule](#stop-on-an-unexpected-problem).
 Arrange a separate, explicit compatibility method in the job packet if
 custom firmware requires one.
 
@@ -277,7 +276,7 @@ job inputs.
 
 | Phase | Operator effect |
 | --- | --- |
-| `stage` | Creates job directories and stages the fixture and assets over the admitted transport without routine readbacks. For EMOS or mainboard FLASH jobs, stages the corresponding install and restore files. Exits the foreground listener. |
+| `stage` | Creates job directories and stages the fixture and assets through P4 over UART by default, without routine payload readbacks. For EMOS or mainboard FLASH jobs, stages the corresponding install and restore files. Exits the foreground listener. |
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its target. Verify the installed bytes using the method below. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `run-ID` | For a named arm, witness its working directory, issue one `LOAD` and one invocation, and keep the same UART reader open through any configured terminator. Follow the [authoring guide](AUTHORING.md) for a native-UART job with MOS-managed listener handoff. Collect reports in the arm's evidence directory. |

@@ -105,7 +105,7 @@ check-in. The four diagnostic files remain in their dedicated SD directory.
 
 ## Approved bench default — November 27
 
-- REMOTE-009-013 [ ] Change the maintained schema-3 runner default to
+- REMOTE-009-013 [x] Change the maintained schema-3 runner default to
   P4-staged UART. Keep an explicit parallel choice for separately admitted
   jobs and keep older schema behavior. On production firmware run one short
   fixture through staging, MOS execution, exact result collection and
@@ -113,3 +113,19 @@ check-in. The four diagnostic files remain in their dedicated SD directory.
   data transfers. Use fresh SD paths and skip the native UART timing rerun.
   Publish the guide and advance the shared bench checkout only after the
   complete fixture and handback pass.
+
+The end-to-end gate passed on November 27 on runner
+`9c69e363b26daac42f40095ec2427d8438436081`. The production-only
+manifest used schema 3 with no transfer override. The runner sent
+`/test/uart-cutover-r01/OLIMT2.bin` (8,182 bytes) through P4 over UART,
+witnessed `OLIMTEST PASS` and the returned MOS prompt, and retrieved
+`result.txt` (20 bytes) through P4 over UART. The report matched the
+expected bytes exactly. The archived fixture was reused with only its
+embedded result path relocated to the new test directory.
+
+Production inventory was byte-identical before and after the run. The
+handback proved a working MOS prompt, idle transfers, closed serial
+handles and joined workers. No firmware or startup write took place.
+Evidence is in `agents/remote009/staged-uart-cutover-r01`. The standard
+operator and authoring guides now specify P4-staged UART for ordinary
+schema-3 jobs. The native UART benchmark remains historical.

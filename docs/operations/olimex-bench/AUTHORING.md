@@ -1,9 +1,8 @@
 # Prepare an Olimex test job
 
-The [temporary Olimex restrictions](README.md) apply to all job preparation.
-Use the named schema-3 UART route below while the transfer restriction is in
-force. Mainboard firmware changes require the FLASH utility while the
-flashing restriction is in force.
+Use the default schema-3 P4-staged UART route for bench file transfers.
+The [current Olimex restrictions](README.md) apply to all job preparation,
+including the use of FLASH for mainboard firmware changes.
 
 Create the fixture and check the job packet before asking for bench time.
 The [Olimex bench procedure](README.md) governs physical checkout and handback.
@@ -45,9 +44,10 @@ when reviewing the run.
    the executable's build contract. Pin each input file by path, byte count
    and SHA-256 for local artifact identity. Follow the bench procedure's
    [staging policy](README.md#stage-the-fixtures) for the actual transfer.
-   For routine jobs omit `schema` or set it to `3`. During the UART rule,
-   use named entries in `fixtures` and set `"transfer": "uart"`.
-   The default PARLIO path applies when the bench procedure admits it.
+   For routine jobs omit `schema` or set it to `3`. Both `fixture` and named
+   `fixtures` use P4-staged UART by default. Existing schema-3 jobs with
+   `"transfer": "uart"` use the same route. Set `"transfer": "parlio"` only
+   for a parallel job explicitly admitted by Smith.
    Use a fresh SD namespace. For additional files, add an `inputs` array
    under `fixture`, with an `sd_path` and a pinned `source` for each file.
    Obtain the startup and listener hashes from the commissioned bench record.
@@ -98,9 +98,9 @@ sha256sum path/to/job.json
 ```
 
 The production-only example yields `stage`, `run` and `handback`.
-The example documents the default PARLIO path for when it is admitted.
-Use the named-fixture contract below for UART. Stage sends the program once.
-Run retrieves the result once and checks the expected output.
+The runner sends the program through P4 over UART. After the fixture
+returns, it retrieves the result once through P4 over UART and checks the
+expected output.
 
 ## Prepare a paired job with dynamic results
 
@@ -118,8 +118,8 @@ For an arm with native UART output that may outlast the application, include
 `"uart_end": {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30}`
 with the fixture's actual diagnostic prefix, complete terminator line and
 maximum wait after application return. For timing firmware that shares USB
-UART with MOS's printer mirror, the PARLIO route supports a
-`listener_handoff` object with a
+UART with MOS's printer mirror, an explicitly admitted `"transfer": "parlio"`
+job supports a `listener_handoff` object with a
 fresh `sd_path` under the arm's directory and a pinned `source` for this
 two-line MOS batch, with CRLF line endings and the job's load address:
 
@@ -206,8 +206,8 @@ restore files. The local Olimex v0.3.0 runtime is under
 
 ## Mainboard FLASH jobs
 
-Use schema 3 and named, automated fixtures. Set the top-level
-`"transfer": "uart"`. The Pi starts `EMOS sdserve --fast /` and submits
+Use schema 3 and named, automated fixtures with the default UART carrier.
+The Pi starts `EMOS sdserve --fast /` and submits
 whole files to the existing P4 staging worker. P4 exchanges checksum-free
 UART records with the foreground EMOS listener. The Pi retrieves complete
 reports from P4 after the fixture returns to MOS. The staged client rejects
