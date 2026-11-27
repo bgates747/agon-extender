@@ -163,6 +163,16 @@ exact reviewed file list. Neither route includes recursive deletion.
   workload to collect a file, and deletion stays blocked until each file
   has a durable archive, verdict and still-confirmed ownership.
 
+- BENCH-025-007 [ ] Add a host-only import of PC-copied token-v1 reports
+  from a local directory. Bind the import to the original manifest, joined
+  RUN, attempt ID, witnessed save/close and report lengths. Archive and
+  validate the copied bytes with the original pinned validator. Provide a
+  way to intentionally defer collection before dispatch. Keep failed inputs
+  and separate the workload and report verdicts. The importer never opens a
+  bench service, mounts or writes the card, cleans files, or replays RUN.
+  Verify the procedure and failure cases offline, then stop for Smith's
+  review before the pilot or shared deployment.
+
 - BENCH-025-005 [ ] Pin the Nurples-owned fixture and run a separately approved
   pilot on a bounded fixture and reused workspace. Verify live argument
   delivery, report save and close, and exact-file cleanup through the
