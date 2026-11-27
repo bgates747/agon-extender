@@ -1,5 +1,10 @@
 # Prepare an Olimex test job
 
+The [temporary Olimex restrictions](README.md) apply to all job preparation.
+Use the named schema-3 UART route below while the transfer restriction is in
+force. Mainboard firmware changes require the FLASH utility while the
+flashing restriction is in force.
+
 Create the fixture and check the job packet before asking for bench time.
 The [Olimex bench procedure](README.md) governs physical checkout and handback.
 
@@ -40,8 +45,9 @@ when reviewing the run.
    the executable's build contract. Pin each input file by path, byte count
    and SHA-256 for local artifact identity. Follow the bench procedure's
    [staging policy](README.md#stage-the-fixtures) for the actual transfer.
-   For routine jobs omit `schema` or set it to `3`. The runner requires
-   PARLIO uploads and downloads with the production `sdserve` listener.
+   For routine jobs omit `schema` or set it to `3`. During the UART rule,
+   use named entries in `fixtures` and set `"transfer": "uart"`.
+   The default PARLIO path applies when the bench procedure admits it.
    Use a fresh SD namespace. For additional files, add an `inputs` array
    under `fixture`, with an `sd_path` and a pinned `source` for each file.
    Obtain the startup and listener hashes from the commissioned bench record.
@@ -49,7 +55,8 @@ when reviewing the run.
    For a custom job, supply only the changed components:
    - For `emos`, provide `candidate_write` and `restore_write`, each a
      complete 128 KiB ROM.
-   - For `mainboard` or `p4`, provide `offset`, `partition_bytes`,
+   - For `mainboard`, use [the FLASH manifest](#mainboard-flash-jobs).
+   - For `p4` or an admitted mainboard USB job, provide `offset`, `partition_bytes`,
      `write_bytes`, `partition_table`, and the `candidate_app`,
      `restore_app`, `candidate_write` and `restore_write` pins.
      The owner supplies the commissioned layout and write extent. Each
@@ -91,7 +98,8 @@ sha256sum path/to/job.json
 ```
 
 The production-only example yields `stage`, `run` and `handback`.
-The example uses the default PARLIO path. Stage sends the program once.
+The example documents the default PARLIO path for when it is admitted.
+Use the named-fixture contract below for UART. Stage sends the program once.
 Run retrieves the result once and checks the expected output.
 
 ## Prepare a paired job with dynamic results
@@ -110,7 +118,8 @@ For an arm with native UART output that may outlast the application, include
 `"uart_end": {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30}`
 with the fixture's actual diagnostic prefix, complete terminator line and
 maximum wait after application return. For timing firmware that shares USB
-UART with MOS's printer mirror, add a `listener_handoff` object with a
+UART with MOS's printer mirror, the PARLIO route supports a
+`listener_handoff` object with a
 fresh `sd_path` under the arm's directory and a pinned `source` for this
 two-line MOS batch, with CRLF line endings and the job's load address:
 
@@ -194,3 +203,41 @@ Use the local interpreter and commissioned configuration recorded for that
 host. The bench procedure links directly to the component owners' retained
 restore files. The local Olimex v0.3.0 runtime is under
 `dist/production/olimex-parlio-v0.3.0/runtime/`.
+
+## Mainboard FLASH jobs
+
+Use schema 3 and named, automated fixtures. Set the top-level
+`"transfer": "uart"`. The Pi starts `EMOS sdserve --fast /` and uses direct
+checksum-free UART RPCs to stage fresh files and collect reports. It rejects
+parallel listener capabilities before moving any payload and records the
+carrier in each completed transfer receipt. UART jobs collect after the
+fixture returns to MOS. Omit `listener_handoff`.
+
+For a mainboard-only FLASH job, set these fields under `firmware.mainboard`.
+
+| Field | Value |
+| --- | --- |
+| `method` | `agon-flash` |
+| `candidate_app`, `restore_app` | Raw ESP32 applications, each with `path`, `bytes` and `sha256` |
+| `partition_table` | Commissioned raw partition table with `path`, `bytes` and `sha256` |
+| `candidate_slot`, `restore_slot` | Distinct integers, 0 and 1, in the required order |
+
+Use the normal runner preflight and configuration. Include evidence from
+checkout that the currently selected production app matches `restore_slot`
+and `restore_app`. An unresolved current image blocks the job. Stage both
+apps and the fixture files. Run `install-mainboard`, the named arms in
+manifest order, `restore-mainboard` and `handback`.
+
+The Pi checks the installed FLASH v1.9 utility over UART and witnesses its
+confirmation prompt before sending one `y`. It requires the checksum and
+reboot messages. After each write it reads the partition table, OTA selector
+and selected application's exact bytes in one bounded USB programmer session
+at 115,200 baud. The Pi closes that session, restarts Agon and proves MOS is
+responsive before publishing the installed identity. The job must explicitly
+cover those independent reads and restarts. Stop and retain custody on the
+first unexpected failure according to the bench procedure.
+
+The UART staging supervisor allows 300 seconds of setup plus 250 ms per
+212-byte payload WRITE request, rounded up by file. This is a watchdog, not a
+throughput estimate. Set the Pi service runtime longer than the supervisor's
+bound so it can preserve failure evidence and wake the operator.

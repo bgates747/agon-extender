@@ -12,12 +12,15 @@ Smith directed VDPlet to work with Extender on a FLASH-compatible plan with
 standard runners, then to book and run the original Nurples pair when ready
 (VDPlet chat message `01a21edd-10dc-7d33-9d81-e52a1930bd81`). This records the
 plan for review. The [commissioned bench guide](../../operations/olimex-bench/README.md)
-currently requires FLASH for mainboard firmware changes.
+currently requires FLASH for mainboard firmware changes and UART for all
+mainboard file transfers. The UART rule arrived after the plan freeze and
+supersedes the frozen plan’s PARLIO staging and collection.
 
 ## Proposed manifest
 
 Keep named schema-3 fixture fields and phase names. For the initial backend,
-use a mainboard-only firmware change. In `firmware.mainboard`, set:
+use a mainboard-only firmware change. Set top-level `"transfer": "uart"`.
+In `firmware.mainboard`, set:
 
 | Field | Meaning |
 | --- | --- |
@@ -57,7 +60,12 @@ handback
    before allowing a write. The Pi stages the fixtures and both pinned raw
    apps through the usual schema-3 path. Stage the apps in the job's
    `/extender/install/<namespace>/` directory. Capture the transfer receipts
-   and keep the ordinary checksum-free PARLIO policy.
+   and use the ordinary checksum-free listener over UART, without routine
+   transfer readback. The Pi refuses a listener advertising parallel
+   payload capabilities. The Earth packet totals 6,243,744 staged bytes.
+   At 250 ms per 212-byte WRITE (rounded up by file), plus 300 seconds for
+   setup, its stage watchdog is 7,665 seconds. Use a 7,900-second Pi service
+   limit for stage to allow evidence collection and chat notification.
 2. **Install and restore.** Under the existing operation lock, the Pi checks
    the expected entry identity, the startup and listener pins and installed
    `/mos/flash.bin` v1.9 (15,624 bytes, SHA-256
@@ -111,13 +119,18 @@ that recovery. Include the app1 return explicitly in this packet.
   standard-runner plan. All 16 local file pins in the owner input bundle
   checked, including both raw images, the partition table, and both arms.
 
-- BENCH-024-013 [ ] Review and freeze the plan, then implement the minimum
+- BENCH-024-013 [x] Review and freeze the plan, then implement the minimum
   reusable backend in an isolated Extender worktree. Exercise the ordinary
   CLI and recorded receipt chain. Prove wrong entry or post-write slot and
   image refusals, missing prompt or reboot witnesses, read failure requiring
   a stop, and the absence of any USB write call. Run existing named-run,
   USB, recovery and handback regressions offline. Return the candidate
-  revision, preflight output and commissioning path.
+  revision, preflight output and commissioning path. The exact Earth UART
+  manifest (SHA-256 `1ffcba91458f975489838382ea44086bc228e29bf12b1980f61378211f1eabe8`)
+  passed the six-phase preflight with the commissioned interpreter and
+  local config. All 98 offline Olimex, SD client and process tests passed.
+  The command, prompt, checksum and reboot witnesses also matched the
+  retained November 26 FLASH capture. Live checks remain under BENCH-024-014.
 
 - BENCH-024-014 [ ] Commission and qualify the exact reviewed packet as a
   distinct live run. VDPlet owns that reservation and all target access.

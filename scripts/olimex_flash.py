@@ -105,14 +105,20 @@ def configure_flash_size(loader, detect_flash_size, flash_size_bytes):
         print("Flash ID did not report a size; retaining the programmer's default parameters.")
 
 
-def mainboard_programmer():
+def mainboard_rom():
     from esptool import __version__
-    from esptool.cmds import detect_flash_size, write_flash
     from esptool.targets.esp32 import ESP32ROM
-    from esptool.util import flash_size_bytes
 
     if __version__ != "5.1.0":
         raise RuntimeError(f"Expected standalone esptool 5.1.0, got {__version__}")
+    return ESP32ROM
+
+
+def mainboard_programmer():
+    from esptool.cmds import detect_flash_size, write_flash
+    from esptool.util import flash_size_bytes
+
+    rom_type = mainboard_rom()
 
     def program(loader, offset, image):
         configure_flash_size(loader, detect_flash_size, flash_size_bytes)
@@ -122,7 +128,7 @@ def mainboard_programmer():
         write_flash(loader, [(offset, str(image))], flash_freq="keep", flash_mode="keep",
                     flash_size="keep", compress=True)
 
-    return ESP32ROM, program
+    return rom_type, program
 
 
 def program_mainboard(port, mac, evidence):

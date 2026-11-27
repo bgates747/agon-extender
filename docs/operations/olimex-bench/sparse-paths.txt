@@ -18,6 +18,7 @@
 /scripts/olimex_cli.py
 /scripts/olimex_flash.py
 /scripts/olimex_p4_app.py
+/scripts/olimex_vdp_ota.py
 /scripts/p4_boot_guard.py
 /scripts/passive_serial.py
 /scripts/reset_agon.py

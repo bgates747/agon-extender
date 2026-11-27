@@ -5,6 +5,7 @@ import argparse
 import fcntl
 from hashlib import sha256
 import json
+from math import ceil
 import os
 from pathlib import Path, PurePosixPath
 import re
@@ -16,8 +17,9 @@ from urllib.request import urlopen
 
 import bench_process
 import olimex_p4_app
+import olimex_vdp_ota
 from olimex_cli import Observer, completion_markers
-from olimex_flash import check_extent, flash_application, mainboard_programmer
+from olimex_flash import check_extent, flash_application, mainboard_programmer, mainboard_rom
 from passive_serial import open_passive_serial
 from reset_agon import status, wait_boot
 from reset_agon_usb import identity
@@ -169,6 +171,22 @@ def validate_fixture(job, schema, *, named, manual=False):
     return [*inputs, *results]
 
 
+def uart_transfer(kit):
+    return kit.get("transfer") == "uart"
+
+
+def stage_seconds(kit):
+    if not uart_transfer(kit):
+        return 300
+    files = [spec for job in fixture_runs(kit).values() for spec in fixture_inputs(job).values()]
+    if ota := olimex_vdp_ota.spec_for(kit):
+        files.extend(ota[f"{selection}_app"] for selection in ("candidate", "restore"))
+    if emos := kit["firmware"].get("emos"):
+        files.extend(emos[f"{selection}_write"] for selection in ("candidate", "restore"))
+    # Allow 250 ms per direct 212-byte WRITE RPC, plus command/setup overhead.
+    return 300 + ceil(sum(ceil(spec["bytes"] / 212) for spec in files) / 4)
+
+
 def preflight(kit):
     schema = kit.get("schema", DEFAULT_SCHEMA)
     if schema not in (1, 2, 3) or set(kit["firmware"]) - set(COMPONENTS):
@@ -186,6 +204,9 @@ def preflight(kit):
     if manual and (kit["human_start"] not in ("stage-only", "preload") or not named or len(jobs) != 1):
         raise ValueError("Human start requires stage-only or preload and exactly one named fixture")
     targets = [path for job in jobs for path in validate_fixture(job, schema, named=named, manual=manual)]
+    if "transfer" in kit and (not uart_transfer(kit) or not named
+                              or any("listener_handoff" in job for job in jobs)):
+        raise ValueError('The "uart" transfer option requires named schema-3 fixtures without listener handoff')
     if named:
         directories = [PurePosixPath(job["cwd"].lower()) for job in jobs]
         if len(set(directories)) != len(jobs) or any(
@@ -198,7 +219,14 @@ def preflight(kit):
         raise ValueError("Startup and listener pins must be SHA-256 digests")
     if not re.fullmatch(r"[a-z0-9-]{1,36}", kit["namespace"]):
         raise ValueError("Invalid fixture namespace")
+    ota = olimex_vdp_ota.spec_for(kit)
+    if ota:
+        if set(kit["firmware"]) != {"mainboard"} or not named or manual or not uart_transfer(kit):
+            raise ValueError('Agon Flash requires an automated named schema-3 mainboard-only job with "transfer": "uart"')
+        olimex_vdp_ota.validate(ota, pinned)
     for component, spec in kit["firmware"].items():
+        if spec is ota:
+            continue
         for selection in ("candidate", "restore"):
             image = pinned(spec[f"{selection}_write"])
             if component == "emos":
@@ -279,6 +307,8 @@ class Bench:
                         "type", command, "--enter"], check=True, timeout=42)
 
     def start_listener(self, label, command):
+        if uart_transfer(self.kit) and "--parallel" in command.split():
+            raise RuntimeError("UART-only jobs cannot launch a parallel listener")
         self.idle()
         self.type_line(label, command)
         deadline = time.monotonic() + 25
@@ -292,6 +322,10 @@ class Bench:
         client = Client(self.url, self.out / f"sd-{label}.json", timeout=12)
         try:
             client.connect(require_fast=True)
+            if uart_transfer(self.kit):
+                hello = client.rpc(1)
+                if len(hello) != 8 or struct.unpack_from("<H", hello, 6)[0] & 0x180:
+                    raise RuntimeError("The UART-only job found parallel payload capabilities on the listener")
             for remote, expected in self.kit["preserve"].items():
                 data = client.download(remote)
                 if sha256(data).hexdigest() != expected:
@@ -333,6 +367,17 @@ class Bench:
             firmware_inputs, expected_absent = self.emos_install_inputs()
             payloads.update(firmware_inputs)
 
+        if ota := olimex_vdp_ota.spec_for(self.kit):
+            inventory = bench_process.read(self.config["inventory"])
+            verified = olimex_vdp_ota.installed(inventory, ota, "restore")
+            bench_process.record(self.out / "flash-entry.json", {
+                "verification_receipt": verified["verification_receipt"],
+                "companions": olimex_vdp_ota.companion_pins(inventory),
+            })
+            for selection in ("candidate", "restore"):
+                path = olimex_vdp_ota.staging_path(self, selection)
+                payloads[path] = pinned(ota[f"{selection}_app"])
+
         def existing(client, remote):
             try:
                 return client.stat_entry(remote)
@@ -343,7 +388,8 @@ class Bench:
 
         if schema in (2, 3):
             results = [path for job in jobs for path in fixture_results(job)]
-            self.stage_parallel(payloads, [*results, *expected_absent], existing)
+            stage = self.stage_uart if uart_transfer(self.kit) else self.stage_parallel
+            stage(payloads, [*results, *expected_absent], existing)
             return
 
         def transfer(client):
@@ -374,6 +420,27 @@ class Bench:
                 if client.download(remote) != payload:
                     raise RuntimeError(f"Independent SD readback differs: {remote}")
                 print(f"Verified {remote} {sha256(payload).hexdigest()}", flush=True)
+
+        self.listener("stage", LISTENER, transfer)
+
+    def stage_uart(self, payloads, result_paths, existing):
+        def transfer(client):
+            targets = [*payloads, *result_paths]
+            for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
+                client.make_directory(directory, parents=True)
+            for path in targets:
+                if existing(client, path) is not None:
+                    raise RuntimeError(f"UART staging requires a fresh target: {path}")
+            for number, (path, payload) in enumerate(payloads.items()):
+                prefix = self.out / f"stage-file-{number:02d}"
+                with prefix.with_suffix(".bin").open("xb") as stream:
+                    stream.write(payload)
+                transfer_id = client.upload(path, payload, activate=True, fast=True)
+                bench_process.record(prefix.with_suffix(".receipt.json"), {
+                    "target": path, "payload_carrier": "uart", "activated": True,
+                    "bytes": len(payload), "id": transfer_id,
+                    "source_sha256": sha256(payload).hexdigest(),
+                })
 
         self.listener("stage", LISTENER, transfer)
 
@@ -435,7 +502,12 @@ class Bench:
         bench_process.record(temporary, inventory)
         temporary.replace(target)
 
-    def firmware(self, component, selection, *, retry=False):
+    def firmware(self, component, selection, *, retry=False, job_root=None):
+        if component == "mainboard" and (ota := olimex_vdp_ota.spec_for(self.kit)):
+            if retry:
+                raise RuntimeError("The Agon Flash backend does not retry firmware writes")
+            self.firmware_ota(ota, selection, job_root or self.out.parent)
+            return
         self.validate_ports()
         self.idle()
         before = self.keyboard()
@@ -512,6 +584,58 @@ class Bench:
         inventory["source"] = "Olimex operator verified write and CLI"
         self.update_inventory(inventory)
 
+    def firmware_ota(self, spec, selection, root):
+        inventory = bench_process.read(self.config["inventory"])
+        entry = bench_process.read(root / "stage" / "flash-entry.json")
+        previous = "restore" if selection == "candidate" else "candidate"
+        previous_receipt = (Path(entry["verification_receipt"]) if previous == "restore"
+                            else root / "install-mainboard" / "independent-verification.json")
+        olimex_vdp_ota.installed(inventory, spec, previous, receipt_path=previous_receipt)
+        if entry["companions"] != olimex_vdp_ota.companion_pins(inventory):
+            raise RuntimeError("The production P4 or EMOS identity changed after staging")
+        app = spec[f"{selection}_app"]
+        image = pinned(app)
+        table = pinned(spec["partition_table"])
+        slot = spec[f"{selection}_slot"]
+        olimex_vdp_ota.stage_proof(self, root, selection, app)
+        self.validate_ports()
+        self.idle()
+        bench_process.record(self.out / "inventory-before.json", inventory)
+
+        def begin():
+            if bench_process.read(self.config["inventory"]) != inventory:
+                raise RuntimeError("Firmware inventory changed before FLASH confirmation")
+            inventory["pending_operation"] = {
+                "component": "native_vdp", "selection": selection, "operation": str(self.out),
+                "write_sha256": app["sha256"], "method": "agon-flash-v1.9", "slot": slot,
+                "recorded_epoch": time.time(),
+            }
+            inventory["ready_claim"] = False
+            self.update_inventory(inventory)
+
+        result, boot = olimex_vdp_ota.replace(self, spec, selection, image, table, begin)
+        if bench_process.read(self.config["inventory"]) != inventory:
+            raise RuntimeError("Firmware inventory changed during FLASH verification")
+        receipt_path = self.out / "independent-verification.json"
+        receipt = {
+            **bench_process.read(self.out / "selected-image.json"),
+            "component": "native_vdp", "selection": selection, "method": "agon-flash-v1.9",
+            "verified_extent_sha256": app["sha256"], "verified_extent_bytes": app["bytes"],
+            "readback": str(result.resolve()), "boot_cli_ready": True, "mos_boot": boot,
+            "companions": entry["companions"], "verified_epoch": time.time(),
+            "verification_receipt": str(receipt_path.resolve()),
+            "status": "verified-standard" if selection == "restore" and slot == 0 else "verified-exception",
+        }
+        olimex_vdp_ota.require_image(receipt, spec, selection)
+        bench_process.record(receipt_path, receipt)
+        inventory["components"]["native_vdp_sha256"] = app["sha256"]
+        inventory["native_vdp"] = dict(receipt, prior=inventory["native_vdp"])
+        inventory["pending_operation"] = None
+        inventory["recorded_epoch"] = time.time()
+        inventory["source"] = "Olimex Agon Flash with independent selected-image and MOS verification"
+        inventory["next_preparation"] = f"Mainboard verified on app{slot}. Confirm slot before any slot-specific job."
+        self.update_inventory(inventory)
+
     def invoke(self, phase="run"):
         preload = phase == "preload"
         enter_cwd = phase == "enter-cwd"
@@ -520,6 +644,10 @@ class Bench:
             raise ValueError("Smith owns fixture invocation for this job")
         job = self.kit["fixtures"][0] if human_phase else fixture_runs(self.kit)[phase]
         named = "fixtures" in self.kit
+        if ota := olimex_vdp_ota.spec_for(self.kit):
+            inventory = bench_process.read(self.config["inventory"])
+            olimex_vdp_ota.installed(inventory, ota, "candidate", receipt_path=(
+                self.out.parent / "install-mainboard" / "independent-verification.json"))
         handoff = job.get("listener_handoff")
         output_dir = self.out / "results" if named else self.out
         if named:
@@ -587,7 +715,24 @@ class Bench:
             if result_path.read_bytes().decode("ascii").splitlines() != job["expected_agon"]:
                 raise RuntimeError("Agon fixture result differs")
 
-        if self.kit.get("schema", DEFAULT_SCHEMA) == 3:
+        if uart_transfer(self.kit):
+            if not named or listener_online:
+                raise RuntimeError("UART results need a fresh UART-only listener and named reports")
+
+            def collect_uart(client):
+                for number, path in enumerate(fixture_results(job), start=1):
+                    raw = client.download(path)
+                    if not raw:
+                        raise RuntimeError(f"Fixture produced an empty report: {path}")
+                    destination = output_dir / PurePosixPath(path).name
+                    with destination.open("xb") as report:
+                        report.write(raw)
+                    bench_process.record(self.out / f"sd-collect-{number:02d}.receipt.json", {
+                        "target": path, "payload_carrier": "uart", "bytes": len(raw),
+                    })
+
+            self.listener("collect", LISTENER, collect_uart)
+        elif self.kit.get("schema", DEFAULT_SCHEMA) == 3:
             if not listener_online:
                 self.start_listener("collect", PARALLEL_LISTENER)
             for number, path in enumerate(fixture_results(job), start=1):
@@ -623,7 +768,7 @@ class Bench:
     def handback(self, restores=None):
         if restores is None:
             restores = {c: self.out.parent / f"restore-{c}" for c in self.kit["firmware"]}
-        if self.kit.get("schema", DEFAULT_SCHEMA) == 3:
+        if self.kit.get("schema", DEFAULT_SCHEMA) == 3 and not uart_transfer(self.kit):
             self.start_listener("handback", PARALLEL_LISTENER)
             self.exit_staged_listener("handback")
         else:
@@ -632,7 +777,13 @@ class Bench:
         inventory = bench_process.read(self.config["inventory"])
         if inventory.get("pending_operation"):
             raise RuntimeError("Firmware is still pending reconciliation")
+        ota = olimex_vdp_ota.spec_for(self.kit)
         for component, spec in self.kit["firmware"].items():
+            if spec is ota:
+                receipt = restores.get(component)
+                olimex_vdp_ota.installed(inventory, ota, "restore", receipt_path=(
+                    receipt / "independent-verification.json" if receipt is not None else None))
+                continue
             role, hash_field = INVENTORY[component]
             expected = spec.get("restore_app", spec["restore_write"])["sha256"]
             if inventory["components"][hash_field] != expected:
@@ -647,6 +798,7 @@ class Bench:
             "working_legacy_cli": True, "keyboard": self.keyboard(),
             "listener_offline": True, "staged_transfer_idle": True, "serial_handles_free": True,
             "production_restores": list(restores),
+            **({"production_mainboard_slot": ota["restore_slot"]} if ota else {}),
         })
         if self.kit["firmware"]:
             inventory["ready_claim"] = True
@@ -669,13 +821,17 @@ class Bench:
                               if phase in (f"install-{component}", f"retry-{component}",
                                            f"restore-{component}")), None)
             selection = "restore" if operation in (None, f"restore-{component}") else "candidate"
-            extent = spec[f"{selection}_write"]
+            ota = spec is olimex_vdp_ota.spec_for(self.kit)
+            suffix = "app" if ota else "write"
+            extent = spec[f"{selection}_{suffix}"]
             digest = spec.get(f"{selection}_app", extent)["sha256"]
             if inventory["components"][field] != digest:
                 raise RuntimeError(f"Inventory does not establish the expected {component} image")
-            if operation is None:
+            receipt_path = root / operation / "independent-verification.json" if operation else None
+            if ota:
+                olimex_vdp_ota.installed(inventory, spec, selection, receipt_path=receipt_path)
+            if receipt_path is None:
                 continue
-            receipt_path = root / operation / "independent-verification.json"
             receipt = bench_process.read(receipt_path)
             if (receipt["component"] != role or receipt["selection"] != selection
                     or receipt["sha256"] != digest or receipt["boot_cli_ready"] is not True
@@ -685,7 +841,7 @@ class Bench:
                 raise RuntimeError(f"Firmware evidence does not bind {component} to the original operation")
             if selection == "restore":
                 restores[component] = receipt_path.parent
-            elif extent["sha256"] != spec["restore_write"]["sha256"]:
+            elif ota or extent["sha256"] != spec["restore_write"]["sha256"]:
                 changed.append(component)
         bench_process.record(self.out / "plan.json", {"failed": failed, "restore": changed,
                                                      "completed": history})
@@ -694,7 +850,10 @@ class Bench:
             folder.mkdir()
             restore = Bench(self.config, self.kit, folder)
             restore.lock = self.lock
-            restore.firmware(component, "restore")
+            if component == "mainboard" and olimex_vdp_ota.spec_for(self.kit):
+                restore.firmware(component, "restore", job_root=root)
+            else:
+                restore.firmware(component, "restore")
             restores[component] = folder
         self.handback(restores)
 
@@ -733,7 +892,9 @@ def runtime_preflight(kit, config):
         from esptool.reset import HardReset
         if __version__ != "5.1.0" or not callable(HardReset):
             raise RuntimeError(f"{sys.executable} needs stock esptool 5.1.0 for the paired restart")
-    if "mainboard" in kit["firmware"]:
+    if olimex_vdp_ota.spec_for(kit):
+        mainboard_rom()
+    elif "mainboard" in kit["firmware"]:
         mainboard_programmer()
 
 
@@ -815,6 +976,9 @@ def main():
     selected = failed or phase
     order = phases(kit, enter_cwd=selected == "enter-cwd" or (args.out / "enter-cwd").is_dir())
     retry_phase = selected in ("retry-mainboard", "retry-p4")
+    ota = olimex_vdp_ota.spec_for(kit)
+    if ota and retry_phase:
+        parser.error("Agon Flash firmware writes cannot be retried by the runner")
     planned = selected.replace("retry-", "install-", 1) if retry_phase else selected
     if planned not in order:
         parser.error("The selected phase is absent from this job")
@@ -833,13 +997,13 @@ def main():
             bench.perform(phase, recovery=(args, failed, supervisor["owner"], binding))
             return 0
         for prior in order[:order.index(planned)]:
-            if prior in ("install-mainboard", "install-p4"):
+            if not ota and prior in ("install-mainboard", "install-p4"):
                 retry = prior.replace("install-", "retry-", 1)
                 if (args.out / retry).exists():
                     bench_process.verify_child(args.out / prior, child_argv(args, prior),
                                                expected_returncode=1)
                     prior = retry
-            if planned == "enter-cwd" or prior == "enter-cwd":
+            if ota or planned == "enter-cwd" or prior == "enter-cwd":
                 previous = args.out / prior
                 previous_supervisor = bench_process.read(previous / "supervisor-started.json")
                 if (previous_supervisor["owner"] != supervisor["owner"]
@@ -856,7 +1020,7 @@ def main():
     if not args.operator:
         parser.error("Physical phases require --operator from the opened chat slot")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
-    bounds = {"stage": 300, "enter-cwd": 90,
+    bounds = {"stage": stage_seconds(kit), "enter-cwd": 90,
               "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
               "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
     if failed:

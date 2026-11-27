@@ -1,5 +1,20 @@
 # Olimex bench checkout through check-in
 
+## Temporary mainboard file transfer rule
+
+Until Smith lifts this restriction, use UART for all file transfers to and
+from the Olimex mainboard, including staging and result collection. This
+supersedes PARLIO transfer steps in this guide and in job packets. If the
+required transfer cannot use UART, follow the bench stop procedure.
+
+## Temporary mainboard VDP flashing rule
+
+Until Smith lifts this restriction, use only the FLASH utility for mainboard
+VDP and VDPlet firmware changes on Olimex, including restoration. This
+supersedes esptool instructions for the mainboard VDP in this guide and in
+job packets. If FLASH cannot perform the required change, follow the bench
+stop procedure.
+
 For a new or adapted fixture, start with [Prepare an Olimex test job](AUTHORING.md).
 
 The scheduler
@@ -142,7 +157,14 @@ use the job owner's pinned, equally sized candidate and restore files with
 
 ### Stage the fixtures
 
-The commissioned `olimex_bench.py` runner defaults to schema 3. It starts
+Under the temporary UART rule, use named schema-3 fixtures and top-level
+`"transfer": "uart"`. The Pi starts `EMOS sdserve --fast /` for both staging
+and result collection. It uses the direct UART client and records the
+carrier. A required file transfer that cannot use this route triggers the
+[stop rule](#stop-on-an-unexpected-problem).
+
+When Smith admits PARLIO again, schema 3 defaults to the parallel route.
+The runner starts
 `EMOS sdserve --fast --parallel /` on the matched production stack. P4 sends
 nonempty fixture files to EMOS over PARLIO during staging. EMOS sends
 nonempty result files back to P4 over PARLIO during collection. UART carries
@@ -254,8 +276,8 @@ job inputs.
 
 | Phase | Operator effect |
 | --- | --- |
-| `stage` | Creates job directories and stages the fixture and assets over PARLIO without routine readbacks. Stages ROM images only for an EMOS job and exits the foreground listener. |
-| `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its applicable target. Compare the complete write extent. Bring the component back to a verified CLI. |
+| `stage` | Creates job directories and stages the fixture and assets over the admitted transport without routine readbacks. For EMOS or mainboard FLASH jobs, stages the corresponding install and restore files. Exits the foreground listener. |
+| `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its target. Verify the installed bytes using the method below. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `run-ID` | For a named arm, witness its working directory, issue one `LOAD` and one invocation, and keep the same UART reader open through any configured terminator. Follow the [authoring guide](AUTHORING.md) for a native-UART job with MOS-managed listener handoff. Collect reports in the arm's evidence directory. |
 | `enter-cwd` | If the packet requests it for a `stage-only` human-start job, enter the fixture directory from the manifest and verify MOS returns the exact prompt there. The worker closes its reader and joins before Smith loads and runs the fixture. |
@@ -276,16 +298,22 @@ phases. A human verdict requires no script or synthetic result file.
 
 ### Firmware methods used by the phase runner
 
-**Use USB esptool by default for mainboard VDPlet.** Run the commissioned
-`install-mainboard` or `restore-mainboard` phase when the job calls for an
-app0 write. The Pi programs the mainboard directly through its USB port.
-Running VDPlet and the SD listener require no special build for that write.
+During the temporary rule, use the standard mainboard phases with
+`firmware.mainboard.method` set to `agon-flash`. The Pi stages both pinned raw
+applications over UART. The installed FLASH v1.9 utility writes and selects
+the alternate slot. The runner verifies that selection and the exact
+application through one bounded read-only USB programmer session after each
+write, then restarts Agon and proves MOS responds. The authorized packet must
+cover both read-only sessions and the declared production return slot. See
+[mainboard FLASH jobs](AUTHORING.md#mainboard-flash-jobs) for the manifest.
 
-Keep the verified Agon Flash SD updater as a fallback. If USB programming
-fails, preserve the failure and follow the stop rule. Agon Flash requires
-a separately commissioned recovery packet, a working MOS prompt and a
-running VDPlet receiver that supports verified OTA. The current production
-VDPlet predates that receiver.
+When Smith admits USB programming again, the legacy app0 path uses the
+commissioned `install-mainboard` and `restore-mainboard` phases as described
+below. The Pi programs the mainboard directly through its USB port.
+
+The separate verified-OTA fallback uses a commissioned packet and a
+VDPlet receiver that supports that protocol. Ordinary FLASH v1.9 uses the
+stock receiver and the independent read-only verification above.
 
 | Phase | What the Pi operator does |
 | --- | --- |
