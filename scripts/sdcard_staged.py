@@ -15,6 +15,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+from sdcard import Client as DirectClient
+
 QUOTA = 32 * 1024 * 1024
 PARALLEL_READ_BLOCK = 512
 
@@ -79,8 +81,23 @@ class Client:
         return {'X-Extender-Job': f"{job['id']:08x}",
                 'X-Extender-Boot': f"{job['boot']:08x}"}
 
+    def check_uart_listener(self):
+        # PUT can choose PARLIO automatically on this P4 firmware. Check the
+        # listener's actual HELLO before submitting a file, not just P4 support.
+        client = DirectClient(self.url, self.path.with_suffix(".listener.json"),
+                              timeout=min(self.timeout, 12))
+        try:
+            client.connect(require_fast=True)
+            hello = client.rpc(1)
+            if len(hello) != 8 or int.from_bytes(hello[6:8], 'little') & 0x180:
+                raise TransferError('Expected a UART-only listener; no job submitted')
+        finally:
+            client.lock.close()
+
     def begin(self, operation, remote, *, source=None, destination=None, activate=False,
-              require_parallel=False):
+              require_parallel=False, require_uart=False):
+        if require_parallel and require_uart:
+            raise ValueError('Choose one required transfer carrier')
         if self.state['job']:
             raise TransferError('Existing job retained; use resume/status before another transfer')
         if operation not in ('put', 'get') or (operation == 'put' and not activate) or (operation == 'get' and activate):
@@ -107,11 +124,13 @@ class Client:
             raise TransferError(f'P4 does not support required parallel {operation}; no job submitted')
         if before['phase'] != 0:
             raise TransferError('P4 has a retained job; inspect it before submitting another')
+        if require_uart:
+            self.check_uart_listener()
         self.state['job'] = {'id': secrets.randbelow(0xffffffff)+1, 'boot': before['boot'],
                              'operation': operation, 'remote': remote, 'activate': activate,
                              'size': len(payload), 'destination': str(Path(destination).absolute()) if destination else None,
                              'started': time.time(), 'result': None, 'delivered': False,
-                             'require_parallel': require_parallel}
+                             'require_parallel': require_parallel, 'require_uart': require_uart}
         self.save()  # durable BEFORE any possibly mutating HTTP submission
         headers = self.headers() | {'X-Extender-Operation': operation, 'X-Extender-Path': remote,
                                    'Content-Type': 'application/octet-stream'}
@@ -159,6 +178,15 @@ class Client:
                     if size and not exact:
                         raise TransferError('Parallel completion proof is absent; job retained')
                     current['payload_carrier'] = 'parlio' if size else 'empty-control'
+                if job.get('require_uart'):
+                    size = current['size']
+                    chunk, controls = (212, 4) if job['operation'] == 'put' else (216, 2)
+                    records = controls + (size + chunk - 1) // chunk
+                    if (current.get('records') != records or current.get('parallel_outcome', 0)
+                            or current.get('parallel_read_blocks', 0)
+                            or current.get('parallel_read_bytes', 0)):
+                        raise TransferError('UART completion evidence differs; job retained')
+                    current['payload_carrier'] = 'uart' if size else 'empty-control'
                 job['result'] = current
                 break
             if current['phase'] not in (1, 2, 3):
@@ -259,13 +287,15 @@ def main():
     put.add_argument('remote')
     put.add_argument('--activate', action='store_true', required=True,
                      help='Complete the file replacement; stage-only transactions use sdcard.py')
-    put.add_argument('--require-parallel', action='store_true',
-                     help='Refuse if the parallel upload carrier is unavailable')
     get = commands.add_parser('get')
     get.add_argument('remote')
     get.add_argument('destination', type=Path)
-    get.add_argument('--require-parallel', action='store_true',
-                     help='Refuse if the parallel download carrier is unavailable')
+    for command in (put, get):
+        carrier = command.add_mutually_exclusive_group()
+        carrier.add_argument('--require-parallel', action='store_true',
+                             help='Refuse if the parallel carrier is unavailable')
+        carrier.add_argument('--require-uart', action='store_true',
+                             help='Require the checksum-free UART-only listener')
     for name in ('status', 'resume', 'release', 'discard'):
         commands.add_parser(name)
     args = parser.parse_args()
@@ -273,10 +303,10 @@ def main():
     try:
         if args.command == 'put':
             result = client.begin('put', args.remote, source=args.source, activate=args.activate,
-                                  require_parallel=args.require_parallel)
+                                  require_parallel=args.require_parallel, require_uart=args.require_uart)
         elif args.command == 'get':
             result = client.begin('get', args.remote, destination=args.destination,
-                                  require_parallel=args.require_parallel)
+                                  require_parallel=args.require_parallel, require_uart=args.require_uart)
         elif args.command == 'status':
             result = client.status()
         elif args.command == 'resume':

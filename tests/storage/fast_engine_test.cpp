@@ -68,6 +68,7 @@ int main(int argc,char **argv){
     Peer receiver;FILE *download=tmpfile();assert(download);
     Plan get{"/test/file",124,0,101,false,false};Engine reader(receiver,56);
     auto result=reader.run(get,download);assert(result.error==Ok&&result.bytes==size);
+    assert(result.records==2+(size+215)/216); // HELLO STAT, then UART READs
     rewind(download);std::vector<unsigned char> out(size);
     if(size)assert(fread(out.data(),1,size,download)==size);assert(out==bytes);fclose(download);
   }

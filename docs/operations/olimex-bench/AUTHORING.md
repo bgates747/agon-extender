@@ -207,11 +207,13 @@ restore files. The local Olimex v0.3.0 runtime is under
 ## Mainboard FLASH jobs
 
 Use schema 3 and named, automated fixtures. Set the top-level
-`"transfer": "uart"`. The Pi starts `EMOS sdserve --fast /` and uses direct
-checksum-free UART RPCs to stage fresh files and collect reports. It rejects
-parallel listener capabilities before moving any payload and records the
-carrier in each completed transfer receipt. UART jobs collect after the
-fixture returns to MOS. Omit `listener_handoff`.
+`"transfer": "uart"`. The Pi starts `EMOS sdserve --fast /` and submits
+whole files to the existing P4 staging worker. P4 exchanges checksum-free
+UART records with the foreground EMOS listener. The Pi retrieves complete
+reports from P4 after the fixture returns to MOS. The staged client rejects
+parallel listener capabilities before submitting any file and records
+the carrier in the completion receipt. Empty files use control records
+only. Omit `listener_handoff`.
 
 For a mainboard-only FLASH job, set these fields under `firmware.mainboard`.
 
@@ -237,7 +239,7 @@ responsive before publishing the installed identity. The job must explicitly
 cover those independent reads and restarts. Stop and retain custody on the
 first unexpected failure according to the bench procedure.
 
-The UART staging supervisor allows 300 seconds of setup plus 250 ms per
-212-byte payload WRITE request, rounded up by file. This is a watchdog, not a
-throughput estimate. Set the Pi service runtime longer than the supervisor's
-bound so it can preserve failure evidence and wake the operator.
+The UART staging supervisor allows 300 seconds of setup plus 60 seconds per
+file and a transfer allowance at 8,000 B/s, rounded up per file. Treat this
+as a watchdog. Set the Pi service runtime longer than the supervisor's bound
+so it can preserve failure evidence and wake the operator.

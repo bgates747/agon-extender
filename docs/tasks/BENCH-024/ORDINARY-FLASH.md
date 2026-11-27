@@ -62,10 +62,9 @@ handback
    `/extender/install/<namespace>/` directory. Capture the transfer receipts
    and use the ordinary checksum-free listener over UART, without routine
    transfer readback. The Pi refuses a listener advertising parallel
-   payload capabilities. The Earth packet totals 6,243,744 staged bytes.
-   At 250 ms per 212-byte WRITE (rounded up by file), plus 300 seconds for
-   setup, its stage watchdog is 7,665 seconds. Use a 7,900-second Pi service
-   limit for stage to allow evidence collection and chat notification.
+   capabilities. The later [P4 staging correction](../REMOTE-009/UART-THROUGHPUT-INVESTIGATION.md)
+   puts the per-record loop on P4 for all UART bulk transfers. Recalculate
+   the service bound from the current authoring guide when commissioning.
 2. **Install and restore.** Under the existing operation lock, the Pi checks
    the expected entry identity, the startup and listener pins and installed
    `/mos/flash.bin` v1.9 (15,624 bytes, SHA-256

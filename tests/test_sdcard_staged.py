@@ -3,10 +3,13 @@ import io
 import json
 from pathlib import Path
 import tempfile
+import struct
+import sys
 import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
 spec = importlib.util.spec_from_file_location('sdcard_staged', ROOT/'scripts/sdcard_staged.py')
 staged = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(staged)
@@ -114,6 +117,49 @@ class StagedClientTests(unittest.TestCase):
                     post, = [call for call in request.call_args_list if call.args[0:1] == ('POST',)]
                     self.assertEqual(post.kwargs['headers']['X-Extender-Require-Parallel'], '1')
                     self.assertNotIn(('GET', '/data'), fake.calls)
+
+    def test_required_uart_uses_whole_file_jobs_in_both_directions(self):
+        for operation, data, records in (('put', b'X' * 65537, 314),
+                                         ('get', b'Y' * 65537, 306),
+                                         ('put', b'', 4), ('get', b'', 2)):
+            with (self.subTest(operation=operation, size=len(data)),
+                  tempfile.TemporaryDirectory() as temp, patch.object(staged, 'DirectClient') as direct):
+                client, fake = self.fixture(temp, data)
+                fake.result['records'] = records
+                direct.return_value.rpc.return_value = struct.pack('<IHH', 1, 212, 0x7f)
+                if operation == 'put':
+                    source = Path(temp) / 'source'
+                    source.write_bytes(data)
+                    paths = dict(source=source, activate=True)
+                else:
+                    destination = Path(temp) / 'result'
+                    paths = dict(destination=destination)
+                receipt = client.begin(operation, '/test/file', require_uart=True, **paths)
+                self.assertEqual(receipt['payload_carrier'], 'uart' if data else 'empty-control')
+                self.assertEqual(fake.calls.count(('POST', '')), 1)
+                self.assertEqual(fake.calls.count(('GET', '/data')), int(operation == 'get'))
+                if operation == 'get':
+                    self.assertEqual(destination.read_bytes(), data)
+                direct.return_value.connect.assert_called_once_with(require_fast=True)
+                direct.return_value.rpc.assert_called_once_with(1)
+                direct.return_value.upload.assert_not_called()
+                direct.return_value.download.assert_not_called()
+
+    def test_required_uart_refuses_parallel_listener_and_retains_conflicting_receipt(self):
+        for capabilities, parallel_bytes in ((0x1ff, 0), (0x7f, 513)):
+            with (self.subTest(capabilities=capabilities), tempfile.TemporaryDirectory() as temp,
+                  patch.object(staged, 'DirectClient') as direct):
+                client, fake = self.fixture(temp, b'x' * 513)
+                fake.result.update(records=5, parallel_read_bytes=parallel_bytes)
+                direct.return_value.rpc.return_value = struct.pack('<IHH', 1, 212, capabilities)
+                output = Path(temp) / 'result'
+                with self.assertRaises(staged.TransferError):
+                    client.begin('get', '/test/file', destination=output, require_uart=True)
+                self.assertEqual(fake.calls.count(('POST', '')), int(bool(parallel_bytes)))
+                self.assertNotIn(('GET', '/data'), fake.calls)
+                self.assertNotIn(('DELETE', ''), fake.calls)
+                self.assertFalse(output.exists())
+                self.assertEqual(bool(client.state['job']), bool(parallel_bytes))
 
     def test_download_empty_and_binary(self):
         for payload in (b'', bytes(range(256))*300):

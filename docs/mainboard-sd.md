@@ -145,6 +145,15 @@ result semantics belong to the component owner's
 [application helper guide](https://github.com/bgates747/agon-emos/blob/main/lib/sdapp/README.md);
 the [protocol guide](protocols/staged-webdav.md) explains ownership.
 
+## P4-staged UART files
+
+When UART is required for bulk files, start `EMOS sdserve --fast /` and
+use the same staged client with `--require-uart` on either `put` or
+`get`. The Pi exchanges one whole file with P4 and P4 owns the UART loop.
+The client checks the checksum-free listener before submitting the file and
+records the completed carrier. Use the direct client for metadata, EXIT and
+specifically authorized recovery.
+
 ## Direct UART client
 
 The earlier direct UART client is retained for authorized compatibility,

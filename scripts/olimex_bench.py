@@ -2,6 +2,7 @@
 """Explicit Olimex operator phases. Run preflight offline and obtain custody first."""
 
 import argparse
+from contextlib import contextmanager
 import fcntl
 from hashlib import sha256
 import json
@@ -175,16 +176,23 @@ def uart_transfer(kit):
     return kit.get("transfer") == "uart"
 
 
+def uart_upload_seconds(size):
+    # Conservative watchdog, based on the retained staged path's ~25 kB/s.
+    return 60 + ceil(size / 8000)
+
+
 def stage_seconds(kit):
     if not uart_transfer(kit):
         return 300
     files = [spec for job in fixture_runs(kit).values() for spec in fixture_inputs(job).values()]
     if ota := olimex_vdp_ota.spec_for(kit):
         files.extend(ota[f"{selection}_app"] for selection in ("candidate", "restore"))
+    seconds = 300
     if emos := kit["firmware"].get("emos"):
         files.extend(emos[f"{selection}_write"] for selection in ("candidate", "restore"))
-    # Allow 250 ms per direct 212-byte WRITE RPC, plus command/setup overhead.
-    return 300 + ceil(sum(ceil(spec["bytes"] / 212) for spec in files) / 4)
+        # Two short generated MOS batches, each fits the first 8,000-byte band.
+        seconds += 2 * uart_upload_seconds(1)
+    return seconds + sum(uart_upload_seconds(spec["bytes"]) for spec in files)
 
 
 def preflight(kit):
@@ -322,10 +330,6 @@ class Bench:
         client = Client(self.url, self.out / f"sd-{label}.json", timeout=12)
         try:
             client.connect(require_fast=True)
-            if uart_transfer(self.kit):
-                hello = client.rpc(1)
-                if len(hello) != 8 or struct.unpack_from("<H", hello, 6)[0] & 0x180:
-                    raise RuntimeError("The UART-only job found parallel payload capabilities on the listener")
             for remote, expected in self.kit["preserve"].items():
                 data = client.download(remote)
                 if sha256(data).hexdigest() != expected:
@@ -337,10 +341,36 @@ class Bench:
         finally:
             client.lock.close()
 
+    def staged_uart(self, label, operation, remote, **paths):
+        timeout = uart_upload_seconds(paths["source"].stat().st_size) if operation == "put" else 300
+        staged = StagedClient(self.url, self.out / f"{label}.json", timeout=timeout)
+        try:
+            return staged.begin(operation, remote, require_uart=True, **paths)
+        finally:
+            staged.close()
+
+    @contextmanager
+    def uart_listener(self, label, command=LISTENER):
+        self.start_listener(label, command)
+        for number, (remote, expected) in enumerate(self.kit["preserve"].items(), start=1):
+            name = f"preserve-{label}-{number:02d}"
+            local = self.out / f"{name}.bin"
+            self.staged_uart(name, "get", remote, destination=local)
+            if sha256(local.read_bytes()).hexdigest() != expected:
+                raise RuntimeError(f"Preserved bytes changed: {remote}")
+        yield
+        # A failed body retains the listener and transfer evidence for the
+        # ordinary stop procedure. Successful staged jobs need a fresh EXIT.
+        self.exit_staged_listener(label)
+
     def cli(self, label="cli"):
         if not re.fullmatch(r"[a-zA-Z0-9_-]+", label):
             raise ValueError("Invalid CLI observation label")
-        self.listener(label, LISTENER, lambda client: None)
+        if uart_transfer(self.kit):
+            with self.uart_listener(label):
+                pass
+        else:
+            self.listener(label, LISTENER, lambda client: None)
 
     def emos_install_inputs(self):
         payloads, results = {}, []
@@ -424,25 +454,30 @@ class Bench:
         self.listener("stage", LISTENER, transfer)
 
     def stage_uart(self, payloads, result_paths, existing):
-        def transfer(client):
+        with self.uart_listener("stage"):
             targets = [*payloads, *result_paths]
-            for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
-                client.make_directory(directory, parents=True)
-            for path in targets:
-                if existing(client, path) is not None:
-                    raise RuntimeError(f"UART staging requires a fresh target: {path}")
-            for number, (path, payload) in enumerate(payloads.items()):
-                prefix = self.out / f"stage-file-{number:02d}"
-                with prefix.with_suffix(".bin").open("xb") as stream:
-                    stream.write(payload)
-                transfer_id = client.upload(path, payload, activate=True, fast=True)
-                bench_process.record(prefix.with_suffix(".receipt.json"), {
-                    "target": path, "payload_carrier": "uart", "activated": True,
-                    "bytes": len(payload), "id": transfer_id,
-                    "source_sha256": sha256(payload).hexdigest(),
-                })
+            client = Client(self.url, self.out / "sd-stage-metadata.json", timeout=12)
+            try:
+                client.connect(require_fast=True)
+                for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
+                    client.make_directory(directory, parents=True)
+                for path in targets:
+                    if existing(client, path) is not None:
+                        raise RuntimeError(f"UART staging requires a fresh target: {path}")
+            finally:
+                client.lock.close()
 
-        self.listener("stage", LISTENER, transfer)
+            for number, (path, payload) in enumerate(payloads.items()):
+                label = f"stage-file-{number:02d}"
+                source = self.out / f"{label}.bin"
+                with source.open("xb") as stream:
+                    stream.write(payload)
+                result = self.staged_uart(label, "put", path, source=source, activate=True)
+                bench_process.record(self.out / f"{label}.receipt.json", {
+                    "target": path, "payload_carrier": result["payload_carrier"], "activated": True,
+                    "bytes": result["bytes"], "id": result["id"],
+                    "source_sha256": sha256(payload).hexdigest(), "result": result,
+                })
 
     def stage_parallel(self, payloads, result_paths, existing):
         capabilities = self.get("/sd/fast")
@@ -549,7 +584,15 @@ class Bench:
                 if result.read_bytes() != image:
                     raise RuntimeError("Independent EMOS ROM readback differs")
 
-            self.listener("rom-readback", f"EXEC {self.install_dir}/{selection}.txt", read_rom)
+            command = f"EXEC {self.install_dir}/{selection}.txt"
+            if uart_transfer(self.kit):
+                with self.uart_listener("rom-readback", command):
+                    self.staged_uart("sd-rom-readback", "get", f"{self.results_dir}/{selection}-rom.bin",
+                                     destination=result)
+                    if result.read_bytes() != image:
+                        raise RuntimeError("Independent EMOS ROM readback differs")
+            else:
+                self.listener("rom-readback", command, read_rom)
         else:
             table = pinned(spec["partition_table"])
             if component == "p4":
@@ -719,19 +762,16 @@ class Bench:
             if not named or listener_online:
                 raise RuntimeError("UART results need a fresh UART-only listener and named reports")
 
-            def collect_uart(client):
+            with self.uart_listener("collect"):
                 for number, path in enumerate(fixture_results(job), start=1):
-                    raw = client.download(path)
-                    if not raw:
-                        raise RuntimeError(f"Fixture produced an empty report: {path}")
+                    channel = f"sd-collect-{number:02d}"
                     destination = output_dir / PurePosixPath(path).name
-                    with destination.open("xb") as report:
-                        report.write(raw)
-                    bench_process.record(self.out / f"sd-collect-{number:02d}.receipt.json", {
-                        "target": path, "payload_carrier": "uart", "bytes": len(raw),
+                    result = self.staged_uart(channel, "get", path, destination=destination)
+                    bench_process.record(self.out / f"{channel}.receipt.json", {
+                        **result, "target": path,
                     })
-
-            self.listener("collect", LISTENER, collect_uart)
+                    if not result["bytes"]:
+                        raise RuntimeError(f"Fixture produced an empty report: {path}")
         elif self.kit.get("schema", DEFAULT_SCHEMA) == 3:
             if not listener_online:
                 self.start_listener("collect", PARALLEL_LISTENER)

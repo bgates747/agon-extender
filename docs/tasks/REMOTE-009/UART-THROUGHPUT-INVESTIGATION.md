@@ -52,7 +52,24 @@ in an isolated runner checkout before any shared checkout update or live
 measurement. The remaining P4-to-EMOS throughput gap still requires the
 separate physical comparison proposed in the findings.
 
-- REMOTE-009-012 [ ] Restore P4-owned UART staging and result retrieval in
+- REMOTE-009-012 [x] Restore P4-owned UART staging and result retrieval in
   the shared runner. Exercise both directions and prove that a parallel
   listener, a contradictory completion or transfer failure stops the job
   without a direct-client replay.
+
+
+The maintained schema-3 runner now stages files and collects reports with
+the existing P4 worker under the UART-only foreground listener. The shared
+staged client exposes `--require-uart` for both directions. It checks the
+listener before submission, identifies the carrier from the terminal job,
+and retains failure evidence without replay. The direct client handles
+metadata and EXIT. The P4 firmware and its UART protocol require no change
+for this repair.
+
+The corrected source is isolated from the commissioned checkout. Bench
+deployment and physical timing are pending. The offline tests exercised
+ordinary FLASH runner compatibility, both host transfer directions, empty
+files, parallel refusal, failed job retention, phase supervision and the
+actual P4 engine with the production listener source. The original worker
+still waits for a local reply per UART record. Measuring that residual cost
+remains the next investigation before changing the firmware protocol.

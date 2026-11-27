@@ -159,8 +159,9 @@ use the job owner's pinned, equally sized candidate and restore files with
 
 Under the temporary UART rule, use named schema-3 fixtures and top-level
 `"transfer": "uart"`. The Pi starts `EMOS sdserve --fast /` for both staging
-and result collection. It uses the direct UART client and records the
-carrier. A required file transfer that cannot use this route triggers the
+and result collection. P4 stages each file and owns UART exchanges in
+both directions. The Pi exchanges whole files with P4 over HTTP and
+records the carrier. A required file transfer that cannot use this route triggers the
 [stop rule](#stop-on-an-unexpected-problem).
 
 When Smith admits PARLIO again, schema 3 defaults to the parallel route.

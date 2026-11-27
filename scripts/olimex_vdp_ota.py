@@ -140,15 +140,14 @@ def stage_proof(target, root, selection, app):
 
 
 def check_updater(target):
-    def check(client):
-        image = client.download(FLASH_PATH)
+    with target.uart_listener("installed-updater"):
+        local = target.out / "installed-flash.bin"
+        transfer = target.staged_uart("sd-installed-flash", "get", FLASH_PATH, destination=local)
+        image = local.read_bytes()
         if len(image) != FLASH_BYTES or sha256(image).hexdigest() != FLASH_SHA:
             raise RuntimeError("Installed /mos/flash.bin differs from published Agon Flash v1.9")
         record(target.out / "updater.json", {"path": FLASH_PATH, "bytes": FLASH_BYTES,
-                                            "sha256": FLASH_SHA, "payload_carrier": "uart"})
-
-    # The existing CLI/listener path also checks pinned startup and listener.
-    target.listener("installed-updater", "EMOS sdserve --fast /", check)
+                                            "sha256": FLASH_SHA, "payload_carrier": transfer["payload_carrier"]})
 
 
 def invoke_flash(target, selection, app, begin):

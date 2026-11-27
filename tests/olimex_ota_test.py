@@ -30,43 +30,63 @@ class UartOnly(TestCase):
         with self.assertRaisesRegex(RuntimeError, "parallel listener"):
             self.runner.start_listener("stage", bench.PARALLEL_LISTENER)
         self.runner.type_line.assert_not_called()
-        self.runner.start_listener = MagicMock()
-        with patch.object(bench, "Client") as client:
-            client.return_value.rpc.return_value = struct.pack("<IHH", 1, 212, 0x1ff)
-            operation = MagicMock()
-            with self.assertRaisesRegex(RuntimeError, "parallel payload capabilities"):
-                self.runner.listener("stage", bench.LISTENER, operation)
-            operation.assert_not_called()
-            client.return_value.download.assert_not_called()
-            client.return_value.lock.close.assert_called_once()
 
-    def test_stage_collect_and_handback_use_only_direct_uart(self):
+    def test_uart_phases_stage_bulk_in_both_directions_and_keep_metadata_separate(self):
         self.runner.start_listener = MagicMock()
         self.runner.validate_ports = MagicMock()
         inventory = self.runner.out / "inventory.json"
         bench.bench_process.record(inventory, {})
         self.runner.config = {"inventory": inventory}
         self.runner.kit["firmware"] = {}
-        staged = "/test/demo/app.bin"
+        staged_path = "/test/demo/app.bin"
         report = "/test/demo/result.bin"
-        with patch.object(bench, "Client") as client, patch.object(bench, "StagedClient") as parallel:
-            direct = client.return_value
-            direct.rpc.return_value = struct.pack("<IHH", 1, 212, 0x7f)
-            direct.upload.return_value = 7
-            direct.download.return_value = b"report"
-            self.runner.stage_uart({staged: b"app"}, [report], lambda client, path: None)
+        startup = b"startup"
+        self.runner.kit["preserve"]["/autoexec.txt"] = sha256(startup).hexdigest()
+
+        def transfer(operation, remote, *, require_uart, **paths):
+            self.assertTrue(require_uart)
+            if operation == "put":
+                data = paths["source"].read_bytes()
+                self.assertTrue(paths["activate"])
+            else:
+                data = startup if remote == "/autoexec.txt" else b"report"
+                paths["destination"].write_bytes(data)
+            return {"bytes": len(data), "id": 7, "payload_carrier": "uart"}
+
+        with patch.object(bench, "Client") as client, patch.object(bench, "StagedClient") as worker:
+            worker.return_value.begin.side_effect = transfer
+            self.runner.stage_uart({staged_path: b"app"}, [report], lambda client, path: None)
             self.runner.collect_results({"results": [report]}, self.runner.out, True)
             self.runner.handback()
             self.assertEqual(self.runner.start_listener.call_args_list, [
                 call("stage", bench.LISTENER), call("collect", bench.LISTENER),
                 call("cli", bench.LISTENER),
             ])
-            direct.upload.assert_called_once_with(staged, b"app", activate=True, fast=True)
-            direct.download.assert_called_once_with(report)
-            parallel.assert_not_called()
+            direct = client.return_value
+            direct.upload.assert_not_called()
+            direct.download.assert_not_called()
+            self.assertEqual(direct.rpc.call_args_list, [call(11)] * 3)
+            self.assertEqual([entry.args for entry in worker.return_value.begin.call_args_list], [
+                ("get", "/autoexec.txt"), ("put", staged_path),
+                ("get", "/autoexec.txt"), ("get", report), ("get", "/autoexec.txt"),
+            ])
         receipt = bench.bench_process.read(self.runner.out / "stage-file-00.receipt.json")
         self.assertEqual((receipt["payload_carrier"], receipt["activated"]), ("uart", True))
         self.assertEqual((self.runner.out / "result.bin").read_bytes(), b"report")
+
+    def test_failed_uart_stage_keeps_evidence_and_never_tries_direct_upload(self):
+        self.runner.start_listener = MagicMock()
+        with patch.object(bench, "Client") as client, patch.object(bench, "StagedClient") as worker:
+            worker.return_value.begin.side_effect = TimeoutError("P4 worker pending")
+            with self.assertRaisesRegex(TimeoutError, "P4 worker pending"):
+                self.runner.stage_uart({"/test/demo/app.bin": b"app", "/test/demo/next.bin": b"next"},
+                                       [], lambda client, path: None)
+            worker.return_value.begin.assert_called_once()
+            worker.return_value.close.assert_called_once()
+            client.return_value.upload.assert_not_called()
+            client.return_value.rpc.assert_not_called()
+        self.assertTrue((self.runner.out / "stage-file-00.bin").exists())
+        self.assertFalse((self.runner.out / "stage-file-00.receipt.json").exists())
 
 
 class FlashPath(TestCase):
