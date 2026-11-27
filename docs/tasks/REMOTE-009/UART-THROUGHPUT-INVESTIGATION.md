@@ -102,3 +102,14 @@ timings, client receipts, four exact comparisons, joined process receipts
 and the independent handback. Working MOS, idle transfers, free serial
 ports and unchanged firmware inventory were verified before scheduler
 check-in. The four diagnostic files remain in their dedicated SD directory.
+
+## Approved bench default — November 27
+
+- REMOTE-009-013 [ ] Change the maintained schema-3 runner default to
+  P4-staged UART. Keep an explicit parallel choice for separately admitted
+  jobs and keep older schema behavior. On production firmware run one short
+  fixture through staging, MOS execution, exact result collection and
+  handback. Require both P4 file receipts to report UART for the normal
+  data transfers. Use fresh SD paths and skip the native UART timing rerun.
+  Publish the guide and advance the shared bench checkout only after the
+  complete fixture and handback pass.
