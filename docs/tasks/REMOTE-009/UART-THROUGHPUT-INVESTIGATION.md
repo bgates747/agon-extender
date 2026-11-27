@@ -73,3 +73,32 @@ files, parallel refusal, failed job retention, phase supervision and the
 actual P4 engine with the production listener source. The original worker
 still waits for a local reply per UART record. Measuring that residual cost
 remains the next investigation before changing the firmware protocol.
+
+## Current bench measurement — November 27
+
+The matched UART benchmark passed on the installed release firmware with
+runner `1e0916182b368869f77bf4d18fbaa7d3b360e56a`. Direct and staged arms
+used the same archived bytes, checksum-free listener, cards and wiring. All
+four scheduled download results matched their input bytes on the Pi. No
+extra verification transfer took place. Times are Pi monotonic elapsed,
+including each client invocation and its own bookkeeping. Speedup is
+direct elapsed divided by staged elapsed. kB/s uses decimal units.
+
+| Bytes | Direction | Direct elapsed, s | P4 staged elapsed, s | Speedup | Staged kB/s |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 1,100,000 | Upload | 281.132 | 44.998 | 6.25× | 24.45 |
+| 1,100,000 | Download | 276.953 | 49.277 | 5.62× | 22.32 |
+| 65,537 | Upload | 17.402 | 3.918 | 4.44× | 16.73 |
+| 65,537 | Download | 16.410 | 3.475 | 4.72× | 18.86 |
+
+At 1.1 MB the P4 worker reported 42.349 s for upload and 47.414 s for
+download. Its interval includes UART exchanges and SD work. Both staged
+receipts report UART. The whole batch took 697.7 s, with 558.1 s in the two
+large direct controls. This confirms the staged recovery on today's bench.
+Maximum payload throughput without the local record loop remains untested.
+
+The archive record is `agents/remote009/uart-rerun-r01`. It retains per-call
+timings, client receipts, four exact comparisons, joined process receipts
+and the independent handback. Working MOS, idle transfers, free serial
+ports and unchanged firmware inventory were verified before scheduler
+check-in. The four diagnostic files remain in their dedicated SD directory.
