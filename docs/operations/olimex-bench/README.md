@@ -284,7 +284,13 @@ job inputs.
 | `enter-cwd` | If the packet requests it for a `stage-only` human-start job, enter the fixture directory from the manifest and verify MOS returns the exact prompt there. The worker closes its reader and joins before Smith loads and runs the fixture. |
 | `preload` | For a human-start fixture, enter its directory, issue one LOAD, observe the returned prompt and close the reader. After the worker joins, give Smith the packet’s RUN command. |
 | `restore-emos`, `restore-p4`, `restore-mainboard` | Restore only the components the job changed. The same component verification and startup checks apply. |
-| `handback` | Verify CLI, idle transfer services, serial handles and the changed components' restores. The parent records joined worker completion before you send check-in. |
+| `verify-mos` | With a fresh evidence root, independently prove a responsive idle MOS prompt using keyboard input and passive mainboard UART. Uses no P4 file-service endpoint. Does not release the slot. |
+| `handback` | Prove MOS with a fresh command response. Check idle transfer status, free serial handles and the changed components' restores. Handback does not launch a file listener. Require the joined completion before check-in. |
+
+For a named run, `--defer-results run-ID` leaves reports on the card after a
+successful application marker and fresh MOS response. The joined run still
+records collection as pending. Use a separate authorized collection step
+later without invoking the fixture again.
 
 For a `human_start` job, stop after the last install (or stage for a
 production-only job). If the `stage-only` packet requests `enter-cwd`, run it

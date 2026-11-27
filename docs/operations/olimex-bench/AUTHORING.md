@@ -246,14 +246,15 @@ so it can preserve failure evidence and wake the operator.
 
 ### Author-approved offboard SD staging
 
-When Smith stages the card offboard and authorizes the same named Agon Flash
+When Smith stages the card offboard for a named production or Agon Flash
 job, use `--offboard-stage DIR MANIFEST_SHA256 RECEIPT_SHA256` on preflight
 and on every phase. Keep the original job and SHA-256. The directory holds
 `manifest.json` with the original job digest, exact staged-file paths and
 byte/hash pins, absent result paths and preserved-file pins. It also holds
 `verification.json` with the matching job digest, verified file and byte
-counts, the absent result paths, confirmation that the startup, listener and
-installed FLASH v1.9 utility pins matched, and confirmation of sync. The
+counts, the absent result paths, confirmation of sync and confirmation that
+the startup and listener pins matched. Agon Flash jobs also require the
+installed FLASH v1.9 utility pin. The
 operator binds these receipts after Smith confirms the verified card is back
 in the bench.
 
@@ -265,3 +266,21 @@ those witnesses and retain the reports on card for later authorized physical
 collection. Handback uses a fresh MOS command witness, idle transfer status
 and the strict new production restore receipt. This path never starts a P4
 file listener or falls back to a P4 upload or download.
+
+
+## Run and observe without a file-service dependency
+
+Use the same job and evidence root with `--defer-results run-ID` to execute
+one named automated fixture and leave its reports on the card. This option
+may follow ordinary staging. It requires a successful fixture marker and
+a fresh MOS command response. The phase records the expected report paths
+as pending collection. Use the authorized file or offboard collection
+procedure later. A deferred phase cannot use a fixture batch that starts
+its own listener.
+
+Use `verify-mos` with a fresh evidence root for a standalone MOS check under
+the existing slot. Run it when MOS is expected to be at the prompt. It uses
+keyboard input and the passive mainboard UART, and records a fresh command
+response. It sends no request to the P4 file-service endpoints. It supplies
+MOS evidence only. Handback separately verifies idle transfer status,
+closed serial handles and any required firmware restoration before check-in.

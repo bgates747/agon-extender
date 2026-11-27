@@ -252,8 +252,8 @@ def preflight(kit):
 
 def offboard_proof(kit, job_sha, option):
     spec = olimex_vdp_ota.spec_for(kit)
-    if spec is None:
-        raise ValueError("Offboard staging requires a named Agon Flash job")
+    if not uart_transfer(kit) or "fixtures" not in kit or (kit["firmware"] and spec is None):
+        raise ValueError("Offboard staging requires a named UART job using production or Agon Flash")
     directory, manifest_sha, verification_sha = option
     paths = [Path(directory).resolve() / name for name in ("manifest.json", "verification.json")]
     documents = []
@@ -265,17 +265,21 @@ def offboard_proof(kit, job_sha, option):
     manifest, verified = documents
     payloads = {path: pin for job in fixture_runs(kit).values()
                 for path, pin in fixture_inputs(job).items()}
-    for selection in ("candidate", "restore"):
-        payloads[f"/extender/install/{kit['namespace']}/{selection}-vdp.bin"] = spec[f"{selection}_app"]
+    if spec:
+        for selection in ("candidate", "restore"):
+            payloads[f"/extender/install/{kit['namespace']}/{selection}-vdp.bin"] = spec[f"{selection}_app"]
     pins = {path: {key: pin[key] for key in ("bytes", "sha256")} for path, pin in payloads.items()}
     reports = [path for job in fixture_runs(kit).values() for path in fixture_results(job)]
     if (manifest["job_sha256"] != job_sha or manifest["payloads"] != pins
             or manifest["expected_absent"] != reports or manifest["preserve"] != kit["preserve"]):
         raise ValueError("Offboard staging manifest differs from the commissioned files")
+    preserved = list(kit["preserve"])
+    if spec:
+        preserved.append(olimex_vdp_ota.FLASH_PATH)
     if (verified["job_sha256"] != job_sha or verified["files_verified"] != len(pins)
             or verified["bytes_verified"] != sum(pin["bytes"] for pin in pins.values())
             or verified["expected_results_absent"] != reports or verified["writes_synced"] is not True
-            or sorted(verified["preservation_verified"]) != sorted([*kit["preserve"], olimex_vdp_ota.FLASH_PATH])):
+            or sorted(verified["preservation_verified"]) != sorted(preserved)):
         raise ValueError("Offboard staging receipt does not establish synced files and fresh reports")
     return {"manifest": str(paths[0]), "manifest_sha256": manifest_sha,
             "verification": str(paths[1]), "verification_sha256": verification_sha,
@@ -319,8 +323,8 @@ class Bench:
         if service["online"] or service.get("pending") or self.get("/sd/fast")["phase"] != 0:
             raise RuntimeError("A transfer or foreground listener is active")
 
-    def ports_free(self):
-        for port in self.c["ports"]:
+    def ports_free(self, *ports):
+        for port in ports or self.c["ports"]:
             Path(port).resolve(strict=True)
             check = subprocess.run(["fuser", port], capture_output=True, text=True, timeout=5)
             if check.returncode != 1 or check.stderr:
@@ -398,13 +402,19 @@ class Bench:
         # ordinary stop procedure. Successful staged jobs need a fresh EXIT.
         self.exit_staged_listener(label)
 
+    def verify_mos(self, label="mos"):
+        identity(self.reset_config)
+        port = self.c["ports"][0]
+        self.ports_free(port)
+        olimex_vdp_ota.mos_witness(self, label)
+        self.ports_free(port)
+
     def cli(self, label="cli"):
         if not re.fullmatch(r"[a-zA-Z0-9_-]+", label):
             raise ValueError("Invalid CLI observation label")
         if getattr(self, "offboard", None):
-            self.validate_ports()
             self.idle()
-            olimex_vdp_ota.mos_witness(self, label)
+            self.verify_mos(label)
             self.idle()
         elif uart_transfer(self.kit):
             with self.uart_listener(label):
@@ -444,12 +454,13 @@ class Bench:
                 "verification_receipt": verified["verification_receipt"],
                 "companions": olimex_vdp_ota.companion_pins(inventory),
             })
-            if self.offboard:
-                bench_process.record(self.out / "offboard-stage.json", self.offboard)
-                return
-            for selection in ("candidate", "restore"):
-                path = olimex_vdp_ota.staging_path(self, selection)
-                payloads[path] = pinned(ota[f"{selection}_app"])
+            if not self.offboard:
+                for selection in ("candidate", "restore"):
+                    path = olimex_vdp_ota.staging_path(self, selection)
+                    payloads[path] = pinned(ota[f"{selection}_app"])
+        if getattr(self, "offboard", None):
+            bench_process.record(self.out / "offboard-stage.json", self.offboard)
+            return
 
         def existing(client, remote):
             try:
@@ -723,7 +734,7 @@ class Bench:
         inventory["next_preparation"] = f"Mainboard verified on app{slot}. Confirm slot before any slot-specific job."
         self.update_inventory(inventory)
 
-    def invoke(self, phase="run"):
+    def invoke(self, phase="run", *, defer_results=False):
         preload = phase == "preload"
         enter_cwd = phase == "enter-cwd"
         human_phase = {"preload": "preload", "enter-cwd": "stage-only"}.get(phase)
@@ -736,12 +747,17 @@ class Bench:
             olimex_vdp_ota.installed(inventory, ota, "candidate", receipt_path=(
                 self.out.parent / "install-mainboard" / "independent-verification.json"))
         handoff = job.get("listener_handoff")
+        offboard = getattr(self, "offboard", None)
+        leave_reports = bool(offboard or defer_results)
+        if defer_results and (not named or human_phase or handoff):
+            raise ValueError("Deferred results require a named automated fixture without listener handoff")
         output_dir = self.out / "results" if named else self.out
         if named:
             output_dir.mkdir()
         transcript_file = "vdp-usb.bin" if named else "mainboard-serial.bin"
         self.validate_ports()
-        self.idle()
+        if not leave_reports:
+            self.idle()
         self.keyboard()
         with open_passive_serial(self.c["ports"][0], timeout=0.2) as reader:
             with (output_dir / transcript_file).open("xb") as transcript:
@@ -789,19 +805,21 @@ class Bench:
                 else:
                     observer.run(f"RUN &{job['address']}", prompt, job["success"].encode(),
                                  job["failure"].encode(), job["seconds"], uart_end=job.get("uart_end"))
-                if getattr(self, "offboard", None):
+                if leave_reports:
                     returned = observer.witness("post-run-witness")
                     if returned.lower() != prompt.lower():
                         raise RuntimeError("MOS returned to a different directory after the fixture")
-                    bench_process.record(self.out / "offboard-results.json", {
+                    receipt = "offboard-results.json" if offboard else "deferred-results.json"
+                    bench_process.record(self.out / receipt, {
                         "success_line": job["success"], "post_run_prompt": returned.decode("ascii"),
-                        "reports": fixture_results(job), "collection": "pending-physical-collection",
+                        "reports": fixture_results(job),
+                        "collection": "pending-physical-collection" if offboard else "pending-collection",
                     })
                 if named:
                     prompt = observer.change_directory("restore-cwd", entry, prompt)
                 observer.mirror_off(prompt)
 
-        if not handoff and not getattr(self, "offboard", None):
+        if not handoff and not leave_reports:
             self.collect_results(job, output_dir, named)
 
     def collect_results(self, job, output_dir, named, *, listener_online=False):
@@ -860,11 +878,8 @@ class Bench:
     def handback(self, restores=None):
         if restores is None:
             restores = {c: self.out.parent / f"restore-{c}" for c in self.kit["firmware"]}
-        if self.kit.get("schema", DEFAULT_SCHEMA) == 3 and not uart_transfer(self.kit):
-            self.start_listener("handback", PARALLEL_LISTENER)
-            self.exit_staged_listener("handback")
-        else:
-            self.cli()
+        self.verify_mos("handback-mos")
+        self.idle()
         self.validate_ports()
         inventory = bench_process.read(self.config["inventory"])
         if inventory.get("pending_operation"):
@@ -951,20 +966,25 @@ class Bench:
             restores[component] = folder
         self.handback(restores)
 
-    def perform(self, phase, *, recovery=None):
+    def perform(self, phase, *, recovery=None, defer_results=False):
         path = Path(self.config["operation_lock"])
         with path.open("a") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
             self.lock = lock
             if recovery is not None:
                 self.recover(*recovery)
+            elif phase == "verify-mos":
+                self.verify_mos()
             elif any(self.out.parent.glob("recover-after-*")):
                 raise RuntimeError("Recovery has started in this evidence directory")
             elif phase == "stage":
                 self.validate_ports()
                 self.stage()
             elif phase in ("preload", "enter-cwd") or phase in fixture_runs(self.kit):
-                self.invoke(phase)
+                if defer_results:
+                    self.invoke(phase, defer_results=True)
+                else:
+                    self.invoke(phase)
             elif phase == "handback":
                 self.handback()
             else:
@@ -973,12 +993,23 @@ class Bench:
                 self.firmware(component, selection, retry=operation == "retry")
 
 
-def child_argv(args, phase):
+def child_argv(args, phase, *, defer_results=False):
     argv = [sys.executable, str(Path(__file__).resolve()), "--job", str(args.job),
             "--sha256", args.sha256, "--config", str(args.config), "--out", str(args.out)]
     if option := getattr(args, "offboard_stage", None):
         argv.extend(("--offboard-stage", *option))
+    if defer_results:
+        argv.append("--defer-results")
     return [*argv, f"worker-{phase}"]
+
+
+def prior_argv(args, kit, phase, supervisor):
+    argv = child_argv(args, phase)
+    if phase.startswith("run-") and (job := fixture_runs(kit).get(phase)) and "listener_handoff" not in job:
+        deferred = child_argv(args, phase, defer_results=True)
+        if supervisor["argv"] == deferred:
+            return deferred
+    return argv
 
 
 def runtime_preflight(kit, config):
@@ -1002,8 +1033,8 @@ def recovery_history(args, kit, failed, owner, binding):
 
     def verify(phase, *, fault=False):
         folder = args.out / phase
-        argv = child_argv(args, phase)
         supervisor = bench_process.read(folder / "supervisor-started.json")
+        argv = prior_argv(args, kit, phase, supervisor)
         if (supervisor["owner"] != owner or supervisor["lease"] != f"chat:{owner}"
                 or supervisor["phase"] != phase or supervisor["argv"] != argv
                 or bench_process.read(folder / "operation-binding.json") != binding):
@@ -1053,6 +1084,8 @@ def main():
     parser.add_argument("--out", type=Path)
     parser.add_argument("--offboard-stage", nargs=3, metavar=("DIR", "MANIFEST_SHA256", "RECEIPT_SHA256"),
                         help="Use pinned physical SD staging evidence and retain reports on card")
+    parser.add_argument("--defer-results", action="store_true",
+                        help="For this named run, prove MOS return and leave the reports on card")
     parser.add_argument("--operator", help="The chat holding the open slot")
     parser.add_argument("phase")
     args = parser.parse_args()
@@ -1060,20 +1093,25 @@ def main():
     if sha256(raw).hexdigest() != args.sha256:
         raise ValueError("Job manifest differs from the named hash")
     kit = json.loads(raw)
-    order = preflight(kit)
+    phase = args.phase.removeprefix("worker-")
+    order = [] if phase == "verify-mos" else preflight(kit)
     offboard = offboard_proof(kit, args.sha256, args.offboard_stage) if args.offboard_stage else None
     config = bench_process.read(args.config) if args.config else None
-    if config is not None:
+    if config is not None and phase != "verify-mos":
         runtime_preflight(kit, config)
     if args.phase == "preflight":
         print("\n".join(order))
         return 0
     if not args.config or not args.out:
         parser.error("Physical phases require --config and --out")
-    phase = args.phase.removeprefix("worker-")
+    job = fixture_runs(kit).get(phase) if args.defer_results else None
+    if args.defer_results and (not phase.startswith("run-") or job is None
+                               or "human_start" in kit or "listener_handoff" in job):
+        parser.error("--defer-results applies to one named automated run without listener handoff")
     failed = phase.removeprefix("recover-after-") if phase.startswith("recover-after-") else None
     selected = failed or phase
-    order = phases(kit, enter_cwd=selected == "enter-cwd" or (args.out / "enter-cwd").is_dir())
+    order = (["verify-mos"] if phase == "verify-mos" else
+             phases(kit, enter_cwd=selected == "enter-cwd" or (args.out / "enter-cwd").is_dir()))
     retry_phase = selected in ("retry-mainboard", "retry-p4")
     ota = olimex_vdp_ota.spec_for(kit)
     if ota and retry_phase:
@@ -1084,7 +1122,7 @@ def main():
     if args.phase != phase:
         folder = args.out / phase
         supervisor = bench_process.read(folder / "supervisor-started.json")
-        if supervisor["argv"] != child_argv(args, phase):
+        if supervisor["argv"] != child_argv(args, phase, defer_results=args.defer_results):
             raise RuntimeError("Worker is missing its supervisor binding")
         binding = {"cwd": str(Path.cwd()), "job_sha256": args.sha256, "config": config,
                    "reset_config_sha256": sha256(Path(config["reset_config"]).read_bytes()).hexdigest()}
@@ -1105,32 +1143,34 @@ def main():
                     bench_process.verify_child(args.out / prior, child_argv(args, prior),
                                                expected_returncode=1)
                     prior = retry
-            if ota or planned == "enter-cwd" or prior == "enter-cwd":
+            argv = child_argv(args, prior)
+            if ota or planned == "enter-cwd" or prior == "enter-cwd" or prior.startswith("run-"):
                 previous = args.out / prior
                 previous_supervisor = bench_process.read(previous / "supervisor-started.json")
+                argv = prior_argv(args, kit, prior, previous_supervisor)
                 if (previous_supervisor["owner"] != supervisor["owner"]
                         or previous_supervisor["lease"] != supervisor["lease"]
                         or previous_supervisor["phase"] != prior
                         or bench_process.read(previous / "operation-binding.json") != binding):
                     raise RuntimeError(f"Original operator, packet or config differs for {prior}")
-            bench_process.verify_child(args.out / prior, child_argv(args, prior))
+            bench_process.verify_child(args.out / prior, argv)
         if retry_phase:
             bench_process.verify_child(args.out / planned, child_argv(args, planned),
                                        expected_returncode=1)
-        bench.perform(phase)
+        bench.perform(phase, defer_results=args.defer_results)
         return 0
     if not args.operator:
         parser.error("Physical phases require --operator from the opened chat slot")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
     bounds = {"stage": 90 if offboard else stage_seconds(kit), "enter-cwd": 90,
               "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
-              "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
+              "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90, "verify-mos": 90}
     if failed:
         bounds[phase] = 90 + sum(bounds.get(f"restore-{c}", 480) for c in kit["firmware"])
-    job = fixture_runs(kit).get(phase)
+    job = None if phase == "verify-mos" else fixture_runs(kit).get(phase)
     seconds = (job["seconds"] + job.get("uart_end", {}).get("seconds", 0) + 210
                if job is not None else bounds.get(phase, 480))
-    return bench_process.run(child_argv(args, phase), args.out / phase,
+    return bench_process.run(child_argv(args, phase, defer_results=args.defer_results), args.out / phase,
                              seconds, owner=args.operator,
                              lease=f"chat:{args.operator}", phase=phase,
                              next_action="Keep the slot and follow the bench stop procedure.")

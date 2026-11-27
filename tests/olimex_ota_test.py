@@ -35,6 +35,7 @@ class UartOnly(TestCase):
     def test_uart_phases_stage_bulk_in_both_directions_and_keep_metadata_separate(self):
         self.runner.start_listener = MagicMock()
         self.runner.validate_ports = MagicMock()
+        self.runner.verify_mos = MagicMock()
         inventory = self.runner.out / "inventory.json"
         bench.bench_process.record(inventory, {})
         self.runner.config = {"inventory": inventory}
@@ -61,15 +62,15 @@ class UartOnly(TestCase):
             self.runner.handback()
             self.assertEqual(self.runner.start_listener.call_args_list, [
                 call("stage", bench.LISTENER), call("collect", bench.LISTENER),
-                call("cli", bench.LISTENER),
             ])
             direct = client.return_value
             direct.upload.assert_not_called()
             direct.download.assert_not_called()
-            self.assertEqual(direct.rpc.call_args_list, [call(11)] * 3)
+            self.assertEqual(direct.rpc.call_args_list, [call(11)] * 2)
+            self.runner.verify_mos.assert_called_once_with("handback-mos")
             self.assertEqual([entry.args for entry in worker.return_value.begin.call_args_list], [
                 ("get", "/autoexec.txt"), ("put", staged_path),
-                ("get", "/autoexec.txt"), ("get", report), ("get", "/autoexec.txt"),
+                ("get", "/autoexec.txt"), ("get", report),
             ])
         receipt = bench.bench_process.read(self.runner.out / "stage-file-00.receipt.json")
         self.assertEqual((receipt["payload_carrier"], receipt["activated"]), ("uart", True))
@@ -88,6 +89,17 @@ class UartOnly(TestCase):
             client.return_value.rpc.assert_not_called()
         self.assertTrue((self.runner.out / "stage-file-00.bin").exists())
         self.assertFalse((self.runner.out / "stage-file-00.receipt.json").exists())
+
+    def test_handback_retains_mos_evidence_if_transfer_status_is_unavailable(self):
+        self.runner.kit["firmware"] = {}
+        self.runner.verify_mos = MagicMock()
+        self.runner.idle.side_effect = OSError("unavailable transfer status")
+        self.runner.start_listener = MagicMock()
+        with self.assertRaisesRegex(OSError, "unavailable transfer status"):
+            self.runner.handback()
+        self.runner.verify_mos.assert_called_once_with("handback-mos")
+        self.runner.start_listener.assert_not_called()
+        self.assertFalse((self.runner.out / "handback.json").exists())
 
 
 class FlashPath(TestCase):
@@ -281,6 +293,41 @@ class OffboardStage(TestCase):
         self.manifest["payloads"].pop(self.job["sd_program"])
         with self.assertRaisesRegex(ValueError, "commissioned files"):
             bench.offboard_proof(self.kit, self.job_sha, self.write_proof())
+
+    def test_production_job_can_admit_offboard_pins(self):
+        self.kit["firmware"] = {}
+        self.kit["fixtures"][0]["agon"] = self.app | {"path": str(self.root / "app.bin")}
+        (self.root / "app.bin").write_bytes(b"A")
+        self.manifest["payloads"] = {self.job["sd_program"]: self.app}
+        self.verified.update(files_verified=1, bytes_verified=1, preservation_verified=["/autoexec.txt"])
+        proof = bench.offboard_proof(self.kit, self.job_sha, self.write_proof())
+        runner = bench.Bench.__new__(bench.Bench)
+        runner.kit, runner.out, runner.offboard = self.kit, self.root, proof
+        runner.stage_uart = MagicMock()
+        runner.stage()
+        self.assertEqual(bench.bench_process.read(self.root / "offboard-stage.json"), proof)
+        runner.stage_uart.assert_not_called()
+
+    def test_ordinary_named_run_can_defer_collection_and_join_same_phase(self):
+        self.kit["firmware"] = {}
+        runner = bench.Bench.__new__(bench.Bench)
+        runner.kit, runner.out, runner.offboard = self.kit, self.root, None
+        runner.c = {"ports": ["offline"]}
+        runner.validate_ports = runner.keyboard = runner.type_line = MagicMock()
+        runner.idle = MagicMock()
+        runner.collect_results = MagicMock()
+        with patch.object(bench, "open_passive_serial"), patch.object(bench, "Observer") as observer:
+            serial = observer.return_value
+            serial.change_directory.side_effect = [b"/test/demo *", b"/ *"]
+            serial.witness.side_effect = [b"/ *", b"/test/demo *"]
+            runner.invoke("run-demo", defer_results=True)
+            serial.run.assert_called_once()
+            serial.witness.assert_called_with("post-run-witness")
+        runner.collect_results.assert_not_called()
+        runner.idle.assert_not_called()
+        record = bench.bench_process.read(self.root / "deferred-results.json")
+        self.assertEqual(record["collection"], "pending-collection")
+        self.assertEqual(record["reports"], [self.report])
 
     def test_named_run_proves_mos_and_leaves_report_on_card(self):
         runner = bench.Bench.__new__(bench.Bench)

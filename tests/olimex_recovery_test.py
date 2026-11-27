@@ -110,6 +110,48 @@ class HumanStart(unittest.TestCase):
             observer.run_to_listener("/test/example/run.txt", 30, {"line": [], "seconds": 10}, MagicMock())
         observer.dispatch.assert_not_called()
 
+    def test_verify_mos_has_no_file_service_or_other_serial_dependency(self):
+        bench = runner.Bench.__new__(runner.Bench)
+        bench.config = {"operation_lock": self.root / "operation.lock"}
+        bench.out = self.root
+        bench.reset_config = {}
+        bench.c = {"ports": ["mainboard", "unavailable-p4-console"]}
+        bench.get = bench.start_listener = MagicMock(side_effect=AssertionError("P4 file service"))
+        bench.ports_free = MagicMock()
+        with patch.object(runner, "identity"), patch.object(runner.olimex_vdp_ota, "mos_witness") as witness:
+            bench.perform("verify-mos")
+            witness.assert_called_once_with(bench, "mos")
+        bench.get.assert_not_called()
+        bench.start_listener.assert_not_called()
+        self.assertEqual(bench.ports_free.call_args_list[0].args, ("mainboard",))
+
+    def test_prior_deferred_run_is_the_same_named_phase(self):
+        from types import SimpleNamespace
+        args = SimpleNamespace(job=self.root / "job.json", sha256="a" * 64,
+                               config=self.root / "config.json", out=self.root)
+        kit = {"fixtures": [{"id": "named"}]}
+        original = runner.child_argv(args, "run-named")
+        deferred = runner.child_argv(args, "run-named", defer_results=True)
+        self.assertEqual(runner.prior_argv(args, kit, "run-named", {"argv": deferred}), deferred)
+        self.assertEqual(runner.prior_argv(args, kit, "run-named", {"argv": original}), original)
+        kit["fixtures"][0]["listener_handoff"] = {}
+        self.assertEqual(runner.prior_argv(args, kit, "run-named", {"argv": deferred}), original)
+
+    def test_standalone_cli_does_not_preflight_fixture_files(self):
+        import hashlib
+        raw = b'{"fixtures": [], "firmware": {}}'
+        manifest = self.root / "mock.json"
+        manifest.write_bytes(raw)
+        config = self.root / "config.json"
+        config.write_text("{}")
+        argv = ["olimex_bench.py", "--job", str(manifest), "--sha256", hashlib.sha256(raw).hexdigest(),
+                "--config", str(config), "--out", str(self.root), "--operator", "owner", "verify-mos"]
+        with (patch.object(sys, "argv", argv),
+              patch.object(runner, "preflight", side_effect=AssertionError("fixture preflight")),
+              patch.object(runner.bench_process, "run", return_value=0) as run):
+            self.assertEqual(runner.main(), 0)
+            self.assertEqual(run.call_args.args[0][-1], "worker-verify-mos")
+
     def test_two_cli_labels_keep_both_dispatches(self):
         bench = runner.Bench.__new__(runner.Bench)
         bench.out, bench.url, bench.kit = self.root, "unused", self.kit

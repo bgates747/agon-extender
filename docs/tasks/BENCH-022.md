@@ -174,3 +174,35 @@ the [operator commands](../operations/olimex-bench/README.md) and
   handback evidence, including Smith’s chat verdict for a human-start job.
   The existing reservation and its pinned shared checkout continue on their
   original revision. The physical USB first-sync investigation remains deferred.
+
+## Independent operations — November 27
+
+Smith requests that the standard runner support piecemeal execution and
+avoid dependencies on optional services when those services are unavailable.
+Keep one evidence trail whether the operator uses the full cycle or an
+explicitly selected operation. The active bench job retains its pinned
+checkout while this work is checked offline.
+
+- BENCH-022-010 [x] Separate MOS observation and handback from launching a
+  file listener. Record MOS responsiveness independently of transfer
+  status. Require positive idle and restoration evidence for check-in.
+
+- BENCH-022-011 [x] Let a named run retain its reports on the card by an
+  explicit operation option chosen before RUN, including after a
+  successful ordinary stage. Preserve the same completion and joined
+  evidence so the next approved operation can proceed. Support pinned
+  offboard staging for production-only jobs as well as Agon Flash jobs.
+
+
+The independent check uses the same operation lock and supervisor, with a
+fresh evidence root. The ordinary handback uses the same MOS witness and
+checks transfer idleness independently. A missing status receipt leaves
+the MOS witness intact and withholds a successful handback. A deferred run
+keeps its existing named phase and app-completion marker, records a new
+MOS command response, and leaves report collection pending. It can feed
+the existing success or authorized recovery chain without repeating RUN.
+The exact offboard Agon Flash packet still passes CLI preflight.
+
+All 111 offline runner, SD client and process checks passed. The maintained
+candidate awaits deployment and physical qualification. No active checkout
+or bench state changed.
