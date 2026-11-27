@@ -1,5 +1,13 @@
 # REMOTE-009 — Remove HTTP turnaround from mainboard file transfers
 
+## Current investigation — 2026-11-27
+
+Smith requests a root-cause investigation into slow P4 ↔ EMOS UART file
+transfers. Begin with historical source from before the checks and waits
+suspected of slowing the path. The [UART throughput investigation](REMOTE-009/UART-THROUGHPUT-INVESTIGATION.md)
+owns the comparison, checklist and review gates. The Earth job is outside
+this work.
+
 ## Current authorized increment — 2026-11-03
 
 The Author accepts BENCH-013's coordination priorities and authorizes the first
