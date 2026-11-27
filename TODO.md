@@ -59,6 +59,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
+- [ ] **[BENCH-025 — Own fixture reports from invocation through SD cleanup](docs/tasks/BENCH-025.md)** — Plan approved with exact-file cleanup after durable archival and conclusive ownership, including semantically rejected reports. Nurples pilot and historical cleanup have separate gates.
+
 - [ ] **[BENCH-022 — Audit recent Olimex runner reliability](docs/tasks/BENCH-022.md)** — Three shared runner corrections passed offline qualification. Pending real-job qualification. USB sync investigation deferred.
 
 - [ ] **[REMOTE-009 — P4-staged fast mainboard transfers](docs/tasks/REMOTE-009.md)** — Bounded staged transfer and sequential-reader passes:1.1MB upload43.24s; new download43.57s versus250.92s matched control (5.759×), exact bytes and clean CLI/released custody. Faster listener accepted/installed with verified rollback, immutable archives and current tool selection. Paired production/version closeout and broader qualification remain; per-record UART replies remain explicit.
