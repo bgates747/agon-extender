@@ -40,3 +40,19 @@ worker scheduling and sequential reader changes are separated. The current
 residual time inside the P4-owned path remains unmeasured. The matched
 historical reference exists for both UART directions. Await Smith's review
 before any code change or bench work.
+
+## Approved repair — 2026-11-27
+
+Smith directs Extender to fix the regression identified above. Restore the
+existing P4-owned staged UART route in the maintained runner and client.
+Use the existing UART-only listener and record the carrier for every
+completed file operation. Preserve the single-file job boundary, failure
+evidence, firmware writer choice and explicit listener exit. Verify offline
+in an isolated runner checkout before any shared checkout update or live
+measurement. The remaining P4-to-EMOS throughput gap still requires the
+separate physical comparison proposed in the findings.
+
+- REMOTE-009-012 [ ] Restore P4-owned UART staging and result retrieval in
+  the shared runner. Exercise both directions and prove that a parallel
+  listener, a contradictory completion or transfer failure stops the job
+  without a direct-client replay.
