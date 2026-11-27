@@ -173,7 +173,7 @@ def validate_fixture(job, schema, *, named, manual=False):
 
 
 def uart_transfer(kit):
-    return kit.get("transfer") == "uart"
+    return kit.get("schema", DEFAULT_SCHEMA) == 3 and kit.get("transfer", "uart") == "uart"
 
 
 def uart_upload_seconds(size):
@@ -212,9 +212,10 @@ def preflight(kit):
     if manual and (kit["human_start"] not in ("stage-only", "preload") or not named or len(jobs) != 1):
         raise ValueError("Human start requires stage-only or preload and exactly one named fixture")
     targets = [path for job in jobs for path in validate_fixture(job, schema, named=named, manual=manual)]
-    if "transfer" in kit and (not uart_transfer(kit) or not named
-                              or any("listener_handoff" in job for job in jobs)):
-        raise ValueError('The "uart" transfer option requires named schema-3 fixtures without listener handoff')
+    if "transfer" in kit and (schema != 3 or kit["transfer"] not in ("uart", "parlio")):
+        raise ValueError('Schema 3 accepts "uart" or "parlio" as the transfer carrier')
+    if uart_transfer(kit) and any("listener_handoff" in job for job in jobs):
+        raise ValueError('Listener handoff requires explicitly selecting "parlio"')
     if named:
         directories = [PurePosixPath(job["cwd"].lower()) for job in jobs]
         if len(set(directories)) != len(jobs) or any(
@@ -230,7 +231,7 @@ def preflight(kit):
     ota = olimex_vdp_ota.spec_for(kit)
     if ota:
         if set(kit["firmware"]) != {"mainboard"} or not named or manual or not uart_transfer(kit):
-            raise ValueError('Agon Flash requires an automated named schema-3 mainboard-only job with "transfer": "uart"')
+            raise ValueError("Agon Flash requires an automated named schema-3 mainboard-only job with UART staging")
         olimex_vdp_ota.validate(ota, pinned)
     for component, spec in kit["firmware"].items():
         if spec is ota:
@@ -829,19 +830,21 @@ class Bench:
                 raise RuntimeError("Agon fixture result differs")
 
         if uart_transfer(self.kit):
-            if not named or listener_online:
-                raise RuntimeError("UART results need a fresh UART-only listener and named reports")
+            if listener_online:
+                raise RuntimeError("UART results need a fresh UART-only listener")
 
             with self.uart_listener("collect"):
                 for number, path in enumerate(fixture_results(job), start=1):
-                    channel = f"sd-collect-{number:02d}"
-                    destination = output_dir / PurePosixPath(path).name
+                    channel = f"sd-collect-{number:02d}" if named else "sd-collect"
+                    destination = output_dir / PurePosixPath(path).name if named else result_path
                     result = self.staged_uart(channel, "get", path, destination=destination)
                     bench_process.record(self.out / f"{channel}.receipt.json", {
                         **result, "target": path,
                     })
-                    if not result["bytes"]:
+                    if named and not result["bytes"]:
                         raise RuntimeError(f"Fixture produced an empty report: {path}")
+                if not named:
+                    check_result()
         elif self.kit.get("schema", DEFAULT_SCHEMA) == 3:
             if not listener_online:
                 self.start_listener("collect", PARALLEL_LISTENER)

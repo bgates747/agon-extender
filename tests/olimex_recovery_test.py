@@ -154,7 +154,7 @@ class HumanStart(unittest.TestCase):
 
     def test_two_cli_labels_keep_both_dispatches(self):
         bench = runner.Bench.__new__(runner.Bench)
-        bench.out, bench.url, bench.kit = self.root, "unused", self.kit
+        bench.out, bench.url, bench.kit = self.root, "unused", {**self.kit, "schema": 1}
         bench.own = bench.keyboard = MagicMock()
         bench.listener = lambda label, command, callback: bench.type_line(label, command)
         with patch("olimex_bench.subprocess.run") as send:

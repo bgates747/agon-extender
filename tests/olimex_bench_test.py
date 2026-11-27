@@ -342,6 +342,9 @@ class TestBench(unittest.TestCase):
             }
             kit = {"fixtures": [job], "namespace": "demo", "firmware": {},
                    "preserve": {"/autoexec.txt": "0" * 64, "/emos/sdserve.bin": "0" * 64}}
+            with self.assertRaisesRegex(ValueError, "Listener handoff requires"):
+                preflight(kit)
+            kit["transfer"] = "parlio"
             self.assertEqual(preflight(kit), ["stage", "run-full", "handback"])
             job["listener_handoff"]["source"] = pin("invalid.txt", batch + b"VDU 12\r\n")
             with self.assertRaisesRegex(ValueError, "only the pinned RUN and listener"):
@@ -393,7 +396,7 @@ class TestBench(unittest.TestCase):
             fixtures[1]["inputs"] = [
                 {"sd_path": "/test/demo/ground/GROUND.ON", "source": pin(marker)},
             ]
-            kit = {"fixtures": fixtures, "namespace": "demo", "firmware": {},
+            kit = {"fixtures": fixtures, "namespace": "demo", "firmware": {}, "transfer": "parlio",
                    "preserve": {"/autoexec.txt": "0" * 64, "/emos/sdserve.bin": "0" * 64}}
             self.assertEqual(preflight(kit), ["stage", "run-full", "run-ground", "handback"])
             bench = Bench.__new__(Bench)
@@ -478,7 +481,7 @@ class TestBench(unittest.TestCase):
                 uploads.append((target, data))
                 return {"payload_carrier": "parlio" if data else "empty-control"}
 
-            bench.kit = {"firmware": {}, "fixture": {
+            bench.kit = {"firmware": {}, "transfer": "parlio", "fixture": {
                 "sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
                 "inputs": [],
             }}
@@ -528,7 +531,7 @@ class TestBench(unittest.TestCase):
             bench.out = Path(tmp)
             bench.url = "http://example.invalid"
             bench.c = {"ports": ["/dev/example"]}
-            bench.kit = {"fixture": {
+            bench.kit = {"transfer": "parlio", "fixture": {
                 "sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
                 "address": "040000", "success": "PASS", "failure": "FAIL",
                 "seconds": 5, "expected_agon": ["result"],
@@ -554,6 +557,50 @@ class TestBench(unittest.TestCase):
             bench.exit_staged_listener.assert_called_once_with("collect")
             staged.close.assert_called_once()
             self.assertIn("parlio", (bench.out / "sd-collect.receipt.json").read_text())
+
+    def test_single_fixture_uses_staged_uart_by_default_and_checks_report(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bench = Bench.__new__(Bench)
+            bench.out = Path(tmp)
+            program = bench.out / "program.bin"
+            program.write_bytes(b"program")
+            job = {
+                "agon": {"path": str(program), "bytes": 7,
+                         "sha256": sha256(b"program").hexdigest()},
+                "sd_program": "/test/demo/program.bin", "sd_result": "/test/demo/result.txt",
+                "address": "040000", "seconds": 5, "success": "PASS", "failure": "FAIL",
+                "expected_agon": ["result"],
+            }
+            bench.kit = {"fixture": job, "namespace": "demo", "firmware": {},
+                         "preserve": {"/autoexec.txt": "0" * 64, "/emos/sdserve.bin": "0" * 64}}
+            self.assertEqual(preflight(bench.kit), ["stage", "run", "handback"])
+            bench.stage_uart = MagicMock()
+            bench.stage()
+            payloads, reports, _ = bench.stage_uart.call_args.args
+            self.assertEqual((payloads, reports),
+                             ({job["sd_program"]: b"program"}, [job["sd_result"]]))
+
+            @contextmanager
+            def listener(label):
+                self.assertEqual(label, "collect")
+                yield
+
+            def download(label, operation, path, *, destination):
+                self.assertEqual((label, operation, path),
+                                 ("sd-collect", "get", job["sd_result"]))
+                self.assertEqual(destination, bench.out / "result.txt")
+                destination.write_bytes(b"result\n")
+                return {"bytes": 7, "payload_carrier": "uart"}
+
+            bench.uart_listener = listener
+            bench.staged_uart = download
+            bench.collect_results(job, bench.out, False)
+            self.assertIn("uart", (bench.out / "sd-collect.receipt.json").read_text())
+            bench.out = bench.out / "wrong-report"
+            bench.out.mkdir()
+            job["expected_agon"] = ["different"]
+            with self.assertRaisesRegex(RuntimeError, "fixture result differs"):
+                bench.collect_results(job, bench.out, False)
 
     def test_plain_production_plan_and_staging(self):
         with tempfile.TemporaryDirectory() as tmp:
