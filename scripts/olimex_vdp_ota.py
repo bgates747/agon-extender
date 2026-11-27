@@ -86,30 +86,43 @@ def selected_slot(selector):
     return (sequence - 1) % 2
 
 
-def require_image(verification, spec, selection):
+def require_image(verification, spec, selection, *, allow_padded=False):
     app = spec[f"{selection}_app"]
     slot = spec[f"{selection}_slot"]
     if (verification.get("component") != "native_vdp" or verification.get("slot") != slot
             or verification.get("address") != hex(SLOTS[slot])
             or verification.get("sha256") != app["sha256"] or verification.get("bytes") != app["bytes"]
-            or verification.get("verified_extent_sha256") != app["sha256"]
-            or verification.get("verified_extent_bytes") != app["bytes"]
             or verification.get("boot_cli_ready") is not True):
         raise RuntimeError(f"Independent proof does not establish {selection} image on app{slot}")
+    extent = verification.get("verified_extent_bytes")
+    digest = verification.get("verified_extent_sha256")
+    if extent == app["bytes"] and digest == app["sha256"]:
+        return
+    if allow_padded and selection == "restore" and type(extent) is int and app["bytes"] < extent <= CAPACITY:
+        path = Path(verification["readback"])
+        if path.stat().st_size == extent:
+            data = path.read_bytes()
+            if (sha256(data).hexdigest() == digest and
+                    sha256(data[:app["bytes"]]).hexdigest() == app["sha256"] and
+                    data[app["bytes"]:] == b"\xff" * (extent - app["bytes"])):
+                return
+    raise RuntimeError(f"Independent extent proof differs for {selection} image on app{slot}")
 
 
-def installed(inventory, spec, selection, *, receipt_path=None):
+def installed(inventory, spec, selection, *, receipt_path=None, allow_padded=False):
     if inventory.get("pending_operation"):
         raise RuntimeError("A prior firmware action requires reconciliation")
     entry = inventory["native_vdp"]
-    require_image(entry, spec, selection)
+    require_image(entry, spec, selection, allow_padded=allow_padded)
     path = Path(entry["verification_receipt"]).resolve(strict=True)
     if receipt_path is not None and path != receipt_path.resolve():
         raise RuntimeError("Installed image belongs to a different firmware operation")
     verification = read(path)
-    require_image(verification, spec, selection)
+    require_image(verification, spec, selection, allow_padded=allow_padded)
+    fields = ("sha256", "slot", "verified_extent_bytes", "verified_extent_sha256", "readback")
     if (inventory["components"]["native_vdp_sha256"] != entry["sha256"]
-            or Path(verification["verification_receipt"]).resolve() != path):
+            or Path(verification["verification_receipt"]).resolve() != path
+            or any(verification.get(key) != entry.get(key) for key in fields)):
         raise RuntimeError("Selected image evidence disagrees with firmware inventory")
     for role, field in COMPANIONS.items():
         companion = inventory[role]
@@ -125,6 +138,10 @@ def companion_pins(inventory):
 
 
 def stage_proof(target, root, selection, app):
+    if getattr(target, "offboard", None):
+        if read(root / "stage" / "offboard-stage.json") != target.offboard:
+            raise RuntimeError("Offboard staging proof differs from the admitted job")
+        return
     path = staging_path(target, selection)
     receipts = [file for file in (root / "stage").glob("stage-file-*.receipt.json")
                 if read(file)["target"] == path]
@@ -230,7 +247,11 @@ def mos_witness(target, label):
 
 def replace(target, spec, selection, image, table, begin):
     target.own()
-    check_updater(target)
+    if getattr(target, "offboard", None):
+        record(target.out / "updater.json", {"path": FLASH_PATH, "sha256": FLASH_SHA,
+                                           "offboard_verification_sha256": target.offboard["verification_sha256"]})
+    else:
+        check_updater(target)
     boot_before_flash = invoke_flash(target, selection, spec[f"{selection}_app"], begin)
     reboot_pair(target, boot_before_flash)
     mos_witness(target, "after-flash-mos")

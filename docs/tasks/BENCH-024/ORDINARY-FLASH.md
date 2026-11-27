@@ -135,3 +135,17 @@ that recovery. Include the app1 return explicitly in this packet.
   distinct live run. VDPlet owns that reservation and all target access.
   Promote the shared runner only under the applicable review and deployment
   authorization.
+
+## Author-approved offboard preparation — 2026-11-27
+
+Smith directed offboard SD staging after the P4 file service failed, returned
+the card, and authorized VDPlet to run the original pair. The standard runner
+uses pinned card staging evidence through the offboard option documented in
+the [authoring guide](../../operations/olimex-bench/AUTHORING.md). The operator
+retains both reports on card after the per-arm completion and MOS witnesses.
+
+The previous production app1 handback verified a padded extent. The runner
+admits that stronger saved proof at entry only after checking the full extent
+digest, the exact raw production prefix and the FF tail. This job's new
+candidate and restore receipts still require exact raw readback at the
+declared slot. No new verification session is introduced for prior handback.

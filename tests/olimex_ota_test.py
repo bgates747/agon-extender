@@ -5,6 +5,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import TestCase
 from unittest.mock import MagicMock, call, patch
+import json
 import struct
 import sys
 import zlib
@@ -96,6 +97,7 @@ class FlashPath(TestCase):
         self.root = Path(folder.name)
         self.target = MagicMock()
         self.target.out = self.root
+        self.target.offboard = None
         self.target.install_dir = "/extender/install/demo"
         self.target.config = {"mainboard_mac": "00:01:02:03:04:05"}
         self.target.c = {"ports": ["offline"]}
@@ -144,6 +146,42 @@ class FlashPath(TestCase):
         for change in ({"slot": 0}, {"sha256": "other"}):
             with self.assertRaisesRegex(RuntimeError, "Independent proof"):
                 ota.installed({"native_vdp": entry | change}, spec, "restore")
+
+    def test_prior_padded_entry_requires_exact_prefix_padding_and_slot(self):
+        spec = {"restore_app": self.app, "restore_slot": 1}
+        raw = self.image
+        padded = raw + b"\xff" * 16
+        path = self.root / "readback.bin"
+        path.write_bytes(padded)
+        receipt = {"component": "native_vdp", "slot": 1, "address": hex(ota.SLOTS[1]),
+                   **self.app, "boot_cli_ready": True, "verified_extent_bytes": len(padded),
+                   "verified_extent_sha256": sha256(padded).hexdigest(), "readback": str(path)}
+        ota.require_image(receipt, spec, "restore", allow_padded=True)
+        with self.assertRaisesRegex(RuntimeError, "extent proof"):
+            ota.require_image(receipt, spec, "restore")
+        for data in (b"A" + padded[1:], padded[:-1] + b"A"):
+            path.write_bytes(data)
+            forged = receipt | {"verified_extent_sha256": sha256(data).hexdigest()}
+            with self.assertRaisesRegex(RuntimeError, "extent proof"):
+                ota.require_image(forged, spec, "restore", allow_padded=True)
+        with self.assertRaisesRegex(RuntimeError, "app1"):
+            ota.require_image(receipt | {"slot": 0}, spec, "restore", allow_padded=True)
+
+    def test_offboard_flash_uses_frozen_updater_proof_and_live_read(self):
+        self.target.offboard = {"verification_sha256": "b" * 64}
+        installed = self.root / "readback.bin"
+        with (patch.object(ota, "check_updater") as fetch,
+              patch.object(ota, "invoke_flash", return_value=1),
+              patch.object(ota, "reboot_pair"), patch.object(ota, "mos_witness"),
+              patch.object(ota, "app_readback", return_value=(2, installed)) as readback,
+              patch.object(ota, "pulse"), patch.object(ota, "wait_boot", return_value={"boot": 3})):
+            answer = ota.replace(self.target, {"candidate_app": self.app, "candidate_slot": 0},
+                                 "candidate", self.image, self.table, MagicMock())
+        fetch.assert_not_called()
+        readback.assert_called_once()
+        self.assertEqual(answer, (installed, 3))
+        self.assertEqual(bench.bench_process.read(self.root / "updater.json")["offboard_verification_sha256"],
+                         "b" * 64)
 
     def test_failed_read_prevents_reset_and_post_read_mos(self):
         with (patch.object(ota, "check_updater"), patch.object(ota, "invoke_flash", return_value=1),
@@ -197,3 +235,72 @@ class FlashPath(TestCase):
                 if issued:
                     self.assertEqual(keyboard.call_args.args[0][-2:], ["type", "y"])
                 self.assertEqual((Path(folder) / "ota-reboot-announced.json").exists(), fault is None)
+
+
+class OffboardStage(TestCase):
+    def setUp(self):
+        folder = TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        self.root = Path(folder.name)
+        self.report = "/test/demo/result.bin"
+        self.app = {"bytes": 1, "sha256": sha256(b"A").hexdigest()}
+        self.job = {"id": "demo", "cwd": "/test/demo", "sd_program": "/test/demo/app.bin", "agon": self.app,
+                    "results": [self.report], "address": "040000", "success": "REPORT SAVED",
+                    "failure": "FAIL", "seconds": 10}
+        self.kit = {"transfer": "uart", "namespace": "demo", "preserve": {"/autoexec.txt": "a" * 64},
+                    "firmware": {"mainboard": {"method": "agon-flash", "candidate_app": self.app,
+                                               "restore_app": self.app}},
+                    "fixtures": [self.job]}
+        self.job_sha = "123"
+        self.manifest = {"job_sha256": self.job_sha, "preserve": self.kit["preserve"],
+                         "expected_absent": [self.report],
+                         "payloads": {path: self.app for path in (self.job["sd_program"],
+                                      "/extender/install/demo/candidate-vdp.bin",
+                                      "/extender/install/demo/restore-vdp.bin")}}
+        self.verified = {"job_sha256": self.job_sha, "files_verified": 3, "bytes_verified": 3,
+                         "preservation_verified": ["/autoexec.txt", ota.FLASH_PATH],
+                         "expected_results_absent": [self.report], "writes_synced": True}
+
+    def write_proof(self):
+        paths = []
+        for name, data in (("manifest.json", self.manifest), ("verification.json", self.verified)):
+            payload = json.dumps(data).encode()
+            (self.root / name).write_bytes(payload)
+            paths.append(sha256(payload).hexdigest())
+        return [str(self.root), *paths]
+
+    def test_offboard_proof_requires_pinned_files_and_fresh_reports(self):
+        option = self.write_proof()
+        self.assertEqual(bench.offboard_proof(self.kit, self.job_sha, option)["files"], 3)
+        (self.root / "verification.json").write_text("{}")
+        with self.assertRaisesRegex(ValueError, "changed"):
+            bench.offboard_proof(self.kit, self.job_sha, option)
+        self.verified["expected_results_absent"] = []
+        with self.assertRaisesRegex(ValueError, "fresh reports"):
+            bench.offboard_proof(self.kit, self.job_sha, self.write_proof())
+        self.manifest["payloads"].pop(self.job["sd_program"])
+        with self.assertRaisesRegex(ValueError, "commissioned files"):
+            bench.offboard_proof(self.kit, self.job_sha, self.write_proof())
+
+    def test_named_run_proves_mos_and_leaves_report_on_card(self):
+        runner = bench.Bench.__new__(bench.Bench)
+        runner.kit, runner.out, runner.config = self.kit, self.root, {"inventory": self.root / "inventory.json"}
+        runner.offboard = {"verification_sha256": "a" * 64}
+        runner.c = {"ports": ["offline"]}
+        runner.validate_ports = runner.idle = runner.keyboard = runner.type_line = MagicMock()
+        runner.collect_results = MagicMock()
+        bench.bench_process.record(runner.config["inventory"], {})
+        with (patch.object(bench, "open_passive_serial"), patch.object(ota, "installed"),
+              patch.object(bench, "Observer") as observer):
+            serial = observer.return_value
+            serial.change_directory.side_effect = [b"/test/demo *", b"/ *"]
+            serial.witness.side_effect = [b"/ *", b"/test/demo *"]
+            runner.invoke("run-demo")
+            serial.run.assert_called_once()
+            serial.witness.assert_called_with("post-run-witness")
+        runner.collect_results.assert_not_called()
+        record = bench.bench_process.read(self.root / "offboard-results.json")
+        self.assertEqual(record["collection"], "pending-physical-collection")
+        self.assertEqual(record["reports"], [self.report])
+        with self.assertRaisesRegex(RuntimeError, "does not admit"):
+            runner.start_listener("collect", bench.LISTENER)

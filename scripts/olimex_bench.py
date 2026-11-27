@@ -250,6 +250,38 @@ def preflight(kit):
     return phases(kit)
 
 
+def offboard_proof(kit, job_sha, option):
+    spec = olimex_vdp_ota.spec_for(kit)
+    if spec is None:
+        raise ValueError("Offboard staging requires a named Agon Flash job")
+    directory, manifest_sha, verification_sha = option
+    paths = [Path(directory).resolve() / name for name in ("manifest.json", "verification.json")]
+    documents = []
+    for path, digest in zip(paths, (manifest_sha, verification_sha), strict=True):
+        raw = path.read_bytes()
+        if sha256(raw).hexdigest() != digest:
+            raise ValueError(f"Offboard staging evidence changed: {path}")
+        documents.append(json.loads(raw))
+    manifest, verified = documents
+    payloads = {path: pin for job in fixture_runs(kit).values()
+                for path, pin in fixture_inputs(job).items()}
+    for selection in ("candidate", "restore"):
+        payloads[f"/extender/install/{kit['namespace']}/{selection}-vdp.bin"] = spec[f"{selection}_app"]
+    pins = {path: {key: pin[key] for key in ("bytes", "sha256")} for path, pin in payloads.items()}
+    reports = [path for job in fixture_runs(kit).values() for path in fixture_results(job)]
+    if (manifest["job_sha256"] != job_sha or manifest["payloads"] != pins
+            or manifest["expected_absent"] != reports or manifest["preserve"] != kit["preserve"]):
+        raise ValueError("Offboard staging manifest differs from the commissioned files")
+    if (verified["job_sha256"] != job_sha or verified["files_verified"] != len(pins)
+            or verified["bytes_verified"] != sum(pin["bytes"] for pin in pins.values())
+            or verified["expected_results_absent"] != reports or verified["writes_synced"] is not True
+            or sorted(verified["preservation_verified"]) != sorted([*kit["preserve"], olimex_vdp_ota.FLASH_PATH])):
+        raise ValueError("Offboard staging receipt does not establish synced files and fresh reports")
+    return {"manifest": str(paths[0]), "manifest_sha256": manifest_sha,
+            "verification": str(paths[1]), "verification_sha256": verification_sha,
+            "job_sha256": job_sha, "files": len(pins), "bytes": verified["bytes_verified"]}
+
+
 class Bench:
     def __init__(self, config, kit, out):
         self.config = config
@@ -261,6 +293,7 @@ class Bench:
         self.install_dir = "/extender/install/" + kit["namespace"]
         self.results_dir = "/agents/extender/" + kit["namespace"]
         self.lock = None
+        self.offboard = None
 
     def own(self):
         if self.lock is None or self.lock.closed:
@@ -315,6 +348,8 @@ class Bench:
                         "type", command, "--enter"], check=True, timeout=42)
 
     def start_listener(self, label, command):
+        if getattr(self, "offboard", None):
+            raise RuntimeError("Offboard staging does not admit a P4 file listener")
         if uart_transfer(self.kit) and "--parallel" in command.split():
             raise RuntimeError("UART-only jobs cannot launch a parallel listener")
         self.idle()
@@ -366,7 +401,12 @@ class Bench:
     def cli(self, label="cli"):
         if not re.fullmatch(r"[a-zA-Z0-9_-]+", label):
             raise ValueError("Invalid CLI observation label")
-        if uart_transfer(self.kit):
+        if getattr(self, "offboard", None):
+            self.validate_ports()
+            self.idle()
+            olimex_vdp_ota.mos_witness(self, label)
+            self.idle()
+        elif uart_transfer(self.kit):
             with self.uart_listener(label):
                 pass
         else:
@@ -399,11 +439,14 @@ class Bench:
 
         if ota := olimex_vdp_ota.spec_for(self.kit):
             inventory = bench_process.read(self.config["inventory"])
-            verified = olimex_vdp_ota.installed(inventory, ota, "restore")
+            verified = olimex_vdp_ota.installed(inventory, ota, "restore", allow_padded=True)
             bench_process.record(self.out / "flash-entry.json", {
                 "verification_receipt": verified["verification_receipt"],
                 "companions": olimex_vdp_ota.companion_pins(inventory),
             })
+            if self.offboard:
+                bench_process.record(self.out / "offboard-stage.json", self.offboard)
+                return
             for selection in ("candidate", "restore"):
                 path = olimex_vdp_ota.staging_path(self, selection)
                 payloads[path] = pinned(ota[f"{selection}_app"])
@@ -633,7 +676,8 @@ class Bench:
         previous = "restore" if selection == "candidate" else "candidate"
         previous_receipt = (Path(entry["verification_receipt"]) if previous == "restore"
                             else root / "install-mainboard" / "independent-verification.json")
-        olimex_vdp_ota.installed(inventory, spec, previous, receipt_path=previous_receipt)
+        olimex_vdp_ota.installed(inventory, spec, previous, receipt_path=previous_receipt,
+                                 allow_padded=selection == "candidate")
         if entry["companions"] != olimex_vdp_ota.companion_pins(inventory):
             raise RuntimeError("The production P4 or EMOS identity changed after staging")
         app = spec[f"{selection}_app"]
@@ -745,11 +789,19 @@ class Bench:
                 else:
                     observer.run(f"RUN &{job['address']}", prompt, job["success"].encode(),
                                  job["failure"].encode(), job["seconds"], uart_end=job.get("uart_end"))
+                if getattr(self, "offboard", None):
+                    returned = observer.witness("post-run-witness")
+                    if returned.lower() != prompt.lower():
+                        raise RuntimeError("MOS returned to a different directory after the fixture")
+                    bench_process.record(self.out / "offboard-results.json", {
+                        "success_line": job["success"], "post_run_prompt": returned.decode("ascii"),
+                        "reports": fixture_results(job), "collection": "pending-physical-collection",
+                    })
                 if named:
                     prompt = observer.change_directory("restore-cwd", entry, prompt)
                 observer.mirror_off(prompt)
 
-        if not handoff:
+        if not handoff and not getattr(self, "offboard", None):
             self.collect_results(job, output_dir, named)
 
     def collect_results(self, job, output_dir, named, *, listener_online=False):
@@ -869,7 +921,8 @@ class Bench:
                 raise RuntimeError(f"Inventory does not establish the expected {component} image")
             receipt_path = root / operation / "independent-verification.json" if operation else None
             if ota:
-                olimex_vdp_ota.installed(inventory, spec, selection, receipt_path=receipt_path)
+                olimex_vdp_ota.installed(inventory, spec, selection, receipt_path=receipt_path,
+                                         allow_padded=operation is None)
             if receipt_path is None:
                 continue
             receipt = bench_process.read(receipt_path)
@@ -890,6 +943,7 @@ class Bench:
             folder.mkdir()
             restore = Bench(self.config, self.kit, folder)
             restore.lock = self.lock
+            restore.offboard = getattr(self, "offboard", None)
             if component == "mainboard" and olimex_vdp_ota.spec_for(self.kit):
                 restore.firmware(component, "restore", job_root=root)
             else:
@@ -920,9 +974,11 @@ class Bench:
 
 
 def child_argv(args, phase):
-    return [sys.executable, str(Path(__file__).resolve()), "--job", str(args.job),
-            "--sha256", args.sha256, "--config", str(args.config),
-            "--out", str(args.out), f"worker-{phase}"]
+    argv = [sys.executable, str(Path(__file__).resolve()), "--job", str(args.job),
+            "--sha256", args.sha256, "--config", str(args.config), "--out", str(args.out)]
+    if option := getattr(args, "offboard_stage", None):
+        argv.extend(("--offboard-stage", *option))
+    return [*argv, f"worker-{phase}"]
 
 
 def runtime_preflight(kit, config):
@@ -995,6 +1051,8 @@ def main():
     parser.add_argument("--sha256", required=True)
     parser.add_argument("--config", type=Path)
     parser.add_argument("--out", type=Path)
+    parser.add_argument("--offboard-stage", nargs=3, metavar=("DIR", "MANIFEST_SHA256", "RECEIPT_SHA256"),
+                        help="Use pinned physical SD staging evidence and retain reports on card")
     parser.add_argument("--operator", help="The chat holding the open slot")
     parser.add_argument("phase")
     args = parser.parse_args()
@@ -1003,6 +1061,7 @@ def main():
         raise ValueError("Job manifest differs from the named hash")
     kit = json.loads(raw)
     order = preflight(kit)
+    offboard = offboard_proof(kit, args.sha256, args.offboard_stage) if args.offboard_stage else None
     config = bench_process.read(args.config) if args.config else None
     if config is not None:
         runtime_preflight(kit, config)
@@ -1029,10 +1088,13 @@ def main():
             raise RuntimeError("Worker is missing its supervisor binding")
         binding = {"cwd": str(Path.cwd()), "job_sha256": args.sha256, "config": config,
                    "reset_config_sha256": sha256(Path(config["reset_config"]).read_bytes()).hexdigest()}
+        if offboard:
+            binding["offboard_stage"] = offboard
         # Retain only the digest of the local binding in evidence.
         binding = {"sha256": sha256(json.dumps(binding, sort_keys=True).encode()).hexdigest()}
         bench_process.record(folder / "operation-binding.json", binding)
         bench = Bench(config, kit, folder)
+        bench.offboard = offboard
         if failed:
             bench.perform(phase, recovery=(args, failed, supervisor["owner"], binding))
             return 0
@@ -1060,7 +1122,7 @@ def main():
     if not args.operator:
         parser.error("Physical phases require --operator from the opened chat slot")
     print(f"Operator {args.operator} starting {phase} under its existing slot", flush=True)
-    bounds = {"stage": stage_seconds(kit), "enter-cwd": 90,
+    bounds = {"stage": 90 if offboard else stage_seconds(kit), "enter-cwd": 90,
               "install-mainboard": 550, "restore-mainboard": 550, "retry-mainboard": 550,
               "install-p4": 650, "restore-p4": 650, "retry-p4": 760, "handback": 90}
     if failed:

@@ -243,3 +243,25 @@ The UART staging supervisor allows 300 seconds of setup plus 60 seconds per
 file and a transfer allowance at 8,000 B/s, rounded up per file. Treat this
 as a watchdog. Set the Pi service runtime longer than the supervisor's bound
 so it can preserve failure evidence and wake the operator.
+
+### Author-approved offboard SD staging
+
+When Smith stages the card offboard and authorizes the same named Agon Flash
+job, use `--offboard-stage DIR MANIFEST_SHA256 RECEIPT_SHA256` on preflight
+and on every phase. Keep the original job and SHA-256. The directory holds
+`manifest.json` with the original job digest, exact staged-file paths and
+byte/hash pins, absent result paths and preserved-file pins. It also holds
+`verification.json` with the matching job digest, verified file and byte
+counts, the absent result paths, confirmation that the startup, listener and
+installed FLASH v1.9 utility pins matched, and confirmation of sync. The
+operator binds these receipts after Smith confirms the verified card is back
+in the bench.
+
+The standard stage phase admits this proof and the existing verified
+production entry. It sends no files. FLASH and its independent USB
+verification follow the ordinary sequence. Each arm must print its normal
+completion line and return to a fresh command-correlated MOS prompt. Capture
+those witnesses and retain the reports on card for later authorized physical
+collection. Handback uses a fresh MOS command witness, idle transfer status
+and the strict new production restore receipt. This path never starts a P4
+file listener or falls back to a P4 upload or download.
