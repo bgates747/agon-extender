@@ -148,3 +148,18 @@ required ROM inputs. No new firmware build is needed for these runner changes.
   staging and verification separately. Refresh the shared checkout between
   operators after qualification. No bench session was used for the offline
   work.
+
+### Mainboard qualification — November 27, 2026
+
+Runner `38c1c37c973dc758a6f864bb095f2cc749a42a09` passed a complete
+mainboard-only cycle with the VDPL-054 scanline fixture in a fresh namespace.
+Agon Flash installed 1,118,336 bytes on app1 and restored production
+VDPlet v0.1.4-alpha, 1,117,392 bytes, on app0. Both USB verifications matched
+the ESP32's digest using the retained table and selector metadata. Neither
+downloaded the application. The fixture passed and returned its 63-byte
+report over UART. Handback proved fresh MOS, idle transfers and closed
+serial handles. Local evidence is under
+`agents/bench-026/compact-vdp-r01/evidence/`. The scheduler and the waiting
+operator received the exact qualified mainboard runner and procedure before
+check-in. The shared checkout stays pinned while P4 and EMOS write
+qualification remains pending.
