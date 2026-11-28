@@ -2,9 +2,10 @@
 
 Use the commissioned [Olimex bench procedure](operations/olimex-bench/README.md)
 and its standard `FLASH mos` phase while the MOS prompt is usable. The
-operator waits for the updater's automatic reboot and independently compares
-all 128 KiB of ROM. A keyboard-command receipt establishes only delivery.
-A missing reboot or failed readback calls for the bench stop procedure.
+runner verifies FLASH's CRC for the staged 128 KiB ROM before confirmation.
+FLASH reads the programmed ROM on the eZ80 and checks the CRC locally. The
+runner requires that result, the automatic reboot and fresh MOS evidence.
+A missing write check or boot witness calls for the bench stop procedure.
 
 **If MOS cannot boot, the Author selects an external ESP32-WROOM programmer
 connected to the eZ80 ZDI header.** The Author recalls WROOM succeeding

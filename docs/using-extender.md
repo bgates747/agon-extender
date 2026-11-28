@@ -64,7 +64,7 @@ accessing the shared bench.
 |---|---|
 | View EDP / type interactively | Open the P4's HTTP page, Connect for video, Capture keyboard for input. [Browser/input behavior and platform limits](remote-keyboard.md#browser-keyboard-capture). Capturing does not admit a disabled EMOS input path. |
 | Send bounded agent input | [Host commands](remote-keyboard.md#host-commands), using `scripts/keyboard.py`. Its journal differs from the SD journal. Do not paste a sequence of dependent CLI commands and infer completion from sleeps. |
-| List, retrieve or replace mainboard SD files | [SD operating guide](mainboard-sd.md). Start the production foreground listener in Legacy with `EMOS sdserve --fast --parallel /`. Exit it before running an application. |
+| List, retrieve or replace mainboard SD files | [SD operating guide](mainboard-sd.md). The ordinary Olimex path uses `EMOS sdserve --fast /` in Legacy and P4-staged UART. Exit the listener before running an application. |
 | Automatic mainboard files on newer paired candidates | [Staged transfers](mainboard-sd.md): port 8081 at an eligible idle CLI in Legacy/negotiated ExCom; no manual listener. Requires installed sdjob and a mounted P4 staging card. Bounded hardware pass, not selected production. |
 | Manage the P4’s own SD card | [P4 SD guide](p4-sd.md): candidate service on port 8080, independent of the production Agon file transfer service. |
 | Observe CLI text | [Screen-text guide](screen-text.md): P4's pixel-derived readback observes ExCom output, not MOS command-buffer RAM or the Legacy screen. It does not take video ownership or provide an atomic command-completion receipt. |

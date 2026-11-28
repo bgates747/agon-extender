@@ -14,8 +14,9 @@ procedure if a required transfer cannot proceed.
 Until Smith lifts this restriction, use only the FLASH utility for mainboard
 VDP and VDPlet firmware changes on Olimex, including restoration. Preflight
 requires `firmware.mainboard.method` to be `agon-flash`. The USB programmer
-may read back a newly written image for verification. If FLASH cannot
-perform the required change, follow the bench stop procedure.
+checks the selected slot and requests an ESP32-computed digest of the new
+image. Reserve a full programmer read for a specific diagnostic or backup.
+If FLASH cannot perform the required change, follow the bench stop procedure.
 
 For a new or adapted fixture, start with [Prepare an Olimex test job](AUTHORING.md).
 
@@ -176,16 +177,21 @@ baseline under `rollback/`. FLASH takes the unpadded application.
 The Agon SD card keeps the two raw applications below. Each was verified once
 by a full byte comparison when deployed. The runner checks the
 [current SD firmware receipts](../../../production/olimex-sd-firmware.json)
-and the matching file's directory metadata before staging. Routine jobs reuse
-these files. Repeat a full SD readback only for a specific, documented reason,
-such as replacing the card, a missing file, or an unexpected CRC.
+and the matching file's directory metadata before staging. Reuse either file
+as the candidate or the restore when its pin matches. The same record binds
+the previously verified `/emos/sdserve.bin` and `/mos/flash.bin`. The Pi
+checks their type and size with `STAT` during routine operation. Reconcile
+the affected receipt when replacing the card, changing a tool or image, or
+investigating evidence of corruption. A `STAT` receipt records file metadata
+and the prior verification, with no new hash of the resident file.
 
 For candidate installation and restore, FLASH v1.9 calculates the file CRC
 on the Agon. The runner compares the displayed value before confirming.
 That CRC verifies a test image's transfer to SD. A bench firmware test can
 return metadata about the file and must never send the whole test image back
 for transfer verification. After FLASH writes a new image, verify the selected
-app bytes and MOS as usual. Stop if the SD copy is missing or its CRC differs.
+app with the programmer digest below and prove MOS. Stop if the SD copy is
+missing or its CRC differs.
 
 | Role | Agon SD path | FLASH v1.9 input CRC |
 | --- | --- | --- |
@@ -216,8 +222,12 @@ successful phase. Use a fresh SD path for each payload and result.
 For ordinary fixture file transfers, use the existing UART protocol with
 no supplemental payload checksums or verification reads. Local input
 hashes identify the files before the job, and the fixture's result checks
-determine the test outcome. For test firmware, use FLASH's on-card CRC to
-verify the file transfer. Verify firmware writes independently. If a
+determine the test outcome. Send only new inputs and retrieve only the named
+original reports needed to score the run. Use the offboard or deferred-result
+route for a large transfer when appropriate. At staging and before FLASH,
+the Pi reads the small startup file with a one-record limit and matches it
+to the commissioned hash. For test
+firmware, use FLASH's on-card CRC to verify the file transfer. If a
 required capability is missing or a transfer or test fails, follow the
 [stop rule](#stop-on-an-unexpected-problem).
 Arrange a separate, explicit compatibility method in the job packet if
@@ -318,7 +328,7 @@ for either a direct phase launch or a Pi service launch. The offline
 
 | Phase | Operator effect |
 | --- | --- |
-| `stage` | Creates job directories and stages fixture and candidate files through P4 over UART by default. For mainboard FLASH jobs it checks the published standard or rollback SD copy before staging. EMOS jobs stage their install and restore files. Exits the foreground listener. |
+| `stage` | Creates job directories and stages fixture and new firmware files through P4 over UART. For mainboard FLASH jobs it reuses any matching verified standard or rollback SD copy. EMOS jobs stage their install and restore ROMs. Exits the foreground listener. |
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its target. Verify the installed bytes using the method below. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `run-ID` | For a named arm, witness its working directory, issue one `LOAD` and one invocation, and keep the same UART reader open through any configured terminator. Follow the [authoring guide](AUTHORING.md) for a native-UART job with MOS-managed listener handoff. Collect reports in the arm's evidence directory. |
@@ -347,19 +357,23 @@ phases. A human verdict requires no script or synthetic result file.
 ### Firmware methods used by the phase runner
 
 Use the standard mainboard phases with `firmware.mainboard.method` set to
-`agon-flash`. The Pi stages the pinned candidate over UART and reuses the
-recorded on-card copy for a standard or rollback restore. FLASH v1.9 reports
-the CRC before it writes and selects the alternate slot. The runner verifies
-that selection and the exact application through one bounded read-only USB
-programmer session after each
-write, then restarts Agon and proves MOS responds. The authorized packet must
-cover both read-only sessions and the declared production return slot. See
+`agon-flash`. FLASH v1.9 reports the on-card CRC before it sends the image
+over the onboard UART and selects the alternate slot. During each bounded
+read-only USB programmer session, the Pi checks the board identity, reads
+the 4 KiB partition table sector and 8 KiB OTA selector, then requests a
+16-byte MD5 from the ESP32 for the exact selected application range. The Pi
+matches it to the MD5 of the SHA-256-pinned source image, restarts Agon, and
+proves MOS responds. The receipt records both digests, the verified range,
+the slot and the MOS witness. A sync failure still stops verification. A
+failed verification leaves the write pending and never triggers another
+FLASH or a full read automatically. The authorized packet covers both
+read-only sessions and the production return slot. See
 [mainboard FLASH jobs](AUTHORING.md#mainboard-flash-jobs) for the manifest.
 
 | Phase | What the Pi operator does |
 | --- | --- |
-| Extender VDP | Hold the Agon reset through its commissioned USB RTS circuit. Use stock esptool 5.1.0 on the P4 USB at 460,800 baud. Read the partition table and OTA selector, write app0 at `0x20000` with all three flash settings set to `keep`, and independently compare the written extent. Restart the P4 once and wait for its boot-pad release. Release Agon reset, then prove a working CLI. |
-| EMOS | At the Legacy CLI, run the prepared `FLASH mos … -f` for the staged ROM. Wait for the updater to restart and admit input. Use `SAVE` to read the full 128 KiB ROM, retrieve it from the SD listener, compare it with the requested image and exit the listener. |
+| Extender VDP | Hold Agon reset through its commissioned USB RTS circuit. Use stock esptool 5.1.0 on the P4 USB at 460,800 baud. Read the partition table and OTA selector, write app0 at `0x20000` with all three flash settings set to `keep`, and retain esptool's target-digest success for the exact padded extent. Restart the P4 once and wait for its boot-pad release. Release Agon reset, then prove a working CLI. |
+| EMOS | At the Legacy CLI, start FLASH v1.9 with the staged full 128 KiB ROM. Confirm only after its on-card CRC matches the pinned image. Capture FLASH's completed 128-page write and local CRC of the programmed ROM, then wait for fresh keyboard admission and prove MOS. |
 
 If `FLASH mos` leaves MOS unable to boot, stop and keep the slot. The
 [bare-metal EMOS recovery procedure](../../mos-recovery.md) uses an external

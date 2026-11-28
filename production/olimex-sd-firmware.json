@@ -18,5 +18,19 @@
       "evidence_run": "card-cache-r01",
       "receipt_sha256": "cb267e5d4c053cc72514d9fac13754b4094da9818923c05a6d40fba34a272eba"
     }
+  },
+  "tools": {
+    "/emos/sdserve.bin": {
+      "bytes": 26127,
+      "sha256": "98492acc7dcd29e484ef76c69026e8801375738c33c617ba61a94d8481151f08",
+      "evidence_run": "VDPL-054 baseline stage/preserve-stage-02",
+      "receipt_sha256": "738c736fed980828d51f4b82ac593a53b87ac82c6451018f6f8be46bc47ebf92"
+    },
+    "/mos/flash.bin": {
+      "bytes": 15624,
+      "sha256": "480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57",
+      "evidence_run": "VDPL-054 baseline install-mainboard/updater.json",
+      "receipt_sha256": "f75599df85a9a54a6484f96735d3a7ed013bb805313e0a2ed68cff6d17cf495a"
+    }
   }
 }

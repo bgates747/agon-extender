@@ -592,8 +592,9 @@ class TestBench(unittest.TestCase):
                              ({job["sd_program"]: b"program"}, [job["sd_result"]]))
 
             @contextmanager
-            def listener(label):
+            def listener(label, *, check_startup):
                 self.assertEqual(label, "collect")
+                self.assertFalse(check_startup)
                 yield
 
             def download(label, operation, path, *, destination):

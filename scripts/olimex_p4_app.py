@@ -1,7 +1,8 @@
 """Application replacement for the commissioned Olimex P4-PC using stock esptool."""
 
 from contextlib import contextmanager
-from hashlib import sha256
+from hashlib import md5, sha256
+import re
 import subprocess
 import sys
 import time
@@ -65,6 +66,18 @@ def reboot_pair(bench, before_boot):
     record(bench.out / "agon-admitted.json", wait_boot(bench.url, before_boot, 60))
 
 
+def verify_write_log(log, offset, size):
+    """Accept only the stock writer's exact single-range target digest proof."""
+    lines = log.read_bytes().splitlines()
+    written = [index for index, line in enumerate(lines) if line.startswith(b"Wrote ")]
+    proof = [index for index, line in enumerate(lines) if line == b"Hash of data verified."]
+    summary = rb"Wrote %d bytes(?: \([0-9]+ compressed\))? at %s in .+" % (
+        size, f"{offset:#010x}".encode("ascii"))
+    if (len(written) != 1 or proof != [written[0] + 1]
+            or not re.fullmatch(summary, lines[written[0]])):
+        raise RuntimeError("P4 writer did not verify the exact application extent")
+
+
 def replace(bench, spec, image, table, before_boot, begin, *, required_entry=None):
     from esptool import __version__
 
@@ -77,8 +90,10 @@ def replace(bench, spec, image, table, before_boot, begin, *, required_entry=Non
     partition = out / "partition-table.bin"
     selector = out / "ota-selector.bin"
     write = out / "write.bin"
-    readback = out / "readback.bin"
+    verified = out / "write-verified.json"
     write.write_bytes(image)
+    if required_entry is not None and len(required_entry) != len(image):
+        raise ValueError("P4 entry verification must cover the entire write extent")
 
     # The same hold, stock CLI flags and pad-release boundary as NET-009.
     # Keep the mainboard held while the P4 GPIO boot pads may be driven.
@@ -90,22 +105,21 @@ def replace(bench, spec, image, table, before_boot, begin, *, required_entry=Non
             raise RuntimeError("P4 partition table differs from the pinned layout")
         check_app0(selector.read_bytes())
         if required_entry is not None:
-            entry = out / "entry-readback.bin"
-            stock(out, "entry", port, "no-reset", "read-flash", "0x20000",
-                  hex(len(image)), entry)
-            if entry.read_bytes() != required_entry:
-                raise RuntimeError("Existing P4 application differs from the production entry")
+            entry = out / "expected-entry.bin"
+            entry.write_bytes(required_entry)
+            # Without --diff, esptool's verify-flash reads only the target's digest.
+            stock(out, "entry", port, "no-reset", "verify-flash", "0x20000", entry)
         begin()
         record(out / "write-intent.json", {"offset": 0x20000, "bytes": len(image)})
         stock(out, "write", port, "no-reset", "write-flash", "--flash-mode", "keep",
               "--flash-freq", "keep", "--flash-size", "keep", "0x20000", write)
-        stock(out, "readback", port, "no-reset", "read-flash", "0x20000", hex(len(image)),
-              readback)
-        if readback.read_bytes() != image:
-            raise RuntimeError("Independent P4 application readback differs")
-        record(out / "write-verified.json", {
-            "bytes": len(image), "write_sha256": sha256(image).hexdigest(),
+        verify_write_log(out / "write.log", 0x20000, len(image))
+        record(verified, {
+            "method": "esptool-write-flash-md5", "offset": 0x20000, "bytes": len(image),
+            "write_sha256": sha256(image).hexdigest(),
+            "write_md5": md5(image, usedforsecurity=False).hexdigest(),
+            "writer_log": str(out / "write.log"),
         })
         reset_until_pads_release(bench)
     record(out / "agon-admitted.json", wait_boot(bench.url, before_boot, 60))
-    return readback
+    return verified

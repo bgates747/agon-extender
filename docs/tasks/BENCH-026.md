@@ -1,13 +1,13 @@
-# BENCH-026 — Audit every Olimex serial file transfer
+# BENCH-026 — Eliminate redundant Olimex serial file transfers
 
 Routine tests should spend their time running the fixture. The audit will show
 which operations move whole files, why each needs the bytes, and where metadata
 or an existing receipt can replace a transfer. It covers both the slow SD path
 and the intermittent mainboard USB programmer path.
 
-**Status:** audit complete on November 27, 2026. The [findings](BENCH-026/FINDINGS.md)
-identify the routine transfers that can be replaced with smaller proofs. The
-bench and runners were untouched.
+**Status:** audit and host implementation complete. The [findings](BENCH-026/FINDINGS.md)
+preserve the original transfer costs. The replacement proofs await a physical
+Olimex run before adoption in the shared checkout.
 
 ## Scope and review boundary
 
@@ -86,19 +86,65 @@ selection or an independently verified write. Keep transfers needed to put new
 bytes on a device, retrieve original results, commission a standard SD copy
 once, or preserve otherwise unavailable evidence with a stated purpose.
 
-- BENCH-026-005 [ ] Replace ordinary full mainboard USB application readback with
+- BENCH-026-005 [x] Replace ordinary full mainboard USB application readback with
   an ESP32-computed digest of the exact selected application range. Keep small
   layout and selector reads, exact host source pin, and fresh MOS after restart.
   Preserve existing admitted receipts and verification-only recovery. Keep full
   byte reads for explicit diagnostics. Never fall back to a dump automatically.
-- BENCH-026-006 [ ] Reuse commissioned SD tool identities and existing standard
+- BENCH-026-006 [x] Reuse commissioned SD tool identities and existing standard
   image receipts. Use metadata during normal phases, retain the small startup
   check, and keep FLASH's on-card CRC for candidate transfer verification.
-- BENCH-026-007 [ ] Remove redundant EMOS and P4 full-image verification transfers
+- BENCH-026-007 [x] Remove redundant EMOS and P4 full-image verification transfers
   where actual written bytes can be checked locally with equivalent scope.
   Keep necessary writes, bounded metadata and required result collection.
-- BENCH-026-008 [ ] Align current procedures, commissioning and host-only tests.
+- BENCH-026-008 [x] Align current procedures, commissioning and host-only tests.
   Record the proof retained in each route, review compatibility with existing
   evidence, and verify that success, mismatch and failure paths avoid bulk
   read fallback. Hardware qualification and live checkout changes require a
   coordinated operator window and a separate test disposition.
+
+
+### Implemented and checked offline
+
+The implementation contract was published at
+`29d6fc761731369ed1fe8cc331a8bc4f08eb9870`. The
+[bench procedure](../operations/olimex-bench/README.md),
+[authoring guide](../operations/olimex-bench/AUTHORING.md) and
+[SD firmware and tool receipts](../../production/olimex-sd-firmware.json)
+describe the resulting duties and evidence.
+
+| Phase | Bytes or proof now used | Bulk transfer removed |
+| --- | --- | --- |
+| Mainboard FLASH verification | The USB programmer keeps the board/slot checks, 12,288 B of layout and selector data and the ESP32's 16-byte digest for the exact installed range. | Mainboard application-sized read after each FLASH. |
+| SD staging and collection | The Pi checks resident tool metadata against published identity receipts, reads bounded startup bytes at the relevant boundaries, and uploads only new fixture and firmware inputs. FLASH compares the candidate input CRC on the Agon. | Repeated SD listener and updater binary downloads. Existing verified standards can serve as candidate or restore without upload. |
+| Extender P4 app verification | esptool's ESP32-P4-computed write digest for the padded extent, retained with the writer log and fresh MOS. An admitted retry checks the entry application by digest. | Separate full P4-app read after writing or to establish a pinned retry entry. |
+| EMOS ROM verification | File size and FLASH's input CRC before confirmation. FLASH checks the actual written 128 KiB locally, then the Pi proves fresh MOS. | Generated SAVE/EXEC upload and full installed-ROM download. |
+
+A matched VDPL-054 install and restore avoid 2,235,680 application bytes over
+the mainboard USB link. An ordinary one-arm run avoids another 135,756 B of
+repeated resident tool downloads over SD UART, excluding any avoided standard
+image upload. These are payload counts from retained evidence. The revised
+elapsed time has yet to be measured.
+
+Host checks included the standard Olimex and bench test suites, exact
+VDPL-054 baseline and candidate manifest preflight, and the retained v0.1.4-alpha
+promotion manifest preflight. The compact mainboard proof also passed against
+the original saved app1 candidate and app0 restore bytes, table and selector,
+using their archived bytes to supply the simulated device response. The
+current P4 writer parser accepted the retained INTEG-019 P4 write logs.
+Existing raw and padded receipts remain readable. Frozen job adapters that
+explicitly consume a raw dump keep their original revision. Future adapters
+consume the compact receipt via the maintained verifier.
+
+The programmer's initial ROM sync remains required. Full original reports,
+first-deployment SD comparison and explicitly scoped diagnostics, backups
+and recovery reads remain available. No durable production EMOS ROM copy on
+the Agon SD card is currently commissioned. EMOS jobs still stage their
+required ROM inputs. No new firmware build is needed for these runner changes.
+
+- BENCH-026-009 [ ] Under a fresh lease, qualify the compact proofs using
+  approved jobs for each affected component. Capture actual ESP32 replies,
+  the P4 writer log, the FLASH MOS transcript and verified handback. Measure
+  staging and verification separately. Refresh the shared checkout between
+  operators after qualification. No bench session was used for the offline
+  work.

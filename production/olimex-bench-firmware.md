@@ -50,6 +50,22 @@ if available. If the upload finished and the file is still unrecorded, document
 that reason and use `--verify-existing SD_PATH` to complete that file's
 initial verification.
 
+For ordinary VDP FLASH, a retained SD receipt establishes the identity of the
+resident file and FLASH's CRC checks its contents before confirmation. After
+the write, the USB programmer reads small layout and selector records and the
+ESP32 returns a digest of the written range. This establishes the installed
+image separately from the SD file proof. The [bench procedure](../docs/operations/olimex-bench/README.md)
+describes how to record the digest, selected slot and subsequent MOS witness.
+
+## Reuse resident SD tools
+
+The same current-card record holds the commissioned identities for
+`/emos/sdserve.bin` and `/mos/flash.bin`. Routine jobs preserve both files.
+The runner checks their type and size and records the earlier verification
+it relied on. After card replacement, file changes, or evidence of corruption,
+verify the affected tool against the pinned artifact once and publish its new
+receipt before using it again.
+
 Use the commissioned checkout, local bench config and its SHA-256, operator
 chat ID, live scheduler-state path and a fresh output directory. Run the same
 command first with `preflight` and then with `provision` under the granted slot

@@ -124,12 +124,14 @@ class Client:
             if chunk!=212 or features&15!=15:raise RemoteError('Missing required capabilities')
             if version==2 and features&0x50!=0x50:raise RemoteError('Missing checksum-free fast capability')
             self.state['boot']=boot;self.save()
-    def download(self,path):
+    def download(self,path,*,max_bytes=None):
         result=bytearray();offset=0;total=None
         while total is None or offset<total:
             p=self.rpc(4,struct.pack('<IH',offset,216)+path_payload(path))
             if len(p)<4:raise RemoteError('Truncated READ reply')
             size=struct.unpack_from('<I',p)[0]
+            if max_bytes is not None and size>max_bytes:
+                raise RemoteError('File exceeds the bounded READ size')
             if total is not None and size!=total:raise RemoteError('File size changed during download')
             total=size;chunk=p[4:]
             if len(chunk)!=min(216,total-offset):raise RemoteError('Unexpected READ count')

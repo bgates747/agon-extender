@@ -10,6 +10,7 @@ currently installed firmware or a ready-to-run qualification procedure.
 | Tool | Purpose and maintained instructions |
 |---|---|
 | [sdcard.py](sdcard.py) | Mainboard-SD list/read/transfer through an already-running foreground EMOSlet; [SD guide](../docs/mainboard-sd.md) owns checked/fast options and journal recovery |
+| [sdcard_staged.py](sdcard_staged.py) | Ordinary fast mainboard bulk transfers through the P4 spool, using the [staged UART procedure](../docs/mainboard-sd.md#p4-staged-fast-files) |
 | [keyboard.py](keyboard.py) | Bounded agent input through previously admitted Extender input; [keyboard guide](../docs/remote-keyboard.md) owns arbitration, pacing and journal handling |
 | [screen_text.py](screen_text.py) | Pixel-derived P4 text readback, not MOS RAM or Legacy display; [screen-text guide](../docs/screen-text.md) |
 | [reset_agon.py](reset_agon.py), [reset_bridge.py](reset_bridge.py) | One Pi-actuated reset and optional browser bridge; [reset guide](../docs/bench-reset.md) owns configuration and effects |
@@ -52,17 +53,6 @@ exchanges offline; no clocks or protocol fields are changed. See the experimenta
 
 ## P4-local storage candidate client
 
-[sdcard_staged.py](sdcard_staged.py) is a separate **development**
-client for fast files on the **mainboard** card. P4 stages the entire payload on
-its own SD and runs the existing checksum-free UART loop without per-record
-HTTP or host journals. It needs the new P4 worker and an admitted major2
-foreground listener. See [staged mainboard transfers](../docs/mainboard-sd.md#p4-staged-fast-files).
-The separately installed [parallel-upload trial](../docs/mainboard-sd.md#parallel-uploads--working-development-trial)
-uses this same host client but requires its matched P4/EMOS and explicit
-`EMOS sdpu01 --fast --parallel /` listener. Ordinary fast UART startup does not
-select parallel. Downloads remain UART.
-It does not replace or silently upgrade `sdcard.py` or a running transfer.
-
 [p4sd.py](p4sd.py) provides sessionless file/directory management of the P4's
 own card over HTTP port8080: transfers, copy/move/delete, recursive trees and
 search. See [P4 SD guide](../docs/p4-sd.md) for syntax, recovery and limits.
@@ -81,7 +71,7 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 | [validate-version-records.py](validate-version-records.py) | Registry/manifest structure and integrity; [version policy](../docs/versions/README.md). A passing validator does not qualify an artifact |
 | [validate-hardware-objects.py](validate-hardware-objects.py) | Hardware vocabulary schema/references, not electrical qualification; [object authority](../hardware/objects/README.md) |
 | [launch_regression_suite.py](launch_regression_suite.py), [run_regression_suite.py](run_regression_suite.py), [regression_notify.py](regression_notify.py) | Compatibility launchers into the canonical [`qualification/`](../qualification/README.md) authority; these wrappers contain no qualification logic |
-| [flash_firmware_commit.py](flash_firmware_commit.py), [p4_flash_remote.py](p4_flash_remote.py) | Build, flash and independently verify one exact EMOS or P4 commit; EMOS flashing first resets the verified P4 to close all clients, then establishes fresh paired input and stops an existing listener; after P4 installation, reset the Agon and prove fresh EMOS/P4 connectivity unless explicitly suppressed; emit the receipt required by hardware validation |
+| [flash_firmware_commit.py](flash_firmware_commit.py), [p4_flash_remote.py](p4_flash_remote.py) | Exact-commit qualification helpers. The P4 factory write preserves a full flash backup and the EMOS qualification retains installed ROM bytes. Use the [commissioned per-component phases](../docs/operations/olimex-bench/README.md#firmware-methods-used-by-the-phase-runner) for ordinary Olimex jobs. |
 | [run_hardware_regression.py](run_hardware_regression.py) | Compatibility launcher for the installed-firmware suite; [qualification policy](../qualification/README.md) owns firmware acceptance |
 | [run_scroll_suite.py](run_scroll_suite.py) | Pi scrolling coordinator, offline plan generation/checking and simulated lifecycle validation; [runner guide](../docs/testing/scroll-suite-runner.md). Live adapter is not yet qualified; generated plans are stopped |
 

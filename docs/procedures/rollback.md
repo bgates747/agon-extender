@@ -42,7 +42,8 @@ On Olimex, follow the [Olimex bench procedure](../operations/olimex-bench/README
    for subsequent explicit restoration. If access is unavailable, explain the
    exact blocker before asking for a physical operator action.
 3. Follow the installation protocol and the component's exact flash layout.
-   Stage/read back the named EMOS image before invoking its flash command.
+   For standard Olimex EMOS rollback, stage the named ROM and compare FLASH's
+   on-card CRC with the pinned ROM before confirming the write.
    For P4, preserve mutable partitions and write only the selected verified
    segments. No blanket erase, unrequested component flash or uncertain replay.
 4. Verify the installed image independently, then verify boot, ordinary CLI and

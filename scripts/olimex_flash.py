@@ -1,19 +1,89 @@
 """Bounded application writes for the commissioned Olimex ESP32 layouts."""
 
 import argparse
+from hashlib import sha256
 from pathlib import Path
+import re
 import struct
 import subprocess
 import sys
 import zlib
 
 from bench_process import record
+from olimex_cli import Observer, returned_output
+from passive_serial import open_passive_serial
+from reset_agon import wait_boot
 
 
 LAYOUTS = {
     "mainboard": (0xE000, 0x10000, 0x140000),
     "p4": (0xF000, 0x20000, 0x700000),
 }
+MOS_ROM_BYTES = 0x20000
+FLASH_BANNER = b"Agon firmware update utility v1.9"
+FLASH_PROMPT = b"Flash firmware (y/n)?"
+MOS_CRC_OK = re.compile(
+    rb"\rWriting flash page 128/128\r\nChecking CRC\.\.\. OK\r\n"
+    rb"\r\n\r\nDone\r\n\r\nSystem reset in 3\.\.\.2\.\.\.1\.\.\."
+)
+
+
+def mos_confirmation(data, command, prompt, crc32):
+    lines, tail = returned_output(data, command, prompt)
+    if tail is None or not any(line.lstrip(b"\x0c") == FLASH_BANNER for line in lines):
+        return False
+    if tail != FLASH_PROMPT and FLASH_PROMPT not in lines:
+        return False
+    actual = [line for line in lines if line.startswith(b"MOS CRC ")]
+    if actual != [f"MOS CRC 0x{crc32:08X}".encode("ascii")]:
+        raise RuntimeError("FLASH did not confirm the pinned EMOS input CRC")
+    return True
+
+
+def mos_write_success(data):
+    if (b"Multiple errors occured during flash write." in data
+            or b"Error reading file to memory" in data):
+        raise RuntimeError("FLASH MOS reported an update failure")
+    return bool(MOS_CRC_OK.search(data))
+
+
+def flash_mos(target, sd_path, image, begin):
+    """Verify the full eZ80 ROM using the installed, pinned FLASH v1.9 utility."""
+    if len(image) != MOS_ROM_BYTES:
+        raise ValueError("FLASH MOS compact proof requires a full 128 KiB ROM input")
+    crc32 = zlib.crc32(image)
+    verification = {
+        "method": "agon-flash-v1.9-rom-crc32", "offset": 0, "bytes": len(image),
+        "crc32": f"{crc32:08X}", "write_sha256": sha256(image).hexdigest(),
+        "sd_path": str(sd_path),
+    }
+    target.own()
+    before = target.keyboard()["boot"]
+    transcript = target.out / "flash-mos-usb.bin"
+    with open_passive_serial(target.c["ports"][0], timeout=0.2) as reader:
+        with transcript.open("xb") as capture:
+            observer = Observer(reader, capture, target.type_line)
+            target.type_line("flash-mos-mirror-on", "VDU 2")
+            prompt = observer.witness("flash-mos-entry")
+            command = f"FLASH mos {sd_path}"
+            observer.exchange("flash-mos-confirmation", command, lambda data: mos_confirmation(
+                data, command, prompt, crc32), 25)
+            record(target.out / "flash-sd-input.json", verification)
+            target.keyboard()
+            begin()
+            record(target.out / "write-intent.json", verification)
+            subprocess.run([sys.executable, str(Path(__file__).with_name("keyboard.py")),
+                            "--url", target.url, "--state", str(target.out / "keys-flash-yes.json"),
+                            "type", "y"], check=True, timeout=15)
+            observer.receive("FLASH MOS written ROM CRC and restart", bytearray(),
+                             mos_write_success, 125)
+    result = target.out / "write-verified.json"
+    record(result, dict(verification, transcript=str(transcript)))
+    record(target.out / "post-flash-admitted.json", wait_boot(target.url, before, 100))
+    target.verify_mos("after-flash-mos")
+    target.validate_ports()
+    target.idle()
+    return result
 
 
 def check_extent(component, specification, image):

@@ -33,8 +33,9 @@ before each target operation. Source preparation finishes before occupancy.
    `--legacy` is explicit reconciliation of old parent-written journals; use
    the real execution host and independently verify host/group identity.
 4. A completed process does not waive any physical check. Preserve firmware
-   provenance and read back changed bytes; do not repeat unchanged firmware
-   backups, reset, or rerun an application just to repair bookkeeping.
+   provenance and verify the changed range using the component's commissioned
+   proof. Reuse recorded evidence when reconciling bookkeeping, with no repeat
+   backup, reset or application run just to replace a missing host record.
 
 ## Unattended failure notification
 

@@ -1,6 +1,6 @@
-"""Ordinary Agon Flash staging, invocation and independent mainboard readback."""
+"""Ordinary Agon Flash staging, invocation and independent mainboard verification."""
 
-from hashlib import sha256
+from hashlib import md5, sha256
 from pathlib import Path
 import re
 import struct
@@ -27,6 +27,7 @@ REBOOT_NOTICE = b"Rebooting in 3...2...1...0!"
 SELECTOR, APP0, CAPACITY = LAYOUTS["mainboard"]
 SLOTS = {0: APP0, 1: APP0 + CAPACITY}
 COMPANIONS = {"p4": "p4_app_sha256", "emos": "emos_rom_sha256"}
+FLASH_DIGEST_METHOD = "usb-flash-md5"
 
 
 def spec_for(kit):
@@ -52,10 +53,14 @@ def cache_images():
     return images
 
 
-def cached_restore(spec):
-    app = spec["restore_app"]
+def cached_app(spec, selection):
+    app = spec[f"{selection}_app"]
     return next((remote for remote, pin in cache_images().items()
                  if (pin["bytes"], pin["sha256"]) == (app["bytes"], app["sha256"])), None)
+
+
+def cached_restore(spec):
+    return cached_app(spec, "restore")
 
 
 def cache_receipts():
@@ -140,6 +145,18 @@ def require_image(verification, spec, selection, *, allow_padded=False):
         raise RuntimeError(f"Independent proof does not establish {selection} image on app{slot}")
     extent = verification.get("verified_extent_bytes")
     digest = verification.get("verified_extent_sha256")
+    if verification.get("verification_method") == FLASH_DIGEST_METHOD:
+        image = Path(app["path"]).read_bytes()
+        expected_md5 = md5(image, usedforsecurity=False).hexdigest()
+        if (extent == app["bytes"] == len(image)
+                and digest == app["sha256"] == sha256(image).hexdigest()
+                and verification.get("target_flash_md5") == expected_md5
+                and verification.get("expected_flash_md5") == expected_md5
+                and verification.get("readback") is None):
+            return
+        raise RuntimeError(f"Independent digest proof differs for {selection} image on app{slot}")
+    if "target_flash_md5" in verification or "expected_flash_md5" in verification:
+        raise RuntimeError(f"Unknown flash digest proof method for {selection} image on app{slot}")
     if extent == app["bytes"] and digest == app["sha256"]:
         return
     if allow_padded and selection == "restore" and type(extent) is int and app["bytes"] < extent <= CAPACITY:
@@ -163,7 +180,9 @@ def installed(inventory, spec, selection, *, receipt_path=None, allow_padded=Fal
         raise RuntimeError("Installed image belongs to a different firmware operation")
     verification = read(path)
     require_image(verification, spec, selection, allow_padded=allow_padded)
-    fields = ("sha256", "slot", "verified_extent_bytes", "verified_extent_sha256", "readback")
+    fields = ("sha256", "slot", "verified_extent_bytes", "verified_extent_sha256", "readback",
+              "verification_method", "target_flash_md5", "expected_flash_md5",
+              "partition_table_sha256", "ota_selector_sha256")
     if (inventory["components"]["native_vdp_sha256"] != entry["sha256"]
             or Path(verification["verification_receipt"]).resolve() != path
             or any(verification.get(key) != entry.get(key) for key in fields)):
@@ -186,11 +205,11 @@ def stage_proof(target, root, selection, app):
         if read(root / "stage" / "offboard-stage.json") != target.offboard:
             raise RuntimeError("Offboard staging proof differs from the admitted job")
         return
-    if selection == "restore" and (path := cached_restore(spec_for(target.kit))):
+    if path := cached_app(spec_for(target.kit), selection):
         require_cache_receipt(path, app)
         expected = {"path": path, "bytes": app["bytes"], "sha256": app["sha256"]}
-        if read(root / "stage" / "flash-restore-cache.json") != expected:
-            raise RuntimeError(f"FLASH restore cache evidence differs from the pinned image for {path}")
+        if read(root / "stage" / f"flash-{selection}-cache.json") != expected:
+            raise RuntimeError(f"FLASH {selection} cache evidence differs from the pinned image for {path}")
         return
     path = staging_path(target, selection)
     receipts = [file for file in (root / "stage").glob("stage-file-*.receipt.json")
@@ -206,15 +225,15 @@ def stage_proof(target, root, selection, app):
         raise RuntimeError(f"FLASH staging evidence differs from the pinned image for {path}")
 
 
-def check_updater(target):
-    with target.uart_listener("installed-updater"):
-        local = target.out / "installed-flash.bin"
-        transfer = target.staged_uart("sd-installed-flash", "get", FLASH_PATH, destination=local)
-        image = local.read_bytes()
-        if len(image) != FLASH_BYTES or sha256(image).hexdigest() != FLASH_SHA:
-            raise RuntimeError("Installed /mos/flash.bin differs from published Agon Flash v1.9")
-        record(target.out / "updater.json", {"path": FLASH_PATH, "bytes": FLASH_BYTES,
-                                            "sha256": FLASH_SHA, "payload_carrier": transfer["payload_carrier"]})
+def check_updater(target, *, rom=None):
+    with target.uart_listener("installed-updater") as client:
+        proof = target.check_sd_tool(client, FLASH_PATH, FLASH_SHA)
+        record(target.out / "updater.json", proof)
+        if rom is not None:
+            size, attributes = client.stat_entry(rom)
+            if size != 0x20000 or attributes & 0x10:
+                raise RuntimeError(f"Expected a complete staged EMOS ROM: {rom}")
+            record(target.out / "flash-rom-metadata.json", {"path": rom, "bytes": size})
 
 
 def invoke_flash(target, selection, app, begin, *, expected_crc, cached_path=None):
@@ -260,8 +279,9 @@ def invoke_flash(target, selection, app, begin, *, expected_crc, cached_path=Non
     return before["boot"]
 
 
-def app_readback(target, slot, table, image):
-    """Enter the commissioned ROM once and read the selector and application."""
+def _verify_selected_flash(target, slot, table, image, *, full_readback):
+    if slot not in SLOTS or not 0 < len(image) <= CAPACITY:
+        raise ValueError("Invalid mainboard slot or application extent")
     before = target.keyboard()["boot"]
     rom = mainboard_rom()(target.c["ports"][0], 115200)
     try:
@@ -279,19 +299,43 @@ def app_readback(target, slot, table, image):
         actual_slot = selected_slot(selector)
         if actual_slot != slot:
             raise RuntimeError(f"FLASH selected app{actual_slot}, expected app{slot}")
-        result = target.out / "readback.bin"
-        data = stub.read_flash(SLOTS[slot], len(image))
-        result.write_bytes(data)
-        if data != image:
-            raise RuntimeError(f"Independent app{slot} bytes differ from the pinned application")
-        record(target.out / "selected-image.json",
-               {"slot": slot, "address": hex(SLOTS[slot]), "bytes": len(data),
-                "sha256": sha256(data).hexdigest(), "partition_table_sha256": sha256(actual_table).hexdigest(),
-                "ota_selector_sha256": sha256(selector).hexdigest()})
+        address = SLOTS[slot]
+        proof = {
+            "slot": slot, "address": hex(address), "bytes": len(image),
+            "sha256": sha256(image).hexdigest(),
+            "partition_table_sha256": sha256(actual_table).hexdigest(),
+            "ota_selector_sha256": sha256(selector).hexdigest(),
+        }
+        if full_readback:
+            result = target.out / "readback.bin"
+            data = stub.read_flash(address, len(image))
+            result.write_bytes(data)
+            if data != image:
+                raise RuntimeError(f"Independent app{slot} bytes differ from the pinned application")
+        else:
+            expected = md5(image, usedforsecurity=False).hexdigest()
+            actual = stub.flash_md5sum(address, len(image))
+            proof.update(verification_method=FLASH_DIGEST_METHOD, expected_flash_md5=expected,
+                         target_flash_md5=actual)
+            if actual != expected:
+                record(target.out / "app-digest-mismatch.json", proof)
+                raise RuntimeError(f"Independent app{slot} flash digest differs from the pinned application")
+            result = proof
+        record(target.out / "selected-image.json", proof)
         return before, result
     finally:
         if rom._port.is_open:
             rom._port.close()
+
+
+def app_digest(target, slot, table, image):
+    """Verify the selected raw extent with a 16-byte ESP32 flash digest reply."""
+    return _verify_selected_flash(target, slot, table, image, full_readback=False)
+
+
+def app_readback(target, slot, table, image):
+    """Read the exact selected application for an explicitly scoped diagnostic."""
+    return _verify_selected_flash(target, slot, table, image, full_readback=True)
 
 
 def mos_witness(target, label):
@@ -311,14 +355,14 @@ def replace(target, spec, selection, image, table, begin):
                                            "offboard_verification_sha256": target.offboard["verification_sha256"]})
     else:
         check_updater(target)
-    cached = cached_restore(spec) if selection == "restore" and not target.offboard else None
+    cached = cached_app(spec, selection) if not target.offboard else None
     boot_before_flash = invoke_flash(target, selection, spec[f"{selection}_app"], begin,
                                      expected_crc=zlib.crc32(image), cached_path=cached)
     reboot_pair(target, boot_before_flash)
     mos_witness(target, "after-flash-mos")
     target.validate_ports()
     target.idle()
-    before, result = app_readback(target, spec[f"{selection}_slot"], table, image)
+    before, proof = app_digest(target, spec[f"{selection}_slot"], table, image)
     target.validate_ports()
     target.idle()
     pulse(target.reset_config)
@@ -327,4 +371,4 @@ def replace(target, spec, selection, image, table, begin):
     mos_witness(target, "after-verification-mos")
     target.validate_ports()
     target.idle()
-    return result, boot["boot"]
+    return proof, boot["boot"]

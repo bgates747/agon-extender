@@ -51,6 +51,10 @@ when reviewing the run.
    Use a fresh SD namespace. For additional files, add an `inputs` array
    under `fixture`, with an `sd_path` and a pinned `source` for each file.
    Obtain the startup and listener hashes from the commissioned bench record.
+   Reuse the resident listener and FLASH identity records for the current
+   card. The runner checks file metadata during normal operation. If either
+   tool was replaced or its identity is uncertain, reconcile the affected
+   tool record before preparing another job.
    For a production-only job, use an empty `firmware` object.
    For a custom job, supply only the changed components:
    - For `emos`, provide `candidate_write` and `restore_write`, each a
@@ -64,8 +68,10 @@ when reviewing the run.
 5. Run the bench runner's offline `preflight` from the checkout root.
    Confirm that it lists the expected phases. Preflight checks the current
    transfer and mainboard FLASH restrictions, local inputs, and phase
-   selection. Preserve the manifest hash with the job. For a job
-   reserved for the Author to invoke, the packet
+   selection. Name each fixture input that needs staging and each original
+   report to retrieve. For a long transfer, use the documented offboard or
+   deferred path if it fits the job. Preserve the manifest hash with the job.
+   For a job reserved for the Author to invoke, the packet
    supplies the exact command and uses the bench guide's staging boundary.
 
 ## Worked example
@@ -183,6 +189,13 @@ Pass each repeated `Bench.cli(label)` observation a distinct label such as
 A refused keyboard admission writes the status sample to
 `keyboard-refused-*.json` in the phase directory.
 
+An EMOS job stages the complete 128 KiB ROM. The Pi matches FLASH's on-card
+CRC to the pinned ROM before confirmation. FLASH reads the programmed ROM
+locally and checks that CRC after the write. Require the command-correlated
+result, automatic restart and fresh MOS. For a P4 application job, esptool
+reports the device-computed digest check of the pinned padded extent during
+the write. Retain that result and the separate paired boot witness.
+
 ## Refresh the operator checkout
 
 The [sparse paths](sparse-paths.txt) select these guides, the example,
@@ -238,17 +251,20 @@ restore. Explicit offboard staging keeps the
 paths declared in its evidence. Run `install-mainboard`, the named arms in
 manifest order, `restore-mainboard` and `handback`.
 
-The Pi checks the installed FLASH v1.9 utility over UART. FLASH reads the
-candidate or restore file on the Agon SD card and prints its CRC. The Pi
-compares that small report with the pinned image before sending one `y`.
-The CRC is the verification of a test image's transfer to SD. Never copy the
-whole test image back to the Pi for transfer verification. The Pi requires
-the checksum and reboot messages. After each write it reads the partition table, OTA selector
-and selected application's exact bytes in one bounded USB programmer session
-at 115,200 baud. The Pi closes that session, restarts Agon and proves MOS is
-responsive before publishing the installed identity. The job must explicitly
-cover those independent reads and restarts. Stop and retain custody on the
-first unexpected failure according to the bench procedure.
+The Pi uses the commissioned FLASH v1.9 identity and checks its SD metadata.
+FLASH reads the candidate or restore file on the Agon SD card and prints its
+CRC. The Pi compares that small report with the pinned image before sending
+one `y`. The CRC verifies the test image's transfer to SD. The Pi requires
+the checksum and reboot messages. After each write the Pi reads the partition
+table and OTA selector at 115,200 baud, then asks the ESP32 for the MD5 of the
+exact selected application range. The Pi compares that digest with the same
+range of the SHA-256-pinned local image. The verification receipt records the
+target digest and range. For a new handback adapter, validate the receipt with
+`olimex_vdp_ota.require_image`; archived byte-readback receipts stay with their
+original runs. The Pi closes the USB session, restarts Agon and proves MOS is
+responsive before publishing the installed identity. The job covers those
+reads and restarts. Stop and retain custody on the first unexpected failure
+according to the bench procedure.
 
 The UART staging supervisor allows 300 seconds of setup plus 60 seconds per
 file and a transfer allowance at 8,000 B/s, rounded up per file. Treat this

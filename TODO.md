@@ -59,6 +59,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Near-term bench reliability investigation
 
+- [ ] **[BENCH-026 — Eliminate redundant Olimex serial file transfers](docs/tasks/BENCH-026.md)** — Source changes and host qualification first. Qualify the compact firmware proofs before moving the shared bench checkout.
+
 - [x] **[BENCH-024 — Verify mainboard VDP updates from SD before reboot](docs/tasks/BENCH-024.md)** — Physical round trip passed. USB esptool is the bench default. Retain verified Agon Flash and its matching receivers as a fallback.
 
 - [ ] **[BENCH-023 — Detect and report a mainboard ESP32 programmer sync failure](docs/tasks/BENCH-023.md)** — Bistromathics USB test complete with eight passes, one selector refusal and one ROM SYNC failure. Production handback verified. Programmer failure reporting remains in research.

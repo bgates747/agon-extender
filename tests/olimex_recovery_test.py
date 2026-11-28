@@ -156,13 +156,16 @@ class HumanStart(unittest.TestCase):
         bench = runner.Bench.__new__(runner.Bench)
         bench.out, bench.url, bench.kit = self.root, "unused", {**self.kit, "schema": 1}
         bench.own = bench.keyboard = MagicMock()
-        bench.listener = lambda label, command, callback: bench.type_line(label, command)
+        bench.idle = MagicMock()
+        bench.start_listener = MagicMock()
+        bench.verify_mos = lambda label: bench.type_line(label, "VDU 2")
         with patch("olimex_bench.subprocess.run") as send:
             bench.cli("before")
             bench.cli("after")
             with self.assertRaises(FileExistsError):
                 bench.cli("before")
         self.assertEqual(send.call_count, 2)
+        bench.start_listener.assert_not_called()
         for label in ("before", "after"):
             self.assertTrue((self.root / f"dispatch-{label}.json").is_file())
 

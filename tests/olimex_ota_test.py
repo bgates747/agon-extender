@@ -1,6 +1,6 @@
 """Host checks for the standard runner's UART and ordinary FLASH paths."""
 
-from hashlib import sha256
+from hashlib import md5, sha256
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest import TestCase
@@ -53,6 +53,9 @@ class UartOnly(TestCase):
         report = "/test/demo/result.bin"
         startup = b"startup"
         self.runner.kit["preserve"]["/autoexec.txt"] = sha256(startup).hexdigest()
+        self.runner.kit["preserve"][bench.SD_LISTENER] = bench.commissioned_sd_tool(
+            bench.SD_LISTENER, "98492acc7dcd29e484ef76c69026e8801375738c33c617ba61a94d8481151f08"
+        )["sha256"]
 
         def transfer(operation, remote, *, require_uart, **paths):
             self.assertTrue(require_uart)
@@ -60,11 +63,14 @@ class UartOnly(TestCase):
                 data = paths["source"].read_bytes()
                 self.assertTrue(paths["activate"])
             else:
-                data = startup if remote == "/autoexec.txt" else b"report"
+                data = b"report"
                 paths["destination"].write_bytes(data)
             return {"bytes": len(data), "id": 7, "payload_carrier": "uart"}
 
         with patch.object(bench, "Client") as client, patch.object(bench, "StagedClient") as worker:
+            direct = client.return_value
+            direct.download.return_value = startup
+            direct.stat_entry.return_value = (26127, 0)
             worker.return_value.begin.side_effect = transfer
             self.runner.stage_uart({staged_path: b"app"}, [report], lambda client, path: None)
             self.runner.collect_results({"results": [report]}, self.runner.out, True)
@@ -72,14 +78,13 @@ class UartOnly(TestCase):
             self.assertEqual(self.runner.start_listener.call_args_list, [
                 call("stage", bench.LISTENER), call("collect", bench.LISTENER),
             ])
-            direct = client.return_value
             direct.upload.assert_not_called()
-            direct.download.assert_not_called()
+            direct.download.assert_called_once_with(bench.STARTUP, max_bytes=216)
+            self.assertEqual(direct.stat_entry.call_args_list, [call(bench.SD_LISTENER)] * 2)
             self.assertEqual(direct.rpc.call_args_list, [call(11)] * 2)
             self.runner.verify_mos.assert_called_once_with("handback-mos")
             self.assertEqual([entry.args for entry in worker.return_value.begin.call_args_list], [
-                ("get", "/autoexec.txt"), ("put", staged_path),
-                ("get", "/autoexec.txt"), ("get", report),
+                ("put", staged_path), ("get", report),
             ])
         receipt = bench.bench_process.read(self.runner.out / "stage-file-00.receipt.json")
         self.assertEqual((receipt["payload_carrier"], receipt["activated"]), ("uart", True))
@@ -105,16 +110,54 @@ class UartOnly(TestCase):
             "payload_carrier": "uart", "bytes": 3, "id": 1,
         })
         cache = {"path": "/extender/recovery/vdp/production.bin", "bytes": 10, "sha256": "a" * 64}
+        previous = {"path": "/extender/recovery/vdp/previous.bin", "bytes": 9, "sha256": "b" * 64}
+        both = {"restore": cache, "candidate": previous}
         with patch.object(bench, "Client"):
             with self.assertRaisesRegex(RuntimeError, "Provision"):
                 self.runner.stage_uart({"/test/demo/app.bin": b"app"}, [],
-                                       lambda client, path: None, restore_cache=cache)
+                                       lambda client, path: None, firmware_cache=both)
             self.runner.staged_uart.assert_not_called()
             self.runner.stage_uart({"/test/demo/app.bin": b"app"}, [],
-                                   lambda client, path: (10, 0) if path == cache["path"] else None,
-                                   restore_cache=cache)
+                                   lambda client, path: {cache["path"]: (10, 0), previous["path"]: (9, 0)}.get(path),
+                                   firmware_cache=both)
         self.assertEqual(self.runner.staged_uart.call_args.args[1:], ("put", "/test/demo/app.bin"))
         self.assertEqual(bench.bench_process.read(self.runner.out / "flash-restore-cache.json"), cache)
+        self.assertEqual(bench.bench_process.read(self.runner.out / "flash-candidate-cache.json"), previous)
+
+    def test_flash_tool_stat_does_not_fall_back_to_payload_read(self):
+        self.runner.start_listener = MagicMock()
+        with patch.object(bench, "Client") as client, patch.object(bench, "StagedClient") as staged:
+            direct = client.return_value
+            direct.stat_entry.return_value = (ota.FLASH_BYTES - 1, 0)
+            with self.assertRaisesRegex(RuntimeError, "type or size changed"):
+                ota.check_updater(self.runner)
+            direct.download.assert_not_called()
+            direct.rpc.assert_not_called()
+            staged.assert_not_called()
+            direct.stat_entry.return_value = (ota.FLASH_BYTES, 0)
+            ota.check_updater(self.runner)
+            self.assertEqual(bench.bench_process.read(self.runner.out / "updater.json")["method"], "sd-stat")
+            direct.download.assert_not_called()
+            staged.assert_not_called()
+
+    def test_emos_updater_checks_full_rom_size_before_flash(self):
+        self.runner.start_listener = MagicMock()
+        rom = "/extender/install/demo/candidate.bin"
+        with patch.object(bench, "Client") as client:
+            direct = client.return_value
+            direct.stat_entry.side_effect = [(ota.FLASH_BYTES, 0), (0x20000 - 1, 0)]
+            with self.assertRaisesRegex(RuntimeError, "complete staged EMOS ROM"):
+                ota.check_updater(self.runner, rom=rom)
+            self.assertEqual(direct.stat_entry.call_args_list, [call(ota.FLASH_PATH), call(rom)])
+            direct.download.assert_not_called()
+            direct.rpc.assert_not_called()
+
+    def test_startup_read_never_continues_into_a_large_file(self):
+        client = bench.Client.__new__(bench.Client)
+        client.rpc = MagicMock(return_value=struct.pack("<I", 1_100_000) + b"x" * 216)
+        with self.assertRaisesRegex(bench.RemoteError, "bounded READ size"):
+            client.download(bench.STARTUP, max_bytes=216)
+        client.rpc.assert_called_once()
 
     def test_handback_retains_mos_evidence_if_transfer_status_is_unavailable(self):
         self.runner.kit["firmware"] = {}
@@ -175,6 +218,83 @@ class FlashPath(TestCase):
                 ])
                 rom._port.close.assert_called_once()
 
+    def test_compact_verification_never_reads_application_bytes(self):
+        expected = md5(self.image, usedforsecurity=False).hexdigest()
+        for fault, error in (
+            ("wrong MAC", "MAC differs"),
+            ("wrong table", "partition table differs"),
+            ("wrong slot", "selected app0, expected app1"),
+            ("wrong digest", "flash digest differs"),
+            ("short digest", "flash digest differs"),
+            ("read failure", "short UART reply"),
+            (None, None),
+        ):
+            with (self.subTest(fault=fault), TemporaryDirectory() as folder,
+                  patch.object(ota, "mainboard_rom") as loader):
+                self.target.out = Path(folder)
+                rom = loader.return_value.return_value
+                rom.read_mac.return_value = (1, 1, 2, 3, 4, 5) if fault == "wrong MAC" else tuple(range(6))
+                stub = rom.run_stub.return_value
+                table = b"wrong" if fault == "wrong table" else self.table
+                selector = self.selector(1 if fault == "wrong slot" else 2)
+                stub.read_flash.side_effect = [table.ljust(0x1000, b"\xff"), selector]
+                stub.flash_md5sum.return_value = {
+                    "wrong digest": "a" * 32, "short digest": "a" * 31,
+                }.get(fault, expected)
+                if fault == "read failure":
+                    stub.flash_md5sum.side_effect = TimeoutError(error)
+                if error:
+                    with self.assertRaisesRegex((RuntimeError, TimeoutError), error):
+                        ota.app_digest(self.target, 1, self.table, self.image)
+                    self.assertFalse((self.target.out / "selected-image.json").exists())
+                    if fault in ("wrong digest", "short digest"):
+                        mismatch = bench.bench_process.read(self.target.out / "app-digest-mismatch.json")
+                        self.assertEqual(mismatch["target_flash_md5"], stub.flash_md5sum.return_value)
+                else:
+                    boot, proof = ota.app_digest(self.target, 1, self.table, self.image)
+                    self.assertEqual(boot, 1)
+                    self.assertEqual(bench.bench_process.read(self.target.out / "selected-image.json"), proof)
+                    self.assertEqual((proof["slot"], proof["address"], proof["bytes"]),
+                                     (1, hex(ota.SLOTS[1]), len(self.image)))
+                    self.assertEqual(proof["verification_method"], ota.FLASH_DIGEST_METHOD)
+                    self.assertEqual(proof["expected_flash_md5"], expected)
+                    self.assertEqual(proof["target_flash_md5"], expected)
+                    self.assertEqual(proof["sha256"], self.app["sha256"])
+                self.assertFalse((self.target.out / "readback.bin").exists())
+                reads = [call(0x8000, 0x1000), call(ota.SELECTOR, 0x2000)]
+                read_count = {"wrong MAC": 0, "wrong table": 1}.get(fault, 2)
+                self.assertEqual(stub.read_flash.call_args_list, reads[:read_count])
+                if fault in ("wrong MAC", "wrong table", "wrong slot"):
+                    stub.flash_md5sum.assert_not_called()
+                else:
+                    stub.flash_md5sum.assert_called_once_with(ota.SLOTS[1], len(self.image))
+                rom._port.close.assert_called_once()
+
+    def test_compact_receipt_is_bound_to_pinned_local_bytes_and_exact_extent(self):
+        source = self.root / "pinned.bin"
+        source.write_bytes(self.image)
+        spec = {"candidate_app": self.app | {"path": str(source)}, "candidate_slot": 1}
+        expected = md5(self.image, usedforsecurity=False).hexdigest()
+        entry = {
+            "component": "native_vdp", "slot": 1, "address": hex(ota.SLOTS[1]),
+            **self.app, "boot_cli_ready": True, "verified_extent_bytes": self.app["bytes"],
+            "verified_extent_sha256": self.app["sha256"], "verification_method": ota.FLASH_DIGEST_METHOD,
+            "target_flash_md5": expected, "expected_flash_md5": expected,
+        }
+        ota.require_image(entry, spec, "candidate")
+        for change in (
+            {"verified_extent_bytes": len(self.image) + 1},
+            {"readback": "unexpected.bin"},
+            {"target_flash_md5": "a" * 32, "expected_flash_md5": "a" * 32},
+        ):
+            with self.assertRaisesRegex(RuntimeError, "Independent digest proof"):
+                ota.require_image(entry | change, spec, "candidate")
+        with self.assertRaisesRegex(RuntimeError, "Unknown flash digest proof method"):
+            ota.require_image(entry | {"verification_method": None}, spec, "candidate")
+        source.write_bytes(b"A" + self.image[1:])
+        with self.assertRaisesRegex(RuntimeError, "Independent digest proof"):
+            ota.require_image(entry, spec, "candidate")
+
     def test_entry_proof_refuses_wrong_slot_or_image(self):
         spec = {"restore_app": self.app, "restore_slot": 1}
         entry = {"component": "native_vdp", "slot": 1, "address": hex(ota.SLOTS[1]),
@@ -205,18 +325,18 @@ class FlashPath(TestCase):
         with self.assertRaisesRegex(RuntimeError, "app1"):
             ota.require_image(receipt | {"slot": 0}, spec, "restore", allow_padded=True)
 
-    def test_offboard_flash_uses_frozen_updater_proof_and_live_read(self):
+    def test_offboard_flash_uses_frozen_updater_proof_and_selected_digest(self):
         self.target.offboard = {"verification_sha256": "b" * 64}
-        installed = self.root / "readback.bin"
+        installed = {"verification_method": ota.FLASH_DIGEST_METHOD}
         with (patch.object(ota, "check_updater") as fetch,
               patch.object(ota, "invoke_flash", return_value=1),
               patch.object(ota, "reboot_pair"), patch.object(ota, "mos_witness"),
-              patch.object(ota, "app_readback", return_value=(2, installed)) as readback,
+              patch.object(ota, "app_digest", return_value=(2, installed)) as digest,
               patch.object(ota, "pulse"), patch.object(ota, "wait_boot", return_value={"boot": 3})):
             answer = ota.replace(self.target, {"candidate_app": self.app, "candidate_slot": 0},
                                  "candidate", self.image, self.table, MagicMock())
         fetch.assert_not_called()
-        readback.assert_called_once()
+        digest.assert_called_once()
         self.assertEqual(answer, (installed, 3))
         self.assertEqual(bench.bench_process.read(self.root / "updater.json")["offboard_verification_sha256"],
                          "b" * 64)
@@ -224,12 +344,14 @@ class FlashPath(TestCase):
     def test_failed_read_prevents_reset_and_post_read_mos(self):
         with (patch.object(ota, "check_updater"), patch.object(ota, "invoke_flash", return_value=1),
               patch.object(ota, "reboot_pair"), patch.object(ota, "mos_witness") as mos,
-              patch.object(ota, "app_readback", side_effect=TimeoutError("ROM sync")) as readback,
+              patch.object(ota, "app_digest", side_effect=TimeoutError("ROM sync")) as digest,
+              patch.object(ota, "app_readback") as readback,
               patch.object(ota, "pulse") as reset):
             with self.assertRaisesRegex(TimeoutError, "ROM sync"):
                 ota.replace(self.target, {"candidate_app": self.app, "candidate_slot": 0},
                             "candidate", self.image, self.table, MagicMock())
-            readback.assert_called_once()
+            digest.assert_called_once()
+            readback.assert_not_called()
             reset.assert_not_called()
             mos.assert_called_once_with(self.target, "after-flash-mos")
 

@@ -29,11 +29,11 @@ foreground operation may still be running. When commands can be sequenced by MOS
 stage a separate command file and invoke it once with `EXEC /path/to/file.txt`.
 For example, SAVE followed by `EMOS sdserve --fast /` lets MOS finish saving
 before starting the listener; the host then verifies listener admission and the
-expected result. This pattern already exists in
-[the maintained firmware installer](../scripts/flash_firmware_commit.py), whose
-flash/reset actions remain separately authorized operations. Never use autoexec
-as the command file. Check command-specific success and preserve uncertain
-journals rather than retyping after a timeout.
+expected result. The [older commit installer](../scripts/flash_firmware_commit.py)
+shows this sequence. Use the [commissioned bench procedure](operations/olimex-bench/README.md)
+for routine Olimex firmware work. Never use autoexec as the command file.
+Check command-specific success and preserve uncertain journals rather than
+retyping after a timeout.
 
 MOS stops `EXEC` at the first command that returns an error, including a nonzero
 application result from `RUN`. A following SAVE, cleanup or listener-start line

@@ -20,9 +20,9 @@ import bench_process
 import olimex_p4_app
 import olimex_vdp_ota
 from olimex_cli import Observer, completion_markers
-from olimex_flash import check_extent, flash_application, mainboard_programmer, mainboard_rom
+from olimex_flash import check_extent, flash_application, flash_mos, mainboard_programmer, mainboard_rom
 from passive_serial import open_passive_serial
-from reset_agon import status, wait_boot
+from reset_agon import status
 from reset_agon_usb import identity
 from sdcard import Client, RemoteError
 from sdcard_staged import Client as StagedClient, QUOTA
@@ -35,7 +35,9 @@ INVENTORY = {
     "p4": ("p4", "p4_app_sha256"),
     "emos": ("emos", "emos_rom_sha256"),
 }
-PRESERVED = ("/autoexec.txt", "/emos/sdserve.bin")
+STARTUP = "/autoexec.txt"
+SD_LISTENER = "/emos/sdserve.bin"
+PRESERVED = (STARTUP, SD_LISTENER)
 LISTENER = "EMOS sdserve --fast /"
 PARALLEL_LISTENER = "EMOS sdserve --fast --parallel /"
 DEFAULT_SCHEMA = 3
@@ -51,6 +53,14 @@ def verify_pin(data, specification):
     if (len(data) != specification["bytes"]
             or sha256(data).hexdigest() != specification["sha256"]):
         raise ValueError(f"Pin mismatch for {specification['path']}")
+
+
+def commissioned_sd_tool(remote, expected):
+    state = bench_process.read(ROOT / "production/olimex-sd-firmware.json")
+    receipt = state.get("tools", {}).get(remote)
+    if state["schema"] != 1 or not receipt or receipt["sha256"] != expected:
+        raise RuntimeError(f"No commissioned SD tool byte verification for {remote}")
+    return receipt
 
 
 def sd_path(path, roots):
@@ -193,14 +203,11 @@ def stage_seconds(kit):
         return 300
     files = [spec for job in fixture_runs(kit).values() for spec in fixture_inputs(job).values()]
     if ota := olimex_vdp_ota.spec_for(kit):
-        files.append(ota["candidate_app"])
-        if not olimex_vdp_ota.cached_restore(ota):
-            files.append(ota["restore_app"])
+        files.extend(ota[f"{selection}_app"] for selection in ("candidate", "restore")
+                     if not olimex_vdp_ota.cached_app(ota, selection))
     seconds = 300
     if emos := kit["firmware"].get("emos"):
         files.extend(emos[f"{selection}_write"] for selection in ("candidate", "restore"))
-        # Two short generated MOS batches, each fits the first 8,000-byte band.
-        seconds += 2 * uart_upload_seconds(1)
     return seconds + sum(uart_upload_seconds(spec["bytes"]) for spec in files)
 
 
@@ -305,7 +312,6 @@ class Bench:
         self.reset_config = bench_process.read(config["reset_config"])
         self.c = {"ports": [self.reset_config["stable_port"], config["p4"]["port"]]}
         self.install_dir = "/extender/install/" + kit["namespace"]
-        self.results_dir = "/agents/extender/" + kit["namespace"]
         self.lock = None
         self.offboard = None
 
@@ -379,10 +385,7 @@ class Bench:
         client = Client(self.url, self.out / f"sd-{label}.json", timeout=12)
         try:
             client.connect(require_fast=True)
-            for remote, expected in self.kit["preserve"].items():
-                data = client.download(remote)
-                if sha256(data).hexdigest() != expected:
-                    raise RuntimeError(f"Preserved bytes changed: {remote}")
+            self.check_sd_preservation(client, label)
             operation(client)
             client.rpc(11)
             self.idle()
@@ -399,18 +402,41 @@ class Bench:
             staged.close()
 
     @contextmanager
-    def uart_listener(self, label, command=LISTENER):
+    def uart_listener(self, label, command=LISTENER, *, check_startup=True):
         self.start_listener(label, command)
-        for number, (remote, expected) in enumerate(self.kit["preserve"].items(), start=1):
-            name = f"preserve-{label}-{number:02d}"
-            local = self.out / f"{name}.bin"
-            self.staged_uart(name, "get", remote, destination=local)
-            if sha256(local.read_bytes()).hexdigest() != expected:
-                raise RuntimeError(f"Preserved bytes changed: {remote}")
-        yield
+        client = Client(self.url, self.out / f"sd-{label}-preserve.json", timeout=12)
+        try:
+            client.connect(require_fast=True)
+            self.check_sd_preservation(client, label, check_startup=check_startup)
+            yield client
+        finally:
+            client.lock.close()
         # A failed body retains the listener and transfer evidence for the
         # ordinary stop procedure. Successful staged jobs need a fresh EXIT.
         self.exit_staged_listener(label)
+
+    def check_sd_tool(self, client, remote, expected):
+        receipt = commissioned_sd_tool(remote, expected)
+        size, attributes = client.stat_entry(remote)
+        if size != receipt["bytes"] or attributes & 0x10:
+            raise RuntimeError(f"Commissioned SD tool type or size changed: {remote}")
+        return {"path": remote, "bytes": size, "commissioned_sha256": expected,
+                "prior_receipt_sha256": receipt["receipt_sha256"], "method": "sd-stat"}
+
+    def check_sd_preservation(self, client, label, *, check_startup=True):
+        pins = self.kit["preserve"]
+        if check_startup and STARTUP in pins:
+            # Treat startup as executable input. Check its exact bytes without
+            # allowing a changed file to turn into an unbounded download.
+            startup = client.download(STARTUP, max_bytes=216)
+            if sha256(startup).hexdigest() != pins[STARTUP]:
+                raise RuntimeError(f"Preserved bytes changed: {STARTUP}")
+            bench_process.record(self.out / f"startup-{label}.json", {
+                "path": STARTUP, "bytes": len(startup), "sha256": pins[STARTUP],
+            })
+        if SD_LISTENER in pins:
+            proof = self.check_sd_tool(client, SD_LISTENER, pins[SD_LISTENER])
+            bench_process.record(self.out / f"listener-{label}.json", proof)
 
     def verify_mos(self, label="mos"):
         identity(self.reset_config)
@@ -422,26 +448,9 @@ class Bench:
     def cli(self, label="cli"):
         if not re.fullmatch(r"[a-zA-Z0-9_-]+", label):
             raise ValueError("Invalid CLI observation label")
-        if getattr(self, "offboard", None):
-            self.idle()
-            self.verify_mos(label)
-            self.idle()
-        elif uart_transfer(self.kit):
-            with self.uart_listener(label):
-                pass
-        else:
-            self.listener(label, LISTENER, lambda client: None)
-
-    def emos_install_inputs(self):
-        payloads, results = {}, []
-        for selection in ("candidate", "restore"):
-            payloads[f"{self.install_dir}/{selection}.bin"] = pinned(
-                self.kit["firmware"]["emos"][f"{selection}_write"])
-            rom = f"{self.results_dir}/{selection}-rom.bin"
-            results.append(rom)
-            payloads[f"{self.install_dir}/{selection}.txt"] = (
-                f"SAVE {rom} &0 &20000\r\n{LISTENER}\r\n").encode("ascii")
-        return payloads, results
+        self.idle()
+        self.verify_mos(label)
+        self.idle()
 
     def stage(self, *, include_emos=True):
         schema = self.kit.get("schema", DEFAULT_SCHEMA)
@@ -452,11 +461,11 @@ class Bench:
             job = self.kit["fixture"]
             sources = {job["sd_program"]: job["agon"]}
         payloads = {destination: pinned(spec) for destination, spec in sources.items()}
-        expected_absent = []
-        restore_cache = None
+        firmware_cache = {}
         if include_emos and "emos" in self.kit["firmware"]:
-            firmware_inputs, expected_absent = self.emos_install_inputs()
-            payloads.update(firmware_inputs)
+            emos = self.kit["firmware"]["emos"]
+            for selection in ("candidate", "restore"):
+                payloads[f"{self.install_dir}/{selection}.bin"] = pinned(emos[f"{selection}_write"])
 
         if ota := olimex_vdp_ota.spec_for(self.kit):
             inventory = bench_process.read(self.config["inventory"])
@@ -466,15 +475,13 @@ class Bench:
                 "companions": olimex_vdp_ota.companion_pins(inventory),
             })
             if not self.offboard:
-                path = olimex_vdp_ota.staging_path(self, "candidate")
-                payloads[path] = pinned(ota["candidate_app"])
-                if path := olimex_vdp_ota.cached_restore(ota):
-                    app = ota["restore_app"]
-                    olimex_vdp_ota.require_cache_receipt(path, app)
-                    restore_cache = {"path": path, "bytes": app["bytes"], "sha256": app["sha256"]}
-                else:
-                    path = olimex_vdp_ota.staging_path(self, "restore")
-                    payloads[path] = pinned(ota["restore_app"])
+                for selection in ("candidate", "restore"):
+                    app = ota[f"{selection}_app"]
+                    if path := olimex_vdp_ota.cached_app(ota, selection):
+                        olimex_vdp_ota.require_cache_receipt(path, app)
+                        firmware_cache[selection] = {"path": path, "bytes": app["bytes"], "sha256": app["sha256"]}
+                    else:
+                        payloads[olimex_vdp_ota.staging_path(self, selection)] = pinned(app)
         if getattr(self, "offboard", None):
             bench_process.record(self.out / "offboard-stage.json", self.offboard)
             return
@@ -490,20 +497,16 @@ class Bench:
         if schema in (2, 3):
             results = [path for job in jobs for path in fixture_results(job)]
             if uart_transfer(self.kit):
-                self.stage_uart(payloads, [*results, *expected_absent], existing, restore_cache=restore_cache)
+                self.stage_uart(payloads, results, existing, firmware_cache=firmware_cache)
             else:
-                self.stage_parallel(payloads, [*results, *expected_absent], existing)
+                self.stage_parallel(payloads, results, existing)
             return
 
         def transfer(client):
             directories = {str(PurePosixPath(remote).parent) for remote in payloads}
             directories.add(str(PurePosixPath(job["sd_result"]).parent))
-            directories.update(str(PurePosixPath(path).parent) for path in expected_absent)
             for remote in sorted(directories):
                 client.make_directory(remote, parents=True)
-            for remote in expected_absent:
-                if existing(client, remote) is not None:
-                    raise RuntimeError(f"ROM evidence path already exists: {remote}")
             present = set()
             for remote, payload in payloads.items():
                 if existing(client, remote) is not None:
@@ -526,18 +529,18 @@ class Bench:
 
         self.listener("stage", LISTENER, transfer)
 
-    def stage_uart(self, payloads, result_paths, existing, *, restore_cache=None):
+    def stage_uart(self, payloads, result_paths, existing, *, firmware_cache=None):
         with self.uart_listener("stage"):
             targets = [*payloads, *result_paths]
             client = Client(self.url, self.out / "sd-stage-metadata.json", timeout=12)
             try:
                 client.connect(require_fast=True)
-                if restore_cache:
-                    path = restore_cache["path"]
+                for selection, cached in (firmware_cache or {}).items():
+                    path = cached["path"]
                     entry = existing(client, path)
-                    if entry is None or entry[0] != restore_cache["bytes"] or entry[1] & 0x10:
+                    if entry is None or entry[0] != cached["bytes"] or entry[1] & 0x10:
                         raise RuntimeError(f"Provision the expected FLASH recovery image before staging: {path}")
-                    bench_process.record(self.out / "flash-restore-cache.json", restore_cache)
+                    bench_process.record(self.out / f"flash-{selection}-cache.json", cached)
                 for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
                     client.make_directory(directory, parents=True)
                 for path in targets:
@@ -653,25 +656,9 @@ class Bench:
             self.update_inventory(inventory)
 
         if component == "emos":
-            begin()
-            self.type_line("flash", f"FLASH mos {self.install_dir}/{selection}.bin -f")
-            wait_boot(self.url, before["boot"], 100)
-            result = self.out / "readback.bin"
-
-            def read_rom(client):
-                result.write_bytes(client.download(f"{self.results_dir}/{selection}-rom.bin"))
-                if result.read_bytes() != image:
-                    raise RuntimeError("Independent EMOS ROM readback differs")
-
-            command = f"EXEC {self.install_dir}/{selection}.txt"
-            if uart_transfer(self.kit):
-                with self.uart_listener("rom-readback", command):
-                    self.staged_uart("sd-rom-readback", "get", f"{self.results_dir}/{selection}-rom.bin",
-                                     destination=result)
-                    if result.read_bytes() != image:
-                        raise RuntimeError("Independent EMOS ROM readback differs")
-            else:
-                self.listener("rom-readback", command, read_rom)
+            sd_rom = f"{self.install_dir}/{selection}.bin"
+            olimex_vdp_ota.check_updater(self, rom=sd_rom)
+            result = flash_mos(self, sd_rom, image, begin)
         else:
             table = pinned(spec["partition_table"])
             if component == "p4":
@@ -688,13 +675,21 @@ class Bench:
                     "bytes": len(image), "write_sha256": sha256(image).hexdigest(),
                 })
                 olimex_p4_app.reboot_pair(self, before["boot"])
-            self.cli()
+            self.cli("after-flash-mos")
+            self.validate_ports()
+
+        if component in ("p4", "emos"):
+            proof = bench_process.read(result)
+            evidence = {"verification_method": proof["method"], "verification_evidence": str(result.resolve())}
+        else:
+            evidence = {"readback": str(result)}
 
         receipt = {
+            **evidence,
             "component": role, "selection": selection, "sha256": original["sha256"],
             "verified_extent_sha256": sha256(image).hexdigest(),
             "verified_extent_bytes": len(image), "bytes": original["bytes"],
-            "readback": str(result), "boot_cli_ready": True, "verified_epoch": time.time(),
+            "boot_cli_ready": True, "verified_epoch": time.time(),
             "status": "verified-standard" if selection == "restore" else "verified-exception",
         }
         receipt["verification_receipt"] = str(self.out / "independent-verification.json")
@@ -736,15 +731,15 @@ class Bench:
             inventory["ready_claim"] = False
             self.update_inventory(inventory)
 
-        result, boot = olimex_vdp_ota.replace(self, spec, selection, image, table, begin)
+        selected, boot = olimex_vdp_ota.replace(self, spec, selection, image, table, begin)
         if bench_process.read(self.config["inventory"]) != inventory:
             raise RuntimeError("Firmware inventory changed during FLASH verification")
         receipt_path = self.out / "independent-verification.json"
         receipt = {
-            **bench_process.read(self.out / "selected-image.json"),
+            **selected,
             "component": "native_vdp", "selection": selection, "method": "agon-flash-v1.9",
             "verified_extent_sha256": app["sha256"], "verified_extent_bytes": app["bytes"],
-            "readback": str(result.resolve()), "boot_cli_ready": True, "mos_boot": boot,
+            "boot_cli_ready": True, "mos_boot": boot,
             "companions": entry["companions"], "verified_epoch": time.time(),
             "verification_receipt": str(receipt_path.resolve()),
             "status": "verified-standard" if selection == "restore" and slot == 0 else "verified-exception",
@@ -857,7 +852,7 @@ class Bench:
             if listener_online:
                 raise RuntimeError("UART results need a fresh UART-only listener")
 
-            with self.uart_listener("collect"):
+            with self.uart_listener("collect", check_startup=False):
                 for number, path in enumerate(fixture_results(job), start=1):
                     channel = f"sd-collect-{number:02d}" if named else "sd-collect"
                     destination = output_dir / PurePosixPath(path).name if named else result_path
@@ -1126,9 +1121,15 @@ def main():
         require_commissioned_policy(kit)
         order = preflight(kit)
     offboard = offboard_proof(kit, args.sha256, args.offboard_stage) if args.offboard_stage else None
-    if phase != "verify-mos" and not offboard and (ota := olimex_vdp_ota.spec_for(kit)):
-        if path := olimex_vdp_ota.cached_restore(ota):
-            olimex_vdp_ota.require_cache_receipt(path, ota["restore_app"])
+    if phase != "verify-mos" and not offboard:
+        commissioned_sd_tool(SD_LISTENER, kit["preserve"][SD_LISTENER])
+        ota = olimex_vdp_ota.spec_for(kit)
+        if ota or "emos" in kit["firmware"]:
+            commissioned_sd_tool(olimex_vdp_ota.FLASH_PATH, olimex_vdp_ota.FLASH_SHA)
+        if ota:
+            for selection in ("candidate", "restore"):
+                if path := olimex_vdp_ota.cached_app(ota, selection):
+                    olimex_vdp_ota.require_cache_receipt(path, ota[f"{selection}_app"])
     config = bench_process.read(args.config) if args.config else None
     if config is not None and phase != "verify-mos":
         runtime_preflight(kit, config)

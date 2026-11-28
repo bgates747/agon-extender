@@ -1,26 +1,25 @@
 # Mainboard SD service operating guide
 
-Olimex production v0.3.0 uses checksum-free PARLIO for nonempty file payloads
-in both directions. P4 drives uploads to EMOS. EMOS drives downloads into the
-P4 staged snapshot. The Pi5 client exchanges whole files with P4 over HTTP.
-UART carries control records, including operations on empty files. Use the
-[bench procedure](operations/olimex-bench/README.md) for commissioned jobs
+Olimex bench jobs currently use P4-staged UART for file payloads. P4 drives
+uploads to EMOS and EMOS sends downloads to the P4 spool over UART. The Pi5
+client exchanges the files with P4 over HTTP. Follow the
+[bench procedure](operations/olimex-bench/README.md) for current restrictions
 and the [selected component pins](mainboard-sd-tools.json) for exact builds.
 
 ## P4-staged fast files
 
-At a verified Legacy prompt, start the canonical foreground listener.
+At a verified Legacy prompt, start the UART foreground listener.
 
 ```text
-EMOS sdserve --fast --parallel /
+EMOS sdserve --fast /
 ```
 
 The commissioned runner opens and exits the listener itself. For separately
 authorized direct operation, give every staged job a fresh local state path.
 
 ```sh
-.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$PUT_STATE" put local.bin /target.bin --activate --require-parallel
-.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$GET_STATE" get /source.bin local-new-file.bin --require-parallel
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$PUT_STATE" put local.bin /target.bin --activate --require-uart
+.venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" --state "$GET_STATE" get /source.bin local-new-file.bin --require-uart
 ```
 
 Wait for each client to stop before opening another client session. Use the
@@ -32,9 +31,9 @@ Keep the state and journal on failure. The `resume` command observes an
 existing staged job and does not submit another transfer.
 
 The [staged protocol](protocols/mainboard-sd-staged.md) explains the service
-boundaries. The [production qualification](tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md)
-records both directions through 1,100,000 bytes and the collected application
-result. The [release](../production/README.md) links the local production bundle.
+boundaries. The [v0.3.0 production qualification](tasks/PORT-008/PRODUCTION-SD-PARALLEL-R03-RESULT.md)
+records PARLIO runs in both directions through 1,100,000 bytes. The
+[release](../production/README.md) links the local production bundle.
 
 ## Existing foreground service
 
@@ -60,7 +59,7 @@ the exact builds in the qualification records below.
 
 | Method | Client / endpoint | Agon requirement | Status |
 |---|---|---|---|
-| Foreground staged listener | `scripts/sdcard_staged.py` and the bench runner | Start `EMOS sdserve --fast --parallel /` in Legacy | Olimex production v0.3.0 |
+| Foreground staged listener | `scripts/sdcard_staged.py` and the bench runner | Start `EMOS sdserve --fast /` in Legacy | Current Olimex UART procedure |
 | Direct UART client | `scripts/sdcard.py`, P4 HTTP origin | Foreground listener in Legacy | Control, inspection and authorized compatibility or recovery |
 | Automatic staged mainboard files | HTTP/WebDAV, port 8081 | Eligible idle CLI; paired resident EMOS and `/emos/sdjob.bin`; mounted P4 staging card | Development; bounded Legacy/ExCom hardware pass |
 | Application-owned card transfer | Linked `emos_file_transfer()` helper | Application explicitly initiates its own transfer | Development; bounded bidirectional Legacy/ExCom hardware pass |
@@ -147,12 +146,10 @@ the [protocol guide](protocols/staged-webdav.md) explains ownership.
 
 ## P4-staged UART files
 
-When UART is required for bulk files, start `EMOS sdserve --fast /` and
-use the same staged client with `--require-uart` on either `put` or
-`get`. The Pi exchanges one whole file with P4 and P4 owns the UART loop.
-The client checks the checksum-free listener before submitting the file and
-records the completed carrier. Use the direct client for metadata, EXIT and
-specifically authorized recovery.
+Use the [P4-staged commands above](#p4-staged-fast-files) for ordinary files.
+The staged client checks the checksum-free listener before submitting the
+file and records the completed carrier. Use the direct client for metadata,
+EXIT and specifically authorized recovery.
 
 ## Direct UART client
 
@@ -180,11 +177,11 @@ Once input is available, at that prompt:
 
 ```text
 EMOS LEGACY
-EMOS sdserve /
+EMOS sdserve --fast /
 ```
 
-For fast mode, substitute `EMOS sdserve --fast /` on the second line. Do not
-blindly inject both lines while the first command is still executing.
+Wait for the first command to complete before starting the listener. Use
+`EMOS sdserve /` when a separate compatibility procedure requires checked mode.
 
 The argument is the absolute allowed filesystem root. `/` permits whole-card
 development. These services have no authentication; use only on a trusted LAN.
@@ -197,16 +194,14 @@ Escape stops the service and returns to its caller, preserving an unfinished
 stage. If invoked from EXEC/autoexec, remaining batch commands may run; return
 is not necessarily an idle MOS prompt.
 Host `exit` does the same only when no transfer is active. Restart the utility
-with `EMOS sdserve /` (or `EMOS sdserve --fast /`).
+with `EMOS sdserve --fast /` for ordinary UART transfers.
 Applications and this service run in the foreground at different times; this is not
 background SD access while a game is running. No remote command execution or
 board reset is part of the wire API.
 
 ## Current MOSlet installation
 
-Production EMOS dispatches `EMOS sdserve --fast --parallel /` to
-`/emos/sdserve.bin`. The older deployment record below describes the retained
-UART workflow.
+Production EMOS dispatches `EMOS sdserve --fast /` to `/emos/sdserve.bin`.
 The maintained listener moved from `/mos` to `/emos`; bare `sdserve` is no longer
 its installed invocation. Host-injected keyboard, ExCom/Legacy, listener transfer,
 return/reentry and a 4096-byte application sentinel passed physical checks.
@@ -220,7 +215,9 @@ memory. Neither form is a background service.
 On the maintained Linux host use the repository's `.venv/bin/python`; on macOS
 use its local `python3` (standard-library client with POSIX file locking). Resolve the Extender address from the
 local bench guidance; do not put credentials or private addresses into tracked
-examples. These examples use a placeholder address:
+examples. Use the staged commands above for ordinary file transfers. The
+checked direct `put` below includes complete rereads, so reserve it for a
+separately authorized compatibility or recovery need.
 
 ```sh
 .venv/bin/python scripts/sdcard.py --url http://EXTENDER_ADDRESS --state agents/sd/client.json status
@@ -327,17 +324,16 @@ through `scripts/bench_job.py`, using the project-local Python for both commands
 
 ```sh
 .venv/bin/python scripts/bench_job.py --output agents/my-deployment-job -- \
-  .venv/bin/python scripts/sdcard.py --url "$EXTENDER_URL" \
-  --state agents/my-deployment-state.json put /path/to/input.bin /target.bin --activate
+  .venv/bin/python scripts/sdcard_staged.py --url "$EXTENDER_URL" \
+  --state agents/my-deployment-state.json put /path/to/input.bin /target.bin --activate --require-uart
 ```
 
 Use a fresh ignored job directory and preserve the SD recovery journal. Launch
 returns immediately. Stop monitoring; inspect `result.json` and `output.log` on
 later Author follow-up. The worker records start/end UTC and monotonic elapsed
-seconds, return code and success/failure; `request.json` preserves exact argv
-and working directory. Success means the wrapped command returned zero; the SD
-client in the normal-mode example verifies staged and activated bytes before
-doing so. Adding `--fast` removes that verification guarantee. There is no automatic
+seconds, return code and success/failure. `request.json` preserves exact argv
+and working directory. Check the staged client's completion receipt for the
+carrier, activated path and byte count. There is no automatic
 retry, cleanup, service exit, reset, firmware flash or game launch. Wrap a prepared
 deployment script when additional verified steps are required. A running record
 without a terminal result after host interruption is unknown, not success.
