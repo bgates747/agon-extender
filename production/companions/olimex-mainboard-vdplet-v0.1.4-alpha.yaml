@@ -1,0 +1,72 @@
+schema_version: 1
+platform: Olimex P4-PC bench mainboard only
+owner: VDPlet
+version: v0.1.4-alpha
+source_commit: 77ad7a1d28c0d44fd2cd2cf4aa4cded10f770485
+release: https://github.com/bgates747/agon-vdplet/releases/tag/v0.1.4-alpha
+extender_bundle: ../bundles/olimex-parlio-v0.3.0/bundle.yaml
+retained_artifacts: ../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1
+application:
+  file: vdp-vdplet-0.1.4-alpha.bin
+  bytes: 1117392
+  sha256: 1698d5ce5ddb441279feb07198753ce99b242552c0d1245c71a00f67336422b2
+published_checksums:
+  file: SHA256SUMS
+  bytes: 735
+  sha256: fe46598f343f1d72a067c021a630a326459cb47d242a988875c8193b56c18af7
+release_manifest:
+  file: release-manifest.json
+  bytes: 2337
+  sha256: 005822ffc1757ae3cd2dbcff56ba2d4d7c114a9020fa2d66c079d78baeab7f2d
+layout:
+  offset: '0x10000'
+  partition_bytes: 1310720
+  partition_table:
+    file: partitions.bin
+    bytes: 3072
+    sha256: 148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1
+write:
+  file: app0-write.bin
+  bytes: 1138688
+  sha256: f5e6584e8dc8fdb910cbd44988f825502806646f77ead5d939699eccc485e2fa
+rollback:
+  version: v0.1.3-alpha
+  companion: olimex-mainboard-vdplet-v0.1.3-alpha.yaml
+  application:
+    file: rollback/vdp-vdplet-0.1.3-alpha.bin
+    bytes: 1117040
+    sha256: 90edc4c52f3120c1709e3f09dd675492e8326f64b36061570b3ea4f2a0efeccc
+  write:
+    file: rollback/app0-write.bin
+    bytes: 1138688
+    sha256: 1b661b9357c3952fcd807dc8aed74060abf26bffeb321deab2ae2697f2e5028f
+status: selected as the commissioned Olimex mainboard default
+restore_archive:
+  file: olimex-mainboard-restore.tar.gz
+  bytes: 2316490
+  sha256: 1884017362c27b580ae5fdf8d1685c7e5aa7d751f6819a4fb72c69d781917d75
+qualification:
+  method: agon-flash-v1.9
+  observed_slot: 0
+  case_count: 545
+  mismatches: 0
+  flow_errors: 0
+  stack_free_bytes: 2420
+  uart_puts: 4
+  uart_gets: 2
+  exact_raw_readback: true
+  working_cli: true
+  idle_resources: true
+  joined_workers: true
+  runner_commit: 1fd19d1250ecbccc427c23ba1de11791c69ec8e4
+  job_sha256: 2d12d4d6bd6a3c82bdfba523b8859e40cefb00d2d91f81d0e3eb86c37c7c9e94
+  evidence_sha256:
+    install-mainboard/independent-verification.json: 9d68b54f8302b5e046e91ba304c2a7bd18bb7bffaa814dd4fb4d3b8a2ef2e8c5
+    run-patched/results/results.dat: e041901be3135807d344c2d66eeeadba79356bc3f817cbd69e2193054b6aebbb
+    run-patched/results/review.log: cfac4df1347859ebefc2cd4968619c0a9c568e8f3c5c4803e1de3ce078f3ece6
+    run-patched/sd-collect-01.receipt.json: ac0057410ec2b8ff24c058954894635ba2c9cddd16b6a9f1b0c334d642f3140e
+    run-patched/sd-collect-02.receipt.json: 2bc4ff5a2090d48d73f7f89828f29caa537d1876223adcff10c01a91b9705d42
+    promotion-handback/promotion-verified.json: a5db0219c7e9c14b2be2e042845cf5f133cc1e8bc76d4d2c5312f18e7b1d2e41
+    promotion-handback/complete.json: 83fcf6ebc5ec50012d266e8853b50c87bae54a7c05689d6e647194e562115246
+    promotion-handback/handback.json: 28eacb056dd0c8d511fc18dde0f89b86291dc3e1675cfccda5da1242690733d7
+    promotion-handback/child-terminal.json: cd9019a677f3b339964e1d38a91439bd69c06d2ba051b7eeefa8645c03e96aa0

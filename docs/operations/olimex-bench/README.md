@@ -128,32 +128,34 @@ the installed firmware.
 
 ### Production restore images
 
-Use the Olimex **Extender v0.3.0** runtime and the **VDPlet v0.1.3-alpha**
+Use the Olimex **Extender v0.3.0** runtime and the **VDPlet v0.1.4-alpha**
 mainboard companion. The Extender
 [SHA256SUMS](../../../dist/production/olimex-parlio-v0.3.0/runtime/SHA256SUMS)
 identifies its local files. The
-[VDPlet release checksums](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/SHA256SUMS)
-and [Olimex write checksums](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/OLIMEX-WRITE-SHA256SUMS)
-identify the mainboard app and its padded write. The job packet supplies the exact
-`restore_write` pin for every processor the job changes.
+[VDPlet release checksums](../../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1/SHA256SUMS)
+and [Olimex write checksums](../../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1/OLIMEX-WRITE-SHA256SUMS)
+identify the raw mainboard app, retained padded extent and rollback. The job
+packet pins each changed processor’s restore image.
 
 | Target | Production file | Bytes | SHA-256 | Use |
 | --- | --- | ---: | --- | --- |
 | Extender ESP32-P4, Extender VDP | [p4/app0-write.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/app0-write.bin) | 1,769,472 | `10d4b60a67888c2363e79ad29adbfd68d58a8638fd9013af413973655cb33ae4` | Extender's padded app0 write image at `0x20000`. Use it for a job with the matching `0x1B0000` write extent. |
 | Olimex eZ80, EMOS | [emos/ROM.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/emos/ROM.bin) | 131,072 | `9b90b5d94ec6888d85ef1fa1acf23a82b2e0eb1f179b75f549863fbd72343673` | Extender's complete MOS ROM for the `restore-emos` phase. |
-| Mainboard ESP32, VDPlet | [VDPlet app0-write.bin](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/app0-write.bin) | 1,138,688 | `1b661b9357c3952fcd807dc8aed74060abf26bffeb321deab2ae2697f2e5028f` | VDPlet's padded app0 write at `0x10000`. Use it for a job with the matching `0x116000` write extent. |
+| Mainboard ESP32, VDPlet | [vdp-vdplet-0.1.4-alpha.bin](../../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1/vdp-vdplet-0.1.4-alpha.bin) | 1,117,392 | `1698d5ce5ddb441279feb07198753ce99b242552c0d1245c71a00f67336422b2` | Raw VDPlet app for FLASH v1.9. Bind the actual production OTA slot at checkout. |
 | Mainboard SD listener | [sd/emos/sdserve.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/sd/emos/sdserve.bin) | 26,127 | `98492acc7dcd29e484ef76c69026e8801375738c33c617ba61a94d8481151f08` | Extender's file for `/emos/sdserve.bin` on the SD card. |
 
 For a P4 job, bind the raw [p4/agon_extender.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/agon_extender.bin)
 as `restore_app`. Use [p4/partition-table.bin](../../../dist/production/olimex-parlio-v0.3.0/runtime/p4/partition-table.bin)
 only to verify the layout. For a mainboard job, bind the raw
-[vdp-vdplet-0.1.3-alpha.bin](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/vdp-vdplet-0.1.3-alpha.bin)
+[vdp-vdplet-0.1.4-alpha.bin](../../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1/vdp-vdplet-0.1.4-alpha.bin)
 as `restore_app` and use the
-[mainboard partition table](../../../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1/partitions.bin)
-to verify the layout. If an ESP32 candidate needs a different write extent,
-use the job owner's pinned, equally sized candidate and restore files with
-`0xff` padding. The release archives keep the previous baseline under
-`rollback/` for owner recovery.
+[mainboard partition table](../../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1/partitions.bin)
+to verify the layout. Bind the current production slot as `restore_slot` and
+the other slot as `candidate_slot`. The promotion verified production on app0.
+Use the actual selected slot from the current handoff for each job.
+The [restore archive](../../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1/olimex-mainboard-restore.tar.gz)
+contains the raw app, the historical padded form and the previous v0.1.3-alpha
+baseline under `rollback/`. FLASH takes the unpadded application.
 
 ### Stage the fixtures
 

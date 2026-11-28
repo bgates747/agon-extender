@@ -18,10 +18,12 @@ The [operator procedure](../docs/operations/olimex-bench/README.md) lists the cu
 The [current release](current.yaml) selects the qualified Olimex bundle and
 the current mainboard companion. The [bundle manifest](bundles/olimex-parlio-v0.3.0/bundle.yaml)
 records the original qualification and immutable artifacts. The
-[mainboard companion manifest](companions/olimex-mainboard-vdplet-v0.1.3-alpha.yaml)
-records the later app0-only update, its physical smoke and rollback.
+[mainboard companion manifest](companions/olimex-mainboard-vdplet-v0.1.4-alpha.yaml)
+records the mainboard application update, its physical smoke and the
+retained v0.1.3-alpha rollback.
 
 Keep an executing job's frozen pins. Before dispatching a prepared exception
-job after a mainboard standard change, bind its restore app and matching
-padded write extent to the new standard and rerun preflight. A deliberate
+job after a mainboard standard change, verify the current OTA slot at checkout, rebind the raw FLASH restore app
+and slot to the new standard, and rerun preflight. Retained padded files
+serve legacy records and expressly authorized recovery procedures. A deliberate
 old-firmware comparison keeps its selected test image.

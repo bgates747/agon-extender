@@ -1,19 +1,19 @@
 {
   "schema": "olimex-test-firmware-standard-v1",
-  "authority_date": "2026-11-18",
+  "authority_date": "2026-11-27",
   "scope": "Default Olimex testing/deployment firmware; existing test/deployment/hardware permissions remain",
   "policy": "procedures/olimex-firmware.md",
   "vdp": {
-    "version": "v0.1.3-alpha",
-    "release": "https://github.com/bgates747/agon-vdplet/releases/tag/v0.1.3-alpha",
-    "source_commit": "343b362ee5631dd05156c4a3f7c08cd999a5fb5f",
-    "asset": "vdp-vdplet-0.1.3-alpha.bin",
-    "bytes": 1117040,
-    "sha256": "90edc4c52f3120c1709e3f09dd675492e8326f64b36061570b3ea4f2a0efeccc",
+    "version": "v0.1.4-alpha",
+    "release": "https://github.com/bgates747/agon-vdplet/releases/tag/v0.1.4-alpha",
+    "source_commit": "77ad7a1d28c0d44fd2cd2cf4aa4cded10f770485",
+    "asset": "vdp-vdplet-0.1.4-alpha.bin",
+    "bytes": 1117392,
+    "sha256": "1698d5ce5ddb441279feb07198753ce99b242552c0d1245c71a00f67336422b2",
     "checksums_asset": "SHA256SUMS",
-    "checksums_sha256": "34f2bf3523d4b0a533b758fcd03d53a2b40102e5f77447d2acd6c036de726890",
-    "release_manifest_sha256": "97f12497b9cb61ff5f68694a3e7620370a238b95565383122abc8e1cf671de95",
-    "retained_assets": "../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1",
+    "checksums_sha256": "fe46598f343f1d72a067c021a630a326459cb47d242a988875c8193b56c18af7",
+    "release_manifest_sha256": "005822ffc1757ae3cd2dbcff56ba2d4d7c114a9020fa2d66c079d78baeab7f2d",
+    "retained_assets": "../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1",
     "features": {
       "uart_rx_repair": true,
       "pixels": true,
@@ -33,19 +33,19 @@
       "quiet_async_poll": false
     },
     "selection_status": "Author-approved companion installed and independently verified on Olimex",
-    "initial_hardware_status": "Exact release passed 545 cases, PARLIO PUT and GET, and clean handback",
-    "selection": "0.1.3-alpha-async-r1",
+    "initial_hardware_status": "Agon Flash v1.9, exact selected app0 readback, 545 smoke cases, P4-staged UART PUT and GET, and joined handback",
+    "selection": "0.1.4-alpha-async-r1",
     "supersedes": {
-      "version": "v0.1.2-alpha",
-      "source_commit": "60e5b4ebafa3e1c8bb740e45260d78cdb6125e30",
-      "bytes": 1115568,
-      "sha256": "dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab",
-      "checksums_sha256": "52438920e70480cd1c0f0c9543fbf2e0f7771ce937b92f422ef2f6ea394f79ba",
-      "release_manifest_sha256": "23036cfdd5d12c9ed54d197ab5184f2227dd635e4c09647a5c9efda95f129f5d",
-      "retained_assets": "../dist/bench-standards/vdplet-v0.1.2-alpha-async-r1"
+      "version": "v0.1.3-alpha",
+      "source_commit": "343b362ee5631dd05156c4a3f7c08cd999a5fb5f",
+      "bytes": 1117040,
+      "sha256": "90edc4c52f3120c1709e3f09dd675492e8326f64b36061570b3ea4f2a0efeccc",
+      "checksums_sha256": "34f2bf3523d4b0a533b758fcd03d53a2b40102e5f77447d2acd6c036de726890",
+      "release_manifest_sha256": "97f12497b9cb61ff5f68694a3e7620370a238b95565383122abc8e1cf671de95",
+      "retained_assets": "../dist/bench-standards/vdplet-v0.1.3-alpha-async-r1"
     },
     "live_run_boundary": "Already-running frozen comparisons retain exact inputs and original deadlines; changed current-standard handback is reconciled separately after original operator terminal/joined custody return, before normal release",
-    "companion": "../production/companions/olimex-mainboard-vdplet-v0.1.3-alpha.yaml"
+    "companion": "../production/companions/olimex-mainboard-vdplet-v0.1.4-alpha.yaml"
   },
   "emos": {
     "requirement": "Latest approved integrated EMOS covering merged Eirene public API slots and releasedRC3-style async output; unmerged proposals and private experimental APIs are not silently added",

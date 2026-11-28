@@ -226,7 +226,9 @@ For a mainboard-only FLASH job, set these fields under `firmware.mainboard`.
 
 Use the normal runner preflight and configuration. Include evidence from
 checkout that the currently selected production app matches `restore_slot`
-and `restore_app`. An unresolved current image blocks the job. Stage both
+and `restore_app`. Use the [current restore pins](README.md#production-restore-images).
+Rebind any prepared packet with stale restore pins before staging and rerun
+preflight. Preserve already-frozen execution evidence. An unresolved current image blocks the job. Stage both
 apps and the fixture files. Run `install-mainboard`, the named arms in
 manifest order, `restore-mainboard` and `handback`.
 

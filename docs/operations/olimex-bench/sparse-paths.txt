@@ -26,3 +26,9 @@
 /scripts/sdcard.py
 /scripts/sdcard_staged.py
 /AGENTS.md
+/docs/olimex-firmware-standard.json
+/production/README.md
+/production/current.yaml
+/production/olimex-bench-firmware.md
+/production/companions/
+/production/bundles/olimex-parlio-v0.3.0/bundle.yaml
