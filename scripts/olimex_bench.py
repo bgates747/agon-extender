@@ -176,6 +176,13 @@ def uart_transfer(kit):
     return kit.get("schema", DEFAULT_SCHEMA) == 3 and kit.get("transfer", "uart") == "uart"
 
 
+def require_commissioned_policy(kit):
+    if not uart_transfer(kit):
+        raise ValueError("Current Olimex jobs require schema 3 and UART file transfers")
+    if "mainboard" in kit["firmware"] and not olimex_vdp_ota.spec_for(kit):
+        raise ValueError('Current Olimex mainboard jobs require method "agon-flash"')
+
+
 def uart_upload_seconds(size):
     # Conservative watchdog, based on the retained staged path's ~25 kB/s.
     return 60 + ceil(size / 8000)
@@ -1114,8 +1121,14 @@ def main():
         raise ValueError("Job manifest differs from the named hash")
     kit = json.loads(raw)
     phase = args.phase.removeprefix("worker-")
-    order = [] if phase == "verify-mos" else preflight(kit)
+    order = []
+    if phase != "verify-mos":
+        require_commissioned_policy(kit)
+        order = preflight(kit)
     offboard = offboard_proof(kit, args.sha256, args.offboard_stage) if args.offboard_stage else None
+    if phase != "verify-mos" and not offboard and (ota := olimex_vdp_ota.spec_for(kit)):
+        if path := olimex_vdp_ota.cached_restore(ota):
+            olimex_vdp_ota.require_cache_receipt(path, ota["restore_app"])
     config = bench_process.read(args.config) if args.config else None
     if config is not None and phase != "verify-mos":
         runtime_preflight(kit, config)

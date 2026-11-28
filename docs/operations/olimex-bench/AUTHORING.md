@@ -46,8 +46,8 @@ when reviewing the run.
    [staging policy](README.md#stage-the-fixtures) for the actual transfer.
    For routine jobs omit `schema` or set it to `3`. Both `fixture` and named
    `fixtures` use P4-staged UART by default. Existing schema-3 jobs with
-   `"transfer": "uart"` use the same route. Set `"transfer": "parlio"` only
-   for a parallel job explicitly admitted by Smith.
+   `"transfer": "uart"` use the same route. Use schema 3 and UART while the
+   restriction is in effect.
    Use a fresh SD namespace. For additional files, add an `inputs` array
    under `fixture`, with an `sd_path` and a pinned `source` for each file.
    Obtain the startup and listener hashes from the commissioned bench record.
@@ -56,15 +56,15 @@ when reviewing the run.
    - For `emos`, provide `candidate_write` and `restore_write`, each a
      complete 128 KiB ROM.
    - For `mainboard`, use [the FLASH manifest](#mainboard-flash-jobs).
-   - For `p4` or an admitted mainboard USB job, provide `offset`, `partition_bytes`,
+   - For `p4`, provide `offset`, `partition_bytes`,
      `write_bytes`, `partition_table`, and the `candidate_app`,
      `restore_app`, `candidate_write` and `restore_write` pins.
      The owner supplies the commissioned layout and write extent. Each
      write file contains its application padded to that extent with `0xff`.
 5. Run the bench runner's offline `preflight` from the checkout root.
-   Confirm that it lists the expected phases. Check the staging command
-   against the transfer policy separately. Preflight checks local job inputs
-   and phase selection. Preserve the manifest hash with the job. For a job
+   Confirm that it lists the expected phases. Preflight checks the current
+   transfer and mainboard FLASH restrictions, local inputs, and phase
+   selection. Preserve the manifest hash with the job. For a job
    reserved for the Author to invoke, the packet
    supplies the exact command and uses the bench guide's staging boundary.
 
@@ -117,7 +117,9 @@ analysis of the report contents.
 For an arm with native UART output that may outlast the application, include
 `"uart_end": {"prefix": "PNT ", "line": "PNT end retained=128", "seconds": 30}`
 with the fixture's actual diagnostic prefix, complete terminator line and
-maximum wait after application return. For timing firmware that shares USB
+maximum wait after application return. Historical, explicitly admitted
+PARLIO jobs use the pattern below. The current UART-only runner rejects it.
+For timing firmware that shares USB
 UART with MOS's printer mirror, an explicitly admitted `"transfer": "parlio"`
 job supports a `listener_handoff` object with a
 fresh `sd_path` under the arm's directory and a pinned `source` for this
@@ -168,8 +170,8 @@ preparation, restore, and handback phases.
 ## Check observer and flash dependencies
 
 Use the actual worker interpreter and supply the commissioned config to
-offline preflight. Mainboard app0 and P4 jobs both use standalone esptool
-5.1.0 from the runner's interpreter for programming and paired startup.
+offline preflight. The runner uses standalone esptool 5.1.0 for P4 programming,
+paired startup, and independent read-only mainboard verification after FLASH.
 A manifest-only preflight without the config checks the packet and lists
 phases. When an
 existing adapter uses these operations, call `runtime_preflight(kit, config)`

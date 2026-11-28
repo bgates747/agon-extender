@@ -2,18 +2,20 @@
 
 ## Mainboard file transfer default and current restriction
 
-The standard runner uses P4-staged UART for fixture uploads and report
-downloads. Until Smith lifts the UART-only restriction, use UART for all
-mainboard file transfers. If a required transfer cannot use UART, follow
-the bench stop procedure.
+The standard runner uses schema 3 and P4-staged UART for fixture uploads
+and report downloads. Until Smith lifts the UART-only restriction, all
+mainboard file transfers use UART. Preflight rejects legacy and PARLIO
+manifests. Use [offboard staging](AUTHORING.md#author-approved-offboard-sd-staging)
+when Smith has approved a physical SD-card copy. Follow the bench stop
+procedure if a required transfer cannot proceed.
 
 ## Temporary mainboard VDP flashing rule
 
 Until Smith lifts this restriction, use only the FLASH utility for mainboard
-VDP and VDPlet firmware changes on Olimex, including restoration. This
-supersedes esptool instructions for the mainboard VDP in this guide and in
-job packets. If FLASH cannot perform the required change, follow the bench
-stop procedure.
+VDP and VDPlet firmware changes on Olimex, including restoration. Preflight
+requires `firmware.mainboard.method` to be `agon-flash`. The USB programmer
+may read back a newly written image for verification. If FLASH cannot
+perform the required change, follow the bench stop procedure.
 
 For a new or adapted fixture, start with [Prepare an Olimex test job](AUTHORING.md).
 
@@ -199,17 +201,13 @@ UART, and EMOS accesses the mainboard SD card. The runner records the
 carrier on each completed file transfer and exits the listener after each
 successful phase. Use a fresh SD path for each payload and result.
 
-An explicitly admitted parallel job sets `"transfer": "parlio"` in its
-schema-3 manifest and uses the matched firmware with
-`EMOS sdserve --fast --parallel /`. Omit this option while the UART-only
-restriction is in force. Older schema-1 and schema-2 manifests retain their
-historical transfer methods. Use schema 3 for routine bench operation.
-
-Skip CRCs, substitute payload digests and verification reads of staged
-contents on both ends. Local input hashes identify the files before the
-job, and the fixture's result checks still determine the test outcome.
-Verify firmware writes independently. If a required capability is missing
-or a transfer or test fails, follow the [stop rule](#stop-on-an-unexpected-problem).
+For ordinary fixture file transfers, use the existing UART protocol with
+no supplemental payload checksums or verification reads. Local input
+hashes identify the files before the job, and the fixture's result checks
+determine the test outcome. For test firmware, use FLASH's on-card CRC to
+verify the file transfer. Verify firmware writes independently. If a
+required capability is missing or a transfer or test fails, follow the
+[stop rule](#stop-on-an-unexpected-problem).
 Arrange a separate, explicit compatibility method in the job packet if
 custom firmware requires one.
 
@@ -338,26 +336,18 @@ phases. A human verdict requires no script or synthetic result file.
 
 ### Firmware methods used by the phase runner
 
-During the temporary rule, use the standard mainboard phases with
-`firmware.mainboard.method` set to `agon-flash`. The Pi stages both pinned raw
-applications over UART. The installed FLASH v1.9 utility writes and selects
-the alternate slot. The runner verifies that selection and the exact
-application through one bounded read-only USB programmer session after each
+Use the standard mainboard phases with `firmware.mainboard.method` set to
+`agon-flash`. The Pi stages the pinned candidate over UART and reuses the
+recorded on-card copy for a standard or rollback restore. FLASH v1.9 reports
+the CRC before it writes and selects the alternate slot. The runner verifies
+that selection and the exact application through one bounded read-only USB
+programmer session after each
 write, then restarts Agon and proves MOS responds. The authorized packet must
 cover both read-only sessions and the declared production return slot. See
 [mainboard FLASH jobs](AUTHORING.md#mainboard-flash-jobs) for the manifest.
 
-When Smith admits USB programming again, the legacy app0 path uses the
-commissioned `install-mainboard` and `restore-mainboard` phases as described
-below. The Pi programs the mainboard directly through its USB port.
-
-The separate verified-OTA fallback uses a commissioned packet and a
-VDPlet receiver that supports that protocol. Ordinary FLASH v1.9 uses the
-stock receiver and the independent read-only verification above.
-
 | Phase | What the Pi operator does |
 | --- | --- |
-| Mainboard VDPlet | Use the runner's standalone esptool 5.1.0 in one classic ESP32 programmer session. Enter ROM at 115,200 baud, verify the MAC, start the stub, and change to 460,800 baud. Verify the partition table and app0 selector, write the job extent at `0x10000` with flash mode, size and frequency set to `keep`, and independently compare the full readback. Hold Agon reset, restart the installed P4 and wait for its boot-pad release. Release Agon reset and prove a working CLI. |
 | Extender VDP | Hold the Agon reset through its commissioned USB RTS circuit. Use stock esptool 5.1.0 on the P4 USB at 460,800 baud. Read the partition table and OTA selector, write app0 at `0x20000` with all three flash settings set to `keep`, and independently compare the written extent. Restart the P4 once and wait for its boot-pad release. Release Agon reset, then prove a working CLI. |
 | EMOS | At the Legacy CLI, run the prepared `FLASH mos … -f` for the staged ROM. Wait for the updater to restart and admit input. Use `SAVE` to read the full 128 KiB ROM, retrieve it from the SD listener, compare it with the requested image and exit the listener. |
 

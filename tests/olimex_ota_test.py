@@ -33,6 +33,14 @@ class UartOnly(TestCase):
             self.runner.start_listener("stage", bench.PARALLEL_LISTENER)
         self.runner.type_line.assert_not_called()
 
+    def test_commissioned_policy_rejects_legacy_transfer_or_mainboard_writer(self):
+        for kit in ({"schema": 2, "firmware": {}}, {"transfer": "parlio", "firmware": {}},
+                    {"firmware": {"mainboard": {"candidate_write": {}}}}):
+            with self.subTest(kit=kit), self.assertRaisesRegex(ValueError, "Current Olimex"):
+                bench.require_commissioned_policy(kit)
+        bench.require_commissioned_policy({"firmware": {"mainboard": {"method": "agon-flash"}}})
+        bench.require_commissioned_policy({"firmware": {"p4": {}}})
+
     def test_uart_phases_stage_bulk_in_both_directions_and_keep_metadata_separate(self):
         self.runner.start_listener = MagicMock()
         self.runner.validate_ports = MagicMock()
