@@ -157,6 +157,30 @@ The [restore archive](../../../dist/bench-standards/vdplet-v0.1.4-alpha-async-r1
 contains the raw app, the historical padded form and the previous v0.1.3-alpha
 baseline under `rollback/`. FLASH takes the unpadded application.
 
+### SD copies for normal FLASH restores and recovery
+
+The Agon SD card keeps the two raw applications below. The runner checks the
+matching recovery file's size before staging any fixture or candidate. During
+restore it reads FLASH v1.9's on-card CRC before confirming the write, then
+independently verifies the selected app bytes and MOS as usual. Routine UART
+staging uploads the candidate and fixtures. It reuses the SD copy for restore.
+Stop if the copy is missing or fails verification and contact the bench owner.
+
+| Role | Agon SD path | FLASH v1.9 input CRC |
+| --- | --- | --- |
+| Standard | `/extender/recovery/vdp/vdp-vdplet-0.1.4-alpha.bin` | `D343911F` |
+| Previous standard rollback | `/extender/recovery/vdp/vdp-vdplet-0.1.3-alpha.bin` | `09AA9F2F` |
+
+For authorized manual recovery from a working MOS prompt, run `FLASH vdp`
+with the appropriate full SD path. Compare the displayed CRC before confirming.
+FLASH switches to the other app slot. Verify the actual selected slot and
+written bytes under the normal handback procedure. The recovery file is
+available even if the Pi-to-Agon file-transfer service is down.
+
+The Extender owner verifies both files when commissioning a card or changing
+the default. [Provision the recovery copies](../../../production/olimex-bench-firmware.md#provision-the-sd-recovery-copies).
+Explicit offboard-stage packets use their own frozen paths and evidence.
+
 ### Stage the fixtures
 
 Use schema 3 (the default manifest schema) for single and named fixtures.
@@ -278,7 +302,7 @@ job inputs.
 
 | Phase | Operator effect |
 | --- | --- |
-| `stage` | Creates job directories and stages the fixture and assets through P4 over UART by default, without routine payload readbacks. For EMOS or mainboard FLASH jobs, stages the corresponding install and restore files. Exits the foreground listener. |
+| `stage` | Creates job directories and stages fixture and candidate files through P4 over UART by default. For mainboard FLASH jobs it checks the published standard or rollback SD copy before staging. EMOS jobs stage their install and restore files. Exits the foreground listener. |
 | `install-mainboard`, `install-p4`, `install-emos` | Run only phases printed by preflight. Write the approved image after confirming its target. Verify the installed bytes using the method below. Bring the component back to a verified CLI. |
 | `run` | For a job with an operator-started Legacy fixture, witness the CLI, issue one `LOAD` and one `RUN`, then collect the specified result. Each physical phase produces a durable process receipt. |
 | `run-ID` | For a named arm, witness its working directory, issue one `LOAD` and one invocation, and keep the same UART reader open through any configured terminator. Follow the [authoring guide](AUTHORING.md) for a native-UART job with MOS-managed listener handoff. Collect reports in the arm's evidence directory. |

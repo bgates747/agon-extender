@@ -228,8 +228,11 @@ Use the normal runner preflight and configuration. Include evidence from
 checkout that the currently selected production app matches `restore_slot`
 and `restore_app`. Use the [current restore pins](README.md#production-restore-images).
 Rebind any prepared packet with stale restore pins before staging and rerun
-preflight. Preserve already-frozen execution evidence. An unresolved current image blocks the job. Stage both
-apps and the fixture files. Run `install-mainboard`, the named arms in
+preflight. Preserve already-frozen execution evidence. An unresolved current
+image blocks the job. Keep both host app pins in the manifest. The runner
+stages the new app and fixtures and checks the versioned SD copy for a
+standard or previous-standard restore. Explicit offboard staging keeps the
+paths declared in its evidence. Run `install-mainboard`, the named arms in
 manifest order, `restore-mainboard` and `handback`.
 
 The Pi checks the installed FLASH v1.9 utility over UART and witnesses its

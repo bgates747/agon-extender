@@ -27,3 +27,29 @@ job after a mainboard standard change, verify the current OTA slot at checkout, 
 and slot to the new standard, and rerun preflight. Retained padded files
 serve legacy records and expressly authorized recovery procedures. A deliberate
 old-firmware comparison keeps its selected test image.
+
+## Provision the SD recovery copies
+
+Before handing back a new production selection or a replacement SD card,
+the Extender owner checks the standard and previous-standard recovery files
+under `/extender/recovery/vdp`. The maintained tool uploads missing files over
+P4-staged UART and reads each file back once for exact SHA-256 verification.
+It preserves existing files on conflict. Keep the joined handback and
+both `*-verified.json` receipts. An ordinary restore reuses the same SD copy.
+
+Use the commissioned checkout, local bench config and its SHA-256, operator
+chat ID, live scheduler-state path and a fresh output directory. Run the same
+command first with `preflight` and then with `provision` under the granted slot
+and normal joined process procedure.
+
+```bash
+.venv/bin/python scripts/olimex_vdp_cache.py \
+  --config BENCH.local.json --config-sha256 CONFIG_SHA256 \
+  --lease-state SCHEDULER_STATE --operator OPERATOR_CHAT_ID \
+  --out EVIDENCE_DIR preflight
+```
+
+During `provision`, the tool verifies MOS on entry and handback and checks
+that the transfer listener is stopped and ports are free. Apply the normal
+bench stop procedure on failure. This procedure prepares SD files and never
+invokes FLASH.

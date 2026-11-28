@@ -37,6 +37,26 @@ def staging_path(target, selection):
     return f"{target.install_dir}/{selection}-vdp.bin"
 
 
+def cache_images():
+    """Derive card paths and host pins from the commissioned firmware standard."""
+    standard = Path(__file__).resolve().parents[1] / "docs/olimex-firmware-standard.json"
+    vdp = read(standard)["vdp"]
+    images = {}
+    for item in (vdp, vdp["supersedes"]):
+        version = item["version"]
+        filename = f"vdp-vdplet-{version[1:]}.bin"
+        local = (standard.parent / item["retained_assets"] / filename).resolve()
+        remote = f"/extender/recovery/vdp/{filename}"
+        images[remote] = {"path": str(local), "bytes": item["bytes"], "sha256": item["sha256"]}
+    return images
+
+
+def cached_restore(spec):
+    app = spec["restore_app"]
+    return next((remote for remote, pin in cache_images().items()
+                 if (pin["bytes"], pin["sha256"]) == (app["bytes"], app["sha256"])), None)
+
+
 def validate(spec, pinned):
     fields = {"method", "candidate_app", "restore_app", "partition_table",
               "candidate_slot", "restore_slot"}
@@ -142,6 +162,11 @@ def stage_proof(target, root, selection, app):
         if read(root / "stage" / "offboard-stage.json") != target.offboard:
             raise RuntimeError("Offboard staging proof differs from the admitted job")
         return
+    if selection == "restore" and (path := cached_restore(spec_for(target.kit))):
+        expected = {"path": path, "bytes": app["bytes"], "sha256": app["sha256"]}
+        if read(root / "stage" / "flash-restore-cache.json") != expected:
+            raise RuntimeError(f"FLASH restore cache evidence differs from the pinned image for {path}")
+        return
     path = staging_path(target, selection)
     receipts = [file for file in (root / "stage").glob("stage-file-*.receipt.json")
                 if read(file)["target"] == path]
@@ -167,9 +192,9 @@ def check_updater(target):
                                             "sha256": FLASH_SHA, "payload_carrier": transfer["payload_carrier"]})
 
 
-def invoke_flash(target, selection, app, begin):
+def invoke_flash(target, selection, app, begin, *, cached_path=None, expected_crc=None):
     before = target.keyboard()
-    path = staging_path(target, selection)
+    path = cached_path or staging_path(target, selection)
     with open_passive_serial(target.c["ports"][0], timeout=0.2) as reader:
         with (target.out / "vdp-usb.bin").open("xb") as capture:
             observer = Observer(reader, capture, target.type_line)
@@ -179,8 +204,18 @@ def invoke_flash(target, selection, app, begin):
 
             def confirmation(data):
                 lines, tail = returned_output(data, command, prompt)
-                return (tail is not None and any(FLASH_BANNER in line for line in lines)
-                        and (tail == FLASH_PROMPT or FLASH_PROMPT in lines))
+                if tail is None or not any(FLASH_BANNER in line for line in lines):
+                    return False
+                if tail != FLASH_PROMPT and FLASH_PROMPT not in lines:
+                    return False
+                if cached_path:
+                    actual = [line for line in lines if line.startswith(b"VDP CRC ")]
+                    if actual != [f"VDP CRC 0x{expected_crc:08X}".encode("ascii")]:
+                        raise RuntimeError(f"FLASH did not confirm the expected on-card CRC for {path}")
+                    record(target.out / "flash-restore-input.json", {
+                        "path": path, "crc32": f"{expected_crc:08X}", "sha256": app["sha256"],
+                    })
+                return True
 
             observer.exchange("ota-confirmation", command, confirmation, 25)
             target.keyboard()
@@ -252,7 +287,9 @@ def replace(target, spec, selection, image, table, begin):
                                            "offboard_verification_sha256": target.offboard["verification_sha256"]})
     else:
         check_updater(target)
-    boot_before_flash = invoke_flash(target, selection, spec[f"{selection}_app"], begin)
+    cached = cached_restore(spec) if selection == "restore" and not target.offboard else None
+    boot_before_flash = invoke_flash(target, selection, spec[f"{selection}_app"], begin,
+                                     cached_path=cached, expected_crc=zlib.crc32(image) if cached else None)
     reboot_pair(target, boot_before_flash)
     mos_witness(target, "after-flash-mos")
     target.validate_ports()

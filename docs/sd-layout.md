@@ -11,6 +11,7 @@ before reuse. No user application directories were relocated.
 | `/extender` | Maintained Extender support files and fixtures |
 | `/extender/install` | Installer/bootstrap scripts and payloads; consumed historical payloads in `archive` |
 | `/extender/recovery` | Documented recovery firmware; select by verified identity, never merely by filename |
+| `/extender/recovery/vdp` | Versioned Olimex raw VDPlet applications for standard FLASH restores and rollback |
 | `/agents/extender/results` | Agent measurement records and run-control evidence |
 | `/agents/extender/fixtures` | Archived agent fixtures |
 | `/agents/extender/backups/startup` | Historical startup copies |

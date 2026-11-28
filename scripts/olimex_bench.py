@@ -186,7 +186,9 @@ def stage_seconds(kit):
         return 300
     files = [spec for job in fixture_runs(kit).values() for spec in fixture_inputs(job).values()]
     if ota := olimex_vdp_ota.spec_for(kit):
-        files.extend(ota[f"{selection}_app"] for selection in ("candidate", "restore"))
+        files.append(ota["candidate_app"])
+        if not olimex_vdp_ota.cached_restore(ota):
+            files.append(ota["restore_app"])
     seconds = 300
     if emos := kit["firmware"].get("emos"):
         files.extend(emos[f"{selection}_write"] for selection in ("candidate", "restore"))
@@ -444,6 +446,7 @@ class Bench:
             sources = {job["sd_program"]: job["agon"]}
         payloads = {destination: pinned(spec) for destination, spec in sources.items()}
         expected_absent = []
+        restore_cache = None
         if include_emos and "emos" in self.kit["firmware"]:
             firmware_inputs, expected_absent = self.emos_install_inputs()
             payloads.update(firmware_inputs)
@@ -456,9 +459,14 @@ class Bench:
                 "companions": olimex_vdp_ota.companion_pins(inventory),
             })
             if not self.offboard:
-                for selection in ("candidate", "restore"):
-                    path = olimex_vdp_ota.staging_path(self, selection)
-                    payloads[path] = pinned(ota[f"{selection}_app"])
+                path = olimex_vdp_ota.staging_path(self, "candidate")
+                payloads[path] = pinned(ota["candidate_app"])
+                if path := olimex_vdp_ota.cached_restore(ota):
+                    app = ota["restore_app"]
+                    restore_cache = {"path": path, "bytes": app["bytes"], "sha256": app["sha256"]}
+                else:
+                    path = olimex_vdp_ota.staging_path(self, "restore")
+                    payloads[path] = pinned(ota["restore_app"])
         if getattr(self, "offboard", None):
             bench_process.record(self.out / "offboard-stage.json", self.offboard)
             return
@@ -473,8 +481,10 @@ class Bench:
 
         if schema in (2, 3):
             results = [path for job in jobs for path in fixture_results(job)]
-            stage = self.stage_uart if uart_transfer(self.kit) else self.stage_parallel
-            stage(payloads, [*results, *expected_absent], existing)
+            if uart_transfer(self.kit):
+                self.stage_uart(payloads, [*results, *expected_absent], existing, restore_cache=restore_cache)
+            else:
+                self.stage_parallel(payloads, [*results, *expected_absent], existing)
             return
 
         def transfer(client):
@@ -508,12 +518,18 @@ class Bench:
 
         self.listener("stage", LISTENER, transfer)
 
-    def stage_uart(self, payloads, result_paths, existing):
+    def stage_uart(self, payloads, result_paths, existing, *, restore_cache=None):
         with self.uart_listener("stage"):
             targets = [*payloads, *result_paths]
             client = Client(self.url, self.out / "sd-stage-metadata.json", timeout=12)
             try:
                 client.connect(require_fast=True)
+                if restore_cache:
+                    path = restore_cache["path"]
+                    entry = existing(client, path)
+                    if entry is None or entry[0] != restore_cache["bytes"] or entry[1] & 0x10:
+                        raise RuntimeError(f"Provision the expected FLASH recovery image before staging: {path}")
+                    bench_process.record(self.out / "flash-restore-cache.json", restore_cache)
                 for directory in sorted({str(PurePosixPath(path).parent) for path in targets}):
                     client.make_directory(directory, parents=True)
                 for path in targets:

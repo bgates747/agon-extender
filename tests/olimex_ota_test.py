@@ -90,6 +90,23 @@ class UartOnly(TestCase):
         self.assertTrue((self.runner.out / "stage-file-00.bin").exists())
         self.assertFalse((self.runner.out / "stage-file-00.receipt.json").exists())
 
+    def test_durable_restore_is_checked_before_any_upload(self):
+        self.runner.uart_listener = MagicMock()
+        self.runner.staged_uart = MagicMock(return_value={
+            "payload_carrier": "uart", "bytes": 3, "id": 1,
+        })
+        cache = {"path": "/extender/recovery/vdp/production.bin", "bytes": 10, "sha256": "a" * 64}
+        with patch.object(bench, "Client"):
+            with self.assertRaisesRegex(RuntimeError, "Provision"):
+                self.runner.stage_uart({"/test/demo/app.bin": b"app"}, [],
+                                       lambda client, path: None, restore_cache=cache)
+            self.runner.staged_uart.assert_not_called()
+            self.runner.stage_uart({"/test/demo/app.bin": b"app"}, [],
+                                   lambda client, path: (10, 0) if path == cache["path"] else None,
+                                   restore_cache=cache)
+        self.assertEqual(self.runner.staged_uart.call_args.args[1:], ("put", "/test/demo/app.bin"))
+        self.assertEqual(bench.bench_process.read(self.runner.out / "flash-restore-cache.json"), cache)
+
     def test_handback_retains_mos_evidence_if_transfer_status_is_unavailable(self):
         self.runner.kit["firmware"] = {}
         self.runner.verify_mos = MagicMock()
@@ -247,6 +264,38 @@ class FlashPath(TestCase):
                 if issued:
                     self.assertEqual(keyboard.call_args.args[0][-2:], ["type", "y"])
                 self.assertEqual((Path(folder) / "ota-reboot-announced.json").exists(), fault is None)
+
+    def test_cached_restore_requires_the_card_crc_before_confirming(self):
+        path = "/extender/recovery/vdp/production.bin"
+        crc = zlib.crc32(self.image)
+        for observed in (None, crc ^ 1, crc):
+            with (self.subTest(observed=observed), TemporaryDirectory() as folder,
+                  patch.object(ota, "open_passive_serial"), patch.object(ota, "Observer") as observer_type,
+                  patch.object(ota.subprocess, "run") as keyboard, patch.object(ota.time, "sleep")):
+                self.target.out = Path(folder)
+                observer = observer_type.return_value
+                observer.witness.return_value = b"/ *"
+                begin = MagicMock()
+
+                def exchange(_label, command, predicate, _seconds):
+                    self.assertEqual(command, f"flash vdp {path}")
+                    data = f"/ *{command}\r\n".encode() + ota.FLASH_BANNER + b"\r\n"
+                    if observed is not None:
+                        data += f"VDP CRC 0x{observed:08X}\r\n".encode()
+                    self.assertTrue(predicate(data + ota.FLASH_PROMPT))
+
+                observer.exchange.side_effect = exchange
+                if observed == crc:
+                    ota.invoke_flash(self.target, "restore", self.app, begin,
+                                     cached_path=path, expected_crc=crc)
+                    begin.assert_called_once()
+                    keyboard.assert_called_once()
+                else:
+                    with self.assertRaisesRegex(RuntimeError, "on-card CRC"):
+                        ota.invoke_flash(self.target, "restore", self.app, begin,
+                                         cached_path=path, expected_crc=crc)
+                    begin.assert_not_called()
+                    keyboard.assert_not_called()
 
 
 class OffboardStage(TestCase):
