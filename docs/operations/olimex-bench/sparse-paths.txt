@@ -31,5 +31,6 @@
 /production/README.md
 /production/current.yaml
 /production/olimex-bench-firmware.md
+/production/olimex-sd-firmware.json
 /production/companions/
 /production/bundles/olimex-parlio-v0.3.0/bundle.yaml

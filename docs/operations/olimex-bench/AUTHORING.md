@@ -230,14 +230,18 @@ and `restore_app`. Use the [current restore pins](README.md#production-restore-i
 Rebind any prepared packet with stale restore pins before staging and rerun
 preflight. Preserve already-frozen execution evidence. An unresolved current
 image blocks the job. Keep both host app pins in the manifest. The runner
-stages the new app and fixtures and checks the versioned SD copy for a
-standard or previous-standard restore. Explicit offboard staging keeps the
+stages the new app and fixtures and checks the published receipt and file
+metadata of the versioned SD copy for a standard or previous-standard
+restore. Explicit offboard staging keeps the
 paths declared in its evidence. Run `install-mainboard`, the named arms in
 manifest order, `restore-mainboard` and `handback`.
 
-The Pi checks the installed FLASH v1.9 utility over UART and witnesses its
-confirmation prompt before sending one `y`. It requires the checksum and
-reboot messages. After each write it reads the partition table, OTA selector
+The Pi checks the installed FLASH v1.9 utility over UART. FLASH reads the
+candidate or restore file on the Agon SD card and prints its CRC. The Pi
+compares that small report with the pinned image before sending one `y`.
+The CRC is the verification of a test image's transfer to SD. Never copy the
+whole test image back to the Pi for transfer verification. The Pi requires
+the checksum and reboot messages. After each write it reads the partition table, OTA selector
 and selected application's exact bytes in one bounded USB programmer session
 at 115,200 baud. The Pi closes that session, restarts Agon and proves MOS is
 responsive before publishing the installed identity. The job must explicitly

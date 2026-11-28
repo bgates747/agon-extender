@@ -463,6 +463,7 @@ class Bench:
                 payloads[path] = pinned(ota["candidate_app"])
                 if path := olimex_vdp_ota.cached_restore(ota):
                     app = ota["restore_app"]
+                    olimex_vdp_ota.require_cache_receipt(path, app)
                     restore_cache = {"path": path, "bytes": app["bytes"], "sha256": app["sha256"]}
                 else:
                     path = olimex_vdp_ota.staging_path(self, "restore")

@@ -12,6 +12,7 @@ import zlib
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import olimex_bench as bench
+import olimex_vdp_cache as cache
 import olimex_vdp_ota as ota
 
 
@@ -237,8 +238,11 @@ class FlashPath(TestCase):
                 observer.witness.return_value = b"/ *"
                 journal = MagicMock()
 
+                expected_crc = zlib.crc32(self.image)
+
                 def exchange(_label, command, predicate, _seconds):
                     capture = b"/ *" + command.encode() + b"\r\n\x0c" + ota.FLASH_BANNER + b"\r\n"
+                    capture += f"VDP CRC 0x{expected_crc:08X}\r\n".encode()
                     if fault != "missing-prompt":
                         capture += ota.FLASH_PROMPT + b"\r\n\r\n"
                     if not predicate(capture):
@@ -255,9 +259,10 @@ class FlashPath(TestCase):
                 observer.receive.side_effect = receive
                 if fault:
                     with self.assertRaises(TimeoutError):
-                        ota.invoke_flash(self.target, "candidate", self.app, journal)
+                        ota.invoke_flash(self.target, "candidate", self.app, journal, expected_crc=expected_crc)
                 else:
-                    self.assertEqual(ota.invoke_flash(self.target, "candidate", self.app, journal), 1)
+                    self.assertEqual(ota.invoke_flash(self.target, "candidate", self.app, journal,
+                                                      expected_crc=expected_crc), 1)
                 issued = fault != "missing-prompt"
                 self.assertEqual(journal.call_count, int(issued))
                 self.assertEqual(keyboard.call_count, int(issued))
@@ -265,11 +270,12 @@ class FlashPath(TestCase):
                     self.assertEqual(keyboard.call_args.args[0][-2:], ["type", "y"])
                 self.assertEqual((Path(folder) / "ota-reboot-announced.json").exists(), fault is None)
 
-    def test_cached_restore_requires_the_card_crc_before_confirming(self):
-        path = "/extender/recovery/vdp/production.bin"
+    def test_candidate_and_restore_require_the_card_crc_before_confirming(self):
         crc = zlib.crc32(self.image)
-        for observed in (None, crc ^ 1, crc):
-            with (self.subTest(observed=observed), TemporaryDirectory() as folder,
+        for selection, observed in (("candidate", None), ("candidate", crc ^ 1), ("restore", crc)):
+            cached = "/extender/recovery/vdp/production.bin" if selection == "restore" else None
+            path = cached or ota.staging_path(self.target, selection)
+            with (self.subTest(selection=selection, observed=observed), TemporaryDirectory() as folder,
                   patch.object(ota, "open_passive_serial"), patch.object(ota, "Observer") as observer_type,
                   patch.object(ota.subprocess, "run") as keyboard, patch.object(ota.time, "sleep")):
                 self.target.out = Path(folder)
@@ -286,16 +292,58 @@ class FlashPath(TestCase):
 
                 observer.exchange.side_effect = exchange
                 if observed == crc:
-                    ota.invoke_flash(self.target, "restore", self.app, begin,
-                                     cached_path=path, expected_crc=crc)
+                    ota.invoke_flash(self.target, selection, self.app, begin,
+                                     cached_path=cached, expected_crc=crc)
+                    self.assertEqual(bench.bench_process.read(self.target.out / "flash-sd-input.json")["path"], path)
                     begin.assert_called_once()
                     keyboard.assert_called_once()
                 else:
                     with self.assertRaisesRegex(RuntimeError, "on-card CRC"):
-                        ota.invoke_flash(self.target, "restore", self.app, begin,
-                                         cached_path=path, expected_crc=crc)
+                        ota.invoke_flash(self.target, selection, self.app, begin,
+                                         cached_path=cached, expected_crc=crc)
                     begin.assert_not_called()
                     keyboard.assert_not_called()
+
+
+class RecoveryCard(TestCase):
+    def test_only_initial_deployment_reads_the_full_file(self):
+        with TemporaryDirectory() as folder, patch.object(cache, "Client") as client:
+            local = Path(folder)
+            source = local / "app.bin"
+            source.write_bytes(b"new firmware")
+            old = "/extender/recovery/vdp/old.bin"
+            new = "/extender/recovery/vdp/new.bin"
+            old_pin = {"bytes": 11, "sha256": "a" * 64}
+            new_pin = {"path": str(source), "bytes": 12, "sha256": sha256(source.read_bytes()).hexdigest()}
+            receipts = {old: old_pin | {"method": "uart-readback-byte-compare", "receipt_sha256": "b" * 64}}
+            images = {old: old_pin, new: new_pin}
+            target = MagicMock()
+            target.out = local
+            client.return_value.stat_entry.side_effect = [(11, 0), cache.RemoteError(
+                "missing", status=6, detail=b"\x04")]
+
+            def transfer(label, mode, path, **args):
+                self.assertEqual(path, new)
+                if mode == "get":
+                    args["destination"].write_bytes(source.read_bytes())
+
+            target.staged_uart.side_effect = transfer
+            cache.provision(target, images, receipts)
+            self.assertEqual([entry.args[1] for entry in target.staged_uart.call_args_list], ["put", "get"])
+            self.assertTrue((local / "old-present.json").exists())
+            verified = bench.bench_process.read(local / "new-verified.json")
+            self.assertEqual(verified["sha256"], new_pin["sha256"])
+
+            target.out = local / "repeat"
+            target.out.mkdir()
+            target.staged_uart.reset_mock()
+            client.return_value.stat_entry.side_effect = [(11, 0), (12, 0)]
+            receipts[new] = verified | {"receipt_sha256": "c" * 64}
+            cache.provision(target, images, receipts)
+            target.staged_uart.assert_not_called()
+            self.assertTrue((target.out / "new-present.json").exists())
+            with self.assertRaisesRegex(ValueError, "unrecorded"):
+                cache.provision(target, images, receipts, verify_existing=new)
 
 
 class OffboardStage(TestCase):

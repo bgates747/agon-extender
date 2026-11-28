@@ -159,12 +159,19 @@ baseline under `rollback/`. FLASH takes the unpadded application.
 
 ### SD copies for normal FLASH restores and recovery
 
-The Agon SD card keeps the two raw applications below. The runner checks the
-matching recovery file's size before staging any fixture or candidate. During
-restore it reads FLASH v1.9's on-card CRC before confirming the write, then
-independently verifies the selected app bytes and MOS as usual. Routine UART
-staging uploads the candidate and fixtures. It reuses the SD copy for restore.
-Stop if the copy is missing or fails verification and contact the bench owner.
+The Agon SD card keeps the two raw applications below. Each was verified once
+by a full byte comparison when deployed. The runner checks the
+[current SD firmware receipts](../../../production/olimex-sd-firmware.json)
+and the matching file's directory metadata before staging. Routine jobs reuse
+these files. Repeat a full SD readback only for a specific, documented reason,
+such as replacing the card, a missing file, or an unexpected CRC.
+
+For candidate installation and restore, FLASH v1.9 calculates the file CRC
+on the Agon. The runner compares the displayed value before confirming.
+That CRC verifies a test image's transfer to SD. A bench firmware test can
+return metadata about the file and must never send the whole test image back
+for transfer verification. After FLASH writes a new image, verify the selected
+app bytes and MOS as usual. Stop if the SD copy is missing or its CRC differs.
 
 | Role | Agon SD path | FLASH v1.9 input CRC |
 | --- | --- | --- |
@@ -177,8 +184,9 @@ FLASH switches to the other app slot. Verify the actual selected slot and
 written bytes under the normal handback procedure. The recovery file is
 available even if the Pi-to-Agon file-transfer service is down.
 
-The Extender owner verifies both files when commissioning a card or changing
-the default. [Provision the recovery copies](../../../production/olimex-bench-firmware.md#provision-the-sd-recovery-copies).
+The Extender owner records initial verification when provisioning a new
+image or a replacement card. An already verified rollback keeps its receipt.
+[Provision the recovery copies](../../../production/olimex-bench-firmware.md#provision-the-sd-recovery-copies).
 Explicit offboard-stage packets use their own frozen paths and evidence.
 
 ### Stage the fixtures

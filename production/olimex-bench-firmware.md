@@ -31,12 +31,24 @@ old-firmware comparison keeps its selected test image.
 ## Provision the SD recovery copies
 
 Before handing back a new production selection or a replacement SD card,
-the Extender owner checks the standard and previous-standard recovery files
-under `/extender/recovery/vdp`. The maintained tool checks existing file
-metadata and uploads only missing files over P4-staged UART. Keep the joined
-handback and both `*-provisioned.json` receipts. The operator or runner
-verifies the SD contents using FLASH's on-card CRC at the confirmation prompt
-during the restore. The recovery image never needs to be sent back over UART.
+the Extender owner ensures the standard and previous-standard raw images are
+available under `/extender/recovery/vdp`. Upload each newly deployed image
+and read it back once over P4-staged UART for a byte-for-byte comparison with
+the pinned release on the Pi. Retain the joined handback and the image's
+`*-verified.json` receipt. Publish the SD path, byte count, release SHA-256,
+verification date and method, evidence run, and receipt SHA-256 in
+[current SD firmware receipts](olimex-sd-firmware.json) before using the copy
+as the standard or rollback.
+
+Reuse existing receipts when the card and files are unchanged. A version
+moved from standard to rollback keeps its original receipt. Subsequent checks
+use file metadata and, during FLASH itself, the utility's on-card CRC. Repeat
+a full SD readback only for a documented reason such as a replaced card,
+lost file, or evidence of corruption. Reconcile the affected receipt first.
+For interrupted initial deployment, recover an existing verification receipt
+if available. If the upload finished and the file is still unrecorded, document
+that reason and use `--verify-existing SD_PATH` to complete that file's
+initial verification.
 
 Use the commissioned checkout, local bench config and its SHA-256, operator
 chat ID, live scheduler-state path and a fresh output directory. Run the same
@@ -52,5 +64,5 @@ and normal joined process procedure.
 
 During `provision`, the tool verifies MOS on entry and handback and checks
 that the transfer listener is stopped and ports are free. Apply the normal
-bench stop procedure on failure. This procedure prepares SD files and never
-invokes FLASH.
+bench stop procedure on failure. Provisioning prepares SD files. FLASH runs
+only during an authorized installation or restore.
