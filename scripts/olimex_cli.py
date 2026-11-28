@@ -40,6 +40,10 @@ def command_result(captured, command, prompt, *, success=None, failure=None, nex
     lines, tail = returned_output(captured, command, prompt)
     if tail is None:
         return False
+    if success is not None:
+        # The MOS printer mirror can emit VDU 12 before a fixture line.
+        # Keep the raw capture and ignore only leading form feeds for matching.
+        lines = [line.lstrip(b"\x0c") for line in lines]
     output = [line for line in lines if line]
     failed = next((line for line in output if failure and line.startswith(failure)), None)
     if failed is not None:

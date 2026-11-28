@@ -379,6 +379,17 @@ failed phase and follow the stop rule.
 
 ## Stop on an unexpected problem
 
+An observer formatting fault alone can be resolved by the operator within the
+approved job. Preserve the failed phase and retain the slot. Verify that the
+worker joined and that its raw capture proves the original command, the exact
+completion marker and a returned MOS prompt. A screen-clear byte immediately
+before the marker is allowed. Confirm the live bench state with a fresh MOS
+witness before any continuation. When the sole fault is a known observer
+mismatch, record the reconciliation and finish the original report collection
+and normal handback without a new approval or a fixture replay. Use a fresh
+evidence directory for the continuation. If the worker, fixture result or
+bench state is uncertain, apply the stop rule below.
+
 Use this rule for a failed transfer or test. Preserve the first failure and
 existing evidence. A completed transfer followed by a test failure is a reason
 to consider corruption during diagnosis. Any diagnostic readback happens as

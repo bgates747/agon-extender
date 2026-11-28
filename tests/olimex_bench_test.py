@@ -76,6 +76,17 @@ class TestObserver(unittest.TestCase):
         self.assertFalse(self.result(b"RUN &040000\r\nBENCH019 PASS\r\n"))
         self.assertTrue(self.result(b"/ *RUN &040000\r\n\rBENCH019 PASS\r\n/ *"))
 
+    def test_clear_screen_does_not_change_fixture_completion(self):
+        start = b"/ *RUN &040000\r\n\r"
+        self.assertTrue(self.result(start + b"\x0cBENCH019 PASS\r\n/ *"))
+        self.assertFalse(self.result(start + b"\x0cBENCH019 PASS\r\n"))
+        self.assertFalse(self.result(b"\x0cBENCH019 PASS\r\n/ *"))
+        for line in (b"prefix BENCH019 PASS", b"BENCH019\x0c PASS", b"\x0cBENCH019 PASS extra"):
+            with self.subTest(line=line), self.assertRaises(CliError):
+                self.result(start + line + b"\r\n/ *")
+        with self.assertRaisesRegex(CliError, "BENCH019 FAIL"):
+            self.result(start + b"\x0cBENCH019 FAIL\r\nBENCH019 PASS\r\n/ *")
+
     def test_cd_requires_the_new_prompt_after_the_command(self):
         reader = MagicMock(in_waiting=0)
         reader.read.side_effect = [b"/ *CD /test/full\r\n/test/fu", b"ll *"]
