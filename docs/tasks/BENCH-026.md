@@ -5,6 +5,10 @@ which operations move whole files, why each needs the bytes, and where metadata
 or an existing receipt can replace a transfer. It covers both the slow SD path
 and the intermittent mainboard USB programmer path.
 
+**Status:** audit complete on November 27, 2026. The [findings](BENCH-026/FINDINGS.md)
+identify the routine transfers that can be replaced with smaller proofs. The
+bench and runners were untouched.
+
 ## Scope and review boundary
 
 - Audit the commissioned Olimex guide, authoring and recovery procedures, the
@@ -37,15 +41,38 @@ and the intermittent mainboard USB programmer path.
 
 ## Work
 
-- BENCH-026-001 [ ] Freeze the exact live and published references and enumerate
+- BENCH-026-001 [x] Freeze the exact live and published references and enumerate
   entry points across maintained procedures and current commissioning packets.
 
-- BENCH-026-002 [ ] Trace and justify the SD, native UART and USB serial
+- BENCH-026-002 [x] Trace and justify the SD, native UART and USB serial
   payloads. Verify representative sizes and costs with saved records.
 
-- BENCH-026-003 [ ] Cross-check every route against procedure, implementation,
+- BENCH-026-003 [x] Cross-check every route against procedure, implementation,
   and evidence. Evaluate compact verification for USB and expose duplicates,
   hidden polling or downloads, and paths that cannot yet be justified.
 
-- BENCH-026-004 [ ] Publish the coverage and transfer ledger, list decisions
+- BENCH-026-004 [x] Publish the coverage and transfer ledger, list decisions
   and recommended order, and identify gaps without changing the bench.
+
+## Results
+
+The audit covered all 45 paths in the live commissioned sparse checkout,
+the published observer correction, linked maintained and fallback procedures,
+and discoverable current or recently executed job-local launchers.
+The [coverage inventory](BENCH-026/COVERAGE.md) records exact revisions,
+the sweep window and the limits on unauditable private or archived variants.
+
+- [USB serial](BENCH-026/USB-SERIAL.md) covers both programmers, console/reset
+  traffic, incident reads and available flash digest proof.
+- [SD UART](BENCH-026/SD-UART.md) covers input/output files, repeated reads
+  of resident tools, exceptions and measured carrier costs.
+- [Onboard Agon UART](BENCH-026/ONBOARD-UART.md) covers FLASH's actual app
+  stream, local verification and measured comparisons.
+
+The findings recommend replacing the routine mainboard USB application dump
+with an ESP32-computed digest, preserving image range, actual boot selection
+and fresh MOS evidence. This saves the bulk transfer and retains the ROM SYNC
+dependency. A stock-compatible in-service proof would be a separate change.
+All changes to operational policy, host runners or firmware await review.
+The task contract was published at
+`9313e48c39cc057ed6825a34c7268ef61e8b2a76`.
