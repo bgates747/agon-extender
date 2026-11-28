@@ -52,7 +52,21 @@ estimated duration, and job authorization in the operator's chat.
 Every Pi operator uses the maintained `pi_chat.py` sender for reservation,
 check-in and authorized result return. The job packet supplies the operator's
 actual chat UUID, evidence directory and the full commissioned checkout commit.
-Run this host-only command once before requesting a slot:
+Use the command route for the operator's current session before requesting
+a slot:
+
+- **Full Access.** Run the commissioned commands normally. Omit
+  `sandbox_permissions` from `exec_command`. This applies to readiness,
+  the Pi sender, physical phases and Pi service launches.
+- **Sandboxed session with interactive approvals.** If the command needs
+  access outside the sandbox, such as the app-server socket, a shared lock
+  or a bench device, request `sandbox_permissions: require_escalated`
+  through the normal review route. If access is blocked and approval is
+  unavailable or denied, stop and report the blocker.
+
+The job authorization and scheduler's slot grant still govern hardware
+access. Preserve prior review denials and their disposition. Run this
+host-only command once before requesting a slot:
 
 ```bash
 .venv/bin/python scripts/olimex_operator_ready.py \
@@ -60,15 +74,13 @@ Run this host-only command once before requesting a slot:
   --out JOB_DIR/operator-ready.json
 ```
 
-Use `sandbox_permissions: require_escalated` in `exec_command` for this
-command and the sender commands below because they access the local app-server
-socket. This is ordinary tool review. The readiness command checks the selected
-guides, scripts and reviewer configuration against the commissioned commit,
-records file hashes, verifies the source chat and standing communication
-authorization through the existing endpoint, and checks the effective reviewer
-policy. It sends no message and accesses no bench hardware. Require
-`"ready": true` before reservation. A failed check identifies the host setup
-that needs correction before checkout.
+The command checks the selected guides and scripts against the commissioned
+commit, verifies the source chat and standing communication authorization,
+and matches the checkout's reviewer policy text against the policy returned
+by the app server. Require `"ready": true` for those host checks before
+reservation. The receipt reports `"session_permissions_checked": false`
+because the check cannot see the operator's active command approval settings.
+Use the session's permission setting to choose the command route above.
 
 ### Request the slot
 
@@ -294,12 +306,10 @@ opens. Use the phase command below directly for short work or as the command
 passed to the Pi service for longer work. Keep the same job, config and evidence
 directory throughout. Use your chat ID as the operator value.
 
-In the commissioned Pi5 sparse checkout, the phase runner uses a shared
-operation lock outside the workspace and needs access to the bench's local
-devices and services. In `exec_command`, request
-`sandbox_permissions: require_escalated` for the physical phase command so it
-goes through ordinary tool review. The offline `preflight` uses only local
-job inputs.
+The phase runner uses a shared operation lock and the bench's local devices
+and services. Use the [command route for your session](#check-the-commissioned-operator-files-and-pi-sender)
+for either a direct phase launch or a Pi service launch. The offline
+`preflight` uses only local job inputs.
 
 ```bash
 .venv/bin/python scripts/olimex_bench.py --job JOB.json --sha256 JOB_SHA256 \

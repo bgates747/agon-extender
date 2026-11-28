@@ -78,6 +78,8 @@ def check(revision, source_thread):
         "transport_sha256": sha256(transport.read_bytes()),
         "startup_instructions_sha256": sha256((ROOT / "AGENTS.md").read_bytes()),
         "effective_reviewer_policy_sha256": sha256(effective_policy.encode()),
+        # config/read here is scoped to the checkout, with no active-turn permissions.
+        "session_permissions_checked": False,
         "authorization_verified": proof["source_verified"],
         "authority": proof["authorization_id"],
         "hardware_accessed": False,
@@ -100,6 +102,7 @@ def main():
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"ready": result["ready"], "receipt": str(args.out),
+                      "session_permissions_checked": False,
                       **({"error": result["error"]} if "error" in result else {})}))
     return 0 if result["ready"] else 1
 
