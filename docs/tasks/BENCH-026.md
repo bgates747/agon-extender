@@ -73,6 +73,32 @@ The findings recommend replacing the routine mainboard USB application dump
 with an ESP32-computed digest, preserving image range, actual boot selection
 and fresh MOS evidence. This saves the bulk transfer and retains the ROM SYNC
 dependency. A stock-compatible in-service proof would be a separate change.
-All changes to operational policy, host runners or firmware await review.
+The initial audit ended at findings. See the authorized implementation below.
 The task contract was published at
 `9313e48c39cc057ed6825a34c7268ef61e8b2a76`.
+
+## Authorized implementation — November 27, 2026
+
+Smith directed removal of unnecessary whole-file transfers from the standard
+runner and bench procedures, across every UART path and both USB programming
+links. Keep small programmer transactions that establish identity, layout,
+selection or an independently verified write. Keep transfers needed to put new
+bytes on a device, retrieve original results, commission a standard SD copy
+once, or preserve otherwise unavailable evidence with a stated purpose.
+
+- BENCH-026-005 [ ] Replace ordinary full mainboard USB application readback with
+  an ESP32-computed digest of the exact selected application range. Keep small
+  layout and selector reads, exact host source pin, and fresh MOS after restart.
+  Preserve existing admitted receipts and verification-only recovery. Keep full
+  byte reads for explicit diagnostics. Never fall back to a dump automatically.
+- BENCH-026-006 [ ] Reuse commissioned SD tool identities and existing standard
+  image receipts. Use metadata during normal phases, retain the small startup
+  check, and keep FLASH's on-card CRC for candidate transfer verification.
+- BENCH-026-007 [ ] Remove redundant EMOS and P4 full-image verification transfers
+  where actual written bytes can be checked locally with equivalent scope.
+  Keep necessary writes, bounded metadata and required result collection.
+- BENCH-026-008 [ ] Align current procedures, commissioning and host-only tests.
+  Record the proof retained in each route, review compatibility with existing
+  evidence, and verify that success, mismatch and failure paths avoid bulk
+  read fallback. Hardware qualification and live checkout changes require a
+  coordinated operator window and a separate test disposition.
