@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Provision and verify the selected VDPlet recovery apps on the Olimex SD card."""
+"""Provision the selected VDPlet recovery apps on the Olimex SD card."""
 
 import argparse
 import fcntl
@@ -9,7 +9,7 @@ from pathlib import Path, PurePosixPath
 import sys
 
 import bench_process
-from olimex_bench import Bench, PRESERVED, ROOT, pinned, verify_pin
+from olimex_bench import Bench, PRESERVED, ROOT, pinned
 from olimex_vdp_ota import cache_images
 from sdcard import Client, RemoteError
 
@@ -41,16 +41,14 @@ def provision(target, images):
 
         for path, pin in images.items():
             label = PurePosixPath(path).stem
-            if not present[path]:
-                target.staged_uart(f"{label}-put", "put", path,
-                                   source=Path(pin["path"]), activate=True)
-            local = target.out / f"{label}-readback.bin"
-            reply = target.staged_uart(f"{label}-verify", "get", path, destination=local)
-            verify_pin(local.read_bytes(), pin | {"path": path})
-            bench_process.record(target.out / f"{label}-verified.json", {
-                "path": path, "bytes": pin["bytes"], "sha256": pin["sha256"],
-                "uploaded": not present[path], "payload_carrier": reply["payload_carrier"],
-            })
+            receipt = {"path": path, "bytes": pin["bytes"], "expected_sha256": pin["sha256"]}
+            if present[path]:
+                receipt["evidence"] = "existing-file-metadata"
+            else:
+                reply = target.staged_uart(f"{label}-put", "put", path,
+                                           source=Path(pin["path"]), activate=True)
+                receipt.update(evidence="completed-upload", transfer=reply)
+            bench_process.record(target.out / f"{label}-provisioned.json", receipt)
     target.handback()
 
 

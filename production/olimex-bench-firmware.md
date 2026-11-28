@@ -32,10 +32,11 @@ old-firmware comparison keeps its selected test image.
 
 Before handing back a new production selection or a replacement SD card,
 the Extender owner checks the standard and previous-standard recovery files
-under `/extender/recovery/vdp`. The maintained tool uploads missing files over
-P4-staged UART and reads each file back once for exact SHA-256 verification.
-It preserves existing files on conflict. Keep the joined handback and
-both `*-verified.json` receipts. An ordinary restore reuses the same SD copy.
+under `/extender/recovery/vdp`. The maintained tool checks existing file
+metadata and uploads only missing files over P4-staged UART. Keep the joined
+handback and both `*-provisioned.json` receipts. The operator or runner
+verifies the SD contents using FLASH's on-card CRC at the confirmation prompt
+during the restore. The recovery image never needs to be sent back over UART.
 
 Use the commissioned checkout, local bench config and its SHA-256, operator
 chat ID, live scheduler-state path and a fresh output directory. Run the same
